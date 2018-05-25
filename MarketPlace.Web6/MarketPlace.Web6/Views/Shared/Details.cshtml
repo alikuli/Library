@@ -1,0 +1,5 @@
+﻿@Html.Partial("ViewControls/Details/_DetailHeading")
+@Html.Partial("_FieldsOnlyEditFormat")
+<div>
+    @Html.ActionLink("Back to List", "Index", new { selectedId = @Model.Id})
+</div>

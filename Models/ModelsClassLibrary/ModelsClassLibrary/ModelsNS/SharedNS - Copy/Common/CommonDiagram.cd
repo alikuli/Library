@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ModelsClassLibrary.ModelsNS.SharedNS.CommonWithId">
+    <Position X="9" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAAAAAIAAAIAAAIQAAAAAAEAAAAAAIIAAACA=</HashCode>
+      <FileName>ModelsNS\SharedNS\Common\CommonWithId.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.SharedNS.MetaData">
+    <Position X="6" Y="2" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AgAAEAAEAAAACAAAEJAAEAAACAAAAAQAAAAAAYIAAAA=</HashCode>
+      <FileName>ModelsNS\SharedNS\Common\MetaData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.SharedNS.MetaDataComplex">
+    <Position X="6" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModelsNS\SharedNS\Common\Complex\MetaDataComplex.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.Logs.VisitorsLogNS.VisitorLog">
+    <Position X="12.75" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>BAABAAAAAAQAAIAEAAAAAAAAAAAAAAAQAAAEAJAEIAA=</HashCode>
+      <FileName>ModelsNS\LogsNS\VisitorLogNS\VisitorLog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.AddressNS.AddressWithId" Collapsed="true">
+    <Position X="15.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAgAAAAAAAAAAAQgAAAAAAAAAAAAAAIRAAAA=</HashCode>
+      <FileName>ModelsNS\AddressNS\Address\AddressWithId.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.DiscountNS.Discount" Collapsed="true">
+    <Position X="17.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kAFDJACBQkAIBEAcAKIAQAIgABIQBBRAAIIABAJYAAA=</HashCode>
+      <FileName>ModelsNS\DiscountNS\Discount.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.DiscountNS.DiscountPrecedence" Collapsed="true">
+    <Position X="19.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABBBIAAAAAAAIAAAIAAAAAAAAACAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>ModelsNS\DiscountNS\DiscountPrecedence.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.DocumentsNS.SaleNS.AbstractSalesmanCommission" Collapsed="true">
+    <Position X="22" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAAQAIAAAAA=</HashCode>
+      <FileName>ModelsNS\DocumentsNS\Abstract\AbstractSalesmanCommission.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.DocumentsNS.FilesNS.AbstractDocHeader" Collapsed="true">
+    <Position X="24.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAIAAAAAAAAAAABAAAAIYAAAAI=</HashCode>
+      <FileName>ModelsNS\DocumentsNS\Abstract\Header\AbstractDocHeader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.DocumentsNS.SaleNS.AbstractDocumentTrx" Collapsed="true">
+    <Position X="26.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ECACoICACAAoACwCDJAAQKAACgAAJRYAEQSCBKAABJA=</HashCode>
+      <FileName>ModelsNS\DocumentsNS\Abstract\Trx\AbstractDocumentTrx.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.DeliveryMethodNS.DeliveryMethod" Collapsed="true">
+    <Position X="28.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>ModelsNS\DocumentsNS\DeliveryMethodNS\DeliveryMethod.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.DocumentsNS.FilesNS.FileCategory" Collapsed="true">
+    <Position X="31" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAEAAAAAAAKAEAIAAAAgAAAAAAAAAAAAAIIAAAJA=</HashCode>
+      <FileName>ModelsNS\DocumentsNS\FilesNS\FileCategory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.DeliveryMethodNS.PaymentMethod" Collapsed="true">
+    <Position X="33.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>ModelsNS\DocumentsNS\PaymentsNS\PaymentMethod.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.DeliveryMethodNS.PaymentTerm" Collapsed="true">
+    <Position X="35.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAIAAAAAAAAAAAAAAAAAAAAAAAIAAAAI=</HashCode>
+      <FileName>ModelsNS\DocumentsNS\PaymentsNS\PaymentTerm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.DocumentsNS.PaymentsNS.PaymentType" Collapsed="true">
+    <Position X="37.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>ModelsNS\DocumentsNS\PaymentsNS\PaymentType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.DocumentsNS.SaleNS.SoSingleEntryVM" Collapsed="true">
+    <Position X="40" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GIADACAAABAACAQAECAAAAAAAAAAAACAAAAAoAAAEAA=</HashCode>
+      <FileName>ModelsNS\DocumentsNS\Sale\SalesorderNS\ViewModel\SoSingleEntryVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.GeneralLedgerNS.GlAccount" Collapsed="true">
+    <Position X="42.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACIAAAAAEAAAAAAACAAAAgAAAAAAAAIAIAAAAA=</HashCode>
+      <FileName>ModelsNS\GeneralLedgerNS\GlAccount.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.GeneralLedgerNS.GlTrx" Collapsed="true">
+    <Position X="44.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAIAAAAAAAAAAAAAAAAACAAAAAAAAAAAEAAIAAAAA=</HashCode>
+      <FileName>ModelsNS\GeneralLedgerNS\GlTrx.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.GeoLocationNS.GeoLocationAbstract" Collapsed="true">
+    <Position X="46.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAEAAAAAAAAAIAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>ModelsNS\GeoLocationNS\GeoLocationAbstract.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.Models.MediaNS.Movie" Collapsed="true">
+    <Position X="49" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAgAAAgAAAAAAAAIAAAAQAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>ModelsNS\MediaNS\Movie.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.MediaNS.UploadedFile" Collapsed="true">
+    <Position X="51.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAgAAAgCAAAAAAAIABAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>ModelsNS\MediaNS\UploadedFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.PeopleNS.PersonCommentAbstract" Collapsed="true">
+    <Position X="53.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAwAAgAAAAAAAAAgAAAAAAAAAAABEAAAAAAKAAAAA=</HashCode>
+      <FileName>ModelsNS\PeopleNS\AbstractsNS\PersonCommentAbstract.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.PlayersNS.PlayerAbstract" Collapsed="true">
+    <Position X="55.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAABAAAAAACQAIAAAIAAAQgAAAAAAAACAAAAIIAAAAA=</HashCode>
+      <FileName>ModelsNS\PeopleNS\AbstractsNS\PlayerAbstract.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.People.EntryScreen.CnicAndPhone_Screen1" Collapsed="true">
+    <Position X="58" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAQAAAAAAQAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>ModelsNS\PeopleNS\EntryScreenNS\CnicAndPhone_Screen1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.PeopleNS.Child" Collapsed="true">
+    <Position X="60.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAABAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>ModelsNS\PeopleNS\SupportingTablesNS\Child.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.PlayersNS.CustomerCategory" Collapsed="true">
+    <Position X="62.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModelsNS\PeopleNS\SupportingTablesNS\CustomerCategory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.PlayersNS.Disabilities" Collapsed="true">
+    <Position X="64.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>ModelsNS\PeopleNS\SupportingTablesNS\Disabilities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.People.SupportingTables.Document" Collapsed="true">
+    <Position X="67" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAEAAAAgAAAAAAAAAAAAEAEAABAAAAACAAAIAAAAA=</HashCode>
+      <FileName>ModelsNS\PeopleNS\SupportingTablesNS\Document.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.PeopleNS.Language" Collapsed="true">
+    <Position X="69.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>ModelsNS\PeopleNS\SupportingTablesNS\Language.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.PlayersNS.OwnerCategory" Collapsed="true">
+    <Position X="71.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>ModelsNS\PeopleNS\SupportingTablesNS\OwnerCategory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.PlayersNS.SalesmanCategory" Collapsed="true">
+    <Position X="73.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModelsNS\PeopleNS\SupportingTablesNS\SalesmanCategory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.PlayersNS.VendorCategory" Collapsed="true">
+    <Position X="76" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModelsNS\PeopleNS\SupportingTablesNS\VendorCategory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.PlayersNS.WorkType" Collapsed="true">
+    <Position X="78.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>ModelsNS\PeopleNS\SupportingTablesNS\WorkType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.PlacesNS.CityAbstract" Collapsed="true">
+    <Position X="80.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAQAAAAIAEAIAAAAAAAAAAAAAAEAAABAAAAAA=</HashCode>
+      <FileName>ModelsNS\PlacesNS\City\CityAbstract.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.PlacesNS.CountryAbstract" Collapsed="true">
+    <Position X="82.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAIAEAIAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModelsNS\PlacesNS\Country\CountryAbstract.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.PlacesNS.StateAbstract" Collapsed="true">
+    <Position X="85" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABgAAAAAIAEAIAAAAAAAAIQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModelsNS\PlacesNS\State\StateAbstract.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.Salepoint" Collapsed="true">
+    <Position X="87.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACIAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>ModelsNS\PlacesNS\Town\Salepoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.PlacesNS.TownAbstract" Collapsed="true">
+    <Position X="89.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAABBQAAAAIAMAIAAAAAAAAIQAAAAAAAABAEAAAA=</HashCode>
+      <FileName>ModelsNS\PlacesNS\Town\TownAbstract.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.Warehouse" Collapsed="true">
+    <Position X="91.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>ModelsNS\PlacesNS\Warehouse\Warehouse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.ProductNS.ProductCategoryAbstract" Collapsed="true">
+    <Position X="94" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>ModelsNS\ProductNS\Category\ProductCategoryAbstract.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.ProductNS.ProductCategoryMain" Collapsed="true">
+    <Position X="96.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AkAAAAAAIwIAkIAAAIAASAAAAAAAAAAAAAgBAIAAAAE=</HashCode>
+      <FileName>ModelsNS\ProductNS\Category\ProductCategoryMain.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.ProductNS.ProductCategoryMainVM" Collapsed="true">
+    <Position X="98.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAACAIQAAAAAAABAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModelsNS\ProductNS\Category\ProductCategoryMainVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.ProductNS.ProductAbstract" Collapsed="true">
+    <Position X="100.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QFCVSJhKRgoDCI60AoICSljiAOBIqNDY0ooYE6BISAE=</HashCode>
+      <FileName>ModelsNS\ProductNS\ProductAbstract.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.ProductNS.ProductIdentifier" Collapsed="true">
+    <Position X="103" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAiAAAAAAAAAIAAAAAAAAAAAABAAAAAAAAgAIAAAAA=</HashCode>
+      <FileName>ModelsNS\ProductNS\ProductIdentifier\ProductIdentifier.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.ProductNS.ProductIdentifierType" Collapsed="true">
+    <Position X="105.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>ModelsNS\ProductNS\ProductIdentifier\ProductIdentifierType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.ProductNS.ProductTrxAbstract" Collapsed="true">
+    <Position X="107.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAADAAAAAACAAEAAAAAAAAAAAABCACAAIAAAAI=</HashCode>
+      <FileName>ModelsNS\ProductNS\ProductTrxAbstract.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.ProductNS.ScratchCard" Collapsed="true">
+    <Position X="109.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAEAgAAAAAgAIQEAIACAAAgEAABAAAAgACQBYAQAAA=</HashCode>
+      <FileName>ModelsNS\ProductNS\ScratchCard\ScratchCard.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.ProductNS.ScratchCardTrx" Collapsed="true">
+    <Position X="112" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAKAAAIQAAAAEAAAAAAAAAAAMCoAAAAA=</HashCode>
+      <FileName>ModelsNS\ProductNS\ScratchCard\ScratchCardTrx.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.ProductNS.UomAbstract" Collapsed="true">
+    <Position X="114.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAABAIAAAAA=</HashCode>
+      <FileName>ModelsNS\ProductNS\UOM\UomAbstract.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.Setup" Collapsed="true">
+    <Position X="116.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAIAAAAAAgAAAAAAAAAAAAQAgAIAAAAA=</HashCode>
+      <FileName>ModelsNS\SetupNS\Setup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.ContactRec" Collapsed="true">
+    <Position X="118.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>ModelsNS\Test\ContactRec.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

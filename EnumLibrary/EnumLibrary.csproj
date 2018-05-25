@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AE825B32-FB33-4D59-8EFF-516B9EC4DE08}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EnumLibrary</RootNamespace>
+    <AssemblyName>EnumLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\MarketPlace.Web4\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\MarketPlace.Web6\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\MarketPlace.Web4\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\MarketPlace.Web4\packages\Ninject.Web.Common.3.2.3.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common.OwinHost, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\MarketPlace.Web4\packages\Ninject.Web.Common.OwinHost.3.2.3.0\lib\net45-full\Ninject.Web.Common.OwinHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\..\MarketPlace.Web4\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\MarketPlace.Web6\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\MarketPlace.Web6\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AKATest.cs" />
+    <Compile Include="EnumNS\AddressTypeENUM.cs" />
+    <Compile Include="EnumNS\Product Related\ProductCategory2ENUM.cs" />
+    <Compile Include="EnumNS\ClassesWithRightsENUM.cs" />
+    <Compile Include="EnumNS\CommonSortingENUM.cs" />
+    <Compile Include="EnumNS\DocumentTypeENUM.cs" />
+    <Compile Include="EnumNS\FileUploadTypeEnum.cs" />
+    <Compile Include="EnumNS\MenuLevelENUM.cs" />
+    <Compile Include="EnumNS\PaymentTermsENUM.cs" />
+    <Compile Include="EnumNS\Product Related\ProductCategory3ENUM.cs" />
+    <Compile Include="EnumNS\Serviceman\BoardingENUM.cs" />
+    <Compile Include="EnumNS\AccountManagerEnums\ManageMessageId.cs" />
+    <Compile Include="EnumNS\CustomerCategoryENUM.cs" />
+    <Compile Include="EnumNS\Misc\DataStatusENUM.cs" />
+    <Compile Include="EnumNS\Payments Related\DebitCreditENUM.cs" />
+    <Compile Include="EnumNS\Discounts\DiscountENUM.cs" />
+    <Compile Include="EnumNS\Discounts\DiscountTyoeENUM.cs" />
+    <Compile Include="EnumNS\Discounts\DiscountValOrPctENUM.cs" />
+    <Compile Include="EnumNS\UomNS\UomLengthtENUM.cs" />
+    <Compile Include="EnumNS\UomNS\UomVolumetENUM.cs" />
+    <Compile Include="EnumNS\UomNS\UomWeightENUM.cs" />
+    <Compile Include="EnumNS\User Related\IUserHasUploadsTypeENUM.cs" />
+    <Compile Include="EnumNS\User Related\EducationLevelENUM.cs" />
+    <Compile Include="EnumNS\EmailProviderEnum.cs" />
+    <Compile Include="EnumNS\Misc\EnumTypes.cs" />
+    <Compile Include="EnumNS\Misc\FileTypeENUM.cs" />
+    <Compile Include="EnumNS\User Related\MaritalStatusENUM.cs" />
+    <Compile Include="EnumNS\MethodOfContactEnum.cs" />
+    <Compile Include="EnumNS\Owner\OwnerCategoryENUM.cs" />
+    <Compile Include="EnumNS\Payments Related\PaymentTypeEnum.cs" />
+    <Compile Include="EnumNS\Misc\PostOrGetENUM.cs" />
+    <Compile Include="EnumNS\Product Related\ProductCategory1ENUM.cs" />
+    <Compile Include="EnumNS\ScratchCard\ScratchCardBatchENUM.cs" />
+    <Compile Include="EnumNS\ScratchCard\ScratchCardStatesENUM.cs" />
+    <Compile Include="EnumNS\User Related\SortUserByENUM.cs" />
+    <Compile Include="EnumNS\Product Related\UomLengthENUM.cs" />
+    <Compile Include="EnumNS\Product Related\UomQtyENUM.cs" />
+    <Compile Include="EnumNS\Product Related\UomVolumeENUM.cs" />
+    <Compile Include="EnumNS\Product Related\UomWeightEnum.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EnumNS\Sale Documents\SaleOrderTypeEnum.cs" />
+    <Compile Include="EnumNS\SalesmanCategoryENUM.cs" />
+    <Compile Include="EnumNS\SetupEnum.cs" />
+    <Compile Include="EnumNS\User Related\SexENUM.cs" />
+    <Compile Include="EnumNS\SmsStrategyEnum.cs" />
+    <Compile Include="EnumNS\User Related\SonOfWifeOfDotOfENUM.cs" />
+    <Compile Include="EnumNS\VendorCategoryENUM.cs" />
+    <Compile Include="EnumNS\Misc\YesNoEnum.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExtentionsLibrary\AliKuliLibrary.csproj">
+      <Project>{db8b5ef1-1281-4c65-ae5a-b798426ed432}</Project>
+      <Name>AliKuliLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

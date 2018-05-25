@@ -1,0 +1,24 @@
+﻿@*https://getbootstrap.com/docs/4.0/components/breadcrumb/*@
+
+@model ModelsClassLibrary.ViewModels.IndexListVM
+
+<p>
+
+    @{
+        string linkTextHome = "Admin Home";
+        string linkTextLevel1 = "List of " + Model.Heading.RecordNamePlural;
+        string linkTextLevel2 = ((RazorView)ViewContext.View).ViewPath + " " + Model.Heading.RecordNamePlural;
+        string linkTextLevel3 = Model.Menu.Cat2Name;
+        string linkTextProductLevel = Model.Menu.Cat3Name;
+        string actionName = "index";
+        var controllerNameMenuGeneral = this.ViewContext.RouteData.Values["controller"].ToString();
+    }
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">@Html.ActionLink(@linkTextHome, @actionName, "Home", null, null)</li>
+            <li class="breadcrumb-item active" aria-current="page">@linkTextLevel1</li>
+        </ol>
+    </nav>
+
+</p>

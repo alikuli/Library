@@ -1,0 +1,166 @@
+﻿@model ModelsClassLibrary.ViewModels.IndexListVM
+<div class="container">
+
+    @{int count = 0;}
+
+    @foreach (ModelsClassLibrary.ViewModels.IndexItemVM item in Model.DataSortedAndFiltered.ToList())
+    {
+
+        string alertRow = (@Model.SelectedIdMatchesThis(item.Id) ? "alert-info " : " ");
+        string alertFont = (@Model.SelectedIdMatchesThis(item.Id) ? " text-danger " : " ");
+
+        if (count % 2 == 0)
+        {
+            alertRow += " background-ltgrey ";
+        }
+        <div class="row @alertRow">
+
+            @*This is the description and image*@
+            <div class="col-lg-8">
+                @{
+        count++;
+        if (item.PrintLineNumber.IsNullOrWhiteSpace())
+        {
+            item.PrintLineNumber = count.ToString();
+        }
+
+
+                }
+                @if(Model.Show.ImageInList)
+                {
+                    if (@item.IsImageThere)
+                    {
+                        <div class="col-lg-4">
+                            <div class="container">
+                                @*<h2>Rounded Corners</h2>
+                                    <p>The .img-rounded class adds rounded corners to an image (not available in IE8):</p>*@
+                                @{
+                        var imagePath = "";
+                        if (item.IsImageThere)
+                        {
+                            imagePath = Url.Content(item.ImageAddressStr);
+                        }
+                                }
+                                <img src="@imagePath" class="img-rounded" alt="Cinque Terre" width="102" height="73">
+                            </div>
+                        </div>
+                    }
+                }
+                <div class="col-lg-8">
+                    @if (Model.Show.Edit)
+                    {
+                        if (item.AllowEdit)
+                        {
+                            <span class="@alertFont">@item.PrintLineNumber. @Html.ActionLink(item.ShortName, "Edit", new { id = item.Id }, new { @id = item.Id, @title = item.FullName, @class = @alertFont })</span>
+                        }
+                        else
+                        {
+                            <span class="@alertFont">@item.PrintLineNumber.  @Html.DisplayFor(x => item.ShortName, null, new { @title = item.FullName })</span>
+                        }
+                    }
+                    else
+                    {
+                        <span class="@alertFont">@item.PrintLineNumber. @Html.DisplayFor(x => item.ShortName, null, new { @title = item.FullName })</span>
+                    }
+
+                </div>
+
+
+            </div>
+
+
+
+            @*these are the options on the side*@
+            <div class="col-lg-4">
+                @if (Model.Show.MoveTop)
+                {
+                    <span class="@alertFont">
+                        @Ajax.ActionLink("Top", "MoveTop", new { selectedId = item.Id, sortBy = Model.SortOrderEnum, searchFor = Model.SearchFor },
+                                new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "indexmiddlepart",
+
+
+                                }, new { @class = "@alertFont,  btn-primary" })
+                        |
+                    </span>
+
+                }
+
+                @if (Model.Show.MoveUp)
+                {
+                    <span class=@alertFont>
+                        @Ajax.ActionLink("Up 1", "MoveUp", new { selectedId = item.Id, sortBy = Model.SortOrderEnum, searchFor = Model.SearchFor },
+                                new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "indexmiddlepart",
+
+
+                                }, new { @class = "@alertFont  btn-info" })
+                        |
+                    </span>
+
+                }
+                @if (Model.Show.MoveDown)
+                {
+                    <span class=@alertFont>
+                        @Ajax.ActionLink("Down 1", "MoveDown", new { selectedId = item.Id, sortBy = Model.SortOrderEnum, searchFor = Model.SearchFor },
+                                new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "indexmiddlepart",
+
+
+                                }, new { @class = @alertFont })
+                        |
+                    </span>
+
+                }
+
+                @if (Model.Show.MoveBottom)
+                {
+                    <span class="@alertFont">
+                        @Ajax.ActionLink("Bottom", "MoveBottom", new { selectedId = item.Id, sortBy = Model.SortOrderEnum, searchFor = Model.SearchFor },
+                                new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "indexmiddlepart",
+
+
+                                }, new { @class = "@alertFont btn-warning" })
+                        |
+                    </span>
+
+                }
+
+                <span>
+                    @Html.ActionLink("View", "Details", new { id = item.Id }, new { @class = "@alertFont btn-info" })
+                </span>
+
+                @if (Model.Show.Edit)
+                {
+                    if (item.AllowEdit)
+                    {
+                        <span class="@alertFont">
+                            | @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "@alertFont btn-danger" })
+                        </span>
+
+                    }
+                }
+            </div>
+        </div>
+
+    }
+</div>
+
+<script>
+    //This causes the edited entry to appear in the middle of the viewport
+    document.getElementById('@Model.SelectedId').scrollIntoView(top);
+
+</script>

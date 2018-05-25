@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="InterfacesLibrary.PlacesNS.ICity">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAQAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>InterfacesNS\PlacesNS\ICity.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InterfacesLibrary.PlacesNS.ICountry">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InterfacesNS\PlacesNS\ICountry.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InterfacesLibrary.PlacesNS.IState">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAIQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InterfacesNS\PlacesNS\IState.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InterfacesLibrary.PlacesNS.ITown">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABBAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InterfacesNS\PlacesNS\ITown.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

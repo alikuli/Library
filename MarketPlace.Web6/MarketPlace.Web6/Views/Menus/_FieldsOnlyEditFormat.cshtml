@@ -1,0 +1,42 @@
+﻿@model ModelsClassLibrary.ModelsNS.ProductNS.ProductCategoryMain
+
+@Html.HiddenFor(x => x.ProductCat1Id)
+@Html.HiddenFor(x => x.ProductCat2Id)
+@Html.HiddenFor(x => x.ProductCat3Id)
+
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductCat1Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.ProductCat1Id,
+                     (@ViewBag.ProductCategory1SelectList as IEnumerable<SelectListItem>),
+                                    "--- Select Category 1 ---",
+                                    new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductCat2Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.ProductCat2Id,
+                     (@ViewBag.ProductCategory2SelectList as IEnumerable<SelectListItem>),
+                                             "--- Select Category 2 ---",
+                                    new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductCat3Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.ProductCat3Id,
+                     (@ViewBag.ProductCategory3SelectList as IEnumerable<SelectListItem>),
+                                             "--- Select Category 3 ---",
+                                    new { @class = "form-control" })
+            </div>
+        </div>
+
+        @Html.Partial(@"_Name_And_DetailInfo")
+    </div>
+

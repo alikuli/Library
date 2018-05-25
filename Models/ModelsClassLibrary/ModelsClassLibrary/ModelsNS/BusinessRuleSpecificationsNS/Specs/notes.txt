@@ -1,0 +1,1 @@
+﻿This was taken from my book called Professional ASP.Patterns By Scott Millett, pages 121 onwards

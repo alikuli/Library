@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D136798C-8556-4423-9C6C-E3384E99CD26}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ModelsClassLibrary</RootNamespace>
+    <AssemblyName>ModelsClassLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\MarketPlace.Web\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\MarketPlace.Web4\packages\Microsoft.Owin.Security.3.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\MarketPlace.Web4\packages\Microsoft.Owin.Security.Cookies.3.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\MarketPlace.Web4\packages\Microsoft.Owin.Security.OAuth.3.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\MarketPlace.Web\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\MarketPlace.Web4\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\MarketPlace.Web4\packages\Ninject.Web.Common.3.2.3.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common.OwinHost, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\MarketPlace.Web4\packages\Ninject.Web.Common.OwinHost.3.2.3.0\lib\net45-full\Ninject.Web.Common.OwinHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AKATest.cs" />
+    <Compile Include="InterfacesNS\AddressNS\IAddressString.cs" />
+    <Compile Include="InterfacesNS\AddressNS\IAddressStringPartial.cs" />
+    <Compile Include="InterfacesNS\AddressNS\IAddressStringWithTown.cs" />
+    <Compile Include="InterfacesNS\AddressNS\IAddressWithId.cs" />
+    <Compile Include="InterfacesNS\AddressNS\IAddressWithIdComplex.cs" />
+    <Compile Include="InterfacesNS\Address\IAddress.cs" />
+    <Compile Include="InterfacesNS\Address\IAddressCommon.cs" />
+    <Compile Include="InterfacesNS\Address\IAddressComplex.cs" />
+    <Compile Include="InterfacesNS\Address\IAddressWithTownClass.cs" />
+    <Compile Include="InterfacesNS\BusinessRuleSpecificationsNS\ISpecification.cs" />
+    <Compile Include="InterfacesNS\BusinessRuleSpecifications\ISpecification.cs" />
+    <Compile Include="InterfacesNS\DocumentsNS\IAbstractDocHeader.cs" />
+    <Compile Include="InterfacesNS\DocumentsNS\IAbstractDocumentTrx.cs" />
+    <Compile Include="InterfacesNS\DocumentsNS\IDeliveryMethod.cs" />
+    <Compile Include="InterfacesNS\DocumentsNS\IFileCategory.cs" />
+    <Compile Include="InterfacesNS\DocumentsNS\IFileDoc.cs" />
+    <Compile Include="InterfacesNS\DocumentsNS\IInvoice.cs" />
+    <Compile Include="InterfacesNS\DocumentsNS\IPayment.cs" />
+    <Compile Include="InterfacesNS\DocumentsNS\IPaymentMethod.cs" />
+    <Compile Include="InterfacesNS\DocumentsNS\IPaymentTerm.cs" />
+    <Compile Include="InterfacesNS\DocumentsNS\IPaymentType.cs" />
+    <Compile Include="InterfacesNS\GeneralLedgerNS\IGlAccount.cs" />
+    <Compile Include="InterfacesNS\GeneralLedgerNS\IGlTrx.cs" />
+    <Compile Include="InterfacesNS\GeolocationNS\IGeoLocation.cs" />
+    <Compile Include="InterfacesNS\IAbstractPayment.cs" />
+    <Compile Include="InterfacesNS\IDateTime.cs" />
+    <Compile Include="InterfacesNS\IEntityWithEnum.cs" />
+    <Compile Include="InterfacesNS\IFinancialDocAbstract.cs" />
+    <Compile Include="InterfacesNS\OperationalNS\Documents\IHeader.cs" />
+    <Compile Include="InterfacesNS\OperationalNS\Documents\ITransactionOrder.cs" />
+    <Compile Include="InterfacesNS\PeopleNS\PlayersNS\ICustomer.cs" />
+    <Compile Include="InterfacesNS\PeopleNS\PlayersNS\IOwner.cs" />
+    <Compile Include="InterfacesNS\PeopleNS\PlayersNS\IPerson.cs" />
+    <Compile Include="InterfacesNS\PeopleNS\PlayersNS\IPersonAbstract.cs" />
+    <Compile Include="InterfacesNS\PeopleNS\PlayersNS\IPlayer.cs" />
+    <Compile Include="InterfacesNS\PeopleNS\PlayersNS\ISalesman.cs" />
+    <Compile Include="InterfacesNS\PeopleNS\PlayersNS\IVendor.cs" />
+    <Compile Include="InterfacesNS\People\IGeneralCustomerAbstract.cs" />
+    <Compile Include="InterfacesNS\People\IInjectValuesCustomer.cs" />
+    <Compile Include="InterfacesNS\People\IMultiAddress.cs" />
+    <Compile Include="InterfacesNS\People\IPerson.cs" />
+    <Compile Include="InterfacesNS\People\IPersonAbstract.cs" />
+    <Compile Include="InterfacesNS\People\IPlayerAbstract.cs" />
+    <Compile Include="InterfacesNS\PlacesNS\ICity.cs" />
+    <Compile Include="InterfacesNS\PlacesNS\ICountry.cs" />
+    <Compile Include="InterfacesNS\PlacesNS\IState.cs" />
+    <Compile Include="InterfacesNS\PlacesNS\ITown.cs" />
+    <Compile Include="InterfacesNS\ProductNS\IPackageDimensionsRec.cs" />
+    <Compile Include="InterfacesNS\ProductNS\IProduct.cs" />
+    <Compile Include="InterfacesNS\ProductNS\IProductCategoryMain.cs" />
+    <Compile Include="InterfacesNS\ProductNS\IProductIdentifier.cs" />
+    <Compile Include="InterfacesNS\ProductNS\IProductIdentifierType.cs" />
+    <Compile Include="InterfacesNS\ScratchCardsNS\IScratchCard.cs" />
+    <Compile Include="InterfacesNS\ScratchCardsNS\IScratchCardAvailableUnits.cs" />
+    <Compile Include="InterfacesNS\ScratchCardsNS\IScratchCardStateStrategy.cs" />
+    <Compile Include="InterfacesNS\ScratchCardsNS\IScratchCardTrx.cs" />
+    <Compile Include="InterfacesNS\ScratchCards\IScratchCardAvailableUnits.cs" />
+    <Compile Include="InterfacesNS\SharedNS\Common\CalculatorDelegate.cs" />
+    <Compile Include="InterfacesNS\SharedNS\Common\ICommonBasic.cs" />
+    <Compile Include="InterfacesNS\SharedNS\Common\IMetaData.cs" />
+    <Compile Include="InterfacesNS\SharedNS\Common\ICommonNoIdWithState.cs" />
+    <Compile Include="InterfacesNS\SharedNS\Common\ICommonWithId OLD.cs" />
+    <Compile Include="InterfacesNS\SharedNS\ICategory.cs" />
+    <Compile Include="InterfacesNS\SharedNS\ICommon OLD.cs" />
+    <Compile Include="InterfacesNS\SharedNS\ICounterClass.cs" />
+    <Compile Include="InterfacesNS\SharedNS\IDateAndBy.cs" />
+    <Compile Include="InterfacesNS\SharedNS\IDateTime.cs" />
+    <Compile Include="InterfacesNS\SharedNS\IEntity.cs" />
+    <Compile Include="InterfacesNS\SharedNS\IEntityWithEnum.cs" />
+    <Compile Include="InterfacesNS\Shared\ICommon OLD.cs" />
+    <Compile Include="InterfacesNS\Shared\ICommonNoId.cs" />
+    <Compile Include="InterfacesNS\Shared\ICommonWithId.cs" />
+    <Compile Include="InterfacesNS\Shared\IEntity.cs" />
+    <Compile Include="ModelsNS\AddressNS\Address\Address.cs" />
+    <Compile Include="ModelsNS\AddressNS\Address\AddressComplex.cs" />
+    <Compile Include="ModelsNS\AddressNS\Address\AddressStringWithNames.cs" />
+    <Compile Include="ModelsNS\AddressNS\Address\AddressType.cs" />
+    <Compile Include="ModelsNS\AddressNS\Address\AddressWithId.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\AndSpec.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\CompositeSpec.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\NotSpec.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\CommissionAgentNS\CommissionAgentHasAvailableUnitsSpec.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\CommissionAgentNS\CommissionAgentIsActiveSpec.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\CommissionAgentNS\CommissionAgentIsBlackListedSpec.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\CustomerNS\CustomerHasAvailableUnitsSpec.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\CustomerNS\CustomerIsActiveSpec.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\CustomerNS\CustomerIsBlackListedSpec.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SalesmanNS\SalesmanHasAvailableUnitsSpec.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SalesmanNS\SalesmanIsActiveSpec.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SalesmanNS\SalesmanIsBlackListedSpec.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\ScratchCardNS\ScratchCardIsActiveSpec.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerHasAvailableUnitsSpec.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerIsActiveSpec.cs" />
+    <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerIsBlackListedSpec.cs" />
+    <Compile Include="ModelsNS\ClicksNS\Click.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\FileDocsNS\FileDoc - Upload.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\FileDocsNS\FileDoc - FileNumber.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\FileDocsNS\FileDoc - UpdatePropertiesDuringModify.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\FileDocsNS\FileDoc.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\FileDocsNS\OldFileData.cs" />
+    <Compile Include="ModelsNS\HistoryNS\History.cs" />
+    <Compile Include="ModelsNS\DiscountNS\DiscountPrecedence.cs" />
+    <Compile Include="ModelsNS\DiscountNS\DiscountPrecedenceInitParameter.cs" />
+    <Compile Include="ModelsNS\DiscountNS\DiscountPrecedenceVM.cs" />
+    <Compile Include="ModelsNS\DiscountNS\IDiscountPrecedence.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\PaymentsNS\IPaymentType.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\PaymentsNS\PaymentMethod.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\PaymentsNS\PaymentTerm.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\PaymentsNS\PaymentType.cs" />
+    <Compile Include="ModelsNS\GeoLocationNS\GeoLocation.cs" />
+    <Compile Include="ModelsNS\GeoLocationNS\GeoLocationAbstract.cs" />
+    <Compile Include="ModelsNS\GlobalValuesNS\GlobalSetupValues.cs" />
+    <Compile Include="ModelsNS\IndexNS\Logo.cs" />
+    <Compile Include="ModelsNS\IndexNS\MenuIndexItem.cs" />
+    <Compile Include="ModelsNS\IndexNS\MenuModel.cs" />
+    <Compile Include="ModelsNS\IndexNS\Show.cs" />
+    <Compile Include="ModelsNS\LogsNS\VisitorLogNS\VisitorLog.cs" />
+    <Compile Include="ModelsNS\MediaNS\FileType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelsNS\MediaNS\Movie.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelsNS\IndexNS\Headings.cs" />
+    <Compile Include="ModelsNS\MigraDocNS\PdfHeaderInfo.cs" />
+    <Compile Include="ModelsNS\MigraDocNS\OptionsPdfDoc.cs" />
+    <Compile Include="ModelsNS\PeopleNS\AbstractsNS\IPlayer.cs" />
+    <Compile Include="ModelsNS\PeopleNS\AbstractsNS\PlayerAbstract.cs" />
+    <Compile Include="ModelsNS\PeopleNS\EntryScreenNS\CnicAndPhone_Screen1.cs" />
+    <Compile Include="ModelsNS\PeopleNS\EntryScreenNS\PersonWithAddress_Screen2.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\CustomerNS\Customer.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\OwnerNS\Owner.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\Person.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\PersonComplex.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\CustomerNS\CustomerCategory.cs" />
+    <Compile Include="ModelsNS\PeopleNS\Language.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\OwnerNS\OwnerCategory.cs" />
+    <Compile Include="ModelsNS\PeopleNS\Person.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\ApplicationUserNS\ApplicationUser - Index.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\UpdatePropertiesDuringModify.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\ApplicationUserNS\ApplicationUser.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\UserState.cs" />
+    <Compile Include="ModelsNS\PlacesNS\CountryNS\UpdatePropertiesDuringModify.cs" />
+    <Compile Include="ModelsNS\PlacesNS\StateNS\StateInitializationData.cs" />
+    <Compile Include="ModelsNS\ProductNS\AbstractNS\IProductHasUploads.cs" />
+    <Compile Include="ModelsNS\ProductNS\AbstractNS\ProductAbstract - Dates.cs" />
+    <Compile Include="ModelsNS\ProductNS\AbstractNS\ProductAbstract - Navigation, Prod Cat and Parent.cs" />
+    <Compile Include="ModelsNS\ProductNS\AbstractNS\ProductAbstract - Prices and Costs.cs" />
+    <Compile Include="ModelsNS\ProductNS\AbstractNS\ProductAbstract - Item numbers and Serial No.cs" />
+    <Compile Include="ModelsNS\ProductNS\AbstractNS\ProductAbstract - Pictures.cs" />
+    <Compile Include="ModelsNS\ProductNS\CategoryNS\ProductCategoryMainNS\ProductCategoryMain.cs" />
+    <Compile Include="ModelsNS\ProductNS\CategoryNS\ProductCategoryMainNS\UpdatePropertiesDuringModify.cs" />
+    <Compile Include="ModelsNS\ProductNS\CategoryNS\ProductCategoryMainNS\HideNameInView.cs" />
+    <Compile Include="ModelsNS\ProductNS\ComplexClassesNS\CostsComplex.cs" />
+    <Compile Include="ModelsNS\ProductNS\ComplexClassesNS\DateComplex.cs" />
+    <Compile Include="ModelsNS\ProductNS\ComplexClassesNS\SalePrice.cs" />
+    <Compile Include="ModelsNS\ProductNS\AbstractNS\Product.cs" />
+    <Compile Include="ModelsNS\ProductNS\AbstractNS\ProductAbstract - Bools.cs" />
+    <Compile Include="ModelsNS\ProductNS\AbstractNS\ProductAbstract - UOM, Weights, lengths.cs" />
+    <Compile Include="ModelsNS\ProductNS\AbstractNS\ProductAbstract -ErrorChecking.cs" />
+    <Compile Include="ModelsNS\ProductNS\AbstractNS\ProductAbstract.cs" />
+    <Compile Include="ModelsNS\ProductNS\UomNS\IUom.cs" />
+    <Compile Include="ModelsNS\SharedNS\Common\CommonWithIdDudClass.cs" />
+    <Compile Include="ModelsNS\SharedNS\Common\IFieldsToLoadFromView.cs" />
+    <Compile Include="ModelsNS\SharedNS\Common\PropertyValue.cs" />
+    <Compile Include="ModelsNS\RightsNS\IRight.cs" />
+    <Compile Include="ModelsNS\RightsNS\IsAllowNameToBeSentanceCased.cs" />
+    <Compile Include="ModelsNS\RightsNS\UpdatePropertiesDuringModify.cs" />
+    <Compile Include="ModelsNS\RightsNS\Various Rights Models\CRUD_Actually_Right.cs" />
+    <Compile Include="ModelsNS\RightsNS\Various Rights Models\CRUD_Right.cs" />
+    <Compile Include="ModelsNS\RightsNS\Various Rights Models\CRU_Right.cs" />
+    <Compile Include="ModelsNS\RightsNS\Various Rights Models\_R_Right.cs" />
+    <Compile Include="ModelsNS\RightsNS\Various Rights Models\CR_Right.cs" />
+    <Compile Include="ModelsNS\RightsNS\Various Rights Models\C_Right.cs" />
+    <Compile Include="ModelsNS\RightsNS\Various Rights Models\NoRights.cs" />
+    <Compile Include="ModelsNS\RightsNS\Right.cs" />
+    <Compile Include="ModelsNS\CounterNS\Counter.cs" />
+    <Compile Include="ModelsNS\CounterNS\CounterTypeENUM.cs" />
+    <Compile Include="ModelsNS\SharedNS\Parameters\AnnonymousStringType.cs" />
+    <Compile Include="ModelsNS\SharedNS\Parameters\ControllerCreateEditParameter.cs" />
+    <Compile Include="ModelsNS\SharedNS\Parameters\ControllerCreateEditParameterDetail.cs" />
+    <Compile Include="ModelsNS\SharedNS\Parameters\MenuParameters.cs" />
+    <Compile Include="ModelsNS\SharedNS\ProductCatMainVM.cs" />
+    <Compile Include="InterfacesNS\HasUploadsNS\IProductHasUploads.cs" />
+    <Compile Include="InterfacesNS\HasUploadsNS\IUserHasUploads.cs" />
+    <Compile Include="InterfacesNS\HasUploadsNS\IHasUploads.cs" />
+    <Compile Include="ModelsNS\ProductNS\CategoryNS\ProductCategory1.cs" />
+    <Compile Include="ModelsNS\ProductNS\CategoryNS\ProductCategory2.cs" />
+    <Compile Include="ModelsNS\ProductNS\CategoryNS\ProductCategory3.cs" />
+    <Compile Include="ModelsNS\ProductNS\CategoryNS\ProductCategoryAbstract.cs" />
+    <Compile Include="ModelsNS\ProductNS\ComplexClassesNS\Dimensions.cs" />
+    <Compile Include="ModelsNS\ProductNS\ComplexClassesNS\ProductQuantityRec.cs" />
+    <Compile Include="ModelsNS\ProductNS\ComplexClassesNS\ShipWeightClassRec.cs" />
+    <Compile Include="ModelsNS\ProductNS\ProductIdentifierNS\ProductIdentifier.cs" />
+    <Compile Include="ModelsNS\ProductNS\UomNS\Length\UomLength.cs" />
+    <Compile Include="ModelsNS\ProductNS\UomNS\Quantity\UomQty.cs" />
+    <Compile Include="ModelsNS\ProductNS\UomNS\UomAbstract.cs" />
+    <Compile Include="ModelsNS\ProductNS\UomNS\Volume\UomVolume.cs" />
+    <Compile Include="ModelsNS\ProductNS\UomNS\Weight\UomWeight.cs" />
+    <Compile Include="ModelsNS\SharedNS\CheckBoxItem.cs" />
+    <Compile Include="InterfacesNS\SharedNS\Common\ICommonWithId.cs" />
+    <Compile Include="ModelsNS\SharedNS\Common\IEncryption.cs" />
+    <Compile Include="ModelsNS\PlacesNS\CityNS\City.cs" />
+    <Compile Include="ModelsNS\PlacesNS\CityNS\CityAbstract.cs" />
+    <Compile Include="ModelsNS\PlacesNS\CountryNS\Country.cs" />
+    <Compile Include="ModelsNS\PlacesNS\CountryNS\CountryAbstract.cs" />
+    <Compile Include="ModelsNS\PlacesNS\CountryNS\ICountry.cs" />
+    <Compile Include="ModelsNS\PlacesNS\StateNS\IState.cs" />
+    <Compile Include="ModelsNS\PlacesNS\StateNS\State - UpdatePropertiesDuringModify.cs" />
+    <Compile Include="ModelsNS\PlacesNS\StateNS\StateAbstract.cs" />
+    <Compile Include="ModelsNS\PlacesNS\Town\Town.cs" />
+    <Compile Include="ModelsNS\PlacesNS\Town\TownAbstract.cs" />
+    <Compile Include="ModelsNS\ReportsNS\ReportClass.cs" />
+    <Compile Include="ModelsNS\SetupNS\Setup.cs" />
+    <Compile Include="ModelsNS\SetupNS\SetupVM.cs" />
+    <Compile Include="ModelsNS\SharedNS\Common\CommonWithId.cs" />
+    <Compile Include="ModelsNS\SharedNS\Complex\MetaDataComplex.cs" />
+    <Compile Include="ModelsNS\SharedNS\Common\IIndexListItems.cs" />
+    <Compile Include="ModelsNS\SharedNS\Common\MetaData.cs" />
+    <Compile Include="ModelsNS\SharedNS\Complex\DateAndByComplex.cs" />
+    <Compile Include="ModelsNS\SharedNS\EncryptedString.cs" />
+    <Compile Include="ModelsNS\SharedNS\ErrorObjHttp.cs" />
+    <Compile Include="ModelsNS\SharedNS\ExcelUtilityClass.cs" />
+    <Compile Include="ModelsNS\SharedNS\GlobalSetupValues.cs" />
+    <Compile Include="ModelsNS\SharedNS\GlobalValuesVM.cs" />
+    <Compile Include="ModelsNS\SharedNS\ICommonNoIdBasics.cs" />
+    <Compile Include="ModelsNS\SharedNS\IndexWithNameAndIsAutoCreatedVM.cs" />
+    <Compile Include="ModelsNS\SharedNS\InternalMessage.cs" />
+    <Compile Include="ModelsNS\SharedNS\NameWithStringValue.cs" />
+    <Compile Include="ModelsNS\SharedNS\Parameters\ControllerIndexParams.cs" />
+    <Compile Include="ModelsNS\SharedNS\ParentChild.cs" />
+    <Compile Include="ModelsNS\SharedNS\SelectListVM.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\AccountViewModels.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\ManageViewModels.cs" />
+    <Compile Include="ModelsNS\SharedNS\RankingMetaData.cs" />
+    <Compile Include="ModelsNS\UploadedFileNS\UploadedFileMainNS\UploadedFile - Image Adjustment.cs" />
+    <Compile Include="ModelsNS\UploadedFileNS\UploadedFileMainNS\UploadedFile - Navigation.cs" />
+    <Compile Include="ModelsNS\UploadedFileNS\UploadedFileMainNS\UploadedFile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ModelsNS\IndexNS\IndexListVM.cs" />
+    <Compile Include="ModelsNS\IndexNS\IndexItemVM.cs" />
+    <Compile Include="ModelsNS\IndexNS\SortOrderENUM.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="InterfacesNS\AddressNS\AddressInterfaceDiagram.cd" />
+    <None Include="InterfacesNS\DocumentsNS\DocumentDiagram.cd" />
+    <None Include="InterfacesNS\PlacesNS\PlacesDiagram.cd" />
+    <None Include="ModelsNS\AddressNS\AddressDiagram.cd" />
+    <None Include="ModelsNS\PlacesNS\PlacesDiagram.cd" />
+    <None Include="ModelsNS\SharedNS\Common\CommonDiagram.cd" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\notes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="InterfacesNS\InventoryNS\" />
+    <Folder Include="InterfacesNS\Inventory\" />
+    <Folder Include="InterfacesNS\Operational\" />
+    <Folder Include="ModelsNS\DocumentsNS\Abstract\" />
+    <Folder Include="ModelsNS\DocumentsNS\PaymentsNS\Abstract\" />
+    <Folder Include="ModelsNS\MenuNS\" />
+    <Folder Include="ModelsNS\PeopleNS\EnumsNS\" />
+    <Folder Include="ModelsNS\PlacesNS\Salepoint\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\ConstantsLibrary\ConstantsLibrary.csproj">
+      <Project>{88109ea7-d29b-4833-8fd0-8b1ea0605260}</Project>
+      <Name>ConstantsLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\EncryptionLibrary\EncryptionLibrary.csproj">
+      <Project>{a3f7975c-278b-4f29-aaba-7650f8db57b2}</Project>
+      <Name>EncryptionLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\EnumLibrary\EnumLibrary.csproj">
+      <Project>{ae825b32-fb33-4d59-8eff-516b9ec4de08}</Project>
+      <Name>EnumLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ErrorHandlerLibrary\ErrorHandlerLibrary\ErrorHandlerLibrary.csproj">
+      <Project>{55af53cc-8856-4a38-9d2c-a984e7f57c47}</Project>
+      <Name>ErrorHandlerLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ExtentionsLibrary\AliKuliLibrary.csproj">
+      <Project>{db8b5ef1-1281-4c65-ae5a-b798426ed432}</Project>
+      <Name>AliKuliLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ValidatorsEntityFrameworkLibrary\ValidatorsEntityFrameworkLibrary.csproj">
+      <Project>{e6a0ad11-5602-4222-8ebb-b6c7cb1ba51e}</Project>
+      <Name>ValidatorsEntityFrameworkLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

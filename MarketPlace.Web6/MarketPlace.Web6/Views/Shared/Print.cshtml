@@ -1,0 +1,99 @@
+﻿@model ModelsClassLibrary.ViewModels.IndexListVM
+
+
+<h2></h2>
+
+
+@{
+    ViewBag.Title = @Model.Heading.Main;
+    Layout = "~/Views/Shared/_PrintLayout.cshtml";
+    
+}
+
+<h2>
+
+    Print 
+    @if (!Model.Heading.Small.IsNullOrWhiteSpace())
+    {
+       <span>of &nbsp;@Model.Heading.Main.ToString().ToSentence().ToTitleCase() </span>
+    }
+    @if (!Model.Heading.Main.IsNullOrWhiteSpace())
+    {
+        <span>@Model.Heading.Small</span>
+    }
+
+    <span>@Model.Heading.SortOrderDescription.ToString().ToTitleSentance()</span>
+</h2>
+
+
+<p>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+</p>
+
+@*This is the heading*@
+
+
+
+<div class="row ">
+    <div class="col-lg-8">
+        <strong>
+            @Html.DisplayFor(model => model.Heading.Column)
+        </strong>
+    </div>
+
+</div>
+
+
+
+@{int count = 0;}
+
+@foreach (ModelsClassLibrary.ViewModels.IndexItemVM item in Model.DataSortedAndFiltered.ToList())
+{
+
+    string alertRow = (@Model.SelectedIdMatchesThis(item.Id) ? "alert-info " : " ");
+    string alertFont = (@Model.SelectedIdMatchesThis(item.Id) ? " text-danger " : " ");
+
+    if (count % 2 == 0)
+    {
+        alertRow += " background-ltgrey ";
+    }
+    <div class="row @alertRow">
+
+        @*This is the description and image*@
+        <div class="col-lg-8">
+            @{count++;}
+            @if(item.PrintLineNumber.IsNullOrWhiteSpace())
+            {
+                item.PrintLineNumber = count.ToString();
+            }
+
+            @if (@item.IsImageThere)
+            {
+                <div class="col-lg-4">
+                    <div class="container">
+                        @*<h2>Rounded Corners</h2>
+                            <p>The .img-rounded class adds rounded corners to an image (not available in IE8):</p>*@
+                        @{
+                var imagePath = "";
+                if (item.IsImageThere)
+                {
+                    imagePath = Url.Content(item.ImageAddressStr);
+                }
+                        }
+                        <img src="@imagePath" class="img-rounded" alt="Cinque Terre" width="102" height="73">
+                    </div>
+                </div>
+            }
+            <div class="col-lg-8">
+                    <span class="@alertFont">@item.PrintLineNumber. @Html.DisplayFor(x => item.Name, null, new { @title = item.FullName })</span>
+            </div>
+
+
+        </div>
+
+
+
+ 
+    </div>
+
+}

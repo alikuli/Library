@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A56131BF-7B0D-4E74-891B-59C7770006D2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FtpLibrary</RootNamespace>
+    <AssemblyName>FtpLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ftp.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Bearer6\DbContextLibrary\DbContextLibrary.csproj">
+      <Project>{8ea20707-2031-4641-ba74-69a416f006a0}</Project>
+      <Name>DbContextLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Bearer6\ErrorHandlerLibrary\ErrorHandlerLibrary.csproj">
+      <Project>{cd602446-df26-4f15-a85d-0aa0a534efc0}</Project>
+      <Name>ErrorHandlerLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Bearer6\ModelsClassLibrary\ModelsClassLibrary\ModelsClassLibrary.csproj">
+      <Project>{d136798c-8556-4423-9c6c-e3384e99cd26}</Project>
+      <Name>ModelsClassLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Bearer6\ServiesLibrary\ServicesLibrary.csproj">
+      <Project>{d8174aea-e117-4dc0-b81a-21af31250c41}</Project>
+      <Name>ServicesLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EnumLibrary\EnumLibrary.csproj">
+      <Project>{ae825b32-fb33-4d59-8eff-516b9ec4de08}</Project>
+      <Name>EnumLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExtentionsLibrary\ExtentionsLibrary.csproj">
+      <Project>{db8b5ef1-1281-4c65-ae5a-b798426ed432}</Project>
+      <Name>ExtentionsLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

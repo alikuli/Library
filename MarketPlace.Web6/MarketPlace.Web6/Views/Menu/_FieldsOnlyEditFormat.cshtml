@@ -1,0 +1,10 @@
+﻿@model ModelsClassLibrary.ModelsNS.ProductNS.ProductCategoryMain
+
+@Html.HiddenFor(x => x.ProductCat1Id)
+@Html.HiddenFor(x => x.ProductCat2Id)
+@Html.HiddenFor(x => x.ProductCat3Id)
+
+    <div class="form-horizontal">
+        @Html.Partial(@"_Name_And_DetailInfo")
+     </div>
+

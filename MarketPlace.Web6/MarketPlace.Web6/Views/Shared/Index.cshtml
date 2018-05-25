@@ -1,0 +1,286 @@
+﻿@model ModelsClassLibrary.ViewModels.IndexListVM
+@Html.HiddenFor(x => x.Menu.MenuLevelEnum)
+
+@{
+    ViewBag.Title = @Model.Heading.Main;
+}
+
+
+
+
+
+
+    <p>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </p>
+
+    @*This is the heading*@
+
+
+
+
+
+<div class="row">
+    <div class="col-xs-6 col-lg-6">
+        @Html.Partial(@"ViewControls/index/_breadCrumbs")
+    </div>
+
+    <div class="col-xs-6 col-lg-6">
+        <h4 class="pull-right">
+            @Model.NoOfRecords
+
+        </h4>
+
+
+    </div>
+
+</div>
+
+@*Heading
+    <h3>
+        @if (!Model.Heading.Main.IsNullOrWhiteSpace())
+        {
+            @Model.Heading.Main.ToString().ToSentence().ToTitleCase()
+
+        }
+
+        <span>
+
+            @if (!Model.Heading.Small.IsNullOrWhiteSpace())
+            {
+                <small> - @Model.Heading.Small</small>
+                <small>@Model.Heading.SortOrderDescription.ToString().ToTitleSentance()</small>
+            }
+        </span>
+    </h3>
+    Heading End*@
+
+<div >
+    <div class="panel-group ">
+        <div class="panel panel-info">
+            <div class="panel-heading ">
+                <div class="panel-title">
+
+                    <div class="row">
+                        <div class="col-xs-12 col-lg-5 ">
+                            <a data-toggle="collapse" href="#collapse1">
+                                <strong>
+                                    <small>@Model.Heading.SortOrderDescription.ToString().ToTitleSentance()</small>
+                                    @*@Html.DisplayFor(model => model.Heading.Column)
+                    <span>
+
+                        @if (!Model.Heading.Small.IsNullOrWhiteSpace())
+                        {
+                            <small> - @Model.Heading.Small</small>
+                            <small>@Model.Heading.SortOrderDescription.ToString().ToTitleSentance()</small>
+                        }
+                    </span>*@
+
+                                </strong>
+                            </a>
+
+                        </div>
+                        <div class="col-xs-12 col-lg-4 ">
+                            <div>
+                                @using (Html.BeginForm())
+                                {
+                                    <span>
+                                        @Html.TextBox("searchFor", @Model.SearchFor as string, new { @placeholder = "Search/Find", size=12 })
+                                        <button type="submit" class="btn btn-info btn-sm">
+                                            <span class="glyphicon glyphicon-search"></span> 
+                                        </button>
+
+                                        @*<input type="submit" value="Find" class="btn-info" />*@
+                                    </span>
+                                    <br />
+                                }
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-xs-6 col-lg-2">
+                            <div>
+                                @if (Model.Show.Create)
+                                {
+                                    //Session["cahttps://www.facebook.com/messages/t/560129803t1id"] = Model.Menu.ProductCategory1_Id as string;
+                                    //Session["cat2id"] = Model.Menu.ProductCategory2_Id as string;
+                                    //Session["cat3id"] = Model.Menu.ProductCategory3_Id as string;
+
+                                    <div>
+                                        @*                                            @{string name = "CREATE - " + @Model.Heading.Main.ToString().ToSentence().ToTitleCase();}*@
+                                        @{string name = "CREATE";}
+                                        @Html.ActionLink(@name, "Create", new { menuLevelEnum = Model.Menu.MenuLevelEnum, productCat1Id = Model.Menu.ProductCategory1_Id, productCat2Id = Model.Menu.ProductCategory2_Id, productCat3Id = Model.Menu.ProductCategory2_Id }, new { @class = "text-danger btn btn-success btn-sm" })
+                                    </div>
+                                }
+
+
+
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-xs-6 col-lg-1 ">
+                            <div >
+                                @{
+                                    //Need this for the breadcrumbs
+                                    MenuLevelENUM previousMenuLevel = Model.Menu.GetPreviousMenuLevel();
+                                }
+                                @Html.ActionLink("Print", "Index", new { sortBy = @Model.SortOrderEnum, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, print = true, menuLevelEnum = previousMenuLevel }, new { @class = "btn btn-danger btn-sm", target = "_blank" })
+
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="row ">
+                        <div class="container">
+
+
+
+
+                            <div class="col-sm-2 ">
+                                @Html.ActionLink(Model.SortOrder1_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item1_Asc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = previousMenuLevel }, new { @class = "btn btn-primary" }) <br />
+                                @Html.ActionLink(Model.SortOrder1_Description_Dsc, "Index", new { sortBy = SortOrderENUM.Item1_Dsc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = previousMenuLevel }, new { @class = "btn btn-danger" })
+                            </div>
+
+                            <div class="col-sm-2 ">
+                                @if (!Model.NameInput2.IsNullOrWhiteSpace())
+                                {
+                                <span>
+                                    @Html.ActionLink(Model.SortOrder2_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item2_Asc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = previousMenuLevel }, new { @class = "btn btn-primary" }) <br />
+                                    @Html.ActionLink(Model.SortOrder2_Description_Dsc, "Index", new { sortBy = SortOrderENUM.Item2_Dsc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = previousMenuLevel }, new { @class = "btn btn-danger" })
+                                </span>
+                                }
+                            </div>
+
+                            <div class="col-sm-2 ">
+                                @if (!Model.NameInput3.IsNullOrWhiteSpace())
+                                {
+                                <span>
+                                    @Html.ActionLink(Model.SortOrder3_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item3_Asc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = previousMenuLevel }, new { @class = "btn btn-primary" }) <br />
+                                    @Html.ActionLink(Model.SortOrder3_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item3_Dsc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = previousMenuLevel }, new { @class = "btn btn-danger" })
+                                </span>
+                                }
+                            </div>
+
+                            <div class="col-sm-2  text-right">
+
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-sm-8">
+                                </div>
+
+                                <div class="col-sm-4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="row">
+
+        <div class="container">
+            @*<div class="panel-body">*@
+            @if (!Model.SortedData().IsNullOrEmpty())
+            {
+
+                <div id="indexmiddlepart">
+
+                    @if (Model.IsImageTiled)
+                    {
+                        @Html.Partial(@"ViewControls/index/_IndexMiddlePart - TiledPictures")
+                    }
+                    else
+                    {
+                        @Html.Partial(@"ViewControls/index/_IndexMiddlePart")
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <h3>- No Data -</h3>
+                </div>
+            }
+            @* </div>*@
+        </div>
+    </div>
+
+
+    @section styles{
+
+        <style>
+            /* CSS used here will be applied after bootstrap.css */
+
+            body {
+                padding-top: 50px;
+            }
+
+            .thumbnail {
+                position: relative;
+                overflow: hidden;
+            }
+
+            .caption {
+                position: absolute;
+                top: 0;
+                right: 0;
+                background: rgba(90, 90, 90, 0.75);
+                width: 100%;
+                height: 100%;
+                padding: 2%;
+                display: none;
+                text-align: left;
+                font-size: 7pt;
+                color: #fff !important;
+                z-index: 2;
+            }
+        </style>
+
+    }
+
+
+    @section scripts{
+
+        <script>
+            $("[rel='tooltip']").tooltip();
+
+            $('.thumbnail').hover(
+                function () {
+                    $(this).find('.caption').slideDown(250); //.fadeIn(250)
+                },
+                function () {
+                    $(this).find('.caption').slideUp(250); //.fadeOut(205)
+                }
+            );
+
+
+            @*$("#printButton").click(function () {
+            window.open("@Url.Action("Print", new { sortBy = SortOrderENUM.Item1_Asc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string })", "_blank",
+                "menubar=no, toolbar=no, resizable=no, top=100, left=200, width=500, height=500");
+        });*@
+
+        </script>
+    }

@@ -1,0 +1,28 @@
+﻿@*https://getbootstrap.com/docs/4.0/components/breadcrumb/*@
+
+@model ModelsClassLibrary.ModelsNS.SharedNS.CommonWithId
+
+<p>
+
+    @{
+
+        var controllerNameMenuGeneral = this.ViewContext.RouteData.Values["controller"].ToString();
+        string linkTextHome = "Admin Home";
+        string linkTextLevel1 = "List of " + Model.ClassNamePlural;
+        string linkTextLevel2 = "Edit a " + Model.ClassName + " (" + Model.Name + ")";
+        //string linkTextLevel3 = Model.Menu.Cat2Name;
+        //string linkTextProductLevel = Model.Menu.Cat3Name;
+        //string actionName = "index";
+        
+
+    }
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">@Html.ActionLink(@linkTextHome, "Index", "Home", null, null)</li>
+            <li class="breadcrumb-item">@Html.ActionLink(linkTextLevel1, "Index",controllerNameMenuGeneral, new {  selectedId = Model.Id},null) </li>
+            <li class="breadcrumb-item active" aria-current="page">@linkTextLevel2</li>
+        </ol>
+    </nav>
+
+</p>

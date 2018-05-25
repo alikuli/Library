@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ModelsClassLibrary.ModelsNS.AddressNS.AddressComplex">
+    <Position X="8.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModelsNS\AddressNS\Address\AddressComplex.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.AddressNS.AddressStringWithNames">
+    <Position X="8.5" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAIAAAAoAEAAACAAAAAAECAABAAAAAAIEAAAA=</HashCode>
+      <FileName>ModelsNS\AddressNS\Address\AddressStringWithNames.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="InterfacesLibrary.AddressNS.IAddressStringPartial">
+    <Position X="3.5" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAACAAAAAAIAEACAAAABAAAgAAAAAAIIAAAAA=</HashCode>
+      <FileName>InterfacesNS\AddressNS\IAddressStringPartial.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InterfacesLibrary.AddressNS.IAddressString">
+    <Position X="3.5" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAIAAAAgAAAAAAAAAAAAAAAAAAAAAAAIEAAAA=</HashCode>
+      <FileName>InterfacesNS\AddressNS\IAddressString.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InterfacesLibrary.AddressNS.IAddressWithId">
+    <Position X="6" Y="4.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAgAAAAAAAAAAAAgAAAAAAAACAAAAAIRAAAA=</HashCode>
+      <FileName>InterfacesNS\AddressNS\IAddressWithId.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Address" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="ModelsClassLibrary.ModelsNS.AddressNS.IAddressComplexWithTown">
+    <Position X="5.75" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>InterfacesNS\AddressNS\IAddressWithIdComplex.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ModelsClassLibrary.InterfacesNS.AddressNS.IAddressStringWithTown">
+    <Position X="3.25" Y="6.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>InterfacesNS\AddressNS\IAddressStringWithTown.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

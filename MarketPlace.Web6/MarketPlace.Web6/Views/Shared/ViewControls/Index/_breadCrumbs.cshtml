@@ -1,0 +1,17 @@
+﻿@*https://getbootstrap.com/docs/4.0/components/breadcrumb/*@
+
+@model ModelsClassLibrary.ViewModels.IndexListVM
+
+
+
+    @if(Model.Menu.IsMenu)
+    { 
+        @Html.Partial(@"ViewControls/Index/_breadCrumbs - Menu")
+    }
+    else
+    {
+        //These are the bread crumbs outside the menu
+        @Html.Partial(@"ViewControls/Index/_breadCrumbs - General")
+    
+    }
+

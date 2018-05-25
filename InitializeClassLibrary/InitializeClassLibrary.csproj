@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2BF8E88F-CB4E-4EE9-B8AA-72F599CC00AF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>InitializeClassLibrary</RootNamespace>
+    <AssemblyName>InitializeClassLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Initialize\Discounts\InitializeDiscountPrecedenceList.cs" />
+    <Compile Include="Initialize\Documents\InitializeFileCategories.cs" />
+    <Compile Include="Initialize\Documents\InitializeFiles.cs" />
+    <Compile Include="Initialize\Documents\InitializePayment.cs" />
+    <Compile Include="Initialize\Documents\InitializePaymentMethods.cs" />
+    <Compile Include="Initialize\Documents\InitializePaymentTerms.cs" />
+    <Compile Include="Initialize\Documents\InitializeSalesOrders.cs" />
+    <Compile Include="Initialize\Documents\InitializeSalesOrderTrx.cs" />
+    <Compile Include="Initialize\Documents\InitializeShippingMethods.cs" />
+    <Compile Include="Initialize\GeneralLedger\InitializeGlAccount.cs" />
+    <Compile Include="Initialize\Logs\InitializeVisitorLog.cs" />
+    <Compile Include="Initialize\Media\InitializeMedia.cs" />
+    <Compile Include="Initialize\Media\InitializeMovies.cs" />
+    <Compile Include="Initialize\Misc\InitializeSetup.cs" />
+    <Compile Include="Initialize\PeopleNS\InitializeCustomer.cs" />
+    <Compile Include="Initialize\PeopleNS\InitializeCustomerCategory.cs" />
+    <Compile Include="Initialize\PeopleNS\InitializeOwner.cs" />
+    <Compile Include="Initialize\PeopleNS\InitializePersonAddress.cs" />
+    <Compile Include="Initialize\PeopleNS\InitializePersonComment.cs" />
+    <Compile Include="Initialize\PeopleNS\InitializeSalesmanCategory.cs" />
+    <Compile Include="Initialize\PeopleNS\InitializeSalesmen.cs" />
+    <Compile Include="Initialize\PeopleNS\InitializeUsers.cs" />
+    <Compile Include="Initialize\PeopleNS\InitializeWorker.cs" />
+    <Compile Include="Initialize\Places\InitializeCountries.cs" />
+    <Compile Include="Initialize\InitializeAbstract.cs" />
+    <Compile Include="Initialize\Places\InitializeLanguages.cs" />
+    <Compile Include="Initialize\Products\InitializeCat1.cs" />
+    <Compile Include="Initialize\Products\InitializeCat2.cs" />
+    <Compile Include="Initialize\Products\InitializeCat3.cs" />
+    <Compile Include="Initialize\Products\InitializeLengthUom.cs" />
+    <Compile Include="Initialize\Products\InitializeMainCat.cs" />
+    <Compile Include="Initialize\Products\InitializeProductIdentifierType.cs" />
+    <Compile Include="Initialize\Products\InitializeProducts.cs" />
+    <Compile Include="Initialize\Products\InitializeQtyUom.cs" />
+    <Compile Include="Initialize\Products\InitializeScratchCard.cs" />
+    <Compile Include="Initialize\Products\InitializeScratchCardTrx.cs" />
+    <Compile Include="Initialize\Products\InitializeVolumeUom.cs" />
+    <Compile Include="Initialize\Products\InitializeWeightUom.cs" />
+    <Compile Include="Initialize\ProgramDataInitialization.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\EnumLibrary\EnumLibrary.csproj">
+      <Project>{ae825b32-fb33-4d59-8eff-516b9ec4de08}</Project>
+      <Name>EnumLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\ExtentionsLibrary\ExtentionsLibrary.csproj">
+      <Project>{db8b5ef1-1281-4c65-ae5a-b798426ed432}</Project>
+      <Name>ExtentionsLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\WebLibrary\WebLibrary.csproj">
+      <Project>{74ab826c-5db4-4291-9778-c6307deff24b}</Project>
+      <Name>WebLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DalLibrary\DalLibrary.csproj">
+      <Project>{5a6ad963-12ce-4b09-a331-28b1f8a8c192}</Project>
+      <Name>DalLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DbContextLibrary\DbContextLibrary.csproj">
+      <Project>{8ea20707-2031-4641-ba74-69a416f006a0}</Project>
+      <Name>DbContextLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ErrorHandlerLibrary\ErrorHandlerLibrary.csproj">
+      <Project>{cd602446-df26-4f15-a85d-0aa0a534efc0}</Project>
+      <Name>ErrorHandlerLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModelsClassLibrary\ModelsClassLibrary\ModelsClassLibrary.csproj">
+      <Project>{d136798c-8556-4423-9c6c-e3384e99cd26}</Project>
+      <Name>ModelsClassLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiesLibrary\ServicesLibrary.csproj">
+      <Project>{d8174aea-e117-4dc0-b81a-21af31250c41}</Project>
+      <Name>ServicesLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnitOfWorkLibrary\UnitOfWorkLibrary.csproj">
+      <Project>{f8231b16-321d-474c-9777-40613851208f}</Project>
+      <Name>UnitOfWorkLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

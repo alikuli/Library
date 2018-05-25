@@ -1,0 +1,96 @@
+﻿@*https://www.bootply.com/jf5wQlQVGI*@
+@*https://stackoverflow.com/questions/24276367/how-to-make-an-entire-bootstrap-thumbnail-clickable-for-mobile-and-tablet*@
+
+@*https://stackoverflow.com/questions/24590222/bootstrap-3-grid-with-different-height-in-each-item-is-it-solvable-using-only*@
+<style>
+    .akaFix
+    {
+        display:flex;
+        flex-wrap:wrap;
+        width:100%;
+    }
+</style>
+
+@model ModelsClassLibrary.ViewModels.IndexListVM
+
+    @{int count = 0;}
+<div class="panel panel-default ">
+
+
+
+    <div class="akaFix panel-body ">
+        @foreach (ModelsClassLibrary.ViewModels.IndexItemVM item in Model.DataSortedAndFiltered)
+        {
+
+            string alert = (@Model.SelectedIdMatchesThis(item.Id) ? "alert-info " : " ");
+            string alertFont = (@Model.SelectedIdMatchesThis(item.Id) ? " text-danger " : " ");
+            if (count % 2 == 0)
+            {
+                alert += " background-ltgrey ";
+            }
+
+            var imagePath = "";
+            var editPath = "";
+            var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+            if (item.IsImageThere)
+            {
+                imagePath = Url.Content(item.ImageAddressStr);
+            }
+            //this has to be updated for the menu
+            if (Model.Menu.IsMenu)
+            {
+                editPath = Url.Action("index", controllerName, new { id = item.Id, productCat1Id = Model.Menu.ProductCategory1_Id, productCat2Id = Model.Menu.ProductCategory2_Id, productCat3Id = Model.Menu.ProductCategory3_Id, menuLevelEnum = Model.Menu.MenuLevelEnum });
+
+            }
+            else
+            {
+                editPath = Url.Action("Edit", controllerName, new { id = item.Id });
+            }
+            <!-- TH1 -->
+
+
+    @*<div class="col-sm-1 col-sm-offset-1 col-md-1 col-md-offset-1 col-lg-1 col-lg-offset-1  img-thumbnail background-ltgrey " style="margin-bottom:10px">
+        <a href="@editPath" title="@item.FullName">
+            <div class="caption">
+                <h4>@item.ShortName</h4>
+                <p class="">
+                    @item.Description
+                </p>
+            </div>
+            <p class="">
+                <img src="@imagePath" alt="@item.ShortName" class="img-responsive  img-rounded ">
+            </p>
+        </a>
+        <div class="row">
+            <div class="text-center">@item.FullName</div>
+        </div>
+
+    </div>*@
+
+    <div class="gallery col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-sm-3 col-sm-offset-1 col-xs-6  thumbnail" style="margin-bottom:10px">
+        <a href="@editPath" title="@item.FullName">
+            <div class="caption">
+                <h4>@item.ShortName</h4>
+                <p class="">
+                    @item.Description
+                </p>
+            </div>
+            <p class="">
+                <img src="@imagePath" alt="@item.ShortName" class="img-responsive  img-rounded ">
+            </p>
+        </a>
+        <div class="row">
+            <div class="text-center">@item.FullName</div>
+        </div>
+
+    </div>
+
+
+        }
+    </div>
+
+
+
+
+
+</div>

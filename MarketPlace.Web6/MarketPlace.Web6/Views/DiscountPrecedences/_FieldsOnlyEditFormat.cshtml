@@ -1,0 +1,55 @@
+﻿
+@model ModelsClassLibrary.ModelsNS.DiscountNS.DiscountPrecedenceVM
+
+
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Rank, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Rank, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Rank, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.DiscountRuleEnum, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.DiscountRuleEnum,
+                     (Model.RulesSelectList as IEnumerable<SelectListItem>),
+                                    "--- Select Rule---",
+                                    new { @class = "form-control" })
+                @Html.EnumDropDownListFor(model => model.DiscountRuleEnum, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DiscountRuleEnum, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DiscountRuleEnum, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.DiscountRuleEnum, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DiscountRuleEnum, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DiscountTypeEnum, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.DiscountTypeEnum, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DiscountTypeEnum, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.UserId,
+            (Model.UsersSelectList as IEnumerable<SelectListItem>),
+                                    "--- Select User for Rule---",
+                                    new { @class = "form-control" })
+            </div>
+        </div>
+
+    </div>
+
+

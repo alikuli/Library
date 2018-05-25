@@ -1,0 +1,22 @@
+﻿@model ModelsClassLibrary.ModelsNS.PlacesNS.Country
+
+<div class="form-horizontal">
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Abbreviation, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Abbreviation, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Abbreviation, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    @Html.Partial(@"_Name_And_DetailInfo")
+
+
+
+    
+
+
+</div>
+

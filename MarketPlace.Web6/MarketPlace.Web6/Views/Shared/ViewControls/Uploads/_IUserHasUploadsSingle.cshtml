@@ -1,0 +1,76 @@
+﻿@using AliKuli.Extentions;
+  @using System.Linq;
+@using System.Data.Entity;
+
+@model InterfacesLibrary.SharedNS.ICommonWithId
+
+@{    var modelHasUploadsSingle = Model as ModelsClassLibrary.ModelsNS.UploadedFileNS.IHasUploads;}
+
+
+@if (modelHasUploadsSingle != null)
+{
+
+
+
+
+    //var userUpload = Model.SelfieUploads;
+    var userUpload = ViewBag.userUpload as ICollection<ModelsClassLibrary.ModelsNS.UploadedFileNS.UploadedFile>;
+
+
+    <div class="container">
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.SelfieUploads, "@ViewBag.panelHeading", new { @class = "control-label col-md-2" })*@
+            <div class="control-label col-md-2"><strong>@ViewBag.panelHeading</strong></div>
+            <div class="col-md-10">
+                <input type="file" name="@ViewBag.httpUpload" multiple>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            <div class="row panel panel-default">
+                <div class="panel-heading text-center">
+                    <h4>List of @ViewBag.panelHeading uploads</h4>
+                </div>
+
+                <div class="panel-body">
+                    @if (userUpload!= null )
+                    {
+
+                        string returnUrl = Url.Action("Edit", new { productCatId = modelHasUploadsSingle.Id });
+
+                        foreach (ModelsClassLibrary.ModelsNS.UploadedFileNS.UploadedFile uploadedFile in userUpload.Where(x => x.MetaData.IsDeleted == false))
+                        {
+                            string imagePath = Url.Content(uploadedFile.RelativePathWithFileName());
+                            string deletePath = Url.Action("delete", "UploadedFiles", new { id = uploadedFile.Id, returnUrl = returnUrl });
+
+
+                    <div class="col-md-1 thumbnail img-responsive img-rounded">
+                        
+                            <a href="@deletePath" title="@uploadedFile.OrignalCompleteName @uploadedFile.FullName()">
+                                <img src="@imagePath" alt="Image" class="img-responsive">
+                            </a>
+                    </div>
+                        }
+                    }
+                    else
+                    {
+                    <div class="container text-center text-info">
+                        <h4>No Pictures uploaded!</h4>
+
+                    </div>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+}

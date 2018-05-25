@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DalLibrary.DalNS.Repositry&lt;TEntity&gt;">
+    <Position X="3.5" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>CgQAg4AEACAAIRGgIQQSAhEAQssAEMoACIAKAoMKAIE=</HashCode>
+      <FileName>DAL\Repositry.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="DalLibrary.Interfaces.IRepositry&lt;T&gt;">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAA4AAACAAAQGAIQAQABEAAssAAEgACAAKAoEIAIA=</HashCode>
+      <FileName>DAL\IRepositry.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

@@ -1,0 +1,184 @@
+﻿@model InterfacesLibrary.SharedNS.ICommonWithId
+
+
+@{    var modelHasUploads = Model as ModelsClassLibrary.ModelsNS.UploadedFileNS.IHasUploads;}
+
+
+@if (modelHasUploads != null)
+{
+
+    @*<div class="panel-group" id="accordion">*@
+    <div class="panel panel-default">
+
+        <div class="panel-heading">
+            @{ViewBag.panelHeading = "Misc Uploads";}
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#accordionUploadscollapse0">
+                    @ViewBag.panelHeading
+                </a>
+            </h4>
+        </div>
+        <div id="accordionUploadscollapse0" class="panel-collapse collapse">
+            <div class="panel-body">
+                @{
+    ViewBag.userUpload = modelHasUploads.MiscFiles;
+    ViewBag.httpUpload = "httpMiscUploadedFiles";
+
+    @Html.Partial(@"ViewControls/Uploads/_IUserHasUploadsSingle")
+                }
+            </div>
+        </div>
+    </div>
+
+
+    var modelIUserHasUploads = Model as ModelsClassLibrary.ModelsNS.UploadedFileNS.IUserHasUploads;
+
+
+    if (modelIUserHasUploads != null)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @{   ViewBag.panelHeading = "Selfie"; }
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#accordionUploadscollapse1">
+                        @ViewBag.panelHeading
+                    </a>
+                </h4>
+            </div>
+            <div id="accordionUploadscollapse1" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{
+                   ViewBag.userUpload = modelIUserHasUploads.SelfieUploads;
+                   ViewBag.httpUpload = "httpSelfieUploads";
+                    }
+                    @Html.Partial(@"ViewControls/Uploads/_IUserHasUploadsSingle")
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @{ViewBag.panelHeading = "ID Card Front";}
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#accordionUploadscollapse2">
+                        @ViewBag.panelHeading
+                    </a>
+                </h4>
+            </div>
+            <div id="accordionUploadscollapse2" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{
+                ViewBag.userUpload = modelIUserHasUploads.IdCardFrontUploads;
+                ViewBag.httpUpload = "httpIdCardFrontUploads";
+                    }
+                    @Html.Partial(@"ViewControls/Uploads/_IUserHasUploadsSingle")
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @{ViewBag.panelHeading = "Id Card Back";}
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#accordionUploadscollapse3">
+                        @ViewBag.panelHeading
+                    </a>
+                </h4>
+            </div>
+            <div id="accordionUploadscollapse3" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{
+                ViewBag.userUpload = modelIUserHasUploads.IdCardBackUploads;
+                ViewBag.httpUpload = "httpIdCardBackUploads";
+                    }
+                    @Html.Partial(@"ViewControls/Uploads/_IUserHasUploadsSingle")
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            @{ViewBag.panelHeading = "Passport Front";}
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#accordionUploadscollapse4">
+                        @ViewBag.panelHeading
+                    </a>
+                </h4>
+            </div>
+            <div id="accordionUploadscollapse4" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{
+            ViewBag.userUpload = modelIUserHasUploads.PassportFrontUploads;
+            ViewBag.httpUpload = "httpPassportFrontUploads";
+                    }
+                    @Html.Partial(@"ViewControls/Uploads/_IUserHasUploadsSingle")
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @{ViewBag.panelHeading = "Passport Back";}
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#accordionUploadscollapse5">
+                        @ViewBag.panelHeading
+                    </a>
+                </h4>
+            </div>
+            <div id="accordionUploadscollapse5" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{
+                ViewBag.userUpload = modelIUserHasUploads.PassportVisaUploads;
+                ViewBag.httpUpload = "httpPassportVisaUploads";
+                    }
+                    @Html.Partial(@"ViewControls/Uploads/_IUserHasUploadsSingle")
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            @{ViewBag.panelHeading = "Liscense Front";}
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#accordionUploadscollapse6">
+                        @ViewBag.panelHeading
+                    </a>
+                </h4>
+            </div>
+            <div id="accordionUploadscollapse6" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{
+            ViewBag.userUpload = modelIUserHasUploads.LiscenseFrontUploads;
+            ViewBag.httpUpload = "httpLiscenseFrontUploads";
+                    }
+                    @Html.Partial(@"ViewControls/Uploads/_IUserHasUploadsSingle")
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            @{ViewBag.panelHeading = "Liscense Back";}
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#accordionUploadscollapse7">
+                        @ViewBag.panelHeading
+                    </a>
+                </h4>
+            </div>
+            <div id="accordionUploadscollapse7" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{
+            ViewBag.userUpload = modelIUserHasUploads.LiscenseBackUploads;
+            ViewBag.httpUpload = "httpLiscenseBackUploads";
+                    }
+
+                    @Html.Partial(@"ViewControls/Uploads/_IUserHasUploadsSingle")
+                </div>
+            </div>
+        </div>
+
+
+    }
+}

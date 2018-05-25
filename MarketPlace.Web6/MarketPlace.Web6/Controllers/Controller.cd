@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MarketPlace.Web4.Controllers.AbstractController">
+    <Position X="5.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAIAAAAAwQAEAIAAAAgAAAAMAAAIAQAAAAAAAAA=</HashCode>
+      <FileName>Controllers\Abstract\AbstractController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarketPlace.Web6.Controllers.Abstract.EntityAbstractController&lt;TEntity&gt;">
+    <Position X="0.75" Y="4.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAFGACgAAQAEAAAAAEAAEACACGAAAAEAAQ=</HashCode>
+      <FileName>Controllers\Abstract\EntityAbstractController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarketPlace.Web6.Controllers.AccountController">
+    <Position X="3.75" Y="4.75" Width="2.25" />
+    <NestedTypes>
+      <Class Name="MarketPlace.Web6.Controllers.AccountController.ChallengeResult" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Controllers\AccountController.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAhAAAAAAAAAAEAAAAAJAABEIAAAAMQAAQAAAA=</HashCode>
+      <FileName>Controllers\AccountController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarketPlace.Web6.Controllers.HomeController">
+    <Position X="6.75" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAACEAiAgAAAAAAAAAAAAAAAEAEAAABAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarketPlace.Web6.Controllers.ManageController">
+    <Position X="9.5" Y="4.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQCAAgAAAQGEBAAAAAAEAIMAAAEEEgAAAAAA=</HashCode>
+      <FileName>Controllers\ManageController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarketPlace.Web6.Controllers.DiscountPrecedencesController">
+    <Position X="1.5" Y="9.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAACIABAAAAAAAIAAAAAAAAAAAAQCAAAAAAAAA=</HashCode>
+      <FileName>Controllers\MyControllersNS\DiscountNS\DiscountPrecedencesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarketPlace.Web6.Controllers.FileDocsController">
+    <Position X="6" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\MyControllersNS\FileDocsNS\FileDocsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

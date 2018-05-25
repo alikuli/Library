@@ -1,0 +1,54 @@
+﻿@model InterfacesLibrary.SharedNS.ICommonWithId
+@Html.HiddenFor(model => model.Id)
+
+@{
+    var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+}
+
+@Html.Partial(@"ViewControls/Create/_breadCrumbs - Create")
+
+@Html.Partial(@"ViewControls/Create/_CreateHeading")
+
+@using (Html.BeginForm("Create", @controllerName, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.HiddenFor(model => model.Id)
+    
+    @Html.Partial(@"_FieldsOnlyEditFormat")
+    @Html.Partial(@"ViewControls/Uploads/_ShowUploads")
+    @Html.Partial(@"ViewControls/Create/_CreateControls")
+}
+
+
+
+<div>
+
+    @{
+        string prodcat1 = "";
+        string prodcat2 = "";
+        string prodcat3 = "";
+        
+        ModelsClassLibrary.ModelsNS.ProductNS.ProductCategoryMain pcm = Model as ModelsClassLibrary.ModelsNS.ProductNS.ProductCategoryMain;
+        if(!pcm.IsNull())
+        {
+            bool isMenu = (ViewBag.IsMenu)?? false;
+            if(isMenu)
+            { 
+                prodcat1 = pcm.ProductCat1Id;
+                prodcat2 = pcm.ProductCat2Id;
+                prodcat3 = pcm.ProductCat3Id;
+            }
+        }
+        
+    }
+    @Html.ActionLink("Back to List", "Index", new { menuLevelEnum = @ViewBag.MenuLevelEnum, productCat1Id = prodcat1, productCat2Id = prodcat2, productCat3Id = prodcat3, selectedId = Model.Id })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

@@ -1,0 +1,69 @@
+﻿@*https://getbootstrap.com/docs/4.0/components/breadcrumb/*@
+
+@model ModelsClassLibrary.ViewModels.IndexListVM
+
+
+    @{
+        string controllerName = "Home";
+        string home = Url.Action("index", @controllerName, new { id = "", productCat1Id = Model.Menu.ProductCategory1_Id, productCat2Id = Model.Menu.ProductCategory2_Id, productCat3Id = Model.Menu.ProductCategory3_Id, menuLevelEnum = Model.Menu.MenuLevelEnum });
+        controllerName = "Menu";
+        string category1 = Url.Action("index", @controllerName, new { id = "", productCat1Id = Model.Menu.ProductCategory1_Id, productCat2Id = Model.Menu.ProductCategory2_Id, productCat3Id = Model.Menu.ProductCategory3_Id, menuLevelEnum = Model.Menu.MenuLevelEnum });
+        string cat1Name = Model.Menu.Cat1Name;
+        string cat2Name = Model.Menu.Cat2Name;
+        string cat3Name = Model.Menu.Cat3Name;
+
+        string linkTextHome = "Admin Home";
+        string linkTextCat1 = "All";
+        string linkTextCat2 = Model.Menu.Cat1Name;
+        string linkTextCat3 = Model.Menu.Cat2Name;
+        string linkTextProductLevel = Model.Menu.Cat3Name;
+
+        string actionName = "index";
+
+    }
+
+    @if(Model.Menu.IsMenu)
+    { 
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            @switch (@Model.Menu.MenuLevelEnum)
+            {
+                case MenuLevelENUM.unknown:
+                    break;
+                case MenuLevelENUM.Level_1:
+                    <li class="breadcrumb-item">@Html.ActionLink(@linkTextHome, @actionName, "Home", null, null)</li>
+                    <li class="breadcrumb-item active" aria-current="page">@linkTextCat1</li>
+                    break;
+                case MenuLevelENUM.Level_2:
+                    <li class="breadcrumb-item">@Html.ActionLink(@linkTextHome, @actionName, "Home", null, null)</li>
+                    <li class="breadcrumb-item">@Html.ActionLink(linkTextCat1, "Index", new { searchFor = Model.SearchFor, selectedId = Model.SelectedId, menuLevelEnum = MenuLevelENUM.unknown, sortBy = Model.SortOrderEnum, id = "", productCat1Id = Model.Menu.ProductCategory1_Id, productCat2Id = Model.Menu.ProductCategory2_Id, productCat3Id = Model.Menu.ProductCategory3_Id }) </li>
+                    <li class="breadcrumb-item active" aria-current="page">@linkTextCat2</li>
+                    break;
+                case MenuLevelENUM.Level_3:
+
+                    <li class="breadcrumb-item">@Html.ActionLink(@linkTextHome, @actionName, "Home", null, null)</li>
+                    <li class="breadcrumb-item">@Html.ActionLink(linkTextCat1, "Index", new { searchFor = Model.SearchFor, selectedId = Model.SelectedId, menuLevelEnum = MenuLevelENUM.unknown, sortBy = Model.SortOrderEnum, id = "", productCat1Id = Model.Menu.ProductCategory1_Id, productCat2Id = Model.Menu.ProductCategory2_Id, productCat3Id = Model.Menu.ProductCategory3_Id }) </li>
+                    <li class="breadcrumb-item">@Html.ActionLink(linkTextCat2, "Index", new { searchFor = Model.SearchFor, selectedId = Model.SelectedId, menuLevelEnum = MenuLevelENUM.Level_1, sortBy = Model.SortOrderEnum, id = "", productCat1Id = Model.Menu.ProductCategory1_Id, productCat2Id = Model.Menu.ProductCategory2_Id, productCat3Id = Model.Menu.ProductCategory3_Id }) </li>
+                    <li class="breadcrumb-item active" aria-current="page">@linkTextCat3</li>
+                    break;
+                case MenuLevelENUM.Level_4:
+                    <li class="breadcrumb-item">@Html.ActionLink(@linkTextHome, @actionName, "Home", null, null)</li>
+            
+                    <li class="breadcrumb-item">@Html.ActionLink(linkTextCat1, "Index", new { searchFor = Model.SearchFor, selectedId = Model.SelectedId, menuLevelEnum = MenuLevelENUM.unknown, sortBy = Model.SortOrderEnum, id = "", productCat1Id = Model.Menu.ProductCategory1_Id, productCat2Id = Model.Menu.ProductCategory2_Id, productCat3Id = Model.Menu.ProductCategory3_Id }) </li>
+            
+                    <li class="breadcrumb-item" >@Html.ActionLink(linkTextCat2, "Index", new { searchFor = Model.SearchFor, selectedId = Model.SelectedId, menuLevelEnum = MenuLevelENUM.Level_1, sortBy = Model.SortOrderEnum, id = "", productCat1Id = Model.Menu.ProductCategory1_Id, productCat2Id = Model.Menu.ProductCategory2_Id, productCat3Id = Model.Menu.ProductCategory3_Id }) </li>
+            
+                    <li class="breadcrumb-item" >@Html.ActionLink(linkTextCat3, "Index", new { searchFor = Model.SearchFor, selectedId = Model.SelectedId, menuLevelEnum = MenuLevelENUM.Level_2, sortBy = Model.SortOrderEnum, id = "", productCat1Id = Model.Menu.ProductCategory1_Id, productCat2Id = Model.Menu.ProductCategory2_Id, productCat3Id = Model.Menu.ProductCategory3_Id }) </li>
+                    <li class="breadcrumb-item active" aria-current="page">@linkTextProductLevel</li>
+                        break;
+                default:
+                    break;
+            }
+        </ol>
+    </nav>
+    }
+    else
+    {
+        //These are the bread crumbs outside the menu
+    }
+

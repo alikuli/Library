@@ -1,0 +1,27 @@
+﻿using DatastoreNS;
+using ModelsClassLibrary.ModelsNS.ProductNS;
+
+namespace UowLibrary.ProductNS
+{
+    public partial class ProductCat3Biz : BusinessLayer<ProductCategory3>
+    {
+
+        public override bool Event_LockEditDuringInitialization()
+        {
+            return false;
+        }
+
+
+        public override string[] GetDataForStringArrayFormat
+        {
+            get
+            {
+                return ProductCat3Array.DataArray();
+            }
+        }
+
+
+
+
+    }
+}

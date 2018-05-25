@@ -1,0 +1,32 @@
+﻿@model ModelsClassLibrary.ModelsNS.DeliveryMethodNS.PaymentTerm
+
+    <div class="form-horizontal">
+
+        @Html.Partial(@"_Name_And_DetailInfo")
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NoOfDaysCredit, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NoOfDaysCredit, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NoOfDaysCredit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NoOfDaysEarlyPayment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NoOfDaysEarlyPayment, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NoOfDaysEarlyPayment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EarlyPaymentDiscount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EarlyPaymentDiscount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EarlyPaymentDiscount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
