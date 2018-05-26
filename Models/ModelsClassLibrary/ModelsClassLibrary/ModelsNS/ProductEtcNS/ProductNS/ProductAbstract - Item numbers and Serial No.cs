@@ -11,22 +11,30 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
     public abstract partial class ProductAbstract : CommonWithId
     {
 
+
+
         /// <summary>
-        /// These are all the list of Item Numbers the product can have. You must have at least one
+        /// A product can have ONE or Many ProductIdentifiers. It must have at least one.
+        /// For automobiles, this will be automatically created using the brand, year model etc.
         /// </summary>
-        //public virtual ICollection<ProductIdentifier> ItemNos { get; set; }
+        public ICollection<ProductIdentifier> ProductIdentifiers { get; set; }
+
+
+        //#region Properties
+
+        /// <summary>
+        /// This is the serial number of the product Moved to the Chile
+        /// </summary>
+        //[Display(Name = "Serial #")]
+        //public string SerialNo { get; set; }
 
 
 
-        [Display(Name = "Category")]
-        public virtual ICollection<ProductCategoryMain> ProdCategory { get; set; }
 
 
 
-        public string ParentId { get; set; }
 
-        [Display(Name = "Parent")]
-        public virtual Product Parent { get; set; }
+
 
 
     }

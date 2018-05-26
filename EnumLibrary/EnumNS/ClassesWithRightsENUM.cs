@@ -24,6 +24,7 @@ namespace EnumLibrary.EnumNS
         ProductCategory2,
         ProductCategory3,
         ProductCategoryMain,
+        ProductChild,
         Right,
         State,
         Town,

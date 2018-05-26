@@ -14,12 +14,13 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
     public abstract partial class ProductAbstract : CommonWithId
     {
 
+        //I have removed this because this is just the header product. The real products will be under this.
 
-        [Column(TypeName = "DateTime2")]
-        [Display(Name = "Expirey(UTC)")]
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
-        public DateTime? ExpiryDate { get; set; }
+        //[Column(TypeName = "DateTime2")]
+        //[Display(Name = "Expirey(UTC)")]
+        //[DataType(DataType.DateTime)]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
+        //public DateTime? ExpiryDate { get; set; }
 
 
 

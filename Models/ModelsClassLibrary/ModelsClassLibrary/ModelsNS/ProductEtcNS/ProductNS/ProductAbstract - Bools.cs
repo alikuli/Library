@@ -36,6 +36,13 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         public bool IsDisplayedOnWebsite { get; set; }
 
 
+        /// <summary>
+        /// If product is saleable, it will be able to be sold, and so be displayed on the webpage.
+        /// It is possible to be not saleable and be IsDisplayedOnWebsite - eg. advert.
+        /// </summary>
+        public bool IsSaleable { get; set; }
+
+
 
 
     }

@@ -1,4 +1,5 @@
 ﻿using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.ProductEtcNS;
 //using ModelsClassLibrary.Models.DiscountNS;
 using System.Collections.Generic;
 
@@ -8,6 +9,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
     {
         public ICollection<ProductCategoryMain> Catogories { get; set; }
 
+        public ICollection<ProductChild> ProductChildren { get; set; }
 
         public override void UpdatePropertiesDuringModify(ICommonWithId icommonWithId)
         {

@@ -82,7 +82,9 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         [Display(Name = "UOM Length")]
         public string UomPackageLengthId { get; set; }
         public UomLength UomPackageLength { get; set; }
-        public Dimensions Dims { get; set; }
+
+
+        public Dimensions Dimensions { get; set; }
 
         #endregion
 

@@ -4,8 +4,8 @@ using ModelsClassLibrary.ModelsNS.SharedNS;
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
     /// <summary>
-    /// Note. Scratch card 16 digit serial number is placed in Name AND in ProductsOwnNumber. I believe thqt ProductsOwnNumber
-    /// needs to be removed. No need for that. Name is fine because it will not duplicate intrinsically.
+    /// This will not be saved in the product because the product is being used like a header. The transactional products below will control the sell price etc.
+    /// Here we will only track the prices
     /// </summary>
     public abstract partial class ProductAbstract : CommonWithId
     {
