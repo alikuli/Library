@@ -200,6 +200,10 @@
     <Compile Include="Migrations\201805271005562_ChangedNameOfProdCat1-4.Designer.cs">
       <DependentUpon>201805271005562_ChangedNameOfProdCat1-4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805271203364_FixedProduct.cs" />
+    <Compile Include="Migrations\201805271203364_FixedProduct.Designer.cs">
+      <DependentUpon>201805271203364_FixedProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -265,6 +269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805271005562_ChangedNameOfProdCat1-4.resx">
       <DependentUpon>201805271005562_ChangedNameOfProdCat1-4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805271203364_FixedProduct.resx">
+      <DependentUpon>201805271203364_FixedProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

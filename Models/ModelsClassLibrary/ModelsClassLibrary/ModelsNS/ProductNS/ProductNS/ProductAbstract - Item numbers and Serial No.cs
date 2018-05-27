@@ -17,7 +17,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         /// A product can have ONE or Many ProductIdentifiers. It must have at least one.
         /// For automobiles, this will be automatically created using the brand, year model etc.
         /// </summary>
-        public ICollection<ProductIdentifier> ProductIdentifiers { get; set; }
+        public virtual ICollection<ProductIdentifier> ProductIdentifiers { get; set; }
 
 
         //#region Properties

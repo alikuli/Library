@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
@@ -47,6 +48,25 @@ namespace UowLibrary
         {
             createEngineSimple(entity);
             SaveChanges();
+        }
+        public virtual void CreateAndSave_ForInitializeOnly(TEntity entity)
+        {
+            try
+            {
+                Event_DoSpecialInitializationStuff(entity);
+                entity.MetaData.IsEditLocked = Event_LockEditDuringInitialization();
+                CreateAndSave(entity);
+            }
+            catch (NoDuplicateException)
+            {
+
+                ErrorsGlobal.AddMessage(string.Format("Item '{0}' is already initialized.",entity.Name));
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Error while creating entity", MethodBase.GetCurrentMethod(), e);
+
+            }
         }
         public virtual void CreateAndSave(ControllerCreateEditParameter parm)
         {

@@ -21,7 +21,8 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
             Buy = new CostsComplex();
             Sell = new SalePriceComplex();
             Dimensions = new Dimensions();
-
+            
+            UomVolume = new UomVolume();
             ProductIdentifiers = new List<ProductIdentifier>();
 
             //Date = new ProductDateComplex();

@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductBiz : BusinessLayer<Product>
+    public partial class ProductBiz 
     {
 
         public override void BusinessRulesFor(Product entity)

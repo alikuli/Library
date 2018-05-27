@@ -25,10 +25,11 @@ namespace DatastoreNS
         double shipWeight;
         double shipVol;
         string uomShipWeight;
-        string uomHeightName;
-        string uomWidthName;
+        //string uomHeightName;
+        //string uomWidthName;
         string uomLengthName;
         string uomVolumeName;
+        string uomStock;
         ProductInitializerHelper pi;
 
         public List<ProductInitializerHelper> DataArray()
@@ -59,13 +60,14 @@ namespace DatastoreNS
             shipWeight = 15093;
             shipVol = 0;
 
-            uomHeightName = "";
-            uomWidthName = "";
-            uomLengthName = "";
-            uomVolumeName = "";
+            uomVolumeName = "L";
+            uomLengthName = "Ft";
+            uomStock = "ea";
+            //uomHeightName = "Ft";
+            //uomWidthName = "Ft";
 
 
-            pi = CreateProductInitializer(name, salePrice, mrsp, mlsp, cost, cat1, cat2, cat3, lastOrderedDate, height, width, length, uomShipWeight, shipWeight, shipVol, uomHeightName, uomWidthName, uomLengthName, uomVolumeName);
+            pi = CreateProductInitializer(name, salePrice, mrsp, mlsp, cost, cat1, cat2, cat3, lastOrderedDate, height, width, length, uomShipWeight, shipWeight, shipVol, uomLengthName, uomVolumeName, uomStock);
 
             lst.Add(pi);
 
@@ -93,19 +95,18 @@ namespace DatastoreNS
             shipWeight = 15093;
             shipVol = 0;
 
-            uomHeightName = "";
-            uomWidthName = "";
-            uomLengthName = "";
-            uomVolumeName = "";
+            uomVolumeName = "L";
+            uomLengthName = "Ft";
+            uomStock = "ea";
 
-            pi = CreateProductInitializer(name, salePrice, mrsp, mlsp, cost, cat1, cat2, cat3, lastOrderedDate, height, width, length, uomShipWeight, shipWeight, shipVol, uomHeightName, uomWidthName, uomLengthName, uomVolumeName);
+            pi = CreateProductInitializer(name, salePrice, mrsp, mlsp, cost, cat1, cat2, cat3, lastOrderedDate, height, width, length, uomShipWeight, shipWeight, shipVol, uomLengthName, uomVolumeName, uomStock);
 
             lst.Add(pi);
 
 
         }
 
-        private ProductInitializerHelper CreateProductInitializer(string name, decimal salePrice, decimal mrsp, decimal mlsp, decimal cost, string cat1, string cat2, string cat3, DateTime lastOrderedDate, double height, double width, double length, string uomShipWeight, double shipWeight, double shipVol, string uomHeightName, string uomWidthName, string uomLengthName, string uomVolumeName)
+        private ProductInitializerHelper CreateProductInitializer(string name, decimal salePrice, decimal mrsp, decimal mlsp, decimal cost, string cat1, string cat2, string cat3, DateTime lastOrderedDate, double height, double width, double length, string uomShipWeight, double shipWeight, double shipVol, string uomLengthName, string uomVolumeName, string uomStock)
         {
 
             ProductInitializerHelper ph = new ProductInitializerHelper(
@@ -124,10 +125,8 @@ namespace DatastoreNS
                 uomShipWeight,
                 shipWeight,
                 shipVol,
-                uomHeightName,
-                uomWidthName,
                 uomLengthName,
-                uomVolumeName);
+                uomVolumeName,uomStock);
 
             return ph;
 

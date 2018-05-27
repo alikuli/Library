@@ -359,6 +359,7 @@
     <Content Include="Views\Shared\ViewControls\Index\_breadCrumbs - General.cshtml" />
     <Content Include="Views\Shared\ViewControls\Create\_breadCrumbs - Create.cshtml" />
     <Content Include="Views\Shared\ViewControls\Edit\_breadCrumbs - Edit.cshtml" />
+    <Content Include="Views\Products\_FieldsOnlyEditFormat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -374,7 +375,6 @@
     <Folder Include="Content\Uploads\UserPassportVisa\" />
     <Folder Include="Content\Uploads\UserSelfie\" />
     <Folder Include="Views\Print\" />
-    <Folder Include="Views\Products\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

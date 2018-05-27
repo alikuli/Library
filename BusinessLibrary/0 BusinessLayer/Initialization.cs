@@ -116,22 +116,22 @@ namespace UowLibrary
 
                 TEntity tentity = Factory();
                 tentity.Name = dataList[i];
-                Event_DoSpecialInitializationStuff(tentity);
-                tentity.MetaData.IsEditLocked = Event_LockEditDuringInitialization();
-                try
-                {
-                    CreateAndSave(tentity);
-                }
-                catch (NoDuplicateException)
-                {
+                CreateAndSave_ForInitializeOnly(tentity);
+                
+                //try
+                //{
+                //    CreateAndSave(tentity);
+                //}
+                //catch (NoDuplicateException)
+                //{
 
-                    continue;
-                }
-                catch (Exception e)
-                {
-                    ErrorsGlobal.Add("Error while creating entity", MethodBase.GetCurrentMethod(), e);
+                //    continue;
+                //}
+                //catch (Exception e)
+                //{
+                //    ErrorsGlobal.Add("Error while creating entity", MethodBase.GetCurrentMethod(), e);
 
-                }
+                //}
 
 
             }

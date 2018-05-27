@@ -5,7 +5,7 @@ namespace DatastoreNS
     public class ProductInitializerHelper
     {
 
-        public ProductInitializerHelper(string name, decimal sellPrice, decimal msrp, decimal mlpPrice, decimal cost, string cat1, string cat2, string cat3, DateTime lastOrderedDate, double height, double width, double length, string uomShipWeightName, double shipWeight, double shipVol, string uomHeightName, string uomWidthName, string uomLengthName, string uomVolumeName)
+        public ProductInitializerHelper(string name, decimal sellPrice, decimal msrp, decimal mlpPrice, decimal cost, string cat1, string cat2, string cat3, DateTime lastOrderedDate, double height, double width, double length, string uomShipWeightName, double shipWeight, double shipVol, string uomLengthName, string uomVolumeName, string uomStock)
         {
             Name = name;
             //SellPrice = sellPrice;
@@ -21,9 +21,9 @@ namespace DatastoreNS
             Length = length;
             UomShipWeightName = uomShipWeightName;
             ShipWeight = shipWeight;
-            UomHeightName = uomHeightName;
-            UomWidthName = uomWidthName;
-            UomLengthName = UomLengthName;
+            UomLengthName = uomLengthName;
+            UomVolumeName = uomVolumeName;
+            UomStock = uomStock;
         }
 
 
@@ -39,10 +39,10 @@ namespace DatastoreNS
         public string MainCategoryName { get; set; }
         public DateTime LastOrderedDate { get; set; }
 
-        public string UomHeightName { get; set; }
+        //public string UomHeightName { get; set; }
         public double Height { get; set; }
 
-        public string UomWidthName { get; set; }
+        //public string UomWidthName { get; set; }
         public double Width { get; set; }
 
 
@@ -54,6 +54,7 @@ namespace DatastoreNS
 
         public string UomVolumeName { get; set; }
         public double ShipVolume { get; set; }
+        public string UomStock { get; set; }
 
         public override string ToString()
         {

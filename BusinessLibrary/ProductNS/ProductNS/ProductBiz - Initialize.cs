@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductBiz : BusinessLayer<Product>
+    public partial class ProductBiz 
     {
         public List<ProductInitializerHelper> GetDataListForProduct
         {
@@ -25,49 +25,60 @@ namespace UowLibrary.ProductNS
 
             if (!dataList.IsNullOrEmpty())
             {
-                foreach (var h in dataList)
+                foreach (var item in dataList)
                 {
                     Product p = new Product();
-                
-                    p.Name = h.Name;
-                    p.Dimensions.Height = h.Height;
-                    p.Dimensions.Width = h.Width;
-                    p.Dimensions.Length = h.Length;
-                    p.ShipWeight = h.ShipWeight;
 
-                    p.UomShipWeight = _uomWeightBiz.FindByName(h.UomShipWeightName);
-                    if(p.UomShipWeight.IsNull())
+                    p.Name = item.Name;
+                    p.Dimensions.Height = item.Height;
+                    p.Dimensions.Width = item.Width;
+                    p.Dimensions.Length = item.Length;
+                    p.ShipWeight = item.ShipWeight;
+
+                    p.UomShipWeight = _uomWeightBiz.FindByName(item.UomShipWeightName);
+                    if (p.UomShipWeight.IsNull())
                     {
                         ErrorsGlobal.Add("UomShipWeight is null", MethodBase.GetCurrentMethod());
                     }
 
-                    p.UomVolume = _uomVolumeBiz.FindByName(h.UomVolumeName);
+                    p.UomVolume = _uomVolumeBiz.FindByName(item.UomVolumeName);
                     if (p.UomVolume.IsNull())
                     {
                         ErrorsGlobal.Add("UomVolume is null", MethodBase.GetCurrentMethod());
                     }
 
-                    p.UomDimensions = _uomLengthBiz.FindByName(h.UomLengthName);
+                    p.UomDimensions = _uomLengthBiz.FindByName(item.UomLengthName);
                     if (p.UomDimensions.IsNull())
                     {
                         ErrorsGlobal.Add("UomPackageLength is null", MethodBase.GetCurrentMethod());
+                    }
+
+                    p.UomStock = _uomQuantityBiz.FindByName(item.UomStock);
+                    if (p.UomStock.IsNull())
+                    {
+                        ErrorsGlobal.Add("UomStock is null", MethodBase.GetCurrentMethod());
                     }
 
                     if (ErrorsGlobal.HasErrors)
                     {
                         throw new Exception(ErrorsGlobal.ToString());
                     }
-
+                    p.UomShipWeightId = p.UomShipWeight.Id;
                     p.UomDimensionsId = p.UomDimensions.Id;
                     p.UomVolumeId = p.UomVolume.Id;
                     p.UomDimensionsId = p.UomDimensions.Id;
+                    p.UomStockID = p.UomStock.Id;
 
-                    Create(p);
+                    CreateAndSave_ForInitializeOnly(p);
                 }
 
 
             }
-            SaveChanges();
+        }
+
+        public override bool Event_LockEditDuringInitialization()
+        {
+            return false;
         }
 
     }

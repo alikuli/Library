@@ -1,5 +1,6 @@
 ﻿using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
@@ -14,7 +15,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         public string UomPurchaseId { get; set; }
 
         [Display(Name = "Purchase UOM")]
-        public UomQty UomPurchase { get; set; }
+        public virtual  UomQty UomPurchase { get; set; }
 
         #endregion
 
@@ -30,13 +31,14 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         public string UomStockID { get; set; }
 
 
-        public UomQty UomStock { get; set; }
+        public virtual UomQty UomStock { get; set; }
 
 
         ///// <summary>
         ///// This is the UOM we stock in. Note, we dont need the sale UOM because we can convert this to any type. Note, the quantity stored here will be calculated 
         ///// on the fly and stored
         ///// </summary>
+        [NotMapped]
         [Display(Name = "Stock")]
         public Quantity Qty { get; set; }
 
@@ -46,7 +48,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         #region Listed Weight UOM, WeightOnProduct
         [Display(Name = "Listed Weight UOM")]
         public string UomWeightId { get; set; }
-        public UomWeight UomUomWeight { get; set; }
+        public virtual UomWeight UomUomWeight { get; set; }
 
         [Display(Name = "Listed Weight")]
         public double Weight { get; set; }
@@ -58,7 +60,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         [Display(Name = "Listed Volume UOM")]
         public string UomVolumeId { get; set; }
-        public UomVolume UomVolume { get; set; }
+        public virtual UomVolume UomVolume { get; set; }
 
         public double Volume { get; set; }
 
@@ -69,7 +71,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         [Display(Name = "Ship Wt. UOM")]
         public string UomShipWeightId { get; set; }
-        public UomWeight UomShipWeight { get; set; }
+        public virtual UomWeight UomShipWeight { get; set; }
 
         [Display(Name = "Ship Wt.")]
         public double ShipWeight { get; set; }
@@ -81,10 +83,10 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         [Display(Name = "UOM Dimensions")]
         public string UomDimensionsId { get; set; }
-        public UomLength UomDimensions { get; set; }
+        public virtual UomLength UomDimensions { get; set; }
 
 
-        public Dimensions Dimensions { get; set; }
+        public virtual Dimensions Dimensions { get; set; }
 
         #endregion
 

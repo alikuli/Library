@@ -22,7 +22,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         /// This decides the menus
         /// </summary>
         [Display(Name = "Category")]
-        public virtual ICollection<MenuPathMain> ProductCategories { get; set; }
+        public virtual ICollection<MenuPathMain> MenuPathMain { get; set; }
 
 
 
