@@ -4,6 +4,7 @@ using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.ViewModels;
 using System.Linq;
+
 namespace UowLibrary.ProductNS
 {
     public partial class ProductCat3Biz : BusinessLayer<ProductCategory3>
