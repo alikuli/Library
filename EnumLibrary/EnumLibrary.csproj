@@ -91,14 +91,14 @@
   <ItemGroup>
     <Compile Include="AKATest.cs" />
     <Compile Include="EnumNS\AddressTypeENUM.cs" />
-    <Compile Include="EnumNS\Product Related\ProductCategory2ENUM.cs" />
+    <Compile Include="EnumNS\MenuPathNS\MenuPath2ENUM.cs" />
     <Compile Include="EnumNS\ClassesWithRightsENUM.cs" />
     <Compile Include="EnumNS\CommonSortingENUM.cs" />
     <Compile Include="EnumNS\DocumentTypeENUM.cs" />
     <Compile Include="EnumNS\FileUploadTypeEnum.cs" />
     <Compile Include="EnumNS\MenuLevelENUM.cs" />
     <Compile Include="EnumNS\PaymentTermsENUM.cs" />
-    <Compile Include="EnumNS\Product Related\ProductCategory3ENUM.cs" />
+    <Compile Include="EnumNS\MenuPathNS\MenuPath3ENUM.cs" />
     <Compile Include="EnumNS\Serviceman\BoardingENUM.cs" />
     <Compile Include="EnumNS\AccountManagerEnums\ManageMessageId.cs" />
     <Compile Include="EnumNS\CustomerCategoryENUM.cs" />
@@ -120,7 +120,7 @@
     <Compile Include="EnumNS\Owner\OwnerCategoryENUM.cs" />
     <Compile Include="EnumNS\Payments Related\PaymentTypeEnum.cs" />
     <Compile Include="EnumNS\Misc\PostOrGetENUM.cs" />
-    <Compile Include="EnumNS\Product Related\ProductCategory1ENUM.cs" />
+    <Compile Include="EnumNS\MenuPathNS\MenuPath1ENUM.cs" />
     <Compile Include="EnumNS\ScratchCard\ScratchCardBatchENUM.cs" />
     <Compile Include="EnumNS\ScratchCard\ScratchCardStatesENUM.cs" />
     <Compile Include="EnumNS\User Related\SortUserByENUM.cs" />

@@ -23,7 +23,7 @@ namespace UowLibrary.ProductNS
         {
             get
             {
-                return ProductCat1Array.DataArray();
+                return MenuPath1Array.DataArray();
             }
         }
 

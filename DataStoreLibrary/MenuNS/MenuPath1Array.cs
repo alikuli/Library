@@ -7,22 +7,22 @@ namespace DatastoreNS
     /// <summary>
     /// This is a starting database of ProductCat1s that the worker can speak or understand.
     /// </summary>
-    public class ProductCat1Array
+    public class MenuPath1Array
     {
         public static string[] DataArray()
         {
-            var productCat1Array = Enum.GetNames(typeof(ProductCategory1ENUM));
+            var menupath1Array = Enum.GetNames(typeof(MenuPath1ENUM));
 
-            if (productCat1Array.IsNullOrEmpty())
+            if (menupath1Array.IsNullOrEmpty())
                 return null;
 
 
-            for (int i = 0; i < productCat1Array.Length; i++)
+            for (int i = 0; i < menupath1Array.Length; i++)
             {
-                productCat1Array[i] = productCat1Array[i].ToTitleSentance();
+                menupath1Array[i] = menupath1Array[i].ToTitleSentance();
             }
 
-            return productCat1Array;
+            return menupath1Array;
 
         }
     }

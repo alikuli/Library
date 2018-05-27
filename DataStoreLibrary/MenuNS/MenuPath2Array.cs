@@ -6,12 +6,12 @@ namespace DatastoreNS
     /// <summary>
     /// This is a starting database of ProductCat1s that the worker can speak or understand.
     /// </summary>
-    public class ProductCat2Array
+    public class MenuPath2Array
     {
 
         public static string[] DataArray()
         {
-            //string[] productCat2Array = 
+            //string[] menupath2Array = 
             //{
 
             //    "Car",
@@ -39,18 +39,18 @@ namespace DatastoreNS
                 //"Mechanics Machines",
             //};
 
-            var productCat2Array = Enum.GetNames(typeof(EnumLibrary.EnumNS.ProductCategory2ENUM));
+            var menupath2Array = Enum.GetNames(typeof(EnumLibrary.EnumNS.MenuPath2ENUM));
             
-            if (productCat2Array.IsNullOrEmpty())
+            if (menupath2Array.IsNullOrEmpty())
                 return null;
 
 
-            for (int i = 0; i < productCat2Array.Length; i++)
+            for (int i = 0; i < menupath2Array.Length; i++)
             {
-                productCat2Array[i] = productCat2Array[i].ToTitleSentance();
+                menupath2Array[i] = menupath2Array[i].ToTitleSentance();
             }
 
-            return productCat2Array;
+            return menupath2Array;
 
         }
     }

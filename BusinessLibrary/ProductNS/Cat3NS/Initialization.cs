@@ -17,7 +17,7 @@ namespace UowLibrary.ProductNS
         {
             get
             {
-                return ProductCat3Array.DataArray();
+                return MenuPath3Array.DataArray();
             }
         }
 

@@ -4,7 +4,7 @@ namespace EnumLibrary.EnumNS
     /// <summary>
     /// This category will come from the product
     /// </summary>
-    public enum ProductCategory1ENUM
+    public enum MenuPath1ENUM
     {
         Unknown,
         Automobiles,

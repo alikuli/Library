@@ -7,11 +7,11 @@ namespace DatastoreNS
     /// <summary>
     /// This is a starting database of ProductCat1s that the worker can speak or understand.
     /// </summary>
-    public class ProductCat3Array
+    public class MenuPath3Array
     {
         public static string[] DataArray()
         {
-            //string[] productCat3Array = 
+            //string[] menupath3Array = 
             //{
             //    "Toyota",
             //    "Mercedeze",
@@ -88,17 +88,17 @@ namespace DatastoreNS
 
             //};
 
-            var productCat3Array = Enum.GetNames(typeof(ProductCategory3ENUM));
-            if (productCat3Array.IsNullOrEmpty())
+            var menupath3Array = Enum.GetNames(typeof(MenuPath3ENUM));
+            if (menupath3Array.IsNullOrEmpty())
                 return null;
 
 
-            for (int i = 0; i < productCat3Array.Length; i++)
+            for (int i = 0; i < menupath3Array.Length; i++)
             {
-                productCat3Array[i] = productCat3Array[i].ToTitleSentance();
+                menupath3Array[i] = menupath3Array[i].ToTitleSentance();
             }
 
-            return productCat3Array;
+            return menupath3Array;
 
         }
     }

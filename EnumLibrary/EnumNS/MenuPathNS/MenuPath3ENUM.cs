@@ -4,7 +4,7 @@ namespace EnumLibrary.EnumNS.Product_Related
     /// <summary>
     /// This category will come from the seller.
     /// </summary>
-    public enum ProductCategory3ENUM
+    public enum MenuPath3ENUM
     {
         Unknown,
 

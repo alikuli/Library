@@ -6,7 +6,7 @@ namespace EnumLibrary.EnumNS
     /// This could be the product Generic Name
     /// A product can have multiple categories Er. Automobiles-Car, and Automobiles-Toyota
     /// </summary>
-    public enum ProductCategory2ENUM
+    public enum MenuPath2ENUM
     {
         Car,
         Coaster,
