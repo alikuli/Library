@@ -19,11 +19,11 @@ using UserModels;
 using WebLibrary.Programs;
 namespace UowLibrary.MenuNS
 {
-    public partial class MenuBiz : BusinessLayer<ProductCategoryMain>
+    public partial class MenuBiz : BusinessLayer<MenuPathMain>
     {
-        protected ProductCatMainBiz _productCatMainBiz;
+        protected MenuPathMainBiz _productCatMainBiz;
         protected ProductBiz _productBiz;
-        public MenuBiz(IRepositry<ApplicationUser> userDal, ProductCatMainBiz productCatMainBiz, ProductBiz productBiz, IRepositry<ProductCategoryMain> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
+        public MenuBiz(IRepositry<ApplicationUser> userDal, MenuPathMainBiz productCatMainBiz, ProductBiz productBiz, IRepositry<MenuPathMain> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
             : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
         {
 
@@ -79,7 +79,7 @@ namespace UowLibrary.MenuNS
         }
 
 
-        private IQueryable<ProductCategoryMain> AllProductCatMainIQ()
+        private IQueryable<MenuPathMain> AllProductCatMainIQ()
         {
             return Dal.FindAll();
         }
@@ -98,7 +98,7 @@ namespace UowLibrary.MenuNS
         {
 
             var cat1LstIds = AllProductCatMainIQ()
-                .Select(x => x.ProductCat1Id)
+                .Select(x => x.MenuPath1Id)
                 .Distinct()
                 .ToList();
 
@@ -119,7 +119,7 @@ namespace UowLibrary.MenuNS
             var allProductCatMain = await Dal.FindAllAsync();
             foreach (var id in listOfProductCat1Ids)
             {
-                var pc = allProductCatMain.FirstOrDefault(x => x.ProductCat1Id == id);
+                var pc = allProductCatMain.FirstOrDefault(x => x.MenuPath1Id == id);
                 pclst.Add(pc);
             }
 
@@ -138,8 +138,8 @@ namespace UowLibrary.MenuNS
 
 
             //get the productCategoryMain
-            ProductCategoryMain pcm = Dal.FindAll().FirstOrDefault(x =>
-                x.ProductCat1Id == parms.Menu.ProductCat1Id);
+            MenuPathMain pcm = Dal.FindAll().FirstOrDefault(x =>
+                x.MenuPath1Id == parms.Menu.ProductCat1Id);
 
             if (pcm.IsNull())
                 return null;
@@ -163,8 +163,8 @@ namespace UowLibrary.MenuNS
             }
 
             var cat2LstIds = AllProductCatMainIQ()
-                .Where(x => x.ProductCat1Id == productCategory1Id)
-                .Select(x => x.ProductCat2Id)
+                .Where(x => x.MenuPath1Id == productCategory1Id)
+                .Select(x => x.MenuPath2Id)
                 .Distinct()
                 .ToList();
 
@@ -184,7 +184,7 @@ namespace UowLibrary.MenuNS
                     throw new NoDataException(ErrorsGlobal.ToString());
                 }
 
-                var pcmDummy = Dal.FindAll().ToList().FirstOrDefault(x => x.ProductCat1Id == parms.Menu.ProductCat1Id);
+                var pcmDummy = Dal.FindAll().ToList().FirstOrDefault(x => x.MenuPath1Id == parms.Menu.ProductCat1Id);
 
                 if(pcmDummy.IsNull())
                 {
@@ -197,25 +197,25 @@ namespace UowLibrary.MenuNS
             }
 
             string productCatMainId = parms.Id;
-            ProductCategoryMain pcm = await Dal.FindForAsync(productCatMainId);
+            MenuPathMain pcm = await Dal.FindForAsync(productCatMainId);
             if (pcm.IsNull())
             {
                 ErrorsGlobal.Add("Product Category Main Not found.", MethodBase.GetCurrentMethod());
                 throw new Exception(ErrorsGlobal.ToString());
 
             }
-            List<string> listOfProductCat2Ids = UniqueListOfProductCategory2_IDs(pcm.ProductCat1Id);
+            List<string> listOfProductCat2Ids = UniqueListOfProductCategory2_IDs(pcm.MenuPath1Id);
 
             if (listOfProductCat2Ids.IsNullOrEmpty())
                 return null;
 
             List<ICommonWithId> pclst = new List<ICommonWithId>();
             var allProductCatMain = await Dal.FindAllAsync();
-            var allProductCatMainWithProductCategory1 = allProductCatMain.Where(x => x.ProductCat1Id == pcm.ProductCat1Id).ToList();
+            var allProductCatMainWithProductCategory1 = allProductCatMain.Where(x => x.MenuPath1Id == pcm.MenuPath1Id).ToList();
 
             foreach (var cat2Id in listOfProductCat2Ids)
             {
-                ProductCategoryMain pc = allProductCatMainWithProductCategory1.Where(x => x.ProductCat2Id == cat2Id).FirstOrDefault();
+                MenuPathMain pc = allProductCatMainWithProductCategory1.Where(x => x.MenuPath2Id == cat2Id).FirstOrDefault();
                 if (!pc.IsNull())
                     pclst.Add(pc);
             }
@@ -239,9 +239,9 @@ namespace UowLibrary.MenuNS
 
 
             //get the productCategoryMain
-            ProductCategoryMain pcm = Dal.FindAll().FirstOrDefault(x =>
-                x.ProductCat1Id == parms.Menu.ProductCat1Id &&
-                x.ProductCat2Id == parms.Menu.ProductCat2Id);
+            MenuPathMain pcm = Dal.FindAll().FirstOrDefault(x =>
+                x.MenuPath1Id == parms.Menu.ProductCat1Id &&
+                x.MenuPath2Id == parms.Menu.ProductCat2Id);
 
             if (pcm.IsNull())
                 return null;
@@ -272,8 +272,8 @@ namespace UowLibrary.MenuNS
             }
 
             var cat3LstIds = AllProductCatMainIQ()
-                .Where(x => x.ProductCat1Id == productCategory1Id && x.ProductCat2Id == productCategory2Id)
-                .Select(x => x.ProductCat3Id)
+                .Where(x => x.MenuPath1Id == productCategory1Id && x.MenuPath2Id == productCategory2Id)
+                .Select(x => x.MenuPath3Id)
                 .Distinct()
                 .ToList();
 
@@ -301,7 +301,7 @@ namespace UowLibrary.MenuNS
                     throw new NoDataException(ErrorsGlobal.ToString());
                 }
 
-                var pcmDummy = Dal.FindAll().ToList().FirstOrDefault(x => x.ProductCat1Id == parms.Menu.ProductCat1Id && x.ProductCat2Id == parms.Menu.ProductCat2Id);
+                var pcmDummy = Dal.FindAll().ToList().FirstOrDefault(x => x.MenuPath1Id == parms.Menu.ProductCat1Id && x.MenuPath2Id == parms.Menu.ProductCat2Id);
 
                 if (pcmDummy.IsNull())
                 {
@@ -313,14 +313,14 @@ namespace UowLibrary.MenuNS
                 parms.Id = pcmDummy.Id;
             }
             string productCatMainId = parms.Id;
-            ProductCategoryMain pcm = await Dal.FindForAsync(productCatMainId);
+            MenuPathMain pcm = await Dal.FindForAsync(productCatMainId);
             if (pcm.IsNull())
             {
                 ErrorsGlobal.Add("Product Category Main Not found.", MethodBase.GetCurrentMethod());
                 throw new Exception(ErrorsGlobal.ToString());
 
             }
-            List<string> listOfProductCat3Ids = UniqueListOfProductCategory3_IDs(pcm.ProductCat1Id, pcm.ProductCat2Id);
+            List<string> listOfProductCat3Ids = UniqueListOfProductCategory3_IDs(pcm.MenuPath1Id, pcm.MenuPath2Id);
             if (listOfProductCat3Ids.IsNullOrEmpty())
                 return null;
 
@@ -328,11 +328,11 @@ namespace UowLibrary.MenuNS
 
             var allProductCatMain = await Dal.FindAllAsync();
 
-            var allProductCatMainWithCategory1 = allProductCatMain.Where(x => x.ProductCat1Id == pcm.ProductCat1Id && x.ProductCat2Id == pcm.ProductCat2Id).ToList();
+            var allProductCatMainWithCategory1 = allProductCatMain.Where(x => x.MenuPath1Id == pcm.MenuPath1Id && x.MenuPath2Id == pcm.MenuPath2Id).ToList();
 
             foreach (var id in listOfProductCat3Ids)
             {
-                ProductCategoryMain pc = allProductCatMainWithCategory1.FirstOrDefault(x => x.ProductCat3Id == id);
+                MenuPathMain pc = allProductCatMainWithCategory1.FirstOrDefault(x => x.MenuPath3Id == id);
                 if (!pc.IsNull())
                     pclst.Add(pc);
             }
@@ -362,10 +362,10 @@ namespace UowLibrary.MenuNS
 
 
             //get the productCategoryMain
-            ProductCategoryMain pcm = Dal.FindAll().FirstOrDefault(x =>
-                x.ProductCat1Id == parms.Menu.ProductCat1Id &&
-                x.ProductCat2Id == parms.Menu.ProductCat2Id &&
-                x.ProductCat3Id == parms.Menu.ProductCat3Id);
+            MenuPathMain pcm = Dal.FindAll().FirstOrDefault(x =>
+                x.MenuPath1Id == parms.Menu.ProductCat1Id &&
+                x.MenuPath2Id == parms.Menu.ProductCat2Id &&
+                x.MenuPath3Id == parms.Menu.ProductCat3Id);
             if (pcm.IsNull())
                 return null;
 

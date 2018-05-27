@@ -16,17 +16,17 @@ namespace UowLibrary.MenuNS
 
         public SelectList ProductCat1_SelectList()
         {
-            return _productCatMainBiz.ProductCat1_SelectList();
+            return _productCatMainBiz.MenuPath1_SelectList();
         }
 
         public SelectList ProductCat2_SelectList()
         {
-            return _productCatMainBiz.ProductCat2_SelectList();
+            return _productCatMainBiz.MenuPath2_SelectList();
         }
 
         public SelectList ProductCat3_SelectList()
         {
-            return _productCatMainBiz.ProductCat3_SelectList();
+            return _productCatMainBiz.MenuPath3_SelectList();
         }
 
 

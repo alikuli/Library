@@ -110,7 +110,7 @@
                                     <div>
                                         @*                                            @{string name = "CREATE - " + @Model.Heading.Main.ToString().ToSentence().ToTitleCase();}*@
                                         @{string name = "CREATE";}
-                                        @Html.ActionLink(@name, "Create", new { menuLevelEnum = Model.Menu.MenuLevelEnum, productCat1Id = Model.Menu.ProductCategory1_Id, productCat2Id = Model.Menu.ProductCategory2_Id, productCat3Id = Model.Menu.ProductCategory2_Id }, new { @class = "text-danger btn btn-success btn-sm" })
+                                        @Html.ActionLink(@name, "Create", new { menuLevelEnum = Model.Menu.MenuLevelEnum, menuPath1Id = Model.Menu.ProductCategory1_Id, menuPath2Id = Model.Menu.ProductCategory2_Id, menuPath3Id = Model.Menu.ProductCategory2_Id }, new { @class = "text-danger btn btn-success btn-sm" })
                                     </div>
                                 }
 

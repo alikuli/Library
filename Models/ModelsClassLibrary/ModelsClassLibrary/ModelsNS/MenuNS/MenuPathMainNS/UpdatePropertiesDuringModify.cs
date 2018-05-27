@@ -4,23 +4,24 @@ using InterfacesLibrary.SharedNS;
 using UserModels;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using InterfacesLibrary.ProductNS;
+using InterfacesLibrary.MenuNS;
 
 namespace ModelsClassLibrary.MenuNS
 
 
 {
     
-    public partial class ProductCategoryMain : MenuPathAbstract, IProductCategoryMain
+    public partial class MenuPathMain 
     {
         public override void UpdatePropertiesDuringModify(ICommonWithId icommonWithId)
         {
             base.UpdatePropertiesDuringModify(icommonWithId);
 
-            ProductCategoryMain p = (ProductCategoryMain)icommonWithId;
+            MenuPathMain p = (MenuPathMain)icommonWithId;
 
-            ProductCat1Id = p.ProductCat1Id;
-            ProductCat2Id = p.ProductCat2Id;
-            ProductCat3Id = p.ProductCat3Id;
+            MenuPath1Id = p.MenuPath1Id;
+            MenuPath2Id = p.MenuPath2Id;
+            MenuPath3Id = p.MenuPath3Id;
 
 
         }

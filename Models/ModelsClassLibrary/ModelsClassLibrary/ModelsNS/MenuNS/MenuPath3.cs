@@ -1,5 +1,6 @@
 ﻿using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace ModelsClassLibrary.MenuNS
         }
 
 
-        public virtual ICollection<ProductCategoryMain> MenuPathMains { get; set; }
+        public virtual ICollection<MenuPathMain> MenuPathMains { get; set; }
 
         string IHasUploads.MiscFilesLocation()
         {

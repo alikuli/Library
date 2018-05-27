@@ -8,7 +8,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
     public class Product : ProductAbstract
     {
-        public ICollection<ProductCategoryMain> Catogories { get; set; }
+        public ICollection<MenuPathMain> Catogories { get; set; }
 
         public ICollection<ProductChild> ProductChildren { get; set; }
 

@@ -25,11 +25,11 @@ namespace MarketPlace.Web6.Controllers
 
 
 
-        public async Task<ActionResult> DeleteUploadedFile(string productCatId, string uploadedFileId)
+        public async Task<ActionResult> DeleteUploadedFile(string menupathId, string uploadedFileId)
         {
             //delete from the ProductCategoryMain
             await _menupath3Biz.DeleteUploadedFile(uploadedFileId);
-            return RedirectToAction("Edit", new { id = productCatId });
+            return RedirectToAction("Edit", new { id = menupathId });
             //return RedirectToAction("DeleteConfirmed", "UploadedFiles", new { id = uploadedFileId });
         }
     }

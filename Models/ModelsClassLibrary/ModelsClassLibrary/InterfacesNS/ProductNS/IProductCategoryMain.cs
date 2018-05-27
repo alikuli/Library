@@ -5,7 +5,7 @@ using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.MenuNS;
 
-namespace InterfacesLibrary.ProductNS
+namespace InterfacesLibrary.MenuNS
 {
     public interface IProductCategoryMain
     {
@@ -16,12 +16,12 @@ namespace InterfacesLibrary.ProductNS
         bool IsCat1Null();
         bool IsCat2Null();
         bool IsCat3Null();
-        MenuPath1 ProductCat1 { get; set; }
-        string ProductCat1Id { get; set; }
-        MenuPath2 ProductCat2 { get; set; }
-        string ProductCat2Id { get; set; }
-        MenuPath3 ProductCat3 { get; set; }
-        string ProductCat3Id { get; set; }
+        MenuPath1 MenuPath1 { get; set; }
+        string MenuPath1Id { get; set; }
+        MenuPath2 MenuPath2 { get; set; }
+        string MenuPath2Id { get; set; }
+        MenuPath3 MenuPath3 { get; set; }
+        string MenuPath3Id { get; set; }
         //ICollection<IDiscount> ProductCategoryDiscounts { get; set; }
         void SelfErrorCheck();
     }

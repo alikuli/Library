@@ -27,24 +27,24 @@
 <div>
 
     @{
-        string prodcat1 = "";
-        string prodcat2 = "";
-        string prodcat3 = "";
-        
-        ModelsClassLibrary.ModelsNS.ProductNS.ProductCategoryMain pcm = Model as ModelsClassLibrary.ModelsNS.ProductNS.ProductCategoryMain;
+        string menuPath1 = "";
+        string menuPath2 = "";
+        string menuPath3 = "";
+
+        ModelsClassLibrary.MenuNS.MenuPathMain pcm = Model as ModelsClassLibrary.MenuNS.MenuPathMain;
         if(!pcm.IsNull())
         {
             bool isMenu = (ViewBag.IsMenu)?? false;
             if(isMenu)
-            { 
-                prodcat1 = pcm.ProductCat1Id;
-                prodcat2 = pcm.ProductCat2Id;
-                prodcat3 = pcm.ProductCat3Id;
+            {
+                menuPath1 = pcm.MenuPath1Id;
+                menuPath2 = pcm.MenuPath2Id;
+                menuPath3 = pcm.MenuPath3Id;
             }
         }
         
     }
-    @Html.ActionLink("Back to List", "Index", new { menuLevelEnum = @ViewBag.MenuLevelEnum, productCat1Id = prodcat1, productCat2Id = prodcat2, productCat3Id = prodcat3, selectedId = Model.Id })
+    @Html.ActionLink("Back to List", "Index", new { menuLevelEnum = @ViewBag.MenuLevelEnum, menuPath1Id = menuPath1, menuPath2Id = menuPath2, menuPath3Id = menuPath3, selectedId = Model.Id })
 </div>
 
 @section Scripts {

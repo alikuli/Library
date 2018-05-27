@@ -280,9 +280,9 @@
     <Compile Include="ModelsNS\ProductEtcNS\ProductNS\ProductAbstract - Prices and Costs.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ProductNS\ProductAbstract - Item numbers and Serial No.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ProductNS\ProductAbstract - Pictures.cs" />
-    <Compile Include="ModelsNS\MenuNS\ProductCategoryMainNS\ProductCategoryMain.cs" />
-    <Compile Include="ModelsNS\MenuNS\ProductCategoryMainNS\UpdatePropertiesDuringModify.cs" />
-    <Compile Include="ModelsNS\MenuNS\ProductCategoryMainNS\HideNameInView.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuPathMainNS\MenuPathMain.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuPathMainNS\UpdatePropertiesDuringModify.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuPathMainNS\HideNameInView.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\CostsComplex.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\DateComplex.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\SalePrice.cs" />

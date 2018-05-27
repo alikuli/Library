@@ -16,7 +16,7 @@ namespace ModelsClassLibrary.ViewModels
         public MenuModel()
         {
             ProductList = new List<Product>();
-            ProductCategoryMain = new ProductCategoryMain();
+            ProductCategoryMain = new MenuPathMain();
         }
 
         public List<Product> ProductList { get; set; }
@@ -29,7 +29,7 @@ namespace ModelsClassLibrary.ViewModels
             get
             {
                 throwErrorIfProductCategoryMain();
-                return ProductCategoryMain.ProductCat1Id;
+                return ProductCategoryMain.MenuPath1Id;
             }
 
         }
@@ -47,7 +47,7 @@ namespace ModelsClassLibrary.ViewModels
             get
             {
                 throwErrorIfProductCategoryMain();
-                return ProductCategoryMain.ProductCat2Id;
+                return ProductCategoryMain.MenuPath2Id;
             }
 
         }
@@ -57,13 +57,13 @@ namespace ModelsClassLibrary.ViewModels
             get
             {
                 throwErrorIfProductCategoryMain();
-                return ProductCategoryMain.ProductCat3Id;
+                return ProductCategoryMain.MenuPath3Id;
             }
 
         }
 
 
-        public ProductCategoryMain ProductCategoryMain { get; set; }
+        public MenuPathMain ProductCategoryMain { get; set; }
 
         public string Cat1Name
         {
@@ -71,10 +71,10 @@ namespace ModelsClassLibrary.ViewModels
             {
                 throwErrorIfProductCategoryMain();
 
-                if (ProductCategoryMain.ProductCat1.IsNull())
+                if (ProductCategoryMain.MenuPath1.IsNull())
                     return "";
 
-                return ProductCategoryMain.ProductCat1.Name;
+                return ProductCategoryMain.MenuPath1.Name;
             }
         }
 
@@ -84,10 +84,10 @@ namespace ModelsClassLibrary.ViewModels
             {
                 throwErrorIfProductCategoryMain();
 
-                if (ProductCategoryMain.ProductCat2.IsNull())
+                if (ProductCategoryMain.MenuPath2.IsNull())
                     return "";
 
-                return ProductCategoryMain.ProductCat2.Name;
+                return ProductCategoryMain.MenuPath2.Name;
             }
         }
 
@@ -97,10 +97,10 @@ namespace ModelsClassLibrary.ViewModels
             {
                 throwErrorIfProductCategoryMain();
 
-                if (ProductCategoryMain.ProductCat3.IsNull())
+                if (ProductCategoryMain.MenuPath3.IsNull())
                     return "";
 
-                return ProductCategoryMain.ProductCat3.Name;
+                return ProductCategoryMain.MenuPath3.Name;
             }
         }
 

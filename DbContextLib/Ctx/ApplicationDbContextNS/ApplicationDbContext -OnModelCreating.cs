@@ -110,24 +110,24 @@ namespace ApplicationDbContextNS
             #region Product Categories
 
             modelBuilder.Entity<MenuPath1>()
-                .HasMany<ProductCategoryMain>(x => x.MenuPathMains)
-                .WithOptional(x => x.ProductCat1)
-                .HasForeignKey(x => x.ProductCat1Id)
+                .HasMany<MenuPathMain>(x => x.MenuPathMains)
+                .WithOptional(x => x.MenuPath1)
+                .HasForeignKey(x => x.MenuPath1Id)
                 .WillCascadeOnDelete(false);
 
 
 
             modelBuilder.Entity<MenuPath2>()
-                .HasMany<ProductCategoryMain>(x => x.MenuPathMains)
-                .WithOptional(x => x.ProductCat2)
-                .HasForeignKey(x => x.ProductCat2Id)
+                .HasMany<MenuPathMain>(x => x.MenuPathMains)
+                .WithOptional(x => x.MenuPath2)
+                .HasForeignKey(x => x.MenuPath2Id)
                 .WillCascadeOnDelete(false);
 
 
             modelBuilder.Entity<MenuPath3>()
-                .HasMany<ProductCategoryMain>(x => x.MenuPathMains)
-                .WithOptional(x => x.ProductCat3)
-                .HasForeignKey(x => x.ProductCat3Id)
+                .HasMany<MenuPathMain>(x => x.MenuPathMains)
+                .WithOptional(x => x.MenuPath3)
+                .HasForeignKey(x => x.MenuPath3Id)
                 .WillCascadeOnDelete(false);
 
 

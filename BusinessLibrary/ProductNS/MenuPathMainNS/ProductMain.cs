@@ -11,17 +11,17 @@ using WebLibrary.Programs;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCatMainBiz : BusinessLayer<ProductCategoryMain>
+    public partial class MenuPathMainBiz : BusinessLayer<MenuPathMain>
     {
-        MenuPath1Biz _productCat1Biz;
-        MenuPath2Biz _productCat2Biz;
-        MenuPath3Biz _productCat3Biz;
-        public ProductCatMainBiz(IRepositry<ApplicationUser> userDal, MenuPath1Biz productCat1Biz, MenuPath2Biz productCat2Biz, MenuPath3Biz productCat3Biz, IRepositry<ProductCategoryMain> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
+        MenuPath1Biz _menupath1Biz;
+        MenuPath2Biz _menupath2Biz;
+        MenuPath3Biz _menupath3Biz;
+        public MenuPathMainBiz(IRepositry<ApplicationUser> userDal, MenuPath1Biz menupath1Biz, MenuPath2Biz menupath2Biz, MenuPath3Biz menupath3Biz, IRepositry<MenuPathMain> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
             : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
         {
-            _productCat1Biz = productCat1Biz;
-            _productCat2Biz = productCat2Biz;
-            _productCat3Biz = productCat3Biz;
+            _menupath1Biz = menupath1Biz;
+            _menupath2Biz = menupath2Biz;
+            _menupath3Biz = menupath3Biz;
         }
     }
 }

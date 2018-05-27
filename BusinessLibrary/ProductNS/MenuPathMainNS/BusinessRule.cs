@@ -19,64 +19,64 @@ using ModelsClassLibrary.MenuNS;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCatMainBiz 
+    public partial class MenuPathMainBiz 
     {
 
 
-        public override void BusinessRulesFor(ProductCategoryMain entity)
+        public override void BusinessRulesFor(MenuPathMain menupathmain)
         {
-            MakeName(entity);
+            MakeName(menupathmain);
 
-            base.BusinessRulesFor(entity);
+            base.BusinessRulesFor(menupathmain);
 
 
         }
 
-        private void MakeName(ProductCategoryMain entity)
+        private void MakeName(MenuPathMain entity)
         {
-            string cat1Name = "";
-            string cat2Name = "";
-            string cat3Name = "";
+            string menu1Name = "";
+            string menu2Name = "";
+            string menu3Name = "";
 
-            if (!entity.ProductCat1Id.IsNullOrWhiteSpace())
+            if (!entity.MenuPath1Id.IsNullOrWhiteSpace())
             {
-                var c1 = _productCat1Biz.Find(entity.ProductCat1Id);
+                var menu1 = _menupath1Biz.Find(entity.MenuPath1Id);
 
-                if (c1.IsNull())
+                if (menu1.IsNull())
                 {
-                    ErrorsGlobal.Add("Product Category 1 was not found", MethodBase.GetCurrentMethod());
+                    ErrorsGlobal.Add("Menu Path 1 was not found", MethodBase.GetCurrentMethod());
                     throw new Exception(ErrorsGlobal.ToString());
                 }
-                cat1Name = c1.Name;
+                menu1Name = menu1.Name;
 
             }
 
-            if (!entity.ProductCat2Id.IsNullOrWhiteSpace())
+            if (!entity.MenuPath2Id.IsNullOrWhiteSpace())
             {
-                var c2 = _productCat2Biz.Find(entity.ProductCat2Id);
+                var c2 = _menupath2Biz.Find(entity.MenuPath2Id);
 
                 if (c2.IsNull())
                 {
-                    entity.MakeName(cat1Name, cat2Name, cat3Name);
+                    entity.MakeName(menu1Name, menu2Name, menu3Name);
                     return;
                 }
-                cat2Name = c2.Name;
+                menu2Name = c2.Name;
 
             }
 
 
-            if (!entity.ProductCat3Id.IsNullOrWhiteSpace())
+            if (!entity.MenuPath3Id.IsNullOrWhiteSpace())
             {
-                var c3 = _productCat3Biz.Find(entity.ProductCat3Id);
+                var c3 = _menupath3Biz.Find(entity.MenuPath3Id);
 
                 if (!c3.IsNull())
                 {
-                    cat3Name = c3.Name;
+                    menu3Name = c3.Name;
                 }
 
             }
 
-            entity.MakeName(cat1Name, cat2Name, cat3Name);
+            entity.MakeName(menu1Name, menu2Name, menu3Name);
         }
 
 

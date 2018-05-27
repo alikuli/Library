@@ -9,7 +9,7 @@ using System.Web;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCatMainBiz 
+    public partial class MenuPathMainBiz 
     {
 
         public override bool Event_LockEditDuringInitialization()
@@ -39,15 +39,15 @@ namespace UowLibrary.ProductNS
 
                     if (item.MenuPath1.IsNullOrWhiteSpace())
                     {
-                        ErrorsGlobal.Add(string.Format("Category 1 '{0}' not found", item.MenuPath1),MethodBase.GetCurrentMethod());
+                        ErrorsGlobal.Add(string.Format("Menu Path 1 '{0}' not found", item.MenuPath1),MethodBase.GetCurrentMethod());
                         throw new Exception(ErrorsGlobal.ToString());
                     }
 
-                    MenuPath3 cat3 = _productCat3Biz.FindByName(item.MenuPath3);
-                    ProductCategoryMain pcm = new ProductCategoryMain();
+                    MenuPath3 menu3 = _menupath3Biz.FindByName(item.MenuPath3);
+                    MenuPathMain pcm = new MenuPathMain();
                     
-                    addCat1(item, pcm);
-                    addCat2(item, cat3, pcm);
+                    addmenu1(item, pcm);
+                    addmenu2(item, menu3, pcm);
                     Create(pcm);
                 }
                 
@@ -56,61 +56,61 @@ namespace UowLibrary.ProductNS
                 SaveChanges();
         }
 
-        private void addCat2(MenuPathMainHelper item, MenuPath3 cat3, ProductCategoryMain pcm)
+        private void addmenu2(MenuPathMainHelper item, MenuPath3 menu3, MenuPathMain pcm)
         {
-            //cat2 starts here
-            MenuPath2 cat2 = _productCat2Biz.FindByName(item.MenuPath2);
+            //menu2 starts here
+            MenuPath2 menu2 = _menupath2Biz.FindByName(item.MenuPath2);
             if (!item.MenuPath2.IsNullOrWhiteSpace())
             {
-                if (cat2.IsNull())
+                if (menu2.IsNull())
                 {
-                    ErrorsGlobal.Add(string.Format("Category 2 '{0}' not found", item.MenuPath2), MethodBase.GetCurrentMethod());
+                    ErrorsGlobal.Add(string.Format("Menu Path 2 '{0}' not found", item.MenuPath2), MethodBase.GetCurrentMethod());
                     throw new Exception(ErrorsGlobal.ToString());
                 }
 
-                pcm.ProductCat2 = cat2;
-                pcm.ProductCat2Id = cat2.Id;
-                if (cat2.MenuPathMains.IsNullOrEmpty())
+                pcm.MenuPath2 = menu2;
+                pcm.MenuPath2Id = menu2.Id;
+                if (menu2.MenuPathMains.IsNullOrEmpty())
                 {
-                    cat2.MenuPathMains = new List<ProductCategoryMain>();
+                    menu2.MenuPathMains = new List<MenuPathMain>();
                 }
-                cat2.MenuPathMains.Add(pcm);
+                menu2.MenuPathMains.Add(pcm);
 
-                addCat3(item, cat3, pcm);
+                addmenu3(item, menu3, pcm);
             }
         }
 
-        private  void addCat3(MenuPathMainHelper item, MenuPath3 cat3, ProductCategoryMain pcm)
+        private  void addmenu3(MenuPathMainHelper item, MenuPath3 menu3, MenuPathMain pcm)
         {
             //Cat3 starts here....
             if (!item.MenuPath3.IsNullOrWhiteSpace())
             {
-                if (cat3.IsNull())
+                if (menu3.IsNull())
                 {
-                    ErrorsGlobal.Add(string.Format("Category 3 '{0}' not found", item.MenuPath3), MethodBase.GetCurrentMethod());
+                    ErrorsGlobal.Add(string.Format("Menu Path 3 '{0}' not found", item.MenuPath3), MethodBase.GetCurrentMethod());
                     throw new Exception(ErrorsGlobal.ToString());
-                    throw new Exception(string.Format("Category 3 '{0}' not found", item.MenuPath3));
+                    throw new Exception(string.Format("Menu Path 3 '{0}' not found", item.MenuPath3));
                 }
-                pcm.ProductCat3 = cat3;
-                pcm.ProductCat3Id = cat3.Id;
-                if (cat3.MenuPathMains.IsNullOrEmpty())
+                pcm.MenuPath3 = menu3;
+                pcm.MenuPath3Id = menu3.Id;
+                if (menu3.MenuPathMains.IsNullOrEmpty())
                 {
-                    cat3.MenuPathMains = new List<ProductCategoryMain>();
+                    menu3.MenuPathMains = new List<MenuPathMain>();
                 }
-                cat3.MenuPathMains.Add(pcm);
+                menu3.MenuPathMains.Add(pcm);
             }
         }
 
-        private void addCat1(MenuPathMainHelper item, ProductCategoryMain pcm)
+        private void addmenu1(MenuPathMainHelper item, MenuPathMain pcm)
             {
-                                MenuPath1 cat1 = _productCat1Biz.FindByName(item.MenuPath1);
-                                pcm.ProductCat1 = cat1;
-                                pcm.ProductCat1Id = cat1.Id;
-                                if (cat1.MenuPathMains.IsNullOrEmpty())
-                                {
-                                    cat1.MenuPathMains = new List<ProductCategoryMain>();
-                                }
-                                cat1.MenuPathMains.Add(pcm);
+                MenuPath1 menu1 = _menupath1Biz.FindByName(item.MenuPath1);
+                pcm.MenuPath1 = menu1;
+                pcm.MenuPath1Id = menu1.Id;
+                if (menu1.MenuPathMains.IsNullOrEmpty())
+                {
+                    menu1.MenuPathMains = new List<MenuPathMain>();
+                }
+                menu1.MenuPathMains.Add(pcm);
             }
     }
 

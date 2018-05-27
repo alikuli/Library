@@ -7,28 +7,28 @@ using System.Web.Mvc;
 namespace UowLibrary.ProductNS
 
 {
-    public partial class ProductCatMainBiz 
+    public partial class MenuPathMainBiz 
     {
 
 
         public override string SelectListCacheKey
         {
-            get { return "ProductCategoryMainSelectListData"; }
+            get { return "MenuPathMainSelectListData"; }
         }
 
-        public SelectList ProductCat1_SelectList()
+        public SelectList MenuPath1_SelectList()
         {
-            return _productCat1Biz.SelectList();
+            return _menupath1Biz.SelectList();
         }
         
-        public SelectList ProductCat2_SelectList()
+        public SelectList MenuPath2_SelectList()
         {
-            return _productCat2Biz.SelectList();
+            return _menupath2Biz.SelectList();
         }
 
-        public SelectList ProductCat3_SelectList()
+        public SelectList MenuPath3_SelectList()
         {
-            return _productCat3Biz.SelectList();
+            return _menupath3Biz.SelectList();
         }
 
 

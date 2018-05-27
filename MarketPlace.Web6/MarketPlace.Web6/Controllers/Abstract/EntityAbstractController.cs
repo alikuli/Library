@@ -71,14 +71,14 @@ namespace MarketPlace.Web6.Controllers.Abstract
         /// <param name="id">This is used for the Menus. It brings back the selected Id.</param>
         /// <param name="searchFor"></param>
         /// <param name="selectedId"></param>
-        /// <param name="productCat1Id"></param>
-        /// <param name="productCat2Id"></param>
-        /// <param name="productCat3Id"></param>
+        /// <param name="menuPath1Id"></param>
+        /// <param name="menuPath2Id"></param>
+        /// <param name="menuPath3Id"></param>
         /// <param name="menuLevelEnum"></param>
         /// <param name="sortBy"></param>
         /// <param name="print"></param>
         /// <returns></returns>
-        public virtual async Task<ActionResult> Index(string id, string searchFor, string selectedId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string productCat1Id = "", string productCat2Id = "", string productCat3Id = "")
+        public virtual async Task<ActionResult> Index(string id, string searchFor, string selectedId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "")
         {
             try
             {
@@ -90,7 +90,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 TEntity dudEntity = Biz.Factory();
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
                 //todo note... the company name is missing. We may need it.
-                ControllerIndexParams parms = new ControllerIndexParams(searchFor, selectedId, sortBy, menuLevelEnum, id, productCat1Id, productCat2Id, productCat3Id, logoAddress, dudEntity, User.Identity.Name);
+                ControllerIndexParams parms = new ControllerIndexParams(searchFor, selectedId, sortBy, menuLevelEnum, id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, dudEntity, User.Identity.Name);
 
                 var indexListVM = await indexEngine(parms);
 

@@ -3,7 +3,7 @@ using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 
 namespace ModelsClassLibrary.MenuNS
 {
-    public partial class ProductCategoryMain 
+    public partial class MenuPathMain 
     {
 
         public override bool HideNameInView()

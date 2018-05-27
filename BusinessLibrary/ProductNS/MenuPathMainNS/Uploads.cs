@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCatMainBiz
+    public partial class MenuPathMainBiz
     {
 
         /// <summary>

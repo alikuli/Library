@@ -29,7 +29,7 @@ namespace UowLibrary.MenuNS
             else
             {
                 //we need to find a dummy ProductCategoryMain which will full fill the requirements of the menu level.
-                ProductCategoryMain pcm = findDummyProductCategoryMain(parameters);
+                MenuPathMain pcm = findDummyProductCategoryMain(parameters);
                 if (pcm.IsNull())
                 {
                     ErrorsGlobal.Add("PCM cannot be null. Programming Error", MethodBase.GetCurrentMethod());
@@ -43,9 +43,9 @@ namespace UowLibrary.MenuNS
         }
 
         //This supplies a dummy ProductCategoryMain for the Back to List in the Create.
-        private ProductCategoryMain findDummyProductCategoryMain(ControllerIndexParams parameters)
+        private MenuPathMain findDummyProductCategoryMain(ControllerIndexParams parameters)
         {
-            ProductCategoryMain pcm;
+            MenuPathMain pcm;
             switch (parameters.Menu.MenuLevel)
             {
                 case MenuLevelENUM.unknown:
@@ -55,24 +55,24 @@ namespace UowLibrary.MenuNS
 
                 case MenuLevelENUM.Level_1:
                     //do nothing...
-                    return new ProductCategoryMain();
+                    return new MenuPathMain();
 
                 case MenuLevelENUM.Level_2:
                     //find one with the same productCat1
-                    pcm = Dal.FindAll().FirstOrDefault(x => x.ProductCat1Id == parameters.Menu.ProductCat1Id);
+                    pcm = Dal.FindAll().FirstOrDefault(x => x.MenuPath1Id == parameters.Menu.ProductCat1Id);
                     return pcm;
                 case MenuLevelENUM.Level_3:
                     //find one with the same productCat1 & productCat2
                     pcm = Dal.FindAll().FirstOrDefault(x =>
-                        x.ProductCat1Id == parameters.Menu.ProductCat1Id &&
-                        x.ProductCat2Id == parameters.Menu.ProductCat2Id);
+                        x.MenuPath1Id == parameters.Menu.ProductCat1Id &&
+                        x.MenuPath2Id == parameters.Menu.ProductCat2Id);
                     return pcm;
                 case MenuLevelENUM.Level_4:
                     //find one with the same productCat1 & productCat2 &  & productCat3
                     pcm = Dal.FindAll().FirstOrDefault(x =>
-                        x.ProductCat1Id == parameters.Menu.ProductCat1Id &&
-                        x.ProductCat2Id == parameters.Menu.ProductCat2Id &&
-                        x.ProductCat3Id == parameters.Menu.ProductCat3Id);
+                        x.MenuPath1Id == parameters.Menu.ProductCat1Id &&
+                        x.MenuPath2Id == parameters.Menu.ProductCat2Id &&
+                        x.MenuPath3Id == parameters.Menu.ProductCat3Id);
                     return pcm;
                 default:
                     ErrorsGlobal.Add("Menu Level cannot be unknown here. Programming Error.", MethodBase.GetCurrentMethod());
@@ -88,16 +88,16 @@ namespace UowLibrary.MenuNS
             if (indexListVM.Menu.ProductCategoryMain.IsNull())
                 return (completeName = "Menu Items");
 
-            if (!indexListVM.Menu.ProductCategoryMain.ProductCat1.IsNull())
-                nameProdCat1 = indexListVM.Menu.ProductCategoryMain.ProductCat1.Name;
+            if (!indexListVM.Menu.ProductCategoryMain.MenuPath1.IsNull())
+                nameProdCat1 = indexListVM.Menu.ProductCategoryMain.MenuPath1.Name;
 
             string nameProdCat2 = "";
-            if (!indexListVM.Menu.ProductCategoryMain.ProductCat2.IsNull())
-                nameProdCat2 = indexListVM.Menu.ProductCategoryMain.ProductCat2.Name;
+            if (!indexListVM.Menu.ProductCategoryMain.MenuPath2.IsNull())
+                nameProdCat2 = indexListVM.Menu.ProductCategoryMain.MenuPath2.Name;
 
             string nameProdCat3 = "";
-            if (!indexListVM.Menu.ProductCategoryMain.ProductCat3.IsNull())
-                nameProdCat3 = indexListVM.Menu.ProductCategoryMain.ProductCat3.Name;
+            if (!indexListVM.Menu.ProductCategoryMain.MenuPath3.IsNull())
+                nameProdCat3 = indexListVM.Menu.ProductCategoryMain.MenuPath3.Name;
 
 
             completeName = "Menu Items";
@@ -110,12 +110,12 @@ namespace UowLibrary.MenuNS
         public override void Event_ModifyIndexItem(IndexListVM indexListVM, IndexItemVM indexItem, ICommonWithId icommonWithId)
         {
             base.Event_ModifyIndexItem(indexListVM, indexItem, icommonWithId);
-            ProductCategoryMain pcm = icommonWithId as ProductCategoryMain;
+            MenuPathMain pcm = icommonWithId as MenuPathMain;
             makeNameForMenuItem(indexListVM, indexItem, pcm);
 
         }
 
-        private void makeNameForMenuItem(IndexListVM indexListVM, IndexItemVM indexItem, ProductCategoryMain pcm)
+        private void makeNameForMenuItem(IndexListVM indexListVM, IndexItemVM indexItem, MenuPathMain pcm)
         {
             //The id in parameters belongs to ProductMainControler. Extract the Id from there...
             switch (indexListVM.Menu.MenuLevelEnum)
@@ -131,17 +131,17 @@ namespace UowLibrary.MenuNS
                     }
 
 
-                    if (pcm.ProductCat1.IsNull())
+                    if (pcm.MenuPath1.IsNull())
                     {
                         indexItem.Name = "";
                         return;
                     }
 
-                    indexItem.Name = pcm.ProductCat1.Name;
-                    if (pcm.ProductCat1.MiscFiles.FirstOrDefault().IsNull())
+                    indexItem.Name = pcm.MenuPath1.Name;
+                    if (pcm.MenuPath1.MiscFiles.FirstOrDefault().IsNull())
                         return;
 
-                    indexItem.ImageAddressStr = pcm.ProductCat1.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted).RelativePathWithFileName();
+                    indexItem.ImageAddressStr = pcm.MenuPath1.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted).RelativePathWithFileName();
 
                     break;
 
@@ -153,18 +153,18 @@ namespace UowLibrary.MenuNS
                     }
 
 
-                    if (pcm.ProductCat2.IsNull())
+                    if (pcm.MenuPath2.IsNull())
                     {
                         indexItem.Name = "";
                         return;
                     }
 
-                    indexItem.Name = pcm.ProductCat2.Name;
+                    indexItem.Name = pcm.MenuPath2.Name;
 
-                    if (pcm.ProductCat2.MiscFiles.FirstOrDefault().IsNull())
+                    if (pcm.MenuPath2.MiscFiles.FirstOrDefault().IsNull())
                         return;
 
-                    indexItem.ImageAddressStr = pcm.ProductCat2.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted).RelativePathWithFileName();
+                    indexItem.ImageAddressStr = pcm.MenuPath2.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted).RelativePathWithFileName();
                     break;
                 case MenuLevelENUM.Level_3:
                     if (pcm.IsNull())
@@ -174,17 +174,17 @@ namespace UowLibrary.MenuNS
                     }
 
 
-                    if (pcm.ProductCat3.IsNull())
+                    if (pcm.MenuPath3.IsNull())
                     {
                         indexItem.Name = "";
                         return;
                     }
 
-                    indexItem.Name = pcm.ProductCat3.Name;
-                    if (pcm.ProductCat3.MiscFiles.FirstOrDefault().IsNull())
+                    indexItem.Name = pcm.MenuPath3.Name;
+                    if (pcm.MenuPath3.MiscFiles.FirstOrDefault().IsNull())
                         return;
 
-                    indexItem.ImageAddressStr = pcm.ProductCat3.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted).RelativePathWithFileName();
+                    indexItem.ImageAddressStr = pcm.MenuPath3.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted).RelativePathWithFileName();
 
                     break;
                 case MenuLevelENUM.Level_4:

@@ -13,7 +13,7 @@ using UowLibrary.MenuNS;
 
 namespace MarketPlace.Web6.Controllers
 {
-    public class MenusController : EntityAbstractController<ProductCategoryMain>
+    public class MenusController : EntityAbstractController<MenuPathMain>
     {
 
 
@@ -54,7 +54,7 @@ namespace MarketPlace.Web6.Controllers
 
 
 
-        private ProductCategoryMain loadTheProductCategoryMain(ControllerIndexParams parm)
+        private MenuPathMain loadTheProductCategoryMain(ControllerIndexParams parm)
         {
             string cat1Id = parm.Menu.ProductCat1Id;
             string cat2Id = parm.Menu.ProductCat2Id;
@@ -66,7 +66,7 @@ namespace MarketPlace.Web6.Controllers
 
             ViewBag.IsMenu = true;
 
-            ProductCategoryMain pcm = Biz.EntityFactoryForHttpGet();
+            MenuPathMain pcm = Biz.EntityFactoryForHttpGet();
             
 
             //create the select list depending on the menu level
@@ -84,7 +84,7 @@ namespace MarketPlace.Web6.Controllers
                         ErrorsGlobal.Add("Cat 1 is not loaded.", MethodBase.GetCurrentMethod());
                         throw new Exception(ErrorsGlobal.ToString());
                     }
-                    pcm.ProductCat1Id = cat1Id;
+                    pcm.MenuPath1Id = cat1Id;
                     break;
 
                 case MenuLevelENUM.Level_3:
@@ -98,8 +98,8 @@ namespace MarketPlace.Web6.Controllers
                         ErrorsGlobal.Add("Cat 2 is not loaded.", MethodBase.GetCurrentMethod());
                         throw new Exception(ErrorsGlobal.ToString());
                     }
-                    pcm.ProductCat1Id = cat1Id;
-                    pcm.ProductCat2Id = cat2Id;
+                    pcm.MenuPath1Id = cat1Id;
+                    pcm.MenuPath2Id = cat2Id;
                     break;
 
                 case MenuLevelENUM.Level_4:
@@ -118,9 +118,9 @@ namespace MarketPlace.Web6.Controllers
                         ErrorsGlobal.Add("Cat 3 is not loaded.", MethodBase.GetCurrentMethod());
                         throw new Exception(ErrorsGlobal.ToString());
                     }
-                    pcm.ProductCat1Id = cat1Id;
-                    pcm.ProductCat2Id = cat2Id;
-                    pcm.ProductCat3Id = cat3Id;
+                    pcm.MenuPath1Id = cat1Id;
+                    pcm.MenuPath2Id = cat2Id;
+                    pcm.MenuPath3Id = cat3Id;
                     break;
 
                 default:
@@ -132,7 +132,7 @@ namespace MarketPlace.Web6.Controllers
 
         public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
         {
-            ProductCategoryMain pcm = loadTheProductCategoryMain(parm);
+            MenuPathMain pcm = loadTheProductCategoryMain(parm);
             return View(pcm);
         }
 

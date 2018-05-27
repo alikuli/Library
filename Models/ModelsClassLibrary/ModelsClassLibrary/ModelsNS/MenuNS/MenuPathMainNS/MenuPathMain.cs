@@ -1,6 +1,8 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
+using InterfacesLibrary.MenuNS;
 using InterfacesLibrary.ProductNS;
+using ModelsClassLibrary.ModelsNS.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System;
@@ -15,7 +17,7 @@ namespace ModelsClassLibrary.MenuNS
     /// <summary>
     /// This is the Menu Path
     /// </summary>
-    public partial class ProductCategoryMain : MenuPathAbstract, IProductCategoryMain
+    public partial class MenuPathMain : MenuPathAbstract, IProductCategoryMain
     {
         StringBuilder sb = new StringBuilder();
 
@@ -23,23 +25,23 @@ namespace ModelsClassLibrary.MenuNS
         {
             return EnumLibrary.EnumNS.ClassesWithRightsENUM.MenuPathMain;
         }
-        [Display(Name = "ProductCategory 1")]
-
-        public string ProductCat1Id { get; set; }
-        public virtual MenuPath1 ProductCat1 { get; set; }
 
         #region Navigation Properties
 
-
-        [Display(Name = "ProductCategory 2")]
-
-        public string ProductCat2Id { get; set; }
-        public virtual MenuPath2 ProductCat2 { get; set; }
+        [Display(Name = "Menu Path 1")]
+        public string MenuPath1Id { get; set; }
+        public virtual MenuPath1 MenuPath1 { get; set; }
 
 
-        [Display(Name = "ProductCategory 3")]
-        public string ProductCat3Id { get; set; }
-        public virtual MenuPath3 ProductCat3 { get; set; }
+        [Display(Name = "Menu Path 2")]
+
+        public string MenuPath2Id { get; set; }
+        public virtual MenuPath2 MenuPath2 { get; set; }
+
+
+        [Display(Name = "Menu Path 3")]
+        public string MenuPath3Id { get; set; }
+        public virtual MenuPath3 MenuPath3 { get; set; }
 
 
 
@@ -51,19 +53,19 @@ namespace ModelsClassLibrary.MenuNS
         #region booleans
         public bool IsCat3Null()
         {
-            bool cat3Null = ProductCat3Id.IsNullOrWhiteSpace() && ProductCat3.IsNull();
+            bool cat3Null = MenuPath3Id.IsNullOrWhiteSpace() && MenuPath3.IsNull();
             return cat3Null;
         }
 
         public bool IsCat2Null()
         {
-            bool cat2Null = ProductCat2Id.IsNullOrWhiteSpace() && ProductCat2.IsNull();
+            bool cat2Null = MenuPath2Id.IsNullOrWhiteSpace() && MenuPath2.IsNull();
             return cat2Null;
         }
 
         public bool IsCat1Null()
         {
-            bool cat1Null = ProductCat1Id.IsNullOrWhiteSpace() && ProductCat1.IsNull();
+            bool cat1Null = MenuPath1Id.IsNullOrWhiteSpace() && MenuPath1.IsNull();
             return cat1Null;
         }
 
@@ -151,21 +153,21 @@ namespace ModelsClassLibrary.MenuNS
         #endregion
 
 
-        public void MakeName(string cat1Name, string cat2Name, string cat3Name)
+        public void MakeName(string menupath1name, string menupath2name, string menupath3name)
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(cat1Name);
+            sb.Append(menupath1name);
 
-            if (!cat2Name.IsNullOrWhiteSpace())
+            if (!menupath2name.IsNullOrWhiteSpace())
             {
-                sb.Append(" - " + cat2Name);
+                sb.Append(" - " + menupath2name);
 
             }
 
-            if (!cat3Name.IsNullOrWhiteSpace())
+            if (!menupath3name.IsNullOrWhiteSpace())
             {
-                sb.Append(" - " + cat3Name);
+                sb.Append(" - " + menupath3name);
 
             }
 

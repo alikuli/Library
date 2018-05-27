@@ -10,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCatMainBiz 
+    public partial class MenuPathMainBiz 
     {
 
 
@@ -19,7 +19,7 @@ namespace UowLibrary.ProductNS
         {
             base.Event_ModifyIndexList(indexListVM, parameters);
 
-            indexListVM.Heading.Column = "All Product Category";
+            indexListVM.Heading.Column = "All Menu Mains";
             //indexListVM.MainHeading = "Product Category 3";
             indexListVM.IsImageTiled = true;
             indexListVM.Show.EditDeleteAndCreate = true;
@@ -29,21 +29,21 @@ namespace UowLibrary.ProductNS
         public override void Event_ModifyIndexItem(IndexListVM indexListVM, IndexItemVM indexItem, ICommonWithId icommonWithid)
         {
             base.Event_ModifyIndexItem(indexListVM, indexItem, icommonWithid);
-            ProductCategoryMain productCategoryMain = icommonWithid as ProductCategoryMain;
+            MenuPathMain menupathMain = icommonWithid as MenuPathMain;
 
-            if (productCategoryMain.IsNull())
+            if (menupathMain.IsNull())
             {
-                ErrorsGlobal.Add("Unable to convert to product Category Main", MethodBase.GetCurrentMethod());
+                ErrorsGlobal.Add("Unable to convert to Menu Main", MethodBase.GetCurrentMethod());
                 throw new Exception(ErrorsGlobal.ToString());
             }
 
-            indexItem.ImageAddressStr = selectAddressOfImageToDisplay(productCategoryMain);
+            indexItem.ImageAddressStr = selectAddressOfImageToDisplay(menupathMain);
         }
 
-        private string selectAddressOfImageToDisplay(ProductCategoryMain ProductCategoryMain)
+        private string selectAddressOfImageToDisplay(MenuPathMain menupathmain)
         {
             //Get a list of images for this category item.
-            UploadedFile image = ProductCategoryMain.MiscFiles.FirstOrDefault(x => x.MetaData.IsDeleted == false);
+            UploadedFile image = menupathmain.MiscFiles.FirstOrDefault(x => x.MetaData.IsDeleted == false);
 
             if (image.IsNull())
                 image = new UploadedFile();

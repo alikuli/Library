@@ -199,10 +199,10 @@
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomQuantitiesController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomWeightsController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomLenghtsController.cs" />
-    <Compile Include="Controllers\MyControllersNS\ProductNS\ProductCatMainController.cs" />
-    <Compile Include="Controllers\MyControllersNS\ProductNS\MenuPath3sController.cs" />
-    <Compile Include="Controllers\MyControllersNS\ProductNS\MenuPath2sController.cs" />
-    <Compile Include="Controllers\MyControllersNS\ProductNS\MenuPath1sController.cs" />
+    <Compile Include="Controllers\MyControllersNS\MenuNS\MenuPathMainsController.cs" />
+    <Compile Include="Controllers\MyControllersNS\MenuNS\MenuPath3sController.cs" />
+    <Compile Include="Controllers\MyControllersNS\MenuNS\MenuPath2sController.cs" />
+    <Compile Include="Controllers\MyControllersNS\MenuNS\MenuPath1sController.cs" />
     <Compile Include="Controllers\MyControllersNS\DiscountNS\DiscountPrecedencesController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlayersNS\CustomerCategoriesController.cs" />
     <Compile Include="Controllers\MyControllersNS\PaymentNS\PaymentTermsController.cs" />
@@ -325,7 +325,7 @@
     <Content Include="Views\Shared\ViewControls\DeleteAll\_DeleteAllHeading.cshtml" />
     <Content Include="Views\Shared\ViewControls\Index\_IndexMiddlePart.cshtml" />
     <Content Include="Views\CustomerCategories\_FieldsOnlyEditFormat.cshtml" />
-    <Content Include="Views\MenuPath1\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\MenuPath1s\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\OwnerCategories\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\States\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\Shared\ViewControls\Index\_IndexMiddlePart - TiledPictures.cshtml" />
@@ -333,9 +333,9 @@
     <Content Include="Views\Shared\_Name_And_DetailInfo.cshtml" />
     <Content Include="Views\UploadedFiles\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\Shared\ViewControls\Uploads\_ShowUploads.cshtml" />
-    <Content Include="Views\Shared\ProductCategory\_ProductCategoryFieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\Shared\MenuPathNS\_menuPathFieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\MenuPath2s\_FieldsOnlyEditFormat.cshtml" />
-    <Content Include="Views\ProductCategories3\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\MenuPath3s\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\FileDocs\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\FileDocsOldData\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\Users\_FieldsOnlyEditFormat.cshtml" />
@@ -352,7 +352,7 @@
     <Content Include="Views\UomWeights\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\UomQuantities\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\Shared\ViewControls\Uploads\_IUserHasUploadsSingle.cshtml" />
-    <Content Include="Views\Menus\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\MenuPathMains\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\Shared\ViewControls\Index\_breadCrumbs.cshtml" />
     <Content Include="Views\Counters\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\Shared\ViewControls\Index\_breadCrumbs - Menu.cshtml" />
