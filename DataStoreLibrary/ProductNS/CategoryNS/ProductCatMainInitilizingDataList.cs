@@ -2,7 +2,6 @@
 using CountryDATA.ProductNS.CategoryNS;
 using EnumLibrary.EnumNS;
 using EnumLibrary.EnumNS.Product_Related;
-using ModelsClassLibrary.ModelsNS.ProductNS;
 using System;
 using System.Collections.Generic;
 namespace DatastoreNS
@@ -38,37 +37,37 @@ namespace DatastoreNS
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Bus);
-            c3 = Cat3Name(ProductCategory3ENUM.Toyota);
+            //c3 = Cat3Name(ProductCategory3ENUM.Toyota);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Bus);
-            c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
+            //c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Bus);
-            c3 = Cat3Name(ProductCategory3ENUM.BMW);
+            //c3 = Cat3Name(ProductCategory3ENUM.BMW);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Bus);
-            c3 = Cat3Name(ProductCategory3ENUM.Datsun);
+            //c3 = Cat3Name(ProductCategory3ENUM.Datsun);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Bus);
-            c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
+            //c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Bus);
-            c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
+            //c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
             //-------------------------------------------------------
@@ -78,37 +77,37 @@ namespace DatastoreNS
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Car);
-            c3 = Cat3Name(ProductCategory3ENUM.Toyota);
+            //c3 = Cat3Name(ProductCategory3ENUM.Toyota);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Car);
-            c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
+            //c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Car);
-            c3 = Cat3Name(ProductCategory3ENUM.BMW);
+            //c3 = Cat3Name(ProductCategory3ENUM.BMW);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Car);
-            c3 = Cat3Name(ProductCategory3ENUM.Datsun);
+            //c3 = Cat3Name(ProductCategory3ENUM.Datsun);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Car);
-            c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
+            //c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Car);
-            c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
+            //c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
@@ -119,37 +118,37 @@ namespace DatastoreNS
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Coaster);
-            c3 = Cat3Name(ProductCategory3ENUM.Toyota);
+            //c3 = Cat3Name(ProductCategory3ENUM.Toyota);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Coaster);
-            c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
+            //c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Coaster);
-            c3 = Cat3Name(ProductCategory3ENUM.BMW);
+            //c3 = Cat3Name(ProductCategory3ENUM.BMW);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Coaster);
-            c3 = Cat3Name(ProductCategory3ENUM.Datsun);
+            //c3 = Cat3Name(ProductCategory3ENUM.Datsun);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Coaster);
-            c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
+            //c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Coaster);
-            c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
+            //c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
@@ -159,37 +158,37 @@ namespace DatastoreNS
             #region Recreationalvehical
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.RecreationalVehical);
-            c3 = Cat3Name(ProductCategory3ENUM.Toyota);
+            //c3 = Cat3Name(ProductCategory3ENUM.Toyota);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.RecreationalVehical);
-            c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
+            //c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.RecreationalVehical);
-            c3 = Cat3Name(ProductCategory3ENUM.BMW);
+            //c3 = Cat3Name(ProductCategory3ENUM.BMW);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.RecreationalVehical);
-            c3 = Cat3Name(ProductCategory3ENUM.Datsun);
+            //c3 = Cat3Name(ProductCategory3ENUM.Datsun);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.RecreationalVehical);
-            c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
+            //c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.RecreationalVehical);
-            c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
+            //c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
@@ -200,37 +199,37 @@ namespace DatastoreNS
             #region Truck
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Truck);
-            c3 = Cat3Name(ProductCategory3ENUM.Toyota);
+            //c3 = Cat3Name(ProductCategory3ENUM.Toyota);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Truck);
-            c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
+            //c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Truck);
-            c3 = Cat3Name(ProductCategory3ENUM.BMW);
+            //c3 = Cat3Name(ProductCategory3ENUM.BMW);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Truck);
-            c3 = Cat3Name(ProductCategory3ENUM.Datsun);
+            //c3 = Cat3Name(ProductCategory3ENUM.Datsun);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Truck);
-            c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
+            //c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Truck);
-            c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
+            //c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
@@ -242,37 +241,37 @@ namespace DatastoreNS
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.SUV);
-            c3 = Cat3Name(ProductCategory3ENUM.Toyota);
+            //c3 = Cat3Name(ProductCategory3ENUM.Toyota);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.SUV);
-            c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
+            //c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.SUV);
-            c3 = Cat3Name(ProductCategory3ENUM.BMW);
+            //c3 = Cat3Name(ProductCategory3ENUM.BMW);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.SUV);
-            c3 = Cat3Name(ProductCategory3ENUM.Datsun);
+            //c3 = Cat3Name(ProductCategory3ENUM.Datsun);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.SUV);
-            c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
+            //c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.SUV);
-            c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
+            //c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
@@ -285,37 +284,37 @@ namespace DatastoreNS
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Van);
-            c3 = Cat3Name(ProductCategory3ENUM.Toyota);
+            //c3 = Cat3Name(ProductCategory3ENUM.Toyota);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Van);
-            c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
+            //c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Van);
-            c3 = Cat3Name(ProductCategory3ENUM.BMW);
+            //c3 = Cat3Name(ProductCategory3ENUM.BMW);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Van);
-            c3 = Cat3Name(ProductCategory3ENUM.Datsun);
+            //c3 = Cat3Name(ProductCategory3ENUM.Datsun);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Van);
-            c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
+            //c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Van);
-            c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
+            //c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
             //-------------------------------------------------------
@@ -334,49 +333,37 @@ namespace DatastoreNS
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.Resteraunts);
-            c3 = Cat3Name(ProductCategory3ENUM.PakistaniFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.SaltNPepper);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.Resteraunts);
-            c3 = Cat3Name(ProductCategory3ENUM.ChineseFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.Macdonalds);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.Resteraunts);
-            c3 = Cat3Name(ProductCategory3ENUM.MalaysianFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.Hardees);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.Resteraunts);
-            c3 = Cat3Name(ProductCategory3ENUM.JapaneseFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.MinistryOfBurgers);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.Resteraunts);
-            c3 = Cat3Name(ProductCategory3ENUM.Pizzas);
+            c3 = Cat3Name(ProductCategory3ENUM.BurgerKing);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.Resteraunts);
-            c3 = Cat3Name(ProductCategory3ENUM.Hamburgers);
-            lst.Add(new ProductCatMainHelper(c1, c2, c3));
-
-
-            c1 = Cat1Name(ProductCategory1ENUM.Foods);
-            c2 = Cat2Name(ProductCategory2ENUM.Resteraunts);
-            c3 = Cat3Name(ProductCategory3ENUM.Currys);
-            lst.Add(new ProductCatMainHelper(c1, c2, c3));
-
-
-            c1 = Cat1Name(ProductCategory1ENUM.Foods);
-            c2 = Cat2Name(ProductCategory2ENUM.Resteraunts);
-            c3 = Cat3Name(ProductCategory3ENUM.Sandwichs);
+            c3 = Cat3Name(ProductCategory3ENUM.SaltNPepper);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
             //-------------------------------------------------------
@@ -386,50 +373,32 @@ namespace DatastoreNS
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.FoodDelivery);
-            c3 = Cat3Name(ProductCategory3ENUM.PakistaniFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.BurgerKing);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.FoodDelivery);
-            c3 = Cat3Name(ProductCategory3ENUM.ChineseFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.Macdonalds);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.FoodDelivery);
-            c3 = Cat3Name(ProductCategory3ENUM.MalaysianFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.PizzaHut);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.FoodDelivery);
-            c3 = Cat3Name(ProductCategory3ENUM.JapaneseFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.MinistryOfBurgers);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
-
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.FoodDelivery);
-            c3 = Cat3Name(ProductCategory3ENUM.Pizzas);
+            c3 = Cat3Name(ProductCategory3ENUM.PizzaHut);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
-
-            c1 = Cat1Name(ProductCategory1ENUM.Foods);
-            c2 = Cat2Name(ProductCategory2ENUM.FoodDelivery);
-            c3 = Cat3Name(ProductCategory3ENUM.Hamburgers);
-            lst.Add(new ProductCatMainHelper(c1, c2, c3));
-
-
-            c1 = Cat1Name(ProductCategory1ENUM.Foods);
-            c2 = Cat2Name(ProductCategory2ENUM.FoodDelivery);
-            c3 = Cat3Name(ProductCategory3ENUM.Currys);
-            lst.Add(new ProductCatMainHelper(c1, c2, c3));
-
-
-            c1 = Cat1Name(ProductCategory1ENUM.Foods);
-            c2 = Cat2Name(ProductCategory2ENUM.FoodDelivery);
-            c3 = Cat3Name(ProductCategory3ENUM.Sandwichs);
-            lst.Add(new ProductCatMainHelper(c1, c2, c3));
             #endregion
             //-------------------------------------------------------
 
@@ -437,50 +406,34 @@ namespace DatastoreNS
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.FastFoods);
-            c3 = Cat3Name(ProductCategory3ENUM.PakistaniFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.Macdonalds);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.FastFoods);
-            c3 = Cat3Name(ProductCategory3ENUM.ChineseFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.Hardees);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.FastFoods);
-            c3 = Cat3Name(ProductCategory3ENUM.MalaysianFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.BurgerKing);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.FastFoods);
-            c3 = Cat3Name(ProductCategory3ENUM.JapaneseFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.PizzaHut);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.FastFoods);
-            c3 = Cat3Name(ProductCategory3ENUM.Pizzas);
+            c3 = Cat3Name(ProductCategory3ENUM.PizzaHut);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
-            c1 = Cat1Name(ProductCategory1ENUM.Foods);
-            c2 = Cat2Name(ProductCategory2ENUM.FastFoods);
-            c3 = Cat3Name(ProductCategory3ENUM.Hamburgers);
-            lst.Add(new ProductCatMainHelper(c1, c2, c3));
-
-
-            c1 = Cat1Name(ProductCategory1ENUM.Foods);
-            c2 = Cat2Name(ProductCategory2ENUM.FastFoods);
-            c3 = Cat3Name(ProductCategory3ENUM.Currys);
-            lst.Add(new ProductCatMainHelper(c1, c2, c3));
-
-
-            c1 = Cat1Name(ProductCategory1ENUM.Foods);
-            c2 = Cat2Name(ProductCategory2ENUM.FastFoods);
-            c3 = Cat3Name(ProductCategory3ENUM.Sandwichs);
-            lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
             //-------------------------------------------------------
 
@@ -489,7 +442,7 @@ namespace DatastoreNS
 
             c1 = Cat1Name(ProductCategory1ENUM.Foods);
             c2 = Cat2Name(ProductCategory2ENUM.SuperMarkets);
-            c3 = Cat3Name(ProductCategory3ENUM.PakistaniFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.RahatBakery);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
@@ -580,6 +533,148 @@ namespace DatastoreNS
             //-------------------------------------------------------
             #endregion
 
+            #region Pakistani Foods
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.PakistaniFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.Chaman);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.PakistaniFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.SaltNPepper);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.PakistaniFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.TheVillage);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            #endregion
+
+            #region Chinese Food
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.ChineseFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.MeiFie);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.ChineseFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.ChinaTown);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+            #endregion
+
+            #region Malaysian Foods
+
+            #endregion
+
+
+            #region JapaneseFoods
+
+            #endregion
+
+
+            #region Pizzas
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.PakistaniFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.PizzaHut);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.PakistaniFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.RahatBakery);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.PakistaniFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.JalalSons);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.PakistaniFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.Metro);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.PakistaniFoods);
+            c3 = Cat3Name(ProductCategory3ENUM.MallOfLahore);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            #endregion
+
+
+            #region Hamburgers
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.Hamburgers);
+            c3 = Cat3Name(ProductCategory3ENUM.RahatBakery);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.Hamburgers);
+            c3 = Cat3Name(ProductCategory3ENUM.JalalSons);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.Hamburgers);
+            c3 = Cat3Name(ProductCategory3ENUM.Metro);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.Hamburgers);
+            c3 = Cat3Name(ProductCategory3ENUM.MallOfLahore);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.Hamburgers);
+            c3 = Cat3Name(ProductCategory3ENUM.Macdonalds);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.Hamburgers);
+            c3 = Cat3Name(ProductCategory3ENUM.Hardees);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.Hamburgers);
+            c3 = Cat3Name(ProductCategory3ENUM.MinistryOfBurgers);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.Hamburgers);
+            c3 = Cat3Name(ProductCategory3ENUM.BurgerKing);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.Hamburgers);
+            c3 = Cat3Name(ProductCategory3ENUM.SaltNPepper);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+
+            c1 = Cat1Name(ProductCategory1ENUM.Foods);
+            c2 = Cat2Name(ProductCategory2ENUM.Hamburgers);
+            c3 = Cat3Name(ProductCategory3ENUM.TheVillage);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+
+            #endregion
+
+
+            #region Currys
+
+            #endregion
+
+
+            #region Sandwichs
+
+            #endregion
+
 
 
 
@@ -596,14 +691,19 @@ namespace DatastoreNS
 
             c1 = Cat1Name(ProductCategory1ENUM.Electronics);
             c2 = Cat2Name(ProductCategory2ENUM.ElectronicParts);
-            c3 = Cat3Name(ProductCategory3ENUM.ComputerParts);
+            c3 = Cat3Name(ProductCategory3ENUM.ComputerBoards);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Electronics);
             c2 = Cat2Name(ProductCategory2ENUM.ElectronicParts);
-            c3 = Cat3Name(ProductCategory3ENUM.MiscParts);
+            c3 = Cat3Name(ProductCategory3ENUM.HardDrives);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            c1 = Cat1Name(ProductCategory1ENUM.Electronics);
+            c2 = Cat2Name(ProductCategory2ENUM.ElectronicParts);
+            c3 = Cat3Name(ProductCategory3ENUM.BasicElectronicParts);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
             #endregion
 
@@ -623,67 +723,168 @@ namespace DatastoreNS
             #region clothes
             //-------------------------------------------------------
 
-            c1 = Cat1Name(ProductCategory1ENUM.Clothes);
-            c2 = Cat2Name(ProductCategory2ENUM.MensClothing);
-            c3 = Cat3Name(ProductCategory3ENUM.MensJeans);
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensJeans);
+            c3 = Cat3Name(ProductCategory3ENUM.Levis);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensJeans);
+            c3 = Cat3Name(ProductCategory3ENUM.Gucci);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensJeans);
+            c3 = Cat3Name(ProductCategory3ENUM.MallOfLahore);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
-            c1 = Cat1Name(ProductCategory1ENUM.Clothes);
-            c2 = Cat2Name(ProductCategory2ENUM.MensClothing);
-            c3 = Cat3Name(ProductCategory3ENUM.MensTwoPieceSuits);
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensJeans);
+            c3 = Cat3Name(ProductCategory3ENUM.MallOfLahore);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            //-------------------------
+
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensTwoPieceSuits);
+            c3 = Cat3Name(ProductCategory3ENUM.JunaidJamshed);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
-            c1 = Cat1Name(ProductCategory1ENUM.Clothes);
-            c2 = Cat2Name(ProductCategory2ENUM.MensClothing);
-            c3 = Cat3Name(ProductCategory3ENUM.MensThreePieceSuits);
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensTwoPieceSuits);
+            c3 = Cat3Name(ProductCategory3ENUM.JohnTailor);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
-            c1 = Cat1Name(ProductCategory1ENUM.Clothes);
-            c2 = Cat2Name(ProductCategory2ENUM.MensClothing);
-            c3 = Cat3Name(ProductCategory3ENUM.MensSwimSuits);
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensTwoPieceSuits);
+            c3 = Cat3Name(ProductCategory3ENUM.MallOfLahore);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            //-------------------------
+
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensThreePieceSuits);
+            c3 = Cat3Name(ProductCategory3ENUM.JunaidJamshed);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
-            c1 = Cat1Name(ProductCategory1ENUM.Clothes);
-            c2 = Cat2Name(ProductCategory2ENUM.MensClothing);
-            c3 = Cat3Name(ProductCategory3ENUM.MensShalwaarKameezs);
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensThreePieceSuits);
+            c3 = Cat3Name(ProductCategory3ENUM.JohnTailor);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensThreePieceSuits);
+            c3 = Cat3Name(ProductCategory3ENUM.MallOfLahore);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            //-------------------------
+
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensSwimSuits);
+            c3 = Cat3Name(ProductCategory3ENUM.MallOfLahore);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            //-------------------------
+
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensShalwaarKameezs);
+            c3 = Cat3Name(ProductCategory3ENUM.JunaidJamshed);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensShalwaarKameezs);
+            c3 = Cat3Name(ProductCategory3ENUM.JohnTailor);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensShalwaarKameezs);
+            c3 = Cat3Name(ProductCategory3ENUM.MallOfLahore);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+
+
 
 
             //-------------------------------------------------------
 
 
-            c1 = Cat1Name(ProductCategory1ENUM.Clothes);
-            c2 = Cat2Name(ProductCategory2ENUM.WomensClothing);
-            c3 = Cat3Name(ProductCategory3ENUM.WomensJeans);
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensJeans);
+            c3 = Cat3Name(ProductCategory3ENUM.Levis);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensJeans);
+            c3 = Cat3Name(ProductCategory3ENUM.Gucci);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensJeans);
+            c3 = Cat3Name(ProductCategory3ENUM.MallOfLahore);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
-            c1 = Cat1Name(ProductCategory1ENUM.Clothes);
-            c2 = Cat2Name(ProductCategory2ENUM.WomensClothing);
-            c3 = Cat3Name(ProductCategory3ENUM.WomensTwoPcSuits);
+            c1 = Cat1Name(ProductCategory1ENUM.MensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.MensJeans);
+            c3 = Cat3Name(ProductCategory3ENUM.MallOfLahore);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            //-------------------------
+
+            c1 = Cat1Name(ProductCategory1ENUM.WomensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.WomensTwoPcSuits);
+            c3 = Cat3Name(ProductCategory3ENUM.JunaidJamshed);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
-            c1 = Cat1Name(ProductCategory1ENUM.Clothes);
-            c2 = Cat2Name(ProductCategory2ENUM.WomensClothing);
-            c3 = Cat3Name(ProductCategory3ENUM.WomensThreePcSuits);
+            c1 = Cat1Name(ProductCategory1ENUM.WomensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.WomensTwoPcSuits);
+            c3 = Cat3Name(ProductCategory3ENUM.JohnTailor);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
-            c1 = Cat1Name(ProductCategory1ENUM.Clothes);
-            c2 = Cat2Name(ProductCategory2ENUM.WomensClothing);
-            c3 = Cat3Name(ProductCategory3ENUM.WomensSwimsuits);
+            c1 = Cat1Name(ProductCategory1ENUM.WomensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.WomensTwoPcSuits);
+            c3 = Cat3Name(ProductCategory3ENUM.MallOfLahore);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            //-------------------------
+
+            c1 = Cat1Name(ProductCategory1ENUM.WomensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.WomensThreePcSuits);
+            c3 = Cat3Name(ProductCategory3ENUM.JunaidJamshed);
             lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
-            //c1 = Cat1Name(ProductCategory1ENUM.Clothes);
-            //c2 = Cat2Name(ProductCategory2ENUM.WomensClothing);
-            //c3 = Cat3Name(ProductCategory3ENUM.WomensShalwaarKameezs);
-            //lst.Add(new ProductCatMainHelper(c1, c2, c3));
+            c1 = Cat1Name(ProductCategory1ENUM.WomensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.WomensThreePcSuits);
+            c3 = Cat3Name(ProductCategory3ENUM.Warda);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            c1 = Cat1Name(ProductCategory1ENUM.WomensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.WomensThreePcSuits);
+            c3 = Cat3Name(ProductCategory3ENUM.MallOfLahore);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            //-------------------------
+
+            c1 = Cat1Name(ProductCategory1ENUM.WomensClothing);
+            c2 = Cat2Name(ProductCategory2ENUM.WomensSwimsuits);
+            c3 = Cat3Name(ProductCategory3ENUM.MallOfLahore);
+            lst.Add(new ProductCatMainHelper(c1, c2, c3));
+
+            //-------------------------
+
+
+
+
+
+            
 
 
             //-------------------------------------------------------

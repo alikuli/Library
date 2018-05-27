@@ -79,9 +79,9 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         #region Diemensions
 
-        [Display(Name = "UOM Length")]
-        public string UomPackageLengthId { get; set; }
-        public UomLength UomPackageLength { get; set; }
+        [Display(Name = "UOM Dimensions")]
+        public string UomDimensionsId { get; set; }
+        public UomLength UomDimensions { get; set; }
 
 
         public Dimensions Dimensions { get; set; }

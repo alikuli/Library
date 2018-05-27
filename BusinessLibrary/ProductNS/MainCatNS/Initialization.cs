@@ -26,7 +26,7 @@ namespace UowLibrary.ProductNS
         //}
 
 
-        public override void AddInitData(HttpContext ctx)
+        public override void AddInitData()
         {
             //get the data
             List<ProductCatMainHelper> dataList = new DatastoreNS.ProductCatMainInitilizingDataList().DataList();

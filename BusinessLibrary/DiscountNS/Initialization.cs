@@ -14,7 +14,7 @@ namespace UowLibrary.DiscountPrecedenceNS
     {
 
 
-        public override void AddInitData(HttpContext ctx)
+        public override void AddInitData()
         {
             List<DiscountPrecedenceInitParameter> DiscountPrecedenceNamesLst = DiscountPrecedenceData.DataList();
 

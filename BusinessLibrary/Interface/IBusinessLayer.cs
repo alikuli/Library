@@ -47,7 +47,7 @@ namespace UowLibrary.Interface
         Task UpdateAndSaveAsync(ControllerCreateEditParameter param);
         string UserNameBiz { get; }
         string UserIdBiz { get;  }
-        Task InitializationDataAsync(HttpContext ctx);
+        Task InitializationDataAsync();
 
     }
 }

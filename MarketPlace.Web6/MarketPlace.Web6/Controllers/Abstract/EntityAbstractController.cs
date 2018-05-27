@@ -511,7 +511,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
             try
             {
                 Biz.SaveAfterEveryAddition(IsSavingAfterEveryAddition);
-                await Biz.InitializationDataAsync(System.Web.HttpContext.Current);
+                await Biz.InitializationDataAsync();
                 ErrorsGlobal.Add(string.Format("*** {0} Initialized", typeof(TEntity).Name), "");
 
             }

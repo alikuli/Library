@@ -10,6 +10,9 @@ using System.Text;
 
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
+    /// <summary>
+    /// This is the Menu Path
+    /// </summary>
     public partial class ProductCategoryMain : ProductCategoryAbstract, IProductCategoryMain
     {
         StringBuilder sb = new StringBuilder();

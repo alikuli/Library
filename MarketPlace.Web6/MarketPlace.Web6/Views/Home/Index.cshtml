@@ -16,9 +16,12 @@
     </div>
     <div class="col-lg-4 text-center">
         <p class="text-success h3 text-center">Programs</p>
-
-        <p> @Html.ActionLink("Counters", "Index", "Counters", null, new { @class = "btn btn-success" })</p>
+        <p> @Html.ActionLink("Products", "Index", "Products", null, new { @class = "btn btn-success" })</p>
+        <p class="text-success h3 text-center">Current</p>
         <p> @Html.ActionLink("Menus", "Index", "Menus", null, new { @class = "btn btn-success" })</p>
+        <p class="text-success h4 text-center">Filing</p>
+        <p> @Html.ActionLink("Filing", "Index", "FileDocs", null, new { @class = "btn btn-success" })</p>
+        <p> @Html.ActionLink("Filing Old", "Index", "FileDocsOldData", null, new { @class = "btn btn-success" })</p>
         <p class="text-success h4 text-center">Places</p>
         <p>@Html.ActionLink("Countries", "Index", "Countries", null, new { @class = "btn btn-success" })</p>
         <p>@Html.ActionLink("States", "Index", "States", null, new { @class = "btn btn-success" })</p>
@@ -42,20 +45,24 @@
         <p> @Html.ActionLink("Uom Qty", "Index", "UomQuantities", null, new { @class = "btn btn-success" })</p>
         <p> @Html.ActionLink("Uploaded Files", "Index", "UploadedFiles", null, new { @class = "btn btn-success" })</p>
         <p>@Html.ActionLink("Counters", "Index", "Counters", null, new { @class = "btn btn-success" })</p>
-        <p class="text-success h4 text-center">Filing</p>
-        <p> @Html.ActionLink("Filing", "Index", "FileDocs", null, new { @class = "btn btn-success" })</p>
-        <p> @Html.ActionLink("Filing Old", "Index", "FileDocsOldData", null, new { @class = "btn btn-success" })</p>
         <p class="text-success h4 text-center">Users</p>
         <p> @Html.ActionLink("Users", "Index", "Users", null, new { @class = "btn btn-success" })</p>
         <p> @Html.ActionLink("Rights", "Index", "Rights", null, new { @class = "btn btn-success" })</p>
+        <p class="text-success h4 text-center">Misc</p>
+        <p> @Html.ActionLink("Counters", "Index", "Counters", null, new { @class = "btn btn-success" })</p>
+
 
 
     </div>
 
     <div class="col-lg-4 text-center">
+        <p class="text-warning h3 text-center">Current</p>
+        <p>@Html.ActionLink("Products", "InitializeDb", "Products", null, new { @class = "btn btn-warning" })</p>
         <p class="text-warning h3 text-center">Initializers</p>
-        <p>@Html.ActionLink("Counters", "InitializeDb", "Counters", null, new { @class = "btn btn-warning" })</p>
-        <p> @Html.ActionLink("Invoice Pdf", "PrintInvoice", "Languages", null, new { @class = "btn btn-success" })</p>
+        <p> @Html.ActionLink("Invoice Pdf", "PrintInvoice", "Languages", null, new { @class = "btn btn-warning" })</p>
+        <p class="text-warning h4 text-center">Filing</p>
+        <p> @Html.ActionLink("Filing", "InitializeDb", "FileDocs", null, new { @class = "btn btn-warning" })</p>
+        <p> @Html.ActionLink("Filing Old", "InitializeDb", "FileDocsOldData", null, new { @class = "btn btn-warning" })</p>
         <p class="text-warning h4 text-center">Places</p>
         <p>@Html.ActionLink("Countries", "InitializeDb", "Countries", null, new { @class = "btn btn-warning" })</p>
         <p>@Html.ActionLink("States", "InitializeDb", "States", null, new { @class = "btn btn-warning" })</p>
@@ -79,19 +86,22 @@
         <p> @Html.ActionLink("Uom Qty", "InitializeDb", "UomQuantities", null, new { @class = "btn btn-warning" })</p>
         <p> @Html.ActionLink("NO Initialization", "", "", null, new { @class = "btn btn-warning disabled" })</p>
         <p> @Html.ActionLink("Counters", "InitializeDb", "Counters", null, new { @class = "btn btn-warning" })</p>
-        <p class="text-warning h4 text-center">Filing</p>
-        <p> @Html.ActionLink("Filing", "InitializeDb", "FileDocs", null, new { @class = "btn btn-warning" })</p>
-        <p> @Html.ActionLink("Filing Old", "InitializeDb", "FileDocsOldData", null, new { @class = "btn btn-warning" })</p>
         <p class="text-warning h4 text-center">Users</p>
         <p> @Html.ActionLink("Users", "InitializeDb", "Users", null, new { @class = "btn btn-warning" })</p>
         <p> @Html.ActionLink("Rights", "InitializeDb", "Rights", null, new { @class = "btn btn-warning" })</p>
+        <p class="text-warning h4 text-center">Misc</p>
+        <p>@Html.ActionLink("Counters", "InitializeDb", "Counters", null, new { @class = "btn btn-warning" })</p>
 
     </div>
 
     <div class="col-lg-4 h3 text-center">
+        <p class="text-danger  h3 text-center">Current</p>
+        <p>@Html.ActionLink("Products", "DeleteAll", "Products", null, new { @class = "btn btn-danger" })</p>
         <p class="text-danger  h3 text-center">Delete ALL</p>
-        <p>@Html.ActionLink("Counters", "DeleteAll", "Counters", null, new { @class = "btn btn-danger" })</p>
-        <p> @Html.ActionLink("Menus", "", "", null, new { @class = "btn btn-warning disabled" })</p>
+        <p> @Html.ActionLink("Menus", "", "", null, new { @class = "btn btn-danger disabled" })</p>
+        <p class="text-warning h4 text-center">Filing</p>
+        <p>@Html.ActionLink("Filing", "DeleteAll", "FileDocs", null, new { @class = "btn btn-danger" })</p>
+        <p>@Html.ActionLink("Filing Old", "DeleteAll", "FileDocsOldData", null, new { @class = "btn btn-danger" })</p>
         <p class="text-danger h4 text-center">Places</p>
         <p>@Html.ActionLink("Countries", "DeleteAll", "Countries", null, new { @class = "btn btn-danger" })</p>
         <p>@Html.ActionLink("States", "DeleteAll", "States", null, new { @class = "btn btn-danger" })</p>
@@ -115,12 +125,11 @@
         <p> @Html.ActionLink("Uom Qty", "DeleteAll", "UomQuantities", null, new { @class = "btn btn-danger" })</p>
         <p>@Html.ActionLink("Uploaded Files", "DeleteAll", "UploadedFiles", null, new { @class = "btn btn-danger" })</p>
         <p>@Html.ActionLink("Counters", "DeleteAll", "Counters", null, new { @class = "btn btn-danger" })</p>
-        <p class="text-warning h4 text-center">Filing</p>
-        <p>@Html.ActionLink("Filing", "DeleteAll", "FileDocs", null, new { @class = "btn btn-danger" })</p>
-        <p>@Html.ActionLink("Filing Old", "DeleteAll", "FileDocsOldData", null, new { @class = "btn btn-danger" })</p>
         <p class="text-warning h4 text-center">Users</p>
         <p>@Html.ActionLink("Users", "DeleteAll", "Users", null, new { @class = "btn btn-danger" })</p>
         <p>@Html.ActionLink("Rights", "DeleteAll", "Rights", null, new { @class = "btn btn-danger" })</p>
+        <p class="text-warning h4 text-center">Misc</p>
+        <p>@Html.ActionLink("Counters", "DeleteAll", "Counters", null, new { @class = "btn btn-danger" })</p>
 
     </div>
 </div>

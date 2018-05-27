@@ -24,7 +24,7 @@ namespace UowLibrary.FileDocNS
         }
 
 
-        public override void AddInitData(HttpContext ctx)
+        public override void AddInitData()
         {
             if (GetDataForStringArrayFormat.IsNullOrEmpty())
             {

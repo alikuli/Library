@@ -12,7 +12,7 @@ namespace UowLibrary.StateNS
     public partial class StateBiz : BusinessLayer<State>
     {
 
-        public override void AddInitData(HttpContext ctx)
+        public override void AddInitData()
         {
             var data = StateData.Data();
             if (data.IsNullOrEmpty())

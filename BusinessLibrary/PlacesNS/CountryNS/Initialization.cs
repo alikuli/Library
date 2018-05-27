@@ -15,7 +15,7 @@ namespace UowLibrary
 
 
 
-        public override void AddInitData(HttpContext ctx)
+        public override void AddInitData()
         {
             string[,] countryDataArray = CountryData.CountryDataArray();
             if (!countryDataArray.IsNull() && countryDataArray.Length > 0)

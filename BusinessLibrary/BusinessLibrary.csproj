@@ -238,6 +238,7 @@
     <Compile Include="ProductNS\MainCatNS\SelectList.cs" />
     <Compile Include="ProductNS\MainCatNS\Uploads.cs" />
     <Compile Include="ProductNS\MainCatNS\BusinessRule.cs" />
+    <Compile Include="ProductNS\ProductNS\ProductBiz - Initialize.cs" />
     <Compile Include="ProductNS\ProductNS\ProductBiz - Bussiness Rules.cs" />
     <Compile Include="ProductNS\ProductNS\ProductBiz.cs" />
     <Compile Include="ProductNS\UomLengthNS\SelectList.cs" />

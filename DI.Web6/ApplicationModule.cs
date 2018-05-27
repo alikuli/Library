@@ -51,6 +51,11 @@ namespace DependancyResolver
             Bind<MenuBiz>().ToSelf();
             Bind<CounterBiz>().ToSelf();
             Bind<ProductBiz>().ToSelf();
+            
+            Bind<UomLengthBiz>().ToSelf();
+            Bind<UomQuantityBiz>().ToSelf();
+            Bind<UomVolumeBiz>().ToSelf();
+            Bind<UomWeightBiz>().ToSelf();
 
         }
 

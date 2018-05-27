@@ -1,20 +1,27 @@
 ﻿
 namespace EnumLibrary.EnumNS
 {
+    /// <summary>
+    /// This category will come from the product
+    /// </summary>
     public enum ProductCategory1ENUM
     {
         Unknown,
         Automobiles,
-        Clothes,
+        MensClothing,
+        WomensClothing,
         Electronics,
         Foods,
-        Servants,
+        HomeServants,
+        FactoryWorkers,
+        OfficeWorkers,
         Machines,
         Stationary,
-        Manufacturing,
-        Wholesalers,
-        Retailers,
-        ImportersExporters,
+        FruitProccessors,
+        Steel,
+        Cement,
+        Electricity,
+
 
 
 

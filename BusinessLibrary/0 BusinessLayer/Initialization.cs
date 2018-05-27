@@ -71,9 +71,9 @@ namespace UowLibrary
         /// Note, if you want a new save message override SaveMessage
         /// Note. If you want to make minor changes when adding string[] data, override Event_ChangeStringFormatInitializationDataBeforeAdding
         /// </summary>
-        public virtual void AddInitData(HttpContext ctx)
+        public virtual void AddInitData()
         {
-            addInitData_Helper(GetDataForStringArrayFormat, ctx);
+            addInitData_Helper(GetDataForStringArrayFormat);
         }
 
         #endregion
@@ -94,7 +94,7 @@ namespace UowLibrary
         /// This adds the data if it is in the simple string array format. For more complicated stuff, override GetData.
         /// </summary>
         /// <param name="dataList"></param>
-        private void addInitData_Helper(string[] dataList, HttpContext ctx)
+        private void addInitData_Helper(string[] dataList)
         {
 
             if (dataList.IsNullOrEmpty())
@@ -149,11 +149,11 @@ namespace UowLibrary
         /// To send more complicated data, override GetData.
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
-        public async Task InitializationDataAsync(HttpContext ctx)
+        public async Task InitializationDataAsync()
         {
             try
             {
-                AddInitData(ctx);
+                AddInitData();
                 if (!IsSaveAfterEveryAddition)
                 {
                     await SaveChangesAsync();

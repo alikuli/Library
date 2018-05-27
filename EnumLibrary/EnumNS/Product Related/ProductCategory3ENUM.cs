@@ -1,29 +1,12 @@
 ﻿
 namespace EnumLibrary.EnumNS.Product_Related
 {
+    /// <summary>
+    /// This category will come from the seller.
+    /// </summary>
     public enum ProductCategory3ENUM
     {
         Unknown,
-        Toyota,
-        Mercedeze,
-        BMW,
-        Datsun,
-        Daewoo,
-        Volkswagon,
-
-        Yamaha,
-        Kawasaki,
-        Qingqi,
-        HondaMotorcycle,
-
-        PakistaniFoods,
-        ChineseFoods,
-        MalaysianFoods,
-        JapaneseFoods,
-        Pizzas,
-        Hamburgers,
-        Currys,
-        Sandwichs,
 
         RahatBakery,
         JalalSons,
@@ -36,58 +19,25 @@ namespace EnumLibrary.EnumNS.Product_Related
         Hardees,
         MinistryOfBurgers,
         BurgerKing,
+        SaltNPepper,
+        PizzaHut,
+        TheVillage,
+        Packages,
 
-        WomensJeans,
-        WomensSwimsuits,
-        WomensTwoPcSuits,
-        WomensThreePcSuits,
+        MeiFie,
+        ChinaTown,
 
-        MensJeans,
-        MensTwoPieceSuits,
-        MensThreePieceSuits,
-        MensSwimSuits,
-        MensShalwaarKameezs,
+        ComputerBoards,
+        HardDrives,
+        BasicElectronicParts,
 
-        Maids,
-        Butlers,
-        CarDrivers,
-        Gardeners,
-        Janitors,
+        Levis,
+        Gucci,
+        Misc,
+        JunaidJamshed,
+        JohnTailor,
 
-        SteelWorkers,
-        WarehouseWorkers,
-        ConstructionWorkers,
-        BusDrivers,
-        CraneDrivers,
-        TruckDrivers,
-
-
-        KitchenBlendingMachines,
-        KitchenCuttingMachines,
-        KitchenMixingMachines,
-        KitchenOven,
-        GardenMowingMachines,
-        HomeAirconditioners,
-        HomeTvs,
-
-        ComputerPrinters,
-        ComputerMonitors,
-        ComputerWires,
-        ComputerKeyBoards,
-        ComputerTables,
-        ComputerChairs,
-        ComputerMouse,
-
-        FactoryAirConditioner,
-        SteelFactoryMachines,
-        PrintingMachines,
-        PackingMachines,
-        SpinningMachines,
-        GrindingMachines,
-
-            //electronic parts
-        ComputerParts,
-        MiscParts
+        Warda
 
     }
 }
