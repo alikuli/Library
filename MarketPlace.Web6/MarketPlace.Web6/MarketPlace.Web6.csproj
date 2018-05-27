@@ -201,7 +201,7 @@
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomLenghtsController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductCatMainController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductCategories3Controller.cs" />
-    <Compile Include="Controllers\MyControllersNS\ProductNS\ProductCategories2Controller.cs" />
+    <Compile Include="Controllers\MyControllersNS\ProductNS\MenuPath2sController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\MenuPath1sController.cs" />
     <Compile Include="Controllers\MyControllersNS\DiscountNS\DiscountPrecedencesController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlayersNS\CustomerCategoriesController.cs" />
@@ -334,7 +334,7 @@
     <Content Include="Views\UploadedFiles\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\Shared\ViewControls\Uploads\_ShowUploads.cshtml" />
     <Content Include="Views\Shared\ProductCategory\_ProductCategoryFieldsOnlyEditFormat.cshtml" />
-    <Content Include="Views\ProductCategories2\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\MenuPath2s\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\ProductCategories3\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\FileDocs\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\FileDocsOldData\_FieldsOnlyEditFormat.cshtml" />

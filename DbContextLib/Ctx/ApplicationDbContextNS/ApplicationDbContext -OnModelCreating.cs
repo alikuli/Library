@@ -29,10 +29,10 @@ namespace ApplicationDbContextNS
                 .WillCascadeOnDelete(true);
 
 
-            modelBuilder.Entity<ProductCategory2>()
+            modelBuilder.Entity<MenuPath2>()
                 .HasMany<UploadedFile>(x => x.MiscFiles)
-                .WithOptional(x => x.ProductCategory2)
-                .HasForeignKey(x => x.ProductCategory2Id)
+                .WithOptional(x => x.MenuPath2)
+                .HasForeignKey(x => x.MenuPath2Id)
                 .WillCascadeOnDelete(true);
 
 
@@ -117,8 +117,8 @@ namespace ApplicationDbContextNS
 
 
 
-            modelBuilder.Entity<ProductCategory2>()
-                .HasMany<ProductCategoryMain>(x => x.ProductCategoryMains)
+            modelBuilder.Entity<MenuPath2>()
+                .HasMany<ProductCategoryMain>(x => x.MenuPathMains)
                 .WithOptional(x => x.ProductCat2)
                 .HasForeignKey(x => x.ProductCat2Id)
                 .WillCascadeOnDelete(false);

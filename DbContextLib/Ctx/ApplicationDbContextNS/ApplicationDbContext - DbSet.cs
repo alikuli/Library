@@ -62,7 +62,7 @@ namespace ApplicationDbContextNS
         public IDbSet<MenuPath1> MenuPath1s { get; set; }
 
 
-        public IDbSet<ProductCategory2> MenuPath2s { get; set; }
+        public IDbSet<MenuPath2> MenuPath2s { get; set; }
 
         public IDbSet<ProductCategory3> MenuPath3s { get; set; }
 

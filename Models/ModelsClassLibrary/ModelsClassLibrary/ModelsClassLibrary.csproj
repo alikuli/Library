@@ -280,9 +280,9 @@
     <Compile Include="ModelsNS\ProductEtcNS\ProductNS\ProductAbstract - Prices and Costs.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ProductNS\ProductAbstract - Item numbers and Serial No.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ProductNS\ProductAbstract - Pictures.cs" />
-    <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategoryMainNS\ProductCategoryMain.cs" />
-    <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategoryMainNS\UpdatePropertiesDuringModify.cs" />
-    <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategoryMainNS\HideNameInView.cs" />
+    <Compile Include="ModelsNS\MenuNS\ProductCategoryMainNS\ProductCategoryMain.cs" />
+    <Compile Include="ModelsNS\MenuNS\ProductCategoryMainNS\UpdatePropertiesDuringModify.cs" />
+    <Compile Include="ModelsNS\MenuNS\ProductCategoryMainNS\HideNameInView.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\CostsComplex.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\DateComplex.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\SalePrice.cs" />
@@ -316,10 +316,10 @@
     <Compile Include="InterfacesNS\HasUploadsNS\IProductHasUploads.cs" />
     <Compile Include="InterfacesNS\HasUploadsNS\IUserHasUploads.cs" />
     <Compile Include="InterfacesNS\HasUploadsNS\IHasUploads.cs" />
-    <Compile Include="ModelsNS\MenuNS\CategoryNS\MenuPath1.cs" />
-    <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategory2.cs" />
-    <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategory3.cs" />
-    <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategoryAbstract.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuPath1.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuPath2.cs" />
+    <Compile Include="ModelsNS\MenuNS\ProductCategory3.cs" />
+    <Compile Include="ModelsNS\MenuNS\ProductCategoryAbstract.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\Dimensions.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\ProductQuantityRec.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\ShipWeightClassRec.cs" />

@@ -12,19 +12,19 @@ namespace ModelsClassLibrary.MenuNS
 
 {
     
-    public class ProductCategory2:MenuPathAbstract, IHasUploads
+    public class MenuPath2: MenuPathAbstract, IHasUploads
     {
         public override ClassesWithRightsENUM ClassNameForRights()
         {
                 return EnumLibrary.EnumNS.ClassesWithRightsENUM.MenuPath2;
         }
-        public void LoadFrom(ProductCategory2 p)
+        public void LoadFrom(MenuPath2 p)
         {
             base.LoadFrom(p as ICommonWithId);
         }
 
 
-        public virtual ICollection<ProductCategoryMain> ProductCategoryMains { get; set; }
+        public virtual ICollection<ProductCategoryMain> MenuPathMains { get; set; }
 
         string IHasUploads.MiscFilesLocation()
         {

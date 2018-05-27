@@ -16,10 +16,10 @@ using WebLibrary.Programs;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCat2Biz : BusinessLayer<ProductCategory2>
+    public partial class MenuPath2Biz : BusinessLayer<MenuPath2>
     {
 
-        public ProductCat2Biz(IRepositry<ApplicationUser> userDal, IRepositry<ProductCategory2> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
+        public MenuPath2Biz(IRepositry<ApplicationUser> userDal, IRepositry<MenuPath2> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
             : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
         {
         }

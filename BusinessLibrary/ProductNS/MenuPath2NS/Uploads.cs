@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCat2Biz 
+    public partial class MenuPath2Biz 
     {
 
-        public override void AddEntityRecordIntoUpload(UploadedFile uploadFile, ProductCategory2 entity, IUserHasUploadsTypeENUM iuserHasUploadsTypeEnum)
+        public override void AddEntityRecordIntoUpload(UploadedFile uploadFile, MenuPath2 entity, IUserHasUploadsTypeENUM iuserHasUploadsTypeEnum)
         {
-            uploadFile.ProductCategory2Id = entity.Id;
-            uploadFile.ProductCategory2 = entity; 
+            uploadFile.MenuPath2Id = entity.Id;
+            uploadFile.MenuPath2 = entity; 
             ;
         }
 

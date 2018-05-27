@@ -59,7 +59,7 @@ namespace UowLibrary.ProductNS
         private void addCat2(MenuPathMainHelper item, ProductCategory3 cat3, ProductCategoryMain pcm)
         {
             //cat2 starts here
-            ProductCategory2 cat2 = _productCat2Biz.FindByName(item.MenuPath2);
+            MenuPath2 cat2 = _productCat2Biz.FindByName(item.MenuPath2);
             if (!item.MenuPath2.IsNullOrWhiteSpace())
             {
                 if (cat2.IsNull())
@@ -70,11 +70,11 @@ namespace UowLibrary.ProductNS
 
                 pcm.ProductCat2 = cat2;
                 pcm.ProductCat2Id = cat2.Id;
-                if (cat2.ProductCategoryMains.IsNullOrEmpty())
+                if (cat2.MenuPathMains.IsNullOrEmpty())
                 {
-                    cat2.ProductCategoryMains = new List<ProductCategoryMain>();
+                    cat2.MenuPathMains = new List<ProductCategoryMain>();
                 }
-                cat2.ProductCategoryMains.Add(pcm);
+                cat2.MenuPathMains.Add(pcm);
 
                 addCat3(item, cat3, pcm);
             }

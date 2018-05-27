@@ -9,27 +9,27 @@ using UowLibrary.ProductNS;
 
 namespace MarketPlace.Web6.Controllers
 {
-    public class ProductCategories2Controller : EntityAbstractController<ProductCategory2>
+    public class MenuPath2sController : EntityAbstractController<MenuPath2>
     {
 
-        ProductCat2Biz _productCat2Biz;
+        MenuPath2Biz _menuPath2Biz;
         #region Constructo and initializers
 
-        public ProductCategories2Controller(ProductCat2Biz productCat2Biz, IErrorSet errorSet)
+        public MenuPath2sController(MenuPath2Biz productCat2Biz, IErrorSet errorSet)
             : base(productCat2Biz, errorSet)
         {
-            _productCat2Biz = productCat2Biz;
+            _menuPath2Biz = productCat2Biz;
         }
 
         #endregion
 
 
 
-        public async Task<ActionResult> DeleteUploadedFile(string productCatId, string uploadedFileId)
+        public async Task<ActionResult> DeleteUploadedFile(string menuPathId, string uploadedFileId)
         {
             //delete from the productCategory2
-            await _productCat2Biz.DeleteUploadedFile(productCatId, uploadedFileId);
-            return RedirectToAction("Edit", new { id = productCatId });
+            await _menuPath2Biz.DeleteUploadedFile(menuPathId, uploadedFileId);
+            return RedirectToAction("Edit", new { id = menuPathId });
             //return RedirectToAction("DeleteConfirmed", "UploadedFiles", new { id = uploadedFileId });
         }
     }

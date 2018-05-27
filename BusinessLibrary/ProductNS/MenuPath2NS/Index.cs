@@ -6,7 +6,7 @@ using ModelsClassLibrary.ViewModels;
 using System.Linq;
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCat2Biz 
+    public partial class MenuPath2Biz 
     {
 
 
@@ -15,7 +15,7 @@ namespace UowLibrary.ProductNS
         {
             base.Event_ModifyIndexList(indexListVM, parameters);
 
-            indexListVM.Heading.Column = "All Product Category 2";
+            indexListVM.Heading.Column = "All Menu Paths 2";
             //indexListVM.MainHeading = "Product Category 2";
             indexListVM.IsImageTiled = true;
             indexListVM.Show.EditDeleteAndCreate = true;

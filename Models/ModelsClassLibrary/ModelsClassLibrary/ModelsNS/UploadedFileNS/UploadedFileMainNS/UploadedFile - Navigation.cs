@@ -20,9 +20,9 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
 
 
 
-        [Display(Name = "Category 2")]
-        public virtual string ProductCategory2Id { get; set; }
-        public virtual ProductCategory2 ProductCategory2 { get; set; }
+        [Display(Name = "Menu Path 2")]
+        public virtual string MenuPath2Id { get; set; }
+        public virtual MenuPath2 MenuPath2 { get; set; }
 
 
 

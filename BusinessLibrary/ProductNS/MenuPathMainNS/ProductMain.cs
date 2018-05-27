@@ -14,9 +14,9 @@ namespace UowLibrary.ProductNS
     public partial class ProductCatMainBiz : BusinessLayer<ProductCategoryMain>
     {
         MenuPath1Biz _productCat1Biz;
-        ProductCat2Biz _productCat2Biz;
+        MenuPath2Biz _productCat2Biz;
         ProductCat3Biz _productCat3Biz;
-        public ProductCatMainBiz(IRepositry<ApplicationUser> userDal, MenuPath1Biz productCat1Biz, ProductCat2Biz productCat2Biz, ProductCat3Biz productCat3Biz, IRepositry<ProductCategoryMain> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
+        public ProductCatMainBiz(IRepositry<ApplicationUser> userDal, MenuPath1Biz productCat1Biz, MenuPath2Biz productCat2Biz, ProductCat3Biz productCat3Biz, IRepositry<ProductCategoryMain> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
             : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
         {
             _productCat1Biz = productCat1Biz;

@@ -270,11 +270,10 @@
     <Compile Include="ProductNS\MenuPath1NS\Initialization.cs" />
     <Compile Include="ProductNS\MenuPath1NS\MenuPath1Biz.cs" />
     <Compile Include="ProductNS\MenuPath2NS\Uploads.cs" />
-    <Compile Include="ProductNS\MenuPath2NS\Fix.cs" />
     <Compile Include="ProductNS\MenuPath2NS\Index.cs" />
     <Compile Include="ProductNS\MenuPath2NS\Initialization.cs" />
     <Compile Include="ProductNS\MenuPath2NS\SelectList.cs" />
-    <Compile Include="ProductNS\MenuPath2NS\ProductCat2Biz.cs" />
+    <Compile Include="ProductNS\MenuPath2NS\MenuPath2Biz.cs" />
     <Compile Include="ProductNS\MenuPath3NS\Uploads.cs" />
     <Compile Include="ProductNS\MenuPath3NS\Fix.cs" />
     <Compile Include="ProductNS\MenuPath3NS\Index.cs" />

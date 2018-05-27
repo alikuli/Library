@@ -4,7 +4,7 @@ using ModelsClassLibrary.ModelsNS.ProductNS;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCat2Biz 
+    public partial class MenuPath2Biz 
     {
 
 
