@@ -20,7 +20,7 @@ namespace InterfacesLibrary.ProductNS
         string ProductCat1Id { get; set; }
         MenuPath2 ProductCat2 { get; set; }
         string ProductCat2Id { get; set; }
-        ProductCategory3 ProductCat3 { get; set; }
+        MenuPath3 ProductCat3 { get; set; }
         string ProductCat3Id { get; set; }
         //ICollection<IDiscount> ProductCategoryDiscounts { get; set; }
         void SelfErrorCheck();

@@ -8,13 +8,13 @@ namespace MarketPlace.Web6.Controllers
     public class UploadedFilesController : EntityAbstractController<UploadedFile>
     {
 
-        UploadedFileBiz _paymentTermsBiz;
+        UploadedFileBiz _uploadedfilesBiz;
         #region Constructo and initializers
 
         public UploadedFilesController(UploadedFileBiz UploadedFilesBiz, IErrorSet errorSet)
             : base(UploadedFilesBiz, errorSet)
         {
-            _paymentTermsBiz = UploadedFilesBiz;
+            _uploadedfilesBiz = UploadedFilesBiz;
         }
 
         #endregion

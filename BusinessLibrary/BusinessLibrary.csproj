@@ -275,7 +275,6 @@
     <Compile Include="ProductNS\MenuPath2NS\SelectList.cs" />
     <Compile Include="ProductNS\MenuPath2NS\MenuPath2Biz.cs" />
     <Compile Include="ProductNS\MenuPath3NS\Uploads.cs" />
-    <Compile Include="ProductNS\MenuPath3NS\Fix.cs" />
     <Compile Include="ProductNS\MenuPath3NS\Index.cs" />
     <Compile Include="ProductNS\MenuPath3NS\Initialization.cs" />
     <Compile Include="ProductNS\MenuPath3NS\SelectList.cs" />

@@ -200,7 +200,7 @@
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomWeightsController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomLenghtsController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductCatMainController.cs" />
-    <Compile Include="Controllers\MyControllersNS\ProductNS\ProductCategories3Controller.cs" />
+    <Compile Include="Controllers\MyControllersNS\ProductNS\MenuPath3sController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\MenuPath2sController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\MenuPath1sController.cs" />
     <Compile Include="Controllers\MyControllersNS\DiscountNS\DiscountPrecedencesController.cs" />

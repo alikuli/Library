@@ -9,19 +9,19 @@ namespace ModelsClassLibrary.MenuNS
 
 {
 
-    public class ProductCategory3 : MenuPathAbstract, IHasUploads
+    public class MenuPath3 : MenuPathAbstract, IHasUploads
     {
         public override ClassesWithRightsENUM ClassNameForRights()
         {
             return EnumLibrary.EnumNS.ClassesWithRightsENUM.MenuPath3;
         }
-        public void LoadFrom(ProductCategory3 p)
+        public void LoadFrom(MenuPath3 p)
         {
             base.LoadFrom(p as ICommonWithId);
         }
 
 
-        public virtual ICollection<ProductCategoryMain> ProductCategoryMains { get; set; }
+        public virtual ICollection<ProductCategoryMain> MenuPathMains { get; set; }
 
         string IHasUploads.MiscFilesLocation()
         {
@@ -31,7 +31,7 @@ namespace ModelsClassLibrary.MenuNS
 
         public string MiscFilesLocation_Initialization()
         {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY, "productcategory");
+            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY, "menupaths");
         }
 
     }

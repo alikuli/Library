@@ -39,7 +39,7 @@ namespace ModelsClassLibrary.MenuNS
 
         [Display(Name = "ProductCategory 3")]
         public string ProductCat3Id { get; set; }
-        public virtual ProductCategory3 ProductCat3 { get; set; }
+        public virtual MenuPath3 ProductCat3 { get; set; }
 
 
 

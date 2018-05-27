@@ -43,7 +43,7 @@ namespace UowLibrary.ProductNS
                         throw new Exception(ErrorsGlobal.ToString());
                     }
 
-                    ProductCategory3 cat3 = _productCat3Biz.FindByName(item.MenuPath3);
+                    MenuPath3 cat3 = _productCat3Biz.FindByName(item.MenuPath3);
                     ProductCategoryMain pcm = new ProductCategoryMain();
                     
                     addCat1(item, pcm);
@@ -56,7 +56,7 @@ namespace UowLibrary.ProductNS
                 SaveChanges();
         }
 
-        private void addCat2(MenuPathMainHelper item, ProductCategory3 cat3, ProductCategoryMain pcm)
+        private void addCat2(MenuPathMainHelper item, MenuPath3 cat3, ProductCategoryMain pcm)
         {
             //cat2 starts here
             MenuPath2 cat2 = _productCat2Biz.FindByName(item.MenuPath2);
@@ -80,7 +80,7 @@ namespace UowLibrary.ProductNS
             }
         }
 
-        private  void addCat3(MenuPathMainHelper item, ProductCategory3 cat3, ProductCategoryMain pcm)
+        private  void addCat3(MenuPathMainHelper item, MenuPath3 cat3, ProductCategoryMain pcm)
         {
             //Cat3 starts here....
             if (!item.MenuPath3.IsNullOrWhiteSpace())
@@ -93,11 +93,11 @@ namespace UowLibrary.ProductNS
                 }
                 pcm.ProductCat3 = cat3;
                 pcm.ProductCat3Id = cat3.Id;
-                if (cat3.ProductCategoryMains.IsNullOrEmpty())
+                if (cat3.MenuPathMains.IsNullOrEmpty())
                 {
-                    cat3.ProductCategoryMains = new List<ProductCategoryMain>();
+                    cat3.MenuPathMains = new List<ProductCategoryMain>();
                 }
-                cat3.ProductCategoryMains.Add(pcm);
+                cat3.MenuPathMains.Add(pcm);
             }
         }
 

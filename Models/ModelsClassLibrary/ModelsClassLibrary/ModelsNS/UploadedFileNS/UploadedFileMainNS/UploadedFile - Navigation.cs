@@ -29,7 +29,7 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
 
         [Display(Name = "Category 3")]
         public virtual string ProductCategory3Id { get; set; }
-        public virtual ProductCategory3 ProductCategory3 { get; set; }
+        public virtual MenuPath3 ProductCategory3 { get; set; }
 
 
 

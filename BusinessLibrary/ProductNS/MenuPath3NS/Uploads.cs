@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCat3Biz 
+    public partial class MenuPath3Biz 
     {
         //private readonly IRepositry<UploadedFile> _uploadFileDAL;
 
@@ -20,7 +20,7 @@ namespace UowLibrary.ProductNS
         //    return MyConstants.SAVE_LOCATION_PRODUCT_CATEGORY3;
         //}
 
-        public override void AddEntityRecordIntoUpload(UploadedFile uploadFile, ProductCategory3 entity, IUserHasUploadsTypeENUM iuserHasUploadsTypeEnum)
+        public override void AddEntityRecordIntoUpload(UploadedFile uploadFile, MenuPath3 entity, IUserHasUploadsTypeENUM iuserHasUploadsTypeEnum)
         {
             uploadFile.ProductCategory3Id = entity.Id;
             uploadFile.ProductCategory3 = entity;

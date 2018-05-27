@@ -16,28 +16,15 @@ using WebLibrary.Programs;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCat3Biz : BusinessLayer<ProductCategory3>
+    public partial class MenuPath3Biz : BusinessLayer<MenuPath3>
     {
 
-        public ProductCat3Biz(IRepositry<ApplicationUser> userDal, IRepositry<ProductCategory3> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
+        public MenuPath3Biz(IRepositry<ApplicationUser> userDal, IRepositry<MenuPath3> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
             : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
         {
         }
 
 
-        //private Repositry<UploadedFile> UploadDal
-        //{
-
-        //    get
-        //    {
-        //        if (_iUploadDAL.IsNull())
-        //        {
-        //            ErrorsGlobal.Add("Upload DAL not loaded.", MethodBase.GetCurrentMethod());
-        //            throw new Exception(ErrorsGlobal.ToString());
-        //        }
-        //        return (Repositry<UploadedFile>)_iUploadDAL;
-        //    }
-        //}
 
     }
 }

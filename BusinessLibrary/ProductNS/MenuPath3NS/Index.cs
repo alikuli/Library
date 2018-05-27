@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCat3Biz 
+    public partial class MenuPath3Biz 
     {
 
 
@@ -17,8 +17,7 @@ namespace UowLibrary.ProductNS
         {
             base.Event_ModifyIndexList(indexListVM, parameters);
 
-            indexListVM.Heading.Column = "All Product Category 3";
-            //indexListVM.MainHeading = "Product Category 3";
+            indexListVM.Heading.Column = "All Menu Path 3";
             indexListVM.IsImageTiled = true;
             indexListVM.Show.EditDeleteAndCreate = true;
 

@@ -318,8 +318,8 @@
     <Compile Include="InterfacesNS\HasUploadsNS\IHasUploads.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuPath1.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuPath2.cs" />
-    <Compile Include="ModelsNS\MenuNS\ProductCategory3.cs" />
-    <Compile Include="ModelsNS\MenuNS\ProductCategoryAbstract.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuPath3.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuPathAbstract.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\Dimensions.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\ProductQuantityRec.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\ShipWeightClassRec.cs" />

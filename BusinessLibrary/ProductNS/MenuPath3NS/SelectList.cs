@@ -6,13 +6,13 @@ using ModelsClassLibrary.ViewModels;
 namespace UowLibrary.ProductNS
 
 {
-    public partial class ProductCat3Biz
+    public partial class MenuPath3Biz
     {
 
 
         public override string SelectListCacheKey
         {
-            get { return "ProductCat3SelectListData"; }
+            get { return "MenuPath3SelectListData"; }
         }
 
 
