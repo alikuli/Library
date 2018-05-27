@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
@@ -10,7 +11,7 @@ using System.Reflection;
 using System.Web.Mvc;
 namespace UowLibrary.MenuNS
 {
-    public partial class MenuBiz : BusinessLayer<ProductCategoryMain>
+    public partial class MenuBiz
     {
 
         public SelectList ProductCat1_SelectList()

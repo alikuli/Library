@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.ProductNS;
+using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,8 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Text;
 
-namespace ModelsClassLibrary.ModelsNS.ProductNS
+namespace ModelsClassLibrary.MenuNS
+
 {
     /// <summary>
     /// This is the Menu Path

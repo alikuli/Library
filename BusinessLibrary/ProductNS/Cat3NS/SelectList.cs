@@ -1,11 +1,12 @@
 ﻿using AliKuli.Extentions;
+using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ViewModels;
 
 namespace UowLibrary.ProductNS
 
 {
-    public partial class ProductCat3Biz : BusinessLayer<ProductCategory3>
+    public partial class ProductCat3Biz
     {
 
 

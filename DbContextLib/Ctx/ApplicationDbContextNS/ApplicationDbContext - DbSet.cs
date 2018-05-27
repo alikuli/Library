@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.DeliveryMethodNS;
 using ModelsClassLibrary.ModelsNS.DiscountNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FileDocsNS;

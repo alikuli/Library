@@ -3,6 +3,7 @@ using AliKuli.Extentions;
 using AliKuli.UtilitiesNS;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCat1Biz : BusinessLayer<ProductCategory1>
+    public partial class ProductCat1Biz 
     {
         //private readonly IRepositry<UploadedFile> _uploadFileDAL;
 

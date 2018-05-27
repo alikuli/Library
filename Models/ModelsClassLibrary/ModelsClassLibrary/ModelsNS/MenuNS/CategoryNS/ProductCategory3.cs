@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
-using EnumLibrary.EnumNS;
+using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
+using System.Collections.Generic;
 using System.IO;
 
-namespace ModelsClassLibrary.ModelsNS.ProductNS
+namespace ModelsClassLibrary.MenuNS
+
 {
-    
-    public class ProductCategory2:ProductCategoryAbstract, IHasUploads
+
+    public class ProductCategory3 : ProductCategoryAbstract, IHasUploads
     {
         public override ClassesWithRightsENUM ClassNameForRights()
         {
-                return EnumLibrary.EnumNS.ClassesWithRightsENUM.ProductCategory2;
+            return EnumLibrary.EnumNS.ClassesWithRightsENUM.ProductCategory3;
         }
-        public void LoadFrom(ProductCategory2 p)
+        public void LoadFrom(ProductCategory3 p)
         {
             base.LoadFrom(p as ICommonWithId);
         }
@@ -27,6 +26,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         string IHasUploads.MiscFilesLocation()
         {
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, ClassNameRaw);
+
         }
 
         public string MiscFilesLocation_Initialization()

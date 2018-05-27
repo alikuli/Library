@@ -1,4 +1,5 @@
-﻿using ModelsClassLibrary.ModelsNS.SharedNS;
+﻿using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 

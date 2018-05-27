@@ -1,9 +1,10 @@
 ﻿using DatastoreNS;
+using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCat2Biz : BusinessLayer<ProductCategory2>
+    public partial class ProductCat2Biz 
     {
 
 

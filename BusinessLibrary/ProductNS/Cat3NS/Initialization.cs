@@ -1,9 +1,10 @@
 ﻿using DatastoreNS;
+using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCat3Biz : BusinessLayer<ProductCategory3>
+    public partial class ProductCat3Biz 
     {
 
         public override bool Event_LockEditDuringInitialization()

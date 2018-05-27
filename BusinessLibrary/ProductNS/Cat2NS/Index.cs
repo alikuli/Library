@@ -6,7 +6,7 @@ using ModelsClassLibrary.ViewModels;
 using System.Linq;
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCat2Biz : BusinessLayer<ProductCategory2>
+    public partial class ProductCat2Biz 
     {
 
 

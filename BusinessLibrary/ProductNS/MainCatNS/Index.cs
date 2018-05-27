@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCatMainBiz : BusinessLayer<ProductCategoryMain>
+    public partial class ProductCatMainBiz 
     {
 
 

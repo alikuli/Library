@@ -15,10 +15,11 @@ using System.Text;
 using AliKuli.Extentions;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using System.Reflection;
+using ModelsClassLibrary.MenuNS;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCatMainBiz : BusinessLayer<ProductCategoryMain>
+    public partial class ProductCatMainBiz 
     {
 
 

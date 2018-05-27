@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ViewModels;
 using System.Web.Mvc;
@@ -6,7 +7,7 @@ using System.Web.Mvc;
 namespace UowLibrary.ProductNS
 
 {
-    public partial class ProductCatMainBiz : BusinessLayer<ProductCategoryMain>
+    public partial class ProductCatMainBiz 
     {
 
 

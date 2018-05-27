@@ -280,9 +280,9 @@
     <Compile Include="ModelsNS\ProductEtcNS\ProductNS\ProductAbstract - Prices and Costs.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ProductNS\ProductAbstract - Item numbers and Serial No.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ProductNS\ProductAbstract - Pictures.cs" />
-    <Compile Include="ModelsNS\ProductEtcNS\CategoryNS\ProductCategoryMainNS\ProductCategoryMain.cs" />
-    <Compile Include="ModelsNS\ProductEtcNS\CategoryNS\ProductCategoryMainNS\UpdatePropertiesDuringModify.cs" />
-    <Compile Include="ModelsNS\ProductEtcNS\CategoryNS\ProductCategoryMainNS\HideNameInView.cs" />
+    <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategoryMainNS\ProductCategoryMain.cs" />
+    <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategoryMainNS\UpdatePropertiesDuringModify.cs" />
+    <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategoryMainNS\HideNameInView.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\CostsComplex.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\DateComplex.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\SalePrice.cs" />
@@ -316,10 +316,10 @@
     <Compile Include="InterfacesNS\HasUploadsNS\IProductHasUploads.cs" />
     <Compile Include="InterfacesNS\HasUploadsNS\IUserHasUploads.cs" />
     <Compile Include="InterfacesNS\HasUploadsNS\IHasUploads.cs" />
-    <Compile Include="ModelsNS\ProductEtcNS\CategoryNS\ProductCategory1.cs" />
-    <Compile Include="ModelsNS\ProductEtcNS\CategoryNS\ProductCategory2.cs" />
-    <Compile Include="ModelsNS\ProductEtcNS\CategoryNS\ProductCategory3.cs" />
-    <Compile Include="ModelsNS\ProductEtcNS\CategoryNS\ProductCategoryAbstract.cs" />
+    <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategory1.cs" />
+    <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategory2.cs" />
+    <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategory3.cs" />
+    <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategoryAbstract.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\Dimensions.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\ProductQuantityRec.cs" />
     <Compile Include="ModelsNS\ProductEtcNS\ComplexClassesNS\ShipWeightClassRec.cs" />
@@ -392,7 +392,6 @@
     <Folder Include="InterfacesNS\Operational\" />
     <Folder Include="ModelsNS\DocumentsNS\Abstract\" />
     <Folder Include="ModelsNS\DocumentsNS\PaymentsNS\Abstract\" />
-    <Folder Include="ModelsNS\MenuNS\" />
     <Folder Include="ModelsNS\PeopleNS\EnumsNS\" />
     <Folder Include="ModelsNS\PlacesNS\Salepoint\" />
   </ItemGroup>

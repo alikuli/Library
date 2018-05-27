@@ -1,7 +1,7 @@
 ﻿using InterfacesLibrary.ProductNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 
-namespace ModelsClassLibrary.ModelsNS.ProductNS
+namespace ModelsClassLibrary.MenuNS
 {
     public partial class ProductCategoryMain 
     {

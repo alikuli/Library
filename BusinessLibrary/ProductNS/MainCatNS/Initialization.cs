@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using CountryDATA.ProductNS.CategoryNS;
+using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Web;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCatMainBiz : BusinessLayer<ProductCategoryMain>
+    public partial class ProductCatMainBiz 
     {
 
         public override bool Event_LockEditDuringInitialization()

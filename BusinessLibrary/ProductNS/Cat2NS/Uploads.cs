@@ -2,6 +2,7 @@
 using AliKuli.Extentions;
 using AliKuli.UtilitiesNS;
 using EnumLibrary.EnumNS;
+using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductCat2Biz : BusinessLayer<ProductCategory2>
+    public partial class ProductCat2Biz 
     {
 
         public override void AddEntityRecordIntoUpload(UploadedFile uploadFile, ProductCategory2 entity, IUserHasUploadsTypeENUM iuserHasUploadsTypeEnum)

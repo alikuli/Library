@@ -5,7 +5,8 @@ using UserModels;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using InterfacesLibrary.ProductNS;
 
-namespace ModelsClassLibrary.ModelsNS.ProductNS
+namespace ModelsClassLibrary.MenuNS
+
 
 {
     

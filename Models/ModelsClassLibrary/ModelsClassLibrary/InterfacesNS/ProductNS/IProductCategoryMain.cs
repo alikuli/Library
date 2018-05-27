@@ -3,6 +3,7 @@ using System.Collections.Generic;
 //using InterfacesLibrary.DiscountNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.MenuNS;
 
 namespace InterfacesLibrary.ProductNS
 {

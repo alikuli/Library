@@ -44,7 +44,6 @@ namespace DatastoreNS
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
             c2 = Cat2Name(ProductCategory2ENUM.Bus);
             //c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
-            lst.Add(new ProductCatMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(ProductCategory1ENUM.Automobiles);
