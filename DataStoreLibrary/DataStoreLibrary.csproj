@@ -80,11 +80,11 @@
     <Compile Include="PlaceNS\CityNS\Data From Internet\CityData.cs" />
     <Compile Include="PlaceNS\CityNS\Data From Internet\CityRawDataModel.cs" />
     <Compile Include="PlaceNS\CountryNS\CountryData.cs" />
-    <Compile Include="ProductNS\CategoryNS\ProductCatMainInitilizingDataList.cs" />
+    <Compile Include="ProductNS\CategoryNS\MenuPathMainInitilizingDataList.cs" />
     <Compile Include="ProductNS\CategoryNS\ProductCat3Array.cs" />
     <Compile Include="ProductNS\CategoryNS\ProductCat2Array.cs" />
     <Compile Include="ProductNS\CategoryNS\ProductCat1Array.cs" />
-    <Compile Include="ProductNS\CategoryNS\ProductCatMainHelper.cs" />
+    <Compile Include="ProductNS\CategoryNS\MenuPathMainHelper.cs" />
     <Compile Include="ProductNS\ProductDataArray.cs" />
     <Compile Include="ProductNS\ProductInitializerHelper.cs" />
     <Compile Include="ProductNS\UomNS\UomVolumeArray.cs" />
