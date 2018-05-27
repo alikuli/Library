@@ -7,10 +7,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 
-namespace UowLibrary.ProductNS
+namespace UowLibrary.MenuNS
+
 
 {
-    public partial class ProductCat1Biz 
+    public partial class MenuPath1Biz 
     {
 
 

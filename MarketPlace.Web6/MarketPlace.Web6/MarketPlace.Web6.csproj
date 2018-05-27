@@ -202,7 +202,7 @@
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductCatMainController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductCategories3Controller.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductCategories2Controller.cs" />
-    <Compile Include="Controllers\MyControllersNS\ProductNS\ProductCategories1Controller.cs" />
+    <Compile Include="Controllers\MyControllersNS\ProductNS\MenuPath1sController.cs" />
     <Compile Include="Controllers\MyControllersNS\DiscountNS\DiscountPrecedencesController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlayersNS\CustomerCategoriesController.cs" />
     <Compile Include="Controllers\MyControllersNS\PaymentNS\PaymentTermsController.cs" />
@@ -325,7 +325,7 @@
     <Content Include="Views\Shared\ViewControls\DeleteAll\_DeleteAllHeading.cshtml" />
     <Content Include="Views\Shared\ViewControls\Index\_IndexMiddlePart.cshtml" />
     <Content Include="Views\CustomerCategories\_FieldsOnlyEditFormat.cshtml" />
-    <Content Include="Views\ProductCategories1\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\MenuPath1\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\OwnerCategories\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\States\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\Shared\ViewControls\Index\_IndexMiddlePart - TiledPictures.cshtml" />

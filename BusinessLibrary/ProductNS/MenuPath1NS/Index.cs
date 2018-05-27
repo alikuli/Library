@@ -5,9 +5,10 @@ using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.ViewModels;
 using System.Linq;
-namespace UowLibrary.ProductNS
+
+namespace UowLibrary.MenuNS
 {
-    public partial class ProductCat1Biz 
+    public partial class MenuPath1Biz 
     {
 
 
@@ -16,7 +17,7 @@ namespace UowLibrary.ProductNS
         {
             base.Event_ModifyIndexList(indexListVM, parameters);
 
-            indexListVM.Heading.Column = "All Product Category 1";
+            indexListVM.Heading.Column = "All Menu Path 1";
             //indexListVM.MainHeading = "Product Category 1";
             indexListVM.IsImageTiled = true;
             indexListVM.Show.EditDeleteAndCreate = true;

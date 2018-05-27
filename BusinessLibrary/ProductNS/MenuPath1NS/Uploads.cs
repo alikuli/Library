@@ -11,9 +11,10 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace UowLibrary.ProductNS
+namespace UowLibrary.MenuNS
+
 {
-    public partial class ProductCat1Biz 
+    public partial class MenuPath1Biz 
     {
         //private readonly IRepositry<UploadedFile> _uploadFileDAL;
 
@@ -27,10 +28,10 @@ namespace UowLibrary.ProductNS
         //}
 
 
-        public override void AddEntityRecordIntoUpload(UploadedFile uploadFile, ProductCategory1 entity, IUserHasUploadsTypeENUM iuserHasUploadsTypeEnum)
+        public override void AddEntityRecordIntoUpload(UploadedFile uploadFile, MenuPath1 entity, IUserHasUploadsTypeENUM iuserHasUploadsTypeEnum)
         {
-            uploadFile.ProductCategory1Id = entity.Id;
-            uploadFile.ProductCategory1 = entity;
+            uploadFile.MenuPath1Id = entity.Id;
+            uploadFile.MenuPath1 = entity;
         }
 
 

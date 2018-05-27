@@ -15,18 +15,18 @@ namespace ModelsClassLibrary.MenuNS
     /// <summary>
     /// This is the Menu Path
     /// </summary>
-    public partial class ProductCategoryMain : ProductCategoryAbstract, IProductCategoryMain
+    public partial class ProductCategoryMain : MenuPathAbstract, IProductCategoryMain
     {
         StringBuilder sb = new StringBuilder();
 
         public override ClassesWithRightsENUM ClassNameForRights()
         {
-            return EnumLibrary.EnumNS.ClassesWithRightsENUM.ProductCategoryMain;
+            return EnumLibrary.EnumNS.ClassesWithRightsENUM.MenuPathMain;
         }
         [Display(Name = "ProductCategory 1")]
 
         public string ProductCat1Id { get; set; }
-        public virtual ProductCategory1 ProductCat1 { get; set; }
+        public virtual MenuPath1 ProductCat1 { get; set; }
 
         #region Navigation Properties
 

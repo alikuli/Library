@@ -3,16 +3,17 @@ using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ViewModels;
 
-namespace UowLibrary.ProductNS
+namespace UowLibrary.MenuNS
+
 
 {
-    public partial class ProductCat1Biz 
+    public partial class MenuPath1Biz 
     {
 
 
         public override string SelectListCacheKey
         {
-            get { return "ProductCat1SelectListData"; }
+            get { return "MenuPath1SelectListData"; }
         }
 
 

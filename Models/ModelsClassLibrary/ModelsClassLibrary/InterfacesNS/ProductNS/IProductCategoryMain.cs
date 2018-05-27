@@ -16,7 +16,7 @@ namespace InterfacesLibrary.ProductNS
         bool IsCat1Null();
         bool IsCat2Null();
         bool IsCat3Null();
-        ProductCategory1 ProductCat1 { get; set; }
+        MenuPath1 ProductCat1 { get; set; }
         string ProductCat1Id { get; set; }
         ProductCategory2 ProductCat2 { get; set; }
         string ProductCat2Id { get; set; }

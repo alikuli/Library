@@ -14,9 +14,9 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
     {
 
 
-        [Display(Name = "Category 1")]
-        public virtual string ProductCategory1Id { get; set; }
-        public virtual ProductCategory1 ProductCategory1 { get; set; }
+        [Display(Name = "Menu Path 1")]
+        public virtual string MenuPath1Id { get; set; }
+        public virtual MenuPath1 MenuPath1 { get; set; }
 
 
 

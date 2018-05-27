@@ -9,11 +9,11 @@ namespace ModelsClassLibrary.MenuNS
 
 {
 
-    public class ProductCategory3 : ProductCategoryAbstract, IHasUploads
+    public class ProductCategory3 : MenuPathAbstract, IHasUploads
     {
         public override ClassesWithRightsENUM ClassNameForRights()
         {
-            return EnumLibrary.EnumNS.ClassesWithRightsENUM.ProductCategory3;
+            return EnumLibrary.EnumNS.ClassesWithRightsENUM.MenuPath3;
         }
         public void LoadFrom(ProductCategory3 p)
         {

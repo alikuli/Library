@@ -22,10 +22,10 @@ namespace ApplicationDbContextNS
             //we need to delete the physical uploads seperately
             #region Uploads
 
-            modelBuilder.Entity<ProductCategory1>()
+            modelBuilder.Entity<MenuPath1>()
                 .HasMany<UploadedFile>(x => x.MiscFiles)
-                .WithOptional(x => x.ProductCategory1)
-                .HasForeignKey(x => x.ProductCategory1Id)
+                .WithOptional(x => x.MenuPath1)
+                .HasForeignKey(x => x.MenuPath1Id)
                 .WillCascadeOnDelete(true);
 
 
@@ -109,8 +109,8 @@ namespace ApplicationDbContextNS
 
             #region Product Categories
 
-            modelBuilder.Entity<ProductCategory1>()
-                .HasMany<ProductCategoryMain>(x => x.ProductCategoryMains)
+            modelBuilder.Entity<MenuPath1>()
+                .HasMany<ProductCategoryMain>(x => x.MenuPathMains)
                 .WithOptional(x => x.ProductCat1)
                 .HasForeignKey(x => x.ProductCat1Id)
                 .WillCascadeOnDelete(false);

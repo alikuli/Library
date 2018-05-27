@@ -316,7 +316,7 @@
     <Compile Include="InterfacesNS\HasUploadsNS\IProductHasUploads.cs" />
     <Compile Include="InterfacesNS\HasUploadsNS\IUserHasUploads.cs" />
     <Compile Include="InterfacesNS\HasUploadsNS\IHasUploads.cs" />
-    <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategory1.cs" />
+    <Compile Include="ModelsNS\MenuNS\CategoryNS\MenuPath1.cs" />
     <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategory2.cs" />
     <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategory3.cs" />
     <Compile Include="ModelsNS\MenuNS\CategoryNS\ProductCategoryAbstract.cs" />

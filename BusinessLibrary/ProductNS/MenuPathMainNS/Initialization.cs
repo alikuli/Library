@@ -103,14 +103,14 @@ namespace UowLibrary.ProductNS
 
         private void addCat1(MenuPathMainHelper item, ProductCategoryMain pcm)
             {
-                                ProductCategory1 cat1 = _productCat1Biz.FindByName(item.MenuPath1);
+                                MenuPath1 cat1 = _productCat1Biz.FindByName(item.MenuPath1);
                                 pcm.ProductCat1 = cat1;
                                 pcm.ProductCat1Id = cat1.Id;
-                                if (cat1.ProductCategoryMains.IsNullOrEmpty())
+                                if (cat1.MenuPathMains.IsNullOrEmpty())
                                 {
-                                    cat1.ProductCategoryMains = new List<ProductCategoryMain>();
+                                    cat1.MenuPathMains = new List<ProductCategoryMain>();
                                 }
-                                cat1.ProductCategoryMains.Add(pcm);
+                                cat1.MenuPathMains.Add(pcm);
             }
     }
 

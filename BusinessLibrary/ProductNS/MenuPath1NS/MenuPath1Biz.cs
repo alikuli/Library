@@ -14,13 +14,13 @@ using UowLibrary.UploadFileNS;
 using UserModels;
 using WebLibrary.Programs;
 
-namespace UowLibrary.ProductNS
+namespace UowLibrary.MenuNS
 {
-    public partial class ProductCat1Biz : BusinessLayer<ProductCategory1>
+    public partial class MenuPath1Biz : BusinessLayer<MenuPath1>
     {
         
 
-        public ProductCat1Biz(IRepositry<ApplicationUser> userDal, IRepositry<ProductCategory1> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
+        public MenuPath1Biz(IRepositry<ApplicationUser> userDal, IRepositry<MenuPath1> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
             : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
         {
         }

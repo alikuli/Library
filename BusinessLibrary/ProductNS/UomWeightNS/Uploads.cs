@@ -19,8 +19,8 @@ namespace UowLibrary
 
                     file.MetaData.Created.SetToTodaysDate("");
 
-                    file.ProductCategory1 = entity as ProductCategory1;
-                    file.ProductCategory1Id = entity.Id;
+                    file.MenuPath1 = entity as MenuPath1;
+                    file.MenuPath1Id = entity.Id;
 
                     //add the owner of the file here....
                     entity.MiscFiles.Add(file);

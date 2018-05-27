@@ -5,31 +5,32 @@ using ModelsClassLibrary.ModelsNS.ProductNS;
 using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using UowLibrary.MenuNS;
 using UowLibrary.ProductNS;
 
 namespace MarketPlace.Web6.Controllers
 {
-    public class ProductCategories1Controller : EntityAbstractController<ProductCategory1>
+    public class MenuPath1sController : EntityAbstractController<MenuPath1>
     {
 
-        ProductCat1Biz _productCat1Biz;
+        MenuPath1Biz _menupath1Biz;
         #region Constructo and initializers
 
-        public ProductCategories1Controller(ProductCat1Biz productCat1Biz, IErrorSet errorSet)
-            : base(productCat1Biz, errorSet)
+        public MenuPath1sController(MenuPath1Biz menupath1Biz, IErrorSet errorSet)
+            : base(menupath1Biz, errorSet)
         {
-            _productCat1Biz = productCat1Biz;
+            _menupath1Biz = menupath1Biz;
         }
 
         #endregion
 
 
 
-        public async Task<ActionResult> DeleteUploadedFile(string productCatId, string uploadedFileId)
+        public async Task<ActionResult> DeleteUploadedFile(string menupathId, string uploadedFileId)
         {
             //delete from the productCategory1
-            await _productCat1Biz.DeleteUploadedFile(productCatId, uploadedFileId);
-            return RedirectToAction("Edit", new { id = productCatId });
+            await _menupath1Biz.DeleteUploadedFile(menupathId, uploadedFileId);
+            return RedirectToAction("Edit", new { id = menupathId });
             //return RedirectToAction("DeleteConfirmed", "UploadedFiles", new { id = uploadedFileId });
         }
     }

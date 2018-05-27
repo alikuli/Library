@@ -10,7 +10,7 @@ namespace ModelsClassLibrary.MenuNS
 
 {
     
-    public partial class ProductCategoryMain : ProductCategoryAbstract, IProductCategoryMain
+    public partial class ProductCategoryMain : MenuPathAbstract, IProductCategoryMain
     {
         public override void UpdatePropertiesDuringModify(ICommonWithId icommonWithId)
         {
