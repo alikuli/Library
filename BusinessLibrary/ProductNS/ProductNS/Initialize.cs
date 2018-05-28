@@ -53,11 +53,11 @@ namespace UowLibrary.ProductNS
                         ErrorsGlobal.Add("UomPackageLength is null", MethodBase.GetCurrentMethod());
                     }
 
-                    p.UomStock = _uomQuantityBiz.FindByName(item.UomStock);
-                    if (p.UomStock.IsNull())
-                    {
-                        ErrorsGlobal.Add("UomStock is null", MethodBase.GetCurrentMethod());
-                    }
+                    //p.UomStock = _uomQuantityBiz.FindByName(item.UomStock);
+                    //if (p.UomStock.IsNull())
+                    //{
+                    //    ErrorsGlobal.Add("UomStock is null", MethodBase.GetCurrentMethod());
+                    //}
 
                     if (ErrorsGlobal.HasErrors)
                     {
@@ -67,7 +67,7 @@ namespace UowLibrary.ProductNS
                     p.UomDimensionsId = p.UomDimensions.Id;
                     p.UomVolumeId = p.UomVolume.Id;
                     p.UomDimensionsId = p.UomDimensions.Id;
-                    p.UomStockID = p.UomStock.Id;
+                    //p.UomStockID = p.UomStock.Id;
 
                     CreateAndSave_ForInitializeOnly(p);
                 }

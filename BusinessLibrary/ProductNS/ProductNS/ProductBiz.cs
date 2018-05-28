@@ -2,8 +2,6 @@
 using ApplicationDbContextNS;
 using DalLibrary.Interfaces;
 using ErrorHandlerLibrary.ExceptionsNS;
-using InvoiceNS;
-using MigraDocLibrary;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -18,7 +16,7 @@ namespace UowLibrary.ProductNS
         UomWeightBiz _uomWeightBiz;
         UomVolumeBiz _uomVolumeBiz;
         UomLengthBiz _uomLengthBiz;
-        UomQuantityBiz _uomQuantityBiz; 
+        UomQuantityBiz _uomQuantityBiz;
 
         public ProductBiz(IRepositry<ApplicationUser> userDal, IRepositry<Product> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz, UomWeightBiz uomWeightBiz, UomVolumeBiz uomVolumeBiz, UomLengthBiz uomLengthBiz, UomQuantityBiz uomQuantityBiz)
             : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
@@ -26,14 +24,47 @@ namespace UowLibrary.ProductNS
             _uomWeightBiz = uomWeightBiz;
             _uomVolumeBiz = uomVolumeBiz;
             _uomLengthBiz = uomLengthBiz;
-            _uomQuantityBiz = uomQuantityBiz; 
+            _uomQuantityBiz = uomQuantityBiz;
         }
 
 
-        public override string SelectListCacheKey
+        public UomWeightBiz UomWeightBiz{
+            get
+            {
+                return _uomWeightBiz;
+            }
+        }
+
+
+        public UomVolumeBiz UomVolumeBiz
         {
-            get { return "ProductSelectListCache"; }
+            get
+            {
+                return _uomVolumeBiz;
+            }
         }
+
+        public UomLengthBiz UomLengthBiz
+        {
+            get
+            {
+                return _uomLengthBiz;
+            }
+        }
+
+        public UomQuantityBiz UomQuantityBiz
+        {
+            get
+            {
+                return _uomQuantityBiz;
+            }
+        }
+
+
+        //public override string SelectListCacheKey
+        //{
+        //    get { return "ProductSelectListCache"; }
+        //}
 
     }
 }

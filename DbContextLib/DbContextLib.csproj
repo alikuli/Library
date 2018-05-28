@@ -204,6 +204,10 @@
     <Compile Include="Migrations\201805271203364_FixedProduct.Designer.cs">
       <DependentUpon>201805271203364_FixedProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805280009253_28-05-2018.cs" />
+    <Compile Include="Migrations\201805280009253_28-05-2018.Designer.cs">
+      <DependentUpon>201805280009253_28-05-2018.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -272,6 +276,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805271203364_FixedProduct.resx">
       <DependentUpon>201805271203364_FixedProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805280009253_28-05-2018.resx">
+      <DependentUpon>201805280009253_28-05-2018.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

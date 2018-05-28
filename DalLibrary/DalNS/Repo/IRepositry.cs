@@ -54,6 +54,7 @@ namespace DalLibrary.Interfaces
         IList<TEntity> SearchFor(Expression<Func<TEntity, bool>> predicate);
         Task<IList<TEntity>> SearchForAsync(Expression<Func<TEntity, bool>> predicate);
         global::System.Web.Mvc.SelectList SelectList();
+        global::System.Web.Mvc.SelectList SelectList_Engine(IQueryable<TEntity> data);
         void UnChangedState(TEntity entity);
         string UserName { get; set; }
         string UserId { get; set; }

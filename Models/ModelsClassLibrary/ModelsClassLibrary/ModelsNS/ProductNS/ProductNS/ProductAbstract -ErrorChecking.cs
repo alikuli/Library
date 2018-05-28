@@ -1,11 +1,6 @@
 ﻿using AliKuli.Extentions;
-using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
@@ -28,7 +23,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
             Check_MlpPrice();
             Check_Sell_Price();
             Check_Is_Not_Child_Of_Self();
-            Check_UomStock();
+            //Check_UomStock();
             Check_Uom_Weight_On_Product();
             Check_Uom_Volume();
             Check_Ship_Weight();
@@ -199,18 +194,18 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
             }
         }
 
-        private void Check_UomStock()
-        {
-            //this is required
-            if (UomStock == null)
-            {
-                throw new Exception(string.Format("UOM Stock Is Required for product '{0}'. 1.ProductAbstract.Check_UomStock", FullName()));
-            }
-            if (UomStockID.IsNullOrEmpty())
-            {
-                throw new Exception(string.Format("UOM Stock Is Required for product '{0}'. 2.ProductAbstract.Check_UomStock", FullName()));
-            }
-        }
+        //private void Check_UomStock()
+        //{
+        //    //this is required
+        //    if (UomStock == null)
+        //    {
+        //        throw new Exception(string.Format("UOM Stock Is Required for product '{0}'. 1.ProductAbstract.Check_UomStock", FullName()));
+        //    }
+        //    if (UomStockID.IsNullOrEmpty())
+        //    {
+        //        throw new Exception(string.Format("UOM Stock Is Required for product '{0}'. 2.ProductAbstract.Check_UomStock", FullName()));
+        //    }
+        //}
 
         //private void Check_Parent()
         //{
