@@ -1,0 +1,136 @@
+﻿@model ModelsClassLibrary.ModelsNS.ProductNS.Quantity
+
+<div class="well" >
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-XS-2 col-sm-2 col-md-2 "><strong>On Hand</strong></div>
+            <div class="col-XS-2 col-sm-2 col-md-2 "><strong>On Order</strong></div>
+            <div class="col-XS-2 col-sm-2 col-md-2 "><strong>Allotted</strong></div>
+            <div class="col-XS-2 col-sm-2 col-md-2 "><strong>Projected</strong></div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-XS-2 col-sm-2 col-md-2">
+                @Html.EditorFor(model => model.OnHand, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+            </div>
+            <div class="col-XS-2 col-sm-2 col-md-2">
+                @Html.EditorFor(model => model.OnOrder, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+            </div>
+            <div class="col-XS-2 col-sm-2 col-md-2">
+                @Html.EditorFor(model => model.Allotted, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+            </div>
+            <div class="col-XS-2 col-sm-2 col-md-2">
+                @Html.EditorFor(model => model.Projected, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="row">
+                <div class="col-XS-2 col-sm-2 col-md-2">
+                    <strong>ERRORS</strong>
+
+                </div>
+
+
+                <div class="col-XS-2 col-sm-2 col-md-2">
+                    <strong>Date</strong>
+                </div>
+
+
+                <div class="col-XS-2 col-sm-2 col-md-2">
+                    <strong>Error</strong>
+                </div>
+
+
+                <div class="col-XS-2 col-sm-2 col-md-2">
+
+                    <strong>UOM</strong>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="col-XS-2 col-sm-2 col-md-2">
+                    <strong>Last</strong>
+                </div>
+
+
+                <div class="col-XS-2 col-sm-2 col-md-2">
+                    @Html.EditorFor(model => model.LastAllottedDate, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                </div>
+
+
+                <div class="col-XS-2 col-sm-2 col-md-2">
+                    @Html.EditorFor(model => model.LastQtyError, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+
+
+                </div>
+
+
+                <div class="col-XS-2 col-sm-2 col-md-2">
+                    @Html.EditorFor(model => model.LastUomStockName, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="col-XS-2 col-sm-2 col-md-2">
+                    <strong>Previous to Last</strong>
+
+
+                </div>
+
+
+                <div class="col-XS-2 col-sm-2 col-md-2">
+                    @Html.EditorFor(model => model.PreviousToLastQtyErrorDate, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                </div>
+
+
+                <div class="col-XS-2 col-sm-2 col-md-2">
+                    @Html.EditorFor(model => model.PreviousToLastQtyError, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+
+
+                </div>
+
+
+                <div class="col-XS-2 col-sm-2 col-md-2">
+                    @Html.EditorFor(model => model.PreviousToLastUomStockName, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                </div>
+            </div>
+
+
+
+            <div class="row ">
+
+                <div class="col-XS-2 col-sm-2 col-md-2">
+                    <strong>B4 Previous To Last</strong>
+
+                </div>
+
+
+                <div class="col-XS-2 col-sm-2 col-md-2">
+                    @Html.EditorFor(model => model.B4PreviousToLastQtyErrorDate, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                </div>
+
+
+                <div class="col-XS-2 col-sm-2 col-md-2">
+                    @Html.EditorFor(model => model.B4PreviousToLastQtyErrorDate, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+
+
+                </div>
+
+
+                <div class="col-XS-2 col-sm-2 col-md-2">
+                    @Html.EditorFor(model => model.B4PreviousToLastUomStockName, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+

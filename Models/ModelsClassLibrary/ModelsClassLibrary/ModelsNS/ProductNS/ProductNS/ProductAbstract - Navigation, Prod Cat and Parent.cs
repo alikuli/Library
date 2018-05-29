@@ -25,6 +25,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         public virtual ICollection<MenuPathMain> MenuPathMain { get; set; }
 
 
+        [Display(Name = "Parent")]
 
         public string ParentId { get; set; }
 

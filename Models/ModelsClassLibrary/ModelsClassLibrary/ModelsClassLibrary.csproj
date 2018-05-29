@@ -275,7 +275,7 @@
     <Compile Include="ModelsNS\PlacesNS\StateNS\StateInitializationData.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductChildNS\ProductChild.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\IProductHasUploads.cs" />
-    <Compile Include="ModelsNS\ProductNS\ProductNS\ProductAbstract - Move To Trx.cs" />
+    <Compile Include="ModelsNS\ProductNS\ProductNS\Product - UpdatePropertiesDuringModify.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\ProductAbstract - Dates.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\ProductAbstract - Navigation, Prod Cat and Parent.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\ProductAbstract - Prices and Costs.cs" />

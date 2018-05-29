@@ -359,7 +359,18 @@
     <Content Include="Views\Shared\ViewControls\Index\_breadCrumbs - General.cshtml" />
     <Content Include="Views\Shared\ViewControls\Create\_breadCrumbs - Create.cshtml" />
     <Content Include="Views\Shared\ViewControls\Edit\_breadCrumbs - Edit.cshtml" />
+    <Content Include="Views\Products\_WeightListed.cshtml" />
     <Content Include="Views\Products\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\Products\_WeightActual.cshtml" />
+    <Content Include="Views\Products\_MenuPath.cshtml" />
+    <Content Include="Views\Products\_Parent.cshtml" />
+    <Content Include="Views\Products\_Purchase.cshtml" />
+    <Content Include="Views\Products\_Volume.cshtml" />
+    <Content Include="Views\Products\_Quantity.cshtml" />
+    <Content Include="Views\Products\_ProductIdentifiers.cshtml" />
+    <Content Include="Views\Products\_Dimensions.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Dimensions.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Quantity.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

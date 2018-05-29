@@ -1,119 +1,69 @@
 ﻿@model ModelsClassLibrary.ModelsNS.ProductNS.Product
-
-
-<div class="form-horizontal">
+<div class="well">
     @Html.Partial(@"_Name_And_DetailInfo")
- </div>
-
-@if (!Model.ProductIdentifiers.IsNullOrEmpty())
-{
-    foreach (var item in Model.ProductIdentifiers)
-    {
-        <div class="form-group">
-            @Html.LabelFor(model => item.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => item.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter name" } })
-                @Html.ValidationMessageFor(model => item.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-    }
-
-}
+    @Html.Partial(@"_WeightActual")
+    @Html.Partial(@"_WeightListed")
+    @Html.Partial(@"_Volume")
+    @Html.Partial(@"_ProductIdentifiers")
+    @Html.Partial(@"_MenuPath")
+    @Html.Partial(@"_Purchase")
+    @Html.Partial(@"_Parent")
 
 
-
-@if (!Model.MenuPathMain.IsNullOrEmpty())
-{
-    foreach (var item in Model.MenuPathMain)
-    {
-        <div class="form-group">
-            @Html.LabelFor(model => item.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => item.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter name" } })
-                @Html.ValidationMessageFor(model => item.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-    }
-
-}
-
-<div class="form-group">
-    @Html.LabelFor(model => model.ParentId, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.DropDownListFor(x => x.ParentId,
-                                       (@ViewBag.ParentSelectList as IEnumerable<SelectListItem>),
-                                                      "--- Select Parent ---",
-                                    new { @class = "form-control" })
-    </div>
 </div>
+<div class="well">
+@Html.Partial(@"_Quantity")
+@Html.Partial(@"_Dimensions")
 
 
-<div class="form-group">
-    @Html.LabelFor(model => model.UomPurchaseId, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.DropDownListFor(x => x.UomPurchaseId,
-                                       (@ViewBag.UomPurchaseSelectList as IEnumerable<SelectListItem>),
-                                                      "--- Select UoM Purchase ---",
-                                    new { @class = "form-control" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.UomWeightId, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.DropDownListFor(x => x.UomWeightId,
-                                       (@ViewBag.UomWeightSelectList as IEnumerable<SelectListItem>),
-                                                      "--- Select UoM Weight ---",
-                                    new { @class = "form-control" })
-    </div>
-</div>
-
-
-<div class="form-group">
-    @Html.LabelFor(model => model.UomVolumeId, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.DropDownListFor(x => x.UomVolumeId,
-                                       (@ViewBag.UomVolumeSelectList as IEnumerable<SelectListItem>),
-                                                      "--- Select UoM Volume ---",
-                                    new { @class = "form-control" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.UomShipWeightId, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.DropDownListFor(x => x.UomShipWeightId,
-                                       (@ViewBag.UomShipWtSelectList as IEnumerable<SelectListItem>),
-                                                      "--- Select UoM Ship Wt  ---",
-                                    new { @class = "form-control" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.Qty, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter name" } })
-        @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.Volume, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.Volume, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter name" } })
-        @Html.ValidationMessageFor(model => model.Volume, "", new { @class = "text-danger" })
-    </div>
 </div>
 
 
 
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Dimensions, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.Dimensions, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter name" } })
-        @Html.ValidationMessageFor(model => model.Dimensions, "", new { @class = "text-danger" })
-    </div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

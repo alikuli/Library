@@ -35,6 +35,16 @@
     </div>
     <div class="container body-content">
         @RenderBody()
+        @if (IsSectionDefined("AdditionalFields"))
+        {
+            @RenderSection("AdditionalFields")
+        }
+        else
+        {
+            <div>
+                This is a test
+            </div>
+        }
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>

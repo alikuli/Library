@@ -17,6 +17,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         {
             return ClassesWithRightsENUM.UomQuantity;
         }
+
         //public ICollection<Product> ProductsWeightListedOnProductUoms { get; set; }
         //public ICollection<Product> ProductsPurchaseUoms { get; set; }
         //public ICollection<Product> ProductUomStocks { get; set; }

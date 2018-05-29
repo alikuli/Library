@@ -1,0 +1,24 @@
+﻿@model ModelsClassLibrary.ModelsNS.ProductNS.Product
+
+
+
+<div class="container">
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.WeightActual, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(model => model.WeightActual, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter  Actual Weight" } })
+            @Html.ValidationMessageFor(model => model.WeightActual, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.DropDownListFor(x => x.UomWeightActualId,
+                                       (@ViewBag.UomWeightSelectList as IEnumerable<SelectListItem>),
+                                                      "--- Select UoM Weight ---",
+                                    new { @class = "form-control" })
+        </div>
+    </div>
+
+</div>
+

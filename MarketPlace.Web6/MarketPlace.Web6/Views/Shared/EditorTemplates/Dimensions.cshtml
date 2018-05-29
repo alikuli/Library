@@ -1,0 +1,40 @@
+﻿@model ModelsClassLibrary.ModelsNS.ProductNS.Dimensions
+
+<div class="well">
+    <div class="row">
+        <div>
+            <div class="col-md-2">
+                <strong>Height</strong>
+            </div>
+        </div>
+        <div>
+            <div class="col-md-2">
+                <strong>Length</strong>
+            </div>
+        </div>
+        <div>
+            <div class="col-md-2">
+                <strong>Width</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div>
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.Height, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+
+            </div>
+        </div>
+        <div>
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.Length, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+            </div>
+        </div>
+        <div>
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.Width, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+            </div>
+        </div>
+    </div>
+</div>

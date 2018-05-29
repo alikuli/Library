@@ -5,7 +5,25 @@ namespace DatastoreNS
     public class ProductInitializerHelper
     {
 
-        public ProductInitializerHelper(string name, decimal sellPrice, decimal msrp, decimal mlpPrice, decimal cost, string cat1, string cat2, string cat3, DateTime lastOrderedDate, double height, double width, double length, string uomShipWeightName, double shipWeight, double shipVol, string uomLengthName, string uomVolumeName, string uomStock)
+        public ProductInitializerHelper(
+            string name, 
+            decimal sellPrice, 
+            decimal msrp, 
+            decimal mlpPrice, 
+            decimal cost, 
+            string cat1, 
+            string cat2, 
+            string cat3, 
+            DateTime lastOrderedDate, 
+            double height, 
+            double width, 
+            double length, 
+            string uomShipWeightName, 
+            double shipWeight, 
+            double shipVol, 
+            string uomLengthName, 
+            string uomVolumeName, 
+            string uomStock)
         {
             Name = name;
             //SellPrice = sellPrice;

@@ -29,14 +29,9 @@ namespace UowLibrary.ProductNS
                 {
                     Product p = new Product();
 
-                    p.Name = item.Name;
-                    p.Dimensions.Height = item.Height;
-                    p.Dimensions.Width = item.Width;
-                    p.Dimensions.Length = item.Length;
-                    p.ShipWeight = item.ShipWeight;
 
-                    p.UomShipWeight = _uomWeightBiz.FindByName(item.UomShipWeightName);
-                    if (p.UomShipWeight.IsNull())
+                    p.UomWeightActual = _uomWeightBiz.FindByName(item.UomShipWeightName);
+                    if (p.UomWeightActual.IsNull())
                     {
                         ErrorsGlobal.Add("UomShipWeight is null", MethodBase.GetCurrentMethod());
                     }
@@ -62,8 +57,14 @@ namespace UowLibrary.ProductNS
                     if (ErrorsGlobal.HasErrors)
                     {
                         throw new Exception(ErrorsGlobal.ToString());
+
                     }
-                    p.UomShipWeightId = p.UomShipWeight.Id;
+                    p.Name = item.Name;
+                    p.Dimensions.Height = item.Height;
+                    p.Dimensions.Width = item.Width;
+                    p.Dimensions.Length = item.Length;
+                    p.WeightActual = item.ShipWeight;
+                    p.UomWeightActualId = p.UomWeightActual.Id;
                     p.UomDimensionsId = p.UomDimensions.Id;
                     p.UomVolumeId = p.UomVolume.Id;
                     p.UomDimensionsId = p.UomDimensions.Id;

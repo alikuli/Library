@@ -1,6 +1,5 @@
 ﻿using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
@@ -20,13 +19,6 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         public virtual ICollection<ProductIdentifier> ProductIdentifiers { get; set; }
 
 
-        //#region Properties
-
-        /// <summary>
-        /// This is the serial number of the product Moved to the Chile
-        /// </summary>
-        //[Display(Name = "Serial #")]
-        //public string SerialNo { get; set; }
 
 
 

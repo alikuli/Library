@@ -12,10 +12,10 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
     {
 
         #region UomPurchase
+        [Display(Name = "Purchase UOM")]
         public string UomPurchaseId { get; set; }
 
-        [Display(Name = "Purchase UOM")]
-        public virtual  UomQty UomPurchase { get; set; }
+        public virtual UomQty UomPurchase { get; set; }
 
         #endregion
 
@@ -30,20 +30,12 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         ///// on the fly and stored
         ///// </summary>
         [NotMapped]
-        [Display(Name = "Qty -Not Saved")]
+        [Display(Name = "Quantities")]
         public Quantity Qty { get; set; }
 
         #endregion
 
 
-        #region Listed Weight UOM, WeightOnProduct
-        [Display(Name = "Listed Weight UOM")]
-        public string UomWeightId { get; set; }
-        public virtual UomWeight UomUomWeight { get; set; }
-
-        [Display(Name = "Listed Weight")]
-        public double Weight { get; set; }
-        #endregion
 
 
         #region Listed Volume
@@ -58,14 +50,24 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         #endregion
 
 
+        #region Listed Weight UOM, WeightOnProduct
+
+        [Display(Name = "Listed Weight UOM")]
+        public string UomWeightListedId { get; set; }
+        public virtual UomWeight UomWeightListed { get; set; }
+
+        [Display(Name = "Listed Weight")]
+        public double WeightListed { get; set; }
+        #endregion
+
         #region Ship Weight
 
         [Display(Name = "Ship Wt. UOM")]
-        public string UomShipWeightId { get; set; }
-        public virtual UomWeight UomShipWeight { get; set; }
+        public string UomWeightActualId { get; set; }
+        public virtual UomWeight UomWeightActual { get; set; }
 
         [Display(Name = "Ship Wt.")]
-        public double ShipWeight { get; set; }
+        public double WeightActual { get; set; }
 
         #endregion
 

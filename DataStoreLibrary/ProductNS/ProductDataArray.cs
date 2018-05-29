@@ -106,7 +106,25 @@ namespace DatastoreNS
 
         }
 
-        private ProductInitializerHelper CreateProductInitializer(string name, decimal salePrice, decimal mrsp, decimal mlsp, decimal cost, string cat1, string cat2, string cat3, DateTime lastOrderedDate, double height, double width, double length, string uomShipWeight, double shipWeight, double shipVol, string uomLengthName, string uomVolumeName, string uomStock)
+        private ProductInitializerHelper CreateProductInitializer(
+            string name, 
+            decimal salePrice, 
+            decimal mrsp, 
+            decimal mlsp, 
+            decimal cost, 
+            string cat1, 
+            string cat2, 
+            string cat3, 
+            DateTime lastOrderedDate, 
+            double height, 
+            double width, 
+            double length, 
+            string uomShipWeight, 
+            double shipWeight, 
+            double shipVol, 
+            string uomLengthName, 
+            string uomVolumeName, 
+            string uomStock)
         {
 
             ProductInitializerHelper ph = new ProductInitializerHelper(

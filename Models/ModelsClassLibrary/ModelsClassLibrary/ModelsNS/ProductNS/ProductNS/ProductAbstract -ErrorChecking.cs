@@ -134,12 +134,12 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         private void Check_Uom_ShipWeight()
         {
-            if (UomShipWeight.IsNull())
-            {
-                throw new Exception(string.Format("The Uom of Ship Weight On Product '{0}' has no is missing. 1.ProductAbstract.Check_Uom_ShipWeight", FullName()));
+            //if (UomWeightActual.IsNull())
+            //{
+            //    throw new Exception(string.Format("The Uom of Ship Weight On Product '{0}' has no is missing. 1.ProductAbstract.Check_Uom_ShipWeight", FullName()));
 
-            }
-            if (UomShipWeightId.IsNullOrEmpty())
+            //}
+            if (UomWeightActualId.IsNullOrEmpty())
             {
                 throw new Exception(string.Format("The Uom of Ship Weight On Product '{0}' has no is missing. 2.ProductAbstract.Check_Uom_ShipWeight", FullName()));
 
@@ -148,7 +148,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         private void Check_Ship_Weight()
         {
-            if (ShipWeight == 0)
+            if (WeightActual == 0)
             {
                 throw new Exception(string.Format("The Uom of Ship Weight On Product '{0}' is zero. 1.ProductAbstract.Check_Ship_Weight", FullName()));
 
@@ -157,11 +157,11 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         private void Check_Uom_Volume()
         {
-            if (UomVolume.IsNull())
-            {
-                throw new Exception(string.Format("The Uom of Ship volume On Product '{0}' has no is missing. 1.ProductAbstract.Check_Uom_Volume", FullName()));
+            //if (UomVolume.IsNull())
+            //{
+            //    throw new Exception(string.Format("The Uom of Ship volume On Product '{0}' has no is missing. 1.ProductAbstract.Check_Uom_Volume", FullName()));
 
-            }
+            //}
             if (UomVolumeId.IsNullOrEmpty())
             {
                 throw new Exception(string.Format("The Uom of Ship volume On Product '{0}' has no is missing. 2.ProductAbstract.Check_Uom_Volume", FullName()));
@@ -175,23 +175,23 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
             //Either both there... or none there.
 
-            if (UomUomWeight == null)
-            {
-                if (UomWeightId.IsNullOrEmpty())
-                {
-                    //Both are null... dont do anything
-                    return;
-                }
+            //if (UomWeightListed == null)
+            //{
+            //    if (UomWeightListedId.IsNullOrEmpty())
+            //    {
+            //        //Both are null... dont do anything
+            //        return;
+            //    }
 
-                throw new Exception(string.Format("The Uom Weight On Product '{0}' has no Id. ProductAbstract.Check_Uom_Weight_On_Product", FullName()));
-            }
-            else
-            {
-                if (UomWeightId.IsNullOrEmpty())
-                {
-                    throw new Exception(string.Format("The Uom Weight On Product '{0}' has no Product. ProductAbstract.Check_Uom_Weight_On_Product", FullName()));
-                }
-            }
+            //    throw new Exception(string.Format("The Uom Weight On Product '{0}' has no Id. ProductAbstract.Check_Uom_Weight_On_Product", FullName()));
+            //}
+            //else
+            //{
+            //    if (UomWeightListedId.IsNullOrEmpty())
+            //    {
+            //        throw new Exception(string.Format("The Uom Weight On Product '{0}' has no Product. ProductAbstract.Check_Uom_Weight_On_Product", FullName()));
+            //    }
+            //}
         }
 
         //private void Check_UomStock()

@@ -8,13 +8,6 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
     {
 
 
-        //[Display(Name = "Uom For Packing Required?")]
-        //public bool IsUomForPackingVolRequired { get; set; }
-
-
-        //[Display(Name = "Zero MSRP Allowed?")]
-        //public bool IsAllowd_Zero_MRSP { get; set; }
-
 
         /// <summary>
         /// If this is a child, then we will need the parent.
