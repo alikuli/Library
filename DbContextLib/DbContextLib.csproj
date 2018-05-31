@@ -216,6 +216,46 @@
     <Compile Include="Migrations\201805291746274_29-05-2018-1.Designer.cs">
       <DependentUpon>201805291746274_29-05-2018-1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805301005528_30-05-2018.cs" />
+    <Compile Include="Migrations\201805301005528_30-05-2018.Designer.cs">
+      <DependentUpon>201805301005528_30-05-2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805301009279_30-05-2018-1.cs" />
+    <Compile Include="Migrations\201805301009279_30-05-2018-1.Designer.cs">
+      <DependentUpon>201805301009279_30-05-2018-1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805301013234_30-05-2018-2.cs" />
+    <Compile Include="Migrations\201805301013234_30-05-2018-2.Designer.cs">
+      <DependentUpon>201805301013234_30-05-2018-2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805301024008_30-05-2018-3.cs" />
+    <Compile Include="Migrations\201805301024008_30-05-2018-3.Designer.cs">
+      <DependentUpon>201805301024008_30-05-2018-3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805301031093_30-05-2018-4.cs" />
+    <Compile Include="Migrations\201805301031093_30-05-2018-4.Designer.cs">
+      <DependentUpon>201805301031093_30-05-2018-4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805301035514_30-05-2018-5.cs" />
+    <Compile Include="Migrations\201805301035514_30-05-2018-5.Designer.cs">
+      <DependentUpon>201805301035514_30-05-2018-5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805301040208_30-05-2018-6.cs" />
+    <Compile Include="Migrations\201805301040208_30-05-2018-6.Designer.cs">
+      <DependentUpon>201805301040208_30-05-2018-6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805301047220_30-05-2018-7.cs" />
+    <Compile Include="Migrations\201805301047220_30-05-2018-7.Designer.cs">
+      <DependentUpon>201805301047220_30-05-2018-7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805302328014_31-05-2018.cs" />
+    <Compile Include="Migrations\201805302328014_31-05-2018.Designer.cs">
+      <DependentUpon>201805302328014_31-05-2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805310429592_31-05-2018-8.cs" />
+    <Compile Include="Migrations\201805310429592_31-05-2018-8.Designer.cs">
+      <DependentUpon>201805310429592_31-05-2018-8.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -293,6 +333,36 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805291746274_29-05-2018-1.resx">
       <DependentUpon>201805291746274_29-05-2018-1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805301005528_30-05-2018.resx">
+      <DependentUpon>201805301005528_30-05-2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805301009279_30-05-2018-1.resx">
+      <DependentUpon>201805301009279_30-05-2018-1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805301013234_30-05-2018-2.resx">
+      <DependentUpon>201805301013234_30-05-2018-2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805301024008_30-05-2018-3.resx">
+      <DependentUpon>201805301024008_30-05-2018-3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805301031093_30-05-2018-4.resx">
+      <DependentUpon>201805301031093_30-05-2018-4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805301035514_30-05-2018-5.resx">
+      <DependentUpon>201805301035514_30-05-2018-5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805301040208_30-05-2018-6.resx">
+      <DependentUpon>201805301040208_30-05-2018-6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805301047220_30-05-2018-7.resx">
+      <DependentUpon>201805301047220_30-05-2018-7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805302328014_31-05-2018.resx">
+      <DependentUpon>201805302328014_31-05-2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805310429592_31-05-2018-8.resx">
+      <DependentUpon>201805310429592_31-05-2018-8.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

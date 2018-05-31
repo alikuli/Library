@@ -86,6 +86,7 @@
     <Compile Include="MenuNS\MenuPath1Array.cs" />
     <Compile Include="MenuNS\MenuPathMainHelper.cs" />
     <Compile Include="ProductNS\ProductDataArray.cs" />
+    <Compile Include="ProductNS\MenuPathHelper.cs" />
     <Compile Include="ProductNS\ProductInitializerHelper.cs" />
     <Compile Include="ProductNS\UomNS\UomVolumeArray.cs" />
     <Compile Include="ProductNS\UomNS\UomQuantityArray.cs" />

@@ -95,7 +95,7 @@ namespace ApplicationDbContextNS
         public virtual IDbSet<UploadedFile> UploadedFiles { get; set; }
         public virtual IDbSet<VisitorLog> VisitorLogs { get; set; }
         public virtual IDbSet<UomLength> UomLengths { get; set; }
-        //public virtual IDbSet<UomQty> UomQtys { get; set; }
+        public virtual IDbSet<UomQty> UomQtys { get; set; }
         public virtual IDbSet<UomVolume> UomVolumes { get; set; }
         public virtual IDbSet<UomWeight> UomWeights { get; set; }
 

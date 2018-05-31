@@ -15,12 +15,12 @@ namespace UowLibrary.Interface
     {
         void Create(TEntity entity);
         //Task CreateAsync(TEntity entity);
-        void Create(ControllerCreateEditParameter param);
+        //void Create(ControllerCreateEditParameter param);
         //Task CreateAsync(TEntity entity, HttpPostedFileBase[] files);
 
 
         void CreateAndSave(TEntity entity);
-        Task CreateAndSaveAsync(TEntity entity);
+        //Task CreateAndSaveAsync(TEntity entity);
         void CreateAndSave(ControllerCreateEditParameter param);
         Task CreateAndSaveAsync(ControllerCreateEditParameter param);
 
@@ -40,14 +40,14 @@ namespace UowLibrary.Interface
         void Event_ModifyIndexList(IndexListVM indexListVM, ControllerIndexParams parameters);
         //IndexListVM Index(ControllerIndexParams parameters);
         Task<IndexListVM> IndexAsync(ControllerIndexParams parameters);
-        void SaveAfterEveryAddition(bool isSavingAfterEveryAddition);
+        //void SaveAfterEveryAddition(bool isSavingAfterEveryAddition);
         System.Web.Mvc.SelectList SelectList();
         dynamic SelectListJson();
         void UpdateAndSave(ControllerCreateEditParameter param);
         Task UpdateAndSaveAsync(ControllerCreateEditParameter param);
         string UserNameBiz { get; }
         string UserIdBiz { get;  }
-        Task InitializationDataAsync();
+        void InitializationData();
 
     }
 }

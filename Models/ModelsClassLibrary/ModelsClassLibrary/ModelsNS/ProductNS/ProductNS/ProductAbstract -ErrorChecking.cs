@@ -139,20 +139,20 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
             //    throw new Exception(string.Format("The Uom of Ship Weight On Product '{0}' has no is missing. 1.ProductAbstract.Check_Uom_ShipWeight", FullName()));
 
             //}
-            if (UomWeightActualId.IsNullOrEmpty())
-            {
-                throw new Exception(string.Format("The Uom of Ship Weight On Product '{0}' has no is missing. 2.ProductAbstract.Check_Uom_ShipWeight", FullName()));
+            //if (UomWeightActualId.IsNullOrEmpty())
+            //{
+            //    throw new Exception(string.Format("The Uom of Ship Weight On Product '{0}' has no is missing. 2.ProductAbstract.Check_Uom_ShipWeight", FullName()));
 
-            }
+            //}
         }
 
         private void Check_Ship_Weight()
         {
-            if (WeightActual == 0)
-            {
-                throw new Exception(string.Format("The Uom of Ship Weight On Product '{0}' is zero. 1.ProductAbstract.Check_Ship_Weight", FullName()));
+            //if (WeightActual == 0)
+            //{
+            //    throw new Exception(string.Format("The Uom of Ship Weight On Product '{0}' is zero. 1.ProductAbstract.Check_Ship_Weight", FullName()));
 
-            }
+            //}
         }
 
         private void Check_Uom_Volume()

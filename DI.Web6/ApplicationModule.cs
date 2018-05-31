@@ -55,7 +55,7 @@ namespace DependancyResolver
             Bind<UomLengthBiz>().ToSelf();
             Bind<UomQuantityBiz>().ToSelf();
             Bind<UomVolumeBiz>().ToSelf();
-            Bind<UomWeightBiz>().ToSelf();
+            //Bind<UomWeightBiz>().ToSelf();
 
         }
 

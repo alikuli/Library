@@ -19,9 +19,9 @@ namespace MarketPlace.Web6.Controllers
         {
             ViewBag.ParentSelectList = _productBiz.SelectList_ForParent(parm.Entity);
             ViewBag.UomPurchaseSelectList = _productBiz.UomQuantityBiz.SelectList();
-            ViewBag.UomWeightSelectList = _productBiz.UomWeightBiz.SelectList();
             ViewBag.UomVolumeSelectList = _productBiz.UomVolumeBiz.SelectList();
             ViewBag.UomShipWtSelectList = _productBiz.UomWeightBiz.SelectList();
+            ViewBag.UomWeightSelectList = _productBiz.UomWeightBiz.SelectList();
 
             return base.Event_CreateViewAndSetupSelectList(parm);
 

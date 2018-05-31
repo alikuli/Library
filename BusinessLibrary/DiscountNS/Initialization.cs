@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using AliKuli.Extentions;
+﻿using AliKuli.Extentions;
+using DatastoreNS;
 using EnumLibrary.EnumNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.DiscountNS;
-using DatastoreNS;
-using System.Web;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace UowLibrary.DiscountPrecedenceNS
 {
@@ -41,8 +40,9 @@ namespace UowLibrary.DiscountPrecedenceNS
                         dp.DiscountRuleEnum = discPrecedenceParameter.DiscountRuleEnum;
 
 
-                        Create(dp);
-                        SaveChanges();
+                        //Create(dp);
+                        //SaveChanges();
+                        Create_ForInitializeOnly(dp);
 
                     }
                     else

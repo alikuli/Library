@@ -325,11 +325,11 @@
     <Compile Include="ModelsNS\ProductNS\ComplexClassesNS\ProductQuantityRec.cs" />
     <Compile Include="ModelsNS\ProductNS\ComplexClassesNS\ShipWeightClassRec.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductIdentifierNS\ProductIdentifier.cs" />
-    <Compile Include="ModelsNS\ProductNS\UomNS\Length\UomLength.cs" />
-    <Compile Include="ModelsNS\ProductNS\UomNS\Quantity\UomQty.cs" />
+    <Compile Include="ModelsNS\ProductNS\UomNS\UomLength.cs" />
+    <Compile Include="ModelsNS\ProductNS\UomNS\UomQty.cs" />
     <Compile Include="ModelsNS\ProductNS\UomNS\UomAbstract.cs" />
-    <Compile Include="ModelsNS\ProductNS\UomNS\Volume\UomVolume.cs" />
-    <Compile Include="ModelsNS\ProductNS\UomNS\Weight\UomWeight.cs" />
+    <Compile Include="ModelsNS\ProductNS\UomNS\UomVolume.cs" />
+    <Compile Include="ModelsNS\ProductNS\UomNS\UomWeight.cs" />
     <Compile Include="ModelsNS\SharedNS\CheckBoxItem.cs" />
     <Compile Include="InterfacesNS\SharedNS\Common\ICommonWithId.cs" />
     <Compile Include="ModelsNS\SharedNS\Common\IEncryption.cs" />

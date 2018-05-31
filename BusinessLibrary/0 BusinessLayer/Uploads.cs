@@ -210,7 +210,7 @@ namespace UowLibrary
         /// <summary>
         /// Example
         ///    uploadFile.FileDoc = filedoc;
-        ///    uploadFile.Id = filedoc.Id;
+        ///    uploadFile.FileDoc.Id = filedoc.FileDoc.Id;
 
         /// </summary>
         /// <param name="uploadFile"></param>

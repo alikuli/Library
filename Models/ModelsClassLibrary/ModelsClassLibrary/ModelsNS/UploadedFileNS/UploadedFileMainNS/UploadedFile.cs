@@ -3,7 +3,6 @@ using AliKuli.ToolsNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Web;
 using System.Web.Hosting;
@@ -29,7 +28,6 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
             Path.GetFileNameWithoutExtension(file.FileName),
             FileTools.CreateNewNameForFile(Path.GetExtension(file.FileName)),
             relativePath)
-
         {
             file.SaveAs(AbsolutePathWithFileName());
 
@@ -47,14 +45,30 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
             //}
         }
 
-        public UploadedFile(string originalNameWithoutExtention, string newNameWithExtention, string relativePath)
+        public UploadedFile(string originalNameWithoutExtention, string newNameWithMappedPathPlusExtention, string saveToRelativePath)
         {
             OriginalNameWithoutExtention = originalNameWithoutExtention;
-            Name = newNameWithExtention;
-            Extention = Path.GetExtension(newNameWithExtention);
-            RelativeWebsitePath = relativePath;
+            Name = newNameWithMappedPathPlusExtention;
+            Extention = Path.GetExtension(newNameWithMappedPathPlusExtention);
+            RelativeWebsitePath = saveToRelativePath;
         }
 
+        //public UploadedFile(string getFromRelativePath, string saveToRelativePath, string nameWithExtention)
+        //{
+
+        //}
+        //public UploadedFile(string fileNameWithPathAndExtention, string saveToRelativePath)
+        //    : this(
+        //    Path.GetFileName(fileNameWithPathAndExtention),
+        //    AliKuli.ToolsNS.FileTools.CreateNewNameForFile(Path.GetExtension(fileNameWithPathAndExtention)),
+        //    saveToRelativePath)
+        //{
+        //    //string orignalNameWithExtention = Path.GetFileName(fileNameWithPathAndExtention);
+        //    //string orignalNameWithoutExtention = Path.GetFileNameWithoutExtension(orignalNameWithExtention);
+        //    //string relativePath = Path.GetFullPath(fileNameWithPathAndExtention);
+        //    //string newNameWithExtention = AliKuli.ToolsNS.FileTools.CreateNewNameForFile(Path.GetExtension(fileNameWithPathAndExtention));
+
+        //}
         public override EnumLibrary.EnumNS.ClassesWithRightsENUM ClassNameForRights()
         {
             return EnumLibrary.EnumNS.ClassesWithRightsENUM.UploadFile;

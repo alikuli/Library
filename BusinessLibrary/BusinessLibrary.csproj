@@ -238,10 +238,11 @@
     <Compile Include="MenuNS\MenuPathMainNS\SelectList.cs" />
     <Compile Include="MenuNS\MenuPathMainNS\Uploads.cs" />
     <Compile Include="MenuNS\MenuPathMainNS\BusinessRule.cs" />
+    <Compile Include="ProductNS\ProductNS\Uploads.cs" />
     <Compile Include="ProductNS\ProductNS\Index.cs" />
     <Compile Include="ProductNS\ProductNS\SelectList.cs" />
     <Compile Include="ProductNS\ProductNS\Initialize.cs" />
-    <Compile Include="ProductNS\ProductNS\ProductBiz - Bussiness Rules.cs" />
+    <Compile Include="ProductNS\ProductNS\Bussiness Rules.cs" />
     <Compile Include="ProductNS\ProductNS\ProductBiz.cs" />
     <Compile Include="ProductNS\UomLengthNS\SelectList.cs" />
     <Compile Include="ProductNS\UomLengthNS\UomLengthBiz.cs" />
@@ -258,11 +259,21 @@
     <Compile Include="ProductNS\UomQtyNS\SelectList.cs" />
     <Compile Include="ProductNS\UomQtyNS\UomQuantityBiz.cs" />
     <Compile Include="ProductNS\UomQtyNS\Uploads.cs" />
-    <Compile Include="ProductNS\UomWeightNS\Index.cs" />
-    <Compile Include="ProductNS\UomWeightNS\Initialization.cs" />
-    <Compile Include="ProductNS\UomWeightNS\UomWeightBiz.cs" />
-    <Compile Include="ProductNS\UomWeightNS\SelectList.cs" />
-    <Compile Include="ProductNS\UomWeightNS\Uploads.cs" />
+    <Compile Include="ProductNS\UomWeightNS\Index.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductNS\UomWeightNS\Initialization.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductNS\UomWeightNS\SelectList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductNS\UomWeightNS\UomWeightBiz.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ProductNS\UomWeightNS\Uploads.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="RightsNS\DefaultRights.cs" />
     <Compile Include="RightsNS\RightBiz.cs" />
     <Compile Include="Interface\IUpload.cs" />

@@ -13,6 +13,11 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
     public partial class UploadedFile : CommonWithId
     {
 
+        [Display(Name = "Products")]
+        public virtual string ProductId { get; set; }
+        public virtual Product Product { get; set; }
+
+
 
         [Display(Name = "Menu Path 1")]
         public virtual string MenuPath1Id { get; set; }

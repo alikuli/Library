@@ -18,12 +18,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         //public virtual ICollection<ProductIdentifier> ItemNos { get; set; }
 
 
-        /// <summary>
-        /// This decides the menus
-        /// </summary>
-        [Display(Name = "Category")]
-        public virtual ICollection<MenuPathMain> MenuPathMain { get; set; }
-
+        
 
         [Display(Name = "Parent")]
 

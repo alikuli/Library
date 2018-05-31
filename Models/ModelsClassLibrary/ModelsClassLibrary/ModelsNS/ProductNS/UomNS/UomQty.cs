@@ -12,6 +12,8 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
     public class UomQty : UomAbstract
     {
+        public virtual ICollection<Product> Products_Purchase { get; set; }
+        public virtual ICollection<Product> Products_Sale { get; set; }
 
         public override ClassesWithRightsENUM ClassNameForRights()
         {

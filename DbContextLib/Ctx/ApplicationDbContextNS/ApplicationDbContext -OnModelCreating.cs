@@ -107,7 +107,7 @@ namespace ApplicationDbContextNS
 
             #endregion
 
-            #region Product Categories
+            #region Menu Paths
 
             modelBuilder.Entity<MenuPath1>()
                 .HasMany<MenuPathMain>(x => x.MenuPathMains)
@@ -133,6 +133,49 @@ namespace ApplicationDbContextNS
 
             #endregion
 
+            #region MyRegion
+
+            modelBuilder.Entity<Product>()
+                .HasRequired<UomLength>(x => x.UomDimensions)
+                .WithMany(x => x.Products)
+                .HasForeignKey(x => x.UomDimensionsId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Product>()
+                .HasRequired<UomQty>(x => x.UomPurchase)
+                .WithMany(x => x.Products_Purchase)
+                .HasForeignKey(x => x.UomPurchaseId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Product>()
+                .HasRequired<UomQty>(x => x.UomSale)
+                .WithMany(x => x.Products_Sale)
+                .HasForeignKey(x => x.UomSaleId)
+                .WillCascadeOnDelete(false);
+
+
+            modelBuilder.Entity<Product>()
+                .HasRequired<UomVolume>(x => x.UomVolume)
+                .WithMany(x => x.Products)
+                .HasForeignKey(x => x.UomVolumeId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Product>()
+                .HasRequired<UomWeight>(x => x.UomWeightActual)
+                .WithMany(x => x.Products_WeightActual)
+                .HasForeignKey(x => x.UomWeightActualId)
+                .WillCascadeOnDelete(false);
+
+
+            modelBuilder.Entity<Product>()
+                .HasRequired<UomWeight>(x => x.UomWeightListed)
+                .WithMany(x => x.Products_WeightListed)
+                .HasForeignKey(x => x.UomWeightListedId)
+                .WillCascadeOnDelete(true);
+
+
+
+            #endregion
             //modelBuilder.Entity<ApplicationUser>().ToTable("Users");
             //modelBuilder.Entity<IdentityRole>().ToTable("Roles");
             //modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");

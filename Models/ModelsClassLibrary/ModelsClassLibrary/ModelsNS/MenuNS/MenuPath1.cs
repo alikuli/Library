@@ -1,6 +1,5 @@
 ﻿using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.MenuNS;
-using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Collections.Generic;
 using System.IO;
@@ -27,7 +26,7 @@ namespace ModelsClassLibrary.MenuNS
 
         public string MiscFilesLocation_Initialization()
         {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY, "menupath");
+            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY, "MenuPaths");
         }
 
     }

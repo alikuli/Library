@@ -10,7 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Web;
 using UowLibrary.Abstract;
 using UowLibrary.Interface;
 
@@ -31,10 +30,10 @@ namespace UowLibrary
             createEngineSimple(entity);
         }
 
-        public virtual void Create(ControllerCreateEditParameter parm)
-        {
-            createEngineWithFileUpload(parm);
-        }
+        //public virtual void Create(ControllerCreateEditParameter parm)
+        //{
+        //    createEngineWithFileUpload(parm);
+        //}
         //public virtual void Create(TEntity entity, HttpPostedFileBase[] files)
         //{
         //    createEngineWithFileUpload(entity, files);
@@ -49,7 +48,13 @@ namespace UowLibrary
             createEngineSimple(entity);
             SaveChanges();
         }
-        public virtual void CreateAndSave_ForInitializeOnly(TEntity entity)
+
+        /// <summary>
+        /// This creates and saves for initialization only. It AUTOMATICLY looks for an image in the initialization folder and loads it, 
+        /// provided the image name is the same as the name of the product, without spaces.
+        /// </summary>
+        /// <param name="entity"></param>
+        public virtual void Create_ForInitializeOnly(TEntity entity)
         {
             try
             {
@@ -60,7 +65,7 @@ namespace UowLibrary
             catch (NoDuplicateException)
             {
 
-                ErrorsGlobal.AddMessage(string.Format("Item '{0}' is already initialized.",entity.Name));
+                ErrorsGlobal.AddMessage(string.Format("Item '{0}' is already initialized.", entity.Name));
             }
             catch (Exception e)
             {
@@ -75,11 +80,11 @@ namespace UowLibrary
         }
 
 
-        public virtual async Task CreateAndSaveAsync(TEntity entity)
-        {
-            createEngineSimple(entity);
-            await SaveChangesAsync();
-        }
+        //public virtual async Task CreateAndSaveAsync(TEntity entity)
+        //{
+        //    createEngineSimple(entity);
+        //    await SaveChangesAsync();
+        //}
         public virtual async Task CreateAndSaveAsync(ControllerCreateEditParameter parm)
         {
             createEngineWithFileUpload(parm);
@@ -97,10 +102,9 @@ namespace UowLibrary
 
         private void createEngineWithFileUpload(ControllerCreateEditParameter parm)
         {
-
             fixEntityAndBussinessRulesAndErrorCheck_Helper(parm.Entity as TEntity);
             handleUploadedFilesIfExist(parm);
-            Create(parm.Entity as TEntity);
+            createEngineSimple(parm.Entity as TEntity);
         }
 
         private void createEngineSimple(TEntity entity)
@@ -246,8 +250,8 @@ namespace UowLibrary
 
             foreach (var entity in lst)
             {
-                deleteRelatedRecordsForIHasUploads(entity);
-                EVENT_DeleteRelatedRecords(entity); 
+                deleteRelatedRecordsForIHasUploadsAndSave(entity);
+                EVENT_DeleteRelatedRecords(entity);
                 Dal.DeleteActually(entity);
                 SaveChanges();
             }
@@ -260,7 +264,7 @@ namespace UowLibrary
         /// It also removes the uploaded files themselves.
         /// </summary>
         /// <param name="entity"></param>
-        private void deleteRelatedRecordsForIHasUploads(ICommonWithId entity)
+        private void deleteRelatedRecordsForIHasUploadsAndSave(ICommonWithId entity)
         {
             IHasUploads ihasuploads = entity as IHasUploads;
 
@@ -272,11 +276,16 @@ namespace UowLibrary
             //delete the actual files 
             deletePhysicalUploadedFiles(ihasuploads, lstUploadIdsToDelete);
 
-            //this just clears the navigation.
-            ihasuploads.MiscFiles.Clear();
 
             //now delete the upload records
             deleteRelatedUploadRecords(lstUploadIdsToDelete);
+            //this just clears the navigation.
+            ihasuploads.MiscFiles.Clear();
+
+            Dal.SaveChanges();
+
+
+
         }
 
         /// <summary>

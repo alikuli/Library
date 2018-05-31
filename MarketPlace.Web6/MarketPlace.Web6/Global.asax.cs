@@ -64,7 +64,7 @@ namespace MarketPlace.Web6
                 IHasUploads ihasuploads;
                 ICommonWithId icommonWithId;
                 var type = Type.GetType(entityType.FullName);
-                if(type.IsNull())
+                if (type.IsNull())
                 {
                     //the type is in a different assembly.
                     var type2 = GetInstance(entityType.FullName);
@@ -74,7 +74,7 @@ namespace MarketPlace.Web6
                 }
                 else
                 {
-                    
+
                     ihasuploads = type as IHasUploads;
                     icommonWithId = type as ICommonWithId;
 
@@ -82,13 +82,13 @@ namespace MarketPlace.Web6
 
                 if (!ihasuploads.IsNull())
                 {
-                    string rawName  = icommonWithId.ClassNameRaw.ToLower();
-                    switch(rawName)
+                    string rawName = icommonWithId.ClassNameRaw.ToLower();
+                    switch (rawName)
                     {
-                        case "productcategory1": rawName = "productcategory";
+                        case "menupath1": rawName = "menupaths";
                             break;
-                        case "productcategory2": continue;
-                        case "productcategory3": continue; ;
+                        case "menupath2": continue;
+                        case "menupath3": continue; ;
 
                     }
                     string filename = Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY, rawName);

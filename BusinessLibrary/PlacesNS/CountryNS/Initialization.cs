@@ -33,7 +33,8 @@ namespace UowLibrary
 
                     try
                     {
-                        Create(c);
+                        //Create(c);
+                        Create_ForInitializeOnly(c);
                     }
                     catch (NoDuplicateException e)
                     {

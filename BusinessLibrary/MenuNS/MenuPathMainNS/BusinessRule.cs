@@ -57,7 +57,7 @@ namespace UowLibrary.ProductNS
 
                 if (c2.IsNull())
                 {
-                    entity.MakeName(menu1Name, menu2Name, menu3Name);
+                    entity.Name = entity.MakeName(menu1Name, menu2Name, menu3Name);
                     return;
                 }
                 menu2Name = c2.Name;
@@ -76,7 +76,7 @@ namespace UowLibrary.ProductNS
 
             }
 
-            entity.MakeName(menu1Name, menu2Name, menu3Name);
+            entity.Name = entity.MakeName(menu1Name, menu2Name, menu3Name);
         }
 
 

@@ -20,6 +20,13 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         #endregion
 
 
+        #region UomSale
+        [Display(Name = "UOM Sale")]
+        public string UomSaleId { get; set; }
+
+        public virtual UomQty UomSale { get; set; }
+
+        #endregion
         #region UomStock
 
 
@@ -39,36 +46,31 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
 
         #region Listed Volume
-
-
         [Display(Name = "Listed Volume UOM")]
         public string UomVolumeId { get; set; }
         public virtual UomVolume UomVolume { get; set; }
-
         public double Volume { get; set; }
-
         #endregion
 
 
-        #region Listed Weight UOM, WeightOnProduct
 
+
+        #region Listed Weight UOM, WeightOnProduct
         [Display(Name = "Listed Weight UOM")]
         public string UomWeightListedId { get; set; }
         public virtual UomWeight UomWeightListed { get; set; }
-
         [Display(Name = "Listed Weight")]
         public double WeightListed { get; set; }
         #endregion
 
-        #region Ship Weight
 
-        [Display(Name = "Ship Wt. UOM")]
+
+        #region Ship Weight
+        [Display(Name = "Actual Wt. UOM")]
         public string UomWeightActualId { get; set; }
         public virtual UomWeight UomWeightActual { get; set; }
-
-        [Display(Name = "Ship Wt.")]
+        [Display(Name = "Actual Wt.")]
         public double WeightActual { get; set; }
-
         #endregion
 
 

@@ -15,21 +15,29 @@ namespace DatastoreNS
         decimal mrsp;
         decimal mlsp;
         decimal cost;
-        string cat1;
-        string cat2;
+        string menupath1;
+        string menupath2;
         string cat3;
         DateTime lastOrderedDate;
         double height;
         double width;
         double length;
-        double shipWeight;
         double shipVol;
-        string uomShipWeight;
+
+        double actualWeight;
+        string uomActualWeightName;
         //string uomHeightName;
         //string uomWidthName;
         string uomLengthName;
         string uomVolumeName;
-        string uomStock;
+        string uomPurchaseName;
+        string uomSaleName;
+        string uomWeightListedName;
+        double weightListed;
+        List<MenuPathHelper> menupaths = new List<MenuPathHelper>();
+        //string uomWeightActual;
+        //string imageRelativeAddress;
+
         ProductInitializerHelper pi;
 
         public List<ProductInitializerHelper> DataArray()
@@ -49,25 +57,28 @@ namespace DatastoreNS
             mrsp = 45000;
             mlsp = 29000;
             cost = 15000;
-            cat1 = "Automobile";
-            cat2 = "Car";
+            menupath1 = "Automobiles";
+            menupath2 = "Car";
             cat3 = "Toyota";
             lastOrderedDate = DateTime.Now.AddYears(-1);
             height = 5;
             width = 8;
             length = 18;
-            uomShipWeight = "KG";
-            shipWeight = 15093;
-            shipVol = 0;
+            uomActualWeightName = "KG";
+            actualWeight = 15093;
+            shipVol = 52334;
 
             uomVolumeName = "L";
             uomLengthName = "Ft";
-            uomStock = "ea";
-            //uomHeightName = "Ft";
-            //uomWidthName = "Ft";
+            uomPurchaseName = "Ea";
+            uomSaleName = "Count";
+            uomWeightListedName = "KG";
+            weightListed = 23029;
 
+            MenuPathHelper mph = new MenuPathHelper(menupath1, menupath2);
+            menupaths.Add(mph);
 
-            pi = CreateProductInitializer(name, salePrice, mrsp, mlsp, cost, cat1, cat2, cat3, lastOrderedDate, height, width, length, uomShipWeight, shipWeight, shipVol, uomLengthName, uomVolumeName, uomStock);
+            pi = CreateProductInitializer(name, salePrice, mrsp, mlsp, cost, menupath1, menupath2, cat3, lastOrderedDate, height, width, length, uomActualWeightName, actualWeight, shipVol, uomLengthName, uomVolumeName, uomPurchaseName, uomSaleName, uomWeightListedName, weightListed, menupaths);
 
             lst.Add(pi);
 
@@ -84,22 +95,30 @@ namespace DatastoreNS
             mrsp = 45000;
             mlsp = 29000;
             cost = 15000;
-            cat1 = "Automobile";
-            cat2 = "Car";
+            menupath1 = "Automobiles";
+            menupath2 = "Car";
             cat3 = "Toyota";
             lastOrderedDate = DateTime.Now.AddYears(-1);
             height = 5;
             width = 8;
             length = 18;
-            uomShipWeight = "KG";
-            shipWeight = 15093;
-            shipVol = 0;
+            uomActualWeightName = "KG";
+            actualWeight = 15093;
+            shipVol = 39281;
 
             uomVolumeName = "L";
             uomLengthName = "Ft";
-            uomStock = "ea";
+            uomPurchaseName = "Ea";
+            uomSaleName = "Count";
+            uomWeightListedName = "KG";
+            weightListed = 23023;
+            //uomWeightActual = "KG";
+            //imageRelativeAddress = "";
+            MenuPathHelper mph = new MenuPathHelper(menupath1, menupath2);
+            menupaths.Add(mph);
 
-            pi = CreateProductInitializer(name, salePrice, mrsp, mlsp, cost, cat1, cat2, cat3, lastOrderedDate, height, width, length, uomShipWeight, shipWeight, shipVol, uomLengthName, uomVolumeName, uomStock);
+
+            pi = CreateProductInitializer(name, salePrice, mrsp, mlsp, cost, menupath1, menupath2, cat3, lastOrderedDate, height, width, length, uomActualWeightName, actualWeight, shipVol, uomLengthName, uomVolumeName, uomPurchaseName, uomSaleName, uomWeightListedName, weightListed, menupaths);
 
             lst.Add(pi);
 
@@ -107,36 +126,32 @@ namespace DatastoreNS
         }
 
         private ProductInitializerHelper CreateProductInitializer(
-            string name, 
-            decimal salePrice, 
-            decimal mrsp, 
-            decimal mlsp, 
-            decimal cost, 
-            string cat1, 
-            string cat2, 
-            string cat3, 
-            DateTime lastOrderedDate, 
-            double height, 
-            double width, 
-            double length, 
-            string uomShipWeight, 
-            double shipWeight, 
-            double shipVol, 
-            string uomLengthName, 
-            string uomVolumeName, 
-            string uomStock)
+            string name,
+            decimal salePrice,
+            decimal mrsp,
+            decimal mlsp,
+            decimal cost,
+            string cat1,
+            string cat2,
+            string cat3,
+            DateTime lastOrderedDate,
+            double height,
+            double width,
+            double length,
+            string uomShipWeight,
+            double shipWeight,
+            double shipVol,
+            string uomLengthName,
+            string uomVolumeName,
+            string uomPurchaseName,
+            string uomSaleName,
+            string uomWeightListedName,
+            double weightListed,
+            List<MenuPathHelper> menupaths)
         {
 
-            ProductInitializerHelper ph = new ProductInitializerHelper(
+            pi = new ProductInitializerHelper(
                 name,
-                salePrice,
-                mrsp,
-                mlsp,
-                cost,
-                cat1,
-                cat2,
-                cat3,
-                lastOrderedDate,
                 height,
                 width,
                 length,
@@ -144,9 +159,17 @@ namespace DatastoreNS
                 shipWeight,
                 shipVol,
                 uomLengthName,
-                uomVolumeName,uomStock);
+                uomVolumeName,
+                uomPurchaseName,
+                uomSaleName,
+                uomWeightListedName,
+                weightListed,
+                mlsp,
+                mrsp,
+                menupaths);
 
-            return ph;
+
+            return pi;
 
         }
     }

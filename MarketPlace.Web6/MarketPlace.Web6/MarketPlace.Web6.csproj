@@ -227,6 +227,7 @@
     <Content Include="Content\Initialization\Product\blank.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Initialization\Product\ToyatoSalon2015.jpg" />
     <Content Include="Content\Initialization\User\blank.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -251,7 +252,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Controllers\Controller.cd" />
-    <Content Include="Content\Initialization\productcategory\blank.txt" />
     <None Include="Properties\PublishProfiles\File.pubxml" />
     <None Include="Properties\PublishProfiles\FTP Comsats.pubxml" />
     <None Include="Properties\PublishProfiles\HostPK.pubxml" />
@@ -376,7 +376,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Uploads\FileDocImagesAdmin\" />
     <Folder Include="Content\Uploads\FileDocImages\Admin\" />
-    <Folder Include="Content\Uploads\ProductCategory1\" />
     <Folder Include="Content\Uploads\UserIdCardBack\" />
     <Folder Include="Content\Uploads\UserIdCardFront\" />
     <Folder Include="Content\Uploads\UserImages\" />

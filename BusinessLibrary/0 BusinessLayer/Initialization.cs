@@ -28,7 +28,7 @@ namespace UowLibrary
         #region overrideable methods for controlling initialization
 
         //Sometimes if you need to save after every addition, make this true
-        public bool IsSaveAfterEveryAddition { get; set; }
+        //public bool IsSaveAfterEveryAddition { get; set; }
 
         /// <summary>
         /// Use this to inject data into GetData. It is only used if you have a simple string array format for data.
@@ -116,24 +116,7 @@ namespace UowLibrary
 
                 TEntity tentity = Factory();
                 tentity.Name = dataList[i];
-                CreateAndSave_ForInitializeOnly(tentity);
-                
-                //try
-                //{
-                //    CreateAndSave(tentity);
-                //}
-                //catch (NoDuplicateException)
-                //{
-
-                //    continue;
-                //}
-                //catch (Exception e)
-                //{
-                //    ErrorsGlobal.Add("Error while creating entity", MethodBase.GetCurrentMethod(), e);
-
-                //}
-
-
+                Create_ForInitializeOnly(tentity);
             }
 
         }
@@ -149,15 +132,15 @@ namespace UowLibrary
         /// To send more complicated data, override GetData.
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
-        public async Task InitializationDataAsync()
+        public void InitializationData()
         {
             try
             {
                 AddInitData();
-                if (!IsSaveAfterEveryAddition)
-                {
-                    await SaveChangesAsync();
-                }
+                //if (!IsSaveAfterEveryAddition)
+                //{
+                //    //await SaveChangesAsync();
+                //}
                 addSaveMessage();
             }
             catch (Exception e)
@@ -169,10 +152,10 @@ namespace UowLibrary
 
 
 
-        public void SaveAfterEveryAddition(bool isSavingAfterEveryAddition)
-        {
-            IsSaveAfterEveryAddition = isSavingAfterEveryAddition;
-        }
+        //public void SaveAfterEveryAddition(bool isSavingAfterEveryAddition)
+        //{
+        //    IsSaveAfterEveryAddition = isSavingAfterEveryAddition;
+        //}
 
 
 
@@ -222,10 +205,10 @@ namespace UowLibrary
 
             //copy the actual file to the new spot. We need to do it here so we can get it's new name
             //== COPY FILE
-            string newNamePlusExtention = CopyFile(relative_SrcPath, relative_targetPath, Path.ChangeExtension(originalnameWithoutExtention, ExtentionFound));
+            string newNameWithMappedPathPlusExtention = CopyFile(relative_SrcPath, relative_targetPath, Path.ChangeExtension(originalnameWithoutExtention, ExtentionFound));
             string newPath = Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, entity.ClassNameRaw);
 
-            UploadedFile uf = new UploadedFile(originalnameWithoutExtention, newNamePlusExtention, newPath);
+            UploadedFile uf = new UploadedFile(originalnameWithoutExtention, newNameWithMappedPathPlusExtention, newPath);
             lst.Add(uf);
 
             SaveUploadedFiles(lst,

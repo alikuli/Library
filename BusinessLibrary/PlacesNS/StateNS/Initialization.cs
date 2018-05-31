@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using AliKuli.Extentions;
+﻿using AliKuli.Extentions;
+using DatastoreNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
-using DatastoreNS;
-using System.Web;
+using System;
+using System.Linq;
+using System.Reflection;
 
 namespace UowLibrary.StateNS
 {
@@ -40,7 +39,8 @@ namespace UowLibrary.StateNS
 
                 try
                 {
-                    Create(s);
+                    Create_ForInitializeOnly(s);
+                    //Create(s);
                 }
                 catch (NoDuplicateException e)
                 {

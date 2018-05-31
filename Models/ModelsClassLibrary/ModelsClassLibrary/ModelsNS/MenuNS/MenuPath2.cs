@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
-using EnumLibrary.EnumNS;
-using ModelsClassLibrary.ModelsNS.UploadedFileNS;
-using System.IO;
-using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.MenuNS;
+using ModelsClassLibrary.ModelsNS.UploadedFileNS;
+using System.Collections.Generic;
+using System.IO;
 
 namespace ModelsClassLibrary.MenuNS
-
 {
-    
-    public class MenuPath2: MenuPathAbstract, IHasUploads
+
+    public class MenuPath2 : MenuPathAbstract, IHasUploads
     {
         public override ClassesWithRightsENUM ClassNameForRights()
         {
-                return EnumLibrary.EnumNS.ClassesWithRightsENUM.MenuPath2;
+            return EnumLibrary.EnumNS.ClassesWithRightsENUM.MenuPath2;
         }
         public void LoadFrom(MenuPath2 p)
         {
@@ -34,7 +29,7 @@ namespace ModelsClassLibrary.MenuNS
 
         public string MiscFilesLocation_Initialization()
         {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY, "menupaths");
+            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY, "MenuPaths");
         }
 
     }

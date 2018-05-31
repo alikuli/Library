@@ -155,6 +155,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
         }
 
+
         public ActionResult PrintPdf(IndexListVM indexListVM)
         {
             //Biz.PrintIndex(indexListVM);
@@ -283,7 +284,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 }
                 //ViewBag.MenuLevelEnum = menuLevelEnum;
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, productCat1Id, productCat2Id, productCat3Id, logoAddress,(ICommonWithId)entity, User.Identity.Name);
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, productCat1Id, productCat2Id, productCat3Id, logoAddress, (ICommonWithId)entity, User.Identity.Name);
 
                 return Event_CreateViewAndSetupSelectList(parm);
 
@@ -410,7 +411,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 entity.ReturnUrl = returnUrl;
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
 
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, MenuLevelENUM.unknown, id, "", "", "",logoAddress, (ICommonWithId)entity, User.Identity.Name);
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, MenuLevelENUM.unknown, id, "", "", "", logoAddress, (ICommonWithId)entity, User.Identity.Name);
 
                 return Event_CreateViewAndSetupSelectList(parm);
 
@@ -506,12 +507,12 @@ namespace MarketPlace.Web6.Controllers.Abstract
         #endregion
 
         #region Initialize
-        public async Task<ActionResult> InitializeDb()
+        public ActionResult InitializeDb()
         {
             try
             {
-                Biz.SaveAfterEveryAddition(IsSavingAfterEveryAddition);
-                await Biz.InitializationDataAsync();
+                //Biz.SaveAfterEveryAddition(IsSavingAfterEveryAddition);
+                Biz.InitializationData();
                 ErrorsGlobal.Add(string.Format("*** {0} Initialized", typeof(TEntity).Name), "");
 
             }

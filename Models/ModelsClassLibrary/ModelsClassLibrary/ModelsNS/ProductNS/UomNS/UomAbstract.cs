@@ -6,7 +6,6 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
     public abstract class UomAbstract : CommonWithId, IUom
     {
-        public virtual ICollection<Product> Products { get; set; }
 
         /// <summary>
         /// Multiply the inward number with this to get the UOM. This is usually 1 but in case you

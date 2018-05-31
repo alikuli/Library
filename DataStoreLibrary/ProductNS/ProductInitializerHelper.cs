@@ -1,39 +1,31 @@
 ﻿
+using ModelsClassLibrary.MenuNS;
 using System;
+using System.Collections.Generic;
 namespace DatastoreNS
 {
     public class ProductInitializerHelper
     {
 
         public ProductInitializerHelper(
-            string name, 
-            decimal sellPrice, 
-            decimal msrp, 
-            decimal mlpPrice, 
-            decimal cost, 
-            string cat1, 
-            string cat2, 
-            string cat3, 
-            DateTime lastOrderedDate, 
-            double height, 
-            double width, 
-            double length, 
-            string uomShipWeightName, 
-            double shipWeight, 
-            double shipVol, 
-            string uomLengthName, 
-            string uomVolumeName, 
-            string uomStock)
+            string name,
+            double height,
+            double width,
+            double length,
+            string uomShipWeightName,
+            double shipWeight,
+            double shipVol,
+            string uomLengthName,
+            string uomVolumeName,
+            string uomPurchaseName,
+            string uomSaleName,
+            string uomWeightListedName,
+            double weightListed,
+            decimal mrsp,
+            decimal mlsp,
+            List<MenuPathHelper> menupaths)
         {
             Name = name;
-            //SellPrice = sellPrice;
-            //MSRP = msrp;
-            //MlpPrice = mlpPrice;
-            //Cost = cost;
-            //Cat1 = cat1;
-            //Cat2 = cat2;
-            //Cat3 = cat3;
-            //LastOrderedDate = lastOrderedDate;
             Height = height;
             Width = width;
             Length = length;
@@ -41,26 +33,29 @@ namespace DatastoreNS
             ShipWeight = shipWeight;
             UomLengthName = uomLengthName;
             UomVolumeName = uomVolumeName;
-            UomStock = uomStock;
+            UomPurchaseName = uomPurchaseName;
+            UomSaleName = uomSaleName;
+            UomWeightListedName = uomWeightListedName;
+            UomVolumeName = uomVolumeName;
+            WeightListed = weightListed;
+            Menupaths = menupaths;
+            //UomWeightActualName = uomWeightActual;
+            //ImageRelativeAddress = imageRelativeAddress;
         }
+        public List<MenuPathHelper> Menupaths { get; set; }
 
-
+        //public string ImageRelativeAddress { get; set; }
+        public string UomPurchaseName { get; set; }
+        public string UomSaleName { get; set; }
+        public string UomWeightListedName { get; set; }
+        public double WeightListed { get; set; }
         public string Name { get; set; }
-        //public decimal SellPrice { get; set; }
-        //public decimal MSRP { get; set; }
-        //public decimal MlpPrice { get; set; }
 
-        //public decimal Cost { get; set; }
-        //public string Cat1 { get; set; }
-        //public string Cat2 { get; set; }
-        //public string Cat3 { get; set; }
         public string MainCategoryName { get; set; }
         public DateTime LastOrderedDate { get; set; }
 
-        //public string UomHeightName { get; set; }
         public double Height { get; set; }
 
-        //public string UomWidthName { get; set; }
         public double Width { get; set; }
 
 
@@ -74,14 +69,12 @@ namespace DatastoreNS
         public double ShipVolume { get; set; }
         public string UomStock { get; set; }
 
+        public decimal MLSP { get; set; }
+        public decimal MRSP { get; set; }
         public override string ToString()
         {
 
             string name = string.Format("\"{0}\",", Name);
-            //string salePrice = string.Format("\"{0}\",", SellPrice);
-            //string mlpPrice = string.Format("\"{0}\",", MlpPrice);
-            //string msrp = string.Format("\"{0}\",", MSRP);
-            //string cost = string.Format("\"{0}\",", Cost);
             string mainCat = string.Format("\"{0}\",", MainCategoryName);
             string lastOrderDt = string.Format("\"{0}\",", LastOrderedDate);
             string height = string.Format("\"{0}\",", Height);
@@ -91,10 +84,6 @@ namespace DatastoreNS
             string shipWt = string.Format("\"{0}\"", ShipWeight);
 
             string finalString = name;      //0
-            //finalString += salePrice;       //1
-            //finalString += msrp;            //2
-            //finalString += mlpPrice;        //3
-            //finalString += cost;            //4
             finalString += mainCat;         //5
             finalString += LastOrderedDate; //6
             finalString += height;          //7

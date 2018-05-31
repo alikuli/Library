@@ -1,24 +1,31 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.MenuNS;
-using InterfacesLibrary.ProductNS;
 using ModelsClassLibrary.ModelsNS.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
-using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Text;
 
 namespace ModelsClassLibrary.MenuNS
-
 {
     /// <summary>
     /// This is the Menu Path
     /// </summary>
     public partial class MenuPathMain : MenuPathAbstract, IProductCategoryMain
     {
+
+        public MenuPathMain()
+        {
+            MenuPath1 = new MenuPath1();
+            MenuPath2 = new MenuPath2();
+            MenuPath3 = new MenuPath3();
+            Products = new List<Product>();
+            
+            
+            
+        }
         StringBuilder sb = new StringBuilder();
 
         public override ClassesWithRightsENUM ClassNameForRights()
@@ -153,7 +160,7 @@ namespace ModelsClassLibrary.MenuNS
         #endregion
 
 
-        public void MakeName(string menupath1name, string menupath2name, string menupath3name)
+        public string MakeName(string menupath1name, string menupath2name, string menupath3name)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -172,11 +179,15 @@ namespace ModelsClassLibrary.MenuNS
             }
 
 
-            Name = sb.ToString();
+            return sb.ToString();
         }
 
 
+        public override string ToString()
+        {
+            
+            return MakeName(MenuPath1.Name,MenuPath2.Name,"");
+        }
 
- 
     }
 }

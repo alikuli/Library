@@ -1,20 +1,15 @@
-﻿using AliKuli.UtilitiesNS;
-using AliKuli.Extentions;
-using ApplicationDbContextNS;
-using DalLibrary.Interfaces;
-using ErrorHandlerLibrary.ExceptionsNS;
+﻿using AliKuli.Extentions;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using System.Collections.Generic;
-using UowLibrary.UploadFileNS;
-using UserModels;
-using WebLibrary.Programs;
 using System.Linq;
 
 
 namespace UowLibrary.ProductNS
 {
-    public partial class ProductBiz 
+    public partial class ProductBiz
     {
+        private List<string> lstOfIds = new List<string>();
+        private Stack<Product> trailStack = new Stack<Product>();
 
         public override void BusinessRulesFor(Product entity)
         {
@@ -23,8 +18,6 @@ namespace UowLibrary.ProductNS
         }
 
 
-        private List<string> lstOfIds = new List<string>();
-        private Stack<Product> trailStack = new Stack<Product>();
         private void checkParentageIsNotCircular(Product entity)
         {
             if (entity.IsChild)
@@ -65,19 +58,19 @@ namespace UowLibrary.ProductNS
                     }
                 }
             }
-            
-            
+
+
         }
 
         private string makeTrailOfEntries()
         {
-            string s = ""; 
-            
+            string s = "";
+
             if (trailStack.IsNull())
                 return s;
             if (trailStack.Count == 0)
                 return s;
-            
+
             foreach (var item in trailStack)
             {
                 s += string.Format("{0} - ", item.Name);
@@ -85,5 +78,7 @@ namespace UowLibrary.ProductNS
 
             return s.Substring(s.Length - 2);
         }
+
+
     }
 }

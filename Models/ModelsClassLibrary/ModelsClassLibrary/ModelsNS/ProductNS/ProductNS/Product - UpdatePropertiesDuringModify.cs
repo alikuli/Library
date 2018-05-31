@@ -1,11 +1,8 @@
-﻿using AliKuli.Extentions;
-using InterfacesLibrary.SharedNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
-using System.ComponentModel.DataAnnotations;
+﻿using InterfacesLibrary.SharedNS;
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
 
-    public  partial class Product
+    public partial class Product
     {
 
 
@@ -21,7 +18,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
             UomWeightActualId = p.UomWeightActualId;
             WeightActual = p.WeightActual;
-            
+
             UomVolumeId = p.UomVolumeId;
             Volume = p.Volume;
 

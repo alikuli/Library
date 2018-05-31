@@ -1,10 +1,8 @@
 ﻿using AliKuli.Extentions;
 using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
-using System;
 using UowLibrary.Abstract;
 using UowLibrary.Interface;
-using UserModels;
 
 namespace UowLibrary
 {
@@ -36,7 +34,8 @@ namespace UowLibrary
 
         private void NoDuplicateNameAllowed(TEntity entity)
         {
-            bool found = Dal.NameExists(entity);
+            var entityFound = Dal.FindForName(entity.Name);
+            bool found = !entityFound.IsNull();
 
             if (found)
                 throw new NoDuplicateException(string.Format("{0}: '{1}' already exists in the db.", entity.GetType().Name, entity.Name));
