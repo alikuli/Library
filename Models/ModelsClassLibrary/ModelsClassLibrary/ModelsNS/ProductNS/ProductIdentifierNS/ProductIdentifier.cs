@@ -16,5 +16,10 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         [Display(Name = "Product")]
         public string ProductId { get; set; }
         public Product Product { get; set; }
+
+        public override EnumLibrary.EnumNS.ClassesWithRightsENUM ClassNameForRights()
+        {
+            return EnumLibrary.EnumNS.ClassesWithRightsENUM.ProductIdentifier;
+        }
     }
 }

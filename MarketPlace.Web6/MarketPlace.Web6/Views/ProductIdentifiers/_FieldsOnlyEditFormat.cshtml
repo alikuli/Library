@@ -1,0 +1,19 @@
+﻿@model ModelsClassLibrary.ModelsNS.ProductNS.ProductIdentifier
+    <div class="form-horizontal">
+
+        @Html.Partial(@"_Name_And_DetailInfo")
+
+    </div>
+<div class="container">
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProductId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.DropDownListFor(x => x.ProductId,
+                         (@ViewBag.ProductSelectList as IEnumerable<SelectListItem>),
+                    "--- Select Product ---",
+                new { @class = "form-control" })
+        </div>
+    </div>
+
+</div>

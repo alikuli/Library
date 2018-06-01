@@ -42,7 +42,7 @@ namespace UowLibrary.DiscountPrecedenceNS
 
                         //Create(dp);
                         //SaveChanges();
-                        Create_ForInitializeOnly(dp);
+                        CreateSave_ForInitializeOnly(dp);
 
                     }
                     else

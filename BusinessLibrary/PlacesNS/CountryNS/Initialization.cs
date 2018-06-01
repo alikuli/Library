@@ -34,7 +34,7 @@ namespace UowLibrary
                     try
                     {
                         //Create(c);
-                        Create_ForInitializeOnly(c);
+                        CreateSave_ForInitializeOnly(c);
                     }
                     catch (NoDuplicateException e)
                     {

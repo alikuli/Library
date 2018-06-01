@@ -22,6 +22,7 @@ namespace MarketPlace.Web6.Controllers
             ViewBag.UomVolumeSelectList = _productBiz.UomVolumeBiz.SelectList();
             ViewBag.UomShipWtSelectList = _productBiz.UomWeightBiz.SelectList();
             ViewBag.UomWeightSelectList = _productBiz.UomWeightBiz.SelectList();
+            ViewBag.UomLengthSelectList = _productBiz.UomLengthBiz.SelectList();
 
             return base.Event_CreateViewAndSetupSelectList(parm);
 

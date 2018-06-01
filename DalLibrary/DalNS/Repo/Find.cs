@@ -97,7 +97,14 @@ namespace DalLibrary.DalNS
             if (id.IsNullOrEmpty())
                 throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
 
-            return FindAll().FirstOrDefault(x => x.Id == id);
+            var allItems = FindAll().ToList();
+            
+            if(allItems.IsNull())
+                return null;
+
+            var item = allItems.FirstOrDefault(x => x.Id == id);
+
+            return item ;
 
             //if (itemList.IsNullOrEmpty())
             //    return default(TEntity);

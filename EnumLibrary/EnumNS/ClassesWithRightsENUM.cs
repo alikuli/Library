@@ -20,6 +20,7 @@ namespace EnumLibrary.EnumNS
         PaymentTerm,
         PaymentType,
         Product,
+        ProductIdentifier,
         MenuPath1,
         MenuPath2,
         MenuPath3,

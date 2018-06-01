@@ -1,5 +1,4 @@
 ﻿
-using ModelsClassLibrary.MenuNS;
 using System;
 using System.Collections.Generic;
 namespace DatastoreNS
@@ -23,7 +22,8 @@ namespace DatastoreNS
             double weightListed,
             decimal mrsp,
             decimal mlsp,
-            List<MenuPathHelper> menupaths)
+            List<MenuPathHelper> menupaths,
+            List<string> productIdentifiers)
         {
             Name = name;
             Height = height;
@@ -39,10 +39,13 @@ namespace DatastoreNS
             UomVolumeName = uomVolumeName;
             WeightListed = weightListed;
             Menupaths = menupaths;
+            ProductIdentifiers = productIdentifiers;
+            ShipVolume = shipVol;
             //UomWeightActualName = uomWeightActual;
             //ImageRelativeAddress = imageRelativeAddress;
         }
         public List<MenuPathHelper> Menupaths { get; set; }
+        public List<string> ProductIdentifiers { get; set; }
 
         //public string ImageRelativeAddress { get; set; }
         public string UomPurchaseName { get; set; }

@@ -3,143 +3,176 @@
 }
 
 
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="text-center thumbnail ">Menu</h1>
+
+     <!-- Modal -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center thumbnail ">Menu</h1>
+        </div>
+
+        <div>
+            <p>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </p>
+
+        </div>
+
+
+        <div class="container">
+            <h2>Modal Example</h2>
+            <!-- Trigger the modal with a button -->
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Modal Header</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Some text in the modal.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-4 text-center">
+            <p class="text-success h3 text-center">Current</p>
+            <p> @Html.ActionLink("Menus", "Index", "Menus", null, new { @class = "btn btn-success" })</p>
+            <p class="text-success h4 text-center">Filing</p>
+            <p> @Html.ActionLink("Filing", "Index", "FileDocs", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Filing Old", "Index", "FileDocsOldData", null, new { @class = "btn btn-success" })</p>
+            <p class="text-success h4 text-center">Places</p>
+            <p>@Html.ActionLink("Countries", "Index", "Countries", null, new { @class = "btn btn-success" })</p>
+            <p>@Html.ActionLink("States", "Index", "States", null, new { @class = "btn btn-success" })</p>
+            <p>@Html.ActionLink("Languages", "Index", "Languages", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Discount Precedences", "Index", "DiscountPrecedences", null, new { @class = "btn btn-success" })</p>
+            <p class="text-success h4 text-center">Players</p>
+            <p> @Html.ActionLink("Customer Category", "Index", "CustomerCategories", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Owner Category", "Index", "OwnerCategories", null, new { @class = "btn btn-success" })</p>
+            <p class="text-success h4 text-center">Payments</p>
+            <p> @Html.ActionLink("Payment Methods", "Index", "PaymentMethods", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Payment Terms", "Index", "PaymentTerms", null, new { @class = "btn btn-success" })</p>
+            <p class="text-success h4 text-center">Products</p>
+            <p> @Html.ActionLink("Products", "Index", "Products", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Products Identifiers", "Index", "ProductIdentifiers", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Menu Path 1", "Index", "MenuPath1s", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Menu Path 2", "Index", "MenuPath2s", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Menu Path 3", "Index", "MenuPath3s", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Menu Path Main", "Index", "MenuPathMains", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Uom Length", "Index", "UomLengths", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("uom Volume", "Index", "UomVolumes", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Uom Weight", "Index", "UomWeights", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Uom Qty", "Index", "UomQuantities", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Uploaded Files", "Index", "UploadedFiles", null, new { @class = "btn btn-success" })</p>
+            <p>@Html.ActionLink("Counters", "Index", "Counters", null, new { @class = "btn btn-success" })</p>
+            <p class="text-success h4 text-center">Users</p>
+            <p> @Html.ActionLink("Users", "Index", "Users", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Rights", "Index", "Rights", null, new { @class = "btn btn-success" })</p>
+            <p class="text-success h4 text-center">Misc</p>
+            <p> @Html.ActionLink("Counters", "Index", "Counters", null, new { @class = "btn btn-success" })</p>
+
+
+
+        </div>
+
+        <div class="col-lg-4 text-center">
+            <p class="text-warning h3 text-center">Current</p>
+            <p>@Html.ActionLink("Products", "InitializeDb", "Products", null, new { @class = "btn btn-warning" })</p>
+            <p>@Html.ActionLink("Products Identifiers", "InitializeDb", "ProductIdentifiers", null, new { @class = "btn btn-warning" })</p>
+            <p class="text-warning h3 text-center">Initializers</p>
+            <p> @Html.ActionLink("Invoice Pdf", "PrintInvoice", "Languages", null, new { @class = "btn btn-warning" })</p>
+            <p class="text-warning h4 text-center">Filing</p>
+            <p> @Html.ActionLink("Filing", "InitializeDb", "FileDocs", null, new { @class = "btn btn-warning" })</p>
+            <p> @Html.ActionLink("Filing Old", "InitializeDb", "FileDocsOldData", null, new { @class = "btn btn-warning" })</p>
+            <p class="text-warning h4 text-center">Places</p>
+            <p>@Html.ActionLink("Countries", "InitializeDb", "Countries", null, new { @class = "btn btn-warning" })</p>
+            <p>@Html.ActionLink("States", "InitializeDb", "States", null, new { @class = "btn btn-warning" })</p>
+            <p>@Html.ActionLink("Languages", "InitializeDb", "Languages", null, new { @class = "btn btn-warning" })</p>
+            <p>@Html.ActionLink("Discount Precedencs", "InitializeDb", "DiscountPrecedences", null, new { @class = "btn btn-warning" })</p>
+            <p class="text-warning h4 text-center">Players</p>
+            <p>@Html.ActionLink("Customer Category", "InitializeDb", "CustomerCategories", null, new { @class = "btn btn-warning" })</p>
+            <p>@Html.ActionLink("Owner Category", "InitializeDb", "OwnerCategories", null, new { @class = "btn btn-warning" })</p>
+            <p class="text-warning h4 text-center">Payments</p>
+            <p>@Html.ActionLink("Payment Methods", "InitializeDb", "PaymentMethods", null, new { @class = "btn btn-warning" })</p>
+            <p>@Html.ActionLink("Payment Terms", "InitializeDb", "PaymentTerms", null, new { @class = "btn btn-warning" })</p>
+            <p class="text-warning h4 text-center">Products</p>
+            <p>@Html.ActionLink("Products", "InitializeDb", "Products", null, new { @class = "btn btn-warning" })</p>
+            <p>@Html.ActionLink("Menu Path 1", "InitializeDb", "MenuPath1s", null, new { @class = "btn btn-warning" })</p>
+            <p>@Html.ActionLink("Menu Path 2", "InitializeDb", "MenuPath2s", null, new { @class = "btn btn-warning" })</p>
+            <p>@Html.ActionLink("Menu Path 3", "InitializeDb", "MenuPath3s", null, new { @class = "btn btn-warning" })</p>
+            <p>@Html.ActionLink("Menu Path Main", "InitializeDb", "MenuPathMains", null, new { @class = "btn btn-warning" })</p>
+            <p> @Html.ActionLink("Uom Length", "InitializeDb", "UomLengths", null, new { @class = "btn btn-warning" })</p>
+            <p> @Html.ActionLink("uom Volume", "InitializeDb", "UomVolumes", null, new { @class = "btn btn-warning" })</p>
+            <p> @Html.ActionLink("Uom Weight", "InitializeDb", "UomWeights", null, new { @class = "btn btn-warning" })</p>
+            <p> @Html.ActionLink("Uom Qty", "InitializeDb", "UomQuantities", null, new { @class = "btn btn-warning" })</p>
+            <p> @Html.ActionLink("NO Initialization", "", "", null, new { @class = "btn btn-warning disabled" })</p>
+            <p> @Html.ActionLink("Counters", "InitializeDb", "Counters", null, new { @class = "btn btn-warning" })</p>
+            <p class="text-warning h4 text-center">Users</p>
+            <p> @Html.ActionLink("Users", "InitializeDb", "Users", null, new { @class = "btn btn-warning" })</p>
+            <p> @Html.ActionLink("Rights", "InitializeDb", "Rights", null, new { @class = "btn btn-warning" })</p>
+            <p class="text-warning h4 text-center">Misc</p>
+            <p>@Html.ActionLink("Counters", "InitializeDb", "Counters", null, new { @class = "btn btn-warning" })</p>
+
+        </div>
+
+        <div class="col-lg-4 h3 text-center">
+            <p class="text-danger  h3 text-center">Current</p>
+            <p>@Html.ActionLink("Products", "DeleteAll", "Products", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Product Identifiers", "DeleteAll", "ProductIdentifiers", null, new { @class = "btn btn-danger" })</p>
+            <p class="text-danger  h3 text-center">Delete ALL</p>
+            <p> @Html.ActionLink("Menus", "", "", null, new { @class = "btn btn-danger disabled" })</p>
+            <p class="text-warning h4 text-center">Filing</p>
+            <p>@Html.ActionLink("Filing", "DeleteAll", "FileDocs", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Filing Old", "DeleteAll", "FileDocsOldData", null, new { @class = "btn btn-danger" })</p>
+            <p class="text-danger h4 text-center">Places</p>
+            <p>@Html.ActionLink("Countries", "DeleteAll", "Countries", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("States", "DeleteAll", "States", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Languages", "DeleteAll", "Languages", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Discount Precedencs", "DeleteAll", "DiscountPrecedences", null, new { @class = "btn btn-danger" })</p>
+            <p class="text-danger h4 text-center">Players</p>
+            <p>@Html.ActionLink("Customer Category", "DeleteAll", "CustomerCategories", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Owners Category", "DeleteAll", "OwnerCategories", null, new { @class = "btn btn-danger" })</p>
+            <p class="text-danger h4 text-center">Payments</p>
+            <p>@Html.ActionLink("Payment Methods", "DeleteAll", "PaymentMethods", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Payment Terms", "DeleteAll", "PaymentTerms", null, new { @class = "btn btn-danger" })</p>
+            <p class="text-danger h4 text-center">Products</p>
+            <p>@Html.ActionLink("Products", "DeleteAll", "Products", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Menu Path 1", "DeleteAll", "MenuPath1s", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Menu Path 2", "DeleteAll", "MenuPath2s", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Menu Path 3", "DeleteAll", "MenuPath3s", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Menu Path Main", "DeleteAll", "MenuPathMains", null, new { @class = "btn btn-danger" })</p>
+            <p> @Html.ActionLink("Uom Length", "DeleteAll", "UomLengths", null, new { @class = "btn btn-danger" })</p>
+            <p> @Html.ActionLink("uom Volume", "DeleteAll", "UomVolumes", null, new { @class = "btn btn-danger" })</p>
+            <p> @Html.ActionLink("Uom Weight", "DeleteAll", "UomWeights", null, new { @class = "btn btn-danger" })</p>
+            <p> @Html.ActionLink("Uom Qty", "DeleteAll", "UomQuantities", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Uploaded Files", "DeleteAll", "UploadedFiles", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Counters", "DeleteAll", "Counters", null, new { @class = "btn btn-danger" })</p>
+            <p class="text-warning h4 text-center">Users</p>
+            <p>@Html.ActionLink("Users", "DeleteAll", "Users", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Rights", "DeleteAll", "Rights", null, new { @class = "btn btn-danger" })</p>
+            <p class="text-warning h4 text-center">Misc</p>
+            <p>@Html.ActionLink("Counters", "DeleteAll", "Counters", null, new { @class = "btn btn-danger" })</p>
+
+        </div>
     </div>
 
     <div>
         <p>
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ActionLink("Back to List", "Index", "Home")
         </p>
-
-    </div>
-    <div class="col-lg-4 text-center">
-        <p class="text-success h3 text-center">Programs</p>
-        <p> @Html.ActionLink("Products", "Index", "Products", null, new { @class = "btn btn-success" })</p>
-        <p class="text-success h3 text-center">Current</p>
-        <p> @Html.ActionLink("Menus", "Index", "Menus", null, new { @class = "btn btn-success" })</p>
-        <p class="text-success h4 text-center">Filing</p>
-        <p> @Html.ActionLink("Filing", "Index", "FileDocs", null, new { @class = "btn btn-success" })</p>
-        <p> @Html.ActionLink("Filing Old", "Index", "FileDocsOldData", null, new { @class = "btn btn-success" })</p>
-        <p class="text-success h4 text-center">Places</p>
-        <p>@Html.ActionLink("Countries", "Index", "Countries", null, new { @class = "btn btn-success" })</p>
-        <p>@Html.ActionLink("States", "Index", "States", null, new { @class = "btn btn-success" })</p>
-        <p>@Html.ActionLink("Languages", "Index", "Languages", null, new { @class = "btn btn-success" })</p>
-        <p> @Html.ActionLink("Discount Precedences", "Index", "DiscountPrecedences", null, new { @class = "btn btn-success" })</p>
-        <p class="text-success h4 text-center">Players</p>
-        <p> @Html.ActionLink("Customer Category", "Index", "CustomerCategories", null, new { @class = "btn btn-success" })</p>
-        <p> @Html.ActionLink("Owner Category", "Index", "OwnerCategories", null, new { @class = "btn btn-success" })</p>
-        <p class="text-success h4 text-center">Payments</p>
-        <p> @Html.ActionLink("Payment Methods", "Index", "PaymentMethods", null, new { @class = "btn btn-success" })</p>
-        <p> @Html.ActionLink("Payment Terms", "Index", "PaymentTerms", null, new { @class = "btn btn-success" })</p>
-        <p class="text-success h4 text-center">Products</p>
-        <p> @Html.ActionLink("Products", "Index", "Products", null, new { @class = "btn btn-success" })</p>
-        <p> @Html.ActionLink("Menu Path 1", "Index", "MenuPath1s", null, new { @class = "btn btn-success" })</p>
-        <p> @Html.ActionLink("Menu Path 2", "Index", "MenuPath2s", null, new { @class = "btn btn-success" })</p>
-        <p> @Html.ActionLink("Menu Path 3", "Index", "MenuPath3s", null, new { @class = "btn btn-success" })</p>
-        <p> @Html.ActionLink("Menu Path Main", "Index", "MenuPathMains", null, new { @class = "btn btn-success" })</p>
-        <p> @Html.ActionLink("Uom Length", "Index", "UomLengths", null, new { @class = "btn btn-success" })</p>
-        <p> @Html.ActionLink("uom Volume", "Index", "UomVolumes", null, new { @class = "btn btn-success" })</p>
-        <p> @Html.ActionLink("Uom Weight", "Index", "UomWeights", null, new { @class = "btn btn-success" })</p>
-        <p> @Html.ActionLink("Uom Qty", "Index", "UomQuantities", null, new { @class = "btn btn-success" })</p>
-        <p> @Html.ActionLink("Uploaded Files", "Index", "UploadedFiles", null, new { @class = "btn btn-success" })</p>
-        <p>@Html.ActionLink("Counters", "Index", "Counters", null, new { @class = "btn btn-success" })</p>
-        <p class="text-success h4 text-center">Users</p>
-        <p> @Html.ActionLink("Users", "Index", "Users", null, new { @class = "btn btn-success" })</p>
-        <p> @Html.ActionLink("Rights", "Index", "Rights", null, new { @class = "btn btn-success" })</p>
-        <p class="text-success h4 text-center">Misc</p>
-        <p> @Html.ActionLink("Counters", "Index", "Counters", null, new { @class = "btn btn-success" })</p>
-
-
-
     </div>
 
-    <div class="col-lg-4 text-center">
-        <p class="text-warning h3 text-center">Current</p>
-        <p>@Html.ActionLink("Products", "InitializeDb", "Products", null, new { @class = "btn btn-warning" })</p>
-        <p class="text-warning h3 text-center">Initializers</p>
-        <p> @Html.ActionLink("Invoice Pdf", "PrintInvoice", "Languages", null, new { @class = "btn btn-warning" })</p>
-        <p class="text-warning h4 text-center">Filing</p>
-        <p> @Html.ActionLink("Filing", "InitializeDb", "FileDocs", null, new { @class = "btn btn-warning" })</p>
-        <p> @Html.ActionLink("Filing Old", "InitializeDb", "FileDocsOldData", null, new { @class = "btn btn-warning" })</p>
-        <p class="text-warning h4 text-center">Places</p>
-        <p>@Html.ActionLink("Countries", "InitializeDb", "Countries", null, new { @class = "btn btn-warning" })</p>
-        <p>@Html.ActionLink("States", "InitializeDb", "States", null, new { @class = "btn btn-warning" })</p>
-        <p>@Html.ActionLink("Languages", "InitializeDb", "Languages", null, new { @class = "btn btn-warning" })</p>
-        <p>@Html.ActionLink("Discount Precedencs", "InitializeDb", "DiscountPrecedences", null, new { @class = "btn btn-warning" })</p>
-        <p class="text-warning h4 text-center">Players</p>
-        <p>@Html.ActionLink("Customer Category", "InitializeDb", "CustomerCategories", null, new { @class = "btn btn-warning" })</p>
-        <p>@Html.ActionLink("Owner Category", "InitializeDb", "OwnerCategories", null, new { @class = "btn btn-warning" })</p>
-        <p class="text-warning h4 text-center">Payments</p>
-        <p>@Html.ActionLink("Payment Methods", "InitializeDb", "PaymentMethods", null, new { @class = "btn btn-warning" })</p>
-        <p>@Html.ActionLink("Payment Terms", "InitializeDb", "PaymentTerms", null, new { @class = "btn btn-warning" })</p>
-        <p class="text-warning h4 text-center">Products</p>
-        <p>@Html.ActionLink("Products", "InitializeDb", "Products", null, new { @class = "btn btn-warning" })</p>
-        <p>@Html.ActionLink("Menu Path 1", "InitializeDb", "MenuPath1s", null, new { @class = "btn btn-warning" })</p>
-        <p>@Html.ActionLink("Menu Path 2", "InitializeDb", "MenuPath2s", null, new { @class = "btn btn-warning" })</p>
-        <p>@Html.ActionLink("Menu Path 3", "InitializeDb", "MenuPath3s", null, new { @class = "btn btn-warning" })</p>
-        <p>@Html.ActionLink("Menu Path Main", "InitializeDb", "MenuPathMains", null, new { @class = "btn btn-warning" })</p>
-        <p> @Html.ActionLink("Uom Length", "InitializeDb", "UomLengths", null, new { @class = "btn btn-warning" })</p>
-        <p> @Html.ActionLink("uom Volume", "InitializeDb", "UomVolumes", null, new { @class = "btn btn-warning" })</p>
-        <p> @Html.ActionLink("Uom Weight", "InitializeDb", "UomWeights", null, new { @class = "btn btn-warning" })</p>
-        <p> @Html.ActionLink("Uom Qty", "InitializeDb", "UomQuantities", null, new { @class = "btn btn-warning" })</p>
-        <p> @Html.ActionLink("NO Initialization", "", "", null, new { @class = "btn btn-warning disabled" })</p>
-        <p> @Html.ActionLink("Counters", "InitializeDb", "Counters", null, new { @class = "btn btn-warning" })</p>
-        <p class="text-warning h4 text-center">Users</p>
-        <p> @Html.ActionLink("Users", "InitializeDb", "Users", null, new { @class = "btn btn-warning" })</p>
-        <p> @Html.ActionLink("Rights", "InitializeDb", "Rights", null, new { @class = "btn btn-warning" })</p>
-        <p class="text-warning h4 text-center">Misc</p>
-        <p>@Html.ActionLink("Counters", "InitializeDb", "Counters", null, new { @class = "btn btn-warning" })</p>
-
-    </div>
-
-    <div class="col-lg-4 h3 text-center">
-        <p class="text-danger  h3 text-center">Current</p>
-        <p>@Html.ActionLink("Products", "DeleteAll", "Products", null, new { @class = "btn btn-danger" })</p>
-        <p class="text-danger  h3 text-center">Delete ALL</p>
-        <p> @Html.ActionLink("Menus", "", "", null, new { @class = "btn btn-danger disabled" })</p>
-        <p class="text-warning h4 text-center">Filing</p>
-        <p>@Html.ActionLink("Filing", "DeleteAll", "FileDocs", null, new { @class = "btn btn-danger" })</p>
-        <p>@Html.ActionLink("Filing Old", "DeleteAll", "FileDocsOldData", null, new { @class = "btn btn-danger" })</p>
-        <p class="text-danger h4 text-center">Places</p>
-        <p>@Html.ActionLink("Countries", "DeleteAll", "Countries", null, new { @class = "btn btn-danger" })</p>
-        <p>@Html.ActionLink("States", "DeleteAll", "States", null, new { @class = "btn btn-danger" })</p>
-        <p>@Html.ActionLink("Languages", "DeleteAll", "Languages", null, new { @class = "btn btn-danger" })</p>
-        <p>@Html.ActionLink("Discount Precedencs", "DeleteAll", "DiscountPrecedences", null, new { @class = "btn btn-danger" })</p>
-        <p class="text-danger h4 text-center">Players</p>
-        <p>@Html.ActionLink("Customer Category", "DeleteAll", "CustomerCategories", null, new { @class = "btn btn-danger" })</p>
-        <p>@Html.ActionLink("Owners Category", "DeleteAll", "OwnerCategories", null, new { @class = "btn btn-danger" })</p>
-        <p class="text-danger h4 text-center">Payments</p>
-        <p>@Html.ActionLink("Payment Methods", "DeleteAll", "PaymentMethods", null, new { @class = "btn btn-danger" })</p>
-        <p>@Html.ActionLink("Payment Terms", "DeleteAll", "PaymentTerms", null, new { @class = "btn btn-danger" })</p>
-        <p class="text-danger h4 text-center">Products</p>
-        <p>@Html.ActionLink("Products", "DeleteAll", "Products", null, new { @class = "btn btn-danger" })</p>
-        <p>@Html.ActionLink("Menu Path 1", "DeleteAll", "MenuPath1s", null, new { @class = "btn btn-danger" })</p>
-        <p>@Html.ActionLink("Menu Path 2", "DeleteAll", "MenuPath2s", null, new { @class = "btn btn-danger" })</p>
-        <p>@Html.ActionLink("Menu Path 3", "DeleteAll", "MenuPath3s", null, new { @class = "btn btn-danger" })</p>
-        <p>@Html.ActionLink("Menu Path Main", "DeleteAll", "MenuPathMains", null, new { @class = "btn btn-danger" })</p>
-        <p> @Html.ActionLink("Uom Length", "DeleteAll", "UomLengths", null, new { @class = "btn btn-danger" })</p>
-        <p> @Html.ActionLink("uom Volume", "DeleteAll", "UomVolumes", null, new { @class = "btn btn-danger" })</p>
-        <p> @Html.ActionLink("Uom Weight", "DeleteAll", "UomWeights", null, new { @class = "btn btn-danger" })</p>
-        <p> @Html.ActionLink("Uom Qty", "DeleteAll", "UomQuantities", null, new { @class = "btn btn-danger" })</p>
-        <p>@Html.ActionLink("Uploaded Files", "DeleteAll", "UploadedFiles", null, new { @class = "btn btn-danger" })</p>
-        <p>@Html.ActionLink("Counters", "DeleteAll", "Counters", null, new { @class = "btn btn-danger" })</p>
-        <p class="text-warning h4 text-center">Users</p>
-        <p>@Html.ActionLink("Users", "DeleteAll", "Users", null, new { @class = "btn btn-danger" })</p>
-        <p>@Html.ActionLink("Rights", "DeleteAll", "Rights", null, new { @class = "btn btn-danger" })</p>
-        <p class="text-warning h4 text-center">Misc</p>
-        <p>@Html.ActionLink("Counters", "DeleteAll", "Counters", null, new { @class = "btn btn-danger" })</p>
-
-    </div>
-</div>
-
-<div>
-    <p>
-        @Html.ActionLink("Back to List", "Index", "Home")
-    </p>
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

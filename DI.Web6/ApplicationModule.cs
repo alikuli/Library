@@ -6,6 +6,7 @@ using DalNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using ModelsClassLibrary.ModelsNS.ProductNS;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using UowLibrary;
@@ -55,6 +56,7 @@ namespace DependancyResolver
             Bind<UomLengthBiz>().ToSelf();
             Bind<UomQuantityBiz>().ToSelf();
             Bind<UomVolumeBiz>().ToSelf();
+            Bind<ProductIdentifierBiz>().ToSelf();
             //Bind<UomWeightBiz>().ToSelf();
 
         }

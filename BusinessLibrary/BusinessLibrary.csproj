@@ -238,6 +238,10 @@
     <Compile Include="MenuNS\MenuPathMainNS\SelectList.cs" />
     <Compile Include="MenuNS\MenuPathMainNS\Uploads.cs" />
     <Compile Include="MenuNS\MenuPathMainNS\BusinessRule.cs" />
+    <Compile Include="ProductNS\ProductIdentifierNS\Index.cs" />
+    <Compile Include="ProductNS\ProductIdentifierNS\HandleRelatedRecord.cs" />
+    <Compile Include="ProductNS\ProductIdentifierNS\SelectList.cs" />
+    <Compile Include="ProductNS\ProductIdentifierNS\ProductIdentifierBiz.cs" />
     <Compile Include="ProductNS\ProductNS\Uploads.cs" />
     <Compile Include="ProductNS\ProductNS\Index.cs" />
     <Compile Include="ProductNS\ProductNS\SelectList.cs" />

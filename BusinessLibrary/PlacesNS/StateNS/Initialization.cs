@@ -39,7 +39,7 @@ namespace UowLibrary.StateNS
 
                 try
                 {
-                    Create_ForInitializeOnly(s);
+                    CreateSave_ForInitializeOnly(s);
                     //Create(s);
                 }
                 catch (NoDuplicateException e)

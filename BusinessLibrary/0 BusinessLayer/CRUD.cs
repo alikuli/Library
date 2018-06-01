@@ -54,7 +54,7 @@ namespace UowLibrary
         /// provided the image name is the same as the name of the product, without spaces.
         /// </summary>
         /// <param name="entity"></param>
-        public virtual void Create_ForInitializeOnly(TEntity entity)
+        public virtual void CreateSave_ForInitializeOnly(TEntity entity)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace UowLibrary
         private void createEngineWithFileUpload(ControllerCreateEditParameter parm)
         {
             fixEntityAndBussinessRulesAndErrorCheck_Helper(parm.Entity as TEntity);
-            handleUploadedFilesIfExist(parm);
+            handleRelatedFilesIfExist(parm);
             createEngineSimple(parm.Entity as TEntity);
         }
 
@@ -146,7 +146,7 @@ namespace UowLibrary
         {
 
             fixEntityAndBussinessRulesAndErrorCheck_Helper(parm.Entity as TEntity);
-            handleUploadedFilesIfExist(parm);
+            handleRelatedFilesIfExist(parm);
             Dal.Update(parm.Entity as TEntity);
             ClearSelectListInCache(SelectListCacheKey);
 

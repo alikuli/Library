@@ -21,12 +21,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
             Buy = new CostsComplex();
             Sell = new SalePriceComplex();
             Dimensions = new Dimensions();
-            ProductIdentifiers = new List<ProductIdentifier>();
 
-            //Date = new ProductDateComplex();
-            //IsChild = false;
-            //IsUomForPackingVolRequired = false;
-            //IsAllowd_Zero_MRSP = false;
         }
 
 

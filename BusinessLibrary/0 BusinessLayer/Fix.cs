@@ -15,7 +15,7 @@ namespace UowLibrary
 
         /// <summary>
         /// Fix any records that need fixing before applying business rules, saving and error checking here.
-        /// Default. Fixes the Name To Title Case.
+        /// Default. 
         /// </summary>
         /// <param name="entity"></param>
         public virtual void Fix(TEntity entity)

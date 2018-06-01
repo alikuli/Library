@@ -8,7 +8,6 @@ namespace DatastoreNS
     /// </summary>
     public class ProductDataArray
     {
-
         //Product items to initalize
         string name;
         decimal salePrice;
@@ -34,7 +33,6 @@ namespace DatastoreNS
         string uomSaleName;
         string uomWeightListedName;
         double weightListed;
-        List<MenuPathHelper> menupaths = new List<MenuPathHelper>();
         //string uomWeightActual;
         //string imageRelativeAddress;
 
@@ -51,6 +49,9 @@ namespace DatastoreNS
 
         private void addToyatoSalon2015(List<ProductInitializerHelper> lst)
         {
+            List<MenuPathHelper> menupaths = new List<MenuPathHelper>();
+            List<string> productIdentifiers = new List<string>();
+
 
             name = "Toyato Salon 2015";
             salePrice = 30000;
@@ -78,7 +79,11 @@ namespace DatastoreNS
             MenuPathHelper mph = new MenuPathHelper(menupath1, menupath2);
             menupaths.Add(mph);
 
-            pi = CreateProductInitializer(name, salePrice, mrsp, mlsp, cost, menupath1, menupath2, cat3, lastOrderedDate, height, width, length, uomActualWeightName, actualWeight, shipVol, uomLengthName, uomVolumeName, uomPurchaseName, uomSaleName, uomWeightListedName, weightListed, menupaths);
+            productIdentifiers.Clear();
+            productIdentifiers.Add("XXX");
+            productIdentifiers.Add("XX4534");
+
+            pi = CreateProductInitializer(name, salePrice, mrsp, mlsp, cost, menupath1, menupath2, cat3, lastOrderedDate, height, width, length, uomActualWeightName, actualWeight, shipVol, uomLengthName, uomVolumeName, uomPurchaseName, uomSaleName, uomWeightListedName, weightListed, menupaths, productIdentifiers);
 
             lst.Add(pi);
 
@@ -89,6 +94,8 @@ namespace DatastoreNS
         {
 
 
+            List<MenuPathHelper> menupaths = new List<MenuPathHelper>();
+            List<string> productIdentifiers = new List<string>();
 
             name = "Car";
             salePrice = 30000;
@@ -117,8 +124,11 @@ namespace DatastoreNS
             MenuPathHelper mph = new MenuPathHelper(menupath1, menupath2);
             menupaths.Add(mph);
 
+            productIdentifiers.Clear();
+            productIdentifiers.Add("PT20");
+            productIdentifiers.Add("PT2036");
 
-            pi = CreateProductInitializer(name, salePrice, mrsp, mlsp, cost, menupath1, menupath2, cat3, lastOrderedDate, height, width, length, uomActualWeightName, actualWeight, shipVol, uomLengthName, uomVolumeName, uomPurchaseName, uomSaleName, uomWeightListedName, weightListed, menupaths);
+            pi = CreateProductInitializer(name, salePrice, mrsp, mlsp, cost, menupath1, menupath2, cat3, lastOrderedDate, height, width, length, uomActualWeightName, actualWeight, shipVol, uomLengthName, uomVolumeName, uomPurchaseName, uomSaleName, uomWeightListedName, weightListed, menupaths, productIdentifiers);
 
             lst.Add(pi);
 
@@ -147,7 +157,8 @@ namespace DatastoreNS
             string uomSaleName,
             string uomWeightListedName,
             double weightListed,
-            List<MenuPathHelper> menupaths)
+            List<MenuPathHelper> menupaths,
+            List<string> productIdentifiers)
         {
 
             pi = new ProductInitializerHelper(
@@ -166,7 +177,8 @@ namespace DatastoreNS
                 weightListed,
                 mlsp,
                 mrsp,
-                menupaths);
+                menupaths,
+                productIdentifiers);
 
 
             return pi;

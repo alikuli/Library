@@ -43,7 +43,6 @@ namespace UowLibrary
 
                     //You need to add a refrence here to save the file in the UploadedFile as well.
                     AddEntityRecordIntoUpload(file, entity, iuserHasUploadsTypeEnum);
-
                     _uploadedFileBiz.Create(file);
 
                 }
@@ -235,23 +234,24 @@ namespace UowLibrary
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="files"></param>
-        private void handleUploadedFilesIfExist(ControllerCreateEditParameter parm)
+        private void handleRelatedFilesIfExist(ControllerCreateEditParameter parm)
         {
             getFilesForIhasUploads(parm);
             getFilesForIUserHasUploads(parm);
+            HandleRelatedRecord(parm);
 
 
         }
 
-        //private void uploadFile(ControllerCreateEditParameter parm)
-        //{
-        //    ///Deal with IHasUploads
-        //    //uploadFileHelperForIHasUploads(
-        //    //    parm.MiscUploadedFiles,
-        //    //    parm.Entity as TEntity);
-        //    getFilesForIhasUploads(parm);
-        //    getFilesForIUserHasUploads(parm);
-        //}
+        /// <summary>
+        /// Handle related record activity here.
+        /// </summary>
+        /// <param name="parm"></param>
+        public virtual void HandleRelatedRecord(ControllerCreateEditParameter parm)
+        {
+
+        }
+
 
         private void getFilesForIUserHasUploads(ControllerCreateEditParameter parm)
         {

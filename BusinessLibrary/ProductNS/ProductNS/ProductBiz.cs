@@ -14,17 +14,17 @@ namespace UowLibrary.ProductNS
     {
 
 
-        UomWeightBiz _uomWeightBiz;
-        UomVolumeBiz _uomVolumeBiz;
-        UomLengthBiz _uomLengthBiz;
-        UomQuantityBiz _uomQuantityBiz;
-        MenuPathMainBiz _menuPathMainBiz;
-        MenuPath1Biz _menuPath1Biz;
-        MenuPath2Biz _menuPath2Biz;
-        MenuPath3Biz _menuPath3Biz;
+        readonly UomWeightBiz _uomWeightBiz;
+        readonly UomVolumeBiz _uomVolumeBiz;
+        readonly UomLengthBiz _uomLengthBiz;
+        readonly UomQuantityBiz _uomQuantityBiz;
+        readonly MenuPathMainBiz _menuPathMainBiz;
+        readonly MenuPath1Biz _menuPath1Biz;
+        readonly MenuPath2Biz _menuPath2Biz;
+        readonly MenuPath3Biz _menuPath3Biz;
+        readonly ProductIdentifierBiz _productIdentifierBiz;
 
-
-        public ProductBiz(IRepositry<ApplicationUser> userDal, IRepositry<Product> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz, UomVolumeBiz uomVolumeBiz, UomLengthBiz uomLengthBiz, UomQuantityBiz uomQuantityBiz, UomWeightBiz uomWeightBiz, MenuPathMainBiz menuPathMainBiz, MenuPath1Biz menuPath1Biz, MenuPath2Biz menuPath2Biz, MenuPath3Biz menuPath3Biz)
+        public ProductBiz(IRepositry<ApplicationUser> userDal, IRepositry<Product> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz, UomVolumeBiz uomVolumeBiz, UomLengthBiz uomLengthBiz, UomQuantityBiz uomQuantityBiz, UomWeightBiz uomWeightBiz, MenuPathMainBiz menuPathMainBiz, MenuPath1Biz menuPath1Biz, MenuPath2Biz menuPath2Biz, MenuPath3Biz menuPath3Biz, ProductIdentifierBiz productIdentifierBiz)
             : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
         {
             _uomWeightBiz = uomWeightBiz;
@@ -35,6 +35,7 @@ namespace UowLibrary.ProductNS
             _menuPath1Biz = menuPath1Biz;
             _menuPath2Biz = menuPath2Biz;
             _menuPath3Biz = menuPath3Biz;
+            _productIdentifierBiz = productIdentifierBiz;
         }
 
 
@@ -101,6 +102,15 @@ namespace UowLibrary.ProductNS
                 return _menuPath3Biz;
             }
         }
+
+        public ProductIdentifierBiz ProductIdentifierBiz
+        {
+            get
+            {
+                return _productIdentifierBiz;
+            }
+        }
+
         //public override string SelectListCacheKey
         //{
         //    get { return "ProductSelectListCache"; }

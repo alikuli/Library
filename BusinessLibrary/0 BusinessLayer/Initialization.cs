@@ -116,7 +116,7 @@ namespace UowLibrary
 
                 TEntity tentity = Factory();
                 tentity.Name = dataList[i];
-                Create_ForInitializeOnly(tentity);
+                CreateSave_ForInitializeOnly(tentity);
             }
 
         }

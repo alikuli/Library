@@ -195,6 +195,7 @@
     <Compile Include="Controllers\MyControllersNS\PlayersNS\UsersController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlayersNS\OwnerCategoriesController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductsController.cs" />
+    <Compile Include="Controllers\MyControllersNS\ProductNS\ProductIdentifiersController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomVolumesController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomQuantitiesController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomWeightsController.cs" />
@@ -371,6 +372,7 @@
     <Content Include="Views\Products\_Dimensions.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Dimensions.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Quantity.cshtml" />
+    <Content Include="Views\ProductIdentifiers\_FieldsOnlyEditFormat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
