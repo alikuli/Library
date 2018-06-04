@@ -8,6 +8,7 @@ using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using UowLibrary.PaymentMethodNS;
 using UowLibrary.PlayersNS.OwnerCategoryNS;
+using UowLibrary;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -17,8 +18,8 @@ namespace MarketPlace.Web6.Controllers
         OwnerCategoryBiz _OwnerCategoryBiz;
         #region Constructo and initializers
 
-        public OwnerCategoriesController(OwnerCategoryBiz OwnerCategoryBiz, IErrorSet errorSet)
-            : base(OwnerCategoryBiz, errorSet) 
+        public OwnerCategoriesController(OwnerCategoryBiz OwnerCategoryBiz, IErrorSet errorSet, UserBiz userbiz)
+            : base(OwnerCategoryBiz, errorSet,  userbiz) 
         {
             _OwnerCategoryBiz = OwnerCategoryBiz;
         }

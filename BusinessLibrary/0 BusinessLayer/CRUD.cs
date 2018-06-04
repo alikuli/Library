@@ -202,6 +202,32 @@ namespace UowLibrary
             return false;
         }
 
+        //public virtual bool DeleteActually(string id)
+        //{
+        //    TEntity entity = Dal.FindFor(id);
+        //    try
+        //    {
+        //        if (entity.IsNull())
+        //        {
+        //            ErrorsGlobal.Add(string.Format("Unable to find the {0} record", typeof(TEntity).Name.ToUpper()), "Delete");
+        //            ErrorsGlobal.AddMessage(string.Format("*** NOT Deleted ***"));
+        //            return false;
+        //        }
+        //        _nameOfItemBeingDeleted = entity.Name; //NameOfItemBeingDeleted is updated here
+        //        Dal.DeleteActually(entity);
+        //        Dal.SaveChanges();
+        //        ErrorsGlobal.AddMessage(string.Format("*** Deleted '{0}' ***", entity.Name));
+        //        ClearSelectListInCache(SelectListCacheKey);
+        //        return true;
+        //    }
+        //    catch (Exception e)
+        //    {
+
+        //        ErrorsGlobal.AddMessage(string.Format("*** NOT Deleted '{0}' ***", entity.Name));
+        //        ErrorsGlobal.Add(string.Format("Unable to find the {0} record", typeof(TEntity).Name.ToUpper()), MethodBase.GetCurrentMethod(), e);
+        //    }
+        //    return false;
+        //}
         public virtual async Task<bool> DeleteAsync(string id)
         {
             TEntity entity = await Dal.FindForAsync(id);
@@ -230,34 +256,7 @@ namespace UowLibrary
             return false;
         }
 
-        public virtual void DeleteAll()
-        {
-            var lst = Dal.FindAll().ToList();
-            deleteAllAndSave(lst);
-        }
 
-
-        public virtual async Task DeleteAllAsync()
-        {
-            var lst = await Dal.FindAll().ToListAsync();
-            deleteAllAndSave(lst);
-        }
-
-        private void deleteAllAndSave(List<TEntity> lst)
-        {
-            if (lst.IsNullOrEmpty())
-                return;
-
-            foreach (var entity in lst)
-            {
-                deleteRelatedRecordsForIHasUploadsAndSave(entity);
-                EVENT_DeleteRelatedRecords(entity);
-                Dal.DeleteActually(entity);
-                SaveChanges();
-            }
-        }
-
-        #region Delete Related IHasUploads
 
         /// <summary>
         /// This automatically deletes all related records for IHasUploads. 
@@ -299,7 +298,7 @@ namespace UowLibrary
 
             foreach (var id in lstUploadIdsToDelete)
             {
-                _uploadedFileBiz.Delete(id);
+                _uploadedFileBiz.DeleteActuallyAndSave(id);
 
             }
         }
@@ -339,26 +338,92 @@ namespace UowLibrary
             return true;
         }
 
-
-        #endregion
-
-
-        public virtual void EVENT_DeleteRelatedRecords(ICommonWithId entity)
+        public virtual void EVENT_DeleteRelatedRecordsActually(ICommonWithId entity)
         {
         }
 
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="entity"></param>
-        //public virtual void Event_DeleteAllDuringItterationBeforeDeleteActually(TEntity entity)
-        //{
-        //    var f = new System.IO.FileInfo(uploadedFile.AbsolutePathWithFileName());
-        //    f.Delete();
+        #endregion
 
-        //}
+        #region DeleteActually
+
+        public async Task DeleteActuallyAndSaveAsync(TEntity entity)
+        {
+            deleteActuallyEngine(entity);
+            await SaveChangesAsync();
+        }
+
+        public void DeleteActuallyAndSave(TEntity entity)
+        {
+            deleteActuallyEngine(entity);
+            SaveChanges();
+        }
+
+        //------------------------------------------------------
+
+
+        public void DeleteActuallyAndSave(string id)
+        {
+            id.IsNullThrowException("Id is blank");
+            TEntity entity = Find(id);
+            entity.IsNullThrowException("No entity found!");
+            DeleteActuallyAndSave(entity);
+        }
+
+        public async Task DeleteActuallyAndSaveAsync(string id)
+        {
+            id.IsNullThrowException("Id is blank");
+            TEntity entity = await FindAsync(id);
+            entity.IsNullThrowException("No entity found!");
+            await DeleteActuallyAndSaveAsync(entity);
+        }
+
+        //------------------------------------------------------
+
+
+
+        public virtual void DeleteActuallyAllAndSave()
+        {
+            var lst = Dal.FindAll().ToList();
+            deleteActuallyAll(lst);
+            SaveChanges();
+        }
+
+        public virtual async Task DeleteActuallyAllAndSaveAsync()
+        {
+            var lst = await Dal.FindAll().ToListAsync();
+            deleteActuallyAll(lst);
+            await SaveChangesAsync();
+        }
+
+        //------------------------------------------------------
+        
+
+
+
+
+        
+        private void deleteActuallyAll(List<TEntity> lst)
+        {
+            if (lst.IsNullOrEmpty())
+                return;
+
+            foreach (var entity in lst)
+            {
+                deleteActuallyEngine(entity);
+            }
+        }
+
+
+        private void deleteActuallyEngine(TEntity entity)
+        {
+            entity.IsNullThrowException("Argument Exception.");
+            deleteRelatedRecordsForIHasUploadsAndSave(entity);
+            EVENT_DeleteRelatedRecordsActually(entity);
+            Dal.DeleteActually(entity);
+        }
+
 
         #endregion
 

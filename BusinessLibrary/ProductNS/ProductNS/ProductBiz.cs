@@ -4,6 +4,7 @@ using DalLibrary.Interfaces;
 using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using UowLibrary.MenuNS;
+using UowLibrary.ProductChildNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
 using WebLibrary.Programs;
@@ -23,8 +24,8 @@ namespace UowLibrary.ProductNS
         readonly MenuPath2Biz _menuPath2Biz;
         readonly MenuPath3Biz _menuPath3Biz;
         readonly ProductIdentifierBiz _productIdentifierBiz;
-
-        public ProductBiz(IRepositry<ApplicationUser> userDal, IRepositry<Product> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz, UomVolumeBiz uomVolumeBiz, UomLengthBiz uomLengthBiz, UomQuantityBiz uomQuantityBiz, UomWeightBiz uomWeightBiz, MenuPathMainBiz menuPathMainBiz, MenuPath1Biz menuPath1Biz, MenuPath2Biz menuPath2Biz, MenuPath3Biz menuPath3Biz, ProductIdentifierBiz productIdentifierBiz)
+        readonly ProductChildBiz _productChildBiz;
+        public ProductBiz(IRepositry<ApplicationUser> userDal, IRepositry<Product> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz, UomVolumeBiz uomVolumeBiz, UomLengthBiz uomLengthBiz, UomQuantityBiz uomQuantityBiz, UomWeightBiz uomWeightBiz, MenuPathMainBiz menuPathMainBiz, MenuPath1Biz menuPath1Biz, MenuPath2Biz menuPath2Biz, MenuPath3Biz menuPath3Biz, ProductIdentifierBiz productIdentifierBiz, ProductChildBiz productChildBiz)
             : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
         {
             _uomWeightBiz = uomWeightBiz;
@@ -36,6 +37,7 @@ namespace UowLibrary.ProductNS
             _menuPath2Biz = menuPath2Biz;
             _menuPath3Biz = menuPath3Biz;
             _productIdentifierBiz = productIdentifierBiz;
+            _productChildBiz = productChildBiz;
         }
 
 
@@ -108,6 +110,15 @@ namespace UowLibrary.ProductNS
             get
             {
                 return _productIdentifierBiz;
+            }
+        }
+
+
+        public ProductChildBiz ProductChildBiz
+        {
+            get
+            {
+                return _productChildBiz;
             }
         }
 

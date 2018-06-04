@@ -9,6 +9,7 @@ using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using UowLibrary;
 using UowLibrary.MenuNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -17,8 +18,8 @@ namespace MarketPlace.Web6.Controllers
     {
 
 
-        public MenusController(MenuBiz menuBiz, IErrorSet errorSet)
-            : base(menuBiz, errorSet)
+        public MenusController(MenuBiz menuBiz, IErrorSet errorSet, UserBiz userbiz)
+            : base(menuBiz, errorSet,  userbiz)
         {
         }
         #region Index

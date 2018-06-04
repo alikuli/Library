@@ -9,8 +9,8 @@ namespace MarketPlace.Web6.Controllers
     {
 
 
-        public UomQuantitiesController(UomQuantityBiz uomQtyBiz, IErrorSet errorSet)
-            : base(uomQtyBiz, errorSet)
+        public UomQuantitiesController(UomQuantityBiz uomQtyBiz, IErrorSet errorSet, UserBiz userbiz)
+            : base(uomQtyBiz, errorSet, userbiz)
         {
         }
 

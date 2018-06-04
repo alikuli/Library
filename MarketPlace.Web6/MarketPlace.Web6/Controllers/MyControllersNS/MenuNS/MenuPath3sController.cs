@@ -5,6 +5,7 @@ using ModelsClassLibrary.ModelsNS.ProductNS;
 using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using UowLibrary;
 using UowLibrary.ProductNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -15,8 +16,8 @@ namespace MarketPlace.Web6.Controllers
         MenuPath3Biz _menupath3Biz;
         #region Constructo and initializers
 
-        public MenuPath3sController(MenuPath3Biz menupath3Biz, IErrorSet errorSet)
-            : base(menupath3Biz, errorSet)
+        public MenuPath3sController(MenuPath3Biz menupath3Biz, IErrorSet errorSet, UserBiz userbiz)
+            : base(menupath3Biz, errorSet,  userbiz)
         {
             _menupath3Biz = menupath3Biz;
         }

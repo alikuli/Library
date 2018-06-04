@@ -3,6 +3,7 @@ using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.PeopleNS;
 using System;
 using System.Web.Mvc;
+using UowLibrary;
 using UowLibrary.LanguageNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -12,8 +13,8 @@ namespace MarketPlace.Web6.Controllers
 
         #region Constructo and initializers
 
-        public LanguagesController(LanguageBiz languagesBiz, IErrorSet errorSet)
-            : base(languagesBiz, errorSet) { }
+        public LanguagesController(LanguageBiz languagesBiz, IErrorSet errorSet, UserBiz userbiz)
+            : base(languagesBiz, errorSet,  userbiz) { }
 
         #endregion
 

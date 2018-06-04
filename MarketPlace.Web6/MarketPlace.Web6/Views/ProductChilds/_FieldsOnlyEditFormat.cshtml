@@ -1,0 +1,30 @@
+﻿@model ModelsClassLibrary.ModelsNS.ProductChildNS.ProductChild
+
+
+<div class="well">
+    @Html.Partial(@"_Name_And_DetailInfo")
+    
+    <div class="container">
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.UserId,
+                                       (@ViewBag.UserSelectList as IEnumerable<SelectListItem>),
+                                                      "--- Select Owner ---",
+                                    new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.ProductId,
+                                       (@ViewBag.ProductSelectList as IEnumerable<SelectListItem>),
+                                                      "--- Select Parent ---",
+                                    new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+

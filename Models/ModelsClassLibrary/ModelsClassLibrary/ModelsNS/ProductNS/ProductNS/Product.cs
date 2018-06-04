@@ -1,8 +1,7 @@
 ﻿using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.ProductEtcNS;
+using ModelsClassLibrary.ModelsNS.ProductChildNS;
 //using ModelsClassLibrary.Models.DiscountNS;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {

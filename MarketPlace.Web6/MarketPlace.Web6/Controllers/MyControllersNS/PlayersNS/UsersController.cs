@@ -13,8 +13,8 @@ namespace MarketPlace.Web6.Controllers
     {
 
         StateBiz _stateBiz;
-        public UsersController(UserBiz userBiz, IErrorSet errorSet, StateBiz stateBiz)
-            : base(userBiz, errorSet)
+        public UsersController(UserBiz userBiz, IErrorSet errorSet, StateBiz stateBiz, UserBiz userbiz)
+            : base(userBiz, errorSet, userbiz)
         {
             _stateBiz =stateBiz;
         }

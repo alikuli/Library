@@ -10,8 +10,8 @@ namespace MarketPlace.Web6.Controllers
     {
         ProductBiz _productBiz;
 
-        public ProductIdentifiersController(ProductIdentifierBiz productIdentifierBiz, IErrorSet errorSet, ProductBiz productBiz)
-            : base(productIdentifierBiz, errorSet)
+        public ProductIdentifiersController(ProductIdentifierBiz productIdentifierBiz, IErrorSet errorSet, ProductBiz productBiz, UserBiz userbiz)
+            : base(productIdentifierBiz, errorSet,  userbiz)
         {
             _productBiz = productBiz;
         }

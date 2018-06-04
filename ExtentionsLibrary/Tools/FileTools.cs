@@ -222,5 +222,15 @@ namespace AliKuli.ToolsNS
 
             return name;
         }
+
+        /// <summary>
+        /// Checks to see if file exists, if so, then deletes
+        /// </summary>
+        /// <param name="filepath"></param>
+        public static void Delete(string filepath)
+        {
+            if(IsExistFile(filepath))
+                File.Delete(filepath);
+        }
     }
 }

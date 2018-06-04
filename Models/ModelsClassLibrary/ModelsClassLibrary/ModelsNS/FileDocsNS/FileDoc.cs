@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
+using ModelsClassLibrary.InterfacesNS.Shared;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +9,7 @@ using UserModels;
 namespace ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS
 {
     //We will only use 
-    public partial class FileDoc : CommonWithId, IHasUploads
+    public partial class FileDoc : CommonWithId, IHasUploads, IUserPartOfEntity
     {
 
         public override ClassesWithRightsENUM ClassNameForRights()

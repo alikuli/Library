@@ -13,12 +13,13 @@ namespace DalLibrary.Interfaces
     public interface IRepositry<TEntity>
      where TEntity : class, ICommonWithId
     {
-        
+
         void AddedState(TEntity entity);
         void Create(TEntity entity);
         void Delete(string id);
         void Delete(TEntity entity);
         void DeleteActually(TEntity entity);
+        void DeleteActually(string id);
         Task DeleteAsync(string id);
         void Detach(TEntity entity);
         //void Dispose();

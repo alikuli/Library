@@ -81,6 +81,15 @@ namespace DalLibrary.DalNS
             _db.Set<TEntity>().Remove(entity);
 
         }
+        public virtual void DeleteActually(string id)
+        {
+            if (id.IsNullOrWhiteSpace())
+                throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing entity Id. Repository.DeleteActually (T)");
+
+            var entity = FindFor(id);
+            entity.IsNullThrowException("Entity not found!");
+            DeleteActually(entity);
+        }
         //--------------------------------------------------------------------------------------------
 
 

@@ -33,9 +33,9 @@ namespace UserModels
             //Country = new Country();
         }
 
-        [Display(Name = "Country")]
-        public string CountryId { get; set; }
-        public Country Country { get; set; }
+        //[Display(Name = "Country")]
+        //public string CountryId { get; set; }
+        //public Country Country { get; set; }
         public string CountryAbbreviation
         {
             get
@@ -102,72 +102,72 @@ namespace UserModels
 
         public string ReturnUrl { get; set; }
 
-        public ICollection<Right> UserRights { get; set; }
+        //public ICollection<Right> UserRights { get; set; }
 
 
-        public virtual ICollection<UploadedFile> MiscFiles { get; set; }
+        //public virtual ICollection<UploadedFile> MiscFiles { get; set; }
 
-        public string MiscFilesLocation ()
-        {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY,"User");
-        }
+        //public string MiscFilesLocation ()
+        //{
+        //    return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY,"User");
+        //}
 
-        public virtual ICollection<UploadedFile> SelfieUploads { get; set; }
+        //public virtual ICollection<UploadedFile> SelfieUploads { get; set; }
 
-        public string SelfieLocationConst (string userName)
-        {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "Selfie");
+        //public string SelfieLocationConst (string userName)
+        //{
+        //    return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "Selfie");
 
-        }
+        //}
 
-        public virtual ICollection<UploadedFile> IdCardFrontUploads { get; set; }
+        //public virtual ICollection<UploadedFile> IdCardFrontUploads { get; set; }
         
-        public string IdCardFrontLocationConst(string userName)
-        {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "IdCardfront");
+        //public string IdCardFrontLocationConst(string userName)
+        //{
+        //    return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "IdCardfront");
 
-        }
+        //}
 
-        public virtual ICollection<UploadedFile> IdCardBackUploads { get; set; }
+        //public virtual ICollection<UploadedFile> IdCardBackUploads { get; set; }
 
-        public string IdCardBackLocationConst (string userName)
-        {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "IdCardBack");
-        }
+        //public string IdCardBackLocationConst (string userName)
+        //{
+        //    return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "IdCardBack");
+        //}
 
-        public virtual ICollection<UploadedFile> PassportFrontUploads { get; set; }
+        //public virtual ICollection<UploadedFile> PassportFrontUploads { get; set; }
 
         
-        public string PassportFrontLocationConst (string userName)
-        {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "PassportFront");
+        //public string PassportFrontLocationConst (string userName)
+        //{
+        //    return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "PassportFront");
 
-        }
+        //}
 
 
-        public virtual ICollection<UploadedFile> PassportVisaUploads { get; set; }
+        //public virtual ICollection<UploadedFile> PassportVisaUploads { get; set; }
         
-        public string PassportVisaLocationConst (string userName)
-        {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "PassportVisa");
+        //public string PassportVisaLocationConst (string userName)
+        //{
+        //    return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "PassportVisa");
 
-        }
+        //}
 
 
-        public virtual ICollection<UploadedFile> LiscenseFrontUploads { get; set; }
+        //public virtual ICollection<UploadedFile> LiscenseFrontUploads { get; set; }
 
-        public string LiscenseFrontLocationConst(string userName)
-        {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "LiscenseFront");
+        //public string LiscenseFrontLocationConst(string userName)
+        //{
+        //    return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "LiscenseFront");
 
-        }
+        //}
 
-        public virtual ICollection<UploadedFile> LiscenseBackUploads { get; set; }
+        //public virtual ICollection<UploadedFile> LiscenseBackUploads { get; set; }
 
-        public string LiscenseBackLocationConst(string userName)
-        {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "LiscenseBack");
-        }
+        //public string LiscenseBackLocationConst(string userName)
+        //{
+        //    return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "LiscenseBack");
+        //}
 
 
 

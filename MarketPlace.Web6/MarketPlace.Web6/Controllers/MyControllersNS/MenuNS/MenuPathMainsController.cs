@@ -7,6 +7,7 @@ using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using UowLibrary;
 using UowLibrary.ProductNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -18,8 +19,8 @@ namespace MarketPlace.Web6.Controllers
 
         #region Construction and initializers
 
-        public MenuPathMainsController(MenuPathMainBiz menuPathMainBiz, IErrorSet errorSet)
-            : base(menuPathMainBiz, errorSet)
+        public MenuPathMainsController(MenuPathMainBiz menuPathMainBiz, IErrorSet errorSet, UserBiz userbiz)
+            : base(menuPathMainBiz, errorSet,  userbiz)
         {
             _menupathmainBiz = menuPathMainBiz;
         }

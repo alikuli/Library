@@ -11,5 +11,17 @@ namespace AliKuli.Extentions
         {
             return obj == null;
         }
+
+        public static bool IsNullThrowException(this object obj, string errorMsg)
+        {
+            if(obj.IsNull())
+            {
+                if (errorMsg.IsNullOrWhiteSpace())
+                    throw new Exception("Item is null.");
+                throw new Exception(errorMsg);
+
+            }
+            return false;
+        }
     }
 }

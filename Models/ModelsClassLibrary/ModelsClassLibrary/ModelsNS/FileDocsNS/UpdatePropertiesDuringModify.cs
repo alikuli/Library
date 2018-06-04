@@ -6,7 +6,7 @@ using UserModels;
 namespace ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS
 {
     //We will only use 
-    public partial class FileDoc : CommonWithId
+    public partial class FileDoc 
     {
         public override void UpdatePropertiesDuringModify(InterfacesLibrary.SharedNS.ICommonWithId icommonWithId)
         {

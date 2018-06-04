@@ -1,12 +1,11 @@
-﻿using InterfacesLibrary.SharedNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
+﻿using AliKuli.Extentions;
+using InterfacesLibrary.SharedNS;
+using System;
+using System.IO;
+using System.Reflection;
 using System.Web;
 using UowLibrary.Abstract;
 using UowLibrary.Interface;
-using AliKuli.Extentions;
-using System.Reflection;
-using System;
-using System.IO;
 
 namespace UowLibrary
 {
@@ -15,11 +14,16 @@ namespace UowLibrary
 
         public string CopyFile(string sourcePath, string targetPath, string nameOfSourceFile)
         {
-            string sourcePathMapped = HttpContext.Current.Server.MapPath(sourcePath);
-            string targetPathMapped = HttpContext.Current.Server.MapPath(targetPath);
+            string sourcePathMapped = GetMappedPath(sourcePath);
+            string targetPathMapped = GetMappedPath(targetPath);
 
             return AliKuli.ToolsNS.FileTools.CopyFileAndGiveNewName(sourcePathMapped, targetPathMapped, nameOfSourceFile);
 
+        }
+
+        public string GetMappedPath(string relativePath)
+        {
+            return HttpContext.Current.Server.MapPath(relativePath);
         }
 
         /// <summary>
@@ -37,7 +41,7 @@ namespace UowLibrary
         protected bool imageFileExists(string fileNameNoExtention)
         {
 
-            if(fileNameNoExtention.IsNullOrWhiteSpace())
+            if (fileNameNoExtention.IsNullOrWhiteSpace())
             {
                 ErrorsGlobal.Add("fileNameNoExtention is null", MethodBase.GetCurrentMethod());
                 throw new ArgumentException(ErrorsGlobal.ToString());

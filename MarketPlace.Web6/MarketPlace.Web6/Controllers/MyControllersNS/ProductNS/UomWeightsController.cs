@@ -9,8 +9,8 @@ namespace MarketPlace.Web6.Controllers
     {
 
 
-        public UomWeightsController(UomWeightBiz uomWeightBiz, IErrorSet errorSet)
-            : base(uomWeightBiz, errorSet)
+        public UomWeightsController(UomWeightBiz uomWeightBiz, IErrorSet errorSet, UserBiz userbiz)
+            : base(uomWeightBiz, errorSet,  userbiz)
         {
         }
 

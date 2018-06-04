@@ -48,7 +48,10 @@
         </div>
         <div class="col-lg-4 text-center">
             <p class="text-success h3 text-center">Current</p>
+            <p> @Html.ActionLink("Products", "Index", "Products", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Product Children", "Index", "ProductChilds", null, new { @class = "btn btn-success" })</p>
             <p> @Html.ActionLink("Menus", "Index", "Menus", null, new { @class = "btn btn-success" })</p>
+
             <p class="text-success h4 text-center">Filing</p>
             <p> @Html.ActionLink("Filing", "Index", "FileDocs", null, new { @class = "btn btn-success" })</p>
             <p> @Html.ActionLink("Filing Old", "Index", "FileDocsOldData", null, new { @class = "btn btn-success" })</p>
@@ -89,7 +92,8 @@
         <div class="col-lg-4 text-center">
             <p class="text-warning h3 text-center">Current</p>
             <p>@Html.ActionLink("Products", "InitializeDb", "Products", null, new { @class = "btn btn-warning" })</p>
-            <p>@Html.ActionLink("Products Identifiers", "InitializeDb", "ProductIdentifiers", null, new { @class = "btn btn-warning" })</p>
+            <p>@Html.ActionLink("Product Children", "InitializeDb", "ProductChilds", null, new { @class = "btn btn-warning" })</p>
+            <p>@Html.ActionLink("Products Identifiers", "InitializeDb", "ProductIdentifiers", null, new { @class = "btn btn-warning disabled", })</p>
             <p class="text-warning h3 text-center">Initializers</p>
             <p> @Html.ActionLink("Invoice Pdf", "PrintInvoice", "Languages", null, new { @class = "btn btn-warning" })</p>
             <p class="text-warning h4 text-center">Filing</p>
@@ -129,6 +133,7 @@
         <div class="col-lg-4 h3 text-center">
             <p class="text-danger  h3 text-center">Current</p>
             <p>@Html.ActionLink("Products", "DeleteAll", "Products", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Product Children", "DeleteAll", "ProductChilds", null, new { @class = "btn btn-danger" })</p>
             <p>@Html.ActionLink("Product Identifiers", "DeleteAll", "ProductIdentifiers", null, new { @class = "btn btn-danger" })</p>
             <p class="text-danger  h3 text-center">Delete ALL</p>
             <p> @Html.ActionLink("Menus", "", "", null, new { @class = "btn btn-danger disabled" })</p>

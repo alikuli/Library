@@ -27,6 +27,7 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
             : this(
             Path.GetFileNameWithoutExtension(file.FileName),
             FileTools.CreateNewNameForFile(Path.GetExtension(file.FileName)),
+            Path.GetExtension(file.FileName),
             relativePath)
         {
             file.SaveAs(AbsolutePathWithFileName());
@@ -44,15 +45,27 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
             //    adjustedsizeFile.SaveAs(AbsolutePathWithFileName());
             //}
         }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="originalNameWithoutExtention">This is there because during initialization the name of the file is the name of the item. That is why there is no extention. Also at this time we have no idea what the extention is.</param>
+        ///// <param name="newNameWithMappedPathPlusExtention"></param>
+        ///// <param name="saveToRelativePath"></param>
+        //public UploadedFile(string originalNameWithoutExtention, string newNameWithMappedPathPlusExtention, string saveToRelativePath)
+        //{
+        //    OriginalNameWithoutExtention = originalNameWithoutExtention;
+        //    Name = newNameWithMappedPathPlusExtention;
+        //    Extention = Path.GetExtension(newNameWithMappedPathPlusExtention);
+        //    RelativeWebsitePath = saveToRelativePath;
+        //}
 
-        public UploadedFile(string originalNameWithoutExtention, string newNameWithMappedPathPlusExtention, string saveToRelativePath)
+        public UploadedFile(string originalNameNoExtention, string newNameNoExtention, string extention, string saveToRelativePath)
         {
-            OriginalNameWithoutExtention = originalNameWithoutExtention;
-            Name = newNameWithMappedPathPlusExtention;
-            Extention = Path.GetExtension(newNameWithMappedPathPlusExtention);
+            OriginalNameWithoutExtention = originalNameNoExtention;
+            Name =  Path.ChangeExtension(newNameNoExtention, extention);
+            Extention = extention;
             RelativeWebsitePath = saveToRelativePath;
         }
-
         //public UploadedFile(string getFromRelativePath, string saveToRelativePath, string nameWithExtention)
         //{
 

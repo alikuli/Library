@@ -42,7 +42,7 @@ namespace UowLibrary
                     navigation.Add(file);
 
                     //You need to add a refrence here to save the file in the UploadedFile as well.
-                    AddEntityRecordIntoUpload(file, entity, iuserHasUploadsTypeEnum);
+                    AddEntityRecordIntoUpload(file, entity as TEntity, iuserHasUploadsTypeEnum);
                     _uploadedFileBiz.Create(file);
 
                 }
@@ -216,7 +216,8 @@ namespace UowLibrary
         /// <param name="entity"></param>
         public virtual void AddEntityRecordIntoUpload(UploadedFile uploadedFile, TEntity entity, IUserHasUploadsTypeENUM iuserHasUploadsTypeEnum)
         {
-            ErrorsGlobal.Add(string.Format("AddEntityRecordIntoUpload not implimented in {0}.", entity.MetaData.GetSelfClassName()), MethodBase.GetCurrentMethod());
+
+            ErrorsGlobal.Add(string.Format("AddEntityRecordIntoUpload not implimented ."), MethodBase.GetCurrentMethod());
             throw new NotImplementedException(ErrorsGlobal.ToString());
         }
 

@@ -8,7 +8,7 @@ using UserModels;
 namespace ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS
 {
     //We will only use 
-    public partial class FileDoc : CommonWithId, IHasUploads
+    public partial class FileDoc 
     {
 
         

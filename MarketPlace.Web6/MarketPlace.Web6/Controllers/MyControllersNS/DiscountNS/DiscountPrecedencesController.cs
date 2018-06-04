@@ -6,6 +6,7 @@ using ModelsClassLibrary.ModelsNS.DiscountNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using UowLibrary;
 using UowLibrary.DiscountPrecedenceNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -17,8 +18,8 @@ namespace MarketPlace.Web6.Controllers
 
         #region Constructo and initializers
 
-        public DiscountPrecedencesController(DiscountPrecedenceBiz DiscountPrecedencesBiz, IErrorSet errorSet)
-            : base(DiscountPrecedencesBiz, errorSet)
+        public DiscountPrecedencesController(DiscountPrecedenceBiz DiscountPrecedencesBiz, IErrorSet errorSet, UserBiz userbiz)
+            : base(DiscountPrecedencesBiz, errorSet,  userbiz)
         {
             _discountPrecBiz = DiscountPrecedencesBiz;
         }

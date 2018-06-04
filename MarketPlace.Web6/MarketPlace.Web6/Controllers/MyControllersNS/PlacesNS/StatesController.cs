@@ -3,6 +3,7 @@ using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using UowLibrary;
 using UowLibrary.StateNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -13,8 +14,8 @@ namespace MarketPlace.Web6.Controllers
         #region Constructo and initializers
 
         StateBiz _stateBiz;
-        public StatesController(StateBiz stateBiz, IErrorSet errorSet)
-            : base(stateBiz, errorSet)
+        public StatesController(StateBiz stateBiz, IErrorSet errorSet, UserBiz userbiz)
+            : base(stateBiz, errorSet,  userbiz)
         {
             _stateBiz = stateBiz;
         }

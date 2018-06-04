@@ -10,7 +10,7 @@ namespace UowLibrary
     public partial class UserBiz : BusinessLayer<ApplicationUser>
     {
 
-        public override void AddEntityRecordIntoUpload(UploadedFile uploadFile, ApplicationUser entity, IUserHasUploadsTypeENUM iuserHasUploadsTypeEnum)
+        public override void AddEntityRecordIntoUpload (UploadedFile uploadFile, ApplicationUser entity, IUserHasUploadsTypeENUM iuserHasUploadsTypeEnum)
         {
 
             //this uses Enum which are sent along with the item that is uploaded.

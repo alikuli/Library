@@ -15,8 +15,8 @@ namespace MarketPlace.Web6.Controllers
         UomLengthBiz _uomLengthBiz;
         #region Constructo and initializers
 
-        public UomLengthsController(UomLengthBiz uomLengthBiz, IErrorSet errorSet)
-            : base(uomLengthBiz, errorSet)
+        public UomLengthsController(UomLengthBiz uomLengthBiz, IErrorSet errorSet, UserBiz userbiz)
+            : base(uomLengthBiz, errorSet,  userbiz)
         {
             _uomLengthBiz = uomLengthBiz;
         }

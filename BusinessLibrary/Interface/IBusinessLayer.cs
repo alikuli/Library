@@ -29,8 +29,8 @@ namespace UowLibrary.Interface
         void BusinessRulesFor(TEntity entity);
         bool Delete(string id);
         Task<bool> DeleteAsync(string id);
-        void DeleteAll();
-        Task DeleteAllAsync();
+        void DeleteActuallyAllAndSave();
+        Task DeleteActuallyAllAndSaveAsync();
 
         void ErrorCheck(TEntity entity);
         TEntity Factory();

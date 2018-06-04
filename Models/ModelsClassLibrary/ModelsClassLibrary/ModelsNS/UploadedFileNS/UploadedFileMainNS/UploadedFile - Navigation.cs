@@ -1,5 +1,6 @@
 ﻿using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
+using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.ComponentModel.DataAnnotations;
@@ -84,12 +85,10 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
 
         #region Product
 
-        /// <summary>
-        /// This is the Misc file.
-        /// </summary>
-        //[Display(Name = "Small Pic")]
-        //public virtual string ProductSmallPicId { get; set; }
-        //public virtual Product ProductSmallPic { get; set; }
+        
+        [Display(Name = "Product Child")]
+        public virtual string ProductChildId { get; set; }
+        public virtual ProductChild ProductChild { get; set; }
 
 
         //[Display(Name = "Medium Pic")]

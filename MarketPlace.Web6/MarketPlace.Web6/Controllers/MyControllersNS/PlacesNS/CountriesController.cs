@@ -9,8 +9,8 @@ namespace MarketPlace.Web6.Controllers
 
         #region Constructo and initializers
 
-        public CountriesController(CountryBiz countryBiz, IErrorSet errorSet)
-            : base(countryBiz, errorSet) { }
+        public CountriesController(CountryBiz countryBiz, IErrorSet errorSet, UserBiz userbiz)
+            : base(countryBiz, errorSet, userbiz) { }
 
         #endregion
 

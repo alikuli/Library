@@ -6,6 +6,7 @@ using ModelsClassLibrary.ModelsNS.DeliveryMethodNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
 using UowLibrary.PaymentMethodNS;
+using UowLibrary;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -15,8 +16,8 @@ namespace MarketPlace.Web6.Controllers
         PaymentMethodBiz _PaymentMethodsBiz;
         #region Constructo and initializers
 
-        public PaymentMethodsController(PaymentMethodBiz PaymentMethodsBiz, IErrorSet errorSet)
-            : base(PaymentMethodsBiz, errorSet) 
+        public PaymentMethodsController(PaymentMethodBiz PaymentMethodsBiz, IErrorSet errorSet, UserBiz userbiz)
+            : base(PaymentMethodsBiz, errorSet,  userbiz) 
         {
             _PaymentMethodsBiz = PaymentMethodsBiz;
         }

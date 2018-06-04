@@ -8,6 +8,7 @@ using ModelsClassLibrary.ModelsNS.SharedNS;
 using UowLibrary.PlayersNS;
 using ModelsClassLibrary.RightsNS;
 using EnumLibrary.EnumNS;
+using UowLibrary;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -16,8 +17,8 @@ namespace MarketPlace.Web6.Controllers
 
         RightBiz _rightsBiz;
 
-        public RightsController(RightBiz rightsBiz, IErrorSet errorSet)
-            : base(rightsBiz, errorSet) 
+        public RightsController(RightBiz rightsBiz, IErrorSet errorSet, UserBiz userbiz)
+            : base(rightsBiz, errorSet,  userbiz) 
         {
             _rightsBiz = rightsBiz;
         }

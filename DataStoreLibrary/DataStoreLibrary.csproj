@@ -7,8 +7,8 @@
     <ProjectGuid>{129330B8-2115-45A0-8EE4-58BBCFAA24EB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CountryDATA</RootNamespace>
-    <AssemblyName>CountryDATA</AssemblyName>
+    <RootNamespace>DatastoreNS</RootNamespace>
+    <AssemblyName>DatastoreNS</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -85,9 +85,11 @@
     <Compile Include="MenuNS\MenuPath2Array.cs" />
     <Compile Include="MenuNS\MenuPath1Array.cs" />
     <Compile Include="MenuNS\MenuPathMainHelper.cs" />
-    <Compile Include="ProductNS\ProductDataArray.cs" />
+    <Compile Include="ProductNS\ProductChildNS\ProductChildDataArray.cs" />
+    <Compile Include="ProductNS\ProductChildNS\ProductChildInitializer.cs" />
+    <Compile Include="ProductNS\ProductNS\ProductDataArray.cs" />
     <Compile Include="ProductNS\MenuPathHelper.cs" />
-    <Compile Include="ProductNS\ProductInitializerHelper.cs" />
+    <Compile Include="ProductNS\ProductNS\ProductInitializerHelper.cs" />
     <Compile Include="ProductNS\UomNS\UomVolumeArray.cs" />
     <Compile Include="ProductNS\UomNS\UomQuantityArray.cs" />
     <Compile Include="ProductNS\UomNS\UomWeightArray.cs" />

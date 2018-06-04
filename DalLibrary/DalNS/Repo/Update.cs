@@ -1,11 +1,7 @@
 ﻿using DalLibrary.Interfaces;
 using InterfacesLibrary.SharedNS;
 using System;
-using System.Data.Entity.Infrastructure;
 using System.Reflection;
-using AliKuli.Extentions;
-using ModelsClassLibrary.ModelsNS.SharedNS;
-using System.Linq;
 
 namespace DalLibrary.DalNS
 {
@@ -49,7 +45,7 @@ namespace DalLibrary.DalNS
             //old code
             //_db.Entry(entity).State = EntityState.Modified;
 
-            ErrorsGlobal.AddMessage(string.Format("'{0}' saved!", entity.Name));
+            ErrorsGlobal.AddMessage(string.Format("'{0}' Updated!", entity.Name));
 
         }
 

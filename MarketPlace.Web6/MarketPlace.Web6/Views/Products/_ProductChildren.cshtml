@@ -1,0 +1,36 @@
+﻿@model ModelsClassLibrary.ModelsNS.ProductNS.Product
+
+
+
+
+@if (!Model.ProductChildren.IsNullOrEmpty())
+{
+    <div class="">
+        <div class="container">
+            <div class="form-group">
+                <div class="control-label col-md-2">
+                    <strong>Children</strong>
+                </div>
+                <div class="col-md-10">
+                    <div class="well">
+                        @foreach (var item in Model.ProductChildren)
+                        {
+                            <div class="row">
+                                @*@Html.LabelFor(model => item.Name, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                @Html.EditorFor(model => item.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter name", disabled = true } })
+                                @Html.ValidationMessageFor(model => item.Name, "", new { @class = "text-danger" })
+                            </div>
+
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+

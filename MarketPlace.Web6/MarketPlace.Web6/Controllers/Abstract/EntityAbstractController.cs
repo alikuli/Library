@@ -3,6 +3,7 @@ using EnumLibrary.EnumNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
 using MarketPlace.Web4.Controllers;
+using ModelsClassLibrary.InterfacesNS.Shared;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
 using System;
@@ -25,7 +26,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
         protected IBusinessLayer<TEntity> _icrudBiz;
         protected Type _tEntityType;
-        public EntityAbstractController(IBusinessLayer<TEntity> icrudUow, IErrorSet errorSet)
+        UserBiz _userBiz;
+        public EntityAbstractController(IBusinessLayer<TEntity> icrudUow, IErrorSet errorSet, UserBiz userbiz)
             : base(errorSet)
         {
             _icrudBiz = icrudUow;
@@ -34,6 +36,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
             //_icrudBiz.UserIdBiz = UserId;//Passes the User Id to the biz level
 
             _tEntityType = typeof(TEntity);
+            _userBiz = userbiz;
         }
 
         public BusinessLayer<TEntity> Biz
@@ -230,6 +233,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         {
             try
             {
+                Event_LoadUserIntoEntity(entity);
                 ControllerCreateEditParameter parm = new ControllerCreateEditParameter(
                     entity,
                     httpMiscUploadedFiles,
@@ -257,6 +261,29 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 ErrorsGlobal.MemorySave();
                 return RedirectToAction("Index", new { selectedId = entity.Id.ToString() });
             }
+        }
+
+        public void Event_LoadUserIntoEntity(TEntity entity)
+        {
+            IUserPartOfEntity iuser = entity as IUserPartOfEntity;
+
+            if (iuser.IsNull())
+                return;
+
+            if (iuser.UserId.IsNullOrWhiteSpace())
+            {
+                ErrorsGlobal.Add("The User is required. The Id is missing.", MethodBase.GetCurrentMethod());
+                throw new Exception(ErrorsGlobal.ToString());
+            }
+
+            iuser.User = _userBiz.Find(iuser.UserId);
+
+            if (iuser.User.IsNull())
+            {
+                ErrorsGlobal.Add("The User was not found.", MethodBase.GetCurrentMethod());
+                throw new Exception(ErrorsGlobal.ToString());
+            }
+
         }
         //GetErrorsFromModelState();
 
@@ -319,6 +346,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                     ErrorsGlobal.AddMessage("No item received.");
                 }
+
+                Event_LoadUserIntoEntity(entity);
 
                 ControllerCreateEditParameter parm = new ControllerCreateEditParameter(
                     entity,
@@ -488,7 +517,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         {
             try
             {
-                await Biz.DeleteAllAsync();
+                await Biz.DeleteActuallyAllAndSaveAsync();
                 return RedirectToAction("Index");
 
 
@@ -529,7 +558,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         /// If true then items will be saved after every addition during initialization. This kind of initilization
         /// is required by some items such as fileDocs which generate the next file number.
         /// </summary>
-        public bool IsSavingAfterEveryAddition { get; set; }
+        //public bool IsSavingAfterEveryAddition { get; set; }
         #endregion
     }
 }

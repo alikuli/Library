@@ -170,16 +170,19 @@ namespace UowLibrary
         protected void initialization_LoadImage(TEntity entity)
         {
 
-            if (!isContinue(entity))
+            IHasUploads entityHasUploads = entity as IHasUploads;
+            if (entityHasUploads.IsNull())
                 return;
 
-            IHasUploads entityHasUploads = entity as IHasUploads;
+            ICommonWithId icommonwithid = entity as ICommonWithId;
+            icommonwithid.IsNullThrowException("Unable to cast entity to ICommonWithId. Programming Error.");
 
-            string originalname = entity.Name.RemoveAllSpaces().ToString();
+
+            string originalname = icommonwithid.Name.RemoveAllSpaces().ToString();
             string relative_SrcPath = entityHasUploads.MiscFilesLocation_Initialization();
             string relative_targetPath = entityHasUploads.MiscFilesLocation();
 
-            string filenameNoExtention = getFileNameWithoutExtention(originalname, relative_SrcPath);
+            string filenameNoExtention = getFileNameWithoutExtention(relative_SrcPath, originalname);
 
             
             if (!imageFileExists(filenameNoExtention))
@@ -199,16 +202,24 @@ namespace UowLibrary
         /// <param name="originalnameWithoutExtention"></param>
         /// <param name="relative_SrcPath"></param>
         /// <param name="relative_targetPath"></param>
-        private void saveAndCopyUploadedFile(TEntity entity, IHasUploads entityHasUploads, string originalnameWithoutExtention, string relative_SrcPath, string relative_targetPath)
+        protected void  saveAndCopyUploadedFile (TEntity entity, IHasUploads entityHasUploads, string originalnameWithoutExtention, string relative_SrcPath, string relative_targetPath)
         {
             List<UploadedFile> lst = new List<UploadedFile>();
 
             //copy the actual file to the new spot. We need to do it here so we can get it's new name
             //== COPY FILE
             string newNameWithMappedPathPlusExtention = CopyFile(relative_SrcPath, relative_targetPath, Path.ChangeExtension(originalnameWithoutExtention, ExtentionFound));
-            string newPath = Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, entity.ClassNameRaw);
 
-            UploadedFile uf = new UploadedFile(originalnameWithoutExtention, newNameWithMappedPathPlusExtention, newPath);
+            //string newPath = Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, entity.ClassNameRaw);
+            //UploadedFile uf = new UploadedFile(originalnameWithoutExtention, newNameWithMappedPathPlusExtention, newPath);
+            //UploadedFile uf = new UploadedFile(originalnameWithoutExtention, newNameWithMappedPathPlusExtention, relative_targetPath);
+            
+            UploadedFile uf = new UploadedFile(
+                originalnameWithoutExtention,
+                Path.GetFileNameWithoutExtension(newNameWithMappedPathPlusExtention),
+                ExtentionFound, 
+                relative_targetPath);
+
             lst.Add(uf);
 
             SaveUploadedFiles(lst,
@@ -224,13 +235,13 @@ namespace UowLibrary
         /// <param name="originalname"></param>
         /// <param name="relative_SrcPath"></param>
         /// <returns></returns>
-        private static string getFileNameWithoutExtention(string originalname, string relative_SrcPath)
+        protected static string getFileNameWithoutExtention(string relative_SrcPath, string originalname )
         {
             string lookingForFileWithoutExtention = HttpContext.Current.Server.MapPath(Path.Combine(relative_SrcPath, originalname));
             return lookingForFileWithoutExtention;
         }
 
-        private bool isContinue(TEntity entity)
+        private bool isContinue<T>(T entity)
         {
             if (!IsHasUploads)
                 return false;
@@ -256,7 +267,7 @@ namespace UowLibrary
             string relative_SrcPath = entityHasUploads.MiscFilesLocation_Initialization();
             string relative_targetPath = entityHasUploads.MiscFilesLocation();
 
-            string filenameNoExtention = getFileNameWithoutExtention(originalname, relative_SrcPath);
+            string filenameNoExtention = getFileNameWithoutExtention(relative_SrcPath, originalname);
 
 
             if (!txtFileExists(filenameNoExtention))

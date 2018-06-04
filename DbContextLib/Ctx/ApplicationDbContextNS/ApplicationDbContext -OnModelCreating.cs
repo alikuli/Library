@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
+using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Data.Entity;
@@ -105,6 +106,13 @@ namespace ApplicationDbContextNS
                 .HasForeignKey(x => x.LiscenseBackUploadId)
                 .WillCascadeOnDelete(false);
 
+
+            modelBuilder.Entity<ProductChild>()
+                .HasMany<UploadedFile>(x => x.MiscFiles)
+                .WithOptional(x => x.ProductChild)
+                .HasForeignKey(x => x.ProductChildId)
+                .WillCascadeOnDelete(false);
+
             #endregion
 
             #region Menu Paths
@@ -133,7 +141,7 @@ namespace ApplicationDbContextNS
 
             #endregion
 
-            #region MyRegion
+            #region Product
 
             modelBuilder.Entity<Product>()
                 .HasRequired<UomLength>(x => x.UomDimensions)
@@ -174,7 +182,29 @@ namespace ApplicationDbContextNS
                 .WillCascadeOnDelete(true);
 
 
+            modelBuilder.Entity<Product>()
+                .HasMany<ProductIdentifier>(x => x.ProductIdentifiers)
+                .WithOptional(x => x.Product)
+                .HasForeignKey(x => x.ProductId)
+                .WillCascadeOnDelete(true);
 
+
+            modelBuilder.Entity<Product>()
+                .HasMany<UploadedFile>(x => x.MiscFiles)
+                .WithOptional(x => x.Product)
+                .HasForeignKey(x => x.ProductId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Product>()
+                .HasMany<ProductChild>(x => x.ProductChildren)
+                .WithOptional(x => x.Product)
+                .HasForeignKey(x => x.ProductId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<ProductChild>()
+                .HasRequired<ApplicationUser>(x => x.User)
+                .WithMany(x => x.ProductChildren)
+                .WillCascadeOnDelete(true);
             #endregion
             //modelBuilder.Entity<ApplicationUser>().ToTable("Users");
             //modelBuilder.Entity<IdentityRole>().ToTable("Roles");
