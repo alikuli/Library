@@ -30,7 +30,7 @@ namespace ModelsClassLibrary.MenuNS
 
         public string MiscFilesLocation_Initialization()
         {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY, "MenuPaths");
+            return AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY;
         }
 
     }

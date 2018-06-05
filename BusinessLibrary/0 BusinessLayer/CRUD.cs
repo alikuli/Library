@@ -12,7 +12,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using UowLibrary.Abstract;
 using UowLibrary.Interface;
-using System.Linq;
 
 namespace UowLibrary
 {
@@ -400,12 +399,12 @@ namespace UowLibrary
         }
 
         //------------------------------------------------------
-        
 
 
 
 
-        
+
+
         private void deleteActuallyAll(List<TEntity> lst)
         {
             if (lst.IsNullOrEmpty())

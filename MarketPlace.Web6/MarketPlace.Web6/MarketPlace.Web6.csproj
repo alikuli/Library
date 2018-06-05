@@ -223,83 +223,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Content Include="Content\debug-bootstrap.css" />
-    <Content Include="Content\Initialization\FileDoc\blank.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Initialization\menupaths\BasicElectronicParts.jpg" />
-    <Content Include="Content\Initialization\menupaths\ChinaTown.jpg" />
-    <Content Include="Content\Initialization\menupaths\ChineseFoods.jpg" />
-    <Content Include="Content\Initialization\menupaths\ComputerBoards.jpg" />
-    <Content Include="Content\Initialization\menupaths\ComputerChairs.jpg" />
-    <Content Include="Content\Initialization\menupaths\ComputerKeyboards.jpg" />
-    <Content Include="Content\Initialization\menupaths\ComputerMonitors.jpg" />
-    <Content Include="Content\Initialization\menupaths\ComputerMouse.jpg" />
-    <Content Include="Content\Initialization\menupaths\ComputerPrinters.jpg" />
-    <Content Include="Content\Initialization\menupaths\ComputerTables.jpg" />
-    <Content Include="Content\Initialization\menupaths\ComputerWires.jpg" />
-    <Content Include="Content\Initialization\menupaths\currys.jpg" />
-    <Content Include="Content\Initialization\menupaths\FactoryAirconditioner.jpg" />
-    <Content Include="Content\Initialization\menupaths\FastFoods.jpg" />
-    <Content Include="Content\Initialization\menupaths\Foods.jpg" />
-    <Content Include="Content\Initialization\menupaths\Fruits.jpg" />
-    <Content Include="Content\Initialization\menupaths\GardenMowingMachines.jpg" />
-    <Content Include="Content\Initialization\menupaths\GrindingMachines.jpg" />
-    <Content Include="Content\Initialization\menupaths\Gucci.jpg" />
-    <Content Include="Content\Initialization\menupaths\Hamburgers.jpg" />
-    <Content Include="Content\Initialization\menupaths\HardDrives.jpg" />
-    <Content Include="Content\Initialization\menupaths\HomeAirconditioners.jpg" />
-    <Content Include="Content\Initialization\menupaths\HomeTvs.jpg" />
-    <Content Include="Content\Initialization\menupaths\JapaneseFoods.jpg" />
-    <Content Include="Content\Initialization\menupaths\JohnTailor.png" />
-    <Content Include="Content\Initialization\menupaths\JunaidJamshed.gif" />
-    <Content Include="Content\Initialization\menupaths\JunaidJamshed.png" />
-    <Content Include="Content\Initialization\menupaths\KitchenBlendingMachines.jpg" />
-    <Content Include="Content\Initialization\menupaths\KitchenCuttingMachines.jpg" />
-    <Content Include="Content\Initialization\menupaths\KitchenMixingMachines.jpg" />
-    <Content Include="Content\Initialization\menupaths\KitchenOven.jpg" />
-    <Content Include="Content\Initialization\menupaths\Levis.png" />
-    <Content Include="Content\Initialization\menupaths\MalaysianFoods.jpg" />
-    <Content Include="Content\Initialization\menupaths\MeiFie.jpg" />
-    <Content Include="Content\Initialization\menupaths\MenShalwaarKameezs.jpg" />
-    <Content Include="Content\Initialization\menupaths\MensJeans.jpg" />
-    <Content Include="Content\Initialization\menupaths\MensThreePieceSuits.jpg" />
-    <Content Include="Content\Initialization\menupaths\MensTwoPieceSuits.jpg" />
-    <Content Include="Content\Initialization\menupaths\MenSwimsuits.jpg" />
-    <Content Include="Content\Initialization\menupaths\MieFie.jpg" />
-    <Content Include="Content\Initialization\menupaths\Misc.png" />
-    <Content Include="Content\Initialization\menupaths\Packages.png" />
-    <Content Include="Content\Initialization\menupaths\PackagesMall.png" />
-    <Content Include="Content\Initialization\menupaths\PackingMachines.jpg" />
-    <Content Include="Content\Initialization\menupaths\Pakistanifoods.jpg" />
-    <Content Include="Content\Initialization\menupaths\PizzaHut.png" />
-    <Content Include="Content\Initialization\menupaths\Pizzas.jpg" />
-    <Content Include="Content\Initialization\menupaths\PrintingMachines.jpeg" />
-    <Content Include="Content\Initialization\menupaths\Resteraunts.jpg" />
-    <Content Include="Content\Initialization\menupaths\SaltNPepper.png" />
-    <Content Include="Content\Initialization\menupaths\sandwichs.jpg" />
-    <Content Include="Content\Initialization\menupaths\SpinningMachines.jpg" />
-    <Content Include="Content\Initialization\menupaths\Stationary.jpg" />
-    <Content Include="Content\Initialization\menupaths\SteelFactoryMachines.jpg" />
-    <Content Include="Content\Initialization\menupaths\SuperMarkets.jpg" />
-    <Content Include="Content\Initialization\menupaths\TheVillage.jpg" />
-    <Content Include="Content\Initialization\menupaths\Vegitables.jpg" />
-    <Content Include="Content\Initialization\menupaths\warda.png" />
-    <Content Include="Content\Initialization\menupaths\WomensJeans.jpg" />
-    <Content Include="Content\Initialization\menupaths\WomensSwimsuits.jpg" />
-    <Content Include="Content\Initialization\menupaths\WomensThreePcSuits.jpg" />
-    <Content Include="Content\Initialization\menupaths\WomensTwoPcSuits.jpg" />
-    <Content Include="Content\Initialization\Product\blank.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Initialization\Product\ToyatoSalon2015.jpg" />
-    <Content Include="Content\Initialization\User\blank.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Content\Initialization\blank.txt" />
     <Content Include="Content\MyImages\BlankImage.jpg" />
     <Content Include="Content\MyImages\Logo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PrintStyleSheet.css" />
+    <Content Include="Content\Uploads\blank.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\debug-bootstrap.css" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />

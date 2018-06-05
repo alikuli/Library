@@ -13,21 +13,15 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 
         public string MiscFilesLocation()
         {
-            if (User.IsNull())
-            {
-                throw new Exception("The Owner is null. This cannot be null and should be set at creation! Programming error");
-            }
-
+            User.IsNullThrowException("The Owner is null. This cannot be null and should be set at creation! Programming error");
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, ClassNameRaw, User.UserName);
         }
 
         public string MiscFilesLocation_Initialization()
         {
-            if (User.IsNull())
-            {
-                throw new Exception("The Owner is null. This cannot be null and should be set at creation! Programming error");
-            }
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY, ClassNameRaw);
+
+            User.IsNullThrowException("The Owner is null. This cannot be null and should be set at creation! Programming error");
+            return AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY;
         }
         #endregion
 

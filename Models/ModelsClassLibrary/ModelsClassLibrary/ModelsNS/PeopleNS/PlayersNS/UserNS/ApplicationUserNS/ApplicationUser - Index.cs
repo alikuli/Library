@@ -1,19 +1,5 @@
 ﻿using InterfacesLibrary.SharedNS;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using ModelsClassLibrary.ModelsNS.AddressNS;
-using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
-using ModelsClassLibrary.ModelsNS.PeopleNS.UserNameSpace;
-using ModelsClassLibrary.ModelsNS.PlacesNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.RightsNS;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace UserModels
 {
@@ -58,7 +44,8 @@ namespace UserModels
 
         public string MiscFilesLocation_Initialization()
         {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY, ClassNameRaw);
+            return AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY;
+
         }
 
     }

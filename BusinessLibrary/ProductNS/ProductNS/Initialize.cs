@@ -89,7 +89,7 @@ namespace UowLibrary.ProductNS
             if (!imageFileExists(filenameNoExtention))
                 return;
 
-            #region MyRegion
+            #region Copy File
             string originalnameWithoutExtention = originalname;
             List<UploadedFile> uploadedFileLst = new List<UploadedFile>();
 

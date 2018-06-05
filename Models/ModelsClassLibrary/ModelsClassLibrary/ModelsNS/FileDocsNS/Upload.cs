@@ -24,7 +24,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS
 
         public string MiscFilesLocation_Initialization()
         {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY, ClassNameRaw, User.UserName);
+            return AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY;
         }
     }
 }

@@ -59,7 +59,7 @@ namespace AliKuli.ConstantsNS
         public const string SAVE_ROOT_DIRECTORY = @"~\Content\Uploads";
 
 
-        public const string SAVE_INITIALIZATION_DIRECTORY = @"~\Content\Initialization";
+        public const string SAVE_INITIALIZATION_DIRECTORY = @"~\Content\Initialization\";
 
         public const string LOGO_LOCATION = @"~/Content/MyImages/Logo.jpg";
 
