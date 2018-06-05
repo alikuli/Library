@@ -112,15 +112,6 @@ namespace UowLibrary
             return indexListVM;
         }
 
-        //private IndexListVM _IndexListVM;
-        //private IndexListVM indexListVM
-        //{
-        //    get
-        //    {
-        //        return _IndexListVM ?? (_IndexListVM = new IndexListVM());
-        //    }
-        //}
-
 
         /// <summary>
         /// This creates a list which is later used in the index method.
@@ -166,16 +157,15 @@ namespace UowLibrary
                     bool isEditLocked = entity.MetaData.IsEditLocked;
                     string detailInfoToDisplayOnWebsite = entity.DetailInfoToDisplayOnWebsite.IsNullOrWhiteSpace() ? "" : entity.DetailInfoToDisplayOnWebsite;
 
-                    string e = string.Format("Id: {0};  fullname: {1}; Input1: {2}; Input2: {3}; Input3: {4}, isLocked {5}, detail: {6};",
-
-                    id,
-                    fullName,
-                    input1SortString,
-                    input2SortString,
-                    input3SortString,
-                    isEditLocked,
-                    detailInfoToDisplayOnWebsite
-                        );
+                    //string e = string.Format("Id: {0};  fullname: {1}; Input1: {2}; Input2: {3}; Input3: {4}, isLocked {5}, detail: {6};",
+                    //id,
+                    //fullName,
+                    //input1SortString,
+                    //input2SortString,
+                    //input3SortString,
+                    //isEditLocked,
+                    //detailInfoToDisplayOnWebsite
+                    //    );
 
                     IndexItemVM indexItem = new IndexItemVM(
                         id,

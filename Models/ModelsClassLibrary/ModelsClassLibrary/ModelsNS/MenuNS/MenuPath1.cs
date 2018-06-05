@@ -13,6 +13,7 @@ namespace ModelsClassLibrary.MenuNS
         {
             return EnumLibrary.EnumNS.ClassesWithRightsENUM.MenuPath1;
         }
+        public virtual ICollection<UploadedFile> MiscFiles { get; set; }
 
 
 

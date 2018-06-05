@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using UowLibrary.Abstract;
 using UowLibrary.Interface;
+using System.Linq;
 
 namespace UowLibrary
 {
@@ -109,6 +110,7 @@ namespace UowLibrary
 
         private void createEngineSimple(TEntity entity)
         {
+            //entity.IsCreating = true;
             fixEntityAndBussinessRulesAndErrorCheck_Helper(entity);
             Dal.Create(entity);
             ClearSelectListInCache(SelectListCacheKey);
@@ -144,7 +146,7 @@ namespace UowLibrary
 
         private void updateEngine(ControllerCreateEditParameter parm)
         {
-
+            //parm.Entity.IsUpdating = true;
             fixEntityAndBussinessRulesAndErrorCheck_Helper(parm.Entity as TEntity);
             handleRelatedFilesIfExist(parm);
             Dal.Update(parm.Entity as TEntity);
@@ -448,6 +450,10 @@ namespace UowLibrary
         }
 
 
+        public async Task<List<TEntity>> FindAllAsync()
+        {
+            return await Dal.FindAllAsync();
+        }
         public TEntity FindByName(string name)
         {
             return Dal.FindForName(name);

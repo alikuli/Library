@@ -1,0 +1,2 @@
+This feature removes all the records permanantly.
+This is currently working in Products, Product Child, Product Identifiers.

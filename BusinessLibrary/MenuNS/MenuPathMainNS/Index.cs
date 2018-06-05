@@ -21,36 +21,37 @@ namespace UowLibrary.ProductNS
 
             indexListVM.Heading.Column = "All Menu Mains";
             //indexListVM.MainHeading = "Product Category 3";
-            indexListVM.IsImageTiled = true;
+            //indexListVM.IsImageTiled = true;
             indexListVM.Show.EditDeleteAndCreate = true;
 
         }
 
-        public override void Event_ModifyIndexItem(IndexListVM indexListVM, IndexItemVM indexItem, ICommonWithId icommonWithid)
-        {
-            base.Event_ModifyIndexItem(indexListVM, indexItem, icommonWithid);
-            MenuPathMain menupathMain = icommonWithid as MenuPathMain;
+        //public override void Event_ModifyIndexItem(IndexListVM indexListVM, IndexItemVM indexItem, ICommonWithId icommonWithid)
+        //{
+        //    base.Event_ModifyIndexItem(indexListVM, indexItem, icommonWithid);
 
-            if (menupathMain.IsNull())
-            {
-                ErrorsGlobal.Add("Unable to convert to Menu Main", MethodBase.GetCurrentMethod());
-                throw new Exception(ErrorsGlobal.ToString());
-            }
+        //    MenuPathMain menupathMain = icommonWithid as MenuPathMain;
 
-            indexItem.ImageAddressStr = selectAddressOfImageToDisplay(menupathMain);
-        }
+        //    if (menupathMain.IsNull())
+        //    {
+        //        ErrorsGlobal.Add("Unable to convert to Menu Main", MethodBase.GetCurrentMethod());
+        //        throw new Exception(ErrorsGlobal.ToString());
+        //    }
 
-        private string selectAddressOfImageToDisplay(MenuPathMain menupathmain)
-        {
-            //Get a list of images for this category item.
-            UploadedFile image = menupathmain.MiscFiles.FirstOrDefault(x => x.MetaData.IsDeleted == false);
+        //    //indexItem.ImageAddressStr = selectAddressOfImageToDisplay(menupathMain);
+        //}
 
-            if (image.IsNull())
-                image = new UploadedFile();
+        //private string selectAddressOfImageToDisplay(MenuPathMain menupathmain)
+        //{
+        //    //Get a list of images for this category item.
+        //    UploadedFile image = menupathmain.MiscFiles.FirstOrDefault(x => x.MetaData.IsDeleted == false);
+
+        //    if (image.IsNull())
+        //        image = new UploadedFile();
 
 
-            return image.RelativePathWithFileName();
-        }
+        //    return image.RelativePathWithFileName();
+        //}
 
 
     }

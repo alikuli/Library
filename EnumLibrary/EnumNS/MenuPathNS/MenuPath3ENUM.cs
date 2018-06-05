@@ -37,7 +37,20 @@ namespace EnumLibrary.EnumNS.Product_Related
         JunaidJamshed,
         JohnTailor,
 
-        Warda
+        Warda,
+
+
+        Toyota,
+        Mercedeze,
+        BMW,
+        Datsun,
+        Daewoo,
+        Volkswagon,
+
+        Yamaha,
+        Kawasaki,
+        Qingqi,
+        HondaMotorcycle,
 
     }
 }

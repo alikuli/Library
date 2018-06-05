@@ -1,6 +1,5 @@
 ﻿using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using System;
 namespace InterfacesLibrary.SharedNS
 {
     public interface ICommonWithId
@@ -30,6 +29,13 @@ namespace InterfacesLibrary.SharedNS
         string ClassNameRaw { get; }
         string ClassName { get; }
         string ClassNamePlural { get; }
+
+        //bool IsCreating { get; set; }
+
+        //bool IsDeleting { get; set; }
+
+        //bool IsUpdating { get; set; }
+
 
     }
 }

@@ -31,42 +31,42 @@ namespace DatastoreNS
         {
             string c1;
             string c2;
-            string c3 ="";
+            string c3 = "";
 
             #region Bus
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Bus);
-            //c3 = Cat3Name(ProductCategory3ENUM.Toyota);
+            c3 = Cat3Name(MenuPath3ENUM.Toyota);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Bus);
-            //c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
+            c3 = Cat3Name(MenuPath3ENUM.Mercedeze);
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Bus);
-            //c3 = Cat3Name(ProductCategory3ENUM.BMW);
+            c3 = Cat3Name(MenuPath3ENUM.BMW);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Bus);
-            //c3 = Cat3Name(ProductCategory3ENUM.Datsun);
+            c3 = Cat3Name(MenuPath3ENUM.Datsun);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Bus);
-            //c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
+            c3 = Cat3Name(MenuPath3ENUM.Daewoo);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Bus);
-            //c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
+            c3 = Cat3Name(MenuPath3ENUM.Volkswagon);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
             //-------------------------------------------------------
@@ -76,37 +76,37 @@ namespace DatastoreNS
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Car);
-            //c3 = Cat3Name(ProductCategory3ENUM.Toyota);
+            c3 = Cat3Name(MenuPath3ENUM.Toyota);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Car);
-            //c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
+            c3 = Cat3Name(MenuPath3ENUM.Mercedeze);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Car);
-            //c3 = Cat3Name(ProductCategory3ENUM.BMW);
+            c3 = Cat3Name(MenuPath3ENUM.BMW);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Car);
-            //c3 = Cat3Name(ProductCategory3ENUM.Datsun);
+            c3 = Cat3Name(MenuPath3ENUM.Datsun);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Car);
-            //c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
+            c3 = Cat3Name(MenuPath3ENUM.Daewoo);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Car);
-            //c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
+            c3 = Cat3Name(MenuPath3ENUM.Volkswagon);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
@@ -117,37 +117,37 @@ namespace DatastoreNS
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Coaster);
-            //c3 = Cat3Name(ProductCategory3ENUM.Toyota);
+            c3 = Cat3Name(MenuPath3ENUM.Toyota);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Coaster);
-            //c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
+            c3 = Cat3Name(MenuPath3ENUM.Mercedeze);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Coaster);
-            //c3 = Cat3Name(ProductCategory3ENUM.BMW);
+            c3 = Cat3Name(MenuPath3ENUM.BMW);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Coaster);
-            //c3 = Cat3Name(ProductCategory3ENUM.Datsun);
+            c3 = Cat3Name(MenuPath3ENUM.Datsun);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Coaster);
-            //c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
+            c3 = Cat3Name(MenuPath3ENUM.Daewoo);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Coaster);
-            //c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
+            c3 = Cat3Name(MenuPath3ENUM.Volkswagon);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
@@ -157,37 +157,37 @@ namespace DatastoreNS
             #region Recreationalvehical
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.RecreationalVehical);
-            //c3 = Cat3Name(ProductCategory3ENUM.Toyota);
+            c3 = Cat3Name(MenuPath3ENUM.Toyota);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.RecreationalVehical);
-            //c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
+            c3 = Cat3Name(MenuPath3ENUM.Mercedeze);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.RecreationalVehical);
-            //c3 = Cat3Name(ProductCategory3ENUM.BMW);
+            c3 = Cat3Name(MenuPath3ENUM.BMW);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.RecreationalVehical);
-            //c3 = Cat3Name(ProductCategory3ENUM.Datsun);
+            c3 = Cat3Name(MenuPath3ENUM.Datsun);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.RecreationalVehical);
-            //c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
+            c3 = Cat3Name(MenuPath3ENUM.Daewoo);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.RecreationalVehical);
-            //c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
+            c3 = Cat3Name(MenuPath3ENUM.Volkswagon);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
@@ -198,37 +198,37 @@ namespace DatastoreNS
             #region Truck
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Truck);
-            //c3 = Cat3Name(ProductCategory3ENUM.Toyota);
+            c3 = Cat3Name(MenuPath3ENUM.Toyota);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Truck);
-            //c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
+            c3 = Cat3Name(MenuPath3ENUM.Mercedeze);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Truck);
-            //c3 = Cat3Name(ProductCategory3ENUM.BMW);
+            c3 = Cat3Name(MenuPath3ENUM.BMW);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Truck);
-            //c3 = Cat3Name(ProductCategory3ENUM.Datsun);
+            c3 = Cat3Name(MenuPath3ENUM.Datsun);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Truck);
-            //c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
+            c3 = Cat3Name(MenuPath3ENUM.Daewoo);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Truck);
-            //c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
+            c3 = Cat3Name(MenuPath3ENUM.Volkswagon);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
@@ -240,37 +240,37 @@ namespace DatastoreNS
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.SUV);
-            //c3 = Cat3Name(ProductCategory3ENUM.Toyota);
+            c3 = Cat3Name(MenuPath3ENUM.Toyota);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.SUV);
-            //c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
+            c3 = Cat3Name(MenuPath3ENUM.Mercedeze);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.SUV);
-            //c3 = Cat3Name(ProductCategory3ENUM.BMW);
+            c3 = Cat3Name(MenuPath3ENUM.BMW);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.SUV);
-            //c3 = Cat3Name(ProductCategory3ENUM.Datsun);
+            c3 = Cat3Name(MenuPath3ENUM.Datsun);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.SUV);
-            //c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
+            c3 = Cat3Name(MenuPath3ENUM.Daewoo);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.SUV);
-            //c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
+            c3 = Cat3Name(MenuPath3ENUM.Volkswagon);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
@@ -283,37 +283,37 @@ namespace DatastoreNS
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Van);
-            //c3 = Cat3Name(ProductCategory3ENUM.Toyota);
+            c3 = Cat3Name(MenuPath3ENUM.Toyota);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Van);
-            //c3 = Cat3Name(ProductCategory3ENUM.Mercedeze);
+            c3 = Cat3Name(MenuPath3ENUM.Mercedeze);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Van);
-            //c3 = Cat3Name(ProductCategory3ENUM.BMW);
+            c3 = Cat3Name(MenuPath3ENUM.BMW);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Van);
-            //c3 = Cat3Name(ProductCategory3ENUM.Datsun);
+            c3 = Cat3Name(MenuPath3ENUM.Datsun);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Van);
-            //c3 = Cat3Name(ProductCategory3ENUM.Daewoo);
+            c3 = Cat3Name(MenuPath3ENUM.Daewoo);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Van);
-            //c3 = Cat3Name(ProductCategory3ENUM.Volkswagon);
+            c3 = Cat3Name(MenuPath3ENUM.Volkswagon);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
             //-------------------------------------------------------
@@ -683,7 +683,7 @@ namespace DatastoreNS
         {
             string c1;
             string c2;
-            string c3 ="";
+            string c3 = "";
 
 
             #region Electronics
@@ -883,7 +883,7 @@ namespace DatastoreNS
 
 
 
-            
+
 
 
             //-------------------------------------------------------
@@ -898,36 +898,36 @@ namespace DatastoreNS
         {
             string c1;
             string c2;
-            string c3 ="";
+            string c3 = "";
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Motorcycle);
-            //c3 = Cat3Name(ProductCategory3ENUM.Yamaha);
+            //c3 = Cat3Name(MenuPath3ENUM.Yamaha);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Motorcycle);
-            //c3 = Cat3Name(ProductCategory3ENUM.Kawasaki);
+            //c3 = Cat3Name(MenuPath3ENUM.Kawasaki);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Motorcycle);
-            //c3 = Cat3Name(ProductCategory3ENUM.BMW);
+            //c3 = Cat3Name(MenuPath3ENUM.BMW);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Motorcycle);
-            //c3 = Cat3Name(ProductCategory3ENUM.Qingqi);
+            //c3 = Cat3Name(MenuPath3ENUM.Qingqi);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Motorcycle);
-            //c3 = Cat3Name(ProductCategory3ENUM.HondaMotorcycle);
+            //c3 = Cat3Name(MenuPath3ENUM.HondaMotorcycle);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 

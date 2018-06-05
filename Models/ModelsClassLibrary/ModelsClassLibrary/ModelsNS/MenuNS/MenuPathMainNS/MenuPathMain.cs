@@ -18,13 +18,14 @@ namespace ModelsClassLibrary.MenuNS
 
         public MenuPathMain()
         {
-            MenuPath1 = new MenuPath1();
-            MenuPath2 = new MenuPath2();
-            MenuPath3 = new MenuPath3();
-            Products = new List<Product>();
-            
-            
-            
+            //DONT do this!! IT fucks with LOADING!!
+            //MenuPath1 = new MenuPath1();
+            //MenuPath2 = new MenuPath2();
+            //MenuPath3 = new MenuPath3();
+            //Products = new List<Product>();
+
+
+
         }
         StringBuilder sb = new StringBuilder();
 
@@ -36,24 +37,24 @@ namespace ModelsClassLibrary.MenuNS
         #region Navigation Properties
 
         [Display(Name = "Menu Path 1")]
-        public string MenuPath1Id { get; set; }
+        public virtual string MenuPath1Id { get; set; }
         public virtual MenuPath1 MenuPath1 { get; set; }
 
 
         [Display(Name = "Menu Path 2")]
 
-        public string MenuPath2Id { get; set; }
+        public virtual string MenuPath2Id { get; set; }
         public virtual MenuPath2 MenuPath2 { get; set; }
 
 
         [Display(Name = "Menu Path 3")]
-        public string MenuPath3Id { get; set; }
+        public virtual string MenuPath3Id { get; set; }
         public virtual MenuPath3 MenuPath3 { get; set; }
 
 
 
         //public virtual ICollection<IDiscount> ProductCategoryDiscounts { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
 
 
         #endregion
@@ -185,8 +186,8 @@ namespace ModelsClassLibrary.MenuNS
 
         public override string ToString()
         {
-            
-            return MakeName(MenuPath1.Name,MenuPath2.Name,"");
+
+            return MakeName(MenuPath1.Name, MenuPath2.Name, "");
         }
 
     }

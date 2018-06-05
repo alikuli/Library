@@ -17,17 +17,6 @@ namespace EnumLibrary.EnumNS
         SUV,
         Van,
 
-        Toyota,
-        Mercedeze,
-        BMW,
-        Datsun,
-        Daewoo,
-        Volkswagon,
-
-        Yamaha,
-        Kawasaki,
-        Qingqi,
-        HondaMotorcycle,
 
 
         ElectronicParts,

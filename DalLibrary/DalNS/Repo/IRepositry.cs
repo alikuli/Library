@@ -24,10 +24,12 @@ namespace DalLibrary.Interfaces
         void Detach(TEntity entity);
         //void Dispose();
         void ErrorCheck(TEntity entity);
+
+        void DetachAll();
         ErrorSet ErrorsGlobal { get; }
         TEntity Factory();
         IQueryable<TEntity> FindAll(bool deleted = false);
-        Task<IList<TEntity>> FindAllAsync(bool deleted = false);
+        Task<List<TEntity>> FindAllAsync(bool deleted = false);
         IQueryable<TEntity> FindAllLight(bool deleted = false);
         IQueryable<TEntity> FindAllLightNoTracking(bool deleted = false);
         IQueryable<TEntity> FindAllNoTracking(bool deleted = false);
@@ -40,7 +42,14 @@ namespace DalLibrary.Interfaces
         TEntity FindForLightNoTracking(string id, bool deleted = false);
         Task<TEntity> FindForLightNoTrackingAsync(string id, bool deleted = false);
         TEntity FindForName(string name);
+
+        TEntity FindForNameNoTracking(string name);
+        Task<TEntity> FindForNameNoTrackingAsync(string name);
+
         IEnumerable<TEntity> FindForNameAll(string name);
+        Task<IEnumerable<TEntity>> FindForNameAllNoTrackingAsync(string name);
+        IEnumerable<TEntity> FindForNameAllNoTracking(string name);
+
         Task<IEnumerable<TEntity>> FindForNameAllAsync(string name);
         Task<TEntity> FindForNameAsync(string name);
         string GetClassName { get; }

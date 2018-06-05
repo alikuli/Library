@@ -3,6 +3,7 @@ using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
 using UowLibrary.Abstract;
 using UowLibrary.Interface;
+using System.Linq;
 
 namespace UowLibrary
 {
@@ -34,15 +35,23 @@ namespace UowLibrary
 
         private void NoDuplicateNameAllowed(TEntity entity)
         {
-            var entityFound = Dal.FindForName(entity.Name);
+
+            TEntity entityFound = Dal.FindAll().FirstOrDefault(x =>
+                x.Name.ToLower() == entity.Name.ToLower() &&
+                x.Id != entity.Id);
+
             bool found = !entityFound.IsNull();
 
             if (found)
+            {
+                //This is required otherwise all the previous entries that were found remain in the cache and get added. The Notracking does not work.
+                Dal.Detach(entity);
                 throw new NoDuplicateException(string.Format("{0}: '{1}' already exists in the db.", entity.GetType().Name, entity.Name));
+
+            }
             else
                 return;
         }
-
 
 
 

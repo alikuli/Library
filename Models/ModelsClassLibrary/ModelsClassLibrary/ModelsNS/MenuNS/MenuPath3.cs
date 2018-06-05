@@ -10,6 +10,9 @@ namespace ModelsClassLibrary.MenuNS
 
     public class MenuPath3 : MenuPathAbstract, IHasUploads
     {
+
+        public virtual ICollection<UploadedFile> MiscFiles { get; set; }
+
         public override ClassesWithRightsENUM ClassNameForRights()
         {
             return EnumLibrary.EnumNS.ClassesWithRightsENUM.MenuPath3;

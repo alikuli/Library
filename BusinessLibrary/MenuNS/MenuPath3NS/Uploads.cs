@@ -22,8 +22,8 @@ namespace UowLibrary.ProductNS
 
         public override void AddEntityRecordIntoUpload(UploadedFile uploadFile, MenuPath3 entity, IUserHasUploadsTypeENUM iuserHasUploadsTypeEnum)
         {
-            uploadFile.ProductCategory3Id = entity.Id;
-            uploadFile.ProductCategory3 = entity;
+            uploadFile.MenuPath3Id = entity.Id;
+            uploadFile.MenuPath3 = entity;
         }
         //public override void Event_AddUploadedFileInfoIntoDb(IHasUploads entity, UploadObject uploadObj)
         //{

@@ -92,6 +92,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 //load parameters
                 TEntity dudEntity = Biz.Factory();
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
+
                 //todo note... the company name is missing. We may need it.
                 ControllerIndexParams parms = new ControllerIndexParams(searchFor, selectedId, sortBy, menuLevelEnum, id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, dudEntity, User.Identity.Name);
 
@@ -110,6 +111,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     return View(indexListVM);
                 }
 
+                //this is an Ajax Request.
                 return PartialView("ViewControls/index/_IndexMiddlePart", indexListVM);
 
             }
@@ -505,6 +507,9 @@ namespace MarketPlace.Web6.Controllers.Abstract
         // GET: Countries/Delete/5
         public virtual ActionResult DeleteAll()
         {
+            var entity = Biz.Factory();
+            ViewBag.Heading = entity.ClassNamePlural.ToTitleSentance();
+
             return View();
 
         }

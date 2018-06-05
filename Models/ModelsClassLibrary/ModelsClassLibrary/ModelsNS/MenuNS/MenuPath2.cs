@@ -19,6 +19,7 @@ namespace ModelsClassLibrary.MenuNS
             base.LoadFrom(p as ICommonWithId);
         }
 
+        public virtual ICollection<UploadedFile> MiscFiles { get; set; }
 
         public virtual ICollection<MenuPathMain> MenuPathMains { get; set; }
 

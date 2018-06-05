@@ -1,5 +1,4 @@
 ﻿using InterfacesLibrary.SharedNS;
-using System;
 using System.Collections.Generic;
 using UserModels;
 
@@ -21,5 +20,12 @@ namespace ModelsClassLibrary.ModelsNS.PlacesNS
 
         public ICollection<ApplicationUser> User { get; set; }
 
+        public override string ClassNamePlural
+        {
+            get
+            {
+                return "Countries";
+            }
+        }
     }
 }

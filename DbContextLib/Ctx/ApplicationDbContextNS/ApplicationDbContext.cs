@@ -14,6 +14,7 @@ namespace ApplicationDbContextNS
         {
             var dbx = new ApplicationDbContext();
             //dbx.Configuration.ProxyCreationEnabled = false;
+            dbx.Configuration.LazyLoadingEnabled = true;
             return dbx;
         }
     }

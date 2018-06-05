@@ -6,7 +6,7 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS
 {
     public abstract class MenuPathAbstract : CommonWithId
     {
-        public virtual ICollection<UploadedFile> MiscFiles { get; set; }
+
 
 
     }

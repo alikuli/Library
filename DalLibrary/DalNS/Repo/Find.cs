@@ -1,6 +1,5 @@
 ﻿using AliKuli.Extentions;
 using DalLibrary.Interfaces;
-using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using System;
 using System.Collections.Generic;
@@ -88,7 +87,57 @@ namespace DalLibrary.DalNS
 
         }
 
+
         #endregion
+
+
+
+        #region FindForNameNoTracking and FindForNameNoTrackingAsync
+
+
+        //Use DetachAll() to clear the cache. This NoTracking is not working.
+        public virtual TEntity FindForNameNoTracking(string name)
+        {
+
+            if (name.IsNullOrWhiteSpace())
+            {
+                name = "";
+            }
+
+            var foundall = FindForNameAllNoTracking(name);
+
+            if (foundall.IsNull())
+                return null;
+
+
+            TEntity foundIt = foundall
+                .FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+
+
+            return foundIt;
+
+        }
+
+
+        public virtual async Task<TEntity> FindForNameNoTrackingAsync(string name)
+        {
+
+            if (name.IsNullOrWhiteSpace())
+                return null;
+
+            var foundall = await FindForNameAllNoTrackingAsync(name);
+
+            if (foundall.IsNull())
+                return null;
+
+            TEntity foundIt = foundall.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+            return foundIt;
+
+        }
+
+        #endregion
+
+
 
         #region FindForLight and FindForLightAsync
 
@@ -98,13 +147,13 @@ namespace DalLibrary.DalNS
                 throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
 
             var allItems = FindAll().ToList();
-            
-            if(allItems.IsNull())
+
+            if (allItems.IsNull())
                 return null;
 
             var item = allItems.FirstOrDefault(x => x.Id == id);
 
-            return item ;
+            return item;
 
             //if (itemList.IsNullOrEmpty())
             //    return default(TEntity);
@@ -219,6 +268,44 @@ namespace DalLibrary.DalNS
 
         #endregion
 
+        #region FindForNameAllNoTracking and FindForNameAllNoTrackingAsync
+
+        public virtual IEnumerable<TEntity> FindForNameAllNoTracking(string name)
+        {
+            if (name.IsNullOrEmpty())
+                return null;
+
+            var allT = FindAllNoTracking().Where(x => x.Name.ToLower() == name.ToLower()).ToList();
+
+            if (allT.IsNullOrEmpty())
+                return null;
+
+            //var foundIt = allT.Where(x => x.Name.ToLower() == name.ToLower()).ToList();
+
+            return allT.AsEnumerable();
+
+        }
+
+        public virtual async Task<IEnumerable<TEntity>> FindForNameAllNoTrackingAsync(string name)
+        {
+            if (name.IsNullOrEmpty())
+                return null;
+
+            var allT = await FindAllNoTrackingAsync();
+
+            if (allT.IsNullOrEmpty())
+                return null;
+
+            var foundIt = allT.Where(x => x.Name.ToLower() == name.ToLower());
+
+            return (IEnumerable<TEntity>)foundIt;
+
+        }
+
+
+        #endregion
+
+
         #region NameExistsAsync and NameExists
 
         /// <summary>
@@ -329,7 +416,7 @@ namespace DalLibrary.DalNS
             return listOfItems;
         }
 
-        public virtual async Task<IList<TEntity>> FindAllAsync(bool deleted = false)
+        public virtual async Task<List<TEntity>> FindAllAsync(bool deleted = false)
         {
 
 

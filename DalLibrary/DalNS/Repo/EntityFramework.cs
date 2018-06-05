@@ -54,6 +54,20 @@ namespace DalLibrary.DalNS
 
         }
 
+
+        public void DetachAll()
+        {
+            foreach (DbEntityEntry dbEntityEntry in this._db.ChangeTracker.Entries())
+            {
+
+                if (dbEntityEntry.Entity != null)
+                {
+                    dbEntityEntry.State = EntityState.Detached;
+                }
+            }
+        }
+
+
         //https://stackoverflow.com/questions/15015975/entity-framework-objectstatemanager-not-defined
         public ObjectStateManager GetObjectStateManager()
         {

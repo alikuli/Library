@@ -77,7 +77,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         //public string ProductCat2Id { get; set; }
         //public string ProductCat3Id { get; set; }
         public MenuParameters Menu { get; set; }
-
         #region Uploads
 
 

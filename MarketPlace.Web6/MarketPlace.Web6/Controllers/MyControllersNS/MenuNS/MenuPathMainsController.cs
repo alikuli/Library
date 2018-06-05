@@ -29,13 +29,13 @@ namespace MarketPlace.Web6.Controllers
 
 
 
-        public async Task<ActionResult> DeleteUploadedFile(string menupathId, string uploadedFileId)
-        {
-            //delete from the productCategory1
-            await _menupathmainBiz.DeleteUploadedFile(uploadedFileId);
-            return RedirectToAction("Edit", new { id = menupathId });
-            //return RedirectToAction("DeleteConfirmed", "UploadedFiles", new { id = uploadedFileId });
-        }
+        //public async Task<ActionResult> DeleteUploadedFile(string menupathId, string uploadedFileId)
+        //{
+        //    //delete from the productCategory1
+        //    await _menupathmainBiz.DeleteUploadedFile(uploadedFileId);
+        //    return RedirectToAction("Edit", new { id = menupathId });
+        //    //return RedirectToAction("DeleteConfirmed", "UploadedFiles", new { id = uploadedFileId });
+        //}
         public override System.Web.Mvc.ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
         {
             ViewBag.MenuPath1SelectList = _menupathmainBiz.MenuPath1_SelectList();

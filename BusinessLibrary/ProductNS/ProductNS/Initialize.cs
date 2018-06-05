@@ -54,6 +54,7 @@ namespace UowLibrary.ProductNS
                 Product p = FindByName(item.ParentName);
                 p.IsNullThrowException("Parent Product not found! Programming error.");
 
+                //check for duplicates.
                 if (!p.ProductChildren.IsNull())
                 {
                     ProductChild pFound = p.ProductChildren.FirstOrDefault(x => x.Name.ToLower() == item.ProductName.ToLower());
@@ -267,7 +268,7 @@ namespace UowLibrary.ProductNS
                     #endregion
 
                     #region Get Product Uploads
-                        //this comes automaticly.
+                    //this comes automaticly.
                     #endregion
                     if (ErrorsGlobal.HasErrors)
                     {

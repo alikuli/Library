@@ -27,6 +27,25 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         }
 
         /// <summary>
+        /// Marked true if creating
+        /// </summary>
+        [NotMapped]
+        public bool IsCreating { get; set; }
+
+        /// <summary>
+        /// Marked true if deleting
+        /// </summary>
+        [NotMapped]
+        public bool IsDeleting { get; set; }
+
+        /// <summary>
+        /// Marked true if updating
+        /// </summary>
+        [NotMapped]
+        public bool IsUpdating { get; set; }
+
+
+        /// <summary>
         /// Use this class to create your own ID value.
         /// </summary>
         /// <returns></returns>

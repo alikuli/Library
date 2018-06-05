@@ -184,9 +184,10 @@
     <Compile Include="LanguagesNS\SelectList.cs" />
     <Compile Include="LanguagesNS\Fix.cs" />
     <Compile Include="LanguagesNS\Index.cs" />
-    <Compile Include="MenuNS\SelectList.cs" />
-    <Compile Include="MenuNS\Index.cs" />
-    <Compile Include="MenuNS\MenuBiz.cs" />
+    <Compile Include="MenuNS\MenuBizNS\Modify Index Item.cs" />
+    <Compile Include="MenuNS\MenuBizNS\SelectList.cs" />
+    <Compile Include="MenuNS\MenuBizNS\Index.cs" />
+    <Compile Include="MenuNS\MenuBizNS\MenuBiz.cs" />
     <Compile Include="PaymentsNS\Methods\SelectList.cs" />
     <Compile Include="PaymentsNS\Methods\Index.cs" />
     <Compile Include="PaymentsNS\Terms\Index.cs" />
@@ -234,9 +235,8 @@
     <Compile Include="PlayersNS\UserNS\Find.cs" />
     <Compile Include="MenuNS\MenuPathMainNS\Index.cs" />
     <Compile Include="MenuNS\MenuPathMainNS\Initialization.cs" />
-    <Compile Include="MenuNS\MenuPathMainNS\ProductMain.cs" />
+    <Compile Include="MenuNS\MenuPathMainNS\MenuPathMainBiz.cs" />
     <Compile Include="MenuNS\MenuPathMainNS\SelectList.cs" />
-    <Compile Include="MenuNS\MenuPathMainNS\Uploads.cs" />
     <Compile Include="MenuNS\MenuPathMainNS\BusinessRule.cs" />
     <Compile Include="ProductNS\ProductIdentifierNS\Index.cs" />
     <Compile Include="ProductNS\ProductIdentifierNS\HandleRelatedRecord.cs" />
@@ -302,7 +302,7 @@
     <Compile Include="MenuNS\MenuPath3NS\Index.cs" />
     <Compile Include="MenuNS\MenuPath3NS\Initialization.cs" />
     <Compile Include="MenuNS\MenuPath3NS\SelectList.cs" />
-    <Compile Include="MenuNS\MenuPath3NS\ProductCat3Biz.cs" />
+    <Compile Include="MenuNS\MenuPath3NS\MenuPath3Biz.cs" />
     <Compile Include="UploadingNS\ModifyIndex.cs" />
     <Compile Include="UploadingNS\SelectList.cs" />
     <Compile Include="UploadingNS\UploadedFileBiz.cs" />

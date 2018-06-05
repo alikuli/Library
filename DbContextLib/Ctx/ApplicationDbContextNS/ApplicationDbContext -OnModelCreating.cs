@@ -39,8 +39,8 @@ namespace ApplicationDbContextNS
 
             modelBuilder.Entity<MenuPath3>()
                 .HasMany<UploadedFile>(x => x.MiscFiles)
-                .WithOptional(x => x.ProductCategory3)
-                .HasForeignKey(x => x.ProductCategory3Id)
+                .WithOptional(x => x.MenuPath3)
+                .HasForeignKey(x => x.MenuPath3Id)
                 .WillCascadeOnDelete(true);
 
 

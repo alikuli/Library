@@ -100,5 +100,15 @@ namespace UserModels
 
 
 
+        //[NotMapped]
+
+
+        //public bool IsCreating { get; set; }
+        //[NotMapped]
+
+        //public bool IsDeleting { get; set; }
+        //[NotMapped]
+
+        //public bool IsUpdating { get; set; }
     }
 }
