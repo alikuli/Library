@@ -103,14 +103,14 @@
                             <div>
                                 @if (Model.Show.Create)
                                 {
-                                    //Session["cahttps://www.facebook.com/messages/t/560129803t1id"] = Model.Menu.ProductCategory1_Id as string;
-                                    //Session["cat2id"] = Model.Menu.ProductCategory2_Id as string;
-                                    //Session["cat3id"] = Model.Menu.ProductCategory3_Id as string;
+                                    //Session["cahttps://www.facebook.com/messages/t/560129803t1id"] = Model.Menu.MenuPath1_Id as string;
+                                    //Session["cat2id"] = Model.Menu.MenuPath2_Id as string;
+                                    //Session["cat3id"] = Model.Menu.MenuPath3_Id as string;
 
                                     <div>
                                         @*                                            @{string name = "CREATE - " + @Model.Heading.Main.ToString().ToSentence().ToTitleCase();}*@
                                         @{string name = "CREATE";}
-                                        @Html.ActionLink(@name, "Create", new { menuLevelEnum = Model.Menu.MenuLevelEnum, menuPath1Id = Model.Menu.ProductCategory1_Id, menuPath2Id = Model.Menu.ProductCategory2_Id, menuPath3Id = Model.Menu.ProductCategory2_Id }, new { @class = "text-danger btn btn-success btn-sm" })
+                                        @Html.ActionLink(@name, "Create", new { menuLevelEnum = Model.Menu.MenuLevelEnum, menuPath1Id = Model.Menu.MenuPath1_Id, menuPath2Id = Model.Menu.MenuPath2_Id, menuPath3Id = Model.Menu.MenuPath3_Id }, new { @class = "text-danger btn btn-success btn-sm" })
                                     </div>
                                 }
 

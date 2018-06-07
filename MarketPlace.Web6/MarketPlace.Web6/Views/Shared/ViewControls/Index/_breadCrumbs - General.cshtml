@@ -8,8 +8,8 @@
         string linkTextHome = "Admin Home";
         string linkTextLevel1 = "List of " + Model.Heading.RecordNamePlural;
         string linkTextLevel2 = ((RazorView)ViewContext.View).ViewPath + " " + Model.Heading.RecordNamePlural;
-        string linkTextLevel3 = Model.Menu.Cat2Name;
-        string linkTextProductLevel = Model.Menu.Cat3Name;
+        string linkTextLevel3 = Model.Menu.MenuPath2Name;
+        string linkTextProductLevel = Model.Menu.MenuPath3Name;
         string actionName = "index";
         var controllerNameMenuGeneral = this.ViewContext.RouteData.Values["controller"].ToString();
     }

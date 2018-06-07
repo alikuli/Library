@@ -1,7 +1,6 @@
 ﻿using AliKuli.Extentions;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.SharedNS;
 using ModelsClassLibrary.ViewModels;
 using System;
 using System.Collections;
@@ -22,26 +21,16 @@ namespace UowLibrary
     {
 
 
-        #region Controller Index Methods
 
         public async Task<IndexListVM> IndexAsync(ControllerIndexParams parameters)
         {
             var lstEntities = await GetListForIndexAsync(parameters);
 
             //this is where the list is created
-            IndexListVM indexListVM = CreateIndexListAndGiveNamesToColumns_Helper(parameters, lstEntities);
+            IndexListVM indexListVM = createIndexListAndGiveNamesToColumns_Helper(parameters, lstEntities);
 
             return indexListVM;
         }
-
-
-
-        //public IndexListVM Index(ControllerIndexParams parameters)
-        //{
-        //    return GetIndexList(parameters);
-
-        //}
-
 
 
         public virtual void Event_ApplyChangesAfterCreate(TEntity entity)
@@ -50,36 +39,9 @@ namespace UowLibrary
         }
 
 
-        #endregion
-
-        #region Create Index List for Controller
-
-
-
-        ///// <summary>
-        ///// This is the method that is called but it cannot be edited.
-        ///// </summary>
-        ///// <param name="parameters"></param>
-        ///// <returns></returns>
-        //private IndexListVM GetIndexList(ControllerIndexParams parameters)
-        //{
-        //    IList<ICommonWithId> lstEntities = GetListForIndex();
-
-
-        //    if (lstEntities.IsNull())
-        //        return null;
-
-        //    IndexListVM indexListVM = CreateIndexListAndGiveNamesToColumns_Helper(parameters, lstEntities);
-
-        //    return indexListVM;
-        //}
-
-
-
-
         public virtual IList<ICommonWithId> GetListForIndex()
         {
-            IList<ICommonWithId> lstEntities = Dal.FindAll().ToList() as IList<ICommonWithId>;
+            IList<ICommonWithId> lstEntities = FindAll().ToList() as IList<ICommonWithId>;
 
             IList<ICommonWithId> lstIcom = lstEntities.Cast<ICommonWithId>().ToList();
             return lstIcom;
@@ -87,10 +49,13 @@ namespace UowLibrary
 
         public virtual async Task<IList<ICommonWithId>> GetListForIndexAsync(ControllerIndexParams parameters)
         {
-            var lstEntities = await Dal.FindAllAsync();
+            var lstEntities = await FindAllAsync();
             IList<ICommonWithId> lstIcom = lstEntities.Cast<ICommonWithId>().ToList();
             return lstIcom;
         }
+
+
+
 
 
 
@@ -100,15 +65,15 @@ namespace UowLibrary
         /// <param name="parameters"></param>
         /// <param name="lstEntities"></param>
         /// <returns></returns>
-        private IndexListVM CreateIndexListAndGiveNamesToColumns_Helper(ControllerIndexParams parameters, IList<ICommonWithId> lstEntities)
+        private IndexListVM createIndexListAndGiveNamesToColumns_Helper(ControllerIndexParams parameters, IList<ICommonWithId> lstEntities)
         {
-            IndexListVM indexListVM = CreateIndexList(lstEntities, parameters);
+            IndexListVM indexListVM = createIndexList(lstEntities, parameters);
 
             if (indexListVM.IsNull())
                 return null;
 
             indexListVM.Load(parameters);
-            
+
             return indexListVM;
         }
 
@@ -121,21 +86,14 @@ namespace UowLibrary
         /// </summary>
         /// <param name="lstEntities"></param>
         /// <returns></returns>
-        private IndexListVM CreateIndexList(IList<ICommonWithId> lstEntities, ControllerIndexParams parameters)
+        private IndexListVM createIndexList(IList<ICommonWithId> lstEntities, ControllerIndexParams parameters)
         {
 
 
             //This names the sort links. They come directly from the entity
-            //var dudEntity = Dal.Factory();
-            
             parameters.DudEntity = Dal.Factory();
-            //getMainHeadingAndSortNamesFromEntity(dudEntity);
-            //getParameterInfo(parameters);
 
-            //IndexListVM indexListVM = new IndexListVM(parameters.SortBy, parameters.SearchFor, parameters.SelectedId, dudEntity);
             IndexListVM indexListVM = new IndexListVM(parameters);
-
-            //indexListVM.Heading.SortOrderDescription = getSortDescription(indexListVM.SortOrderEnum);
 
             Event_ModifyIndexList(indexListVM, parameters);
 
@@ -156,16 +114,6 @@ namespace UowLibrary
                     string input3SortString = entity.Input3SortString.IsNullOrWhiteSpace() ? "" : entity.Input3SortString;
                     bool isEditLocked = entity.MetaData.IsEditLocked;
                     string detailInfoToDisplayOnWebsite = entity.DetailInfoToDisplayOnWebsite.IsNullOrWhiteSpace() ? "" : entity.DetailInfoToDisplayOnWebsite;
-
-                    //string e = string.Format("Id: {0};  fullname: {1}; Input1: {2}; Input2: {3}; Input3: {4}, isLocked {5}, detail: {6};",
-                    //id,
-                    //fullName,
-                    //input1SortString,
-                    //input2SortString,
-                    //input3SortString,
-                    //isEditLocked,
-                    //detailInfoToDisplayOnWebsite
-                    //    );
 
                     IndexItemVM indexItem = new IndexItemVM(
                         id,
@@ -197,20 +145,9 @@ namespace UowLibrary
             return indexListVM;
         }
 
-        //private void getParameterInfo(ControllerIndexParams parameters)
-        //{
-        //}
-
-        //private void getMainHeadingAndSortNamesFromEntity(TEntity dudEntity)
-        //{
-        //    indexListVM.NameInput1 = dudEntity.NameInput1;
-        //    indexListVM.NameInput2 = dudEntity.NameInput2;
-        //    indexListVM.NameInput3 = dudEntity.NameInput3;
-        //}
 
 
 
-        #endregion
 
 
 

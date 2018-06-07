@@ -81,22 +81,19 @@ namespace MarketPlace.Web6.Controllers.Abstract
         /// <param name="sortBy"></param>
         /// <param name="print"></param>
         /// <returns></returns>
-        public virtual async Task<ActionResult> Index(string id, string searchFor, string selectedId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "")
+        public virtual async Task<ActionResult> Index(string id, string searchFor, string selectedId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "")
         {
             try
             {
-                //Session["cat1id"] = productCat1Id;
-                //Session["cat2id"] = productCat2Id;
-                //Session["cat3id"] = productCat3Id;
 
                 //load parameters
                 TEntity dudEntity = Biz.Factory();
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
 
                 //todo note... the company name is missing. We may need it.
-                ControllerIndexParams parms = new ControllerIndexParams(searchFor, selectedId, sortBy, menuLevelEnum, id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, dudEntity, User.Identity.Name);
+                ControllerIndexParams parms = new ControllerIndexParams(searchFor, selectedId, sortBy, menuLevelEnum, id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, dudEntity, User.Identity.Name, productId);
 
-                var indexListVM = await indexEngine(parms);
+                IndexListVM indexListVM = await indexEngine(parms);
 
                 if (print)
                 {
@@ -195,14 +192,14 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
         }
         // GET: Countries/Create
-        public virtual ActionResult Create(MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string productCat1Id = "", string productCat2Id = "", string productCat3Id = "")
+        public virtual ActionResult Create(MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId= "")
         {
             TEntity entity = Biz.EntityFactoryForHttpGet();
 
             try
             {
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, entity.Id, productCat1Id, productCat2Id, productCat3Id, logoAddress, (ICommonWithId)entity, User.Identity.Name);
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, entity.Id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, (ICommonWithId)entity, User.Identity.Name, productId);
 
                 //we want to get the previous menu because when we do a back to list, the Index will automatically advance the menu to the next.
                 ViewBag.MenuLevelEnum = getPreviousMenuLevel(menuLevelEnum);
@@ -231,7 +228,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> Create(TEntity entity, HttpPostedFileBase[] httpMiscUploadedFiles = null, HttpPostedFileBase[] httpSelfieUploads = null, HttpPostedFileBase[] httpIdCardFrontUploads = null, HttpPostedFileBase[] httpIdCardBackUploads = null, HttpPostedFileBase[] httpPassportFrontUploads = null, HttpPostedFileBase[] httpPassportVisaUploads = null, HttpPostedFileBase[] httpLiscenseFrontUploads = null, HttpPostedFileBase[] httpLiscenseBackUploads = null, string productCat1Id = "", string productCat2Id = "", string productCat3Id = "")
+        public virtual async Task<ActionResult> Create(TEntity entity, HttpPostedFileBase[] httpMiscUploadedFiles = null, HttpPostedFileBase[] httpSelfieUploads = null, HttpPostedFileBase[] httpIdCardFrontUploads = null, HttpPostedFileBase[] httpIdCardBackUploads = null, HttpPostedFileBase[] httpPassportFrontUploads = null, HttpPostedFileBase[] httpPassportVisaUploads = null, HttpPostedFileBase[] httpLiscenseFrontUploads = null, HttpPostedFileBase[] httpLiscenseBackUploads = null, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "")
         {
             try
             {
@@ -248,9 +245,10 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     httpLiscenseBackUploads,
                     MenuLevelENUM.unknown,
                     User.Identity.Name,
-                    productCat1Id,
-                    productCat2Id,
-                    productCat3Id);
+                    menuPath1Id,
+                    menuPath2Id,
+                    menuPath3Id,
+                    productId);
 
                 await Biz.CreateAndSaveAsync(parm);
 
@@ -296,7 +294,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
         #region Edit
         // GET: Countries/Edit/5
-        public virtual async Task<ActionResult> Edit(string id, string productCat1Id = "", string productCat2Id = "", string productCat3Id = "", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown)
+        public virtual async Task<ActionResult> Edit(string id, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId ="", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown)
         {
             if (id == null)
             {
@@ -313,7 +311,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 }
                 //ViewBag.MenuLevelEnum = menuLevelEnum;
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, productCat1Id, productCat2Id, productCat3Id, logoAddress, (ICommonWithId)entity, User.Identity.Name);
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, (ICommonWithId)entity, User.Identity.Name, productId);
 
                 return Event_CreateViewAndSetupSelectList(parm);
 
@@ -363,7 +361,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     httpLiscenseBackUploads,
                     MenuLevelENUM.unknown,
                     User.Identity.Name ?? "",
-                    "", "", "");
+                    "", "", "","");
 
                 await Biz.UpdateAndSaveAsync(parm);
 
@@ -400,7 +398,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown; //dummy entry
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
 
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, "", "", "", logoAddress, (ICommonWithId)entity, User.Identity.Name);
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, "", "", "", logoAddress, (ICommonWithId)entity, User.Identity.Name,"");
 
                 return Event_CreateViewAndSetupSelectList(parm);
 
@@ -442,7 +440,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 entity.ReturnUrl = returnUrl;
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
 
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, MenuLevelENUM.unknown, id, "", "", "", logoAddress, (ICommonWithId)entity, User.Identity.Name);
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, MenuLevelENUM.unknown, id, "", "", "", logoAddress, (ICommonWithId)entity, User.Identity.Name,"");
 
                 return Event_CreateViewAndSetupSelectList(parm);
 

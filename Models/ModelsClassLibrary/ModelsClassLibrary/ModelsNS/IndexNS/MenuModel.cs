@@ -2,7 +2,6 @@
 using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
-using System;
 using System.Collections.Generic;
 
 namespace ModelsClassLibrary.ViewModels
@@ -16,7 +15,7 @@ namespace ModelsClassLibrary.ViewModels
         public MenuModel()
         {
             ProductList = new List<Product>();
-            ProductCategoryMain = new MenuPathMain();
+            MenuPathMain = new MenuPathMain();
         }
 
         public List<Product> ProductList { get; set; }
@@ -24,83 +23,82 @@ namespace ModelsClassLibrary.ViewModels
         public MenuLevelENUM MenuLevelEnum { get; set; }
         public bool IsMenu { get; set; }
 
-        public string ProductCategory1_Id
+        public string MenuPath1_Id
         {
             get
             {
-                throwErrorIfProductCategoryMain();
-                return ProductCategoryMain.MenuPath1Id;
-            }
-
-        }
-
-        private void throwErrorIfProductCategoryMain()
-        {
-            if (ProductCategoryMain.IsNull())
-            {
-                throw new Exception("ProductCategoryMain is null. Programming Error");
-            }
-        }
-
-        public string ProductCategory2_Id
-        {
-            get
-            {
-                throwErrorIfProductCategoryMain();
-                return ProductCategoryMain.MenuPath2Id;
-            }
-
-        }
-
-        public string ProductCategory3_Id
-        {
-            get
-            {
-                throwErrorIfProductCategoryMain();
-                return ProductCategoryMain.MenuPath3Id;
-            }
-
-        }
-
-
-        public MenuPathMain ProductCategoryMain { get; set; }
-
-        public string Cat1Name
-        {
-            get
-            {
-                throwErrorIfProductCategoryMain();
-
-                if (ProductCategoryMain.MenuPath1.IsNull())
+                //MenuPathMain.IsNullThrowException("Menu Path Main is NULL. Programming Error");
+                if (MenuPathMain.IsNull())
+                    return "";
+                if (MenuPathMain.MenuPath1Id.IsNullOrWhiteSpace())
                     return "";
 
-                return ProductCategoryMain.MenuPath1.Name;
+                return MenuPathMain.MenuPath1Id;
             }
+
         }
 
-        public string Cat2Name
+        public string MenuPath2_Id
         {
             get
             {
-                throwErrorIfProductCategoryMain();
-
-                if (ProductCategoryMain.MenuPath2.IsNull())
+                MenuPathMain.IsNullThrowException("Menu Path Main is NULL. Programming Error");
+                if (MenuPathMain.MenuPath2Id.IsNullOrWhiteSpace())
                     return "";
 
-                return ProductCategoryMain.MenuPath2.Name;
+                return MenuPathMain.MenuPath2Id;
             }
+
         }
 
-        public string Cat3Name
+        public string MenuPath3_Id
         {
             get
             {
-                throwErrorIfProductCategoryMain();
-
-                if (ProductCategoryMain.MenuPath3.IsNull())
+                MenuPathMain.IsNullThrowException("Menu Path Main is NULL. Programming Error");
+                if (MenuPathMain.MenuPath3Id.IsNullOrWhiteSpace())
                     return "";
 
-                return ProductCategoryMain.MenuPath3.Name;
+                return MenuPathMain.MenuPath3Id;
+            }
+
+        }
+
+
+        public MenuPathMain MenuPathMain { get; set; }
+
+        public string MenuPath1Name
+        {
+            get
+            {
+                MenuPathMain.IsNullThrowException("Menu Path Main is NULL. Programming Error");
+                if (MenuPathMain.MenuPath1.IsNull())
+                    return "";
+
+                return MenuPathMain.MenuPath1.Name;
+            }
+        }
+
+        public string MenuPath2Name
+        {
+            get
+            {
+                MenuPathMain.IsNullThrowException("Menu Path Main is NULL. Programming Error");
+                if (MenuPathMain.MenuPath2.IsNull())
+                    return "";
+
+                return MenuPathMain.MenuPath2.Name;
+            }
+        }
+
+        public string MenuPath3Name
+        {
+            get
+            {
+                MenuPathMain.IsNullThrowException("Menu Path Main is NULL. Programming Error");
+                if (MenuPathMain.MenuPath3.IsNull())
+                    return "";
+                return MenuPathMain.MenuPath3.Name;
             }
         }
 

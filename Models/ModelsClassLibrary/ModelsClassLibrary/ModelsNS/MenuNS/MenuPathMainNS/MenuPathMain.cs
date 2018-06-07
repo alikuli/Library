@@ -52,7 +52,6 @@ namespace ModelsClassLibrary.MenuNS
         public virtual MenuPath3 MenuPath3 { get; set; }
 
 
-
         //public virtual ICollection<IDiscount> ProductCategoryDiscounts { get; set; }
         public virtual ICollection<Product> Products { get; set; }
 
@@ -187,7 +186,7 @@ namespace ModelsClassLibrary.MenuNS
         public override string ToString()
         {
 
-            return MakeName(MenuPath1.Name, MenuPath2.Name, "");
+            return MakeName(MenuPath1.Name, MenuPath2.Name, MenuPath3.Name);
         }
 
     }

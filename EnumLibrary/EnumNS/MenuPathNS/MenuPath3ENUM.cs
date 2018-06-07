@@ -41,7 +41,7 @@ namespace EnumLibrary.EnumNS.Product_Related
 
 
         Toyota,
-        Mercedeze,
+        MercedesBenz,
         BMW,
         Datsun,
         Daewoo,

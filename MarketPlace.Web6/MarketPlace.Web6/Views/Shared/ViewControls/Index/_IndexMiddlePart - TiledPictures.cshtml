@@ -19,11 +19,11 @@
 
 
     <div class="akaFix panel-body ">
-        @foreach (ModelsClassLibrary.ViewModels.IndexItemVM item in Model.DataSortedAndFiltered)
+        @foreach (ModelsClassLibrary.ViewModels.IndexItemVM indexItemVM in Model.DataSortedAndFiltered)
         {
 
-            string alert = (@Model.SelectedIdMatchesThis(item.Id) ? "alert-info " : " ");
-            string alertFont = (@Model.SelectedIdMatchesThis(item.Id) ? " text-danger " : " ");
+            string alert = (@Model.SelectedIdMatchesThis(indexItemVM.Id) ? "alert-info " : " ");
+            string alertFont = (@Model.SelectedIdMatchesThis(indexItemVM.Id) ? " text-danger " : " ");
             if (count % 2 == 0)
             {
                 alert += " background-ltgrey ";
@@ -32,19 +32,20 @@
             var imagePath = "";
             var editPath = "";
             var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
-            if (item.IsImageThere)
+            if (indexItemVM.IsImageThere)
             {
-                imagePath = Url.Content(item.ImageAddressStr);
+                imagePath = Url.Content(indexItemVM.ImageAddressStr);
             }
             //this has to be updated for the menu
             if (Model.Menu.IsMenu)
             {
-                editPath = Url.Action("index", controllerName, new { id = item.Id, productCat1Id = Model.Menu.ProductCategory1_Id, productCat2Id = Model.Menu.ProductCategory2_Id, productCat3Id = Model.Menu.ProductCategory3_Id, menuLevelEnum = Model.Menu.MenuLevelEnum });
+                //Note the Menu Ids are coming from the indexItemVM and NOT IndexListVM
+                editPath = Url.Action("index", controllerName, new { id = indexItemVM.Id, menuPath1Id = indexItemVM.Menu.MenuPath1Id, menuPath2Id = indexItemVM.Menu.MenuPath2Id, menuPath3Id = indexItemVM.Menu.MenuPath3Id, menuLevelEnum = Model.Menu.MenuLevelEnum, productId = indexItemVM.Id });
 
             }
             else
             {
-                editPath = Url.Action("Edit", controllerName, new { id = item.Id });
+                editPath = Url.Action("Edit", controllerName, new { id = indexItemVM.Id });
             }
             <!-- TH1 -->
 
@@ -68,19 +69,19 @@
     </div>*@
 
     <div class="gallery col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-sm-3 col-sm-offset-1 col-xs-6  thumbnail" style="margin-bottom:10px">
-        <a href="@editPath" title="@item.FullName">
+        <a href="@editPath" title="@indexItemVM.FullName">
             <div class="caption">
-                <h4>@item.ShortName</h4>
+                <h4>@indexItemVM.ShortName</h4>
                 <p class="">
-                    @item.Description
+                    @indexItemVM.Description
                 </p>
             </div>
             <p class="">
-                <img src="@imagePath" alt="@item.ShortName" class="img-responsive  img-rounded ">
+                <img src="@imagePath" alt="@indexItemVM.ShortName" class="img-responsive  img-rounded ">
             </p>
         </a>
         <div class="row">
-            <div class="text-center">@item.FullName</div>
+            <div class="text-center">@indexItemVM.FullName</div>
         </div>
 
     </div>

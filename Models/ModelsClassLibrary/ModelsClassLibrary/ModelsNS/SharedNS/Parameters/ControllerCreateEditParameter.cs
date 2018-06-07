@@ -30,7 +30,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         }
 
 
-        public ControllerCreateEditParameter(ICommonWithId entity, HttpPostedFileBase[] httpMiscUploadedFiles, HttpPostedFileBase[] httpSelfieUpload, HttpPostedFileBase[] httpIdCardFront, HttpPostedFileBase[] httpIdCardBack, HttpPostedFileBase[] httpPassportFront, HttpPostedFileBase[] httpPassportVisa, HttpPostedFileBase[] httpLiscenseFront, HttpPostedFileBase[] httpLiscenseBack, MenuLevelENUM menuLevelEnum, string userName, string productCat1Id, string productCat2Id, string productCat3Id)
+        public ControllerCreateEditParameter(ICommonWithId entity, HttpPostedFileBase[] httpMiscUploadedFiles, HttpPostedFileBase[] httpSelfieUpload, HttpPostedFileBase[] httpIdCardFront, HttpPostedFileBase[] httpIdCardBack, HttpPostedFileBase[] httpPassportFront, HttpPostedFileBase[] httpPassportVisa, HttpPostedFileBase[] httpLiscenseFront, HttpPostedFileBase[] httpLiscenseBack, MenuLevelENUM menuLevelEnum, string userName, string menuPath1Id, string menuPath2Id, string menuPath3Id, string productId)
             : this()
         {
             Entity = entity;
@@ -44,8 +44,8 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             LiscenseBack.HttpBase = httpLiscenseBack;
 
             UserName = userName;
-            
-            Menu = new MenuParameters(menuLevelEnum, productCat1Id, productCat2Id, productCat3Id);
+
+            Menu = new MenuParameters(menuLevelEnum, menuPath1Id, menuPath2Id, menuPath3Id, productId);
             //todo what should we do if userName is empty?
 
             if (IsIHasUploads)
@@ -73,9 +73,9 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public ICommonWithId Entity { get; set; }
         public string UserName { get; set; }
 
-        //public string ProductCat1Id { get; set; }
-        //public string ProductCat2Id { get; set; }
-        //public string ProductCat3Id { get; set; }
+        //public string menuPath1Id { get; set; }
+        //public string menuPath2Id { get; set; }
+        //public string menuPath3Id { get; set; }
         public MenuParameters Menu { get; set; }
         #region Uploads
 

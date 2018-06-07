@@ -15,14 +15,14 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         {
 
         }
-        public ControllerIndexParams(string searchFor, string selectedId, SortOrderENUM sortBy, MenuLevelENUM menuLevel, string id, string productCat1Id, string productCat2Id, string productCat3Id, string filepath, ICommonWithId entity, string userName)
+        public ControllerIndexParams(string searchFor, string selectedId, SortOrderENUM sortBy, MenuLevelENUM menuLevel, string id, string menuPath1Id, string menuPath2Id, string menuPath3Id, string filepath, ICommonWithId entity, string userName, string productId)
         {
             Entity = entity;
             SearchFor = searchFor;
             SortBy = sortBy;
             SelectedId = selectedId;
             Id = id;
-            Menu = new MenuParameters(menuLevel, productCat1Id, productCat2Id, productCat3Id);
+            Menu = new MenuParameters(menuLevel, menuPath1Id, menuPath2Id, menuPath3Id, productId);
             LogoAddress = filepath;
             UserName = userName;
         }

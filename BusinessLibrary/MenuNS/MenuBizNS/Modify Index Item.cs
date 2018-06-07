@@ -2,15 +2,13 @@
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.ProductNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
 using System;
 using System.Linq;
 using System.Reflection;
 namespace UowLibrary.MenuNS
 {
-    public partial class MenuBiz 
+    public partial class MenuBiz
     {
         //public override void Event_ModifyIndexList(IndexListVM indexListVM, ControllerIndexParams parameters)
         //{
@@ -109,9 +107,36 @@ namespace UowLibrary.MenuNS
 
         public override void Event_ModifyIndexItem(IndexListVM indexListVM, IndexItemVM indexItem, ICommonWithId icommonWithId)
         {
+            //The icommonWithId comes here for the first 3 menus as a MenuPathMain item. 
+            //Then on the 4th it comes as a product.
             base.Event_ModifyIndexItem(indexListVM, indexItem, icommonWithId);
+
+
             MenuPathMain pcm = icommonWithId as MenuPathMain;
-            makeNameForMenuItem(indexListVM, indexItem, pcm);
+            bool isMainMenuPath = !pcm.IsNull();
+
+            if (isMainMenuPath)
+            {
+                makeNameForMenuItem(indexListVM, indexItem, pcm);
+
+                indexItem.Menu.MenuPath1Id = pcm.MenuPath1Id;
+                indexItem.Menu.MenuPath2Id = pcm.MenuPath2Id;
+                indexItem.Menu.MenuPath3Id = pcm.MenuPath3Id;
+                return;
+            }
+
+            //Product p = icommonWithId as Product;
+            //p.IsNullThrowException("Not a Main Path or a Product. Programming error.");
+
+
+            //The item is a product.
+            //No modification is required.
+
+            //if the item is a ProductChild
+            //No modification is required.
+
+
+
 
         }
 

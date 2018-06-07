@@ -1,6 +1,5 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
-using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
@@ -10,7 +9,7 @@ using System.Linq;
 using System.Reflection;
 namespace UowLibrary.MenuNS
 {
-    public partial class MenuBiz 
+    public partial class MenuBiz
     {
         public override void Event_ModifyIndexList(IndexListVM indexListVM, ControllerIndexParams parameters)
         {
@@ -24,7 +23,29 @@ namespace UowLibrary.MenuNS
 
             if (!parameters.Id.IsNullOrWhiteSpace())
             {
-                indexListVM.Menu.ProductCategoryMain = Dal.FindFor(parameters.Id);
+                //in menu level 1-4 the parameters.Id that is returned is a MainMenuPath
+                //in menu level 5, the parameters.Id that is returned is a Product.Id
+
+                switch (parameters.Menu.MenuLevel)
+                {
+                    case MenuLevelENUM.Level_1:
+                    case MenuLevelENUM.Level_2:
+                    case MenuLevelENUM.Level_3:
+                    case MenuLevelENUM.Level_4:
+                        indexListVM.Menu.MenuPathMain = Find(parameters.Id);
+                        break;
+                    case MenuLevelENUM.Level_5:
+                        Product p = _productBiz.Find(parameters.Id);
+                        //Now this product has many main Menu Paths.
+                        //which one will it choose?
+                        break;
+                    case MenuLevelENUM.unknown:
+                        break;
+                    default:
+                        break;
+                }
+
+
             }
             else
             {
@@ -58,22 +79,26 @@ namespace UowLibrary.MenuNS
                     return new MenuPathMain();
 
                 case MenuLevelENUM.Level_2:
-                    //find one with the same productCat1
-                    pcm = Dal.FindAll().FirstOrDefault(x => x.MenuPath1Id == parameters.Menu.ProductCat1Id);
+                    //find MenuPathMain with the same productCat1
+                    pcm = FindAll().FirstOrDefault(x => x.MenuPath1Id == parameters.Menu.MenuPath1Id);
                     return pcm;
                 case MenuLevelENUM.Level_3:
-                    //find one with the same productCat1 & productCat2
-                    pcm = Dal.FindAll().FirstOrDefault(x =>
-                        x.MenuPath1Id == parameters.Menu.ProductCat1Id &&
-                        x.MenuPath2Id == parameters.Menu.ProductCat2Id);
+                    //find MenuPathMain with the same productCat1 & productCat2
+                    pcm = FindAll().FirstOrDefault(x =>
+                        x.MenuPath1Id == parameters.Menu.MenuPath1Id &&
+                        x.MenuPath2Id == parameters.Menu.MenuPath2Id);
                     return pcm;
                 case MenuLevelENUM.Level_4:
-                    //find one with the same productCat1 & productCat2 &  & productCat3
-                    pcm = Dal.FindAll().FirstOrDefault(x =>
-                        x.MenuPath1Id == parameters.Menu.ProductCat1Id &&
-                        x.MenuPath2Id == parameters.Menu.ProductCat2Id &&
-                        x.MenuPath3Id == parameters.Menu.ProductCat3Id);
+                    //find MenuPathMain with the same productCat1 & productCat2 &  & productCat3
+                    pcm = FindAll().FirstOrDefault(x =>
+                        x.MenuPath1Id == parameters.Menu.MenuPath1Id &&
+                        x.MenuPath2Id == parameters.Menu.MenuPath2Id &&
+                        x.MenuPath3Id == parameters.Menu.MenuPath3Id);
                     return pcm;
+
+                case MenuLevelENUM.Level_5:
+                    throw new NotImplementedException();
+
                 default:
                     ErrorsGlobal.Add("Menu Level cannot be unknown here. Programming Error.", MethodBase.GetCurrentMethod());
                     throw new Exception(ErrorsGlobal.ToString());
@@ -85,19 +110,19 @@ namespace UowLibrary.MenuNS
             string completeName = "";
             string nameProdCat1 = "";
 
-            if (indexListVM.Menu.ProductCategoryMain.IsNull())
+            if (indexListVM.Menu.MenuPathMain.IsNull())
                 return (completeName = "Menu Items");
 
-            if (!indexListVM.Menu.ProductCategoryMain.MenuPath1.IsNull())
-                nameProdCat1 = indexListVM.Menu.ProductCategoryMain.MenuPath1.Name;
+            if (!indexListVM.Menu.MenuPathMain.MenuPath1.IsNull())
+                nameProdCat1 = indexListVM.Menu.MenuPathMain.MenuPath1.Name;
 
             string nameProdCat2 = "";
-            if (!indexListVM.Menu.ProductCategoryMain.MenuPath2.IsNull())
-                nameProdCat2 = indexListVM.Menu.ProductCategoryMain.MenuPath2.Name;
+            if (!indexListVM.Menu.MenuPathMain.MenuPath2.IsNull())
+                nameProdCat2 = indexListVM.Menu.MenuPathMain.MenuPath2.Name;
 
             string nameProdCat3 = "";
-            if (!indexListVM.Menu.ProductCategoryMain.MenuPath3.IsNull())
-                nameProdCat3 = indexListVM.Menu.ProductCategoryMain.MenuPath3.Name;
+            if (!indexListVM.Menu.MenuPathMain.MenuPath3.IsNull())
+                nameProdCat3 = indexListVM.Menu.MenuPathMain.MenuPath3.Name;
 
 
             completeName = "Menu Items";

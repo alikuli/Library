@@ -43,7 +43,7 @@ namespace DatastoreNS
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Bus);
-            c3 = Cat3Name(MenuPath3ENUM.Mercedeze);
+            c3 = Cat3Name(MenuPath3ENUM.MercedesBenz);
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
@@ -82,7 +82,7 @@ namespace DatastoreNS
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Car);
-            c3 = Cat3Name(MenuPath3ENUM.Mercedeze);
+            c3 = Cat3Name(MenuPath3ENUM.MercedesBenz);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
@@ -123,7 +123,7 @@ namespace DatastoreNS
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Coaster);
-            c3 = Cat3Name(MenuPath3ENUM.Mercedeze);
+            c3 = Cat3Name(MenuPath3ENUM.MercedesBenz);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
@@ -163,7 +163,7 @@ namespace DatastoreNS
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.RecreationalVehical);
-            c3 = Cat3Name(MenuPath3ENUM.Mercedeze);
+            c3 = Cat3Name(MenuPath3ENUM.MercedesBenz);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
@@ -204,7 +204,7 @@ namespace DatastoreNS
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Truck);
-            c3 = Cat3Name(MenuPath3ENUM.Mercedeze);
+            c3 = Cat3Name(MenuPath3ENUM.MercedesBenz);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
@@ -246,7 +246,7 @@ namespace DatastoreNS
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.SUV);
-            c3 = Cat3Name(MenuPath3ENUM.Mercedeze);
+            c3 = Cat3Name(MenuPath3ENUM.MercedesBenz);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
@@ -289,7 +289,7 @@ namespace DatastoreNS
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Van);
-            c3 = Cat3Name(MenuPath3ENUM.Mercedeze);
+            c3 = Cat3Name(MenuPath3ENUM.MercedesBenz);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 

@@ -184,6 +184,7 @@
     <Compile Include="LanguagesNS\SelectList.cs" />
     <Compile Include="LanguagesNS\Fix.cs" />
     <Compile Include="LanguagesNS\Index.cs" />
+    <Compile Include="MenuNS\MenuBizNS\GetListForIndexAsync.cs" />
     <Compile Include="MenuNS\MenuBizNS\Modify Index Item.cs" />
     <Compile Include="MenuNS\MenuBizNS\SelectList.cs" />
     <Compile Include="MenuNS\MenuBizNS\Index.cs" />

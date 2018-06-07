@@ -186,97 +186,22 @@ namespace UowLibrary.ProductNS
                     p = new Product();
 
                     p.UomVolume = _uomVolumeBiz.FindByName(prodInitHelper.UomVolumeName);
-                    if (p.UomVolume.IsNull())
-                    {
-                        ErrorsGlobal.Add("UomVolume is null", MethodBase.GetCurrentMethod());
-                    }
-
+                    p.UomVolume.IsNullThrowException();
+                    
                     p.UomDimensions = _uomLengthBiz.FindByName(prodInitHelper.UomLengthName);
-                    if (p.UomDimensions.IsNull())
-                    {
-                        ErrorsGlobal.Add("UomPackageLength is null", MethodBase.GetCurrentMethod());
-                    }
-
+                    p.UomDimensions.IsNullThrowException();
 
                     p.UomWeightActual = _uomWeightBiz.FindByName(prodInitHelper.UomShipWeightName);
-                    if (p.UomWeightActual.IsNull())
-                    {
-                        ErrorsGlobal.Add("UomShipWeight is null", MethodBase.GetCurrentMethod());
-                    }
+
 
                     p.UomWeightListed = _uomWeightBiz.FindByName(prodInitHelper.UomWeightListedName);
-                    if (p.UomWeightListed.IsNull())
-                    {
-                        ErrorsGlobal.Add("UomWeightListedName is null", MethodBase.GetCurrentMethod());
-                    }
-
-
-
+                    p.UomWeightListed.IsNullThrowException();
 
                     p.UomPurchase = _uomQuantityBiz.FindByName(prodInitHelper.UomPurchaseName);
-                    if (p.UomPurchase.IsNull())
-                    {
-                        ErrorsGlobal.Add("UomPurchaseName is null", MethodBase.GetCurrentMethod());
-                    }
+                    p.UomPurchase.IsNullThrowException();
+
                     p.UomSale = _uomQuantityBiz.FindByName(prodInitHelper.UomSaleName);
-                    if (p.UomSale.IsNull())
-                    {
-                        ErrorsGlobal.Add("UomSaleName is null", MethodBase.GetCurrentMethod());
-                    }
-
-                    #region Menu Path
-
-                    if (!prodInitHelper.Menupaths.IsNullOrEmpty())
-                    {
-                        foreach (MenuPathHelper mph in prodInitHelper.Menupaths)
-                        {
-                            MenuPathMain mpm = MenuPathMainBiz.FindAll().FirstOrDefault(x =>
-                                    x.MenuPath1.Name.ToLower() == mph.MenuPath1Name.ToLower() &&
-                                    x.MenuPath2.Name.ToLower() == mph.MenuPath2Name.ToLower());
-
-                            if (mpm.IsNull())
-                            {
-                                mpm = MenuPathMainBiz.Factory();
-
-                                MenuPath1 mp1 = MenuPath1Biz.FindByName(mph.MenuPath1Name);
-                                if (mp1.IsNull())
-                                {
-                                    ErrorsGlobal.Add("Menu Path 1 is null", MethodBase.GetCurrentMethod());
-                                    ErrorsGlobal.Add(string.Format("Programming error. Menu Path 1 does not exist... it should!. Path is: {0}", mph.MenuPath1Name), MethodBase.GetCurrentMethod());
-                                    throw new Exception(ErrorsGlobal.ToString());
-                                }
-                                mpm.MenuPath1 = mp1;
-                                mpm.MenuPath1.Id = mp1.Id;
-
-                                MenuPath2 mp2 = MenuPath2Biz.FindByName(mph.MenuPath2Name);
-                                if (mp2.IsNull())
-                                {
-                                    ErrorsGlobal.Add("Menu Path 2 is null", MethodBase.GetCurrentMethod());
-                                }
-                                mpm.MenuPath2 = mp2;
-                                mpm.MenuPath2.Id = mp2.Id;
-
-                                mpm.Name = mpm.MakeName(mph.MenuPath1Name, mph.MenuPath2Name, "");
-                            }
-
-                            p.MenuPathMains.Add(mpm);
-                            mpm.Products.Add(p);
-
-
-                        }
-                    }
-                    #endregion
-
-                    #region Get Product Uploads
-                    //this comes automaticly.
-                    #endregion
-                    if (ErrorsGlobal.HasErrors)
-                    {
-                        throw new Exception(ErrorsGlobal.ToString());
-
-                    }
-
-
+                    p.UomSale.IsNullThrowException();
 
                     p.Name = prodInitHelper.Name;
                     p.Dimensions.Height = prodInitHelper.Height;
@@ -295,31 +220,56 @@ namespace UowLibrary.ProductNS
                     p.WeightListed = prodInitHelper.WeightListed;
                     p.Volume = prodInitHelper.ShipVolume;
 
-
-                    #region ProductIdentifier
-                    if (!prodInitHelper.ProductIdentifiers.IsNullOrEmpty())
+                    if (ErrorsGlobal.HasErrors)
                     {
-                        foreach (string piStr in prodInitHelper.ProductIdentifiers)
-                        {
-                            //if it does then add a message
+                        throw new Exception(ErrorsGlobal.ToString());
 
-                            //first look for the product identifier.
-                            ProductIdentifier pi = ProductIdentifierBiz.Find(piStr);
-
-                            //if it already exists, STOP.
-                            if (!pi.IsNull())
-                                continue;
-
-                            pi = ProductIdentifierBiz.Factory();
-
-                            pi.Name = piStr;
-                            pi.Product = p;
-                            pi.ProductId = p.Id;
-
-                            p.ProductIdentifiers.Add(pi);
-                        }
                     }
 
+
+
+                    #region Menu Path
+                    
+                    prodInitHelper.Menupaths.IsNullOrEmptyThrowException();
+
+                    foreach (MenuPathHelper mph in prodInitHelper.Menupaths)
+                    {
+                        MenuPathMain mpm = MenuPathMainBiz.FindAll().FirstOrDefault(x =>
+                                x.MenuPath1.Name.ToLower() == mph.MenuPath1Name.ToLower() &&
+                                x.MenuPath2.Name.ToLower() == mph.MenuPath2Name.ToLower() &&
+                                x.MenuPath3.Name.ToLower() == mph.MenuPath3Name.ToLower());
+
+                        mpm.IsNullThrowException();
+
+                        p.MenuPathMains.Add(mpm);
+                        mpm.Products.Add(p);
+                    }
+
+                    #endregion
+
+
+
+
+
+
+                    #region ProductIdentifier
+                    prodInitHelper.ProductIdentifiers.IsNullOrEmptyThrowException();
+
+                    foreach (string piStr in prodInitHelper.ProductIdentifiers)
+                    {
+                        ProductIdentifier pi = ProductIdentifierBiz.Find(piStr);
+
+                        if (!pi.IsNull())
+                            throw new Exception(string.Format("Duplicate product Identifier: '{0}'", piStr));
+
+                        pi = ProductIdentifierBiz.Factory();
+
+                        pi.Name = piStr;
+                        pi.Product = p;
+                        pi.ProductId = p.Id;
+
+                        p.ProductIdentifiers.Add(pi);
+                    }
 
                     #endregion
                     CreateSave_ForInitializeOnly(p);

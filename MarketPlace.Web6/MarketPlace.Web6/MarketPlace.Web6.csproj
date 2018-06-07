@@ -224,6 +224,25 @@
     <Compile Include="Startup.cs" />
     <Content Include="Content\debug-bootstrap.css" />
     <Content Include="Content\Initialization\blank.txt" />
+    <Content Include="Content\Initialization\BMW.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzAClass.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzCClass.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzClaClass.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzClsClass.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzEClass.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzEClassWagon.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzGClass.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzGlaClass.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzGlcClass.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzGlcCoupe.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzGleClass.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzGlsClass.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzMetrisClass.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzSClass.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzSlcClass.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzSlClass.jpg" />
+    <Content Include="Content\Initialization\MercedesBenzSprinter.jpg" />
+    <Content Include="Content\Initialization\Toyato Salon 2015.jpg" />
     <Content Include="Content\MyImages\BlankImage.jpg" />
     <Content Include="Content\MyImages\Logo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

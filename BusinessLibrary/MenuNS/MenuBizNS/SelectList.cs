@@ -14,19 +14,19 @@ namespace UowLibrary.MenuNS
     public partial class MenuBiz
     {
 
-        public SelectList ProductCat1_SelectList()
+        public SelectList MenuPath1_SelectList()
         {
-            return _productCatMainBiz.MenuPath1_SelectList();
+            return _menuPathMainBiz.MenuPath1_SelectList();
         }
 
-        public SelectList ProductCat2_SelectList()
+        public SelectList MenuPath2_SelectList()
         {
-            return _productCatMainBiz.MenuPath2_SelectList();
+            return _menuPathMainBiz.MenuPath2_SelectList();
         }
 
-        public SelectList ProductCat3_SelectList()
+        public SelectList MenuPath3_SelectList()
         {
-            return _productCatMainBiz.MenuPath3_SelectList();
+            return _menuPathMainBiz.MenuPath3_SelectList();
         }
 
 
