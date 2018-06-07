@@ -1,8 +1,8 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
-using System.Collections.Generic;
 
 namespace ModelsClassLibrary.ViewModels
 {
@@ -14,11 +14,11 @@ namespace ModelsClassLibrary.ViewModels
     {
         public MenuModel()
         {
-            ProductList = new List<Product>();
+            //ProductList = new List<Product>();
             MenuPathMain = new MenuPathMain();
         }
 
-        public List<Product> ProductList { get; set; }
+        //public List<Product> ProductList { get; set; }
 
         public MenuLevelENUM MenuLevelEnum { get; set; }
         public bool IsMenu { get; set; }
@@ -42,7 +42,8 @@ namespace ModelsClassLibrary.ViewModels
         {
             get
             {
-                MenuPathMain.IsNullThrowException("Menu Path Main is NULL. Programming Error");
+                if (MenuPathMain.IsNull())
+                    return "";
                 if (MenuPathMain.MenuPath2Id.IsNullOrWhiteSpace())
                     return "";
 
@@ -55,7 +56,8 @@ namespace ModelsClassLibrary.ViewModels
         {
             get
             {
-                MenuPathMain.IsNullThrowException("Menu Path Main is NULL. Programming Error");
+                if (MenuPathMain.IsNull())
+                    return "";
                 if (MenuPathMain.MenuPath3Id.IsNullOrWhiteSpace())
                     return "";
 
@@ -66,6 +68,9 @@ namespace ModelsClassLibrary.ViewModels
 
 
         public MenuPathMain MenuPathMain { get; set; }
+        public Product Product { get; set; }
+        public ProductChild ProductChild { get; set; }
+
 
         public string MenuPath1Name
         {
@@ -99,6 +104,30 @@ namespace ModelsClassLibrary.ViewModels
                 if (MenuPathMain.MenuPath3.IsNull())
                     return "";
                 return MenuPathMain.MenuPath3.Name;
+            }
+        }
+
+        /// <summary>
+        /// This is the product level
+        /// </summary>
+        public string MenuPath4Name
+        {
+            get
+            {
+                Product.IsNullThrowException("Product is NULL. Programming Error");
+                return Product.Name;
+            }
+        }
+
+        /// <summary>
+        /// This is the product child level.
+        /// </summary>
+        public string MenuPath5Name
+        {
+            get
+            {
+                ProductChild.IsNullThrowException("Product Child is NULL. Programming Error");
+                return ProductChild.Name;
             }
         }
 

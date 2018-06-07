@@ -24,6 +24,7 @@ namespace UowLibrary
 
         public async Task<IndexListVM> IndexAsync(ControllerIndexParams parameters)
         {
+            //this is where the error is.
             var lstEntities = await GetListForIndexAsync(parameters);
 
             //this is where the list is created
@@ -70,9 +71,9 @@ namespace UowLibrary
             IndexListVM indexListVM = createIndexList(lstEntities, parameters);
 
             if (indexListVM.IsNull())
-                return null;
-
-            indexListVM.Load(parameters);
+                indexListVM = new IndexListVM(parameters);
+            else
+                indexListVM.Load(parameters);
 
             return indexListVM;
         }

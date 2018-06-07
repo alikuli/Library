@@ -75,6 +75,10 @@ namespace ModelsClassLibrary.ViewModels
             SelectedId = parameters.SelectedId;
             DudEntity = parameters.DudEntity;
             UserName = parameters.UserName;
+            //Menu = new MenuModel();
+
+            //Menu.MenuLevelEnum = parameters.Menu.MenuLevel;
+
 
             if (!parameters.LogoAddress.IsNullOrWhiteSpace())
                 Logo = new Logo(parameters.LogoAddress);

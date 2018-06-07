@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
-    public partial class Product : ProductAbstract
+    public partial class Product : ProductAbstract, IAmMenu
     {
         public Product()
         {
@@ -35,5 +35,6 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         {
             return EnumLibrary.EnumNS.ClassesWithRightsENUM.Product;
         }
+
     }
 }

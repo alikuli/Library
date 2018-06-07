@@ -127,15 +127,15 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
         protected async Task<IndexListVM> indexEngine(ControllerIndexParams parameters)
         {
-            var data = await Biz.IndexAsync(parameters);
+            IndexListVM indexListVM = await Biz.IndexAsync(parameters);
 
-            if (data.IsNull())
+            if (indexListVM.IsNull())
             {
                 ErrorsGlobal.Add("No data received to make Index list", MethodBase.GetCurrentMethod());
                 ErrorsGlobal.MemorySave();
             }
 
-            return data;
+            return indexListVM;
         }
 
 

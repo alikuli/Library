@@ -119,21 +119,19 @@ namespace UowLibrary.MenuNS
             {
                 makeNameForMenuItem(indexListVM, indexItem, pcm);
 
-                indexItem.Menu.MenuPath1Id = pcm.MenuPath1Id;
-                indexItem.Menu.MenuPath2Id = pcm.MenuPath2Id;
-                indexItem.Menu.MenuPath3Id = pcm.MenuPath3Id;
-                return;
             }
 
-            //Product p = icommonWithId as Product;
-            //p.IsNullThrowException("Not a Main Path or a Product. Programming error.");
+            IAmMenu iAmMenu = icommonWithId as IAmMenu;
+            bool isIAmMenu = !iAmMenu.IsNull();
 
 
-            //The item is a product.
-            //No modification is required.
+            if(isIAmMenu)
+            {
+                indexItem.Menu.MenuPath1Id = iAmMenu.MenuPath1Id;
+                indexItem.Menu.MenuPath2Id = iAmMenu.MenuPath2Id;
+                indexItem.Menu.MenuPath3Id = iAmMenu.MenuPath3Id;
+            }
 
-            //if the item is a ProductChild
-            //No modification is required.
 
 
 

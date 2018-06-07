@@ -28,17 +28,22 @@ namespace UowLibrary.MenuNS
 
                 switch (parameters.Menu.MenuLevel)
                 {
-                    case MenuLevelENUM.Level_1:
-                    case MenuLevelENUM.Level_2:
-                    case MenuLevelENUM.Level_3:
-                    case MenuLevelENUM.Level_4:
+                    case MenuLevelENUM.Level_1: //Menu Level 1
+                    case MenuLevelENUM.Level_2: //Menu Level 2
+                    case MenuLevelENUM.Level_3: //Menu Level 3
+                    case MenuLevelENUM.Level_4: //Product Level
                         indexListVM.Menu.MenuPathMain = Find(parameters.Id);
                         break;
-                    case MenuLevelENUM.Level_5:
-                        Product p = _productBiz.Find(parameters.Id);
-                        //Now this product has many main Menu Paths.
-                        //which one will it choose?
+                    case MenuLevelENUM.Level_5: //Product Children Level
+                        indexListVM.Menu.MenuPathMain = FindAll().FirstOrDefault(x =>
+                            x.MenuPath1Id == parameters.Menu.MenuPath1Id &&
+                            x.MenuPath2Id == parameters.Menu.MenuPath2Id &&
+                            x.MenuPath3Id == parameters.Menu.MenuPath3Id 
+                            );
+                            indexListVM.Menu.Product = _productBiz.Find(parameters.Id);
+
                         break;
+
                     case MenuLevelENUM.unknown:
                         break;
                     default:
@@ -50,7 +55,7 @@ namespace UowLibrary.MenuNS
             else
             {
                 //we need to find a dummy ProductCategoryMain which will full fill the requirements of the menu level.
-                MenuPathMain pcm = findDummyProductCategoryMain(parameters);
+                MenuPathMain pcm = findDummyMenuPathMain(parameters);
                 if (pcm.IsNull())
                 {
                     ErrorsGlobal.Add("PCM cannot be null. Programming Error", MethodBase.GetCurrentMethod());
@@ -64,7 +69,7 @@ namespace UowLibrary.MenuNS
         }
 
         //This supplies a dummy ProductCategoryMain for the Back to List in the Create.
-        private MenuPathMain findDummyProductCategoryMain(ControllerIndexParams parameters)
+        private MenuPathMain findDummyMenuPathMain(ControllerIndexParams parameters)
         {
             MenuPathMain pcm;
             switch (parameters.Menu.MenuLevel)

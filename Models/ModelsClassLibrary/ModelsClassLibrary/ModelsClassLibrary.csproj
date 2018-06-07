@@ -254,6 +254,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ModelsNS\IndexNS\Headings.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuPathMainNS\IAmMenu.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuPathMainNS\IMenuPathMain.cs" />
     <Compile Include="ModelsNS\MigraDocNS\PdfHeaderInfo.cs" />
     <Compile Include="ModelsNS\MigraDocNS\OptionsPdfDoc.cs" />
     <Compile Include="ModelsNS\PeopleNS\AbstractsNS\IPlayer.cs" />
@@ -275,6 +277,7 @@
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\UserState.cs" />
     <Compile Include="ModelsNS\PlacesNS\CountryNS\UpdatePropertiesDuringModify.cs" />
     <Compile Include="ModelsNS\PlacesNS\StateNS\StateInitializationData.cs" />
+    <Compile Include="ModelsNS\ProductNS\ProductChildNS\IAmMenu.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductChildNS\UpdatePropertiesDuringModify.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductChildNS\Navigation - IHasUploads.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductChildNS\Dates.cs" />
@@ -282,6 +285,7 @@
     <Compile Include="ModelsNS\ProductNS\ProductChildNS\Navigation.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductChildNS\ProductChild.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\IProductHasUploads.cs" />
+    <Compile Include="ModelsNS\ProductNS\ProductNS\IAmMenu.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\Product - UpdatePropertiesDuringModify.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\ProductAbstract - Dates.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\ProductAbstract - Navigation, Prod Cat and Parent.cs" />

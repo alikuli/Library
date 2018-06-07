@@ -285,37 +285,37 @@ namespace UowLibrary.MenuNS
 
             return mpmlst;
         }
-        private List<Product> Menu3_ProductList(ControllerIndexParams parms)
-        {
-            if (parms.Menu.MenuPath1Id.IsNullOrEmpty())
-            {
-                ErrorsGlobal.Add("Category 1 argument missing. Programming Error", MethodBase.GetCurrentMethod());
-                throw new ArgumentNullException(ErrorsGlobal.ToString());
-            }
+        //private List<Product> Menu3_ProductList(ControllerIndexParams parms)
+        //{
+        //    if (parms.Menu.MenuPath1Id.IsNullOrEmpty())
+        //    {
+        //        ErrorsGlobal.Add("Category 1 argument missing. Programming Error", MethodBase.GetCurrentMethod());
+        //        throw new ArgumentNullException(ErrorsGlobal.ToString());
+        //    }
 
-            if (parms.Menu.MenuPath2Id.IsNullOrEmpty())
-            {
-                ErrorsGlobal.Add("Category 2 argument missing. Programming Error", MethodBase.GetCurrentMethod());
-                throw new ArgumentNullException(ErrorsGlobal.ToString());
-            }
+        //    if (parms.Menu.MenuPath2Id.IsNullOrEmpty())
+        //    {
+        //        ErrorsGlobal.Add("Category 2 argument missing. Programming Error", MethodBase.GetCurrentMethod());
+        //        throw new ArgumentNullException(ErrorsGlobal.ToString());
+        //    }
 
-            if (parms.Menu.MenuPath3Id.IsNullOrEmpty())
-            {
-                ErrorsGlobal.Add("Category 3 argument missing. Programming Error", MethodBase.GetCurrentMethod());
-                throw new ArgumentNullException(ErrorsGlobal.ToString());
-            }
+        //    if (parms.Menu.MenuPath3Id.IsNullOrEmpty())
+        //    {
+        //        ErrorsGlobal.Add("Category 3 argument missing. Programming Error", MethodBase.GetCurrentMethod());
+        //        throw new ArgumentNullException(ErrorsGlobal.ToString());
+        //    }
 
 
-            //get the productCategoryMain
-            MenuPathMain pcm = Dal.FindAll().FirstOrDefault(x =>
-                x.MenuPath1Id == parms.Menu.MenuPath1Id &&
-                x.MenuPath2Id == parms.Menu.MenuPath2Id &&
-                x.MenuPath3Id == parms.Menu.MenuPath3Id);
-            if (pcm.IsNull())
-                return null;
+        //    //get the productCategoryMain
+        //    MenuPathMain pcm = Dal.FindAll().FirstOrDefault(x =>
+        //        x.MenuPath1Id == parms.Menu.MenuPath1Id &&
+        //        x.MenuPath2Id == parms.Menu.MenuPath2Id &&
+        //        x.MenuPath3Id == parms.Menu.MenuPath3Id);
+        //    if (pcm.IsNull())
+        //        return null;
 
-            return pcm.Products.ToList();
-        }
+        //    return pcm.Products.ToList();
+        //}
 
         #endregion
 
@@ -343,9 +343,16 @@ namespace UowLibrary.MenuNS
 
             List<Product> listOfProducts = mpm.Products.ToList();
 
+
             if (listOfProducts.IsNullOrEmpty())
                 return null;
 
+            foreach (var prod in listOfProducts)
+            {
+                prod.MenuPath1Id = parms.Menu.MenuPath1Id;
+                prod.MenuPath2Id = parms.Menu.MenuPath2Id;
+                prod.MenuPath3Id = parms.Menu.MenuPath3Id;
+            }
 
             List<ICommonWithId> pclst = listOfProducts.Cast<ICommonWithId>().ToList();
 

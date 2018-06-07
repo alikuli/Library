@@ -13,7 +13,7 @@ namespace ModelsClassLibrary.MenuNS
     /// <summary>
     /// This is the Menu Path
     /// </summary>
-    public partial class MenuPathMain : MenuPathAbstract, IProductCategoryMain
+    public partial class MenuPathMain : MenuPathAbstract, IProductCategoryMain, IAmMenu
     {
 
         public MenuPathMain()
@@ -36,20 +36,6 @@ namespace ModelsClassLibrary.MenuNS
 
         #region Navigation Properties
 
-        [Display(Name = "Menu Path 1")]
-        public virtual string MenuPath1Id { get; set; }
-        public virtual MenuPath1 MenuPath1 { get; set; }
-
-
-        [Display(Name = "Menu Path 2")]
-
-        public virtual string MenuPath2Id { get; set; }
-        public virtual MenuPath2 MenuPath2 { get; set; }
-
-
-        [Display(Name = "Menu Path 3")]
-        public virtual string MenuPath3Id { get; set; }
-        public virtual MenuPath3 MenuPath3 { get; set; }
 
 
         //public virtual ICollection<IDiscount> ProductCategoryDiscounts { get; set; }
