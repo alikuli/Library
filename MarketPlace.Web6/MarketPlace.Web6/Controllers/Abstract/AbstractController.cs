@@ -79,7 +79,7 @@ namespace MarketPlace.Web4.Controllers
             get
             {
                 if (!User.IsNull())
-                    _userId = User.Identity.GetUserId();
+                    return (_userId = User.Identity.GetUserId());
 
                 return "";
             }
@@ -92,7 +92,7 @@ namespace MarketPlace.Web4.Controllers
             get
             {
                 if (!UserId.IsNullOrWhiteSpace())
-                    User.Identity.GetUserName();
+                    return (User.Identity.GetUserName());
                 return "";
 
             }

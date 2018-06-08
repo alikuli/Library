@@ -50,6 +50,7 @@ namespace ApplicationDbContextNS
                 .HasForeignKey(x => x.FileDocId)
                 .WillCascadeOnDelete(true);
 
+
             //USER Images
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany<UploadedFile>(x => x.MiscFiles)
@@ -206,6 +207,21 @@ namespace ApplicationDbContextNS
                 .WithMany(x => x.ProductChildren)
                 .WillCascadeOnDelete(true);
             #endregion
+
+
+            //modelBuilder.Entity<FileDoc>()
+            //    .HasOptional<ApplicationUser>(x => x.User)
+            //    .WithMany(x => x.FileDocs)
+            //    .HasForeignKey(x => x.UserId)
+            //    .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany<FileDoc>(x => x.FileDocs)
+                .WithOptional(x => x.User)
+                .HasForeignKey(x => x.UserId)
+                .WillCascadeOnDelete(false);
+
+                
             //modelBuilder.Entity<ApplicationUser>().ToTable("Users");
             //modelBuilder.Entity<IdentityRole>().ToTable("Roles");
             //modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");

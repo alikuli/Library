@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TestCheckBoxList.Models
+namespace ModelsClassLibrary.SharedNS
 {
     /// <summary>
     /// This works with the EditorTemplate in the View called CheckBoxItem.cshtml.
@@ -13,9 +11,15 @@ namespace TestCheckBoxList.Models
     {
         public CheckBoxItem()
         {
-            List = new List<CheckBoxItem>();
-            LabelOnLeft = false;
 
+        }
+
+        public CheckBoxItem(string id, string label, bool isOnLeft = true)
+            : this()
+        {
+            Id = id;
+            Label = label;
+            LabelOnLeft = isOnLeft;
         }
         /// <summary>
         /// You must give Id a value programatically.
@@ -25,7 +29,6 @@ namespace TestCheckBoxList.Models
         public bool IsTrue { get; set; }
         public bool LabelOnLeft { get; set; }
         public bool IsEnabled { get; set; }
-        public ICollection<CheckBoxItem> List { get; set; }
 
     }
 }

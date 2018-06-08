@@ -1,7 +1,9 @@
 ﻿using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Collections.Generic;
 
-namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
+namespace InterfacesLibrary.SharedNS.FeaturesNS
+
 {
     public interface IHasUploads : ICommonWithId
     {

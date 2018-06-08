@@ -1,7 +1,9 @@
 ﻿using InterfacesLibrary.SharedNS;
+using InterfacesLibrary.SharedNS.FeaturesNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ModelsClassLibrary.ModelsNS.AddressNS;
+using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.UserNameSpace;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
@@ -95,6 +97,9 @@ namespace UserModels
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "LiscenseBack");
         }
 
+
+
+        public virtual ICollection<FileDoc> FileDocs { get; set; }
 
         public virtual ICollection<ProductChild> ProductChildren { get; set; }
 

@@ -2,11 +2,12 @@
 using EnumLibrary.EnumNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
+using InterfacesLibrary.SharedNS.FeaturesNS;
 using MarketPlace.Web4.Controllers;
-using ModelsClassLibrary.InterfacesNS.Shared;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
 using System;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -192,7 +193,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
         }
         // GET: Countries/Create
-        public virtual ActionResult Create(MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId= "")
+        public virtual ActionResult Create(MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "")
         {
             TEntity entity = Biz.EntityFactoryForHttpGet();
 
@@ -232,7 +233,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         {
             try
             {
-                Event_LoadUserIntoEntity(entity);
+                loadUserIntoEntity(entity);
                 ControllerCreateEditParameter parm = new ControllerCreateEditParameter(
                     entity,
                     httpMiscUploadedFiles,
@@ -263,26 +264,25 @@ namespace MarketPlace.Web6.Controllers.Abstract
             }
         }
 
-        public void Event_LoadUserIntoEntity(TEntity entity)
+        private void loadUserIntoEntity(TEntity entity)
         {
-            IUserPartOfEntity iuser = entity as IUserPartOfEntity;
+            IHasUser iuser = entity as IHasUser;
 
             if (iuser.IsNull())
                 return;
 
-            if (iuser.UserId.IsNullOrWhiteSpace())
-            {
-                ErrorsGlobal.Add("The User is required. The Id is missing.", MethodBase.GetCurrentMethod());
-                throw new Exception(ErrorsGlobal.ToString());
-            }
+            //is user loggerd in
+            UserName.IsNullOrWhiteSpaceThrowException("User is not logged in");
 
-            iuser.User = _userBiz.Find(iuser.UserId);
+            iuser.User = _userBiz.FindAll().FirstOrDefault(x => x.UserName.ToLower() == UserName.ToLower());
 
             if (iuser.User.IsNull())
             {
                 ErrorsGlobal.Add("The User was not found.", MethodBase.GetCurrentMethod());
                 throw new Exception(ErrorsGlobal.ToString());
             }
+
+            iuser.UserId = iuser.User.Id;
 
         }
         //GetErrorsFromModelState();
@@ -294,7 +294,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
         #region Edit
         // GET: Countries/Edit/5
-        public virtual async Task<ActionResult> Edit(string id, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId ="", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown)
+        public virtual async Task<ActionResult> Edit(string id, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown)
         {
             if (id == null)
             {
@@ -331,7 +331,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> Edit(TEntity entity, HttpPostedFileBase[] httpMiscUploadedFiles, HttpPostedFileBase[] httpSelfieUploads, HttpPostedFileBase[] httpIdCardFrontUploads, HttpPostedFileBase[] httpIdCardBackUploads, HttpPostedFileBase[] httpPassportFrontUploads, HttpPostedFileBase[] httpPassportVisaUploads, HttpPostedFileBase[] httpLiscenseFrontUploads, HttpPostedFileBase[] httpLiscenseBackUploads)
+        public virtual async Task<ActionResult> Edit(TEntity entity, HttpPostedFileBase[] httpMiscUploadedFiles, HttpPostedFileBase[] httpSelfieUploads, HttpPostedFileBase[] httpIdCardFrontUploads, HttpPostedFileBase[] httpIdCardBackUploads, HttpPostedFileBase[] httpPassportFrontUploads, HttpPostedFileBase[] httpPassportVisaUploads, HttpPostedFileBase[] httpLiscenseFrontUploads, HttpPostedFileBase[] httpLiscenseBackUploads, FormCollection fc)
         {
             //var req = Request;
             //string fileNameOnly = Path.GetFileNameWithoutExtension(files[0].FileName);
@@ -347,7 +347,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     ErrorsGlobal.AddMessage("No item received.");
                 }
 
-                Event_LoadUserIntoEntity(entity);
+                loadUserIntoEntity(entity);
 
                 ControllerCreateEditParameter parm = new ControllerCreateEditParameter(
                     entity,
@@ -361,7 +361,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     httpLiscenseBackUploads,
                     MenuLevelENUM.unknown,
                     User.Identity.Name ?? "",
-                    "", "", "","");
+                    "", "", "", "");
 
                 await Biz.UpdateAndSaveAsync(parm);
 
@@ -398,7 +398,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown; //dummy entry
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
 
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, "", "", "", logoAddress, (ICommonWithId)entity, User.Identity.Name,"");
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, "", "", "", logoAddress, (ICommonWithId)entity, User.Identity.Name, "");
 
                 return Event_CreateViewAndSetupSelectList(parm);
 
@@ -440,7 +440,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 entity.ReturnUrl = returnUrl;
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
 
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, MenuLevelENUM.unknown, id, "", "", "", logoAddress, (ICommonWithId)entity, User.Identity.Name,"");
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, MenuLevelENUM.unknown, id, "", "", "", logoAddress, (ICommonWithId)entity, User.Identity.Name, "");
 
                 return Event_CreateViewAndSetupSelectList(parm);
 

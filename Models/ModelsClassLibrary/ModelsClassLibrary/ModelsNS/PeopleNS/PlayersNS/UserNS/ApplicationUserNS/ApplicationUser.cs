@@ -1,4 +1,5 @@
 ﻿using InterfacesLibrary.SharedNS;
+using InterfacesLibrary.SharedNS.FeaturesNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ModelsClassLibrary.ModelsNS.AddressNS;

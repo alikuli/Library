@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using DatastoreNS;
+using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;

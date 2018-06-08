@@ -1,4 +1,4 @@
-﻿using ModelsClassLibrary.InterfacesNS.Shared;
+﻿using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS;
@@ -16,7 +16,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
     ///     product, but by adding a serial numbr, it would then become different, within the product. Each serial numbered product
     ///     would then have its own price.
     /// </summary>
-    public partial class ProductChild : CommonWithId, IHasUploads, IUserPartOfEntity, IAmMenu
+    public partial class ProductChild : CommonWithId, IHasUploads, IHasUser, IAmMenu
     {
         public ProductChild()
         {

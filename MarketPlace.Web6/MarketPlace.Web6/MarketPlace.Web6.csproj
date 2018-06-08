@@ -389,6 +389,7 @@
     <Content Include="Views\ProductIdentifiers\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\ProductChilds\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\Products\_ProductChildren.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CheckedBoxesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

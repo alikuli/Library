@@ -250,6 +250,7 @@
     <Compile Include="ProductNS\ProductChildNS\SelectList.cs" />
     <Compile Include="ProductNS\ProductChildNS\Uploads.cs" />
     <Compile Include="ProductNS\ProductNS\DeleteRelatedRecords.cs" />
+    <Compile Include="ProductNS\ProductNS\MenuPathCheckedBoxes.cs" />
     <Compile Include="ProductNS\ProductNS\Uploads.cs" />
     <Compile Include="ProductNS\ProductNS\Index.cs" />
     <Compile Include="ProductNS\ProductNS\SelectList.cs" />

@@ -184,3 +184,10 @@ textarea {
     line-height: 1.2;
   }
 }*/
+
+    .akaFix
+    {
+        display:flex;
+        flex-wrap:wrap;
+        width:100%;
+    }

@@ -2,6 +2,7 @@
 using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
+using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;

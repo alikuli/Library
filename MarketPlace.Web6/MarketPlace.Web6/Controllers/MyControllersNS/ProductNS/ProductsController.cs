@@ -1,6 +1,7 @@
 ﻿using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.ProductNS;
 
@@ -24,9 +25,13 @@ namespace MarketPlace.Web6.Controllers
             ViewBag.UomShipWtSelectList = _productBiz.UomWeightBiz.SelectList();
             ViewBag.UomWeightSelectList = _productBiz.UomWeightBiz.SelectList();
             ViewBag.UomLengthSelectList = _productBiz.UomLengthBiz.SelectList();
+            Product p = parm.Entity as Product;
+            p.CheckedBoxesList = _productBiz.LoadMenuPathCheckedBoxes(p);
 
             return base.Event_CreateViewAndSetupSelectList(parm);
 
         }
+
+        
     }
 }

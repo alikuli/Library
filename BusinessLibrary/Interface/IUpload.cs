@@ -1,5 +1,6 @@
 ﻿using AliKuli.UtilitiesNS;
 using InterfacesLibrary.SharedNS;
+using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System;

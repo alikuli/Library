@@ -1,8 +1,9 @@
 ﻿
 using UserModels;
-namespace ModelsClassLibrary.InterfacesNS.Shared
+namespace InterfacesLibrary.SharedNS.FeaturesNS
+
 {
-    public interface IUserPartOfEntity
+    public interface IHasUser
     {
         string UserId { get; set; }
         ApplicationUser User { get; set; }

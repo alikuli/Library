@@ -1,12 +1,11 @@
 ﻿using InterfacesLibrary.SharedNS.FeaturesNS;
-using ModelsClassLibrary.ModelsNS.UploadedFileNS;
+using System.Collections.Generic;
 
+namespace InterfacesLibrary.SharedNS.FeaturesNS
 
-namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
     public interface IProductHasUploads : IHasUploads
     {
 
     }
 }
-

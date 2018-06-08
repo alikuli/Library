@@ -1,7 +1,9 @@
 ﻿using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
+using ModelsClassLibrary.SharedNS;
 //using ModelsClassLibrary.Models.DiscountNS;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
@@ -14,6 +16,9 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
             ProductIdentifiers = new List<ProductIdentifier>();
 
         }
+        [NotMapped]
+        public List<CheckBoxItem> CheckedBoxesList { get; set; }
+
         public virtual ICollection<MenuPathMain> MenuPathMains { get; set; }
 
         public virtual ICollection<ProductChild> ProductChildren { get; set; }

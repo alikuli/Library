@@ -1,5 +1,4 @@
-﻿using ModelsClassLibrary.InterfacesNS.Shared;
-using ModelsClassLibrary.ModelsNS.ProductNS;
+﻿using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;

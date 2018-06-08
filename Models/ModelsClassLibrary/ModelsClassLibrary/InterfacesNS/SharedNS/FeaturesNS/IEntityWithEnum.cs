@@ -1,4 +1,4 @@
-﻿namespace InterfacesLibrary.SharedNS
+﻿namespace InterfacesLibrary.SharedNS.FeaturesNS
 {
     public interface IEntityWithEnum
     {

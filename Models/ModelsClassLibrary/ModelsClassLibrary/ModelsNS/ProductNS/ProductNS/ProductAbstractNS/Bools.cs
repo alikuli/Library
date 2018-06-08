@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
 
-    public abstract partial class ProductAbstract : CommonWithId
+    public abstract partial class ProductAbstract 
     {
 
 
