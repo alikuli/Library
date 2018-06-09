@@ -224,7 +224,6 @@
     <Compile Include="Startup.cs" />
     <Content Include="Content\debug-bootstrap.css" />
     <Content Include="Content\Initialization\blank.txt" />
-    <Content Include="Content\Initialization\BMW.jpg" />
     <Content Include="Content\Initialization\MercedesBenzAClass.jpg" />
     <Content Include="Content\Initialization\MercedesBenzCClass.jpg" />
     <Content Include="Content\Initialization\MercedesBenzClaClass.jpg" />

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UserModels;
 
 namespace ModelsClassLibrary.ViewModels
 {
@@ -31,7 +32,7 @@ namespace ModelsClassLibrary.ViewModels
 
         //}
 
-        public IndexListVM(SortOrderENUM sortOrderEnum, string searchFor, string selectedId, ICommonWithId dudEntity, string webCompanyName, string logoaddress, string userName)
+        public IndexListVM(SortOrderENUM sortOrderEnum, string searchFor, string selectedId, ICommonWithId dudEntity, string webCompanyName, string logoaddress, ApplicationUser user, bool userIsAdmin, string returnUrl)
         {
             SortOrderEnum = sortOrderEnum;
             SearchFor = searchFor;
@@ -40,7 +41,10 @@ namespace ModelsClassLibrary.ViewModels
             Heading = new Headings();
             //this creates the incoming description. Otherwise it was only being created everytime we 
             //sorted... that is still happening.
+            
             Menu = new MenuModel();
+            Menu.ReturnUrl = returnUrl;
+
             Show = new Show();
             SelectedId = selectedId;
             WebCompanyName = webCompanyName;
@@ -58,12 +62,13 @@ namespace ModelsClassLibrary.ViewModels
 
             //this points to the logo
             Logo = new Logo(logoaddress);
-            UserName = UserName;
+            User = user;
+            UserIsAdmin = userIsAdmin;
 
         }
 
         public IndexListVM(ControllerIndexParams p)
-            : this(p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.UserName)
+            : this(p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.User, p.UserIsAdmin, p.ReturnUrl)
         {
             //note... if you change the parameters for this... remember to change the parameters for Load below.
         }
@@ -74,7 +79,7 @@ namespace ModelsClassLibrary.ViewModels
             SearchFor = parameters.SearchFor;
             SelectedId = parameters.SelectedId;
             DudEntity = parameters.DudEntity;
-            UserName = parameters.UserName;
+            User = parameters.User;
             //Menu = new MenuModel();
 
             //Menu.MenuLevelEnum = parameters.Menu.MenuLevel;
@@ -307,7 +312,6 @@ namespace ModelsClassLibrary.ViewModels
         #endregion
 
         public Headings Heading { get; set; }
-        public string UserName { get; set; }
         public string WebCompanyName { get; set; }
 
         #region Sorting...
@@ -589,7 +593,18 @@ namespace ModelsClassLibrary.ViewModels
         }
 
 
+        public string UserName
+        {
+            get
+            {
+                if (User.IsNull())
+                    return "";
+                return User.UserName;
+            }
+        }
+        public ApplicationUser User { get; set; }
 
-
+        public bool UserIsAdmin { get; set; }
+        
     }
 }

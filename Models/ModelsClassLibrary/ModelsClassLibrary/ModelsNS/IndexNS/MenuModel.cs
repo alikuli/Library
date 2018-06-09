@@ -14,9 +14,9 @@ namespace ModelsClassLibrary.ViewModels
     {
         public MenuModel()
         {
-            //ProductList = new List<Product>();
             MenuPathMain = new MenuPathMain();
         }
+
 
         //public List<Product> ProductList { get; set; }
 
@@ -159,5 +159,8 @@ namespace ModelsClassLibrary.ViewModels
             return previousMenuLevel;
 
         }
+
+        //this is the return URL will be employed when in Menus
+        public string ReturnUrl { get; set; }
     }
 }

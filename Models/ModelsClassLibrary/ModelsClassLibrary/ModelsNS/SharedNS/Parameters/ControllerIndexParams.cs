@@ -1,6 +1,8 @@
-﻿using EnumLibrary.EnumNS;
+﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using System.ComponentModel.DataAnnotations.Schema;
+using UserModels;
 
 namespace ModelsClassLibrary.ModelsNS.SharedNS
 {
@@ -15,7 +17,9 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         {
 
         }
-        public ControllerIndexParams(string searchFor, string selectedId, SortOrderENUM sortBy, MenuLevelENUM menuLevel, string id, string menuPath1Id, string menuPath2Id, string menuPath3Id, string filepath, ICommonWithId entity, string userName, string productId)
+
+        readonly bool _isUserAdmin;
+        public ControllerIndexParams(string searchFor, string selectedId, SortOrderENUM sortBy, MenuLevelENUM menuLevel, string id, string menuPath1Id, string menuPath2Id, string menuPath3Id, string filepath, ICommonWithId entity, ApplicationUser user, string productId, bool isUserAdmin, string returnUrl)
         {
             Entity = entity;
             SearchFor = searchFor;
@@ -24,8 +28,11 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             Id = id;
             Menu = new MenuParameters(menuLevel, menuPath1Id, menuPath2Id, menuPath3Id, productId);
             LogoAddress = filepath;
-            UserName = userName;
+            User = user;
+            _isUserAdmin = isUserAdmin;
+            ReturnUrl = returnUrl;
         }
+
         public ICommonWithId Entity { get; set; }
         public ICommonWithId DudEntity { get; set; }
         public string SearchFor { get; set; }
@@ -38,7 +45,19 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public string Id { get; set; }
         public MenuParameters Menu { get; set; }
         public string LogoAddress { get; set; }
-        public string UserName { get; set; }
+        public string UserName
+        {
+            get
+            {
+                if (User.IsNull())
+                    return "";
+                return User.UserName;
+            }
+        }
+        public ApplicationUser User { get; set; }
+
+        public bool UserIsAdmin { get { return _isUserAdmin; } }
+        public string ReturnUrl { get; set; }
 
     }
 }

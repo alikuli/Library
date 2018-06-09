@@ -37,6 +37,12 @@ namespace UowLibrary
             return user;
         }
 
+        public ApplicationUser FindByUserName_UserManager( string userName)
+        {
+            ApplicationUser user = UserManager.FindByName(userName);
+            return user;
+        }
+
 
 
 

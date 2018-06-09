@@ -22,7 +22,7 @@ namespace MarketPlace.Web6.Controllers
         }
         #region Index
 
-        public override async Task<ActionResult> Index(string id, string searchFor, string selectedId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "")
+        public override async Task<ActionResult> Index(string id, string searchFor, string selectedId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", string returnUrl = "")
         {
             switch (menuLevelEnum)
             {
@@ -52,7 +52,7 @@ namespace MarketPlace.Web6.Controllers
                     menuLevelEnum = MenuLevelENUM.unknown;
                     break;
             }
-            return await base.Index(id, searchFor, selectedId, menuLevelEnum, sortBy, print, menuPath1Id, menuPath2Id, menuPath3Id, productId);
+            return await base.Index(id, searchFor, selectedId, menuLevelEnum, sortBy, print, menuPath1Id, menuPath2Id, menuPath3Id, productId, returnUrl);
         }
 
 

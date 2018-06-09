@@ -9,15 +9,9 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
     public partial class Product : ProductAbstract, IAmMenu
     {
-        public Product()
-        {
-            MenuPathMains = new List<MenuPathMain>();
-            ProductChildren = new List<ProductChild>();
-            ProductIdentifiers = new List<ProductIdentifier>();
 
-        }
         [NotMapped]
-        public List<CheckBoxItem> CheckedBoxesList { get; set; }
+        public virtual List<CheckBoxItem> CheckedBoxesList { get; set; }
 
         public virtual ICollection<MenuPathMain> MenuPathMains { get; set; }
 

@@ -1,15 +1,20 @@
 ﻿@model InterfacesLibrary.SharedNS.ICommonWithId
 
+@*The returnUrl is used for returning when in Menus. One does not want to end up back into the item mode if an edit is done from the
+menus, but rather one should come back to where one started the edit from.*@
+
+
 @Html.HiddenFor(model => model.Id)
 
 @{
     var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+    string returnUrl = ViewBag.ReturnUrl as string;
 }
-@Html.Partial(@"ViewControls/Edit/_breadCrumbs - Edit")
 
+@Html.Partial(@"ViewControls/Edit/_breadCrumbs - Edit")
 @Html.Partial(@"ViewControls/Edit/_EditHeading")
 
-@using (Html.BeginForm("Edit", @controllerName, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", @controllerName, new { returnUrl = @ViewBag.ReturnUrl as string }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -40,7 +45,14 @@
         }
 
     }
-    @Html.ActionLink("Back to List", "Index", new { menuLevelEnum = @ViewBag.MenuLevelEnum, menuPath1Id = menuPath1, menuPath2Id = menuPath2, menuPath3Id = menuPath3, selectedId = Model.Id })
+        @if (returnUrl.IsNullOrWhiteSpace())
+        { 
+            @Html.ActionLink("Back to List", "Index", new { menuLevelEnum = @ViewBag.MenuLevelEnum, menuPath1Id = menuPath1, menuPath2Id = menuPath2, menuPath3Id = menuPath3, selectedId = Model.Id })
+        }
+        else
+        {
+            <a href="@returnUrl">Back to List</a>
+        }
 </div>
 
 @section Scripts {

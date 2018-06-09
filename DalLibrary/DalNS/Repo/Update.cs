@@ -25,22 +25,22 @@ namespace DalLibrary.DalNS
             canUpdate();
 
 
-            var entityDb = FindFor(entity.Id);
+            //var entityDb = FindFor(entity.Id);
 
-            if (entityDb == null)
-            {
-                ErrorsGlobal.Add("Missing entity id Db.", MethodBase.GetCurrentMethod());
-                throw new Exception(ErrorsGlobal.ToString());
-            }
+            //if (entityDb == null)
+            //{
+            //    ErrorsGlobal.Add("Missing entity id Db.", MethodBase.GetCurrentMethod());
+            //    throw new Exception(ErrorsGlobal.ToString());
+            //}
 
-            //now see if this User has rights.
-            //for this we need to access user Id
-            Detach(entity);
-            Attach(entityDb);
-            UnChangedState(entityDb);
+            ////now see if this User has rights.
+            ////for this we need to access user Id
+            //Detach(entity);
+            //Attach(entityDb);
+            //UnChangedState(entityDb);
 
-            entityDb.UpdatePropertiesDuringModify(entity);
-            Fix(entityDb);
+            //entityDb.UpdatePropertiesDuringModify(entity);
+            Fix(entity);
 
             //old code
             //_db.Entry(entity).State = EntityState.Modified;

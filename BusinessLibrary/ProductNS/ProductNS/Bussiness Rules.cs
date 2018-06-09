@@ -15,6 +15,7 @@ namespace UowLibrary.ProductNS
         {
             base.BusinessRulesFor(entity);
             checkParentageIsNotCircular(entity);
+            GetDataFromMenuPathCheckBoxes(entity);
         }
 
 

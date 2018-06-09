@@ -15,6 +15,7 @@ using System.Web;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.Interface;
+using UserModels;
 
 namespace MarketPlace.Web6.Controllers.Abstract
 {
@@ -82,7 +83,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         /// <param name="sortBy"></param>
         /// <param name="print"></param>
         /// <returns></returns>
-        public virtual async Task<ActionResult> Index(string id, string searchFor, string selectedId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "")
+        public virtual async Task<ActionResult> Index(string id, string searchFor, string selectedId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", string returnUrl = "")
         {
             try
             {
@@ -91,8 +92,11 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 TEntity dudEntity = Biz.Factory();
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
 
+                ApplicationUser user = _userBiz.FindByUserName_UserManager(User.Identity.Name);
+                bool isUserAdmin = _userBiz.IsUserAdmin(user);
+
                 //todo note... the company name is missing. We may need it.
-                ControllerIndexParams parms = new ControllerIndexParams(searchFor, selectedId, sortBy, menuLevelEnum, id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, dudEntity, User.Identity.Name, productId);
+                ControllerIndexParams parms = new ControllerIndexParams(searchFor, selectedId, sortBy, menuLevelEnum, id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, dudEntity, user, productId, isUserAdmin, returnUrl);
 
                 IndexListVM indexListVM = await indexEngine(parms);
 
@@ -193,14 +197,17 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
         }
         // GET: Countries/Create
-        public virtual ActionResult Create(MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "")
+        public virtual ActionResult Create(MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", string returnUrl = "")
         {
             TEntity entity = Biz.EntityFactoryForHttpGet();
 
             try
             {
+                ApplicationUser user = _userBiz.FindByUserName_UserManager(User.Identity.Name);
+                bool isUserAdmin = _userBiz.IsUserAdmin(user);
+
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, entity.Id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, (ICommonWithId)entity, User.Identity.Name, productId);
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, entity.Id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, (ICommonWithId)entity, user, productId, isUserAdmin, returnUrl);
 
                 //we want to get the previous menu because when we do a back to list, the Index will automatically advance the menu to the next.
                 ViewBag.MenuLevelEnum = getPreviousMenuLevel(menuLevelEnum);
@@ -229,7 +236,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> Create(TEntity entity, HttpPostedFileBase[] httpMiscUploadedFiles = null, HttpPostedFileBase[] httpSelfieUploads = null, HttpPostedFileBase[] httpIdCardFrontUploads = null, HttpPostedFileBase[] httpIdCardBackUploads = null, HttpPostedFileBase[] httpPassportFrontUploads = null, HttpPostedFileBase[] httpPassportVisaUploads = null, HttpPostedFileBase[] httpLiscenseFrontUploads = null, HttpPostedFileBase[] httpLiscenseBackUploads = null, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "")
+        public virtual async Task<ActionResult> Create(TEntity entity, HttpPostedFileBase[] httpMiscUploadedFiles = null, HttpPostedFileBase[] httpSelfieUploads = null, HttpPostedFileBase[] httpIdCardFrontUploads = null, HttpPostedFileBase[] httpIdCardBackUploads = null, HttpPostedFileBase[] httpPassportFrontUploads = null, HttpPostedFileBase[] httpPassportVisaUploads = null, HttpPostedFileBase[] httpLiscenseFrontUploads = null, HttpPostedFileBase[] httpLiscenseBackUploads = null, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", string returnUrl = "")
         {
             try
             {
@@ -253,7 +260,10 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                 await Biz.CreateAndSaveAsync(parm);
 
-                return Event_UpdateCreateRedicrectToAction(entity);
+                if (returnUrl.IsNullOrWhiteSpace())
+                    return Event_UpdateCreateRedicrectToAction(entity);
+
+                return Redirect(returnUrl);
 
             }
             catch (Exception e)
@@ -294,7 +304,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
         #region Edit
         // GET: Countries/Edit/5
-        public virtual async Task<ActionResult> Edit(string id, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown)
+        public virtual async Task<ActionResult> Edit(string id, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string returnUrl = "")
         {
             if (id == null)
             {
@@ -311,7 +321,12 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 }
                 //ViewBag.MenuLevelEnum = menuLevelEnum;
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, (ICommonWithId)entity, User.Identity.Name, productId);
+                ApplicationUser user = _userBiz.FindByUserName_UserManager(User.Identity.Name);
+                bool isUserAdmin = _userBiz.IsUserAdmin(user);
+
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, (ICommonWithId)entity, user, productId, isUserAdmin, returnUrl);
+
+                ViewBag.ReturnUrl = returnUrl;
 
                 return Event_CreateViewAndSetupSelectList(parm);
 
@@ -321,7 +336,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                 ErrorsGlobal.Add(string.Format("Not Saved!"), MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
-                return RedirectToAction("Index", new { selectedId = id.ToString() });
+                return RedirectToAction("Index", new { selectedId = id.ToString(), returnUrl = returnUrl });
             }
         }
 
@@ -331,7 +346,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> Edit(TEntity entity, HttpPostedFileBase[] httpMiscUploadedFiles, HttpPostedFileBase[] httpSelfieUploads, HttpPostedFileBase[] httpIdCardFrontUploads, HttpPostedFileBase[] httpIdCardBackUploads, HttpPostedFileBase[] httpPassportFrontUploads, HttpPostedFileBase[] httpPassportVisaUploads, HttpPostedFileBase[] httpLiscenseFrontUploads, HttpPostedFileBase[] httpLiscenseBackUploads, FormCollection fc)
+        public virtual async Task<ActionResult> Edit(TEntity entity, HttpPostedFileBase[] httpMiscUploadedFiles, HttpPostedFileBase[] httpSelfieUploads, HttpPostedFileBase[] httpIdCardFrontUploads, HttpPostedFileBase[] httpIdCardBackUploads, HttpPostedFileBase[] httpPassportFrontUploads, HttpPostedFileBase[] httpPassportVisaUploads, HttpPostedFileBase[] httpLiscenseFrontUploads, HttpPostedFileBase[] httpLiscenseBackUploads, FormCollection fc, string returnUrl = "")
         {
             //var req = Request;
             //string fileNameOnly = Path.GetFileNameWithoutExtension(files[0].FileName);
@@ -349,8 +364,19 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                 loadUserIntoEntity(entity);
 
+                //get the Db Entity for this...
+                TEntity dbEntity = Biz.Find(entity.Id);
+
+                if (dbEntity.IsNull())
+                {
+                    ErrorsGlobal.Add("Entity not found.", MethodBase.GetCurrentMethod());
+                    throw new Exception(ErrorsGlobal.ToString());
+                }
+
+                dbEntity.UpdatePropertiesDuringModify(entity);
+
                 ControllerCreateEditParameter parm = new ControllerCreateEditParameter(
-                    entity,
+                    dbEntity,
                     httpMiscUploadedFiles,
                     httpSelfieUploads,
                     httpIdCardFrontUploads,
@@ -365,7 +391,10 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                 await Biz.UpdateAndSaveAsync(parm);
 
-                return RedirectToAction("Index", new { selectedId = entity.Id.ToString() });
+                if (entity.ReturnUrl.IsNullOrWhiteSpace())
+                    return RedirectToAction("Index", new { selectedId = entity.Id.ToString() });
+
+                return Redirect(entity.ReturnUrl);
             }
             catch (Exception e)
             {
@@ -380,7 +409,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         #region Details
 
         // GET: Countries/Details/5
-        public async Task<ActionResult> Details(string id)
+        public async Task<ActionResult> Details(string id, string returnUrl = "")
         {
             if (id == null)
             {
@@ -398,7 +427,10 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown; //dummy entry
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
 
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, "", "", "", logoAddress, (ICommonWithId)entity, User.Identity.Name, "");
+                ApplicationUser user = _userBiz.FindByUserName_UserManager(User.Identity.Name);
+                bool isUserAdmin = _userBiz.IsUserAdmin(user);
+
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, "", "", "", logoAddress, (ICommonWithId)entity, user, "", isUserAdmin, returnUrl);
 
                 return Event_CreateViewAndSetupSelectList(parm);
 
@@ -439,8 +471,10 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 //to DeleteConfirmed via the hidden field
                 entity.ReturnUrl = returnUrl;
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
+                ApplicationUser user = _userBiz.FindByUserName_UserManager(User.Identity.Name);
+                bool isUserAdmin = _userBiz.IsUserAdmin(user);
 
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, MenuLevelENUM.unknown, id, "", "", "", logoAddress, (ICommonWithId)entity, User.Identity.Name, "");
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, MenuLevelENUM.unknown, id, "", "", "", logoAddress, (ICommonWithId)entity, user, "", isUserAdmin, returnUrl);
 
                 return Event_CreateViewAndSetupSelectList(parm);
 

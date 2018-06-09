@@ -24,6 +24,8 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
             UomDimensionsId = p.UomDimensionsId;
             Dimensions = p.Dimensions;
+            //this has the MainPaths checked/Unchecked
+            CheckedBoxesList = p.CheckedBoxesList;
 
 
         }

@@ -3,19 +3,20 @@
 
 @*https://stackoverflow.com/questions/24590222/bootstrap-3-grid-with-different-height-in-each-item-is-it-solvable-using-only*@
 @*<style>
-    .akaFix
-    {
-        display:flex;
-        flex-wrap:wrap;
-        width:100%;
-    }
-</style>*@
+        .akaFix
+        {
+            display:flex;
+            flex-wrap:wrap;
+            width:100%;
+        }
+    </style>*@
 
 @model ModelsClassLibrary.ViewModels.IndexListVM
 
-    @{int count = 0;}
+@{int count = 0;}
 <div class="panel panel-default ">
 
+@{    string returnurl = Request.Url.PathAndQuery;}
 
 
     <div class="akaFix panel-body ">
@@ -50,41 +51,96 @@
             <!-- TH1 -->
 
 
-    @*<div class="col-sm-1 col-sm-offset-1 col-md-1 col-md-offset-1 col-lg-1 col-lg-offset-1  img-thumbnail background-ltgrey " style="margin-bottom:10px">
-        <a href="@editPath" title="@item.FullName">
-            <div class="caption">
-                <h4>@item.ShortName</h4>
-                <p class="">
-                    @item.Description
-                </p>
-            </div>
-            <p class="">
-                <img src="@imagePath" alt="@item.ShortName" class="img-responsive  img-rounded ">
-            </p>
-        </a>
-        <div class="row">
-            <div class="text-center">@item.FullName</div>
-        </div>
+            @*<div class="col-sm-1 col-sm-offset-1 col-md-1 col-md-offset-1 col-lg-1 col-lg-offset-1  img-thumbnail background-ltgrey " style="margin-bottom:10px">
+                    <a href="@editPath" title="@item.FullName">
+                        <div class="caption">
+                            <h4>@item.ShortName</h4>
+                            <p class="">
+                                @item.Description
+                            </p>
+                        </div>
+                        <p class="">
+                            <img src="@imagePath" alt="@item.ShortName" class="img-responsive  img-rounded ">
+                        </p>
+                    </a>
+                    <div class="row">
+                        <div class="text-center">@item.FullName</div>
+                    </div>
 
-    </div>*@
+                </div>*@
 
     <div class="gallery col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-sm-3 col-sm-offset-1 col-xs-6  thumbnail" style="margin-bottom:10px">
         <a href="@editPath" title="@indexItemVM.FullName">
-            <div class="caption">
+            <div id="MyDiv" class="caption ">
                 <h4>@indexItemVM.ShortName</h4>
                 <p class="">
                     @indexItemVM.Description
                 </p>
             </div>
             <p class="">
-                <img src="@imagePath" alt="@indexItemVM.ShortName" class="img-responsive  img-rounded ">
+                <img src="@imagePath" alt="@indexItemVM.ShortName" class=" img-responsive  img-rounded ">
             </p>
         </a>
         <div class="row">
-            <div class="text-center">@indexItemVM.FullName</div>
+            @if (Model.User.IsNull())
+            {
+                <div class="text-center">@indexItemVM.FullName</div>
+            }
+            else
+            {
+                <div class="row fontHeavy">
+
+                    @if (Model.UserIsAdmin)
+                    {
+                        string url = "";
+
+                        switch (Model.Menu.MenuLevelEnum)
+                        {
+                            case MenuLevelENUM.unknown:
+                                break;
+                            case MenuLevelENUM.Level_1:
+                                url = Url.Action("Edit", "MenuPathMains", new { id = indexItemVM.Id, returnurl = returnurl }, null);
+                                break;
+                            case MenuLevelENUM.Level_2:
+                                url = Url.Action("Edit", "MenuPathMains", new { id = indexItemVM.Id, returnurl = returnurl }, null);
+                                break;
+                            case MenuLevelENUM.Level_3:
+                                url = Url.Action("Edit", "MenuPathMains", new { id = indexItemVM.Id, returnurl = returnurl }, null);
+                                break;
+
+                            case MenuLevelENUM.Level_4:
+                                url = Url.Action("Edit", "Products", new { id = indexItemVM.Id, returnurl = returnurl }, null);
+                                break;
+
+                            case MenuLevelENUM.Level_5:
+                                url = Url.Action("Edit", "ProductChilds", new { id = indexItemVM.Id, returnurl = returnurl }, null);
+                                break;
+                            default:
+                                break;
+                        }
+                        <div class="text-center ">
+                            <a href="@url">@indexItemVM.FullName</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center">@indexItemVM.FullName</div>
+
+                    }
+                </div>
+            }
         </div>
 
     </div>
+
+
+
+
+
+
+
+
+
 
 
         }

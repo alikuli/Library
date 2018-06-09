@@ -282,7 +282,7 @@
     <Compile Include="ModelsNS\ProductNS\ProductChildNS\ProductChild.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\IProductHasUploads.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\IAmMenu.cs" />
-    <Compile Include="ModelsNS\ProductNS\ProductNS\Product - UpdatePropertiesDuringModify.cs" />
+    <Compile Include="ModelsNS\ProductNS\ProductNS\UpdatePropertiesDuringModify.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\ProductAbstractNS\Dates.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\ProductAbstractNS\Navigation, Prod Cat and Parent.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\ProductAbstractNS\CheckedBoxes MenuPaths.cs" />

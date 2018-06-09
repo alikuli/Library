@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace AliKuli.Extentions
 {
@@ -12,12 +9,24 @@ namespace AliKuli.Extentions
             return obj == null;
         }
 
-        public static bool IsNullThrowException(this object obj, string errorMsg="")
+        public static bool IsNullThrowException(this object obj, string errorMsg = "")
         {
-            if(obj.IsNull())
+            if (obj.IsNull())
             {
                 if (errorMsg.IsNullOrWhiteSpace())
                     throw new Exception("Item is null.");
+                else
+                    throw new Exception(errorMsg);
+
+            }
+            return obj.IsNull();
+        }
+        public static bool IsNullThrowExceptionArgument(this object obj, string errorMsg = "")
+        {
+            if (obj.IsNull())
+            {
+                if (errorMsg.IsNullOrWhiteSpace())
+                    throw new ArgumentException("Argument is null.");
                 else
                     throw new Exception(errorMsg);
 
