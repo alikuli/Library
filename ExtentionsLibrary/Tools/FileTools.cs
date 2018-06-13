@@ -46,6 +46,31 @@ namespace AliKuli.ToolsNS
             return sList;
         }
 
+
+
+
+        public static string ReadTextFileToString(string fileNameWithPath)
+        {
+            string str = "";
+
+            try
+            {   // Open the text file using a stream reader.
+                using (StreamReader sr = new StreamReader(fileNameWithPath))
+                {
+                    // Read the stream to a string, and write the string to the console.
+                    str = sr.ReadToEnd();
+                    return str;
+                }
+            }
+            catch (Exception e)
+            {
+                string err = string.Format("The file named: '{0}'could not be read. {1}", fileNameWithPath, e.Message);
+                Console.WriteLine(err);
+                throw new Exception(err);
+            }
+
+        }
+
         //https://www.techrepublic.com/blog/how-do-i/how-do-i-use-c-to-upload-and-download-files-from-an-ftp-server/
         /// <summary>
         ///   setup a WebClient object and set the Credentials property to our login information then 
@@ -163,7 +188,7 @@ namespace AliKuli.ToolsNS
             string extention = Path.GetExtension(fileName);
             string name = CreateNewNameForFile(extention);
             string sourceFileWithPath = Path.Combine(sourcePath, fileName);
-            string destFileName = Path.Combine(targetPath,name);
+            string destFileName = Path.Combine(targetPath, name);
 
             File.Copy(sourceFileWithPath, destFileName);
 
@@ -192,7 +217,7 @@ namespace AliKuli.ToolsNS
             return System.IO.Directory.Exists(diretory);
 
         }
-        
+
         #endregion
         public static bool IsExistFile(string filepath)
         {
@@ -229,8 +254,33 @@ namespace AliKuli.ToolsNS
         /// <param name="filepath"></param>
         public static void Delete(string filepath)
         {
-            if(IsExistFile(filepath))
+            if (IsExistFile(filepath))
                 File.Delete(filepath);
+        }
+
+
+        /// <summary>
+        /// This parses a simple comma delimited list
+        /// 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static String[] ParseCsvCommaDelimited(string fileName)
+        {
+            string str = ReadTextFileToString(fileName);
+            if (str.IsNullOrWhiteSpace())
+                return null;
+
+            string[] words = str.Split(',');
+            return words;
+
+        }
+
+        public static string GetPath(string filename)
+        {
+            filename.IsNullOrWhiteSpaceThrowException("Filename is empty");
+            string filepath = System.Web.Hosting.HostingEnvironment.MapPath(filename);
+            return filepath;
         }
     }
 }

@@ -251,6 +251,7 @@
     <Compile Include="ProductNS\ProductChildNS\Uploads.cs" />
     <Compile Include="ProductNS\ProductNS\DeleteRelatedRecords.cs" />
     <Compile Include="ProductNS\ProductNS\MenuPathCheckedBoxes.cs" />
+    <Compile Include="ProductNS\ProductNS\EntityFactory.cs" />
     <Compile Include="ProductNS\ProductNS\Uploads.cs" />
     <Compile Include="ProductNS\ProductNS\Index.cs" />
     <Compile Include="ProductNS\ProductNS\SelectList.cs" />
@@ -378,6 +379,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="0 BusinessLayer\Content\" />
     <Folder Include="PlayersNS\CustomerNS\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

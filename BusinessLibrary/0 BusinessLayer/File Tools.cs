@@ -21,10 +21,6 @@ namespace UowLibrary
 
         }
 
-        public string GetMappedPath(string relativePath)
-        {
-            return HttpContext.Current.Server.MapPath(relativePath);
-        }
 
         /// <summary>
         /// this gets updated in checkIfFileExists

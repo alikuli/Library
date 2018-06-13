@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-
+﻿using AliKuli.Extentions;
+using AliKuli.ToolsNS;
+using System.Collections.Generic;
 namespace AliKuli.Tools
 {
     public class StringTools
@@ -19,6 +20,21 @@ namespace AliKuli.Tools
             }
 
             return s;
+        }
+        public static string[] GetStopWords()
+        {
+            string[] stopWords = FileTools.ParseCsvCommaDelimited(FileTools.GetPath(@"\Content\SetupData\stop-word-list.csv"));
+
+            //now make them all lower case...
+            stopWords.IsNullOrEmptyThrowException("Stop words not found.");
+
+            for (int i = 0; i < stopWords.Length; i++)
+            {
+                stopWords[i] = stopWords[i].ToLower().Trim();
+            }
+            return stopWords;
+
+
         }
 
     }

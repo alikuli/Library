@@ -83,10 +83,14 @@ namespace MarketPlace.Web6.Controllers.Abstract
         /// <param name="sortBy"></param>
         /// <param name="print"></param>
         /// <returns></returns>
-        public virtual async Task<ActionResult> Index(string id, string searchFor, string selectedId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", string returnUrl = "")
+        public virtual async Task<ActionResult> Index(string id, string searchFor, string selectedId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", string returnUrl = "", string isandForSearch = "", FormCollection fc = null)
         {
             try
             {
+                //if (fc["isandForSearch"].IsNull())
+                //    ViewBag.IsandForSearch = "And";
+                //else
+                //    ViewBag.IsandForSearch = fc["isandForSearch"][1];
 
                 //load parameters
                 TEntity dudEntity = Biz.Factory();
@@ -96,7 +100,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 bool isUserAdmin = _userBiz.IsUserAdmin(user);
 
                 //todo note... the company name is missing. We may need it.
-                ControllerIndexParams parms = new ControllerIndexParams(searchFor, selectedId, sortBy, menuLevelEnum, id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, dudEntity, user, productId, isUserAdmin, returnUrl);
+                ControllerIndexParams parms = new ControllerIndexParams(searchFor, selectedId, sortBy, menuLevelEnum, id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, dudEntity, user, productId, isUserAdmin, returnUrl, isandForSearch);
 
                 IndexListVM indexListVM = await indexEngine(parms);
 
@@ -186,18 +190,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
         #region Create
 
 
-        /// <summary>
-        /// I needed to add this because I would like the return from FileDoc Create to be sorted by file number.
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        public virtual RedirectToRouteResult Event_UpdateCreateRedicrectToAction(TEntity entity)
-        {
-            return RedirectToAction("Index", new { selectedId = entity.Id.ToString() });
-
-        }
         // GET: Countries/Create
-        public virtual ActionResult Create(MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", string returnUrl = "")
+        public virtual ActionResult Create(string isandForSearch, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", string returnUrl = "")
         {
             TEntity entity = Biz.EntityFactoryForHttpGet();
 
@@ -207,7 +201,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 bool isUserAdmin = _userBiz.IsUserAdmin(user);
 
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, entity.Id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, (ICommonWithId)entity, user, productId, isUserAdmin, returnUrl);
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, entity.Id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, (ICommonWithId)entity, user, productId, isUserAdmin, returnUrl, isandForSearch);
 
                 //we want to get the previous menu because when we do a back to list, the Index will automatically advance the menu to the next.
                 ViewBag.MenuLevelEnum = getPreviousMenuLevel(menuLevelEnum);
@@ -274,6 +268,19 @@ namespace MarketPlace.Web6.Controllers.Abstract
             }
         }
 
+
+
+        /// <summary>
+        /// I needed to add this because I would like the return from FileDoc Create to be sorted by file number.
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public virtual RedirectToRouteResult Event_UpdateCreateRedicrectToAction(TEntity entity)
+        {
+            return RedirectToAction("Index", new { selectedId = entity.Id.ToString() });
+
+        }
+
         private void loadUserIntoEntity(TEntity entity)
         {
             IHasUser iuser = entity as IHasUser;
@@ -297,14 +304,11 @@ namespace MarketPlace.Web6.Controllers.Abstract
         }
         //GetErrorsFromModelState();
 
-
-
-
         #endregion
 
         #region Edit
         // GET: Countries/Edit/5
-        public virtual async Task<ActionResult> Edit(string id, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string returnUrl = "")
+        public virtual async Task<ActionResult> Edit(string id, string isandForSearch = "", string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string returnUrl = "")
         {
             if (id == null)
             {
@@ -313,18 +317,20 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
             try
             {
-                TEntity entity = await Biz.FindAsync(id);
+                TEntity entity = await Biz.FindAsync(id) as TEntity;
                 if (entity == null)
                 {
                     ErrorsGlobal.Add(string.Format("Not found!"), MethodBase.GetCurrentMethod());
                     return HttpNotFound();
                 }
+
                 //ViewBag.MenuLevelEnum = menuLevelEnum;
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
+
                 ApplicationUser user = _userBiz.FindByUserName_UserManager(User.Identity.Name);
                 bool isUserAdmin = _userBiz.IsUserAdmin(user);
 
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, (ICommonWithId)entity, user, productId, isUserAdmin, returnUrl);
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, (ICommonWithId)entity, user, productId, isUserAdmin, returnUrl, isandForSearch);
 
                 ViewBag.ReturnUrl = returnUrl;
 
@@ -430,7 +436,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 ApplicationUser user = _userBiz.FindByUserName_UserManager(User.Identity.Name);
                 bool isUserAdmin = _userBiz.IsUserAdmin(user);
 
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, "", "", "", logoAddress, (ICommonWithId)entity, user, "", isUserAdmin, returnUrl);
+                string isandForSearchDummy = "";
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, "", "", "", logoAddress, (ICommonWithId)entity, user, "", isUserAdmin, returnUrl, isandForSearchDummy);
 
                 return Event_CreateViewAndSetupSelectList(parm);
 
@@ -473,8 +480,9 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
                 ApplicationUser user = _userBiz.FindByUserName_UserManager(User.Identity.Name);
                 bool isUserAdmin = _userBiz.IsUserAdmin(user);
+                string isandForSearchDummy = "";
 
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, MenuLevelENUM.unknown, id, "", "", "", logoAddress, (ICommonWithId)entity, user, "", isUserAdmin, returnUrl);
+                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, MenuLevelENUM.unknown, id, "", "", "", logoAddress, (ICommonWithId)entity, user, "", isUserAdmin, returnUrl, isandForSearchDummy);
 
                 return Event_CreateViewAndSetupSelectList(parm);
 

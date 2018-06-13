@@ -266,6 +266,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Controllers\Controller.cd" />
+    <Content Include="Content\stop-word-list.csv" />
+    <Content Include="Content\SetupData\stop-word-list.csv" />
     <None Include="Properties\PublishProfiles\File.pubxml" />
     <None Include="Properties\PublishProfiles\FTP Comsats.pubxml" />
     <None Include="Properties\PublishProfiles\HostPK.pubxml" />

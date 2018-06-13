@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using AliKuli.Tools;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelClassLibrary.MigraDocNS;
@@ -9,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UserModels;
-
 namespace ModelsClassLibrary.ViewModels
 {
     /// <summary>
@@ -18,6 +18,8 @@ namespace ModelsClassLibrary.ViewModels
     public class IndexListVM
     {
 
+        string[] _listOfStopWords;
+        string[] _searchWords;
         //public IndexListVM(string userName, string nameInput1, string nameInput2, string nameInput3)
         //    : this()
         //{
@@ -32,16 +34,30 @@ namespace ModelsClassLibrary.ViewModels
 
         //}
 
-        public IndexListVM(SortOrderENUM sortOrderEnum, string searchFor, string selectedId, ICommonWithId dudEntity, string webCompanyName, string logoaddress, ApplicationUser user, bool userIsAdmin, string returnUrl)
+        public IndexListVM(SortOrderENUM sortOrderEnum, string searchFor, string selectedId, ICommonWithId dudEntity, string webCompanyName, string logoaddress, ApplicationUser user, bool userIsAdmin, string returnUrl, bool isAndForSearch)
+        {
+            initialize(sortOrderEnum, searchFor, selectedId, dudEntity, webCompanyName, logoaddress, user, userIsAdmin, returnUrl, isAndForSearch);
+        }
+
+
+        public IndexListVM(ControllerIndexParams p)
+            : this(p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.User, p.UserIsAdmin, p.ReturnUrl, p.IsAndForSearch)
+        {
+        }
+
+        private void initialize(SortOrderENUM sortOrderEnum, string searchFor, string selectedId, ICommonWithId dudEntity, string webCompanyName, string logoaddress, ApplicationUser user, bool userIsAdmin, string returnUrl, bool isAndForSearch)
         {
             SortOrderEnum = sortOrderEnum;
+
             SearchFor = searchFor;
+            IsAndForSearch = isAndForSearch;
+
             DudEntity = dudEntity;
             Data = new List<IndexItemVM>();
             Heading = new Headings();
             //this creates the incoming description. Otherwise it was only being created everytime we 
             //sorted... that is still happening.
-            
+
             Menu = new MenuModel();
             Menu.ReturnUrl = returnUrl;
 
@@ -65,36 +81,34 @@ namespace ModelsClassLibrary.ViewModels
             User = user;
             UserIsAdmin = userIsAdmin;
 
+            //setup.
+            _listOfStopWords = StringTools.GetStopWords();
+            _searchWords = getSearchWords();
         }
 
-        public IndexListVM(ControllerIndexParams p)
-            : this(p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.User, p.UserIsAdmin, p.ReturnUrl)
+        public void Load(ControllerIndexParams p)
         {
-            //note... if you change the parameters for this... remember to change the parameters for Load below.
+            //SortOrderEnum = p.SortBy;
+            //SearchFor = p.SearchFor;
+            //SelectedId = p.SelectedId;
+            //DudEntity = p.DudEntity;
+            //User = p.User;
+            ////Menu = new MenuModel();
+
+            ////Menu.MenuLevelEnum = parameters.Menu.MenuLevel;
+
+
+            //if (!p.LogoAddress.IsNullOrWhiteSpace())
+            //    Logo = new Logo(p.LogoAddress);
+            //else
+            //    Logo = new Logo();
+            //UserIsAdmin = p.UserIsAdmin;
+            //Menu.ReturnUrl = p.ReturnUrl;
+            //IsAndForSearch = p.IsAndForSearch;
+            string webCompany = "";
+            initialize(p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, webCompany, p.LogoAddress, p.User, p.UserIsAdmin, p.ReturnUrl, p.IsAndForSearch);
+
         }
-
-        public void Load(ControllerIndexParams parameters)
-        {
-            SortOrderEnum = parameters.SortBy;
-            SearchFor = parameters.SearchFor;
-            SelectedId = parameters.SelectedId;
-            DudEntity = parameters.DudEntity;
-            User = parameters.User;
-            //Menu = new MenuModel();
-
-            //Menu.MenuLevelEnum = parameters.Menu.MenuLevel;
-
-
-            if (!parameters.LogoAddress.IsNullOrWhiteSpace())
-                Logo = new Logo(parameters.LogoAddress);
-            else
-                Logo = new Logo();
-
-        }
-        //public IndexListVM(ICommonWithId dudEntity)
-        //    : this(SortOrderENUM.Item1_Asc, "", "", dudEntity,"", null)
-        //{
-        //}
 
         public Logo Logo { get; set; }
         public PdfHeaderInfo PdfHeaderInfo { get; set; }
@@ -184,6 +198,53 @@ namespace ModelsClassLibrary.ViewModels
         //#endregion
         public string SearchFor { get; set; }
 
+        private string[] listOfStopWords
+        {
+            get
+            {
+                return _listOfStopWords;
+            }
+        }
+        public bool IsAndForSearch { get; set; }
+        private string[] searchWords
+        {
+            get
+            {
+
+                return _searchWords;
+            }
+        }
+
+        /// <summary>
+        /// This makes an array of search words.
+        /// </summary>
+        /// <returns></returns>
+        private string[] getSearchWords()
+        {
+            if (SearchFor.IsNullOrWhiteSpace())
+                return null;
+
+
+
+            string[] lstOfWordsEntered = SearchFor.Split(' ');
+
+
+            if (lstOfWordsEntered.IsNullOrEmpty())
+                return null;
+
+            //Now exclude stop-Words.
+            List<string> lstOfSearchWords = new List<string>();
+
+            foreach (var word in lstOfWordsEntered)
+            {
+                if (listOfStopWords.Contains(word.ToLower()))
+                    continue;
+                lstOfSearchWords.Add(word);
+            }
+
+            return lstOfSearchWords.ToArray();
+
+        }
         public string NoOfRecords
         {
             get
@@ -191,7 +252,7 @@ namespace ModelsClassLibrary.ViewModels
                 long noOfRecs = 0;
 
                 if (!DataSortedAndFiltered.IsNullOrEmpty())
-                    noOfRecs = DataSortedAndFiltered.Count;
+                    noOfRecs = DataSortedAndFiltered.Count();
 
                 return string.Format("{0} {1}", noOfRecs.ToString("N00"), noOfRecs == 1 ? Heading.RecordName : Heading.RecordNamePlural);
             }
@@ -314,21 +375,18 @@ namespace ModelsClassLibrary.ViewModels
         public Headings Heading { get; set; }
         public string WebCompanyName { get; set; }
 
-        #region Sorting...
+
+
+        #region Data Related
 
         /// <summary>
         /// This is data filtered by SearchFor and sorted...
         /// </summary>
-        public List<IndexItemVM> DataSortedAndFiltered
+        public IQueryable<IndexItemVM> DataSortedAndFiltered
         {
             get
             {
-                if (SearchFor.IsNullOrWhiteSpace())
-                    return SortedData();
-
-                List<IndexItemVM> filteredData = SortedData().ToList().Where(x => x.FullName.ToLower().Contains(SearchFor.ToLower())).ToList();
-                return filteredData;
-
+                return SortedAndFilteredData();
             }
         }
 
@@ -348,35 +406,156 @@ namespace ModelsClassLibrary.ViewModels
         /// </summary>
         private List<IndexItemVM> Data { get; set; }
 
-        private List<IndexItemVM> Sorted_Ascending_Input1()
+        private IQueryable<IndexItemVM> DataFiltered
         {
-            if (!Data.IsNullOrEmpty())
+            get
+            {
+                if (Data.IsNullOrEmpty())
+                    return null;
+
+                if (searchWords.IsNullOrEmpty())
+                    return Data.AsQueryable();
+
+                var dataFiltered = Data.AsQueryable();
+
+                if (IsAndForSearch)
+                    dataFiltered = doAndSearch(dataFiltered);
+                else
+                    dataFiltered = doOrSearch(dataFiltered);
+
+                return dataFiltered;
+            }
+        }
+
+        private IQueryable<IndexItemVM> doOrSearch(IQueryable<IndexItemVM> dataFiltered)
+        {
+            //does up to 6 ors
+            switch (searchWords.Count())
+            {
+                case 1: dataFiltered = dataFiltered.Where(x =>
+                    x.Name.ToLower().Contains(searchWords[0].ToLower()));
+                    break;
+                case 2: dataFiltered = dataFiltered.Where(x =>
+                    x.Name.ToLower().Contains(searchWords[0].ToLower()) ||
+                    x.Name.ToLower().Contains(searchWords[1].ToLower()));
+                    break;
+
+                case 3: dataFiltered = dataFiltered.Where(x =>
+                    x.Name.ToLower().Contains(searchWords[0].ToLower()) ||
+                    x.Name.ToLower().Contains(searchWords[1].ToLower()) ||
+                    x.Name.ToLower().Contains(searchWords[2].ToLower()));
+                    break;
+
+                case 4: dataFiltered = dataFiltered.Where(x =>
+                    x.Name.ToLower().Contains(searchWords[0].ToLower()) ||
+                    x.Name.ToLower().Contains(searchWords[1].ToLower()) ||
+                    x.Name.ToLower().Contains(searchWords[2].ToLower()) ||
+                    x.Name.ToLower().Contains(searchWords[3].ToLower()));
+                    break;
+
+                case 5: dataFiltered = dataFiltered.Where(x =>
+                    x.Name.ToLower().Contains(searchWords[0].ToLower()) ||
+                    x.Name.ToLower().Contains(searchWords[1].ToLower()) ||
+                    x.Name.ToLower().Contains(searchWords[2].ToLower()) ||
+                    x.Name.ToLower().Contains(searchWords[3].ToLower()) ||
+                    x.Name.ToLower().Contains(searchWords[4].ToLower()));
+                    break;
+
+                default:
+                    dataFiltered = dataFiltered.Where(x =>
+                        x.Name.ToLower().Contains(searchWords[0].ToLower()) ||
+                        x.Name.ToLower().Contains(searchWords[1].ToLower()) ||
+                        x.Name.ToLower().Contains(searchWords[2].ToLower()) ||
+                        x.Name.ToLower().Contains(searchWords[3].ToLower()) ||
+                        x.Name.ToLower().Contains(searchWords[4].ToLower()) ||
+                        x.Name.ToLower().Contains(searchWords[5].ToLower()));
+                    break;
+            }
+            return dataFiltered;
+        }
+
+
+        private IQueryable<IndexItemVM> doAndSearch(IQueryable<IndexItemVM> dataFiltered)
+        {
+            //does up to 6 ors
+            switch (searchWords.Count())
+            {
+
+                case 1: dataFiltered = dataFiltered.Where(x =>
+                    x.Name.ToLower().Contains(searchWords[0].ToLower()));
+                    break;
+                case 2: dataFiltered = dataFiltered.Where(x =>
+                    x.Name.ToLower().Contains(searchWords[0].ToLower()) &&
+                    x.Name.ToLower().Contains(searchWords[1].ToLower()));
+                    break;
+
+                case 3: dataFiltered = dataFiltered.Where(x =>
+                    x.Name.ToLower().Contains(searchWords[0].ToLower()) &&
+                    x.Name.ToLower().Contains(searchWords[1].ToLower()) &&
+                    x.Name.ToLower().Contains(searchWords[2].ToLower()));
+                    break;
+
+                case 4: dataFiltered = dataFiltered.Where(x =>
+                    x.Name.ToLower().Contains(searchWords[0].ToLower()) &&
+                    x.Name.ToLower().Contains(searchWords[1].ToLower()) &&
+                    x.Name.ToLower().Contains(searchWords[2].ToLower()) &&
+                    x.Name.ToLower().Contains(searchWords[3].ToLower()));
+                    break;
+
+                case 5: dataFiltered = dataFiltered.Where(x =>
+                    x.Name.ToLower().Contains(searchWords[0].ToLower()) &&
+                    x.Name.ToLower().Contains(searchWords[1].ToLower()) &&
+                    x.Name.ToLower().Contains(searchWords[2].ToLower()) &&
+                    x.Name.ToLower().Contains(searchWords[3].ToLower()) &&
+                    x.Name.ToLower().Contains(searchWords[4].ToLower()));
+                    break;
+
+                default:
+                    dataFiltered = dataFiltered.Where(x =>
+                        x.Name.ToLower().Contains(searchWords[0].ToLower()) &&
+                        x.Name.ToLower().Contains(searchWords[1].ToLower()) &&
+                        x.Name.ToLower().Contains(searchWords[2].ToLower()) &&
+                        x.Name.ToLower().Contains(searchWords[3].ToLower()) &&
+                        x.Name.ToLower().Contains(searchWords[4].ToLower()) &&
+                        x.Name.ToLower().Contains(searchWords[5].ToLower()));
+                    break;
+            }
+            return dataFiltered;
+        }
+        #endregion
+        #region Sorting...
+
+
+
+        private IQueryable<IndexItemVM> Sorted_Ascending_Input1()
+        {
+            if (!DataFiltered.IsNullOrEmpty())
             {
                 //Heading.SortOrderDescription = "Sorted by " + NameInput1 + " ASCENDING";
                 CreateSortOrderDescription(SortOrderEnum);
-                return Data.OrderBy(x => x.Input1SortString).ToList();
+                return DataFiltered.OrderBy(x => x.Input1SortString);
             }
             return null;
         }
 
-        private List<IndexItemVM> Sorted_Ascending_Input2()
+        private IQueryable<IndexItemVM> Sorted_Ascending_Input2()
         {
-            if (!Data.IsNullOrEmpty())
+            if (!DataFiltered.IsNullOrEmpty())
             {
                 //Heading.SortOrderDescription = "Sorted by " + NameInput2 + " ASCENDING";
                 CreateSortOrderDescription(SortOrderEnum);
-                return Data.OrderBy(x => x.Input2SortString).ToList();
+                return DataFiltered.OrderBy(x => x.Input2SortString);
             }
             return null;
         }
 
-        private List<IndexItemVM> Sorted_Ascending_Input3()
+        private IQueryable<IndexItemVM> Sorted_Ascending_Input3()
         {
-            if (!Data.IsNullOrEmpty())
+            if (!DataFiltered.IsNullOrEmpty())
             {
                 //Heading.SortOrderDescription = "Sorted by " + NameInput3 + " ASCENDING";
                 CreateSortOrderDescription(SortOrderEnum);
-                return Data.OrderBy(x => x.Input3SortString).ToList();
+                return DataFiltered.OrderBy(x => x.Input3SortString);
             }
             return null;
         }
@@ -384,37 +563,37 @@ namespace ModelsClassLibrary.ViewModels
 
 
 
-        private List<IndexItemVM> Sorted_Decending_Input1()
+        private IQueryable<IndexItemVM> Sorted_Decending_Input1()
         {
-            if (!Data.IsNullOrEmpty())
+            if (!DataFiltered.IsNullOrEmpty())
             {
                 //Heading.SortOrderDescription = "Sorted by " + NameInput1 + " DECENDING";
                 CreateSortOrderDescription(SortOrderEnum);
-                return Data.OrderByDescending(x => x.Input1SortString).ToList();
+                return DataFiltered.OrderByDescending(x => x.Input1SortString);
             }
             return null;
         }
 
-        private List<IndexItemVM> Sorted_Decending_Input2()
+        private IQueryable<IndexItemVM> Sorted_Decending_Input2()
         {
-            if (!Data.IsNullOrEmpty())
+            if (!DataFiltered.IsNullOrEmpty())
             {
                 //Heading.SortOrderDescription = "Sorted by " + NameInput2 + " DECENDING";
                 CreateSortOrderDescription(SortOrderEnum);
-                return Data.OrderByDescending(x => x.Input2SortString).ToList();
+                return DataFiltered.OrderByDescending(x => x.Input2SortString);
 
             }
 
             return null;
         }
 
-        private List<IndexItemVM> Sorted_Decending_Input3()
+        private IQueryable<IndexItemVM> Sorted_Decending_Input3()
         {
-            if (!Data.IsNullOrEmpty())
+            if (!DataFiltered.IsNullOrEmpty())
             {
                 //Heading.SortOrderDescription = "Sorted by " + NameInput3 + " DECENDING";
                 CreateSortOrderDescription(SortOrderEnum);
-                return Data.OrderByDescending(x => x.Input3SortString).ToList();
+                return DataFiltered.OrderByDescending(x => x.Input3SortString);
 
             }
 
@@ -431,7 +610,7 @@ namespace ModelsClassLibrary.ViewModels
         /// This is sorted data. To control the sorting, set the SortOrderEnum property
         /// </summary>
         /// <returns></returns>
-        public List<IndexItemVM> SortedData()
+        public IQueryable<IndexItemVM> SortedAndFilteredData()
         {
             switch (SortOrderEnum)
             {
@@ -605,6 +784,6 @@ namespace ModelsClassLibrary.ViewModels
         public ApplicationUser User { get; set; }
 
         public bool UserIsAdmin { get; set; }
-        
+
     }
 }

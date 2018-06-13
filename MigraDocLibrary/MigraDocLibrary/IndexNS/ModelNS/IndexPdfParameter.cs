@@ -4,6 +4,8 @@ using ModelClassLibrary.MigraDocNS;
 using ModelsClassLibrary.SharedNS;
 using ModelsClassLibrary.ViewModels;
 using System.Collections.Generic;
+using System.Linq;
+
 namespace MigraDocLibrary.IndexNS
 {
     public class IndexPdfParameter
@@ -46,7 +48,15 @@ namespace MigraDocLibrary.IndexNS
 
 
         }
-        public IndexPdfParameter(Logo logo, PdfHeaderInfo pdfHeaderInfo, string webCompanyName, List<IndexItemVM> dataSortedAndFiltered, Headings headings, string searchString, string sortString, string downloadfilename)
+        public IndexPdfParameter(
+            Logo logo, 
+            PdfHeaderInfo pdfHeaderInfo, 
+            string webCompanyName, 
+            IQueryable<IndexItemVM> dataSortedAndFiltered, 
+            Headings headings, 
+            string searchString, 
+            string sortString, 
+            string downloadfilename)
         {
             Logo = logo;
             PdfHeaderInfo = pdfHeaderInfo;
@@ -65,7 +75,7 @@ namespace MigraDocLibrary.IndexNS
         public PdfHeaderInfo PdfHeaderInfo { get; set; }
         public string WebCompanyName { get; set; }
 
-        public List<IndexItemVM> DataSortedAndFiltered { get; set; }
+        public IQueryable<IndexItemVM> DataSortedAndFiltered { get; set; }
 
         public Headings Headings { get; set; }
 

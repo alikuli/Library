@@ -72,8 +72,8 @@ namespace UowLibrary
 
             if (indexListVM.IsNull())
                 indexListVM = new IndexListVM(parameters);
-            else
-                indexListVM.Load(parameters);
+            //else
+            //    indexListVM.Load(parameters);
 
             return indexListVM;
         }

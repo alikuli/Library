@@ -36,24 +36,6 @@
 
 </div>
 
-@*Heading
-    <h3>
-        @if (!Model.Heading.Main.IsNullOrWhiteSpace())
-        {
-            @Model.Heading.Main.ToString().ToSentence().ToTitleCase()
-
-        }
-
-        <span>
-
-            @if (!Model.Heading.Small.IsNullOrWhiteSpace())
-            {
-                <small> - @Model.Heading.Small</small>
-                <small>@Model.Heading.SortOrderDescription.ToString().ToTitleSentance()</small>
-            }
-        </span>
-    </h3>
-    Heading End*@
 
 <div >
     <div class="panel-group ">
@@ -66,16 +48,6 @@
                             <a data-toggle="collapse" href="#collapse1">
                                 <strong>
                                     <small>@Model.Heading.SortOrderDescription.ToString().ToTitleSentance()</small>
-                                    @*@Html.DisplayFor(model => model.Heading.Column)
-                    <span>
-
-                        @if (!Model.Heading.Small.IsNullOrWhiteSpace())
-                        {
-                            <small> - @Model.Heading.Small</small>
-                            <small>@Model.Heading.SortOrderDescription.ToString().ToTitleSentance()</small>
-                        }
-                    </span>*@
-
                                 </strong>
                             </a>
 
@@ -84,16 +56,31 @@
                             <div>
                                 @using (Html.BeginForm())
                                 {
+                                    //string isandForSearch = "";
                                     <span>
                                         @Html.TextBox("searchFor", @Model.SearchFor as string, new { @placeholder = "Search/Find", size=12 })
                                         <button type="submit" class="btn btn-info btn-sm">
                                             <span class="glyphicon glyphicon-search"></span> 
                                         </button>
 
-                                        @*<input type="submit" value="Find" class="btn-info" />*@
                                     </span>
                                     <br />
+                                    
+                                        
+                                    <div class="col-xs-4">
+                                        @Html.RadioButton("isandForSearch", "And",true, new { id = "IsAnd" })
+                                        <label for="IsAnd" , data-toggle="tooltip" , title="Use AND if you want both all the search words to be present"><span><span>And</span></span></label>
+
+                                    </div>
+                                
+                                    
+                                    <div class="col-xs-4">
+                                        @Html.RadioButton("isandForSearch", "Or", false, new { id = "IsOr"})
+                                        <label for="IsOr", data-toggle ="tooltip" , title="Use OR if you want to find any occourance of any of the search words"><span><span>OR</span></span></label>
+                                    </div>
+
                                 }
+                                
 
                             </div>
 
@@ -103,12 +90,8 @@
                             <div>
                                 @if (Model.Show.Create)
                                 {
-                                    //Session["cahttps://www.facebook.com/messages/t/560129803t1id"] = Model.Menu.MenuPath1_Id as string;
-                                    //Session["cat2id"] = Model.Menu.MenuPath2_Id as string;
-                                    //Session["cat3id"] = Model.Menu.MenuPath3_Id as string;
 
                                     <div>
-                                        @*                                            @{string name = "CREATE - " + @Model.Heading.Main.ToString().ToSentence().ToTitleCase();}*@
                                         @{string name = "CREATE";}
                                         @Html.ActionLink(@name, "Create", new { menuLevelEnum = Model.Menu.MenuLevelEnum, menuPath1Id = Model.Menu.MenuPath1_Id, menuPath2Id = Model.Menu.MenuPath2_Id, menuPath3Id = Model.Menu.MenuPath3_Id }, new { @class = "text-danger btn btn-success btn-sm" })
                                     </div>
@@ -203,7 +186,7 @@
 
         <div class="container">
             @*<div class="panel-body">*@
-            @if (!Model.SortedData().IsNullOrEmpty())
+            @if (!Model.SortedAndFilteredData().IsNullOrEmpty())
             {
 
                 <div id="indexmiddlepart">

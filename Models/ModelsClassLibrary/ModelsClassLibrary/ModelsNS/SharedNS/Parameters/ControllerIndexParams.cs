@@ -19,7 +19,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         }
 
         readonly bool _isUserAdmin;
-        public ControllerIndexParams(string searchFor, string selectedId, SortOrderENUM sortBy, MenuLevelENUM menuLevel, string id, string menuPath1Id, string menuPath2Id, string menuPath3Id, string filepath, ICommonWithId entity, ApplicationUser user, string productId, bool isUserAdmin, string returnUrl)
+        public ControllerIndexParams(string searchFor, string selectedId, SortOrderENUM sortBy, MenuLevelENUM menuLevel, string id, string menuPath1Id, string menuPath2Id, string menuPath3Id, string filepath, ICommonWithId entity, ApplicationUser user, string productId, bool isUserAdmin, string returnUrl, string isandForSearch)
         {
             Entity = entity;
             SearchFor = searchFor;
@@ -31,8 +31,9 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             User = user;
             _isUserAdmin = isUserAdmin;
             ReturnUrl = returnUrl;
+            IsAndForSearch = isandForSearch == "And";
         }
-
+        public bool IsAndForSearch { get; set; }
         public ICommonWithId Entity { get; set; }
         public ICommonWithId DudEntity { get; set; }
         public string SearchFor { get; set; }
