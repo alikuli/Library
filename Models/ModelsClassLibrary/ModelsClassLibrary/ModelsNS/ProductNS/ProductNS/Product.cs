@@ -1,14 +1,23 @@
-﻿using ModelsClassLibrary.MenuNS;
+﻿using AliKuli.Extentions;
+using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
+using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 using ModelsClassLibrary.SharedNS;
-//using ModelsClassLibrary.Models.DiscountNS;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
-    public partial class Product : ProductAbstract, IAmMenu
+    public partial class Product : ProductAbstract, IProduct
     {
+
+        public Product()
+        {
+            MenuManager = new MenuManager(Id);
+        }
 
         [NotMapped]
         public virtual List<CheckBoxItem> CheckedBoxesList { get; set; }
@@ -33,6 +42,18 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         public override EnumLibrary.EnumNS.ClassesWithRightsENUM ClassNameForRights()
         {
             return EnumLibrary.EnumNS.ClassesWithRightsENUM.Product;
+        }
+
+        [NotMapped]
+        public IMenuManager MenuManager { get; set; }
+
+
+        public bool IsAutomobile
+        {
+            get
+            {
+                return !(this as ProductAutomobileVM).IsNull();
+            }
         }
 
     }

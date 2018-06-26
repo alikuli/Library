@@ -197,6 +197,7 @@
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductChildsController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductsController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductIdentifiersController.cs" />
+    <Compile Include="Controllers\MyControllersNS\ProductNS\ProductVmNS\ProductAutomobileVMsController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomVolumesController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomQuantitiesController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomWeightsController.cs" />
@@ -391,6 +392,8 @@
     <Content Include="Views\ProductChilds\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\Products\_ProductChildren.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CheckedBoxesList.cshtml" />
+    <Content Include="Views\ProductAutomobileVMs\_AutomobileVM.cshtml" />
+    <Content Include="Views\ProductAutomobileVMs\_FieldsOnlyEditFormat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

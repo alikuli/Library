@@ -1,6 +1,6 @@
 ﻿using ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS;
+using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ProductAbstractNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using System.Collections.Generic;
 
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
@@ -13,7 +13,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
     /// The children will be owned by the Seller for sale, By Buyer for purchase. Only the owner will be able to edit them.
     /// 
     /// </summary>
-    public abstract partial class ProductAbstract : CommonWithId, IProductHasUploads
+    public abstract partial class ProductAbstract : CommonWithId, IProductHasUploads, IProductAbstract
     {
         public ProductAbstract()
         {
@@ -24,7 +24,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         }
 
-
+        
 
         //string MiscFilesLocation()
         //{

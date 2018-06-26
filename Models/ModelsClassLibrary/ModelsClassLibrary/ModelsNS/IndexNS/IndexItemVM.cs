@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,27 +9,34 @@ namespace ModelsClassLibrary.ViewModels
     public class IndexItemVM : IIndexListItems
     {
         private const int MAX_LENGTH_ALLOWED = 100;
-        public IndexItemVM(string id, string name, string input1SortStr, bool isEditLocked, string description)
+        //public IndexItemVM(string id, string name, string input1SortStr, bool isEditLocked, string description)
+        //{
+        //    Id = id;
+        //    Name = name;
+        //    Input1SortString = input1SortStr;
+        //    IsEditLocked = isEditLocked;
+        //    Description = description;
+        //    PrintLineNumber = "";
+        //    //Menu = new Menu();
+        //}
+
+        //public IndexItemVM(string id, string name, string input1SortStr, string input2SortStr, bool isEditLocked, string description)
+        //    : this(id, name, input1SortStr, isEditLocked, description)
+        //{
+        //    Input2SortString = input2SortStr;
+        //}
+
+        public IndexItemVM(string id, string name, string input1SortStr, string input2SortStr, string input3SortStr, bool isEditLocked, string description)
         {
+            Input3SortString = input3SortStr;
+            Input2SortString = input2SortStr;
             Id = id;
             Name = name;
             Input1SortString = input1SortStr;
             IsEditLocked = isEditLocked;
             Description = description;
             PrintLineNumber = "";
-            Menu = new MenuIndexItem();
-        }
-
-        public IndexItemVM(string id, string name, string input1SortStr, string input2SortStr, bool isEditLocked, string description)
-            : this(id, name, input1SortStr, isEditLocked, description)
-        {
-            Input2SortString = input2SortStr;
-        }
-
-        public IndexItemVM(string id, string name, string input1SortStr, string input2SortStr, string input3SortStr, bool isEditLocked, string description)
-            : this(id, name, input1SortStr, input2SortStr, isEditLocked, description)
-        {
-            Input3SortString = input3SortStr;
+            MenuManager = new MenuManager(id);
         }
         public string Id { get; set; }
 
@@ -79,7 +87,7 @@ namespace ModelsClassLibrary.ViewModels
             return FullName;
         }
 
-        public MenuIndexItem Menu { get; set; }
+        public MenuManager MenuManager { get; set; }
 
         #region Bools
         public bool IsImageThere
@@ -96,6 +104,7 @@ namespace ModelsClassLibrary.ViewModels
         public bool AllowEdit { get { return !IsEditLocked; } }
 
         public string PrintLineNumber { get; set; }
+
 
 
 

@@ -13,141 +13,140 @@
 
 @model ModelsClassLibrary.ViewModels.IndexListVM
 
-@{int count = 0;}
+@{
+    int count = 0;
+    string returnurl = Request.Url.PathAndQuery;
+    string controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+    
+    //these are the edit variables
+    string menuPathMainId = Model.MenuManager.MenuPathMainId;
+    string productId = Model.MenuManager.ProductId;
+    string productChildId = Model.MenuManager.ProductChildId;
+
+}
 <div class="panel panel-default ">
 
-@{    string returnurl = Request.Url.PathAndQuery;}
 
 
     <div class="akaFix panel-body ">
         @foreach (ModelsClassLibrary.ViewModels.IndexItemVM indexItemVM in Model.DataSortedAndFiltered)
         {
 
+            string imagePath = "";
+            string editPath = "";
             string alert = (@Model.SelectedIdMatchesThis(indexItemVM.Id) ? "alert-info " : " ");
             string alertFont = (@Model.SelectedIdMatchesThis(indexItemVM.Id) ? " text-danger " : " ");
+
             if (count % 2 == 0)
             {
                 alert += " background-ltgrey ";
             }
 
-            var imagePath = "";
-            var editPath = "";
-            var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+
+
             if (indexItemVM.IsImageThere)
             {
                 imagePath = Url.Content(indexItemVM.ImageAddressStr);
             }
+
+
             //this has to be updated for the menu
-            if (Model.Menu.IsMenu)
+            if (Model.MenuManager.IsMenu)
             {
-                //Note the Menu Ids are coming from the indexItemVM and NOT IndexListVM
-                editPath = Url.Action("index", controllerName, new { id = indexItemVM.Id, menuPath1Id = indexItemVM.Menu.MenuPath1Id, menuPath2Id = indexItemVM.Menu.MenuPath2Id, menuPath3Id = indexItemVM.Menu.MenuPath3Id, menuLevelEnum = Model.Menu.MenuLevelEnum, productId = indexItemVM.Id });
+                //Note the Menu Ids are coming from the indexItemVM and NOT IndexListVM. I changed this! The Menu paths will be the same!
+                //In level 1. ProductId is not equal to indexItemVm.Id
+                editPath = Url.Action("index", controllerName, new { id = indexItemVM.Id, menuPathMainId = menuPathMainId, menuLevelEnum = Model.MenuManager.MenuLevelEnum, productId = productId});
 
             }
             else
             {
-                editPath = Url.Action("Edit", controllerName, new { id = indexItemVM.Id });
+
+
+
+
+                editPath = Url.Action("Edit", controllerName, new { id = indexItemVM.Id});
             }
-            <!-- TH1 -->
 
-
-            @*<div class="col-sm-1 col-sm-offset-1 col-md-1 col-md-offset-1 col-lg-1 col-lg-offset-1  img-thumbnail background-ltgrey " style="margin-bottom:10px">
-                    <a href="@editPath" title="@item.FullName">
-                        <div class="caption">
-                            <h4>@item.ShortName</h4>
-                            <p class="">
-                                @item.Description
-                            </p>
-                        </div>
+            <div class="gallery col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-sm-3 col-sm-offset-1 col-xs-6  thumbnail" style="margin-bottom:10px">
+                <a href="@editPath" title="@indexItemVM.FullName">
+                    <div id="MyDiv" class="caption ">
+                        <h4>@indexItemVM.ShortName</h4>
                         <p class="">
-                            <img src="@imagePath" alt="@item.ShortName" class="img-responsive  img-rounded ">
+                            @indexItemVM.Description
                         </p>
-                    </a>
-                    <div class="row">
-                        <div class="text-center">@item.FullName</div>
                     </div>
-
-                </div>*@
-
-    <div class="gallery col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-sm-3 col-sm-offset-1 col-xs-6  thumbnail" style="margin-bottom:10px">
-        <a href="@editPath" title="@indexItemVM.FullName">
-            <div id="MyDiv" class="caption ">
-                <h4>@indexItemVM.ShortName</h4>
-                <p class="">
-                    @indexItemVM.Description
-                </p>
-            </div>
-            <p class="">
-                <img src="@imagePath" alt="@indexItemVM.ShortName" class=" img-responsive  img-rounded ">
-            </p>
-        </a>
-        <div class="row">
-            @if (Model.User.IsNull())
-            {
-                <div class="text-center">@indexItemVM.FullName</div>
-            }
-            else
-            {
-                <div class="row fontHeavy">
-
-                    @if (Model.UserIsAdmin)
+                    <p class="">
+                        <img src="@imagePath" alt="@indexItemVM.ShortName" class=" img-responsive  img-rounded ">
+                    </p>
+                </a>
+                <div class="row">
+                    @if (Model.User.IsNull())
                     {
-                        string url = "";
-
-                        switch (Model.Menu.MenuLevelEnum)
-                        {
-                            case MenuLevelENUM.unknown:
-                                break;
-                            case MenuLevelENUM.Level_1:
-                                url = Url.Action("Edit", "MenuPathMains", new { id = indexItemVM.Id, returnurl = returnurl }, null);
-                                break;
-                            case MenuLevelENUM.Level_2:
-                                url = Url.Action("Edit", "MenuPathMains", new { id = indexItemVM.Id, returnurl = returnurl }, null);
-                                break;
-                            case MenuLevelENUM.Level_3:
-                                url = Url.Action("Edit", "MenuPathMains", new { id = indexItemVM.Id, returnurl = returnurl }, null);
-                                break;
-
-                            case MenuLevelENUM.Level_4:
-                                url = Url.Action("Edit", "Products", new { id = indexItemVM.Id, returnurl = returnurl }, null);
-                                break;
-
-                            case MenuLevelENUM.Level_5:
-                                url = Url.Action("Edit", "ProductChilds", new { id = indexItemVM.Id, returnurl = returnurl }, null);
-                                break;
-                            default:
-                                break;
-                        }
-                        <div class="text-center ">
-                            <a href="@url">@indexItemVM.FullName</a>
-                        </div>
+                        <div class="text-center">@indexItemVM.FullName</div>
                     }
                     else
                     {
-                        <div class="text-center">@indexItemVM.FullName</div>
+                        <div class="row fontHeavy">
+                            @if (Model.UserIsAdmin)
+                            {
+                                string url = "";
 
+                                //if (Model.MenuManager.IsMenu)
+                                //{
+                                //    if (Model.MenuManager.MenuLevelEnum != MenuLevelENUM.unknown)
+                                //    {
+                                //        if (Model.MenuManager.MenuLevelEnum != MenuLevelENUM.Level_1)
+                                //        {
+                                //            controllerNameForEdit = Model.MenuManager.ControlerNameForProductVms;
+                                //        }
+                                //    }
+
+                                //}
+
+                                switch (Model.MenuManager.MenuLevelEnum)
+                                {
+                                    case MenuLevelENUM.unknown:
+                                        break;
+                                    case MenuLevelENUM.Level_1:
+                                        url = Url.Action("Edit", "MenuPathMains", new { id = indexItemVM.Id, returnurl = returnurl, menuPathMainId = menuPathMainId, menuLevelEnum = Model.MenuManager.MenuLevelEnum }, null);
+                                        break;
+                                    case MenuLevelENUM.Level_2:
+                                        url = Url.Action("Edit", "MenuPathMains", new { id = indexItemVM.Id, returnurl = returnurl, menuPathMainId = menuPathMainId, menuLevelEnum = Model.MenuManager.MenuLevelEnum }, null);
+                                        break;
+                                    case MenuLevelENUM.Level_3:
+                                        url = Url.Action("Edit", "MenuPathMains", new { id = indexItemVM.Id, returnurl = returnurl, menuPathMainId = menuPathMainId, menuLevelEnum = Model.MenuManager.MenuLevelEnum }, null);
+                                        break;
+
+                                    case MenuLevelENUM.Level_4:
+                                        url = Url.Action("Edit", Model.MenuManager.ControlerNameForProductVms, new { id = indexItemVM.Id, menuPathMainId = menuPathMainId, returnurl = returnurl, menuLevelEnum = Model.MenuManager.MenuLevelEnum, productId = productId }, null);
+                                        break;
+
+                                    case MenuLevelENUM.Level_5:
+                                        url = Url.Action("Edit", "ProductChilds", new { id = indexItemVM.Id, returnurl = returnurl, menuLevelEnum = Model.MenuManager.MenuLevelEnum, productChildId = productChildId }, null);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                    <div class="text-center col-md-12">
+                                        <div class="col-md-1">&nbsp;</div>
+                                        <div class="col-md-11">
+                                            <a href="@url">@indexItemVM.FullName</a>
+                                        </div>
+                                    </div>
+
+                            }
+                            else
+                            {
+                                <div class="text-center">@indexItemVM.FullName</div>
+
+                            }
+                        </div>
                     }
                 </div>
-            }
-        </div>
-
-    </div>
-
-
-
-
-
-
-
-
-
-
-
+            </div>
         }
+
+
     </div>
-
-
-
-
 
 </div>

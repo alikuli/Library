@@ -18,15 +18,19 @@ namespace UowLibrary
         /// This is added in the GET part of Create.
         /// </summary>
         /// <returns></returns>
-        public virtual TEntity EntityFactoryForHttpGet()
+        public ICommonWithId EntityFactoryForHttpGet()
         {
-            TEntity entity = Dal.Factory();
+            ICommonWithId entity = Factory() as ICommonWithId;
             entity.MetaData.Created.SetToTodaysDateStart();
-            Event_ApplyChangesAfterCreate(entity);
             return entity;
         }
 
-        public TEntity Factory()
+        //public virtual TEntity EntityFactoryForHttpGet(FactoryParameters fp)
+        //{
+        //    return EntityFactoryForHttpGet();
+        //}
+
+        public virtual ICommonWithId Factory()
         {
             return Dal.Factory();
         }

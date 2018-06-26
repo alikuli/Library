@@ -1,12 +1,19 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.UtilitiesNS;
 using ErrorHandlerLibrary.ExceptionsNS;
+using InterfacesLibrary.SharedNS;
+using InterfacesLibrary.SharedNS.FeaturesNS;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Mvc;
+using UowLibrary;
 using UowLibrary.Interface;
+using System.Linq;
+using UserModels;
+using ModelsClassLibrary.ModelsNS.SharedNS;
+using EnumLibrary.EnumNS;
 
 namespace MarketPlace.Web4.Controllers
 {
@@ -20,18 +27,18 @@ namespace MarketPlace.Web4.Controllers
     {
 
         private string _userId;
-        //private string _userName;
         private IErrorSet _ierrorSet;
+        private UserBiz _userBiz;
 
         /// <summary>
         /// All errorsets taken from DI point to the same reference.
         /// </summary>
         /// <param name="errorSet"></param>
 
-        public AbstractController(IErrorSet errorSet)
+        public AbstractController(IErrorSet errorSet, UserBiz userBiz)
         {
             _ierrorSet = errorSet;
-
+            _userBiz = userBiz;
 
         }
 
@@ -71,7 +78,18 @@ namespace MarketPlace.Web4.Controllers
         }
 
 
+        #region User Properties
+        protected bool IsUserAdmin(ApplicationUser user)
+        {
+            bool isUserAdmin = _userBiz.IsUserAdmin(user);
+            return isUserAdmin;
+        }
 
+        protected ApplicationUser GetApplicationUser()
+        {
+            ApplicationUser user = _userBiz.FindByUserName_UserManager(UserName);
+            return user;
+        }
 
 
         protected string UserId
@@ -97,6 +115,66 @@ namespace MarketPlace.Web4.Controllers
 
             }
         }
+
+        protected void LoadUserIntoEntity(ICommonWithId entity)
+        {
+            IHasUser iuser = entity as IHasUser;
+
+            if (iuser.IsNull())
+                return;
+
+            //is user loggerd in
+            UserName.IsNullOrWhiteSpaceThrowException("User is not logged in");
+
+            iuser.User = _userBiz.FindAll().FirstOrDefault(x => x.UserName.ToLower() == UserName.ToLower());
+
+            if (iuser.User.IsNull())
+            {
+                ErrorsGlobal.Add("The User was not found.", MethodBase.GetCurrentMethod());
+                throw new Exception(ErrorsGlobal.ToString());
+            }
+
+            iuser.UserId = iuser.User.Id;
+
+        }
+
+        #endregion
+
+
+        protected ControllerIndexParams MakeControlParameters(string id, string searchFor, string isandForSearch, string selectedId, ICommonWithId entity, ICommonWithId dudEntity, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string returnUrl = "", string menuPathMainId = "", string productId = "", string productChildId = "")
+        {
+            //FactoryParameters fp = new FactoryParameters();
+
+            //load parameters
+            string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
+
+            ApplicationUser user = GetApplicationUser();
+            bool isUserAdmin = IsUserAdmin(user);
+
+            //todo note... the company name is missing. We may need it.
+            ControllerIndexParams parms = new ControllerIndexParams(
+                id,
+                searchFor,
+                isandForSearch,
+                selectedId,
+                menuLevelEnum,
+                sortBy,
+                logoAddress,
+                entity,
+                dudEntity as ICommonWithId,
+                user,
+                isUserAdmin,
+                returnUrl,
+                menuPathMainId,
+                productId,
+                productChildId);
+
+            ViewBag.ReturnUrl = returnUrl;
+
+            return parms;
+        }
+
+
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
@@ -136,6 +214,7 @@ namespace MarketPlace.Web4.Controllers
                 }
             }
         }
+
 
         private void LoadErrorsIntoModelState()
         {

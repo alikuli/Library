@@ -184,6 +184,7 @@
     <Compile Include="LanguagesNS\SelectList.cs" />
     <Compile Include="LanguagesNS\Fix.cs" />
     <Compile Include="LanguagesNS\Index.cs" />
+    <Compile Include="MenuNS\MenuBizNS\Event_ModifyIndexList.cs" />
     <Compile Include="MenuNS\MenuBizNS\GetListForIndexAsync.cs" />
     <Compile Include="MenuNS\MenuBizNS\Modify Index Item.cs" />
     <Compile Include="MenuNS\MenuBizNS\SelectList.cs" />
@@ -251,13 +252,14 @@
     <Compile Include="ProductNS\ProductChildNS\Uploads.cs" />
     <Compile Include="ProductNS\ProductNS\DeleteRelatedRecords.cs" />
     <Compile Include="ProductNS\ProductNS\MenuPathCheckedBoxes.cs" />
-    <Compile Include="ProductNS\ProductNS\EntityFactory.cs" />
+    <Compile Include="ProductNS\ProductNS\Factory.cs" />
     <Compile Include="ProductNS\ProductNS\Uploads.cs" />
     <Compile Include="ProductNS\ProductNS\Index.cs" />
     <Compile Include="ProductNS\ProductNS\SelectList.cs" />
     <Compile Include="ProductNS\ProductNS\Initialize.cs" />
     <Compile Include="ProductNS\ProductNS\Bussiness Rules.cs" />
     <Compile Include="ProductNS\ProductNS\ProductBiz.cs" />
+    <Compile Include="ProductNS\ProductVmNS\ProductAutomobileBiz.cs" />
     <Compile Include="ProductNS\UomLengthNS\SelectList.cs" />
     <Compile Include="ProductNS\UomLengthNS\UomLengthBiz.cs" />
     <Compile Include="ProductNS\UomLengthNS\Index.cs" />
@@ -379,7 +381,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="0 BusinessLayer\Content\" />
     <Folder Include="PlayersNS\CustomerNS\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

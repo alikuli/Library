@@ -12,7 +12,7 @@ namespace UowLibrary.ProductNS
             base.Event_ModifyIndexList(indexListVM, parameters);
             indexListVM.Show.EditDeleteAndCreate = true;
             indexListVM.IsImageTiled = true;
-
+            
         }
 
 

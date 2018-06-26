@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
 using System;
@@ -90,11 +91,13 @@ namespace UowLibrary
         private IndexListVM createIndexList(IList<ICommonWithId> lstEntities, ControllerIndexParams parameters)
         {
 
+            
 
             //This names the sort links. They come directly from the entity
             parameters.DudEntity = Dal.Factory();
 
             IndexListVM indexListVM = new IndexListVM(parameters);
+
 
             Event_ModifyIndexList(indexListVM, parameters);
 

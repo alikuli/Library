@@ -31,7 +31,21 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         }
 
 
-        public ControllerCreateEditParameter(ICommonWithId entity, HttpPostedFileBase[] httpMiscUploadedFiles, HttpPostedFileBase[] httpSelfieUpload, HttpPostedFileBase[] httpIdCardFront, HttpPostedFileBase[] httpIdCardBack, HttpPostedFileBase[] httpPassportFront, HttpPostedFileBase[] httpPassportVisa, HttpPostedFileBase[] httpLiscenseFront, HttpPostedFileBase[] httpLiscenseBack, MenuLevelENUM menuLevelEnum, string userName, string menuPath1Id, string menuPath2Id, string menuPath3Id, string productId)
+        public ControllerCreateEditParameter(
+            ICommonWithId entity, 
+            HttpPostedFileBase[] httpMiscUploadedFiles, 
+            HttpPostedFileBase[] httpSelfieUpload, 
+            HttpPostedFileBase[] httpIdCardFront, 
+            HttpPostedFileBase[] httpIdCardBack, 
+            HttpPostedFileBase[] httpPassportFront,
+            HttpPostedFileBase[] httpPassportVisa, 
+            HttpPostedFileBase[] httpLiscenseFront, 
+            HttpPostedFileBase[] httpLiscenseBack, 
+            MenuLevelENUM menuLevelEnum, 
+            string userName, 
+            string menuPathMainId, 
+            string productId, 
+            string productChildId)
             : this()
         {
             Entity = entity;
@@ -46,7 +60,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
             UserName = userName;
 
-            Menu = new MenuParameters(menuLevelEnum, menuPath1Id, menuPath2Id, menuPath3Id, productId);
+            Menu = new MenuParameters(menuLevelEnum,  menuPathMainId, productId, productChildId);
             //todo what should we do if userName is empty?
 
             if (IsIHasUploads)

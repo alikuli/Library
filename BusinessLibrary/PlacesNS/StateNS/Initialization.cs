@@ -21,7 +21,7 @@ namespace UowLibrary.StateNS
 
             foreach (var state in data)
             {
-                State s = Dal.Factory();
+                State s = Dal.Factory() as State;
                 s.Name = state.Name.ToTitleCase();
 
                 var country = CountryDal

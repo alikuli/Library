@@ -1,4 +1,6 @@
-﻿using ErrorHandlerLibrary.ExceptionsNS;
+﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
+using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
@@ -34,5 +36,17 @@ namespace MarketPlace.Web6.Controllers
             return RedirectToAction("Edit", new { id = menupathId });
             //return RedirectToAction("DeleteConfirmed", "UploadedFiles", new { id = uploadedFileId });
         }
+
+        public override ActionResult Event_CreateViewAndSetupSelectList(ModelsClassLibrary.ModelsNS.SharedNS.ControllerIndexParams parm)
+        {
+
+            var result = EnumExtention.Enum<MenuPath1ENUM>.Count;
+            MenuPath1ENUM mp1 = MenuPath1ENUM.Unknown;
+            var result2 = EnumExtention.ToSelectListSorted<MenuPath1ENUM>(mp1);
+            return base.Event_CreateViewAndSetupSelectList(parm);
+        }
+
+    
+    
     }
 }

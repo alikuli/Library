@@ -1,5 +1,6 @@
 ﻿using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
@@ -16,12 +17,13 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
     ///     product, but by adding a serial numbr, it would then become different, within the product. Each serial numbered product
     ///     would then have its own price.
     /// </summary>
-    public partial class ProductChild : CommonWithId, IHasUploads, IHasUser, IAmMenu
+    public partial class ProductChild : CommonWithId, IHasUploads, IHasUser, IHaveMenuManager
     {
         public ProductChild()
         {
             Sell = new SalePriceComplex();
             Buy = new CostsComplex();
+            MenuManager = new MenuManager(Id);
         }
 
 

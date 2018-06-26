@@ -1,15 +1,21 @@
-﻿using EnumLibrary.EnumNS;
+﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.MenuNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 
 namespace ModelsClassLibrary.MenuNS
 {
     public class MenuPath1 : MenuPathAbstract, IHasUploads
     {
-
+        public MenuPath1()
+        {
+            MenuPath1Enum = MenuPath1ENUM.Unknown;
+        }
         public override ClassesWithRightsENUM ClassNameForRights()
         {
             return EnumLibrary.EnumNS.ClassesWithRightsENUM.MenuPath1;
@@ -31,5 +37,17 @@ namespace ModelsClassLibrary.MenuNS
             return AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY;
         }
 
+        [Display(Name = "Menu Path 1")]
+        public MenuPath1ENUM MenuPath1Enum { get; set; }
+
+        public string CreateNameFromEnum(MenuPath1ENUM e)
+        {
+            return Enum.GetName(typeof(MenuPath1ENUM), e).ToTitleSentance();
+        }
+
+        public string CurrentMenuPathEnumString()
+        {
+            return CreateNameFromEnum(MenuPath1Enum);
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace DalLibrary.Interfaces
 
         void DetachAll();
         ErrorSet ErrorsGlobal { get; }
-        TEntity Factory();
+        ICommonWithId Factory();
         IQueryable<TEntity> FindAll(bool deleted = false);
         Task<List<TEntity>> FindAllAsync(bool deleted = false);
         IQueryable<TEntity> FindAllLight(bool deleted = false);

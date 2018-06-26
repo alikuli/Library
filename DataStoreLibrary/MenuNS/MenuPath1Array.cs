@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using System;
+using System.Collections.Generic;
 
 namespace DatastoreNS
 {
@@ -24,6 +25,20 @@ namespace DatastoreNS
 
             return menupath1Array;
 
+        }
+
+        public static MenuPath1ENUM [] DataArray2()
+        {
+            List<MenuPath1ENUM> lstMenuPath1ENUM = new List<MenuPath1ENUM>();
+
+            foreach (int e in Enum.GetValues(typeof(MenuPath1ENUM)))
+            {
+
+                MenuPath1ENUM eMade = (MenuPath1ENUM) Enum.Parse(typeof(MenuPath1ENUM), e.ToString());
+                lstMenuPath1ENUM.Add(eMade);
+            }
+
+            return lstMenuPath1ENUM.ToArray();
         }
     }
 

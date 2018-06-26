@@ -30,7 +30,7 @@ namespace UowLibrary.DiscountPrecedenceNS
                 {
                     if (discPrecedenceParameter.DiscountRuleEnum != DiscountRuleENUM.Unknown || discPrecedenceParameter.DiscountTypeEnum != DiscountTypeENUM.Unknown)
                     {
-                        DiscountPrecedence dp = Factory();
+                        DiscountPrecedence dp = Factory() as DiscountPrecedence;
 
                         //rank += DiscountPrecedence.RANK_SPACING_CONST;
                         //dp.Rank = rank;

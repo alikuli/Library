@@ -11,7 +11,7 @@ using UserModels;
 
 namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 {
-    public partial class ProductChild 
+    public partial class ProductChild
     {
 
         /// <summary>

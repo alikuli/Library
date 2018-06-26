@@ -102,7 +102,10 @@ namespace UserModels
         public virtual ICollection<FileDoc> FileDocs { get; set; }
 
         public virtual ICollection<ProductChild> ProductChildren { get; set; }
-
+        public bool DisableNameInView()
+        {
+            return false;
+        }
 
 
         //[NotMapped]

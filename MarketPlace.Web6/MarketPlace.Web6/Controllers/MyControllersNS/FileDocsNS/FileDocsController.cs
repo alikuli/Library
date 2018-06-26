@@ -7,6 +7,7 @@ using System.Reflection;
 using UowLibrary.FileDocNS;
 using AliKuli.Extentions;
 using UowLibrary;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -23,9 +24,9 @@ namespace MarketPlace.Web6.Controllers
         }
 
 
-        public override System.Web.Mvc.RedirectToRouteResult Event_UpdateCreateRedicrectToAction(FileDoc entity)
+        public override System.Web.Mvc.RedirectToRouteResult Event_UpdateCreateRedicrectToAction(ControllerCreateEditParameter parm)
         {
-            return RedirectToAction("Index", new { selectedId = entity.Id.ToString(), sortBy = SortOrderENUM.Item2_Dsc });
+            return RedirectToAction("Index", new { selectedId = parm.Entity.Id.ToString(), sortBy = SortOrderENUM.Item2_Dsc });
 
         }
 

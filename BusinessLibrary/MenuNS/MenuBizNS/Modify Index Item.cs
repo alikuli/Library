@@ -121,27 +121,29 @@ namespace UowLibrary.MenuNS
 
             }
 
-            IAmMenu iAmMenu = icommonWithId as IAmMenu;
-            bool isIAmMenu = !iAmMenu.IsNull();
+            //IAmMenu iAmMenu = icommonWithId as IAmMenu;
+            //bool isIAmMenu = !iAmMenu.IsNull();
 
 
-            if(isIAmMenu)
-            {
-                indexItem.Menu.MenuPath1Id = iAmMenu.MenuPath1Id;
-                indexItem.Menu.MenuPath2Id = iAmMenu.MenuPath2Id;
-                indexItem.Menu.MenuPath3Id = iAmMenu.MenuPath3Id;
-            }
+            //if(isIAmMenu)
+            //{
+            //    indexItem.Menu.MenuPath1Id = iAmMenu.MenuPath1Id;
+            //    indexItem.Menu.MenuPath2Id = iAmMenu.MenuPath2Id;
+            //    indexItem.Menu.MenuPath3Id = iAmMenu.MenuPath3Id;
+            //}
 
+
+            //I dont believe envery item needs the information. So we do not need to add Menu Info to Item
 
 
 
 
         }
-
+        //TODO move this to Menu
         private void makeNameForMenuItem(IndexListVM indexListVM, IndexItemVM indexItem, MenuPathMain pcm)
         {
             //The id in parameters belongs to ProductMainControler. Extract the Id from there...
-            switch (indexListVM.Menu.MenuLevelEnum)
+            switch (indexListVM.MenuManager.MenuLevelEnum)
             {
                 case MenuLevelENUM.unknown:
                     break;

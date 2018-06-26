@@ -1,5 +1,4 @@
-﻿using AliKuli.Extentions;
-using DalLibrary.Interfaces;
+﻿using DalLibrary.Interfaces;
 using InterfacesLibrary.SharedNS;
 using System.Linq;
 using System.Web.Mvc;
@@ -29,8 +28,8 @@ namespace DalLibrary.DalNS
         {
             var allItems = data;
 
-            if (allItems.IsNull() || allItems.Count() == 0)
-                return null;
+            //if (allItems.IsNull() || allItems.Count() == 0)
+            //    return new SelectList(null, "Value", "Text");
 
             var sortedList = allItems.OrderBy(x => x.Name)
                 .Select(x =>

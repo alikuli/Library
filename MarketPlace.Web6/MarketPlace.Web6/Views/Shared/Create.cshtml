@@ -1,49 +1,60 @@
 ﻿@model InterfacesLibrary.SharedNS.ICommonWithId
-@Html.HiddenFor(model => model.Id)
 
 @{
     var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
-}
+    string menuPath1 = "";
+    string menuPath2 = "";
+    string menuPath3 = "";
+    string productId = "";
+    string returnUrl ="";
+    
+    //This works if the Model is MenuPathMain
+    ModelsClassLibrary.MenuNS.MenuPathMain pcm = Model as ModelsClassLibrary.MenuNS.MenuPathMain;
+    if (!pcm.IsNull())
+    {
+        bool isMenu = (ViewBag.IsMenu) ?? false;
+        if (isMenu)
+        {
+            menuPath1 = pcm.MenuPath1Id;
+            menuPath2 = pcm.MenuPath2Id;
+            menuPath3 = pcm.MenuPath3Id;
+            returnUrl = pcm.ReturnUrl;
+            productId = pcm.ProductId;
+        }
+    }
 
+    ModelsClassLibrary.ModelsNS.ProductNS.Product product = Model as ModelsClassLibrary.ModelsNS.ProductNS.Product;
+    if (!product.IsNull())
+    {
+        menuPath1 = product.Menu.MenuPath1Id;
+        menuPath2 = product.Menu.MenuPath2Id;
+        menuPath3 = product.Menu.MenuPath3Id;
+        //returnUrl = pcm.ReturnUrl;
+        productId = product.Menu.ProductId;
+    }
+
+    }
+@Html.HiddenFor(model => model.Id)
 @Html.Partial(@"ViewControls/Create/_breadCrumbs - Create")
-
 @Html.Partial(@"ViewControls/Create/_CreateHeading")
 
-@using (Html.BeginForm("Create", @controllerName, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", @controllerName, new { menuPath1Id = menuPath1, menuPath2Id = menuPath2, menuPath3Id = menuPath3, productId = productId, returnUrl = returnUrl }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
     @Html.HiddenFor(model => model.Id)
-    
     @Html.Partial(@"_FieldsOnlyEditFormat")
     @Html.Partial(@"ViewControls/Uploads/_ShowUploads")
-    @Html.Partial(@"ViewControls/Create/_CreateControls")
+
+        <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Create" class="btn btn-success" />
+    </div>
 }
 
 
 
 <div>
 
-    @{
-        string menuPath1 = "";
-        string menuPath2 = "";
-        string menuPath3 = "";
-
-        ModelsClassLibrary.MenuNS.MenuPathMain pcm = Model as ModelsClassLibrary.MenuNS.MenuPathMain;
-        if(!pcm.IsNull())
-        {
-            bool isMenu = (ViewBag.IsMenu)?? false;
-            if(isMenu)
-            {
-                menuPath1 = pcm.MenuPath1Id;
-                menuPath2 = pcm.MenuPath2Id;
-                menuPath3 = pcm.MenuPath3Id;
-            }
-        }
-        
-    }
     @Html.ActionLink("Back to List", "Index", new { menuLevelEnum = @ViewBag.MenuLevelEnum, menuPath1Id = menuPath1, menuPath2Id = menuPath2, menuPath3Id = menuPath3, selectedId = Model.Id })
 </div>
 

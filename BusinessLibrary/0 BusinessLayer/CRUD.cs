@@ -112,8 +112,18 @@ namespace UowLibrary
         {
             //entity.IsCreating = true;
             fixEntityAndBussinessRulesAndErrorCheck_Helper(entity);
-            Dal.Create(entity);
+            CreateEntity(entity);
             ClearSelectListInCache(SelectListCacheKey);
+        }
+
+        /// <summary>
+        /// This needs to be overridden for the Product VM. Here we will change the Entity. This will be overridden in each individual
+        /// ProductVm
+        /// </summary>
+        /// <param name="entity"></param>
+        public virtual void CreateEntity(TEntity entity)
+        {
+            Dal.Create(entity);
         }
 
 
@@ -149,9 +159,18 @@ namespace UowLibrary
             //parm.Entity.IsUpdating = true;
             fixEntityAndBussinessRulesAndErrorCheck_Helper(parm.Entity as TEntity);
             handleRelatedFilesIfExist(parm);
-            Dal.Update(parm.Entity as TEntity);
+            UpdateEntity(parm.Entity as TEntity);
             ClearSelectListInCache(SelectListCacheKey);
 
+        }
+
+        /// <summary>
+        /// This will need to be updated in each individual Product VM
+        /// </summary>
+        /// <param name="parm"></param>
+        public virtual void UpdateEntity(TEntity entity)
+        {
+            Dal.Update(entity);
         }
 
 

@@ -23,7 +23,7 @@ namespace UowLibrary
             if (StateBiz.BlankStateExistsForCountryId(entity.Id))
                 return;
 
-            State s = StateBiz.Factory();
+            State s = StateBiz.Factory() as State;
             s.Country = entity;
             s.CountryId = entity.Id;
             s.MetaData.IsEditLocked = true;

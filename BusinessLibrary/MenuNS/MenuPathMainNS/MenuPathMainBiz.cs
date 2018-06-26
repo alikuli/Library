@@ -2,12 +2,14 @@
 using ApplicationDbContextNS;
 using DalLibrary.Interfaces;
 using ErrorHandlerLibrary.ExceptionsNS;
+using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using UowLibrary.MenuNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
 using WebLibrary.Programs;
+using System.Linq;
 
 namespace UowLibrary.ProductNS
 {
@@ -23,5 +25,12 @@ namespace UowLibrary.ProductNS
             _menupath2Biz = menupath2Biz;
             _menupath3Biz = menupath3Biz;
         }
+
+        public MenuPathMain FindByMenuPath1Id(string menuPath1Id)
+        {
+            MenuPathMain mp1 = FindAll().FirstOrDefault(x => x.MenuPath1Id == menuPath1Id);
+            return mp1;
+        }
+
     }
 }

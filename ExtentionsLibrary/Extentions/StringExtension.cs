@@ -142,17 +142,10 @@ namespace AliKuli.Extentions
         /// <summary>
         /// Matching all capital letters in the input and seperate them with spaces to form a sentence.
         /// If the input is an abbreviation text, no space will be added and returns the same input.
+
         /// </summary>
-        /// <example>
-        /// input : HelloWorld
-        /// output : Hello World
-        /// </example>
-        /// <example>
-        /// input : BBC
-        /// output : BBC
-        /// </example>
-        /// <param name="input" />
-        /// <returns>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string ToSentence(this string input)
         {
             if (string.IsNullOrWhiteSpace(input))
@@ -169,6 +162,13 @@ namespace AliKuli.Extentions
             return newResult;
         }
 
+        /// <summary>
+        /// Matching all capital letters in the input and seperate them with spaces to form a sentence.
+        /// If the input is an abbreviation text, no space will be added and returns the same input.
+        /// Then capitalizes every word.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string ToTitleSentance(this string input)
         {
             return input.ToSentence().ToTitleCase();

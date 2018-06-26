@@ -34,7 +34,7 @@ namespace UowLibrary.FileDocNS
 
             foreach (var item in GetDataForStringArrayFormat)
             {
-                FileDoc x = Factory();
+                FileDoc x = Factory() as FileDoc;
 
                 x.Name = string.Format("{0}", item.FullName);
 

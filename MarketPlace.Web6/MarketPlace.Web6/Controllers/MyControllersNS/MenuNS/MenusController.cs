@@ -1,10 +1,8 @@
-﻿using AliKuli.Extentions;
-using EnumLibrary.EnumNS;
+﻿using EnumLibrary.EnumNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
@@ -15,119 +13,102 @@ namespace MarketPlace.Web6.Controllers
     public class MenusController : EntityAbstractController<MenuPathMain>
     {
 
-
+        MenuBiz _menuBiz;
         public MenusController(MenuBiz menuBiz, IErrorSet errorSet, UserBiz userbiz)
             : base(menuBiz, errorSet, userbiz)
         {
+            _menuBiz = menuBiz;
         }
         #region Index
 
-        public override async Task<ActionResult> Index(string id, string searchFor, string selectedId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", string returnUrl = "", string isandForSearch = "", FormCollection fc = null)
+        public override async Task<ActionResult> Index(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, string productId, string menuPathMainId, string productChildId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false)
         {
             switch (menuLevelEnum)
             {
                 case MenuLevelENUM.unknown:
-                    menuLevelEnum = MenuLevelENUM.Level_1;
+                    menuLevelEnum = MenuLevelENUM.Level_1;  //MenuPathMain
+                    menuPathMainId = id;
                     break;
 
                 case MenuLevelENUM.Level_1:
-                    menuLevelEnum = MenuLevelENUM.Level_2;
-                    //the id recieved belongs to the ProductMain
+                    menuLevelEnum = MenuLevelENUM.Level_2; //MenuPathMain
+                    menuPathMainId = id;
+
                     break;
 
                 case MenuLevelENUM.Level_2:
-                    menuLevelEnum = MenuLevelENUM.Level_3;
+                    menuLevelEnum = MenuLevelENUM.Level_3; //MenuPathMain
+                    menuPathMainId = id;
                     break;
 
                 case MenuLevelENUM.Level_3:
-                    menuLevelEnum = MenuLevelENUM.Level_4;
+                    menuLevelEnum = MenuLevelENUM.Level_4; //Products Level
+                    menuPathMainId = id;
+
                     break;
 
-                case MenuLevelENUM.Level_4: //Products Level
-                    menuLevelEnum = MenuLevelENUM.Level_5;
+                case MenuLevelENUM.Level_4:
+                    menuLevelEnum = MenuLevelENUM.Level_5; //Products Child Level
+                    productId = id;
                     break;
 
-                case MenuLevelENUM.Level_5://Products Child Level
+                case MenuLevelENUM.Level_5:
                 default:
-                    menuLevelEnum = MenuLevelENUM.unknown;
+                    //menuLevelEnum = MenuLevelENUM.unknown;
+                    productChildId = id;
                     break;
             }
-            return await base.Index(id, searchFor, selectedId, menuLevelEnum, sortBy, print, menuPath1Id, menuPath2Id, menuPath3Id, productId, returnUrl, isandForSearch);
+            return await base.Index(id, searchFor, isandForSearch, selectedId, returnUrl, productId, menuPathMainId, productChildId, menuLevelEnum, sortBy, print);
         }
 
 
 
 
-        private MenuPathMain loadTheMenuPathMain(ControllerIndexParams parm)
+        private void loadTheMenuPathMain(ControllerIndexParams parm)
         {
-            string menuPath1Id = parm.Menu.MenuPath1Id;
-            string menuPath2Id = parm.Menu.MenuPath2Id;
-            string menuPath3Id = parm.Menu.MenuPath3Id;
-
-            ViewBag.MenuPath1SelectList = ((MenuBiz)Biz).MenuPath1_SelectList();
-            ViewBag.MenuPath2SelectList = ((MenuBiz)Biz).MenuPath2_SelectList();
-            ViewBag.MenuPath3SelectList = ((MenuBiz)Biz).MenuPath3_SelectList();
-
-            ViewBag.IsMenu = true;
-
-            MenuPathMain pcm = Biz.EntityFactoryForHttpGet();
 
 
-            //create the select list depending on the menu level
-            switch (parm.Menu.MenuLevel)
-            {
-                case MenuLevelENUM.unknown:
-                    break;
 
-                case MenuLevelENUM.Level_1:
-                    break;
 
-                case MenuLevelENUM.Level_2:
-                    menuPath1Id.IsNullOrWhiteSpaceThrowException("Menu Path 1 is not loaded.");
+            ////create the select list depending on the menu level
+            //switch (parm.Menu.MenuLevel)
+            //{
+            //    case MenuLevelENUM.unknown:
+            //        break;
 
-                    pcm.MenuPath1Id = menuPath1Id;
-                    break;
+            //    case MenuLevelENUM.Level_1:
 
-                case MenuLevelENUM.Level_3:
-                    menuPath1Id.IsNullOrWhiteSpaceThrowException("Menu Path 1 is not loaded.");
-                    menuPath2Id.IsNullOrWhiteSpaceThrowException("Menu Path 2 is not loaded.");
+            //    case MenuLevelENUM.Level_2:
 
-                    pcm.MenuPath1Id = menuPath1Id;
-                    pcm.MenuPath2Id = menuPath2Id;
-                    break;
 
-                case MenuLevelENUM.Level_4: //Product level
-                    menuPath1Id.IsNullOrWhiteSpaceThrowException("Menu Path 1 is not loaded.");
-                    menuPath2Id.IsNullOrWhiteSpaceThrowException("Menu Path 2 is not loaded.");
-                    menuPath3Id.IsNullOrWhiteSpaceThrowException("Menu Path 3 is not loaded.");
+            //    case MenuLevelENUM.Level_3:
+            //        parm.Menu.MenuPathMainId.IsNullOrWhiteSpaceThrowException("Menu Path Main is not loaded.");
+            //        MenuPathMain pcm = _icrudBiz.Find(parm.Menu.MenuPathMainId);
 
-                    pcm.MenuPath1Id = menuPath1Id;
-                    pcm.MenuPath2Id = menuPath2Id;
-                    pcm.MenuPath3Id = menuPath3Id;
+            //        break;
 
-                    break;
+            //    case MenuLevelENUM.Level_4: //Product level
+            //        break;
 
-                case MenuLevelENUM.Level_5: //Product Child level
-                    menuPath1Id.IsNullOrWhiteSpaceThrowException("Menu Path 1 is not loaded.");
-                    menuPath2Id.IsNullOrWhiteSpaceThrowException("Menu Path 2 is not loaded.");
-                    menuPath3Id.IsNullOrWhiteSpaceThrowException("Menu Path 3 is not loaded.");
+            //    case MenuLevelENUM.Level_5: //Product Child level
+            //        throw new NotImplementedException();
 
-                    pcm.MenuPath1Id = menuPath1Id;
-                    pcm.MenuPath2Id = menuPath2Id;
-                    pcm.MenuPath3Id = menuPath3Id;
-                    throw new NotImplementedException();
-
-                default:
-                    break;
-            }
-            return pcm;
+            //    default:
+            //        break;
+            //}
+            //return pcm;
         }
         #endregion
 
         public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
         {
-            MenuPathMain pcm = loadTheMenuPathMain(parm);
-            return View(pcm);
+            ViewBag.MenuPath1SelectList = _menuBiz.MenuPath1_SelectList();
+            ViewBag.MenuPath2SelectList = _menuBiz.MenuPath2_SelectList();
+            ViewBag.MenuPath3SelectList = _menuBiz.MenuPath3_SelectList();
+
+            ViewBag.IsMenu = true;
+
+            return View(parm.Entity);
         }
 
 

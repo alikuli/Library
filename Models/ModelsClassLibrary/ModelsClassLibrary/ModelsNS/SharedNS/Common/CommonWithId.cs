@@ -271,6 +271,11 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             return false;
         }
 
+        public virtual bool DisableNameInView()
+        {
+            return false;
+        }
+
         public string ClassNameRaw
         {
             get

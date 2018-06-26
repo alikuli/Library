@@ -26,6 +26,7 @@ namespace InterfacesLibrary.SharedNS
         ClassesWithRightsENUM ClassNameForRights();
         int ClassNameForRightsVal();
         bool HideNameInView();
+        bool DisableNameInView();
         string ClassNameRaw { get; }
         string ClassName { get; }
         string ClassNamePlural { get; }

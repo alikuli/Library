@@ -14,8 +14,8 @@ namespace MarketPlace.Web6.Controllers
     public class AccountController : AbstractController
     {
 
-        public AccountController(UserBiz userDAL, IErrorSet errorSet)
-            : base(errorSet)
+        public AccountController(UserBiz userDAL, IErrorSet errorSet, UserBiz userBiz)
+            : base(errorSet,  userBiz)
         {
             UserDAL = userDAL;
 

@@ -25,7 +25,7 @@ namespace UowLibrary.Interface
         Task CreateAndSaveAsync(ControllerCreateEditParameter param);
 
 
-        TEntity EntityFactoryForHttpGet();
+        ICommonWithId EntityFactoryForHttpGet();
         void BusinessRulesFor(TEntity entity);
         bool Delete(string id);
         Task<bool> DeleteAsync(string id);
@@ -33,7 +33,7 @@ namespace UowLibrary.Interface
         Task DeleteActuallyAllAndSaveAsync();
 
         void ErrorCheck(TEntity entity);
-        TEntity Factory();
+        ICommonWithId Factory();
         TEntity Find(string id);
         Task<TEntity> FindAsync(string id);
         void Fix(TEntity entity);

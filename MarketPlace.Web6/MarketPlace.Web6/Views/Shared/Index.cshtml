@@ -1,8 +1,16 @@
 ﻿@model ModelsClassLibrary.ViewModels.IndexListVM
-@Html.HiddenFor(x => x.Menu.MenuLevelEnum)
+@Html.HiddenFor(x => x.MenuManager.MenuLevelEnum)
 
 @{
     ViewBag.Title = @Model.Heading.Main;
+    string controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+
+    if (Model.MenuManager.IsMenu)
+        if (Model.MenuManager.MenuLevelEnum != MenuLevelENUM.unknown)
+            if (Model.MenuManager.MenuLevelEnum != MenuLevelENUM.Level_1)
+                controllerName = Model.MenuManager.ControlerNameForProductVms;
+
+        
 }
 
 
@@ -26,11 +34,12 @@
     </div>
 
     <div class="col-xs-6 col-lg-6">
-        <h4 class="pull-right">
-            @Model.NoOfRecords
-
-        </h4>
-
+            <h4 class="pull-right">
+                @Model.NoOfRecords
+            </h4>
+        <p>
+          Level: @Model.MenuManager.MenuLevelEnum.ToString();
+        </p>
 
     </div>
 
@@ -65,23 +74,16 @@
 
                                     </span>
                                     <br />
-                                    
-                                        
                                     <div class="col-xs-4">
                                         @Html.RadioButton("isandForSearch", "And",true, new { id = "IsAnd" })
                                         <label for="IsAnd" , data-toggle="tooltip" , title="Use AND if you want both all the search words to be present"><span><span>And</span></span></label>
 
                                     </div>
-                                
-                                    
                                     <div class="col-xs-4">
                                         @Html.RadioButton("isandForSearch", "Or", false, new { id = "IsOr"})
                                         <label for="IsOr", data-toggle ="tooltip" , title="Use OR if you want to find any occourance of any of the search words"><span><span>OR</span></span></label>
                                     </div>
-
                                 }
-                                
-
                             </div>
 
 
@@ -92,13 +94,9 @@
                                 {
 
                                     <div>
-                                        @{string name = "CREATE";}
-                                        @Html.ActionLink(@name, "Create", new { menuLevelEnum = Model.Menu.MenuLevelEnum, menuPath1Id = Model.Menu.MenuPath1_Id, menuPath2Id = Model.Menu.MenuPath2_Id, menuPath3Id = Model.Menu.MenuPath3_Id }, new { @class = "text-danger btn btn-success btn-sm" })
+                                        @Html.ActionLink("CREATE", "Create", @controllerName, new { menuLevelEnum = Model.MenuManager.MenuLevelEnum, menuPath1Id = Model.MenuManager.MenuPath1Id, menuPath2Id = Model.MenuManager.MenuPath2Id, menuPath3Id = Model.MenuManager.MenuPath3Id }, new { @class = "text-danger btn btn-success btn-sm" })
                                     </div>
                                 }
-
-
-
 
                             </div>
 
@@ -107,13 +105,7 @@
 
                         <div class="col-xs-6 col-lg-1 ">
                             <div >
-                                @{
-                                    //Need this for the breadcrumbs
-                                    MenuLevelENUM previousMenuLevel = Model.Menu.GetPreviousMenuLevel();
-                                }
-                                @Html.ActionLink("Print", "Index", new { sortBy = @Model.SortOrderEnum, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, print = true, menuLevelEnum = previousMenuLevel }, new { @class = "btn btn-danger btn-sm", target = "_blank" })
-
-
+                                @Html.ActionLink("Print", "Index", new { sortBy = @Model.SortOrderEnum, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, print = true, menuLevelEnum = @Model.MenuManager.GetPreviousMenuLevel() }, new { @class = "btn btn-danger btn-sm", target = "_blank" })
                             </div>
 
 
@@ -131,16 +123,16 @@
 
 
                             <div class="col-sm-2 ">
-                                @Html.ActionLink(Model.SortOrder1_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item1_Asc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = previousMenuLevel }, new { @class = "btn btn-primary" }) <br />
-                                @Html.ActionLink(Model.SortOrder1_Description_Dsc, "Index", new { sortBy = SortOrderENUM.Item1_Dsc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = previousMenuLevel }, new { @class = "btn btn-danger" })
+                                @Html.ActionLink(Model.SortOrder1_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item1_Asc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = @Model.MenuManager.GetPreviousMenuLevel() }, new { @class = "btn btn-primary" }) <br />
+                                @Html.ActionLink(Model.SortOrder1_Description_Dsc, "Index", new { sortBy = SortOrderENUM.Item1_Dsc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = @Model.MenuManager.GetPreviousMenuLevel() }, new { @class = "btn btn-danger" })
                             </div>
 
                             <div class="col-sm-2 ">
                                 @if (!Model.NameInput2.IsNullOrWhiteSpace())
                                 {
                                 <span>
-                                    @Html.ActionLink(Model.SortOrder2_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item2_Asc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = previousMenuLevel }, new { @class = "btn btn-primary" }) <br />
-                                    @Html.ActionLink(Model.SortOrder2_Description_Dsc, "Index", new { sortBy = SortOrderENUM.Item2_Dsc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = previousMenuLevel }, new { @class = "btn btn-danger" })
+                                    @Html.ActionLink(Model.SortOrder2_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item2_Asc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = @Model.MenuManager.GetPreviousMenuLevel() }, new { @class = "btn btn-primary" }) <br />
+                                    @Html.ActionLink(Model.SortOrder2_Description_Dsc, "Index", new { sortBy = SortOrderENUM.Item2_Dsc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = @Model.MenuManager.GetPreviousMenuLevel() }, new { @class = "btn btn-danger" })
                                 </span>
                                 }
                             </div>
@@ -149,8 +141,8 @@
                                 @if (!Model.NameInput3.IsNullOrWhiteSpace())
                                 {
                                 <span>
-                                    @Html.ActionLink(Model.SortOrder3_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item3_Asc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = previousMenuLevel }, new { @class = "btn btn-primary" }) <br />
-                                    @Html.ActionLink(Model.SortOrder3_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item3_Dsc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = previousMenuLevel }, new { @class = "btn btn-danger" })
+                                    @Html.ActionLink(Model.SortOrder3_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item3_Asc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = @Model.MenuManager.GetPreviousMenuLevel() }, new { @class = "btn btn-primary" }) <br />
+                                    @Html.ActionLink(Model.SortOrder3_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item3_Dsc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string, menuLevelEnum = @Model.MenuManager.GetPreviousMenuLevel() }, new { @class = "btn btn-danger" })
                                 </span>
                                 }
                             </div>

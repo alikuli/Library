@@ -38,5 +38,19 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
 
 
+        /// <summary>
+        /// This disables the name in the view.
+        /// </summary>
+        /// <returns></returns>
+        //public override bool DisableNameInView()
+        //{
+        //    return true;
+        //}
+
+        public override bool HideNameInView()
+        {
+            return true;
+        }
+
     }
 }

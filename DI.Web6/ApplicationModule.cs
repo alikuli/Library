@@ -6,7 +6,6 @@ using DalNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using ModelsClassLibrary.ModelsNS.ProductNS;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using UowLibrary;
@@ -14,6 +13,7 @@ using UowLibrary.CounterNS;
 using UowLibrary.FileDocNS;
 using UowLibrary.Interface;
 using UowLibrary.MenuNS;
+using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
 using UowLibrary.StateNS;
 using UowLibrary.UploadFileNS;
@@ -45,20 +45,27 @@ namespace DependancyResolver
         private void LoadBusinessLayer()
         {
             Bind(typeof(IBusinessLayer<>)).To(typeof(BusinessLayer<>));
-            Bind<FileDocBiz>().ToSelf();
-            Bind<StateBiz>().ToSelf();
-            Bind<UserBiz>().ToSelf();
-            Bind<UploadedFileBiz>().ToSelf();
-            Bind<MenuBiz>().ToSelf();
+
             Bind<CounterBiz>().ToSelf();
+
+            Bind<FileDocBiz>().ToSelf();
+
+            Bind<MenuBiz>().ToSelf();
+
             Bind<ProductBiz>().ToSelf();
-            
+            Bind<ProductChildBiz>().ToSelf();
+            Bind<ProductIdentifierBiz>().ToSelf();
+
+            Bind<StateBiz>().ToSelf();
+
             Bind<UomLengthBiz>().ToSelf();
             Bind<UomQuantityBiz>().ToSelf();
             Bind<UomVolumeBiz>().ToSelf();
-            Bind<ProductIdentifierBiz>().ToSelf();
-            //Bind<UomWeightBiz>().ToSelf();
+            Bind<UomWeightBiz>().ToSelf();
 
+            Bind<UploadedFileBiz>().ToSelf();
+
+            Bind<UserBiz>().ToSelf();
         }
 
         public void LoadDALs()
@@ -95,7 +102,7 @@ namespace DependancyResolver
 
             Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().WithConstructorArgument("store", Kernel.GetService(typeof(ApplicationDbContext)));
 
-            
+
 
         }
     }

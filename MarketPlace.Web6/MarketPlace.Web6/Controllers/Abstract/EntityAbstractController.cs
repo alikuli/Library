@@ -2,12 +2,12 @@
 using EnumLibrary.EnumNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
-using InterfacesLibrary.SharedNS.FeaturesNS;
 using MarketPlace.Web4.Controllers;
+using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
 using System;
-using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -28,9 +28,9 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
         protected IBusinessLayer<TEntity> _icrudBiz;
         protected Type _tEntityType;
-        UserBiz _userBiz;
+        private UserBiz _userBiz;
         public EntityAbstractController(IBusinessLayer<TEntity> icrudUow, IErrorSet errorSet, UserBiz userbiz)
-            : base(errorSet)
+            : base(errorSet, userbiz)
         {
             _icrudBiz = icrudUow;
 
@@ -83,24 +83,33 @@ namespace MarketPlace.Web6.Controllers.Abstract
         /// <param name="sortBy"></param>
         /// <param name="print"></param>
         /// <returns></returns>
-        public virtual async Task<ActionResult> Index(string id, string searchFor, string selectedId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", string returnUrl = "", string isandForSearch = "", FormCollection fc = null)
+        public virtual async Task<ActionResult> Index(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, string productId, string menuPathMainId, string productChildId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false)
         {
             try
             {
-                //if (fc["isandForSearch"].IsNull())
-                //    ViewBag.IsandForSearch = "And";
-                //else
-                //    ViewBag.IsandForSearch = fc["isandForSearch"][1];
+                TEntity dudEntity = Biz.Factory() as TEntity;
 
-                //load parameters
-                TEntity dudEntity = Biz.Factory();
-                string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
+                //ApplicationUser user = GetApplicationUser();
 
-                ApplicationUser user = _userBiz.FindByUserName_UserManager(User.Identity.Name);
-                bool isUserAdmin = _userBiz.IsUserAdmin(user);
+                //bool isUserAdmin = IsUserAdmin(user);
 
-                //todo note... the company name is missing. We may need it.
-                ControllerIndexParams parms = new ControllerIndexParams(searchFor, selectedId, sortBy, menuLevelEnum, id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, dudEntity, user, productId, isUserAdmin, returnUrl, isandForSearch);
+                //string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
+
+
+                ControllerIndexParams parms = MakeControlParameters(
+                    id,
+                    searchFor,
+                    isandForSearch,
+                    selectedId,
+                    null,
+                    dudEntity as ICommonWithId,
+                    menuLevelEnum,
+                    sortBy,
+                    print,
+                    returnUrl,
+                    menuPathMainId,
+                    productId,
+                    productChildId);
 
                 IndexListVM indexListVM = await indexEngine(parms);
 
@@ -108,7 +117,6 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 {
                     //return View("Print", await Print(parms));
                     return PrintPdf(indexListVM);
-                    ;
                 }
 
 
@@ -133,6 +141,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
 
         }
+
 
         protected async Task<IndexListVM> indexEngine(ControllerIndexParams parameters)
         {
@@ -191,50 +200,66 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
 
         // GET: Countries/Create
-        public virtual ActionResult Create(string isandForSearch, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", string returnUrl = "")
+        public virtual ActionResult Create(string isandForSearch, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false)
         {
-            TEntity entity = Biz.EntityFactoryForHttpGet();
+            //for product this needs to create the correct vm.
+            FactoryParameters factoryParams = new FactoryParameters(menuLevelEnum, menuPathMainId);
+            TEntity dudEntity = Biz.EntityFactoryForHttpGet() as TEntity;
 
             try
             {
-                ApplicationUser user = _userBiz.FindByUserName_UserManager(User.Identity.Name);
-                bool isUserAdmin = _userBiz.IsUserAdmin(user);
+                ApplicationUser user = GetApplicationUser();
+
+
+                bool isUserAdmin = IsUserAdmin(user);
 
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, entity.Id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, (ICommonWithId)entity, user, productId, isUserAdmin, returnUrl, isandForSearch);
 
-                //we want to get the previous menu because when we do a back to list, the Index will automatically advance the menu to the next.
-                ViewBag.MenuLevelEnum = getPreviousMenuLevel(menuLevelEnum);
+                ControllerIndexParams parms = MakeControlParameters(
+                    "",
+                    searchFor,
+                    isandForSearch,
+                    selectedId,
+                    null,
+                    dudEntity,
+                    menuLevelEnum,
+                    sortBy,
+                    print,
+                    returnUrl,
+                    menuPathMainId,
+                    productId,
+                    productChildId);
 
-                return Event_CreateViewAndSetupSelectList(parm);
+
+
+                return Event_CreateViewAndSetupSelectList(parms);
 
             }
             catch (Exception e)
             {
 
-                ErrorsGlobal.Add(string.Format("'{0}' Something went wrong during creation.", ((ICommonWithId)entity).Name), MethodBase.GetCurrentMethod(), e);
+                ErrorsGlobal.Add(string.Format("'{0}' Something went wrong during creation.", ((ICommonWithId)dudEntity).Name), MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
-                return RedirectToAction("Index", new { selectedId = entity.Id.ToString() });
+
+                return RedirectToAction("Index", new { id = "", searchFor = searchFor, isandForSearch = isandForSearch, selectedId = selectedId, returnUrl = returnUrl, productId = productId, menuPathMainId = menuPathMainId, productChildId = productChildId, menuLevelEnum = menuLevelEnum, sortBy = sortBy, print = print });
             }
         }
 
-        private MenuLevelENUM getPreviousMenuLevel(MenuLevelENUM menuLevelEnum)
-        {
-            MenuModel mm = new MenuModel();
-            mm.MenuLevelEnum = menuLevelEnum;
-            return mm.GetPreviousMenuLevel();
-        }
+
 
         // POST: Countries/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> Create(TEntity entity, HttpPostedFileBase[] httpMiscUploadedFiles = null, HttpPostedFileBase[] httpSelfieUploads = null, HttpPostedFileBase[] httpIdCardFrontUploads = null, HttpPostedFileBase[] httpIdCardBackUploads = null, HttpPostedFileBase[] httpPassportFrontUploads = null, HttpPostedFileBase[] httpPassportVisaUploads = null, HttpPostedFileBase[] httpLiscenseFrontUploads = null, HttpPostedFileBase[] httpLiscenseBackUploads = null, string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", string returnUrl = "")
+        public virtual async Task<ActionResult> Create(TEntity entity, string returnUrl, string menuPathMainId, string productId, string productChildId, HttpPostedFileBase[] httpMiscUploadedFiles = null, HttpPostedFileBase[] httpSelfieUploads = null, HttpPostedFileBase[] httpIdCardFrontUploads = null, HttpPostedFileBase[] httpIdCardBackUploads = null, HttpPostedFileBase[] httpPassportFrontUploads = null, HttpPostedFileBase[] httpPassportVisaUploads = null, HttpPostedFileBase[] httpLiscenseFrontUploads = null, HttpPostedFileBase[] httpLiscenseBackUploads = null, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch="", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown)
         {
             try
             {
-                loadUserIntoEntity(entity);
+                //entity = ifProductVmThenMakeEntityIntoProduct(entity);
+
+                LoadUserIntoEntity(entity);
+
                 ControllerCreateEditParameter parm = new ControllerCreateEditParameter(
                     entity,
                     httpMiscUploadedFiles,
@@ -247,16 +272,16 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     httpLiscenseBackUploads,
                     MenuLevelENUM.unknown,
                     User.Identity.Name,
-                    menuPath1Id,
-                    menuPath2Id,
-                    menuPath3Id,
-                    productId);
+                    menuPathMainId,
+                    productId,
+                    productChildId);
 
                 await Biz.CreateAndSaveAsync(parm);
 
                 if (returnUrl.IsNullOrWhiteSpace())
-                    return Event_UpdateCreateRedicrectToAction(entity);
-
+                {
+                    return Event_UpdateCreateRedicrectToAction(parm);
+                }
                 return Redirect(returnUrl);
 
             }
@@ -264,8 +289,29 @@ namespace MarketPlace.Web6.Controllers.Abstract
             {
                 ErrorsGlobal.Add(string.Format("'{0}' Not saved!", ((ICommonWithId)entity).Name), MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
-                return RedirectToAction("Index", new { selectedId = entity.Id.ToString() });
+                return RedirectToAction("Index", new { id = entity.Id, searchFor = searchFor, isandForSearch = isandForSearch, selectedId = entity.Id, returnUrl = returnUrl, productId = productId, menuPathMainId = menuPathMainId, productChildId = productChildId, menuLevelEnum = menuLevelEnum, sortBy = sortBy, print = print });
             }
+        }
+
+        private static TEntity ifProductVmThenMakeEntityIntoProduct(TEntity entity)
+        {
+
+            IProductVM ipvm = entity as IProductVM;
+            if (ipvm.IsNull())
+                return entity; //do nothing
+
+            entity.SelfErrorCheck();
+
+            Product product = entity as Product;
+
+            if (!ipvm.IsNull()) //this is a product and a VM has returned
+            {
+                product.Name = ipvm.MakeName();
+                ipvm.SaveNameFields();
+                //Now move the VM to a Product Class
+                entity = product as TEntity;
+            }
+            return entity;
         }
 
 
@@ -275,66 +321,86 @@ namespace MarketPlace.Web6.Controllers.Abstract
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual RedirectToRouteResult Event_UpdateCreateRedicrectToAction(TEntity entity)
+        public virtual RedirectToRouteResult Event_UpdateCreateRedicrectToAction(ControllerCreateEditParameter parm)
         {
-            return RedirectToAction("Index", new { selectedId = entity.Id.ToString() });
+            return RedirectToAction("Index", new { selectedId = parm.Entity.Id.ToString() });
 
         }
 
-        private void loadUserIntoEntity(TEntity entity)
-        {
-            IHasUser iuser = entity as IHasUser;
 
-            if (iuser.IsNull())
-                return;
 
-            //is user loggerd in
-            UserName.IsNullOrWhiteSpaceThrowException("User is not logged in");
+        /// <summary>
+        /// If this is a product and it is coming from the menu, then load menupath1 into the product because the ProductVM need it.
+        /// </summary>
+        /// <param name="menuPath1Id"></param>
+        /// <param name="entity"></param>
+        //private static void ifProductThenLoadMenuPath1(string menuPath1Id, TEntity entity, MenuLevelENUM menuLevelEnum)
+        //{
+        //    bool isMenuPathNull = menuPath1Id.IsNullOrWhiteSpace();
+        //    if (isMenuPathNull)
+        //        return;
 
-            iuser.User = _userBiz.FindAll().FirstOrDefault(x => x.UserName.ToLower() == UserName.ToLower());
+        //    IProduct product = entity as IProduct;
+        //    bool isProductNull = product.IsNull();
 
-            if (iuser.User.IsNull())
-            {
-                ErrorsGlobal.Add("The User was not found.", MethodBase.GetCurrentMethod());
-                throw new Exception(ErrorsGlobal.ToString());
-            }
+        //    if (isProductNull)
+        //        return;
 
-            iuser.UserId = iuser.User.Id;
+        //    if (menuLevelEnum == MenuLevelENUM.unknown)
+        //        return;
 
-        }
+        //    if (menuLevelEnum == MenuLevelENUM.Level_1)
+        //        return;
+
+        //    //If it is a product, and the menu level is 2, then feed the menu levels in.
+        //    product.Menu.MenuPath1Id = menuPath1Id;
+
+        //}
+
+        //private MenuLevelENUM getPreviousMenuLevel(MenuLevelENUM menuLevelEnum)
+        //{
+        //    MenuModel mm = new MenuModel();
+        //    mm.MenuLevelEnum = menuLevelEnum;
+        //    return mm.GetPreviousMenuLevel();
+        //}
+
         //GetErrorsFromModelState();
 
         #endregion
 
         #region Edit
         // GET: Countries/Edit/5
-        public virtual async Task<ActionResult> Edit(string id, string isandForSearch = "", string menuPath1Id = "", string menuPath2Id = "", string menuPath3Id = "", string productId = "", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string returnUrl = "")
+        public virtual async Task<ActionResult> Edit(string id, string selectedId = "", string searchFor = "", string isandForSearch = "", string menuPathMainId = "", string productChildId = "", string productId = "", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
+            TEntity entity = _icrudBiz.Factory() as TEntity;
             try
             {
-                TEntity entity = await Biz.FindAsync(id) as TEntity;
-                if (entity == null)
-                {
-                    ErrorsGlobal.Add(string.Format("Not found!"), MethodBase.GetCurrentMethod());
-                    return HttpNotFound();
-                }
+                id.IsNullThrowExceptionArgument("Id not received. Bad Request");
 
-                //ViewBag.MenuLevelEnum = menuLevelEnum;
-                string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
+                entity = await Biz.FindAsync(id) as TEntity;
+                entity.IsNullThrowException("Entity not found.");
 
-                ApplicationUser user = _userBiz.FindByUserName_UserManager(User.Identity.Name);
-                bool isUserAdmin = _userBiz.IsUserAdmin(user);
+                ControllerIndexParams parms = MakeControlParameters(
+                    id,
+                    searchFor,
+                    isandForSearch,
+                    selectedId,
+                    entity,
+                    entity,
+                    menuLevelEnum,
+                    sortBy,
+                    print,
+                    returnUrl,
+                    menuPathMainId,
+                    productId,
+                    productChildId);
 
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, menuPath1Id, menuPath2Id, menuPath3Id, logoAddress, (ICommonWithId)entity, user, productId, isUserAdmin, returnUrl, isandForSearch);
+                return Event_CreateViewAndSetupSelectList(parms);
 
-                ViewBag.ReturnUrl = returnUrl;
+                
 
-                return Event_CreateViewAndSetupSelectList(parm);
+
+
 
             }
             catch (Exception e)
@@ -342,7 +408,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                 ErrorsGlobal.Add(string.Format("Not Saved!"), MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
-                return RedirectToAction("Index", new { selectedId = id.ToString(), returnUrl = returnUrl });
+                return RedirectToAction("Index", new { id = entity.Id, searchFor = searchFor, isandForSearch = isandForSearch, selectedId = entity.Id, returnUrl = returnUrl, productId = productId, menuPathMainId = menuPathMainId, productChildId = productChildId, menuLevelEnum = menuLevelEnum, sortBy = sortBy, print = print });
             }
         }
 
@@ -352,7 +418,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> Edit(TEntity entity, HttpPostedFileBase[] httpMiscUploadedFiles, HttpPostedFileBase[] httpSelfieUploads, HttpPostedFileBase[] httpIdCardFrontUploads, HttpPostedFileBase[] httpIdCardBackUploads, HttpPostedFileBase[] httpPassportFrontUploads, HttpPostedFileBase[] httpPassportVisaUploads, HttpPostedFileBase[] httpLiscenseFrontUploads, HttpPostedFileBase[] httpLiscenseBackUploads, FormCollection fc, string returnUrl = "")
+        public virtual async Task<ActionResult> Edit(TEntity entity, HttpPostedFileBase[] httpMiscUploadedFiles, HttpPostedFileBase[] httpSelfieUploads, HttpPostedFileBase[] httpIdCardFrontUploads, HttpPostedFileBase[] httpIdCardBackUploads, HttpPostedFileBase[] httpPassportFrontUploads, HttpPostedFileBase[] httpPassportVisaUploads, HttpPostedFileBase[] httpLiscenseFrontUploads, HttpPostedFileBase[] httpLiscenseBackUploads, FormCollection fc, string returnUrl = "", string menuPathMainId = "", string productId = "", string productChildId = "", string searchFor = "", string isandForSearch = "", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string selectedId = "")
         {
             //var req = Request;
             //string fileNameOnly = Path.GetFileNameWithoutExtension(files[0].FileName);
@@ -362,27 +428,18 @@ namespace MarketPlace.Web6.Controllers.Abstract
             try
             {
 
-                if (entity.IsNull())
-                {
+                entity.IsNullThrowExceptionArgument("No Entity received!");
 
-                    ErrorsGlobal.AddMessage("No item received.");
-                }
-
-                loadUserIntoEntity(entity);
+                LoadUserIntoEntity(entity);
 
                 //get the Db Entity for this...
                 TEntity dbEntity = Biz.Find(entity.Id);
-
-                if (dbEntity.IsNull())
-                {
-                    ErrorsGlobal.Add("Entity not found.", MethodBase.GetCurrentMethod());
-                    throw new Exception(ErrorsGlobal.ToString());
-                }
+                dbEntity.IsNullThrowException("Entity not found!");
 
                 dbEntity.UpdatePropertiesDuringModify(entity);
 
                 ControllerCreateEditParameter parm = new ControllerCreateEditParameter(
-                    dbEntity,
+                    entity,
                     httpMiscUploadedFiles,
                     httpSelfieUploads,
                     httpIdCardFrontUploads,
@@ -392,21 +449,23 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     httpLiscenseFrontUploads,
                     httpLiscenseBackUploads,
                     MenuLevelENUM.unknown,
-                    User.Identity.Name ?? "",
-                    "", "", "", "");
+                    User.Identity.Name,
+                    menuPathMainId,
+                    productId,
+                    productChildId);
 
                 await Biz.UpdateAndSaveAsync(parm);
 
-                if (entity.ReturnUrl.IsNullOrWhiteSpace())
+                if (returnUrl.IsNullOrWhiteSpace())
                     return RedirectToAction("Index", new { selectedId = entity.Id.ToString() });
 
-                return Redirect(entity.ReturnUrl);
+                return Redirect(returnUrl);
             }
             catch (Exception e)
             {
                 ErrorsGlobal.Add(string.Format("Not saved!"), MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
-                return RedirectToAction("Index", new { selectedId = entity.Id.ToString() });
+                return RedirectToAction("Index", new { id = entity.Id, searchFor = searchFor, isandForSearch = isandForSearch, selectedId = entity.Id, returnUrl = returnUrl, productId = productId, menuPathMainId = menuPathMainId, productChildId = productChildId, menuLevelEnum = menuLevelEnum, sortBy = sortBy, print = print });
             }
         }
 
@@ -415,7 +474,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         #region Details
 
         // GET: Countries/Details/5
-        public async Task<ActionResult> Details(string id, string returnUrl = "")
+        public async Task<ActionResult> Details(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, string productId, string menuPathMainId, string productChildId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false)
         {
             if (id == null)
             {
@@ -430,16 +489,30 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 {
                     return HttpNotFound();
                 }
-                MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown; //dummy entry
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
 
                 ApplicationUser user = _userBiz.FindByUserName_UserManager(User.Identity.Name);
                 bool isUserAdmin = _userBiz.IsUserAdmin(user);
 
-                string isandForSearchDummy = "";
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, "", "", "", logoAddress, (ICommonWithId)entity, user, "", isUserAdmin, returnUrl, isandForSearchDummy);
+                //ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, menuLevelEnum, id, "", "", "", logoAddress, (ICommonWithId)entity, user, "", isUserAdmin, returnUrl, isandForSearchDummy);
 
-                return Event_CreateViewAndSetupSelectList(parm);
+                ControllerIndexParams parms = 
+                    MakeControlParameters(
+                        entity.Id,
+                        searchFor,
+                        isandForSearch,
+                        selectedId,
+                        entity,
+                        entity,
+                        menuLevelEnum,
+                        sortBy,
+                        print,
+                        returnUrl,
+                        menuPathMainId,
+                        productId,
+                        productChildId);
+
+                return Event_CreateViewAndSetupSelectList(parms);
 
 
             }
@@ -447,7 +520,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
             {
                 ErrorsGlobal.Add("Not found!", MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
-                return RedirectToAction("Index", new { selectedId = id.ToString() });
+                return RedirectToAction("Index", new { id = id, searchFor = searchFor, isandForSearch = isandForSearch, selectedId = id, returnUrl = returnUrl, productId = productId, menuPathMainId = menuPathMainId, productChildId = productChildId, menuLevelEnum = menuLevelEnum, sortBy = sortBy, print = print });
             }
         }
 
@@ -456,7 +529,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
         #region Delete
         // GET: Countries/Delete/5
-        public async Task<ActionResult> Delete(string id, string returnUrl)
+        public async Task<ActionResult> Delete(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, string productId, string menuPathMainId, string productChildId, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false)
         {
 
             if (id == null)
@@ -480,11 +553,23 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
                 ApplicationUser user = _userBiz.FindByUserName_UserManager(User.Identity.Name);
                 bool isUserAdmin = _userBiz.IsUserAdmin(user);
-                string isandForSearchDummy = "";
 
-                ControllerIndexParams parm = new ControllerIndexParams("", "", SortOrderENUM.Item1_Asc, MenuLevelENUM.unknown, id, "", "", "", logoAddress, (ICommonWithId)entity, user, "", isUserAdmin, returnUrl, isandForSearchDummy);
+                ControllerIndexParams parms = MakeControlParameters(
+                    id,
+                    searchFor,
+                    isandForSearch,
+                    selectedId,
+                    entity,
+                    entity,
+                    menuLevelEnum,
+                    sortBy,
+                    print,
+                    returnUrl,
+                    menuPathMainId,
+                    productId,
+                    productChildId);
 
-                return Event_CreateViewAndSetupSelectList(parm);
+                return Event_CreateViewAndSetupSelectList(parms);
 
             }
             catch (Exception e)

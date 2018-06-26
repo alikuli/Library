@@ -1,6 +1,9 @@
 ﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.SharedNS;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +14,28 @@ namespace UowLibrary.ProductNS
     {
 
         //this returns a list of checked boxes marked true
-        public List<CheckBoxItem> LoadMenuPathCheckedBoxes(Product product)
+        //public List<CheckBoxItem> LoadMenuPathCheckedBoxes(IProduct product, MenuPath1ENUM menuPath1Enum = MenuPath1ENUM.Unknown)
+        //Note, the MenuPath1 of the Product should have the correct Menupath or a MenuPath1 has to be passed.
+        public void LoadMenuPathCheckedBoxes(IProduct iproduct)
         {
+            IProduct product = iproduct;
+            product.MenuManager.MenuPath1Id.IsNullOrWhiteSpaceThrowException("Menu Path 1 is null.");
+
+            MenuPath1 mp1 = _menuPath1Biz.Find(product.MenuManager.MenuPath1Id);
+            mp1.IsNullThrowException("Menu path 1 not found");
+
+
             var allMenuPaths = MenuPathMainBiz.FindAll();
 
+            if (mp1.MenuPath1Enum != MenuPath1ENUM.Unknown)
+            {
+                //filter the allMenuPaths
+                //find the menuPath1 which holds this
+                allMenuPaths = allMenuPaths.Where(x => x.MenuPath1.MenuPath1Enum == mp1.MenuPath1Enum);
+            }
+
             if (allMenuPaths.IsNullOrEmpty())
-                return null;
+                return;
 
             //Now create all the check boxes
             List<CheckBoxItem> checkedboxes = new List<CheckBoxItem>();
@@ -27,24 +46,25 @@ namespace UowLibrary.ProductNS
                 checkedboxes.Add(chk);
             }
 
-            //Now mark all the ones contained in this product as true
-
-            if (product.MenuPathMains.IsNullOrEmpty())
-                return checkedboxes;
-
-            //Now initialize the values in the check boxes
-            foreach (var menuPaths in product.MenuPathMains)
+            //Here we are going to get the marked menupaths
+            if (!product.MenuPathMains.IsNullOrEmpty())
             {
-                CheckBoxItem cbi = checkedboxes.FirstOrDefault(x => x.Id == menuPaths.Id);
-                if (cbi.IsNull())
-                    continue;
-                cbi.IsTrue = true;
-            }
 
-            return checkedboxes;
+
+                //Now mark all the ones contained in this product as true
+                //Now initialize the values in the check boxes
+                foreach (var menuPaths in product.MenuPathMains)
+                {
+                    CheckBoxItem cbi = checkedboxes.FirstOrDefault(x => x.Id == menuPaths.Id);
+                    if (cbi.IsNull())
+                        continue;
+                    cbi.IsTrue = true;
+                }
+            }
+            product.CheckedBoxesList = checkedboxes;
         }
 
-        public void GetDataFromMenuPathCheckBoxes(Product product)
+        public void GetDataFromMenuPathCheckBoxes(IProduct product)
         {
             product.IsNullThrowExceptionArgument("product is null");
 
@@ -64,13 +84,16 @@ namespace UowLibrary.ProductNS
         /// This adds all the selected Menu Paths.
         /// </summary>
         /// <param name="product"></param>
-        private void addSelectedMenuPathMain(Product product)
+        private void addSelectedMenuPathMain(IProduct product)
         {
             List<CheckBoxItem> selectedPaths = product.CheckedBoxesList.Where(x => x.IsTrue == true).ToList();
 
             //there are none to add
             if (selectedPaths.IsNullOrEmpty())
                 return;
+
+            if (product.MenuPathMains.IsNull())
+                product.MenuPathMains = new List<MenuPathMain>();
 
             //Now add the selected paths to the product.
             foreach (var cbi in selectedPaths)
@@ -87,7 +110,7 @@ namespace UowLibrary.ProductNS
                 mpm.IsNullThrowException("Main path not found! Programming error.");
 
                 product.MenuPathMains.Add(mpm);
-                mpm.Products.Add(product);
+                mpm.Products.Add((Product)product);
 
             }
         }
@@ -97,7 +120,7 @@ namespace UowLibrary.ProductNS
         /// This removes all the unselected Menupaths from the product.
         /// </summary>
         /// <param name="product"></param>
-        private static void removeUnselectedMenuPaths(Product product)
+        private static void removeUnselectedMenuPaths(IProduct product)
         {
             //Nothing to remove.
             if (product.MenuPathMains.IsNullOrEmpty())
@@ -131,7 +154,7 @@ namespace UowLibrary.ProductNS
                         MenuPathMain mpm = product.MenuPathMains.FirstOrDefault(x => x.Id == id);
                         mpm.IsNullThrowException("Menu Path was not found. Programming error.");
                         product.MenuPathMains.Remove(mpm);
-                        mpm.Products.Remove(product);
+                        mpm.Products.Remove((Product)product);
 
                     }
                 }

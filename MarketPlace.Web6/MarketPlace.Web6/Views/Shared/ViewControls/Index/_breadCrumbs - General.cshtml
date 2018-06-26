@@ -5,13 +5,13 @@
 <p>
 
     @{
+        string actionName = "index";
         string linkTextHome = "Admin Home";
         string linkTextLevel1 = "List of " + Model.Heading.RecordNamePlural;
-        string linkTextLevel2 = ((RazorView)ViewContext.View).ViewPath + " " + Model.Heading.RecordNamePlural;
-        string linkTextLevel3 = Model.Menu.MenuPath2Name;
-        string linkTextProductLevel = Model.Menu.MenuPath3Name;
-        string actionName = "index";
-        var controllerNameMenuGeneral = this.ViewContext.RouteData.Values["controller"].ToString();
+        //string linkTextLevel2 = ((RazorView)ViewContext.View).ViewPath + " " + Model.Heading.RecordNamePlural;
+        //string linkTextLevel3 = Model.Menu.MenuPath2Name;
+        //string linkTextProductLevel = Model.Menu.MenuPath3Name;
+        //var controllerNameMenuGeneral = this.ViewContext.RouteData.Values["controller"].ToString();
     }
 
     <nav aria-label="breadcrumb">

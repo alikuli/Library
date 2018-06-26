@@ -1,6 +1,7 @@
 ﻿using System;
 using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.ProductNS;
+using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS;
 namespace InterfacesLibrary.DocumentsNS
 
 {

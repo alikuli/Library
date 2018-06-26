@@ -115,7 +115,7 @@ namespace UowLibrary
                 if (recordExists)
                     continue;
 
-                TEntity tentity = Factory();
+                TEntity tentity = Factory() as TEntity;
                 tentity.Name = dataList[i];
                 CreateSave_ForInitializeOnly(tentity);
             }

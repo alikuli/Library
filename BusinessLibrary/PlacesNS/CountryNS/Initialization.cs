@@ -27,7 +27,7 @@ namespace UowLibrary
                     string abbrev = countryDataArray[i, 1];
                     string phoneAreaCode = countryDataArray[i, 2];
 
-                    Country c = Factory();
+                    Country c = Factory() as Country;
                     c.Abbreviation = (abbrev.IsNull() ? abbrev : abbrev.ToUpper());
                     c.Name = countryName;
 

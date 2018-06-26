@@ -1,14 +1,9 @@
 ﻿using AliKuli.Extentions;
 using ApplicationDbContextNS;
 using DalLibrary.Interfaces;
-using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
-using System.Data.Entity;
 using System.Linq;
-using System.Reflection;
-using System.Web.Mvc;
 
 
 namespace DalLibrary.DalNS
@@ -26,7 +21,7 @@ namespace DalLibrary.DalNS
 
         public string GetSelfClassName()
         {
-            TEntity entity = Factory();
+            TEntity entity = Factory() as TEntity;
             return entity.MetaData.GetSelfClassName();
 
         }

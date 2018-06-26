@@ -8,21 +8,23 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         {
             MenuLevel = MenuLevelENUM.unknown;
         }
-        public MenuParameters(MenuLevelENUM menuLevelEnum, string productCat1Id, string productCat2Id, string productCat3Id, string productId)
+        public MenuParameters(MenuLevelENUM menuLevelEnum, string menuPathMainId, string productId, string productChildId)
         {
             MenuLevel = menuLevelEnum;
-            MenuPath1Id = productCat1Id;
-            MenuPath2Id = productCat2Id;
-            MenuPath3Id = productCat3Id;
+            MenuPathMainId = menuPathMainId;
+            ProductChildId = productChildId;
             ProductId = productId;
         }
 
         public MenuLevelENUM MenuLevel { get; set; }
-        public string MenuPath1Id { get; set; }
-        public string MenuPath2Id { get; set; }
-        public string MenuPath3Id { get; set; }
+        public string MenuPathMainId { get; set; }
         public string ProductId { get; set; }
+        public string ProductChildId { get; set; }
 
+
+        //public string MenuPath1Id { get; set; }
+        //public string MenuPath2Id { get; set; }
+        //public string MenuPath3Id { get; set; }
 
     }
 }

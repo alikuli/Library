@@ -11,6 +11,7 @@ using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 using ModelsClassLibrary.ModelsNS.SharedNS.CounterNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.RightsNS;
@@ -23,7 +24,6 @@ namespace ApplicationDbContextNS
     {
 
         #region IDbSet
-
         //public virtual IDbSet<AddressWithId> Addresses { get; set; }
         //public IDbSet<AddressCategory> AddressCategories { get; set; }
         //public virtual IDbSet<City> Cities { get; set; }

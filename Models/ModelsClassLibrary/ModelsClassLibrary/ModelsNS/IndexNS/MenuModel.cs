@@ -3,6 +3,7 @@ using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 
 namespace ModelsClassLibrary.ViewModels
 {
@@ -21,7 +22,13 @@ namespace ModelsClassLibrary.ViewModels
         //public List<Product> ProductList { get; set; }
 
         public MenuLevelENUM MenuLevelEnum { get; set; }
-        public bool IsMenu { get; set; }
+        public bool IsMenu
+        {
+            get
+            {
+                return !MenuPathMain.IsNull();
+            }
+        }
 
         public string MenuPath1_Id
         {
@@ -38,6 +45,17 @@ namespace ModelsClassLibrary.ViewModels
 
         }
 
+        public MenuPath1 MenuPath1
+        {
+            get
+            {
+                MenuPathMain.IsNullThrowException("Menu Path Main is NULL. Programming Error");
+                MenuPathMain.MenuPath1.IsNullThrowException("Menu Path 1 is null. Programming Error");
+
+                return MenuPathMain.MenuPath1;
+            }
+        }
+
         public string MenuPath2_Id
         {
             get
@@ -51,6 +69,7 @@ namespace ModelsClassLibrary.ViewModels
             }
 
         }
+
 
         public string MenuPath3_Id
         {
@@ -162,5 +181,57 @@ namespace ModelsClassLibrary.ViewModels
 
         //this is the return URL will be employed when in Menus
         public string ReturnUrl { get; set; }
+
+        /// <summary>
+        /// This is what the controller will be called for all ProductVMs, basicaly the class name with a "s" attached, showing a plural.
+        /// However, strict pluralization is not followed. Always a "s" is added.
+        /// </summary>
+        public string ControlerNameForProductVms
+        {
+            get
+            {
+
+                switch (MenuPath1.MenuPath1Enum)
+                {
+                    case MenuPath1ENUM.Unknown:
+                        break;
+                    case MenuPath1ENUM.Automobiles:
+                        return typeof(ProductAutomobileVM).Name + "s";
+
+                    case MenuPath1ENUM.MensClothing:
+                        break;
+                    case MenuPath1ENUM.WomensClothing:
+                        break;
+                    case MenuPath1ENUM.Electronics:
+                        break;
+                    case MenuPath1ENUM.Foods:
+                        break;
+                    case MenuPath1ENUM.HomeServants:
+                        break;
+                    case MenuPath1ENUM.FactoryWorkers:
+                        break;
+                    case MenuPath1ENUM.OfficeWorkers:
+                        break;
+                    case MenuPath1ENUM.Machines:
+                        break;
+                    case MenuPath1ENUM.Stationary:
+                        break;
+                    case MenuPath1ENUM.FruitProccessors:
+                        break;
+                    case MenuPath1ENUM.Steel:
+                        break;
+                    case MenuPath1ENUM.Cement:
+                        break;
+                    case MenuPath1ENUM.Electricity:
+                        break;
+                    default:
+                        break;
+                }
+
+                return MenuPathMain.MenuPath1Id;
+
+            }
+
+        }
     }
 }

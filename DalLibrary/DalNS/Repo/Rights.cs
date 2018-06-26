@@ -136,7 +136,7 @@ namespace DalLibrary.DalNS
         /// <returns></returns>
         private IRight getUserRights()
         {
-            TEntity entityDud = Factory();
+            TEntity entityDud = Factory() as TEntity;
 
             if (!isUserLoggedIn())
             {

@@ -13,7 +13,7 @@ namespace MarketPlace.Web6.Controllers
         UserBiz _userBiz;
         ConfigManagerHelper _configManager;
         public HomeController(IErrorSet errorSet, UserBiz userBiz)
-            : base(errorSet)
+            : base(errorSet, userBiz)
         {
             _userBiz = userBiz;
             _configManager = new ConfigManagerHelper();

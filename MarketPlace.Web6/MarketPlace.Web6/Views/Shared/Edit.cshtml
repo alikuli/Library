@@ -1,15 +1,24 @@
-﻿@model InterfacesLibrary.SharedNS.ICommonWithId
+﻿@*@model InterfacesLibrary.SharedNS.ICommonWithId*@
+@model  ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.IHaveMenuManager
 
 @*The returnUrl is used for returning when in Menus. One does not want to end up back into the item mode if an edit is done from the
 menus, but rather one should come back to where one started the edit from.*@
 
 
-@Html.HiddenFor(model => model.Id)
+@*@Html.HiddenFor(model => model.Id)*@
 
 @{
     var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
     string returnUrl = ViewBag.ReturnUrl as string;
 }
+
+@{    
+    ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.IProduct iproduct = Model as ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.IProduct;
+    MenuLevelENUM previousMenuLevel = iproduct.MenuManager.GetPreviousMenuLevel(); //Need this for bread crumbs}   
+}
+    <div class="col-xs-6 col-lg-6">
+        @*@Html.Partial(@"ViewControls/index/_breadCrumbs")*@
+    </div>
 
 @Html.Partial(@"ViewControls/Edit/_breadCrumbs - Edit")
 @Html.Partial(@"ViewControls/Edit/_EditHeading")
@@ -47,7 +56,7 @@ menus, but rather one should come back to where one started the edit from.*@
     }
         @if (returnUrl.IsNullOrWhiteSpace())
         { 
-            @Html.ActionLink("Back to List", "Index", new { menuLevelEnum = @ViewBag.MenuLevelEnum, menuPath1Id = menuPath1, menuPath2Id = menuPath2, menuPath3Id = menuPath3, selectedId = Model.Id })
+            @Html.ActionLink("Back to List", "Index", new { menuLevelEnum = @ViewBag.MenuLevelEnum,. Men })
         }
         else
         {

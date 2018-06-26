@@ -3,6 +3,8 @@ using AliKuli.Tools;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelClassLibrary.MigraDocNS;
+using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.SharedNS;
 using System;
@@ -15,7 +17,7 @@ namespace ModelsClassLibrary.ViewModels
     /// <summary>
     /// The indexListVM holds just the list of Ids and Names.
     /// </summary>
-    public class IndexListVM
+    public class IndexListVM : IHaveMenuManager
     {
 
         string[] _listOfStopWords;
@@ -34,21 +36,21 @@ namespace ModelsClassLibrary.ViewModels
 
         //}
 
-        public IndexListVM(SortOrderENUM sortOrderEnum, string searchFor, string selectedId, ICommonWithId dudEntity, string webCompanyName, string logoaddress, ApplicationUser user, bool userIsAdmin, string returnUrl, bool isAndForSearch)
+        public IndexListVM(string id, SortOrderENUM sortOrderEnum, string searchFor, string selectedId, ICommonWithId dudEntity, string webCompanyName, string logoaddress, ApplicationUser user, bool userIsAdmin, string returnUrl, bool isAndForSearch)
         {
-            initialize(sortOrderEnum, searchFor, selectedId, dudEntity, webCompanyName, logoaddress, user, userIsAdmin, returnUrl, isAndForSearch);
+            initialize(id, sortOrderEnum, searchFor, selectedId, dudEntity, webCompanyName, logoaddress, user, userIsAdmin, returnUrl, isAndForSearch);
         }
 
 
         public IndexListVM(ControllerIndexParams p)
-            : this(p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.User, p.UserIsAdmin, p.ReturnUrl, p.IsAndForSearch)
+            : this(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.User, p.UserIsAdmin, p.ReturnUrl, p.IsAndForSearch)
         {
         }
 
-        private void initialize(SortOrderENUM sortOrderEnum, string searchFor, string selectedId, ICommonWithId dudEntity, string webCompanyName, string logoaddress, ApplicationUser user, bool userIsAdmin, string returnUrl, bool isAndForSearch)
+        private void initialize(string id, SortOrderENUM sortOrderEnum, string searchFor, string selectedId, ICommonWithId dudEntity, string webCompanyName, string logoaddress, ApplicationUser user, bool userIsAdmin, string returnUrl, bool isAndForSearch)
         {
             SortOrderEnum = sortOrderEnum;
-
+            Id = id;
             SearchFor = searchFor;
             IsAndForSearch = isAndForSearch;
 
@@ -58,8 +60,8 @@ namespace ModelsClassLibrary.ViewModels
             //this creates the incoming description. Otherwise it was only being created everytime we 
             //sorted... that is still happening.
 
-            Menu = new MenuModel();
-            Menu.ReturnUrl = returnUrl;
+            //Menu = new MenuModel();
+            //Menu.ReturnUrl = returnUrl;
 
             Show = new Show();
             SelectedId = selectedId;
@@ -84,6 +86,9 @@ namespace ModelsClassLibrary.ViewModels
             //setup.
             _listOfStopWords = StringTools.GetStopWords();
             _searchWords = getSearchWords();
+
+            MenuManager = new MenuManager(Id);
+            MenuManager.ReturnUrl = returnUrl;
         }
 
         public void Load(ControllerIndexParams p)
@@ -106,9 +111,19 @@ namespace ModelsClassLibrary.ViewModels
             //Menu.ReturnUrl = p.ReturnUrl;
             //IsAndForSearch = p.IsAndForSearch;
             string webCompany = "";
-            initialize(p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, webCompany, p.LogoAddress, p.User, p.UserIsAdmin, p.ReturnUrl, p.IsAndForSearch);
+            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, webCompany, p.LogoAddress, p.User, p.UserIsAdmin, p.ReturnUrl, p.IsAndForSearch);
 
         }
+
+        /// <summary>
+        /// Note. This Id is dangerous. 
+        /// This Id has various values.
+        /// When MenuLevel is 1 to 3 - This is MenuPath1Id
+        /// When MenuLevel is 4 -This is a productId 
+        /// When MenuLevel is 5 -This is a productChildId 
+        /// Always access this through the Menu
+        /// </summary>
+        protected string Id { get; set; }
 
         public Logo Logo { get; set; }
         public PdfHeaderInfo PdfHeaderInfo { get; set; }
@@ -732,7 +747,6 @@ namespace ModelsClassLibrary.ViewModels
 
         #endregion
 
-        public MenuModel Menu { get; set; }
 
         //private string getSortDescription()
         //{
@@ -785,5 +799,8 @@ namespace ModelsClassLibrary.ViewModels
 
         public bool UserIsAdmin { get; set; }
 
+
+        //public MenuModel Menu { get; set; }
+        public IMenuManager MenuManager { get; set; }
     }
 }

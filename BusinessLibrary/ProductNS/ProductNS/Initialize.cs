@@ -263,7 +263,7 @@ namespace UowLibrary.ProductNS
                         if (!pi.IsNull())
                             throw new Exception(string.Format("Duplicate product Identifier: '{0}'", piStr));
 
-                        pi = ProductIdentifierBiz.Factory();
+                        pi = ProductIdentifierBiz.Factory() as ProductIdentifier;
 
                         pi.Name = piStr;
                         pi.Product = p;

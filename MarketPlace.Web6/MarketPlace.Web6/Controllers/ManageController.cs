@@ -16,8 +16,8 @@ namespace MarketPlace.Web6.Controllers
     public class ManageController : AbstractController
     {
         readonly ManageControllerBiz _manageControllerUOW;
-        public ManageController(ManageControllerBiz manageControllerUOW, IErrorSet errorSet)
-            : base(errorSet)
+        public ManageController(ManageControllerBiz manageControllerUOW, IErrorSet errorSet, UserBiz userBiz)
+            : base(errorSet, userBiz)
         {
             _manageControllerUOW = manageControllerUOW;
         }

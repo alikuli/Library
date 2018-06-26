@@ -96,6 +96,7 @@
     <Compile Include="Extentions\GuidExtentions.cs" />
     <Compile Include="Extentions\IntExtentions.cs" />
     <Compile Include="Extentions\ListExtentions.cs" />
+    <Compile Include="Extentions\MvcHtmlHelpers.cs" />
     <Compile Include="Extentions\ObjectExtentions.cs" />
     <Compile Include="Extentions\StringExtension.cs" />
     <Compile Include="Extentions\GuidHelper.cs" />
