@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
@@ -128,6 +129,7 @@ namespace UowLibrary
                         isEditLocked,
                         detailInfoToDisplayOnWebsite);
 
+                    indexItem.MenuManager = indexListVM.MenuManager as MenuManager;
                     Event_ModifyIndexItem(indexListVM, indexItem, entity);
 
                     if (AddEntryToIndex)

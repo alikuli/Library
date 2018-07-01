@@ -251,10 +251,22 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ModelsNS\IndexNS\Headings.cs" />
-    <Compile Include="InterfacesNS\SharedNS\FeaturesNS\IMenuManager.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\IMenuManager.cs" />
     <Compile Include="InterfacesNS\SharedNS\FeaturesNS\IHaveMenuManager.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuManagerProperties.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\MenuManager_Lv1.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\CreateMenuStatesNS\CreateMenuStateAbstract.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\CreateMenuStatesNS\CreateMenuState_Empty.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\CreateMenuStatesNS\CreateMenuState_Lv3.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\CreateMenuStatesNS\CreateMenuState_Lv1.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\CreateMenuStatesNS\CreateMenuState_Lv2.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\CreateMenuStatesNS\ICreateMenuState.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\IMenuManagerState.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\MenuManagerStateAbstract.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\MenuManagerState_Empty.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\MenuManagerState_Lv3.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\MenuManagerState_Lv4.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\MenuManagerState_Lv5.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\MenuManagerState_Lv2.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\MenuManagerState_Lv1.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuPathMainNS\Menu.cs" />
     <Compile Include="ModelsNS\MigraDocNS\PdfHeaderInfo.cs" />
     <Compile Include="ModelsNS\MigraDocNS\OptionsPdfDoc.cs" />

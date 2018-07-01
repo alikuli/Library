@@ -1,25 +1,12 @@
-﻿using AliKuli.UtilitiesNS;
-using ApplicationDbContextNS;
-using DalLibrary.Interfaces;
-using EnumLibrary.EnumNS;
-using ErrorHandlerLibrary.ExceptionsNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.ViewModels;
-using UserModels;
-using WebLibrary.Programs;
-using System;
-using ModelsClassLibrary.RightsNS;
-using System.Web.Mvc;
-using System.Threading.Tasks;
-using System.Text;
-using AliKuli.Extentions;
-using ModelsClassLibrary.ModelsNS.ProductNS;
-using System.Reflection;
+﻿using AliKuli.Extentions;
 using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.RightsNS;
+using System;
+using System.Text;
 
 namespace UowLibrary.ProductNS
 {
-    public partial class MenuPathMainBiz 
+    public partial class MenuPathMainBiz
     {
 
 
@@ -34,49 +21,31 @@ namespace UowLibrary.ProductNS
 
         private void MakeName(MenuPathMain entity)
         {
-            string menu1Name = "";
-            string menu2Name = "";
-            string menu3Name = "";
 
+            MenuPath1 menu1;
+            MenuPath2 menu2;
+            MenuPath3 menu3;
             if (!entity.MenuPath1Id.IsNullOrWhiteSpace())
-            {
-                var menu1 = _menupath1Biz.Find(entity.MenuPath1Id);
-
-                if (menu1.IsNull())
-                {
-                    ErrorsGlobal.Add("Menu Path 1 was not found", MethodBase.GetCurrentMethod());
-                    throw new Exception(ErrorsGlobal.ToString());
-                }
-                menu1Name = menu1.Name;
-
-            }
+                menu1 = _menupath1Biz.Find(entity.MenuPath1Id);
+            else
+                menu1 = entity.MenuPath1;
 
             if (!entity.MenuPath2Id.IsNullOrWhiteSpace())
-            {
-                var c2 = _menupath2Biz.Find(entity.MenuPath2Id);
-
-                if (c2.IsNull())
-                {
-                    entity.Name = entity.MakeName(menu1Name, menu2Name, menu3Name);
-                    return;
-                }
-                menu2Name = c2.Name;
-
-            }
-
+                menu2 = _menupath2Biz.Find(entity.MenuPath2Id);
+            else
+                menu2 = entity.MenuPath2;
 
             if (!entity.MenuPath3Id.IsNullOrWhiteSpace())
-            {
-                var c3 = _menupath3Biz.Find(entity.MenuPath3Id);
+                menu3 = _menupath3Biz.Find(entity.MenuPath3Id);
+            else
+                menu3 = entity.MenuPath3;
 
-                if (!c3.IsNull())
-                {
-                    menu3Name = c3.Name;
-                }
 
-            }
+            menu1.IsNullThrowException();
+            menu2.IsNullThrowException();
+            menu3.IsNullThrowException();
 
-            entity.Name = entity.MakeName(menu1Name, menu2Name, menu3Name);
+            entity.Name = entity.MakeName(menu1.Name, menu2.Name, menu3.Name);
         }
 
 
@@ -99,13 +68,13 @@ namespace UowLibrary.ProductNS
                 }
 
                 sb.Append(string.Format(" {0} [{1}]",
-                    user.UserName, 
+                    user.UserName,
                     user.Id));
 
 
             }
             return sb.ToString();
-        }        
+        }
 
     }
 }

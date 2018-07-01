@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
@@ -16,7 +17,8 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         public Product()
         {
-            MenuManager = new MenuManager(Id);
+            MenuManager = new MenuManager(Id, null, this, null, MenuLevelENUM.unknown, string.Empty, false, "", "", "", SortOrderENUM.Item1_Asc, ActionNameENUM.Unknown);
+
         }
 
         [NotMapped]

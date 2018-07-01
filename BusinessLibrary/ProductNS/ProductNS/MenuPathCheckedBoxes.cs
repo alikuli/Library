@@ -25,32 +25,29 @@ namespace UowLibrary.ProductNS
             mp1.IsNullThrowException("Menu path 1 not found");
 
 
-            var allMenuPaths = MenuPathMainBiz.FindAll();
+            var allMenuPaths = MenuPathMainBiz.FindAllMenuPathMainsFor(mp1.MenuPath1Enum);
 
-            if (mp1.MenuPath1Enum != MenuPath1ENUM.Unknown)
-            {
-                //filter the allMenuPaths
-                //find the menuPath1 which holds this
-                allMenuPaths = allMenuPaths.Where(x => x.MenuPath1.MenuPath1Enum == mp1.MenuPath1Enum);
-            }
 
             if (allMenuPaths.IsNullOrEmpty())
                 return;
 
             //Now create all the check boxes
-            List<CheckBoxItem> checkedboxes = new List<CheckBoxItem>();
+            List<CheckBoxItem> checkedboxes = createAllCheckBoxes(allMenuPaths);
+            markProductSelectedCheckBoxesTrue(product, checkedboxes);
 
-            foreach (var menupath in allMenuPaths)
-            {
-                CheckBoxItem chk = new CheckBoxItem(menupath.Id, menupath.Name, true);
-                checkedboxes.Add(chk);
-            }
+            product.CheckedBoxesList = checkedboxes;
+        }
 
+        /// <summary>
+        /// This marks the check boxes that have been selected in the product true.
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="checkedboxes"></param>
+        private static void markProductSelectedCheckBoxesTrue(IProduct product, List<CheckBoxItem> checkedboxes)
+        {
             //Here we are going to get the marked menupaths
             if (!product.MenuPathMains.IsNullOrEmpty())
             {
-
-
                 //Now mark all the ones contained in this product as true
                 //Now initialize the values in the check boxes
                 foreach (var menuPaths in product.MenuPathMains)
@@ -61,7 +58,18 @@ namespace UowLibrary.ProductNS
                     cbi.IsTrue = true;
                 }
             }
-            product.CheckedBoxesList = checkedboxes;
+        }
+
+        private static List<CheckBoxItem> createAllCheckBoxes(IQueryable<MenuPathMain> allMenuPaths)
+        {
+            List<CheckBoxItem> checkedboxes = new List<CheckBoxItem>();
+
+            foreach (var menupath in allMenuPaths)
+            {
+                CheckBoxItem chk = new CheckBoxItem(menupath.Id, menupath.Name, true);
+                checkedboxes.Add(chk);
+            }
+            return checkedboxes;
         }
 
         public void GetDataFromMenuPathCheckBoxes(IProduct product)

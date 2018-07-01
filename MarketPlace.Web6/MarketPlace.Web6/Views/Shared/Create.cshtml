@@ -2,43 +2,39 @@
 
 @{
     var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
-    string menuPath1 = "";
-    string menuPath2 = "";
-    string menuPath3 = "";
+    string menuPathMainId = "";
     string productId = "";
-    string returnUrl ="";
+    string productChildId = "";
+    string returnUrl = "";
+    string selectId = "";
+    string searchString = "";
+    MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown;
+    MenuLevelENUM previousMenuLevelEnum = MenuLevelENUM.unknown;
+
+
+    ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.IHaveMenuManager ihaveMenuManager = Model as ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.IHaveMenuManager;
+    if (!ihaveMenuManager.IsNull())
+    {
+        ihaveMenuManager.MenuManager.ControllerCurrent = controllerName;
+        controllerName = ihaveMenuManager.MenuManager.ControllerNameInViewIndexForCreateAndEdit;
+
+        menuPathMainId = ihaveMenuManager.MenuManager.MenuPathMainId;
+        returnUrl = ihaveMenuManager.MenuManager.ReturnUrl;
+        productId = ihaveMenuManager.MenuManager.ProductId;
+        productChildId = ihaveMenuManager.MenuManager.ProductChildId;
+        selectId = ihaveMenuManager.MenuManager.SelectId;
+        searchString = ihaveMenuManager.MenuManager.SearchString;
+        menuLevelEnum = ihaveMenuManager.MenuManager.MenuLevelEnum;
+        previousMenuLevelEnum = ihaveMenuManager.MenuManager.GetPreviousMenuLevel();
+    }
+
     
-    //This works if the Model is MenuPathMain
-    ModelsClassLibrary.MenuNS.MenuPathMain pcm = Model as ModelsClassLibrary.MenuNS.MenuPathMain;
-    if (!pcm.IsNull())
-    {
-        bool isMenu = (ViewBag.IsMenu) ?? false;
-        if (isMenu)
-        {
-            menuPath1 = pcm.MenuPath1Id;
-            menuPath2 = pcm.MenuPath2Id;
-            menuPath3 = pcm.MenuPath3Id;
-            returnUrl = pcm.ReturnUrl;
-            productId = pcm.ProductId;
-        }
-    }
+}
+        @Html.Partial(@"ViewControls/index/_breadCrumbs")
 
-    ModelsClassLibrary.ModelsNS.ProductNS.Product product = Model as ModelsClassLibrary.ModelsNS.ProductNS.Product;
-    if (!product.IsNull())
-    {
-        menuPath1 = product.Menu.MenuPath1Id;
-        menuPath2 = product.Menu.MenuPath2Id;
-        menuPath3 = product.Menu.MenuPath3Id;
-        //returnUrl = pcm.ReturnUrl;
-        productId = product.Menu.ProductId;
-    }
-
-    }
-@Html.HiddenFor(model => model.Id)
-@Html.Partial(@"ViewControls/Create/_breadCrumbs - Create")
 @Html.Partial(@"ViewControls/Create/_CreateHeading")
 
-@using (Html.BeginForm("Create", @controllerName, new { menuPath1Id = menuPath1, menuPath2Id = menuPath2, menuPath3Id = menuPath3, productId = productId, returnUrl = returnUrl }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", @controllerName, new { menuPathMainId = menuPathMainId, productId = productId, returnUrl = returnUrl, productChildId = productChildId, menuLevelEnum = menuLevelEnum, selectId = selectId, searchString = searchString }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -55,7 +51,7 @@
 
 <div>
 
-    @Html.ActionLink("Back to List", "Index", new { menuLevelEnum = @ViewBag.MenuLevelEnum, menuPath1Id = menuPath1, menuPath2Id = menuPath2, menuPath3Id = menuPath3, selectedId = Model.Id })
+    @Html.ActionLink("Back to List", "Index", new { menuPathMainId = menuPathMainId, productId = productId, returnUrl = returnUrl, productChildId = productChildId, menuLevelEnum = previousMenuLevelEnum, searchString = searchString, selectedId = Model.Id })
 </div>
 
 @section Scripts {

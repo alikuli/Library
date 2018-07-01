@@ -45,7 +45,8 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             string userName, 
             string menuPathMainId, 
             string productId, 
-            string productChildId)
+            string productChildId,
+            string returnUrl)
             : this()
         {
             Entity = entity;
@@ -60,7 +61,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
             UserName = userName;
 
-            Menu = new MenuParameters(menuLevelEnum,  menuPathMainId, productId, productChildId);
+            Menu = new MenuParameters(menuLevelEnum, menuPathMainId, productId, productChildId, returnUrl);
             //todo what should we do if userName is empty?
 
             if (IsIHasUploads)
@@ -92,6 +93,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         //public string menuPath2Id { get; set; }
         //public string menuPath3Id { get; set; }
         public MenuParameters Menu { get; set; }
+        
         #region Uploads
 
 

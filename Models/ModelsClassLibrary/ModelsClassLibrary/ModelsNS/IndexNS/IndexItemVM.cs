@@ -36,7 +36,7 @@ namespace ModelsClassLibrary.ViewModels
             IsEditLocked = isEditLocked;
             Description = description;
             PrintLineNumber = "";
-            MenuManager = new MenuManager(id);
+            MenuManager = null;
         }
         public string Id { get; set; }
 

@@ -3,6 +3,7 @@ using EnumLibrary.EnumNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
 using MarketPlace.Web4.Controllers;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 using ModelsClassLibrary.ModelsNS.SharedNS;
@@ -61,6 +62,9 @@ namespace MarketPlace.Web6.Controllers.Abstract
         /// <returns></returns>
         public virtual ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
         {
+            if(parm.Entity.IsNull())
+                return View(Biz.EntityFactoryForHttpGet());
+                
             TEntity entity = (TEntity)parm.Entity;
             return View(entity);
         }
@@ -109,7 +113,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     returnUrl,
                     menuPathMainId,
                     productId,
-                    productChildId);
+                    productChildId,
+                    ActionNameENUM.Index);
 
                 IndexListVM indexListVM = await indexEngine(parms);
 
@@ -203,7 +208,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         public virtual ActionResult Create(string isandForSearch, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false)
         {
             //for product this needs to create the correct vm.
-            FactoryParameters factoryParams = new FactoryParameters(menuLevelEnum, menuPathMainId);
+
             TEntity dudEntity = Biz.EntityFactoryForHttpGet() as TEntity;
 
             try
@@ -228,7 +233,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     returnUrl,
                     menuPathMainId,
                     productId,
-                    productChildId);
+                    productChildId,
+                    ActionNameENUM.Create);
 
 
 
@@ -252,7 +258,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> Create(TEntity entity, string returnUrl, string menuPathMainId, string productId, string productChildId, HttpPostedFileBase[] httpMiscUploadedFiles = null, HttpPostedFileBase[] httpSelfieUploads = null, HttpPostedFileBase[] httpIdCardFrontUploads = null, HttpPostedFileBase[] httpIdCardBackUploads = null, HttpPostedFileBase[] httpPassportFrontUploads = null, HttpPostedFileBase[] httpPassportVisaUploads = null, HttpPostedFileBase[] httpLiscenseFrontUploads = null, HttpPostedFileBase[] httpLiscenseBackUploads = null, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch="", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown)
+        public virtual async Task<ActionResult> Create(TEntity entity, string returnUrl, string menuPathMainId, string productId, string productChildId, string menuPath1Id, string menuPath2Id, string menuPath3Id, System.Web.HttpPostedFileBase[] httpMiscUploadedFiles = null, System.Web.HttpPostedFileBase[] httpSelfieUploads = null, System.Web.HttpPostedFileBase[] httpIdCardFrontUploads = null, System.Web.HttpPostedFileBase[] httpIdCardBackUploads = null, System.Web.HttpPostedFileBase[] httpPassportFrontUploads = null, System.Web.HttpPostedFileBase[] httpPassportVisaUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseFrontUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseBackUploads = null, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch = "", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, FormCollection fc = null)
         {
             try
             {
@@ -274,7 +280,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     User.Identity.Name,
                     menuPathMainId,
                     productId,
-                    productChildId);
+                    productChildId,
+                    returnUrl);
 
                 await Biz.CreateAndSaveAsync(parm);
 
@@ -323,7 +330,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         /// <returns></returns>
         public virtual RedirectToRouteResult Event_UpdateCreateRedicrectToAction(ControllerCreateEditParameter parm)
         {
-            return RedirectToAction("Index", new { selectedId = parm.Entity.Id.ToString() });
+            return RedirectToAction("Index", new { id = parm.Entity.Id, selectedId = parm.Entity.Id, returnUrl = parm.Menu.ReturnUrl, productId = parm.Menu.ProductId, menuPathMainId = parm.Menu.MenuPathMainId, productChildId = parm.Menu.ProductChildId, menuLevelEnum = parm.Menu.MenuLevelEnum});
 
         }
 
@@ -393,7 +400,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     returnUrl,
                     menuPathMainId,
                     productId,
-                    productChildId);
+                    productChildId,
+                    ActionNameENUM.Edit);
 
                 return Event_CreateViewAndSetupSelectList(parms);
 
@@ -452,12 +460,13 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     User.Identity.Name,
                     menuPathMainId,
                     productId,
-                    productChildId);
+                    productChildId,
+                    returnUrl);
 
                 await Biz.UpdateAndSaveAsync(parm);
 
                 if (returnUrl.IsNullOrWhiteSpace())
-                    return RedirectToAction("Index", new { selectedId = entity.Id.ToString() });
+                    return RedirectToAction("Index", new { id = entity.Id, searchFor = searchFor, isandForSearch = isandForSearch, selectedId = entity.Id, returnUrl = returnUrl, productId = productId, menuPathMainId = menuPathMainId, productChildId = productChildId, menuLevelEnum = menuLevelEnum, sortBy = sortBy, print = print });
 
                 return Redirect(returnUrl);
             }
@@ -510,7 +519,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                         returnUrl,
                         menuPathMainId,
                         productId,
-                        productChildId);
+                        productChildId,
+                        ActionNameENUM.Detail);
 
                 return Event_CreateViewAndSetupSelectList(parms);
 
@@ -567,7 +577,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     returnUrl,
                     menuPathMainId,
                     productId,
-                    productChildId);
+                    productChildId,
+                    ActionNameENUM.Delete);
 
                 return Event_CreateViewAndSetupSelectList(parms);
 

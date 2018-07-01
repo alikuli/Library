@@ -9,6 +9,7 @@ namespace EnumLibrary.EnumNS
         Level_3,
         Level_4, //Products
         Level_5, //Product Children
+        Level_6,
 
     }
 }

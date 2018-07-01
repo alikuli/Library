@@ -64,7 +64,7 @@
 
 
 
-                editPath = Url.Action("Edit", controllerName, new { id = indexItemVM.Id});
+                editPath = Url.Action("Edit", controllerName, new { id = indexItemVM.Id, menuPathMainId = menuPathMainId, menuLevelEnum = Model.MenuManager.MenuLevelEnum, productId = productId });
             }
 
             <div class="gallery col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-sm-3 col-sm-offset-1 col-xs-6  thumbnail" style="margin-bottom:10px">
@@ -118,11 +118,11 @@
                                         break;
 
                                     case MenuLevelENUM.Level_4:
-                                        url = Url.Action("Edit", Model.MenuManager.ControlerNameForProductVms, new { id = indexItemVM.Id, menuPathMainId = menuPathMainId, returnurl = returnurl, menuLevelEnum = Model.MenuManager.MenuLevelEnum, productId = productId }, null);
+                                        url = Url.Action("Edit", Model.MenuManager.GetProductVmName(), new { id = indexItemVM.Id, menuPathMainId = menuPathMainId, returnurl = returnurl, menuLevelEnum = Model.MenuManager.MenuLevelEnum, productId = productId }, null);
                                         break;
 
                                     case MenuLevelENUM.Level_5:
-                                        url = Url.Action("Edit", "ProductChilds", new { id = indexItemVM.Id, returnurl = returnurl, menuLevelEnum = Model.MenuManager.MenuLevelEnum, productChildId = productChildId }, null);
+                                        url = Url.Action("Edit", "ProductChilds", new { id = indexItemVM.Id, menuPathMainId = menuPathMainId, returnurl = returnurl, menuLevelEnum = Model.MenuManager.MenuLevelEnum, productId = productId }, null);
                                         break;
                                     default:
                                         break;

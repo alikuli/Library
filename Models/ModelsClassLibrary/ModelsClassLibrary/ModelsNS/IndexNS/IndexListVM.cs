@@ -36,18 +36,19 @@ namespace ModelsClassLibrary.ViewModels
 
         //}
 
-        public IndexListVM(string id, SortOrderENUM sortOrderEnum, string searchFor, string selectedId, ICommonWithId dudEntity, string webCompanyName, string logoaddress, ApplicationUser user, bool userIsAdmin, string returnUrl, bool isAndForSearch)
-        {
-            initialize(id, sortOrderEnum, searchFor, selectedId, dudEntity, webCompanyName, logoaddress, user, userIsAdmin, returnUrl, isAndForSearch);
-        }
+        //public IndexListVM(string id, SortOrderENUM sortOrderEnum, string searchFor, string selectedId, ICommonWithId dudEntity, string webCompanyName, string logoaddress, ApplicationUser user, bool userIsAdmin, string returnUrl, bool isAndForSearch)
+        //{
+        //    initialize(id, sortOrderEnum, searchFor, selectedId, dudEntity, webCompanyName, logoaddress, user, userIsAdmin, returnUrl, isAndForSearch);
+        //}
 
 
         public IndexListVM(ControllerIndexParams p)
-            : this(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.User, p.UserIsAdmin, p.ReturnUrl, p.IsAndForSearch)
         {
+            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.User, p.UserIsAdmin, p.Menu.ReturnUrl, p.IsAndForSearch, p.ActionNameEnum);
+
         }
 
-        private void initialize(string id, SortOrderENUM sortOrderEnum, string searchFor, string selectedId, ICommonWithId dudEntity, string webCompanyName, string logoaddress, ApplicationUser user, bool userIsAdmin, string returnUrl, bool isAndForSearch)
+        private void initialize(string id, SortOrderENUM sortOrderEnum, string searchFor, string selectedId, ICommonWithId dudEntity, string webCompanyName, string logoaddress, ApplicationUser user, bool userIsAdmin, string returnUrl, bool isAndForSearch, ActionNameENUM actionNameEnum)
         {
             SortOrderEnum = sortOrderEnum;
             Id = id;
@@ -87,7 +88,7 @@ namespace ModelsClassLibrary.ViewModels
             _listOfStopWords = StringTools.GetStopWords();
             _searchWords = getSearchWords();
 
-            MenuManager = new MenuManager(Id);
+            MenuManager = new MenuManager(id, null, null, null, MenuLevelENUM.unknown, returnUrl, false, "", "", "", sortOrderEnum,actionNameEnum);
             MenuManager.ReturnUrl = returnUrl;
         }
 
@@ -111,7 +112,7 @@ namespace ModelsClassLibrary.ViewModels
             //Menu.ReturnUrl = p.ReturnUrl;
             //IsAndForSearch = p.IsAndForSearch;
             string webCompany = "";
-            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, webCompany, p.LogoAddress, p.User, p.UserIsAdmin, p.ReturnUrl, p.IsAndForSearch);
+            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, webCompany, p.LogoAddress, p.User, p.UserIsAdmin, p.Menu.ReturnUrl, p.IsAndForSearch,p.ActionNameEnum);
 
         }
 

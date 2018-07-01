@@ -1,75 +1,86 @@
 ﻿@*https://getbootstrap.com/docs/4.0/components/breadcrumb/*@
 
-@model ModelsClassLibrary.ViewModels.IndexListVM
-
+@*@model ModelsClassLibrary.ViewModels.IndexListVM*@
+@model ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.IHaveMenuManager
 
     @{
-        //string home = Url.Action("index", "Home", new { id = "", menuPath1Id = Model.MenuManager.MenuPath1Id, menuPath2Id = Model.MenuManager.MenuPath2Id, menuPath3Id = Model.MenuManager.MenuPath3Id, menuLevelEnum = Model.MenuManager.MenuLevelEnum });
 
+        //string menuPathMainId = Model.MenuManager.MenuPathMainId;
+        //string productId = Model.MenuManager.ProductId;
+        //string productChildId = Model.MenuManager.ProductChildId;
+        //string returnUrl = Model.MenuManager.ReturnUrl;
+        //string selectId = Model.MenuManager.SelectId;
+        //string searchFor = Model.MenuManager.SearchString;
+        //MenuLevelENUM previousMenuLevelEnum = Model.MenuManager.GetPreviousMenuLevel();
+        //SortOrderENUM sortBy = Model.SortOrderEnum;
 
+        string linkTextMenuPath1 = Model.MenuManager.MenuPath1Name;
+        string linkTextMenuPath2 = Model.MenuManager.MenuPath2Name;
+        string linkTextMenuPath3 = Model.MenuManager.MenuPath3Name;
+        string linkTextMenuPath4 = Model.MenuManager.MenuPath4Name;
+        string LinkTextNebyPath5 = Model.MenuManager.MenuPath5Name;
+        MenuLevelENUM menuLevelEnum = Model.MenuManager.MenuLevelEnum;
 
-        //string category1 = Url.Action("index", "Menu", new { id = "", menuPath1Id = Model.MenuManager.MenuPath1Id, menuPath2Id = Model.MenuManager.MenuPath2Id, menuPath3Id = Model.MenuManager.MenuPath3Id, menuLevelEnum = Model.MenuManager.MenuLevelEnum });
-
-        
-
-        string linkTextHome = "Admin Home";
-        string linkTextMenuPath1 = "All";
-        string linkTextMenuPath2 = Model.MenuManager.MenuPath1Name;
-        string linkTextMenuPath3 = Model.MenuManager.MenuPath2Name;
-        string linkTextProductLevel = Model.MenuManager.MenuPath3Name;
-
-        string actionName = "index";
 
     }
 
+
+
     @if(Model.MenuManager.IsMenu)
-    { 
+    {
+
+
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            @switch (@Model.MenuManager.MenuLevelEnum)
+            @switch (menuLevelEnum)
             {
                 case MenuLevelENUM.unknown:
                     break;
+                    
                 case MenuLevelENUM.Level_1:
-                    <li class="breadcrumb-item">@Html.ActionLink(@linkTextHome, @actionName, "Home", null, null)</li>
+                    @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_Home.cshtml")
                     <li class="breadcrumb-item active" aria-current="page">@linkTextMenuPath1</li>
                     break;
+                    
                 case MenuLevelENUM.Level_2:
-                    <li class="breadcrumb-item">@Html.ActionLink(@linkTextHome, @actionName, "Home", null, null)</li>
-                    <li class="breadcrumb-item">@Html.ActionLink(linkTextMenuPath1, "Index", new { searchFor = Model.SearchFor, selectedId = Model.SelectedId, menuLevelEnum = MenuLevelENUM.unknown, sortBy = Model.SortOrderEnum, id = "", menuPath1Id = Model.MenuManager.MenuPath1Id, menuPath2Id = Model.MenuManager.MenuPath2Id, menuPath3Id = Model.MenuManager.MenuPath3Id }) </li>
+                    @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_Home.cshtml")
+                    @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_bc2.cshtml")
                     <li class="breadcrumb-item active" aria-current="page">@linkTextMenuPath2</li>
                     break;
+                    
                 case MenuLevelENUM.Level_3:
 
-                    <li class="breadcrumb-item">@Html.ActionLink(@linkTextHome, @actionName, "Home", null, null)</li>
-                    <li class="breadcrumb-item">@Html.ActionLink(linkTextMenuPath1, "Index", new { searchFor = Model.SearchFor, selectedId = Model.SelectedId, menuLevelEnum = MenuLevelENUM.unknown, sortBy = Model.SortOrderEnum, id = "", menuPath1Id = Model.MenuManager.MenuPath1Id, menuPath2Id = Model.MenuManager.MenuPath2Id, menuPath3Id = Model.MenuManager.MenuPath3Id }) </li>
-                    <li class="breadcrumb-item">@Html.ActionLink(linkTextMenuPath2, "Index", new { searchFor = Model.SearchFor, selectedId = Model.SelectedId, menuLevelEnum = MenuLevelENUM.Level_1, sortBy = Model.SortOrderEnum, id = "", menuPath1Id = Model.MenuManager.MenuPath1Id, menuPath2Id = Model.MenuManager.MenuPath2Id, menuPath3Id = Model.MenuManager.MenuPath3Id }) </li>
+                    @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_Home.cshtml")
+                    @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_bc2.cshtml")
+                    @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_bc3.cshtml")
                     <li class="breadcrumb-item active" aria-current="page">@linkTextMenuPath3</li>
                     break;
-                    
-                    
+
+
                 case MenuLevelENUM.Level_4:
-                    <li class="breadcrumb-item">@Html.ActionLink(@linkTextHome, @actionName, "Home", null, null)</li>
-            
-                    <li class="breadcrumb-item">@Html.ActionLink(linkTextMenuPath1, "Index", new { searchFor = Model.SearchFor, selectedId = Model.SelectedId, menuLevelEnum = MenuLevelENUM.unknown, sortBy = Model.SortOrderEnum, id = "", menuPath1Id = Model.MenuManager.MenuPath1Id, menuPath2Id = Model.MenuManager.MenuPath2Id, menuPath3Id = Model.MenuManager.MenuPath3Id }) </li>
-            
-                    <li class="breadcrumb-item" >@Html.ActionLink(linkTextMenuPath2, "Index", new { searchFor = Model.SearchFor, selectedId = Model.SelectedId, menuLevelEnum = MenuLevelENUM.Level_1, sortBy = Model.SortOrderEnum, id = "", menuPath1Id = Model.MenuManager.MenuPath1Id, menuPath2Id = Model.MenuManager.MenuPath2Id, menuPath3Id = Model.MenuManager.MenuPath3Id }) </li>
-            
-                    <li class="breadcrumb-item" >@Html.ActionLink(linkTextMenuPath3, "Index", new { searchFor = Model.SearchFor, selectedId = Model.SelectedId, menuLevelEnum = MenuLevelENUM.Level_2, sortBy = Model.SortOrderEnum, id = "", menuPath1Id = Model.MenuManager.MenuPath1Id, menuPath2Id = Model.MenuManager.MenuPath2Id, menuPath3Id = Model.MenuManager.MenuPath3Id }) </li>
-                    <li class="breadcrumb-item active" aria-current="page">@linkTextProductLevel</li>
+                    @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_Home.cshtml")
+                    @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_bc2.cshtml")
+                    @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_bc3.cshtml")
+                    @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_bc4.cshtml")
+                    <li class="breadcrumb-item active" aria-current="page">@linkTextMenuPath4</li>
                     break;
 
                 case MenuLevelENUM.Level_5:
-                <li class="breadcrumb-item">@Html.ActionLink(@linkTextHome, @actionName, "Home", null, null)</li>
-
-                <li class="breadcrumb-item">@Html.ActionLink(linkTextMenuPath1, "Index", new { searchFor = Model.SearchFor, selectedId = Model.SelectedId, menuLevelEnum = MenuLevelENUM.unknown, sortBy = Model.SortOrderEnum, id = "", menuPath1Id = Model.MenuManager.MenuPath1Id, menuPath2Id = Model.MenuManager.MenuPath2Id, menuPath3Id = Model.MenuManager.MenuPath3Id }) </li>
-
-                <li class="breadcrumb-item">@Html.ActionLink(linkTextMenuPath2, "Index", new { searchFor = Model.SearchFor, selectedId = Model.SelectedId, menuLevelEnum = MenuLevelENUM.Level_1, sortBy = Model.SortOrderEnum, id = "", menuPath1Id = Model.MenuManager.MenuPath1Id, menuPath2Id = Model.MenuManager.MenuPath2Id, menuPath3Id = Model.MenuManager.MenuPath3Id }) </li>
-
-                <li class="breadcrumb-item">@Html.ActionLink(linkTextMenuPath3, "Index", new { searchFor = Model.SearchFor, selectedId = Model.SelectedId, menuLevelEnum = MenuLevelENUM.Level_2, sortBy = Model.SortOrderEnum, id = "", menuPath1Id = Model.MenuManager.MenuPath1Id, menuPath2Id = Model.MenuManager.MenuPath2Id, menuPath3Id = Model.MenuManager.MenuPath3Id }) </li>
-                <li class="breadcrumb-item active" aria-current="page">@linkTextProductLevel</li>
+                    @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_Home.cshtml")
+                    @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_bc2.cshtml")
+                    @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_bc3.cshtml")
+                    @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_bc4.cshtml")
+                    @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_bc5.cshtml")
+                    <li class="breadcrumb-item active" aria-current="page">@LinkTextNebyPath5</li>
                     break;
-
+                case MenuLevelENUM.Level_6:
+                @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_Home.cshtml")
+                @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_bc2.cshtml")
+                @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_bc3.cshtml")
+                @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_bc4.cshtml")
+                @Html.Partial(@"~/Views/Shared/ViewControls/Index/BreadCrumbs/_bc5.cshtml")
+                <li class="breadcrumb-item active" aria-current="page">@LinkTextNebyPath5</li>
+                    break;
                 default:
                     break;
             }

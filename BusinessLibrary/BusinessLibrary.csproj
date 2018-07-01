@@ -144,6 +144,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="0 BusinessLayer\EntityFramework Tools.cs" />
     <Compile Include="0 BusinessLayer\HasUploadsProperties.cs" />
     <Compile Include="0 BusinessLayer\Get.cs" />
     <Compile Include="0 BusinessLayer\File Tools.cs" />
@@ -184,12 +185,17 @@
     <Compile Include="LanguagesNS\SelectList.cs" />
     <Compile Include="LanguagesNS\Fix.cs" />
     <Compile Include="LanguagesNS\Index.cs" />
+    <Compile Include="MenuNS\MenuBizNS\Event_CreateViewAndSetupSelectList.cs" />
     <Compile Include="MenuNS\MenuBizNS\Event_ModifyIndexList.cs" />
+    <Compile Include="MenuNS\MenuBizNS\BusinessRules.cs" />
     <Compile Include="MenuNS\MenuBizNS\GetListForIndexAsync.cs" />
-    <Compile Include="MenuNS\MenuBizNS\Modify Index Item.cs" />
+    <Compile Include="MenuNS\MenuBizNS\Event_ModifyIndexItem.cs" />
+    <Compile Include="MenuNS\MenuBizNS\Fix.cs" />
     <Compile Include="MenuNS\MenuBizNS\SelectList.cs" />
     <Compile Include="MenuNS\MenuBizNS\Index.cs" />
     <Compile Include="MenuNS\MenuBizNS\MenuBiz.cs" />
+    <Compile Include="MenuNS\MenuPathMainNS\Fix.cs" />
+    <Compile Include="MenuNS\MenuPathMainNS\FindAllMenuPathsForMenu1.cs" />
     <Compile Include="PaymentsNS\Methods\SelectList.cs" />
     <Compile Include="PaymentsNS\Methods\Index.cs" />
     <Compile Include="PaymentsNS\Terms\Index.cs" />
@@ -251,6 +257,7 @@
     <Compile Include="ProductNS\ProductChildNS\SelectList.cs" />
     <Compile Include="ProductNS\ProductChildNS\Uploads.cs" />
     <Compile Include="ProductNS\ProductNS\DeleteRelatedRecords.cs" />
+    <Compile Include="ProductNS\ProductNS\Event_ModifyIndexList.cs" />
     <Compile Include="ProductNS\ProductNS\MenuPathCheckedBoxes.cs" />
     <Compile Include="ProductNS\ProductNS\Factory.cs" />
     <Compile Include="ProductNS\ProductNS\Uploads.cs" />

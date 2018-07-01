@@ -1,0 +1,44 @@
+﻿@*https://getbootstrap.com/docs/4.0/components/breadcrumb/*@
+
+@*@model ModelsClassLibrary.ViewModels.IndexListVM*@
+@model ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.IHaveMenuManager
+
+
+
+    @{
+        //string home = Url.Action("index", "Home", new { id = "", menuPath1Id = Model.MenuManager.MenuPath1Id, menuPath2Id = Model.MenuManager.MenuPath2Id, menuPath3Id = Model.MenuManager.MenuPath3Id, menuLevelEnum = Model.MenuManager.MenuLevelEnum });
+
+
+
+        //string category1 = Url.Action("index", "Menu", new { id = "", menuPath1Id = Model.MenuManager.MenuPath1Id, menuPath2Id = Model.MenuManager.MenuPath2Id, menuPath3Id = Model.MenuManager.MenuPath3Id, menuLevelEnum = Model.MenuManager.MenuLevelEnum });
+
+
+
+        //string menuPathMainId = Model.MenuManager.MenuPathMainId;
+        //string productId = Model.MenuManager.ProductId;
+        //string productChildId = Model.MenuManager.ProductChildId;
+        //string returnUrl = Model.MenuManager.ReturnUrl;
+        //string selectId = Model.MenuManager.SelectId;
+        //string searchFor = Model.MenuManager.SearchString;
+        //MenuLevelENUM previousMenuLevelEnum = Model.MenuManager.GetPreviousMenuLevel();
+        //SortOrderENUM sortBy = Model.SortOrderEnum;
+
+        //string linkTextMenuPath1 = "All";
+        //string linkTextMenuPath2 = Model.MenuManager.MenuPath1Name;
+        //string linkTextMenuPath3 = Model.MenuManager.MenuPath2Name;
+        //string linkTextMenuPath4 = Model.MenuManager.MenuPath3Name;
+        //string LinkTextNebyPath5 = Model.MenuManager.MenuPath4Name;
+
+        string actionName = "index";
+        MenuLevelENUM menuLevelEnum = Model.MenuManager.MenuLevelEnum;
+        string linkTextHome = "Admin Home";
+
+    }
+
+
+
+    @if (Model.MenuManager.IsMenu)
+    {
+        <li class="breadcrumb-item">@Html.ActionLink(@linkTextHome, @actionName, "Home", null, null)</li>
+    }
+

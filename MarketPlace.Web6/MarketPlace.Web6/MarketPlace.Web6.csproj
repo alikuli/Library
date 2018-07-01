@@ -189,7 +189,8 @@
     <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\MyControllersNS\CounterNS\CountersController.cs" />
     <Compile Include="Controllers\MyControllersNS\FileDocsNS\FileDocsController.cs" />
-    <Compile Include="Controllers\MyControllersNS\MenuNS\MenusController.cs" />
+    <Compile Include="Controllers\MyControllersNS\MenuNS\MenusControllerNS\Event_CreateViewAndSetupSelectList.cs" />
+    <Compile Include="Controllers\MyControllersNS\MenuNS\MenusControllerNS\MenusController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlacesNS\StatesController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlayersNS\RightsController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlayersNS\UsersController.cs" />
@@ -394,6 +395,13 @@
     <Content Include="Views\Shared\EditorTemplates\CheckedBoxesList.cshtml" />
     <Content Include="Views\ProductAutomobileVMs\_AutomobileVM.cshtml" />
     <Content Include="Views\ProductAutomobileVMs\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\Shared\ViewControls\Index\BreadCrumbs\_bc2.cshtml" />
+    <Content Include="Views\Shared\ViewControls\Index\BreadCrumbs\_home.cshtml" />
+    <Content Include="Views\Shared\ViewControls\Index\BreadCrumbs\_bc3.cshtml" />
+    <Content Include="Views\Shared\ViewControls\Index\BreadCrumbs\_bc5.cshtml" />
+    <Content Include="Views\Shared\ViewControls\Index\BreadCrumbs\_bc4.cshtml" />
+    <Content Include="Views\Menus\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\Shared\ViewControls\Index\BreadCrumbs\_bc6.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

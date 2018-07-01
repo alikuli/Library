@@ -48,6 +48,9 @@ namespace UowLibrary.Interface
         string UserNameBiz { get; }
         string UserIdBiz { get;  }
         void InitializationData();
+        void Detach(TEntity entity);
+        void Attach(TEntity entity);
+
 
     }
 }

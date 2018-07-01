@@ -19,20 +19,38 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         }
 
         readonly bool _isUserAdmin;
-        public ControllerIndexParams(string id, string searchFor, string isandForSearch, string selectedId, MenuLevelENUM menuLevelEnum, SortOrderENUM sortBy, string logoAddress, ICommonWithId entity, ICommonWithId dudEntity, ApplicationUser user, bool isUserAdmin, string returnUrl, string menuPathMainId, string productId, string productChildId)
+        public ControllerIndexParams(
+            string id, 
+            string searchFor, 
+            string isandForSearch, 
+            string selectedId, 
+            MenuLevelENUM menuLevelEnum, 
+            SortOrderENUM sortBy, 
+            string logoAddress, 
+            ICommonWithId entity, 
+            ICommonWithId dudEntity, 
+            ApplicationUser user, 
+            bool isUserAdmin, 
+            string returnUrl, 
+            string menuPathMainId, 
+            string productId, 
+            string productChildId, 
+            ActionNameENUM actionNameEnum)
         {
-            Entity = entity;
-            SearchFor = searchFor;
-            SortBy = sortBy;
-            SelectedId = selectedId;
             Id = id;
-            Menu = new MenuParameters(menuLevelEnum, menuPathMainId, productId, productChildId);
+            SearchFor = searchFor;
+            IsAndForSearch = isandForSearch == "And";
+            SelectedId = selectedId;
+            Entity = entity;
+            SortBy = sortBy;
+            Menu = new MenuParameters(menuLevelEnum, menuPathMainId, productId, productChildId, returnUrl);
             LogoAddress = logoAddress;
             User = user;
             _isUserAdmin = isUserAdmin;
-            ReturnUrl = returnUrl;
-            IsAndForSearch = isandForSearch == "And";
+            ActionNameEnum = actionNameEnum;
+            DudEntity = dudEntity;
         }
+        public ActionNameENUM ActionNameEnum { get; set; }
         public bool IsAndForSearch { get; set; }
         public ICommonWithId Entity { get; set; }
         public ICommonWithId DudEntity { get; set; }
@@ -44,7 +62,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         /// this is the Id of the main item
         /// </summary>
         public string Id { get; set; }
-        public MenuParameters Menu { get; set; }
         public string LogoAddress { get; set; }
         public string UserName
         {
@@ -58,7 +75,8 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public ApplicationUser User { get; set; }
 
         public bool UserIsAdmin { get { return _isUserAdmin; } }
-        public string ReturnUrl { get; set; }
+        //public string ReturnUrl { get; set; }
+        public MenuParameters Menu { get; set; }
 
     }
 }

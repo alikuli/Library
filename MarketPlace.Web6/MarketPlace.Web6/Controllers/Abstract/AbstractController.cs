@@ -14,6 +14,7 @@ using System.Linq;
 using UserModels;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using EnumLibrary.EnumNS;
+using ModelsClassLibrary.MenuNS;
 
 namespace MarketPlace.Web4.Controllers
 {
@@ -141,7 +142,7 @@ namespace MarketPlace.Web4.Controllers
         #endregion
 
 
-        protected ControllerIndexParams MakeControlParameters(string id, string searchFor, string isandForSearch, string selectedId, ICommonWithId entity, ICommonWithId dudEntity, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string returnUrl = "", string menuPathMainId = "", string productId = "", string productChildId = "")
+        protected ControllerIndexParams MakeControlParameters(string id, string searchFor, string isandForSearch, string selectedId, ICommonWithId entity, ICommonWithId dudEntity, MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string returnUrl = "", string menuPathMainId = "", string productId = "", string productChildId = "", ActionNameENUM actionNameEnum = ActionNameENUM.Unknown)
         {
             //FactoryParameters fp = new FactoryParameters();
 
@@ -152,6 +153,9 @@ namespace MarketPlace.Web4.Controllers
             bool isUserAdmin = IsUserAdmin(user);
 
             //todo note... the company name is missing. We may need it.
+
+
+
             ControllerIndexParams parms = new ControllerIndexParams(
                 id,
                 searchFor,
@@ -167,7 +171,8 @@ namespace MarketPlace.Web4.Controllers
                 returnUrl,
                 menuPathMainId,
                 productId,
-                productChildId);
+                productChildId,
+                actionNameEnum);
 
             ViewBag.ReturnUrl = returnUrl;
 

@@ -8,9 +8,6 @@ namespace ModelsClassLibrary.MenuNS
 {
     public partial class MenuPathMain 
     {
-        [NotMapped]
-        public string ProductId { get; set; }
-
 
 
         [Display(Name = "Menu Path 1")]

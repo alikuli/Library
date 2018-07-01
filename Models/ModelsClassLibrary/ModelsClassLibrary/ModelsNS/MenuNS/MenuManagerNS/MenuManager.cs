@@ -1,13 +1,12 @@
 ﻿
-using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
+using ModelsClassLibrary.ModelsNS.MenuManagerNS.MenuStatesNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.CreateMenuStatesNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
-using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Web.Routing;
 
 namespace ModelsClassLibrary.MenuNS
 {
@@ -49,374 +48,257 @@ namespace ModelsClassLibrary.MenuNS
     public class MenuManager : IMenuManager
     {
 
-        public MenuManager(string id)
+        //public MenuManager(string id)
+        //{
+        //    Id = id;
+        //    MenuPathMain = new MenuPathMain();
+        //}
+
+        public MenuManager(
+            string id,                      //1
+            MenuPathMain menuPathMain,      //2
+            Product product,                //3
+            ProductChild productChild,      //4
+            MenuLevelENUM menuLevelEnum,    //5
+            string returnUrl,               //6
+            bool isMenu,                    //7
+            string controllerCurrent,       //8
+            string selectId,                //9
+            string searchString,            //10
+            SortOrderENUM sortOrderEnum,   //11
+            ActionNameENUM actionNameEnum)             //12
+        {
+            Load(id, menuPathMain, product, productChild, menuLevelEnum, returnUrl, isMenu, controllerCurrent, selectId, searchString, sortOrderEnum, actionNameEnum);
+        }
+
+
+        public void Load(string id, MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuLevelENUM menuLevelEnum, string returnUrl, bool isMenu, string controllerCurrent, string selectId, string searchString, SortOrderENUM sortOrderEnum, ActionNameENUM actionNameEnum)
         {
             Id = id;
-            MenuPathMain = new MenuPathMain();
-        }
-
-        public MenuManager(string id, MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuLevelENUM menuLevelEnum, string returnUrl, bool isMenu)
-            : this(id)
-        {
-            Load(id, menuPathMain, product, productChild, menuLevelEnum, returnUrl, isMenu);
-        }
-
-
-        public void Load(string id, MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuLevelENUM menuLevelEnum, string returnUrl, bool isMenu)
-        {
             MenuPathMain = menuPathMain;
             Product = product;
             ProductChild = productChild;
             MenuLevelEnum = menuLevelEnum;
             ReturnUrl = returnUrl;
             IsMenu = isMenu;
+            ControllerCurrent = controllerCurrent;
+            SelectId = selectId;
+            SearchString = searchString;
+            SortOrderEnum = sortOrderEnum;
+            ActionNameEnum = actionNameEnum;
+            _createMenuState = giveCreateMenuState();
         }
-
-        #region MenuPathMain Related
         /// <summary>
-        /// This is the current MenuPathMain.
+        /// This gives the state to the CreateMenuState.
         /// </summary>
-        public MenuPathMain MenuPathMain { get; set; }
-        /// <summary>
-        /// This Id has various values.
-        /// When MenuLevel is 1 to 3 - This is MenuPath1Id
-        /// When MenuLevel is 4 -This is a productId 
-        /// When MenuLevel is 5 -This is a productChildId 
-        /// 
-        /// </summary>
-        protected string Id { get; set; }
-
-        public MenuPath1 MenuPath1
+        private ICreateMenuState giveCreateMenuState()
         {
-            get
-            {
-                MenuPathMain.IsNullThrowException("Menu Path Main is NULL. Programming Error");
-                MenuPathMain.MenuPath1.IsNullThrowException("Menu Path 1 is null. Programming Error");
-
-
-                return MenuPathMain.MenuPath1;
-            }
-        }
-
-        public string MenuPathMainId
-        {
-            get
+            if(ActionNameEnum==ActionNameENUM.Create)
             {
                 switch (MenuLevelEnum)
                 {
-                    case MenuLevelENUM.unknown:
-                        throw new Exception("Menu Level is unknown. MenuManager");
-
                     case MenuLevelENUM.Level_1:
+                        return new CreateMenuState_Lv1();
                     case MenuLevelENUM.Level_2:
+                        return new CreateMenuState_Lv2();
                     case MenuLevelENUM.Level_3:
                     case MenuLevelENUM.Level_4:
-                        return Id;
                     case MenuLevelENUM.Level_5:
-                    default:
-                        return "";
-                }
-            }
-        }
-
-        public string ProductId
-        {
-            get
-            {
-                switch (MenuLevelEnum)
-                {
+                    case MenuLevelENUM.Level_6:
                     case MenuLevelENUM.unknown:
-                    case MenuLevelENUM.Level_1:
-                    case MenuLevelENUM.Level_2:
-                    case MenuLevelENUM.Level_3:
-                    case MenuLevelENUM.Level_4:
-                        return "";
-                    case MenuLevelENUM.Level_5:
-                        return Id;
-                    default:
-                        return "";
-                }
-            }
-
-        }
-
-        public string ProductChildId
-        {
-            get
-            {
-                switch (MenuLevelEnum)
-                {
-                    case MenuLevelENUM.unknown:
-                    case MenuLevelENUM.Level_1:
-                    case MenuLevelENUM.Level_2:
-                    case MenuLevelENUM.Level_3:
-                    case MenuLevelENUM.Level_4:
-                        return "";
-
-                    case MenuLevelENUM.Level_5:
-                        return Id;
-                    default:
-                        return "";
-                }
-            }
-
-        }
-
-        public string MenuPath1Id
-        {
-            get
-            {
-                //MenuPathMain.IsNullThrowException("Menu Path Main is NULL. Programming Error");
-                if (MenuPathMain.IsNull())
-                    return "";
-                if (MenuPathMain.MenuPath1Id.IsNullOrWhiteSpace())
-                    return "";
-
-                if (MenuLevelEnum == MenuLevelENUM.unknown)
-                    return "";
-
-                if (MenuLevelEnum == MenuLevelENUM.Level_1)
-                    return "";
-
-                return MenuPathMain.MenuPath1Id;
-            }
-
-        }
-
-        public string MenuPath2Id
-        {
-            get
-            {
-                if (MenuPathMain.IsNull())
-                    return "";
-                if (MenuPathMain.MenuPath2Id.IsNullOrWhiteSpace())
-                    return "";
-
-                if (MenuLevelEnum == MenuLevelENUM.unknown)
-                    return "";
-
-                if (MenuLevelEnum == MenuLevelENUM.Level_1)
-                    return "";
-
-                if (MenuLevelEnum == MenuLevelENUM.Level_2)
-                    return "";
-
-                return MenuPathMain.MenuPath2Id;
-            }
-
-        }
-
-
-        public string MenuPath3Id
-        {
-            get
-            {
-                if (MenuPathMain.IsNull())
-                    return "";
-                if (MenuPathMain.MenuPath3Id.IsNullOrWhiteSpace())
-                    return "";
-
-                if (MenuLevelEnum == MenuLevelENUM.unknown)
-                    return "";
-
-                if (MenuLevelEnum == MenuLevelENUM.Level_1)
-                    return "";
-
-                if (MenuLevelEnum == MenuLevelENUM.Level_2)
-                    return "";
-
-                if (MenuLevelEnum == MenuLevelENUM.Level_3)
-                    return "";
-
-                return MenuPathMain.MenuPath3Id;
-            }
-
-        }
-
-
-        public bool IsMenu { get; set; }
-
-
-        public string MenuPath1Name
-        {
-            get
-            {
-                //MenuPathMain.IsNullThrowException("Menu Path Main is NULL. Programming Error");
-
-                if (MenuPathMain.IsNull())
-                    return "";
-
-                if (MenuPathMain.MenuPath1.IsNull())
-                    return "";
-
-                return MenuPathMain.MenuPath1.Name;
-            }
-        }
-
-        public string MenuPath2Name
-        {
-            get
-            {
-                //MenuPathMain.IsNullThrowException("Menu Path Main is NULL. Programming Error");
-                if (MenuPathMain.IsNull())
-                    return "";
-
-                if (MenuPathMain.MenuPath2.IsNull())
-                    return "";
-
-                return MenuPathMain.MenuPath2.Name;
-            }
-        }
-
-        public string MenuPath3Name
-        {
-            get
-            {
-                //MenuPathMain.IsNullThrowException("Menu Path Main is NULL. Programming Error");
-
-                if (MenuPathMain.IsNull())
-                    return "";
-
-                if (MenuPathMain.MenuPath3.IsNull())
-                    return "";
-                return MenuPathMain.MenuPath3.Name;
-            }
-        }
-
-
-        public string ControlerNameForProductVms
-        {
-            get
-            {
-
-                switch (MenuPath1.MenuPath1Enum)
-                {
-                    case MenuPath1ENUM.Unknown:
-                        break;
-                    case MenuPath1ENUM.Automobiles:
-                        return typeof(ProductAutomobileVM).Name + "s";
-
-                    case MenuPath1ENUM.MensClothing:
-                        break;
-                    case MenuPath1ENUM.WomensClothing:
-                        break;
-                    case MenuPath1ENUM.Electronics:
-                        break;
-                    case MenuPath1ENUM.Foods:
-                        break;
-                    case MenuPath1ENUM.HomeServants:
-                        break;
-                    case MenuPath1ENUM.FactoryWorkers:
-                        break;
-                    case MenuPath1ENUM.OfficeWorkers:
-                        break;
-                    case MenuPath1ENUM.Machines:
-                        break;
-                    case MenuPath1ENUM.Stationary:
-                        break;
-                    case MenuPath1ENUM.FruitProccessors:
-                        break;
-                    case MenuPath1ENUM.Steel:
-                        break;
-                    case MenuPath1ENUM.Cement:
-                        break;
-                    case MenuPath1ENUM.Electricity:
-                        break;
                     default:
                         break;
                 }
-
-                return MenuPathMain.MenuPath1Id;
-
             }
-
+            return new CreateMenuState_Empty();
+            
         }
+        //public void Load(string id, MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuLevelENUM menuLevelEnum, string returnUrl, bool isMenu)
+        //{
+        //}
 
-
-        #endregion
-
-
-        #region Product Related
-
-        //public string ProductId { get; set; }
-
-        public Product Product { get; set; }
-
-
+        IMenuManagerState _menuManagerState;
+        private IMenuManagerState MenuManagerState
+        {
+            get
+            {
+                refreshMenuManagerStateProperties();
+                return _menuManagerState;
+            }
+            set
+            {
+                _menuManagerState = value;
+            }
+        }
 
         /// <summary>
-        /// This is the product level
+        /// The CreateMenuState controls the state of the Create Menu Butoons by disabling them.
         /// </summary>
-        public string MenuPath4Name
+        ICreateMenuState _createMenuState;
+        public ICreateMenuState CreateMenuState
         {
             get
             {
-                Product.IsNullThrowException("Product is NULL. Programming Error");
-                return Product.Name;
+                return _createMenuState;
             }
         }
+        
 
-        #endregion
+        
 
-
-        #region  ProductChild Related
-        public ProductChild ProductChild { get; set; }
         /// <summary>
-        /// This is the product child level.
+        /// This stores the name of the action that started it. we use this in the bread crumbs. It is the first bread crumb
         /// </summary>
-        public string MenuPath5Name
+        public ActionNameENUM ActionNameEnum { get; set; }
+
+        private bool isRefreshed { get; set; }
+        private void refreshMenuManagerStateProperties()
         {
-            get
-            {
-                ProductChild.IsNullThrowException("Product Child is NULL. Programming Error");
-                return ProductChild.Name;
-            }
+            if (isRefreshed)
+                return;
+
+            _menuManagerState.Load(Id, MenuPathMain, Product, ProductChild, MenuLevelEnum, ReturnUrl, IsMenu, ControllerCurrent, SelectId, SearchString, SortOrderEnum, ActionNameEnum);
+            isRefreshed = true;
+
         }
-
-        #endregion
-
-        #region MenuLevelEnum Related
-        public MenuLevelENUM MenuLevelEnum { get; set; }
-
-        //This gets the previous menu level
-        public MenuLevelENUM GetPreviousMenuLevel()
+        private void selectMenuManagerState()
         {
-            //for the sort we need to go back one menu level
-            MenuLevelENUM previousMenuLevel = MenuLevelENUM.unknown;
             switch (MenuLevelEnum)
             {
                 case MenuLevelENUM.unknown:
+                    MenuManagerState = new MenuManagerState_Empty(Id, MenuPathMain, Product, ProductChild, MenuLevelEnum, ReturnUrl, IsMenu, ControllerCurrent, SelectId, SearchString, SortOrderEnum, ActionNameEnum);
                     break;
                 case MenuLevelENUM.Level_1:
+                    MenuManagerState = new MenuManagerState_Lv1(Id, MenuPathMain, Product, ProductChild, MenuLevelEnum, ReturnUrl, IsMenu, ControllerCurrent, SelectId, SearchString, SortOrderEnum, ActionNameEnum);
                     break;
                 case MenuLevelENUM.Level_2:
-                    previousMenuLevel = MenuLevelENUM.Level_1;
-
+                    MenuManagerState = new MenuManagerState_Lv2(Id, MenuPathMain, Product, ProductChild, MenuLevelEnum, ReturnUrl, IsMenu, ControllerCurrent, SelectId, SearchString, SortOrderEnum, ActionNameEnum);
                     break;
                 case MenuLevelENUM.Level_3:
-                    previousMenuLevel = MenuLevelENUM.Level_2;
+                    MenuManagerState = new MenuManagerState_Lv3(Id, MenuPathMain, Product, ProductChild, MenuLevelEnum, ReturnUrl, IsMenu, ControllerCurrent, SelectId, SearchString, SortOrderEnum, ActionNameEnum);
                     break;
                 case MenuLevelENUM.Level_4:
-                    previousMenuLevel = MenuLevelENUM.Level_3;
+                    MenuManagerState = new MenuManagerState_Lv4(Id, MenuPathMain, Product, ProductChild, MenuLevelEnum, ReturnUrl, IsMenu, ControllerCurrent, SelectId, SearchString, SortOrderEnum, ActionNameEnum);
+                    break;
+                case MenuLevelENUM.Level_5:
+                    MenuManagerState = new MenuManagerState_Lv5(Id, MenuPathMain, Product, ProductChild, MenuLevelEnum, ReturnUrl, IsMenu, ControllerCurrent, SelectId, SearchString, SortOrderEnum, ActionNameEnum);
                     break;
                 default:
+                    MenuManagerState = new MenuManagerState_Empty(Id, MenuPathMain, Product, ProductChild, MenuLevelEnum, ReturnUrl, IsMenu, ControllerCurrent, SelectId, SearchString, SortOrderEnum, ActionNameEnum);
                     break;
             }
-
-            return previousMenuLevel;
-
         }
 
-        #endregion
+        //public EnableButtons CreateButtons { get; set; }
 
-        /// <summary>
-        /// This is what the controller will be called for all ProductVMs, basicaly the class name with a "s" attached, showing a plural.
-        /// However, strict pluralization is not followed. Always a "s" is added.
-        /// </summary>
+        protected string Id { get; set; }
+        public SortOrderENUM SortOrderEnum { get; set; }
 
+        public MenuPathMain MenuPathMain { get; set; }
+        public Product Product { get; set; }
+        public ProductChild ProductChild { get; set; }
 
         public string ReturnUrl { get; set; }
 
 
+        public bool IsMenu { get; set; }
+        public string SelectId { get; set; }
+
+        public string SearchString { get; set; }
+
+        private MenuLevelENUM _menuLevelEnum;
+        public MenuLevelENUM MenuLevelEnum
+        {
+            get
+            {
+                return _menuLevelEnum;
+            }
+            set
+            {
+                _menuLevelEnum = value;
+                selectMenuManagerState();
+            }
+        }
+
+        public string ControllerCurrent { protected get; set; }
+
+
+        public MenuLevelENUM GetPreviousMenuLevel() { return MenuManagerState.GetPreviousMenuLevel(); }
+        //public MenuPath1 MenuPath1 { get { return MenuManagerState.MenuPath1; } }
+        public string MenuPathMainId { get { return MenuManagerState.MenuPathMainId; } }
+        public string MenuPath1Id { get { ;return MenuManagerState.MenuPath1Id; } }
+        public string MenuPath2Id { get { return MenuManagerState.MenuPath2Id; } }
+        public string MenuPath3Id { get { return MenuManagerState.MenuPath3Id; } }
+        public string ProductId { get { return MenuManagerState.ProductId; } }
+        public string ProductChildId { get { return MenuManagerState.ProductChildId; } }
+
+        public string MenuPath1Name { get { return MenuManagerState.MenuPath1Name; } }
+        public string MenuPath2Name { get { return MenuManagerState.MenuPath2Name; } }
+        public string MenuPath3Name { get { return MenuManagerState.MenuPath3Name; } }
+        public string MenuPath4Name { get { return MenuManagerState.MenuPath4Name; } }
+        public string MenuPath5Name { get { return MenuManagerState.MenuPath5Name; } }
+
+        public string LinkForEdit { get { return MenuManagerState.LinkForEdit; } }
+
+
+
+
+
+
+
+        public string LinkForCreate { get { return MenuManagerState.LinkForCreate; } }
+
+        public string BreadCrumbName_Lv1 { get { return MenuManagerState.BreadCrumbName_Lv1; } }
+
+        public string BreadCrumbName_Lv2 { get { return MenuManagerState.BreadCrumbName_Lv2; } }
+
+        public string BreadCrumbName_Lv3 { get { return MenuManagerState.BreadCrumbName_Lv3; } }
+
+        public string BreadCrumbName_Lv4 { get { return MenuManagerState.BreadCrumbName_Lv4; } }
+
+        public string BreadCrumbName_Lv5 { get { return MenuManagerState.BreadCrumbName_Lv5; } }
+
+        public string BreadCrumbLink_Lv1 { get { return MenuManagerState.BreadCrumbLink_Lv1; } }
+
+        public string BreadCrumbLink_Lv2 { get { return MenuManagerState.BreadCrumbLink_Lv2; } }
+
+        public string BreadCrumbLink_Lv3 { get { return MenuManagerState.BreadCrumbLink_Lv3; } }
+
+        public string BreadCrumbLink_Lv4 { get { return MenuManagerState.BreadCrumbLink_Lv4; } }
+
+        public string BreadCrumbLink_Lv5 { get { return MenuManagerState.BreadCrumbLink_Lv5; } }
+
+        public bool ShowCreateButton { get { return MenuManagerState.ShowCreateButton; } }
+
+        public bool ShoeEditButton { get { return MenuManagerState.ShoeEditButton; } }
+
+        public string BackToListLink { get { return MenuManagerState.BackToListLink; } }
+
+
+        public string ControllerNameInViewIndexForCreateAndEdit { get { return MenuManagerState.ControllerNameInViewIndexForCreateAndEdit; } }
+
+        public string GetProductVmName() { return MenuManagerState.GetProductVmName(); }
+
+
+
+
+
+
+
+
+
+
+
+        public ActionNameENUM ActionName
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

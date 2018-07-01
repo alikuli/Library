@@ -35,7 +35,7 @@ namespace AliKuli.Extentions
             if (str.IsNullOrWhiteSpace())
             {
                 if(errMsg.IsNullOrWhiteSpace())
-                    throw new Exception("String is null or only white space");
+                    throw new Exception(string.Format("String: '{0}' is null or only white space",str));
                 else
                     throw new Exception(errMsg);
 

@@ -1,14 +1,12 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
-using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace UowLibrary.MenuNS
@@ -24,21 +22,17 @@ namespace UowLibrary.MenuNS
 
             List<ICommonWithId> lst = new List<ICommonWithId>();
 
-            switch (parms.Menu.MenuLevel)
+            switch (parms.Menu.MenuLevelEnum)
             {
                 case MenuLevelENUM.Level_1:
-
                     //All category 1s
                     lst = await Level1_DataListAsync();
                     break;
 
                 case MenuLevelENUM.Level_2:
                     //All category 2s for selected category 1
-                    //
                     lst = await Level2_DataListAsync(parms);
                     break;
-
-
 
                 case MenuLevelENUM.Level_3:
                     //All category 3s for selected category 1 and selected category 2
@@ -97,7 +91,7 @@ namespace UowLibrary.MenuNS
             List<ICommonWithId> pclst = new List<ICommonWithId>();
 
             var allMenuMain = await FindAllAsync();
-            var allMenu1 = await _menuPath1Biz.FindAllAsync();
+            var allMenu1 = await _menuPathMainBiz.MenuPath1Biz.FindAllAsync();
 
             foreach (var id in listOfMenuPath1Ids)
             {
@@ -126,14 +120,14 @@ namespace UowLibrary.MenuNS
         #endregion
 
         #region Level 2
-        private List<string> UniqueListOfProductCategory2_IDs(string productCategory1Id)
+        private List<string> UniqueListOfProductCategory2_IDs(string id)
         {
 
-            productCategory1Id.IsNullOrWhiteSpaceThrowException("productCategory1Id is null.");
+            id.IsNullOrWhiteSpaceThrowException("Id is null.");
 
 
             var cat2LstIds = FindAll()
-                .Where(x => x.MenuPath1Id == productCategory1Id)
+                .Where(x => x.MenuPath1Id == id)
                 .Select(x => x.MenuPath2Id)
                 .Distinct()
                 .ToList();
@@ -143,7 +137,7 @@ namespace UowLibrary.MenuNS
         }
         private async Task<List<ICommonWithId>> Level2_DataListAsync(ControllerIndexParams parms)
         {
-
+            parms.Menu.MenuPathMainId.IsNullOrWhiteSpaceThrowException();
             MenuPathMain mpm = await FindAsync(parms.Menu.MenuPathMainId);
             mpm.IsNullThrowException("Main path not found.");
 
@@ -171,7 +165,7 @@ namespace UowLibrary.MenuNS
             parms.Menu.MenuPathMainId.IsNullOrWhiteSpaceThrowException("Menu Path 1 argument missing. Programming Error");
 
             //get the productCategoryMain
-            MenuPathMain pcm = Find (parms.Menu.MenuPathMainId);
+            MenuPathMain pcm = Find(parms.Menu.MenuPathMainId);
 
             if (pcm.IsNull())
                 return null;
@@ -205,7 +199,7 @@ namespace UowLibrary.MenuNS
             mpm.IsNullThrowException("MenuPathMain not found.");
 
             List<MenuPathMain> uniqueListOfMainPaths = UniqueListOfMainPath_IDs(mpm.MenuPath1Id, mpm.MenuPath2Id);
-            
+
             if (uniqueListOfMainPaths.IsNullOrEmpty())
                 return null;
 
@@ -215,7 +209,7 @@ namespace UowLibrary.MenuNS
 
             return mpmlst;
         }
-        
+
 
         #endregion
 
@@ -232,7 +226,7 @@ namespace UowLibrary.MenuNS
             //if (mpmLst.IsNullOrEmpty())
             //    return null;
 
-            MenuPathMain mpm = await FindAsync(parms.Id);
+            MenuPathMain mpm = await FindAsync(parms.Menu.MenuPathMainId);
             mpm.IsNullThrowException("Menu Path does note exist. Something is wrong.");
 
 
@@ -243,6 +237,9 @@ namespace UowLibrary.MenuNS
             foreach (var prod in listOfProducts)
             {
                 prod.MenuManager.MenuPathMain = mpm;
+                prod.MenuManager.Product = prod;
+                prod.MenuManager.MenuLevelEnum = parms.Menu.MenuLevelEnum;
+
             }
 
             List<ICommonWithId> pclst = listOfProducts.Cast<ICommonWithId>().ToList();
@@ -268,12 +265,26 @@ namespace UowLibrary.MenuNS
             //parent product cannot be null. It is some kind of programming error if it is.
             parentProduct.IsNullThrowException("Product not found.");
 
-            if (parentProduct.ProductChildren.IsNull())
+            if (parentProduct.ProductChildren.IsNullOrEmpty())
                 return null;
 
-            List<ICommonWithId> children = parentProduct.ProductChildren.Cast<ICommonWithId>().ToList();
+            List<ProductChild> children = parentProduct.ProductChildren.ToList();
+            children.IsNullOrEmptyThrowException("Something went wrong, No Product Children found.");
 
-            return children;
+            ////Not sure if we need to do this.
+            //if (!parms.Menu.MenuPathMainId.IsNullOrWhiteSpace())
+            //{
+            //    MenuPathMain mpm = _menuPathMainBiz.Find(parms.Menu.MenuPathMainId);
+            //    mpm.IsNullThrowException();
+
+            //    foreach (ProductChild pc in children)
+            //    {
+            //        pc.MenuManager.MenuPathMain = mpm;
+            //    }
+            //}
+            List<ICommonWithId> childrenAsIcommonLst = children.Cast<ICommonWithId>().ToList();
+
+            return childrenAsIcommonLst;
         }
         #endregion
 

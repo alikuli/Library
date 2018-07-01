@@ -1,12 +1,10 @@
-﻿using AliKuli.Extentions;
+﻿
 using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.ProductNS;
-using ModelsClassLibrary.ViewModels;
-
+using System.Linq;
+using System.Web.Mvc;
 namespace UowLibrary.ProductNS
-
 {
-    public partial class MenuPath2Biz 
+    public partial class MenuPath2Biz
     {
 
 
@@ -16,6 +14,10 @@ namespace UowLibrary.ProductNS
         }
 
 
+        public SelectList SelectList_Engine(IQueryable<MenuPath2> data)
+        {
+            return Dal.SelectList_Engine(data);
+        }
 
 
     }

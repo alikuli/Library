@@ -31,7 +31,8 @@ namespace DalLibrary.DalNS
             //if (allItems.IsNull() || allItems.Count() == 0)
             //    return new SelectList(null, "Value", "Text");
 
-            var sortedList = allItems.OrderBy(x => x.Name)
+            var sortedList = allItems
+                .OrderBy(x => x.Name)
                 .Select(x =>
                 new
                 {

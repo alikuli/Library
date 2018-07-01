@@ -2,14 +2,12 @@
 using ApplicationDbContextNS;
 using DalLibrary.Interfaces;
 using ErrorHandlerLibrary.ExceptionsNS;
-using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.ProductNS;
+using System.Linq;
 using UowLibrary.MenuNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
 using WebLibrary.Programs;
-using System.Linq;
 
 namespace UowLibrary.ProductNS
 {
@@ -32,5 +30,12 @@ namespace UowLibrary.ProductNS
             return mp1;
         }
 
+        public MenuPath1Biz MenuPath1Biz
+        {
+            get
+            {
+                return _menupath1Biz;
+            }
+        }
     }
 }

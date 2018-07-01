@@ -1,10 +1,7 @@
 ﻿using AliKuli.Extentions;
-using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
-using System;
-using System.Reflection;
 
 namespace UowLibrary.MenuNS
 {
@@ -20,7 +17,7 @@ namespace UowLibrary.MenuNS
             indexListVM.IsImageTiled = true;
             indexListVM.Heading.Main = "Menu";
             indexListVM.Show.Create = true;
-            indexListVM.MenuManager.MenuLevelEnum = parameters.Menu.MenuLevel;
+            indexListVM.MenuManager.MenuLevelEnum = parameters.Menu.MenuLevelEnum;
 
             #region Old Code
             //if (!parameters.Id.IsNullOrWhiteSpace())
@@ -93,26 +90,30 @@ namespace UowLibrary.MenuNS
         {
 
 
+            MenuManager mm = new MenuManager(parameters.Id, null, null, null, parameters.Menu.MenuLevelEnum, parameters.Menu.ReturnUrl, true, "",parameters.SelectedId,parameters.SearchFor, parameters.SortBy,parameters.ActionNameEnum);
 
-            MenuManager mm = new MenuManager(parameters.Id, null , null, null, parameters.Menu.MenuLevel, parameters.ReturnUrl, true);
-            if(!mm.MenuPathMainId.IsNullOrWhiteSpace())
+            if (!parameters.Menu.MenuPathMainId.IsNullOrWhiteSpace())
             {
-                mm.MenuPathMain = Find(mm.MenuPathMainId);
-                mm.MenuPathMain.IsNullThrowException("Menu Path not found.");
+                mm.MenuPathMain = Find(parameters.Menu.MenuPathMainId);
+                mm.MenuPathMain.IsNullThrowException();
+            }
+
+            if (!parameters.Menu.ProductId.IsNullOrWhiteSpace())
+            {
+                mm.Product = _productBiz.Find(parameters.Menu.ProductId);
+                mm.Product.IsNullThrowException();
             }
 
 
-            if(!mm.ProductId.IsNullOrWhiteSpace())
+            if (!parameters.Menu.ProductChildId.IsNullOrWhiteSpace())
             {
-                mm.Product = _productBiz.Find(mm.ProductId);
-                mm.Product.IsNullThrowException("Product not found.");
+                mm.ProductChild = _productChildBiz.Find(parameters.Menu.ProductChildId);
+                mm.ProductChild.IsNullThrowException();
             }
 
-            if (!mm.ProductChildId.IsNullOrWhiteSpace())
-            {
-                mm.ProductChild = _productChildBiz.Find(mm.ProductChildId);
-                mm.Product.IsNullThrowException("Product Child not found.");
-            }
+
+
+
 
             return mm;
 

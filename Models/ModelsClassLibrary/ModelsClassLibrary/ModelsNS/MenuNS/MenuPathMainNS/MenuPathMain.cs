@@ -1,6 +1,5 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
-using InterfacesLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.MenuNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
@@ -13,7 +12,7 @@ namespace ModelsClassLibrary.MenuNS
     /// <summary>
     /// This is the Menu Path
     /// </summary>
-    public partial class MenuPathMain : MenuPathAbstract,  IHaveMenuManager
+    public partial class MenuPathMain : MenuPathAbstract, IHaveMenuManager
     {
 
         public MenuPathMain()
@@ -24,6 +23,7 @@ namespace ModelsClassLibrary.MenuNS
             //MenuPath3 = new MenuPath3();
             //Products = new List<Product>();
 
+            MenuManager = new MenuManager(Id, this, null, null, EnumLibrary.EnumNS.MenuLevelENUM.unknown, "", false, "", "", "", SortOrderENUM.Item1_Asc, ActionNameENUM.Unknown);
 
 
         }
@@ -176,7 +176,7 @@ namespace ModelsClassLibrary.MenuNS
         }
 
 
-        
+
 
     }
 }

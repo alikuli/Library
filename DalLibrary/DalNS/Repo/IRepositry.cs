@@ -13,7 +13,7 @@ namespace DalLibrary.Interfaces
     public interface IRepositry<TEntity>
      where TEntity : class, ICommonWithId
     {
-
+        void Attach(TEntity entity);
         void AddedState(TEntity entity);
         void Create(TEntity entity);
         void Delete(string id);

@@ -104,7 +104,8 @@ namespace MarketPlace.Web6.Controllers
                     User.Identity.Name,
                     menuPathMainId,
                     productId,
-                    productChildId);
+                    productChildId, 
+                    returnUrl);
 
                 await _productBiz.CreateAndSaveAsync(parm);
 
@@ -163,7 +164,7 @@ namespace MarketPlace.Web6.Controllers
             try
             {
                 //the id here is a product Id
-                ProductAutomobileVM productAutomobileVM = await makeTheVm(id, menuPathMainId, returnUrl, menuLevelEnum);
+                ProductAutomobileVM productAutomobileVM = await makeTheVm(id, menuPathMainId, returnUrl, menuLevelEnum, selectedId, searchFor, ActionNameENUM.Edit);
                 return View(productAutomobileVM);
 
             }
@@ -176,7 +177,7 @@ namespace MarketPlace.Web6.Controllers
             }
         }
 
-        private async Task<ProductAutomobileVM> makeTheVm(string id, string menuPathMainId, string returnUrl, MenuLevelENUM menuLevelEnum)
+        private async Task<ProductAutomobileVM> makeTheVm(string id, string menuPathMainId, string returnUrl, MenuLevelENUM menuLevelEnum, string selectId, string searchString, ActionNameENUM actionNameEnum)
         {
             id.IsNullThrowExceptionArgument("Id not received. Bad Request");
             menuPathMainId.IsNullOrWhiteSpaceThrowException("Menu path not defined.");
@@ -190,7 +191,7 @@ namespace MarketPlace.Web6.Controllers
             mpm.IsNullThrowException("MenuPathMain not found.");
 
             //Not Id is ProductId
-            product.MenuManager = new MenuManager(id, mpm, product, null, menuLevelEnum, returnUrl, false);
+            product.MenuManager = new MenuManager(id, mpm, product, null, menuLevelEnum, returnUrl, false, "", selectId, searchString, SortOrderENUM.Item1_Asc, actionNameEnum);
 
             //convert to the derived class.
             ProductAutomobileVM productAutomobileVM = ProductAutomobileVM.MakeThisClassFrom(product);
@@ -247,7 +248,8 @@ namespace MarketPlace.Web6.Controllers
                     User.Identity.Name,
                     menuPathMainId,
                     productId,
-                    productChildId);
+                    productChildId,
+                    returnUrl);
 
                 await _productBiz.UpdateAndSaveAsync(parm);
 

@@ -1,0 +1,32 @@
+﻿@*https://getbootstrap.com/docs/4.0/components/breadcrumb/*@
+
+@*@model ModelsClassLibrary.ViewModels.IndexListVM*@
+@model ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.IHaveMenuManager
+
+
+    @{
+
+
+        string productId = Model.MenuManager.ProductId;
+        string productChildId = Model.MenuManager.ProductChildId;
+        string menuPathMainId = Model.MenuManager.MenuPathMainId;
+        string returnUrl = Model.MenuManager.ReturnUrl;
+        string selectId = Model.MenuManager.SelectId;
+        string searchFor = Model.MenuManager.SearchString;
+        MenuLevelENUM previousMenuLevelEnum = Model.MenuManager.GetPreviousMenuLevel();
+        SortOrderENUM sortBy = Model.MenuManager.SortOrderEnum;
+
+        MenuLevelENUM menuLevelEnum = MenuLevelENUM.Level_2;
+        string linkTextMenuPath3 = Model.MenuManager.MenuPath3Name;
+
+
+    }
+
+
+
+    @if (Model.MenuManager.IsMenu)
+    {
+
+        <li class="breadcrumb-item">@Html.ActionLink(linkTextMenuPath3, "Index", new { menuLevelEnum = menuLevelEnum, searchFor = searchFor, selectedId = selectId, sortBy = sortBy, id = "", menuPathMainId = menuPathMainId, productId = productId, productChildId = productChildId, returnUrl = returnUrl }) </li>
+    }
+

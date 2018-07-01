@@ -1,10 +1,10 @@
-﻿using InterfacesLibrary.SharedNS.FeaturesNS;
+﻿using EnumLibrary.EnumNS;
+using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 
 namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 {
@@ -23,7 +23,8 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
         {
             Sell = new SalePriceComplex();
             Buy = new CostsComplex();
-            MenuManager = new MenuManager(Id);
+            MenuManager = new MenuManager(Id, null, null, this, MenuLevelENUM.unknown, string.Empty, false, "", "", "", SortOrderENUM.Item1_Asc,ActionNameENUM.Unknown);
+
         }
 
 

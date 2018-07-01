@@ -29,6 +29,12 @@ namespace UowLibrary.MenuNS
             return _menuPathMainBiz.MenuPath3_SelectList();
         }
 
+        public SelectList MenuPath2_SelectList_FilteredFor(MenuPath1ENUM menuPath1Enum)
+        {
+
+
+            return _menuPathMainBiz.MenuPath2_SelectList_FilteredFor(menuPath1Enum);
+        }
 
     }
 }
