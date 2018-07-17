@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -87,7 +88,7 @@ namespace ModelsClassLibrary.ViewModels
             return FullName;
         }
 
-        public MenuManager MenuManager { get; set; }
+        public IMenuManager MenuManager { get; set; }
 
         #region Bools
         public bool IsImageThere

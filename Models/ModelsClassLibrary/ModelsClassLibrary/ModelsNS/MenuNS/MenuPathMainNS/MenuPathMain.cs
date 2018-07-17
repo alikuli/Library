@@ -23,7 +23,7 @@ namespace ModelsClassLibrary.MenuNS
             //MenuPath3 = new MenuPath3();
             //Products = new List<Product>();
 
-            MenuManager = new MenuManager(Id, this, null, null, EnumLibrary.EnumNS.MenuLevelENUM.unknown, "", false, "", "", "", SortOrderENUM.Item1_Asc, ActionNameENUM.Unknown);
+            //MenuManager = new MenuManager(Id, this, null, null, EnumLibrary.EnumNS.MenuLevelENUM.unknown, "", false, "", "", "", SortOrderENUM.Item1_Asc, ActionNameENUM.Unknown);
 
 
         }

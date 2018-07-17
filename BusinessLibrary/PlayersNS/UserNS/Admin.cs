@@ -1,4 +1,5 @@
-﻿using AliKuli.UtilitiesNS;
+﻿using AliKuli.Extentions;
+using AliKuli.UtilitiesNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using UserModels;
@@ -250,8 +251,9 @@ namespace UowLibrary
 
         public bool IsUserAdmin(ApplicationUser user)
         {
+            if (user.IsNull())
+                return false;
             ConfigManagerHelper cfg = new ConfigManagerHelper();
-
             return UserManager.IsInRole(user.Id, cfg.AdminRole);
         }
 

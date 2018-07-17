@@ -16,12 +16,17 @@
 @{
     int count = 0;
     string returnurl = Request.Url.PathAndQuery;
-    string controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
-    
+    //string controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+    Model.MenuManager.MenuState.ControllerCurrentName = this.ViewContext.RouteData.Values["controller"].ToString();
+    string currController = Model.MenuManager.MenuState.ControllerCurrentName;
+    string editController = Model.MenuManager.MenuState.CreateAndEditLink_ControllerName;
     //these are the edit variables
-    string menuPathMainId = Model.MenuManager.MenuPathMainId;
-    string productId = Model.MenuManager.ProductId;
-    string productChildId = Model.MenuManager.ProductChildId;
+    
+    //string menuPathMainId = Model.MenuManager.MenuState.MenuPathMainId;
+    //string productId = Model.MenuManager.MenuState.ProductId;
+    //string productChildId = Model.MenuManager.MenuState.ProductChildId;
+            
+    //string idEditLink = Model.MenuManager.MenuState.e;
 
 }
 <div class="panel panel-default ">
@@ -33,10 +38,27 @@
         {
 
             string imagePath = "";
-            string editPath = "";
+            string mainMenuPath = "";
             string alert = (@Model.SelectedIdMatchesThis(indexItemVM.Id) ? "alert-info " : " ");
             string alertFont = (@Model.SelectedIdMatchesThis(indexItemVM.Id) ? " text-danger " : " ");
-
+            
+            //switch (Model.MenuManager.MenuState.MenuEnum)
+            //{
+            //    case MenuENUM.IndexMenuPath1:
+            //    case MenuENUM.IndexMenuPath2:
+            //    case MenuENUM.IndexMenuPath3:
+            //        menuPathMainId = indexItemVM.Id;
+            //        break;
+            //    case MenuENUM.IndexMenuProduct:
+            //        productId = indexItemVM.Id;
+            //        break;
+            //    case MenuENUM.IndexMenuProductChild:
+            //        productChildId = indexItemVM.Id;
+            //        break;
+            //    default:
+            //        break;
+            //}
+            
             if (count % 2 == 0)
             {
                 alert += " background-ltgrey ";
@@ -51,27 +73,31 @@
 
 
             //this has to be updated for the menu
-            if (Model.MenuManager.IsMenu)
+            if (Model.MenuManager.MenuState.IsMenu)
             {
-                //Note the Menu Ids are coming from the indexItemVM and NOT IndexListVM. I changed this! The Menu paths will be the same!
-                //In level 1. ProductId is not equal to indexItemVm.Id
-                editPath = Url.Action("index", controllerName, new { id = indexItemVM.Id, menuPathMainId = menuPathMainId, menuLevelEnum = Model.MenuManager.MenuLevelEnum, productId = productId});
+
+                switch (Model.MenuManager.MenuState.MenuEnum)
+                {
+                    case MenuENUM.IndexMenuProductChild:
+                        //Id = ProductChildId.
+                        mainMenuPath = Url.Action("ProductOwner", currController, new { id = indexItemVM.Id, menuEnum = Model.MenuManager.MenuState.NextMenu, });
+                        break;
+                    default:
+                        mainMenuPath = Url.Action("index", currController, new { id = indexItemVM.Id, menuEnum = Model.MenuManager.MenuState.NextMenu, });
+                        break;
+                }
 
             }
             else
             {
-
-
-
-
-                editPath = Url.Action("Edit", controllerName, new { id = indexItemVM.Id, menuPathMainId = menuPathMainId, menuLevelEnum = Model.MenuManager.MenuLevelEnum, productId = productId });
+                mainMenuPath = Url.Action("Edit", editController, new { id = indexItemVM.Id, menuEnum = EnumLibrary.EnumNS.MenuENUM.unknown, });
             }
 
             <div class="gallery col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-sm-3 col-sm-offset-1 col-xs-6  thumbnail" style="margin-bottom:10px">
-                <a href="@editPath" title="@indexItemVM.FullName">
+                <a href="@mainMenuPath" title="@indexItemVM.FullName">
                     <div id="MyDiv" class="caption ">
                         <h4>@indexItemVM.ShortName</h4>
-                        <p class="">
+                        <p class=""> 
                             @indexItemVM.Description
                         </p>
                     </div>
@@ -86,16 +112,42 @@
                     }
                     else
                     {
+                        string editId = indexItemVM.Id;
                         <div class="row fontHeavy">
                             @if (Model.UserIsAdmin)
                             {
-                                string url = "";
+                                string id = indexItemVM.Id;
+                                switch (indexItemVM.MenuManager.MenuState.MenuEnum)
+                                {
+                                    case MenuENUM.IndexDefault:
+                                        break;
+                                    case MenuENUM.IndexMenuPath1:
+                                        id = indexItemVM.MenuManager.MenuState.MenuPath1Id;
+                                        break;
+                                    case MenuENUM.IndexMenuPath2:
+                                        id = indexItemVM.MenuManager.MenuState.MenuPath2Id;
+                                        break;
+                                    case MenuENUM.IndexMenuPath3:
+                                        id = indexItemVM.MenuManager.MenuState.MenuPath3Id;
+                                        break;
+                                    case MenuENUM.IndexMenuProduct:
+                                        id = indexItemVM.MenuManager.MenuState.ProductId;
+                                        break;
+                                    case MenuENUM.IndexMenuProductChild:
+                                        id = indexItemVM.MenuManager.MenuState.ProductChildId;
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+
+                                string url = Url.Action("Edit", editController, new { id = id, returnurl = returnurl, menuEnum = Model.MenuManager.MenuState.MenuEnum }, null); ;
 
                                 //if (Model.MenuManager.IsMenu)
                                 //{
-                                //    if (Model.MenuManager.MenuLevelEnum != MenuLevelENUM.unknown)
+                                //    if (Model.MenuManager.MenuEnum != MenuLevelENUM.unknown)
                                 //    {
-                                //        if (Model.MenuManager.MenuLevelEnum != MenuLevelENUM.Level_1)
+                                //        if (Model.MenuManager.MenuEnum != MenuLevelENUM.Level_1)
                                 //        {
                                 //            controllerNameForEdit = Model.MenuManager.ControlerNameForProductVms;
                                 //        }
@@ -103,30 +155,27 @@
 
                                 //}
 
-                                switch (Model.MenuManager.MenuLevelEnum)
-                                {
-                                    case MenuLevelENUM.unknown:
-                                        break;
-                                    case MenuLevelENUM.Level_1:
-                                        url = Url.Action("Edit", "MenuPathMains", new { id = indexItemVM.Id, returnurl = returnurl, menuPathMainId = menuPathMainId, menuLevelEnum = Model.MenuManager.MenuLevelEnum }, null);
-                                        break;
-                                    case MenuLevelENUM.Level_2:
-                                        url = Url.Action("Edit", "MenuPathMains", new { id = indexItemVM.Id, returnurl = returnurl, menuPathMainId = menuPathMainId, menuLevelEnum = Model.MenuManager.MenuLevelEnum }, null);
-                                        break;
-                                    case MenuLevelENUM.Level_3:
-                                        url = Url.Action("Edit", "MenuPathMains", new { id = indexItemVM.Id, returnurl = returnurl, menuPathMainId = menuPathMainId, menuLevelEnum = Model.MenuManager.MenuLevelEnum }, null);
-                                        break;
+                                //switch (Model.MenuManager.MenuEnum)
+                                //{
+                                //    case MenuLevelENUM.unknown:
+                                //        break;
+                                //    case MenuLevelENUM.Level_1:
+                                //    case MenuLevelENUM.Level_2:
+                                //    case MenuLevelENUM.Level_3:
 
-                                    case MenuLevelENUM.Level_4:
-                                        url = Url.Action("Edit", Model.MenuManager.GetProductVmName(), new { id = indexItemVM.Id, menuPathMainId = menuPathMainId, returnurl = returnurl, menuLevelEnum = Model.MenuManager.MenuLevelEnum, productId = productId }, null);
-                                        break;
+                                //        url = Url.Action("Edit", editController, new { id = idEditLink, returnurl = returnurl, menuPathMainId = menuPathMainId, menuEnum = Model.MenuManager.MenuEnum }, null);
+                                //        break;
 
-                                    case MenuLevelENUM.Level_5:
-                                        url = Url.Action("Edit", "ProductChilds", new { id = indexItemVM.Id, menuPathMainId = menuPathMainId, returnurl = returnurl, menuLevelEnum = Model.MenuManager.MenuLevelEnum, productId = productId }, null);
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                //    case MenuLevelENUM.Level_4:
+                                //        url = Url.Action("Edit", Model.MenuManager.GetProductVmName(), new { id = indexItemVM.Id, menuPathMainId = menuPathMainId, returnurl = returnurl, menuEnum = Model.MenuManager.MenuEnum, productId = productId }, null);
+                                //        break;
+
+                                //    case MenuLevelENUM.Level_5:
+                                //        url = Url.Action("Edit", "ProductChilds", new { id = indexItemVM.Id, menuPathMainId = menuPathMainId, returnurl = returnurl, menuEnum = Model.MenuManager.MenuEnum, productId = productId }, null);
+                                //        break;
+                                //    default:
+                                //        break;
+                                //}
                                     <div class="text-center col-md-12">
                                         <div class="col-md-1">&nbsp;</div>
                                         <div class="col-md-11">

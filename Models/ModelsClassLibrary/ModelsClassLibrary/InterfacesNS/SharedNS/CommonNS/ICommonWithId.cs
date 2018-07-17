@@ -1,10 +1,12 @@
 ﻿using EnumLibrary.EnumNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 namespace InterfacesLibrary.SharedNS
 {
     public interface ICommonWithId
     {
         //ModelsClassLibrary.ModelsNS.SharedNS.DbBoolsStorageComplex DbBoolsStorageRules { get; set; }
+        IMenuManager MenuManager { get; set; }
         string Comment { get; set; }
         string DetailInfoToDisplayOnWebsite { get; set; }
         string FullName();

@@ -1,4 +1,5 @@
-﻿using ErrorHandlerLibrary.ExceptionsNS;
+﻿using BreadCrumbsLibraryNS.Programs;
+using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using UowLibrary;
@@ -9,8 +10,8 @@ namespace MarketPlace.Web6.Controllers
     {
 
 
-        public UomWeightsController(UomWeightBiz uomWeightBiz, IErrorSet errorSet, UserBiz userbiz)
-            : base(uomWeightBiz, errorSet,  userbiz)
+        public UomWeightsController(UomWeightBiz uomWeightBiz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
+            : base(uomWeightBiz, errorSet, userbiz, breadCrumbManager)
         {
         }
 

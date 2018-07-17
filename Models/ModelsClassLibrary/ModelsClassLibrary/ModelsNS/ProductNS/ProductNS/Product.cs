@@ -2,6 +2,7 @@
 using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
@@ -14,12 +15,6 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
     public partial class Product : ProductAbstract, IProduct
     {
-
-        public Product()
-        {
-            MenuManager = new MenuManager(Id, null, this, null, MenuLevelENUM.unknown, string.Empty, false, "", "", "", SortOrderENUM.Item1_Asc, ActionNameENUM.Unknown);
-
-        }
 
         [NotMapped]
         public virtual List<CheckBoxItem> CheckedBoxesList { get; set; }
@@ -45,9 +40,6 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         {
             return EnumLibrary.EnumNS.ClassesWithRightsENUM.Product;
         }
-
-        [NotMapped]
-        public IMenuManager MenuManager { get; set; }
 
 
         public bool IsAutomobile

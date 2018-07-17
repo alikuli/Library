@@ -3,10 +3,8 @@ using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
-using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
-using UserModels;
 
 namespace ModelsClassLibrary.ModelsNS.SharedNS
 {
@@ -32,20 +30,17 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
 
         public ControllerCreateEditParameter(
-            ICommonWithId entity, 
-            HttpPostedFileBase[] httpMiscUploadedFiles, 
-            HttpPostedFileBase[] httpSelfieUpload, 
-            HttpPostedFileBase[] httpIdCardFront, 
-            HttpPostedFileBase[] httpIdCardBack, 
+            ICommonWithId entity,
+            HttpPostedFileBase[] httpMiscUploadedFiles,
+            HttpPostedFileBase[] httpSelfieUpload,
+            HttpPostedFileBase[] httpIdCardFront,
+            HttpPostedFileBase[] httpIdCardBack,
             HttpPostedFileBase[] httpPassportFront,
-            HttpPostedFileBase[] httpPassportVisa, 
-            HttpPostedFileBase[] httpLiscenseFront, 
-            HttpPostedFileBase[] httpLiscenseBack, 
-            MenuLevelENUM menuLevelEnum, 
-            string userName, 
-            string menuPathMainId, 
-            string productId, 
-            string productChildId,
+            HttpPostedFileBase[] httpPassportVisa,
+            HttpPostedFileBase[] httpLiscenseFront,
+            HttpPostedFileBase[] httpLiscenseBack,
+            MenuENUM menuEnum,
+            string userName,
             string returnUrl)
             : this()
         {
@@ -61,7 +56,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
             UserName = userName;
 
-            Menu = new MenuParameters(menuLevelEnum, menuPathMainId, productId, productChildId, returnUrl);
+            //Menu = new MenuParameters(menuEnum, menuPathMainId, productId, productChildId, returnUrl);
             //todo what should we do if userName is empty?
 
             if (IsIHasUploads)
@@ -93,7 +88,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         //public string menuPath2Id { get; set; }
         //public string menuPath3Id { get; set; }
         public MenuParameters Menu { get; set; }
-        
+
         #region Uploads
 
 

@@ -98,27 +98,27 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    <Reference Include="System.Web.Mvc, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.Mvc.5.2.6\lib\net45\System.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.Razor.3.2.6\lib\net45\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <HintPath>..\..\..\MarketPlace.Web6\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
@@ -251,23 +251,31 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ModelsNS\IndexNS\Headings.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\IMenuManager.cs" />
     <Compile Include="InterfacesNS\SharedNS\FeaturesNS\IHaveMenuManager.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\CreateMenuStatesNS\CreateMenuStateAbstract.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\CreateMenuStatesNS\CreateMenuState_Empty.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\CreateMenuStatesNS\CreateMenuState_Lv3.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\CreateMenuStatesNS\CreateMenuState_Lv1.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\CreateMenuStatesNS\CreateMenuState_Lv2.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\CreateMenuStatesNS\ICreateMenuState.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\IMenuManagerState.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\MenuManagerStateAbstract.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\MenuManagerState_Empty.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\MenuManagerState_Lv3.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\MenuManagerState_Lv4.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\MenuManagerState_Lv5.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\MenuManagerState_Lv2.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStatesNS\MenuManagerState_Lv1.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateAbstract OLD.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\IMenuManager.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\CreateDefault.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\EditDefault.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\IndexDefault.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuPathMainNS\Menu.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\IMenuState.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuManager.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuManagerAbstract.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\CreateMenuPath1.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\CreateMenuPath2.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\CreateMenuPath3.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\CreateMenuProduct.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\CreateMenuProductChild.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\EditMenuPath1.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\EditMenuPath2.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\EditMenuPath3.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\EditMenuProduct.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\EditMenuProductChild.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\IndexMenuPath1.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\IndexMenuPath2.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\IndexMenuPath3.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\IndexMenuProduct.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\IndexMenuProductChild.cs" />
     <Compile Include="ModelsNS\MigraDocNS\PdfHeaderInfo.cs" />
     <Compile Include="ModelsNS\MigraDocNS\OptionsPdfDoc.cs" />
     <Compile Include="ModelsNS\PeopleNS\AbstractsNS\IPlayer.cs" />
@@ -298,7 +306,6 @@
     <Compile Include="ModelsNS\ProductNS\ProductChildNS\ProductChild.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\IProduct.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\IProductHasUploads.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuManager.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\ViewModelFunctions.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductAbstractNS\IProductAbstract.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\UpdatePropertiesDuringModify.cs" />
@@ -429,6 +436,10 @@
     <Folder Include="ModelsNS\PlacesNS\Salepoint\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BreadCrumbsLibrary\BreadCrumbsLibrary\BreadCrumbsLibrary.csproj">
+      <Project>{93822697-db5f-4569-b425-1f0ca6bb3ff4}</Project>
+      <Name>BreadCrumbsLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ConstantsLibrary\ConstantsLibrary.csproj">
       <Project>{88109ea7-d29b-4833-8fd0-8b1ea0605260}</Project>
       <Name>ConstantsLibrary</Name>

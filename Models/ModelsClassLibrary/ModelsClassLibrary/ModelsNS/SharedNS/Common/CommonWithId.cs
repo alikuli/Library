@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -37,6 +38,13 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         /// </summary>
         [NotMapped]
         public bool IsDeleting { get; set; }
+
+        /// <summary>
+        /// This controls the Menus.
+        /// </summary>
+        [NotMapped]
+        public IMenuManager MenuManager { get; set; }
+
 
         /// <summary>
         /// Marked true if updating

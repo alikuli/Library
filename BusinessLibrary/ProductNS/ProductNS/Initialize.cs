@@ -242,7 +242,14 @@ namespace UowLibrary.ProductNS
 
                         mpm.IsNullThrowException();
 
+                        if (p.MenuPathMains.IsNull())
+                            p.MenuPathMains = new List<MenuPathMain>();
+
                         p.MenuPathMains.Add(mpm);
+
+                        if (mpm.Products.IsNull())
+                            mpm.Products = new List<Product>();
+
                         mpm.Products.Add(p);
                     }
 
@@ -268,6 +275,9 @@ namespace UowLibrary.ProductNS
                         pi.Name = piStr;
                         pi.Product = p;
                         pi.ProductId = p.Id;
+
+                        if (p.ProductIdentifiers.IsNull())
+                            p.ProductIdentifiers = new List<ProductIdentifier>();
 
                         p.ProductIdentifiers.Add(pi);
                     }

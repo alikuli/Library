@@ -8,24 +8,22 @@
     string returnUrl = "";
     string selectId = "";
     string searchString = "";
-    MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown;
-    MenuLevelENUM previousMenuLevelEnum = MenuLevelENUM.unknown;
+    MenuENUM menuEnum = MenuENUM.unknown;
 
 
     ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.IHaveMenuManager ihaveMenuManager = Model as ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.IHaveMenuManager;
+    
     if (!ihaveMenuManager.IsNull())
     {
-        ihaveMenuManager.MenuManager.ControllerCurrent = controllerName;
-        controllerName = ihaveMenuManager.MenuManager.ControllerNameInViewIndexForCreateAndEdit;
-
-        menuPathMainId = ihaveMenuManager.MenuManager.MenuPathMainId;
-        returnUrl = ihaveMenuManager.MenuManager.ReturnUrl;
-        productId = ihaveMenuManager.MenuManager.ProductId;
-        productChildId = ihaveMenuManager.MenuManager.ProductChildId;
-        selectId = ihaveMenuManager.MenuManager.SelectId;
-        searchString = ihaveMenuManager.MenuManager.SearchString;
-        menuLevelEnum = ihaveMenuManager.MenuManager.MenuLevelEnum;
-        previousMenuLevelEnum = ihaveMenuManager.MenuManager.GetPreviousMenuLevel();
+        Model.MenuManager.MenuState.ControllerCurrentName = controllerName;
+        controllerName = Model.MenuManager.MenuState.CreateAndEditLink_ControllerName;
+        menuPathMainId = Model.MenuManager.MenuState.MenuPathMainId;
+        productId = Model.MenuManager.MenuState.ProductId;
+        productChildId = Model.MenuManager.MenuState.ProductChildId;
+        selectId = Model.MenuManager.SelectedId;
+        returnUrl = Model.MenuManager.CurrentUrl;
+        searchString = Model.MenuManager.SearchString;
+        menuEnum = Model.MenuManager.MenuState.MenuEnum;
     }
     
 }
@@ -33,11 +31,11 @@
     
 
 
-@Html.Partial(@"ViewControls/Edit/_breadCrumbs - Edit")
+@*@Html.Partial(@"ViewControls/Edit/_breadCrumbs - Edit")*@
 @Html.Partial(@"ViewControls/Edit/_EditHeading")
 
 @*@using (Html.BeginForm("Edit", @controllerName, new { returnUrl = returnUrl}, FormMethod.Post, new { enctype = "multipart/form-data" }))*@
-@using (Html.BeginForm("Edit", @controllerName, new { menuPathMainId = menuPathMainId, productId = productId, returnUrl = returnUrl, productChildId = productChildId, menuLevelEnum = menuLevelEnum, selectId = selectId, searchString = searchString }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", @controllerName, new { menuPathMainId = menuPathMainId, productId = productId, returnUrl = returnUrl, productChildId = productChildId, menuEnum = menuEnum, selectId = selectId, searchString = searchString }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(model => model.Id)
     @Html.AntiForgeryToken()

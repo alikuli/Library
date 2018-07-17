@@ -1,4 +1,5 @@
-﻿using ErrorHandlerLibrary.ExceptionsNS;
+﻿using BreadCrumbsLibraryNS.Programs;
+using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using System;
@@ -15,8 +16,8 @@ namespace MarketPlace.Web6.Controllers
         UomLengthBiz _uomLengthBiz;
         #region Constructo and initializers
 
-        public UomLengthsController(UomLengthBiz uomLengthBiz, IErrorSet errorSet, UserBiz userbiz)
-            : base(uomLengthBiz, errorSet,  userbiz)
+        public UomLengthsController(UomLengthBiz uomLengthBiz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
+            : base(uomLengthBiz, errorSet, userbiz, breadCrumbManager)
         {
             _uomLengthBiz = uomLengthBiz;
         }

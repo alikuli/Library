@@ -8,6 +8,7 @@ using UowLibrary.FileDocNS;
 using AliKuli.Extentions;
 using UowLibrary;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using BreadCrumbsLibraryNS.Programs;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -16,8 +17,8 @@ namespace MarketPlace.Web6.Controllers
         FileDocBiz _fileDocBiz;
         UserBiz _userBiz;
 
-        public FileDocsController(FileDocBiz FileDocsBiz, IErrorSet errorSet, UserBiz userBiz)
-            : base(FileDocsBiz, errorSet, userBiz)
+        public FileDocsController(FileDocBiz FileDocsBiz, IErrorSet errorSet, UserBiz userBiz, BreadCrumbManager breadCrumbManager)
+            : base(FileDocsBiz, errorSet, userBiz, breadCrumbManager)
         {
             _fileDocBiz = FileDocsBiz;
             _userBiz = userBiz;

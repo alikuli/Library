@@ -20,21 +20,18 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         readonly bool _isUserAdmin;
         public ControllerIndexParams(
-            string id, 
-            string searchFor, 
-            string isandForSearch, 
-            string selectedId, 
-            MenuLevelENUM menuLevelEnum, 
-            SortOrderENUM sortBy, 
-            string logoAddress, 
-            ICommonWithId entity, 
-            ICommonWithId dudEntity, 
-            ApplicationUser user, 
-            bool isUserAdmin, 
-            string returnUrl, 
-            string menuPathMainId, 
-            string productId, 
-            string productChildId, 
+            string id,
+            string searchFor,
+            string isandForSearch,
+            string selectedId,
+            MenuENUM menuEnum,
+            SortOrderENUM sortBy,
+            string logoAddress,
+            ICommonWithId entity,
+            ICommonWithId dudEntity,
+            ApplicationUser user,
+            bool isUserAdmin,
+            string returnUrl,
             ActionNameENUM actionNameEnum)
         {
             Id = id;
@@ -43,7 +40,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             SelectedId = selectedId;
             Entity = entity;
             SortBy = sortBy;
-            Menu = new MenuParameters(menuLevelEnum, menuPathMainId, productId, productChildId, returnUrl);
+            Menu = new MenuParameters(menuEnum, id, returnUrl);
             LogoAddress = logoAddress;
             User = user;
             _isUserAdmin = isUserAdmin;

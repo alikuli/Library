@@ -2,6 +2,7 @@
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
 using System;
@@ -129,7 +130,9 @@ namespace UowLibrary
                         isEditLocked,
                         detailInfoToDisplayOnWebsite);
 
-                    indexItem.MenuManager = indexListVM.MenuManager as MenuManager;
+                    //indexItem.MenuManager = indexListVM.MenuManager as IMenuManager;
+                    
+                    //image address is added in here.
                     Event_ModifyIndexItem(indexListVM, indexItem, entity);
 
                     if (AddEntryToIndex)

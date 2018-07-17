@@ -1,4 +1,5 @@
-﻿using ErrorHandlerLibrary.ExceptionsNS;
+﻿using BreadCrumbsLibraryNS.Programs;
+using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.PeopleNS;
 using System;
@@ -13,8 +14,8 @@ namespace MarketPlace.Web6.Controllers
 
         #region Constructo and initializers
 
-        public LanguagesController(LanguageBiz languagesBiz, IErrorSet errorSet, UserBiz userbiz)
-            : base(languagesBiz, errorSet,  userbiz) { }
+        public LanguagesController(LanguageBiz languagesBiz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
+            : base(languagesBiz, errorSet, userbiz, breadCrumbManager) { }
 
         #endregion
 

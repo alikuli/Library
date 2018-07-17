@@ -7,6 +7,7 @@ using MarketPlace.Web4.Controllers;
 using Microsoft.AspNet.Identity.Owin;
 using ModelsNS.Models;
 using UowLibrary;
+using BreadCrumbsLibraryNS.Programs;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -14,8 +15,8 @@ namespace MarketPlace.Web6.Controllers
     public class AccountController : AbstractController
     {
 
-        public AccountController(UserBiz userDAL, IErrorSet errorSet, UserBiz userBiz)
-            : base(errorSet,  userBiz)
+        public AccountController(UserBiz userDAL, IErrorSet errorSet, UserBiz userBiz, BreadCrumbManager breadCrumbManager)
+            : base(errorSet, userBiz, breadCrumbManager)
         {
             UserDAL = userDAL;
 

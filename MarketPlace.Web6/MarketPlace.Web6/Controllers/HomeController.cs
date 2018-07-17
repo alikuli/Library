@@ -1,4 +1,5 @@
 ﻿using AliKuli.UtilitiesNS;
+using BreadCrumbsLibraryNS.Programs;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web4.Controllers;
 using System;
@@ -12,8 +13,8 @@ namespace MarketPlace.Web6.Controllers
     {
         UserBiz _userBiz;
         ConfigManagerHelper _configManager;
-        public HomeController(IErrorSet errorSet, UserBiz userBiz)
-            : base(errorSet, userBiz)
+        public HomeController(IErrorSet errorSet, UserBiz userBiz, BreadCrumbManager breadCrumbManager)
+            : base(errorSet, userBiz, breadCrumbManager)
         {
             _userBiz = userBiz;
             _configManager = new ConfigManagerHelper();

@@ -23,7 +23,6 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
         {
             Sell = new SalePriceComplex();
             Buy = new CostsComplex();
-            MenuManager = new MenuManager(Id, null, null, this, MenuLevelENUM.unknown, string.Empty, false, "", "", "", SortOrderENUM.Item1_Asc,ActionNameENUM.Unknown);
 
         }
 

@@ -21,9 +21,6 @@ namespace ModelsClassLibrary.MenuNS
             return EnumLibrary.EnumNS.ClassesWithRightsENUM.MenuPath1;
         }
         public virtual ICollection<UploadedFile> MiscFiles { get; set; }
-
-
-
         public virtual ICollection<MenuPathMain> MenuPathMains { get; set; }
 
 

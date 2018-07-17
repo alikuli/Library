@@ -7,6 +7,7 @@ using ModelsClassLibrary.ModelsNS.PeopleNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
 using UowLibrary.PaymentTermNS;
 using UowLibrary;
+using BreadCrumbsLibraryNS.Programs;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -16,8 +17,8 @@ namespace MarketPlace.Web6.Controllers
         PaymentTermBiz _paymentTermsBiz;
         #region Constructo and initializers
 
-        public PaymentTermsController(PaymentTermBiz PaymentTermsBiz, IErrorSet errorSet, UserBiz userbiz)
-            : base(PaymentTermsBiz, errorSet,  userbiz) 
+        public PaymentTermsController(PaymentTermBiz PaymentTermsBiz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
+            : base(PaymentTermsBiz, errorSet, userbiz, breadCrumbManager) 
         {
             _paymentTermsBiz = PaymentTermsBiz;
         }

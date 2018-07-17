@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
@@ -18,8 +19,8 @@ namespace MarketPlace.Web6.Controllers
 
         #region Constructo and initializers
 
-        public DiscountPrecedencesController(DiscountPrecedenceBiz DiscountPrecedencesBiz, IErrorSet errorSet, UserBiz userbiz)
-            : base(DiscountPrecedencesBiz, errorSet,  userbiz)
+        public DiscountPrecedencesController(DiscountPrecedenceBiz DiscountPrecedencesBiz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
+            : base(DiscountPrecedencesBiz, errorSet, userbiz, breadCrumbManager)
         {
             _discountPrecBiz = DiscountPrecedencesBiz;
         }

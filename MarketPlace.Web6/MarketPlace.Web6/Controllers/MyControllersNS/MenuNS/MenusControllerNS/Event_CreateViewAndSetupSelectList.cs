@@ -21,28 +21,48 @@ namespace MarketPlace.Web6.Controllers
         public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
         {
 
-            //I have made it a convention to pass the correct id in its own named Id Path. So we are going to use that.
-            //MenuPathMain entity = Biz.EntityFactoryForHttpGet() as MenuPathMain;
 
-            //This is where the dropdown boxes are loaded with their initial values in the create for Menus
-            loadMp1AndMp2Ids(parm);
-            loadSelectLists();
-
-
-            ((MenuPathMain) parm.DudEntity).MenuManager = new MenuManager(
-                "", 
-                parm.DudEntity as MenuPathMain, 
-                null, 
-                null, 
-                parm.Menu.MenuLevelEnum, 
-                parm.Menu.ReturnUrl, 
-                true, 
-                "", 
-                parm.SelectedId, 
-                parm.SearchFor, 
-                parm.SortBy, 
-                parm.ActionNameEnum);
-
+            switch (parm.Menu.MenuEnum)
+            {
+                case MenuENUM.IndexMenuPath1:
+                    break;
+                case MenuENUM.IndexMenuPath2:
+                    break;
+                case MenuENUM.IndexMenuPath3:
+                    break;
+                case MenuENUM.IndexMenuProduct:
+                    break;
+                case MenuENUM.IndexMenuProductChild:
+                    break;
+                case MenuENUM.EditMenuPath1:
+                    break;
+                case MenuENUM.EditMenuPath2:
+                    break;
+                case MenuENUM.EditMenuPath3:
+                    break;
+                case MenuENUM.EditMenuPathMain:
+                    break;
+                case MenuENUM.EditMenuProduct:
+                    break;
+                case MenuENUM.EditMenuProductChild:
+                    break;
+                case MenuENUM.CreateMenuPath1:
+                    break;
+                case MenuENUM.CreateMenuPath2:
+                    break;
+                case MenuENUM.CreateMenuPath3:
+                    break;
+                case MenuENUM.CreateMenuPathMenuPathMain:
+                    break;
+                case MenuENUM.CreateMenuProduct:
+                    break;
+                case MenuENUM.CreateMenuProductChild:
+                    break;
+                case MenuENUM.unknown:
+                    break;
+                default:
+                    break;
+            }
             return View(parm.DudEntity);
 
 
@@ -55,80 +75,80 @@ namespace MarketPlace.Web6.Controllers
             ViewBag.MenuPath3SelectList = _menuBiz.MenuPath3_SelectList();
         }
 
-        private void loadMp1AndMp2Ids(ControllerIndexParams parm)
-        {
-            MenuPathMain mpm = null;
-            if (!parm.Menu.MenuPathMainId.IsNullOrWhiteSpace())
-            {
-                mpm = Biz.Find(parm.Menu.MenuPathMainId);
-                mpm.IsNullThrowException();
+        //private void loadMp1AndMp2Ids(ControllerIndexParams parm)
+        //{
+        //    MenuPathMain mpm = null;
+        //    if (!parm.Menu.MenuPathMainId.IsNullOrWhiteSpace())
+        //    {
+        //        mpm = Biz.Find(parm.Menu.MenuPathMainId);
+        //        mpm.IsNullThrowException();
 
 
 
-                MenuPathMain dudMenuPathMain = parm.DudEntity as MenuPathMain;
+        //        MenuPathMain dudMenuPathMain = parm.DudEntity as MenuPathMain;
 
-                //Which mpm is this?
-                switch (parm.Menu.MenuLevelEnum)
-                {
-                    case MenuLevelENUM.Level_1:
-                        break;
-                    case MenuLevelENUM.Level_2:
+        //        //Which mpm is this?
+        //        switch (parm.Menu.MenuLevelEnum)
+        //        {
+        //            case MenuLevelENUM.Level_1:
+        //                break;
+        //            case MenuLevelENUM.Level_2:
 
-                        //This mpm contains the correct:
-                        // Menupath1
-                        // MenuPath2 is a dummy.
-                        // MenuPath 3 is a dummy.
+        //                //This mpm contains the correct:
+        //                // Menupath1
+        //                // MenuPath2 is a dummy.
+        //                // MenuPath 3 is a dummy.
 
 
-                        mpm.MenuPath1Id.IsNullOrWhiteSpaceThrowException();
-                        mpm.MenuPath1.IsNullThrowException();
+        //                mpm.MenuPath1Id.IsNullOrWhiteSpaceThrowException();
+        //                mpm.MenuPath1.IsNullThrowException();
 
-                        dudMenuPathMain.MenuPath1 = mpm.MenuPath1;
-                        dudMenuPathMain.MenuPath1Id = mpm.MenuPath1Id;
+        //                dudMenuPathMain.MenuPath1 = mpm.MenuPath1;
+        //                dudMenuPathMain.MenuPath1Id = mpm.MenuPath1Id;
                         
-                    //  Note: mpm.MenuPath2Id = string.Empty; .MenuPath3Id = string.Empty;
-                        dudMenuPathMain.MenuManager.MenuPathMain = dudMenuPathMain;
+        //            //  Note: mpm.MenuPath2Id = string.Empty; .MenuPath3Id = string.Empty;
+        //                dudMenuPathMain.MenuManager.MenuPathMain = dudMenuPathMain;
                         
-                        break;
+        //                break;
 
-                    case MenuLevelENUM.Level_3:
-                        //This mpm contains the correct:
-                        // Menupath1
-                        // MenuPath2
-                        // MenuPath 3 is a dummy.
-                        mpm.MenuPath1Id.IsNullOrWhiteSpaceThrowException();
-                        mpm.MenuPath1.IsNullThrowException();
+        //            case MenuLevelENUM.Level_3:
+        //                //This mpm contains the correct:
+        //                // Menupath1
+        //                // MenuPath2
+        //                // MenuPath 3 is a dummy.
+        //                mpm.MenuPath1Id.IsNullOrWhiteSpaceThrowException();
+        //                mpm.MenuPath1.IsNullThrowException();
 
-                        mpm.MenuPath2Id.IsNullOrWhiteSpaceThrowException();
-                        mpm.MenuPath2.IsNullThrowException();
+        //                mpm.MenuPath2Id.IsNullOrWhiteSpaceThrowException();
+        //                mpm.MenuPath2.IsNullThrowException();
 
-                        dudMenuPathMain.MenuPath1 = mpm.MenuPath1;
-                        dudMenuPathMain.MenuPath1Id = mpm.MenuPath1Id;
+        //                dudMenuPathMain.MenuPath1 = mpm.MenuPath1;
+        //                dudMenuPathMain.MenuPath1Id = mpm.MenuPath1Id;
                         
-                        dudMenuPathMain.MenuPath2 = mpm.MenuPath2;
-                        dudMenuPathMain.MenuPath2Id = mpm.MenuPath2Id;
+        //                dudMenuPathMain.MenuPath2 = mpm.MenuPath2;
+        //                dudMenuPathMain.MenuPath2Id = mpm.MenuPath2Id;
 
-                    //  Note: mpm.MenuPath2Id = string.Empty; .MenuPath3Id = string.Empty;
-                        dudMenuPathMain.MenuManager.MenuPathMain = dudMenuPathMain;
+        //            //  Note: mpm.MenuPath2Id = string.Empty; .MenuPath3Id = string.Empty;
+        //                dudMenuPathMain.MenuManager.MenuPathMain = dudMenuPathMain;
                         
-                        break;
+        //                break;
 
-                    case MenuLevelENUM.Level_4:
-                    case MenuLevelENUM.Level_5:
-                    case MenuLevelENUM.Level_6:
-                    case MenuLevelENUM.unknown:
+        //            case MenuLevelENUM.Level_4:
+        //            case MenuLevelENUM.Level_5:
+        //            case MenuLevelENUM.Level_6:
+        //            case MenuLevelENUM.unknown:
 
-                    default:
-                        throw new Exception("Programming error in Menu Event_CreateViewAndSetupSelectList");
-                }
+        //            default:
+        //                throw new Exception("Programming error in Menu Event_CreateViewAndSetupSelectList");
+        //        }
 
-                //if (menupath2SelectList.IsNull())
-                //    menupath2SelectList = _menuBiz.MenuPath2_SelectList();
-                _menuBiz.Detach(mpm);
+        //        //if (menupath2SelectList.IsNull())
+        //        //    menupath2SelectList = _menuBiz.MenuPath2_SelectList();
+        //        _menuBiz.Detach(mpm);
 
 
-            }
-        }
+        //    }
+        //}
 
         private void loadRelatedMainPath2(MenuPathMain mpm)
         {

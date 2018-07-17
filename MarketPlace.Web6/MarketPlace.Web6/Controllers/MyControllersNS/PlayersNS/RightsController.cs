@@ -9,6 +9,7 @@ using UowLibrary.PlayersNS;
 using ModelsClassLibrary.RightsNS;
 using EnumLibrary.EnumNS;
 using UowLibrary;
+using BreadCrumbsLibraryNS.Programs;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -17,8 +18,8 @@ namespace MarketPlace.Web6.Controllers
 
         RightBiz _rightsBiz;
 
-        public RightsController(RightBiz rightsBiz, IErrorSet errorSet, UserBiz userbiz)
-            : base(rightsBiz, errorSet,  userbiz) 
+        public RightsController(RightBiz rightsBiz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
+            : base(rightsBiz, errorSet, userbiz, breadCrumbManager) 
         {
             _rightsBiz = rightsBiz;
         }

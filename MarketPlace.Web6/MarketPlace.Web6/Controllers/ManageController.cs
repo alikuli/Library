@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web4.Controllers;
@@ -16,8 +17,8 @@ namespace MarketPlace.Web6.Controllers
     public class ManageController : AbstractController
     {
         readonly ManageControllerBiz _manageControllerUOW;
-        public ManageController(ManageControllerBiz manageControllerUOW, IErrorSet errorSet, UserBiz userBiz)
-            : base(errorSet, userBiz)
+        public ManageController(ManageControllerBiz manageControllerUOW, IErrorSet errorSet, UserBiz userBiz, BreadCrumbManager breadCrumbManager)
+            : base(errorSet, userBiz, breadCrumbManager)
         {
             _manageControllerUOW = manageControllerUOW;
         }

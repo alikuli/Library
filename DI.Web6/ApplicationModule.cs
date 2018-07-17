@@ -1,5 +1,6 @@
 ﻿using AliKuli.UtilitiesNS;
 using ApplicationDbContextNS;
+using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.DalNS;
 using DalLibrary.Interfaces;
 using DalNS;
@@ -84,6 +85,7 @@ namespace DependancyResolver
             Bind<IMemoryMain>().To<MemoryMain>().InRequestScope();
             Bind<IErrorSet>().To<ErrorSet>().InRequestScope();
             Bind<ConfigManagerHelper>().ToSelf().InRequestScope();
+            Bind<BreadCrumbManager>().ToSelf().InRequestScope();
             //Bind<ISetUpValues>().To<SetUpValues>().InRequestScope();
         }
         public void LoadUow()

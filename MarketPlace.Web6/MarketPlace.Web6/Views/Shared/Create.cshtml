@@ -5,36 +5,33 @@
     string menuPathMainId = "";
     string productId = "";
     string productChildId = "";
-    string returnUrl = "";
+    string returnUrl = Request.Url.PathAndQuery; 
     string selectId = "";
     string searchString = "";
-    MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown;
-    MenuLevelENUM previousMenuLevelEnum = MenuLevelENUM.unknown;
+    Model.MenuManager.MenuState.ControllerCurrentName = this.ViewContext.RouteData.Values["controller"].ToString();
 
 
     ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.IHaveMenuManager ihaveMenuManager = Model as ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.IHaveMenuManager;
     if (!ihaveMenuManager.IsNull())
     {
-        ihaveMenuManager.MenuManager.ControllerCurrent = controllerName;
-        controllerName = ihaveMenuManager.MenuManager.ControllerNameInViewIndexForCreateAndEdit;
+        //ihaveMenuManager.MenuManager.ControllerCurrentName = controllerName;
+        //controllerName = ihaveMenuManager.MenuManager.CreateAndEditLink_ControllerName;
 
-        menuPathMainId = ihaveMenuManager.MenuManager.MenuPathMainId;
-        returnUrl = ihaveMenuManager.MenuManager.ReturnUrl;
-        productId = ihaveMenuManager.MenuManager.ProductId;
-        productChildId = ihaveMenuManager.MenuManager.ProductChildId;
-        selectId = ihaveMenuManager.MenuManager.SelectId;
+        //menuPathMainId = ihaveMenuManager.MenuManager.MenuPathMainId;
+        //returnUrl = Request.Url.PathAndQuery;
+        //productId = ihaveMenuManager.MenuManager.ProductId;
+        //productChildId = ihaveMenuManager.MenuManager.ProductChildId;
+        selectId = ihaveMenuManager.MenuManager.SelectedId;
         searchString = ihaveMenuManager.MenuManager.SearchString;
-        menuLevelEnum = ihaveMenuManager.MenuManager.MenuLevelEnum;
-        previousMenuLevelEnum = ihaveMenuManager.MenuManager.GetPreviousMenuLevel();
     }
 
     
 }
-        @Html.Partial(@"ViewControls/index/_breadCrumbs")
+        @*@Html.Partial(@"ViewControls/index/_breadCrumbs")*@
 
 @Html.Partial(@"ViewControls/Create/_CreateHeading")
 
-@using (Html.BeginForm("Create", @controllerName, new { menuPathMainId = menuPathMainId, productId = productId, returnUrl = returnUrl, productChildId = productChildId, menuLevelEnum = menuLevelEnum, selectId = selectId, searchString = searchString }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", @controllerName, new { returnUrl = returnUrl, selectId = selectId, searchString = searchString }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -51,7 +48,7 @@
 
 <div>
 
-    @Html.ActionLink("Back to List", "Index", new { menuPathMainId = menuPathMainId, productId = productId, returnUrl = returnUrl, productChildId = productChildId, menuLevelEnum = previousMenuLevelEnum, searchString = searchString, selectedId = Model.Id })
+    @Html.ActionLink("Back to List", "Index", new { menuPathMainId = menuPathMainId, productId = productId, returnUrl = returnUrl, productChildId = productChildId,  searchString = searchString, selectedId = Model.Id })
 </div>
 
 @section Scripts {

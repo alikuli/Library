@@ -1,7 +1,10 @@
-﻿using InterfacesLibrary.SharedNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
+﻿using EnumLibrary.EnumNS;
+using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.ProductNS;
 using UowLibrary.Abstract;
 using UowLibrary.Interface;
+using UowLibrary.MenuNS.MenuStateNS;
 
 namespace UowLibrary
 {
@@ -20,9 +23,8 @@ namespace UowLibrary
         /// <returns></returns>
         public ICommonWithId EntityFactoryForHttpGet()
         {
-            ICommonWithId entity = Factory() as ICommonWithId;
-            entity.MetaData.Created.SetToTodaysDateStart();
-            return entity;
+
+            return Factory();
         }
 
         //public virtual TEntity EntityFactoryForHttpGet(FactoryParameters fp)
@@ -32,7 +34,15 @@ namespace UowLibrary
 
         public virtual ICommonWithId Factory()
         {
-            return Dal.Factory();
+            ICommonWithId entity = Dal.Factory();
+            entity.MetaData.Created.SetToTodaysDateStart();
+
+            Product p = entity as Product;
+            MenuPathMain mpm = entity as MenuPathMain;
+
+            entity.MenuManager = new MenuManager(mpm, p, null, MenuENUM.CreateDefault);
+
+            return entity;
         }
 
 

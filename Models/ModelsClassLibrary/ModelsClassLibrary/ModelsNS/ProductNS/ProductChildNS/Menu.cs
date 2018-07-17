@@ -1,5 +1,6 @@
 ﻿using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
@@ -10,8 +11,6 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 {
     public partial class ProductChild
     {
-        [NotMapped]
-        public IMenuManager MenuManager { get; set; }
         //[NotMapped]
         //public string MenuPath1Id { get; set; }
 

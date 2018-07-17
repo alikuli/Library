@@ -5,12 +5,14 @@ using InterfacesLibrary.SharedNS;
 using ModelClassLibrary.MigraDocNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.SharedNS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UowLibrary.MenuNS.MenuStateNS;
 using UserModels;
 namespace ModelsClassLibrary.ViewModels
 {
@@ -48,7 +50,19 @@ namespace ModelsClassLibrary.ViewModels
 
         }
 
-        private void initialize(string id, SortOrderENUM sortOrderEnum, string searchFor, string selectedId, ICommonWithId dudEntity, string webCompanyName, string logoaddress, ApplicationUser user, bool userIsAdmin, string returnUrl, bool isAndForSearch, ActionNameENUM actionNameEnum)
+        private void initialize(
+            string id, 
+            SortOrderENUM sortOrderEnum, 
+            string searchFor, 
+            string selectedId, 
+            ICommonWithId dudEntity, 
+            string webCompanyName, 
+            string logoaddress, 
+            ApplicationUser user, 
+            bool userIsAdmin, 
+            string returnUrl, 
+            bool isAndForSearch, 
+            ActionNameENUM actionNameEnum)
         {
             SortOrderEnum = sortOrderEnum;
             Id = id;
@@ -63,7 +77,7 @@ namespace ModelsClassLibrary.ViewModels
 
             //Menu = new MenuModel();
             //Menu.ReturnUrl = returnUrl;
-
+            MenuManager = new MenuManager(null, null, null, MenuENUM.unknown);
             Show = new Show();
             SelectedId = selectedId;
             WebCompanyName = webCompanyName;
@@ -88,8 +102,8 @@ namespace ModelsClassLibrary.ViewModels
             _listOfStopWords = StringTools.GetStopWords();
             _searchWords = getSearchWords();
 
-            MenuManager = new MenuManager(id, null, null, null, MenuLevelENUM.unknown, returnUrl, false, "", "", "", sortOrderEnum,actionNameEnum);
-            MenuManager.ReturnUrl = returnUrl;
+            //MenuManager = new MenuManager(id, null, null, null, MenuLevelENUM.unknown, returnUrl, false, "", "", "", sortOrderEnum,actionNameEnum);
+            //MenuManager.ReturnUrl = returnUrl;
         }
 
         public void Load(ControllerIndexParams p)

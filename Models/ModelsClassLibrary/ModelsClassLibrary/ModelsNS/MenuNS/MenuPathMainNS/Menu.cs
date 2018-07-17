@@ -1,5 +1,6 @@
 ﻿using InterfacesLibrary.ProductNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,8 +26,6 @@ namespace ModelsClassLibrary.MenuNS
         public virtual string MenuPath3Id { get; set; }
         public virtual MenuPath3 MenuPath3 { get; set; }
 
-        [NotMapped]
-        public IMenuManager MenuManager { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
@@ -19,8 +20,8 @@ namespace MarketPlace.Web6.Controllers
         MenuPath1Biz _menupath1Biz;
         #region Constructo and initializers
 
-        public MenuPath1sController(MenuPath1Biz menupath1Biz, IErrorSet errorSet, UserBiz userbiz)
-            : base(menupath1Biz, errorSet,  userbiz)
+        public MenuPath1sController(MenuPath1Biz menupath1Biz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
+            : base(menupath1Biz, errorSet, userbiz, breadCrumbManager)
         {
             _menupath1Biz = menupath1Biz;
         }

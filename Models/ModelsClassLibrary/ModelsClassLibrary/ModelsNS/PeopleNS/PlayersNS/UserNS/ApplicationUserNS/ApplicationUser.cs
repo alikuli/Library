@@ -3,6 +3,7 @@ using InterfacesLibrary.SharedNS.FeaturesNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ModelsClassLibrary.ModelsNS.AddressNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.UserNameSpace;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
@@ -102,6 +103,9 @@ namespace UserModels
         }
 
         public string ReturnUrl { get; set; }
+
+        [NotMapped]
+        public IMenuManager MenuManager { get; set; }
 
         //public ICollection<Right> UserRights { get; set; }
 

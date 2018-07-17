@@ -1,5 +1,4 @@
 ﻿using AliKuli.Extentions;
-using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
 
@@ -78,47 +77,47 @@ namespace UowLibrary.ProductNS
             indexListVM.Show.EditDeleteAndCreate = true;
             indexListVM.IsImageTiled = true;
 
-            MenuManager mm = makeMenuManager(parameters);
-            indexListVM.MenuManager = mm;
+            //MenuManager mm = makeMenuManager(parameters);
+            //indexListVM.MenuManager = mm;
             //indexListVM.Heading.Column = makeName(indexListVM);
 
 
         }
 
-        //This supplies a dummy MenuPathMain for the Back to List in the Create.
-        private MenuManager makeMenuManager(ControllerIndexParams parameters)
-        {
+        ////This supplies a dummy MenuPathMain for the Back to List in the Create.
+        //private MenuManager makeMenuManager(ControllerIndexParams parameters)
+        //{
 
 
-            MenuManager mm = new MenuManager(parameters.Id, null, null, null, parameters.Menu.MenuLevelEnum, parameters.Menu.ReturnUrl, true, "", parameters.SelectedId, parameters.SearchFor, parameters.SortBy,parameters.ActionNameEnum);
+        //    MenuManager mm = new MenuManager(parameters.Id, null, null, null, parameters.Menu.MenuLevelEnum, parameters.Menu.ReturnUrl, true, "", parameters.SelectedId, parameters.SearchFor, parameters.SortBy,parameters.ActionNameEnum);
 
-            if (!parameters.Menu.MenuPathMainId.IsNullOrWhiteSpace())
-            {
-                mm.MenuPathMain = _menuPathMainBiz.Find(parameters.Menu.MenuPathMainId);
-                mm.MenuPathMain.IsNullThrowException();
-            }
+        //    if (!parameters.Menu.MenuPathMainId.IsNullOrWhiteSpace())
+        //    {
+        //        mm.MenuPathMain = _menuPathMainBiz.Find(parameters.Menu.MenuPathMainId);
+        //        mm.MenuPathMain.IsNullThrowException();
+        //    }
 
-            if (!parameters.Menu.ProductId.IsNullOrWhiteSpace())
-            {
-                mm.Product = Find(parameters.Menu.ProductId);
-                mm.Product.IsNullThrowException();
-            }
-
-
-            if (!parameters.Menu.ProductChildId.IsNullOrWhiteSpace())
-            {
-                mm.ProductChild = _productChildBiz.Find(parameters.Menu.ProductChildId);
-                mm.ProductChild.IsNullThrowException();
-            }
+        //    if (!parameters.Menu.ProductId.IsNullOrWhiteSpace())
+        //    {
+        //        mm.Product = Find(parameters.Menu.ProductId);
+        //        mm.Product.IsNullThrowException();
+        //    }
 
 
+        //    if (!parameters.Menu.ProductChildId.IsNullOrWhiteSpace())
+        //    {
+        //        mm.ProductChild = _productChildBiz.Find(parameters.Menu.ProductChildId);
+        //        mm.ProductChild.IsNullThrowException();
+        //    }
 
 
 
-            return mm;
 
 
-        }
+        //    return mm;
+
+
+        //}
 
 
 

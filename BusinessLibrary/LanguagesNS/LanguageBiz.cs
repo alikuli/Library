@@ -17,7 +17,7 @@ namespace UowLibrary.LanguageNS
         public LanguageBiz(IRepositry<ApplicationUser> userDal, IRepositry<Language> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
             : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
         {
-
+            
         }
 
         //public byte[] PrintInvoice()

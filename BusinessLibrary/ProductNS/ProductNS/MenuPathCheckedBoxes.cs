@@ -1,9 +1,7 @@
 ﻿using AliKuli.Extentions;
-using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.SharedNS;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +17,9 @@ namespace UowLibrary.ProductNS
         public void LoadMenuPathCheckedBoxes(IProduct iproduct)
         {
             IProduct product = iproduct;
-            product.MenuManager.MenuPath1Id.IsNullOrWhiteSpaceThrowException("Menu Path 1 is null.");
+            product.MenuManager.MenuState.MenuPath1Id.IsNullOrWhiteSpaceThrowException("Menu Path 1 is null.");
 
-            MenuPath1 mp1 = _menuPath1Biz.Find(product.MenuManager.MenuPath1Id);
+            MenuPath1 mp1 = _menuPath1Biz.Find(product.MenuManager.MenuState.MenuPath1Id);
             mp1.IsNullThrowException("Menu path 1 not found");
 
 
@@ -63,11 +61,14 @@ namespace UowLibrary.ProductNS
         private static List<CheckBoxItem> createAllCheckBoxes(IQueryable<MenuPathMain> allMenuPaths)
         {
             List<CheckBoxItem> checkedboxes = new List<CheckBoxItem>();
-
-            foreach (var menupath in allMenuPaths)
+            List<MenuPathMain> lst = allMenuPaths.ToList();
+            if (!lst.IsNullOrEmpty())
             {
-                CheckBoxItem chk = new CheckBoxItem(menupath.Id, menupath.Name, true);
-                checkedboxes.Add(chk);
+                foreach (var menupath in allMenuPaths)
+                {
+                    CheckBoxItem chk = new CheckBoxItem(menupath.Id, menupath.Name, true);
+                    checkedboxes.Add(chk);
+                }
             }
             return checkedboxes;
         }

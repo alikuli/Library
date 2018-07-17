@@ -14,7 +14,7 @@ namespace AliKuli.Extentions
             if (obj.IsNull())
             {
                 if (errorMsg.IsNullOrWhiteSpace())
-                    throw new Exception(string.Format("Obj '{0}' is null.",obj.GetType().Name));
+                    throw new Exception(string.Format("Obj is null."));
                 else
                     throw new Exception(errorMsg);
 
@@ -26,7 +26,7 @@ namespace AliKuli.Extentions
             if (obj.IsNull())
             {
                 if (errorMsg.IsNullOrWhiteSpace())
-                    throw new ArgumentException(string.Format("Argument: '{0} is null.",obj.GetType().Name));
+                    throw new ArgumentException(string.Format("Argument is null."));
                 else
                     throw new Exception(errorMsg);
 

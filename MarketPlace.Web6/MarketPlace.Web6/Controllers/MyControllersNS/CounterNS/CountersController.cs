@@ -7,14 +7,15 @@ using ModelsClassLibrary.ModelsNS.PlacesNS;
 using UowLibrary.CounterNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.CounterNS;
 using UowLibrary;
+using BreadCrumbsLibraryNS.Programs;
 
 namespace MarketPlace.Web6.Controllers
 {
     public class CountersController : EntityAbstractController<Counter>
     {
 
-        public CountersController(CounterBiz countersBiz, IErrorSet errorSet, UserBiz userbiz)
-            : base(countersBiz, errorSet,  userbiz) {}
+        public CountersController(CounterBiz countersBiz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
+            : base(countersBiz, errorSet, userbiz, breadCrumbManager) { }
 
 
     }

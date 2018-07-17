@@ -5,6 +5,7 @@ using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.Logs.VisitorsLogNS;
 using UowLibrary.VisitorLogNS;
 using UowLibrary;
+using BreadCrumbsLibraryNS.Programs;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -14,8 +15,8 @@ namespace MarketPlace.Web6.Controllers
         VisitorLogBiz _VisitorLogBiz;
         #region Constructo and initializers
 
-        public VisitorLogsController(VisitorLogBiz VisitorLogBiz, IErrorSet errorSet, UserBiz userbiz)
-            : base(VisitorLogBiz, errorSet,  userbiz)
+        public VisitorLogsController(VisitorLogBiz VisitorLogBiz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
+            : base(VisitorLogBiz, errorSet, userbiz, breadCrumbManager)
         {
             _VisitorLogBiz = VisitorLogBiz;
         }

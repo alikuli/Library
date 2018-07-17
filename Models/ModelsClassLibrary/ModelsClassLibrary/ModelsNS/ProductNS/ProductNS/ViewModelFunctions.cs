@@ -12,7 +12,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
 
 
-        public virtual Product SetupAndMakeProduct(string menutPath1Id, IProduct iproduct)
+        public virtual Product SetupAndMakeProduct(IProduct iproduct)
         {
             //saveParameters(menutPath1Id);
             SaveNameFields();

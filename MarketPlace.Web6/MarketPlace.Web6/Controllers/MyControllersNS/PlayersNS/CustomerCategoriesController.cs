@@ -9,6 +9,7 @@ using ModelsClassLibrary.ModelsNS.PlayersNS;
 using UowLibrary.PaymentMethodNS;
 using UowLibrary.PlayersNS.CustomerCategoryNS;
 using UowLibrary;
+using BreadCrumbsLibraryNS.Programs;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -18,8 +19,8 @@ namespace MarketPlace.Web6.Controllers
         CustomerCategoryBiz _customerCategoryBiz;
         #region Constructo and initializers
 
-        public CustomerCategoriesController(CustomerCategoryBiz CustomerCategoryBiz, IErrorSet errorSet, UserBiz userbiz)
-            : base(CustomerCategoryBiz, errorSet,  userbiz) 
+        public CustomerCategoriesController(CustomerCategoryBiz CustomerCategoryBiz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
+            : base(CustomerCategoryBiz, errorSet, userbiz, breadCrumbManager) 
         {
             _customerCategoryBiz = CustomerCategoryBiz;
         }

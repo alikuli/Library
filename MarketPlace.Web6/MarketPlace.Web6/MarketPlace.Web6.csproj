@@ -85,28 +85,28 @@
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    <Reference Include="System.Web.Mvc, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.6\lib\net45\System.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.6\lib\net45\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
@@ -182,15 +182,31 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\Abstract\AbstractController.cs" />
-    <Compile Include="Controllers\Abstract\EntityAbstractController.cs" />
-    <Compile Include="Controllers\Abstract\IAbstractController.cs" />
+    <Compile Include="Controllers\Abstract\AbstractControllerNS\LoadValidationErrorsIntoErrorsGlobal.cs" />
+    <Compile Include="Controllers\Abstract\AbstractControllerNS\LoadErrorsIntoModelState.cs" />
+    <Compile Include="Controllers\Abstract\AbstractControllerNS\LoadMessagesIntoModelState.cs" />
+    <Compile Include="Controllers\Abstract\AbstractControllerNS\OnActionExecutedAndExecuting.cs" />
+    <Compile Include="Controllers\Abstract\AbstractControllerNS\MakeControlParameters.cs" />
+    <Compile Include="Controllers\Abstract\AbstractControllerNS\AbstractController.cs" />
+    <Compile Include="Controllers\Abstract\EntityAbstractControllerNS\Event_UpdateCreateRedicrectToAction.cs" />
+    <Compile Include="Controllers\Abstract\EntityAbstractControllerNS\Event_CreateViewAndSetupSelectList.cs" />
+    <Compile Include="Controllers\Abstract\EntityAbstractControllerNS\Initialize.cs" />
+    <Compile Include="Controllers\Abstract\EntityAbstractControllerNS\DeleteAll.cs" />
+    <Compile Include="Controllers\Abstract\EntityAbstractControllerNS\Delete.cs" />
+    <Compile Include="Controllers\Abstract\EntityAbstractControllerNS\Edit.cs" />
+    <Compile Include="Controllers\Abstract\EntityAbstractControllerNS\Create.cs" />
+    <Compile Include="Controllers\Abstract\EntityAbstractControllerNS\Index.cs" />
+    <Compile Include="Controllers\Abstract\EntityAbstractControllerNS\EntityAbstractController.cs" />
+    <Compile Include="Controllers\Abstract\AbstractControllerNS\IAbstractController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\MyControllersNS\CounterNS\CountersController.cs" />
     <Compile Include="Controllers\MyControllersNS\FileDocsNS\FileDocsController.cs" />
     <Compile Include="Controllers\MyControllersNS\MenuNS\MenusControllerNS\Event_CreateViewAndSetupSelectList.cs" />
+    <Compile Include="Controllers\MyControllersNS\MenuNS\MenusControllerNS\MenusController - Index.cs" />
+    <Compile Include="Controllers\MyControllersNS\MenuNS\MenusControllerNS\MenusController -Edit.cs" />
     <Compile Include="Controllers\MyControllersNS\MenuNS\MenusControllerNS\MenusController.cs" />
+    <Compile Include="Controllers\MyControllersNS\MenuNS\MenusControllerNS\MenusController -Create.cs" />
     <Compile Include="Controllers\MyControllersNS\PlacesNS\StatesController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlayersNS\RightsController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlayersNS\UsersController.cs" />
@@ -198,6 +214,10 @@
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductChildsController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductsController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductIdentifiersController.cs" />
+    <Compile Include="Controllers\MyControllersNS\ProductNS\ProductVmNS\loadSelectLists.cs" />
+    <Compile Include="Controllers\MyControllersNS\ProductNS\ProductVmNS\Edit.cs" />
+    <Compile Include="Controllers\MyControllersNS\ProductNS\ProductVmNS\Create.cs" />
+    <Compile Include="Controllers\MyControllersNS\ProductNS\ProductVmNS\Index.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductVmNS\ProductAutomobileVMsController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomVolumesController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomQuantitiesController.cs" />
@@ -402,6 +422,7 @@
     <Content Include="Views\Shared\ViewControls\Index\BreadCrumbs\_bc4.cshtml" />
     <Content Include="Views\Menus\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\Shared\ViewControls\Index\BreadCrumbs\_bc6.cshtml" />
+    <Content Include="Views\Print\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -415,7 +436,6 @@
     <Folder Include="Content\Uploads\UserPassportFirstPage\" />
     <Folder Include="Content\Uploads\UserPassportVisa\" />
     <Folder Include="Content\Uploads\UserSelfie\" />
-    <Folder Include="Views\Print\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -425,6 +445,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BreadCrumbsLibrary\BreadCrumbsLibrary\BreadCrumbsLibrary.csproj">
+      <Project>{93822697-db5f-4569-b425-1f0ca6bb3ff4}</Project>
+      <Name>BreadCrumbsLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BusinessLibrary\BusinessLibrary.csproj">
       <Project>{7c833fd3-effc-409e-9dc3-733314a98438}</Project>
       <Name>BusinessLibrary</Name>

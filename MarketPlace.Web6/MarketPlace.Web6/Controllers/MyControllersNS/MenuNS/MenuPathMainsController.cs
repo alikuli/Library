@@ -1,4 +1,5 @@
-﻿using EnumLibrary.EnumNS;
+﻿using BreadCrumbsLibraryNS.Programs;
+using EnumLibrary.EnumNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.MenuNS;
@@ -19,8 +20,8 @@ namespace MarketPlace.Web6.Controllers
 
         #region Construction and initializers
 
-        public MenuPathMainsController(MenuPathMainBiz menuPathMainBiz, IErrorSet errorSet, UserBiz userbiz)
-            : base(menuPathMainBiz, errorSet,  userbiz)
+        public MenuPathMainsController(MenuPathMainBiz menuPathMainBiz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
+            : base(menuPathMainBiz, errorSet, userbiz, breadCrumbManager)
         {
             _menupathmainBiz = menuPathMainBiz;
         }

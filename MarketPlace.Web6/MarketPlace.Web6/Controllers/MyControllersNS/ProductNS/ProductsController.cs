@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using BreadCrumbsLibraryNS.Programs;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.MenuNS;
@@ -18,8 +19,8 @@ namespace MarketPlace.Web6.Controllers
 
         ProductBiz _productBiz;
         MenuPath1Biz _menuPath1Biz;
-        public ProductsController(ProductBiz productBiz, IErrorSet errorSet, UserBiz userbiz, MenuPath1Biz menuPath1Biz)
-            : base(productBiz, errorSet, userbiz)
+        public ProductsController(ProductBiz productBiz, IErrorSet errorSet, UserBiz userbiz, MenuPath1Biz menuPath1Biz, BreadCrumbManager breadCrumbManager)
+            : base(productBiz, errorSet, userbiz, breadCrumbManager)
         {
             _productBiz = productBiz;
             _menuPath1Biz = menuPath1Biz;
