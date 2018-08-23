@@ -26,7 +26,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
         /// <returns></returns>
         public virtual RedirectToRouteResult Event_UpdateCreateRedicrectToAction(ControllerCreateEditParameter parm)
         {
-            return RedirectToAction("Index", new { id = parm.Entity.Id, selectedId = parm.Entity.Id, returnUrl = parm.Menu.ReturnUrl, menuEnum = parm.Menu.MenuEnum });
+//            return RedirectToAction("Index", new { id = parm.Entity.Id, selectedId = parm.Entity.Id,  menuEnum = parm.Menu.MenuEnum });
+            throw new NotImplementedException();
 
         }
 

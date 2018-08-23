@@ -7,6 +7,7 @@ using ErrorHandlerLibrary.ExceptionsNS;
 using Microsoft.AspNet.Identity;
 using UowLibrary.Interface;
 using WebLibrary.Programs;
+using ErrorHandlerLibrary;
 
 namespace UowLibrary.Abstract
 {

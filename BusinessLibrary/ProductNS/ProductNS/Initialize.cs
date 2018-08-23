@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using DatastoreNS;
+using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
@@ -113,7 +114,7 @@ namespace UowLibrary.ProductNS
             {
                 foreach (UploadedFile file in uploadedFileLst)
                 {
-                    file.MetaData.Created.SetToTodaysDate(UserNameBiz);
+                    file.MetaData.Created.SetToTodaysDate(UserName);
 
 
                     //initializes navigation if it is null
@@ -127,7 +128,7 @@ namespace UowLibrary.ProductNS
 
                     pcHasuploads.MiscFiles.Add(file);
 
-                    _uploadedFileBiz.Create(file);
+                    _uploadedFileBiz.Create(CreateControllerCreateEditParameter(file as ICommonWithId));
 
                 }
             }
@@ -155,7 +156,7 @@ namespace UowLibrary.ProductNS
         private void getUser(ProductChildInitializer item, ProductChild pc)
         {
             //get user
-            ApplicationUser user = UserDal.FindAll().FirstOrDefault(x =>
+            ApplicationUser user = UserBiz.FindAll().FirstOrDefault(x =>
                 x.UserName.ToLower() == item.UserName.ToLower());
 
             user.IsNullThrowException(string.Format("User '{0}' Not found. Erronious starting data.", item.UserName));
@@ -186,22 +187,22 @@ namespace UowLibrary.ProductNS
 
                     p = new Product();
 
-                    p.UomVolume = _uomVolumeBiz.FindByName(prodInitHelper.UomVolumeName);
+                    p.UomVolume = UomVolumeBiz.FindByName(prodInitHelper.UomVolumeName);
                     p.UomVolume.IsNullThrowException();
                     
-                    p.UomDimensions = _uomLengthBiz.FindByName(prodInitHelper.UomLengthName);
+                    p.UomDimensions = UomLengthBiz.FindByName(prodInitHelper.UomLengthName);
                     p.UomDimensions.IsNullThrowException();
 
-                    p.UomWeightActual = _uomWeightBiz.FindByName(prodInitHelper.UomShipWeightName);
+                    p.UomWeightActual = UomWeightBiz.FindByName(prodInitHelper.UomShipWeightName);
 
 
-                    p.UomWeightListed = _uomWeightBiz.FindByName(prodInitHelper.UomWeightListedName);
+                    p.UomWeightListed = UomWeightBiz.FindByName(prodInitHelper.UomWeightListedName);
                     p.UomWeightListed.IsNullThrowException();
 
-                    p.UomPurchase = _uomQuantityBiz.FindByName(prodInitHelper.UomPurchaseName);
+                    p.UomPurchase = UomQuantityBiz.FindByName(prodInitHelper.UomPurchaseName);
                     p.UomPurchase.IsNullThrowException();
 
-                    p.UomSale = _uomQuantityBiz.FindByName(prodInitHelper.UomSaleName);
+                    p.UomSale = UomQuantityBiz.FindByName(prodInitHelper.UomSaleName);
                     p.UomSale.IsNullThrowException();
 
                     p.Name = prodInitHelper.Name;

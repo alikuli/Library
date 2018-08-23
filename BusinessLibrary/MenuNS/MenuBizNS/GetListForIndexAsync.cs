@@ -40,7 +40,6 @@ namespace UowLibrary.MenuNS
                 case MenuENUM.IndexMenuProductChild:
                     lst = await indexProductChild_DataListAsync(parms);
                     break;
-                case MenuENUM.unknown:
                 case MenuENUM.EditMenuPath1:
                 case MenuENUM.EditMenuPath2:
                 case MenuENUM.EditMenuPath3:
@@ -101,27 +100,11 @@ namespace UowLibrary.MenuNS
             foreach (var id in listOfMenuPath1Ids)
             {
                 var pc = allMenuMain.FirstOrDefault(x => x.MenuPath1Id == id);
-                //pc.MenuPath1.MiscFiles = _uploadedFileBiz.FindAll().Where(x => x.MenuPath1Id == pc.MenuPath1Id).ToList();
-                //load the uploads because they are not being uploaded
-
                 pclst.Add(pc);
             }
 
             return pclst;
         }
-        //private List<Product> Menu1_ProductList(ControllerIndexParams parms)
-        //{
-        //    parms.Menu.MenuPathMainId.IsNullOrWhiteSpaceThrowException("Menu Path Main Id Missing in parameteres.");
-
-
-        //    //get the productCategoryMain
-        //    MenuPathMain pcm = Find(parms.Menu.MenuPathMainId);
-
-        //    if (pcm.IsNull())
-        //        return null;
-
-        //    return pcm.Products.ToList();
-        //}
 
         #endregion
 
@@ -163,25 +146,12 @@ namespace UowLibrary.MenuNS
                 if (!mpmInner.IsNull())
                     mpmlst.Add(mpmInner);
 
-                //also add the MenuManager
-                //mpm.MenuManager.MenuPathMain = mpm;
 
             }
 
             return mpmlst;
         }
-        //private List<Product> Menu2_ProductList(ControllerIndexParams parms)
-        //{
-        //    parms.Menu.MenuPathMainId.IsNullOrWhiteSpaceThrowException("Menu Path 1 argument missing. Programming Error");
 
-        //    //get the productCategoryMain
-        //    MenuPathMain pcm = Find(parms.Menu.MenuPathMainId);
-
-        //    if (pcm.IsNull())
-        //        return null;
-
-        //    return pcm.Products.ToList();
-        //}
 
         #endregion
 

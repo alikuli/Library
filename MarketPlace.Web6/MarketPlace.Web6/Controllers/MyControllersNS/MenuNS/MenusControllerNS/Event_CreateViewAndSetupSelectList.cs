@@ -58,8 +58,6 @@ namespace MarketPlace.Web6.Controllers
                     break;
                 case MenuENUM.CreateMenuProductChild:
                     break;
-                case MenuENUM.unknown:
-                    break;
                 default:
                     break;
             }

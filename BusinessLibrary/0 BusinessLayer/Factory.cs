@@ -2,6 +2,7 @@
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using UowLibrary.Abstract;
 using UowLibrary.Interface;
 using UowLibrary.MenuNS.MenuStateNS;
@@ -40,7 +41,7 @@ namespace UowLibrary
             Product p = entity as Product;
             MenuPathMain mpm = entity as MenuPathMain;
 
-            entity.MenuManager = new MenuManager(mpm, p, null, MenuENUM.CreateDefault);
+            entity.MenuManager = new MenuManager(mpm, p, null, MenuENUM.CreateDefault, _breadCrumbManager, new LikeUnlikeParameter(0,0,"Initialization in Factory", false, false));
 
             return entity;
         }

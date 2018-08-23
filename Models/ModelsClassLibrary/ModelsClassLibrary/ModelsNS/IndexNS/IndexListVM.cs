@@ -1,12 +1,13 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.Tools;
+using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelClassLibrary.MigraDocNS;
-using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using ModelsClassLibrary.SharedNS;
 using System;
 using System.Collections.Generic;
@@ -24,46 +25,31 @@ namespace ModelsClassLibrary.ViewModels
 
         string[] _listOfStopWords;
         string[] _searchWords;
-        //public IndexListVM(string userName, string nameInput1, string nameInput2, string nameInput3)
-        //    : this()
-        //{
-        //    UserName = userName;
-
-        //    //SmallHeading = smallHeading ?? "";
-        //    //MainHeading = bighHeading ?? "";
-        //    NameInput1 = nameInput1 ?? "";
-        //    NameInput2 = nameInput2;
-        //    NameInput3 = nameInput3;
-        //    SelectedId = "";
-
-        //}
-
-        //public IndexListVM(string id, SortOrderENUM sortOrderEnum, string searchFor, string selectedId, ICommonWithId dudEntity, string webCompanyName, string logoaddress, ApplicationUser user, bool userIsAdmin, string returnUrl, bool isAndForSearch)
-        //{
-        //    initialize(id, sortOrderEnum, searchFor, selectedId, dudEntity, webCompanyName, logoaddress, user, userIsAdmin, returnUrl, isAndForSearch);
-        //}
 
 
         public IndexListVM(ControllerIndexParams p)
         {
-            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.User, p.UserIsAdmin, p.Menu.ReturnUrl, p.IsAndForSearch, p.ActionNameEnum);
+            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.UserId, p.UserName,p.IsAndForSearch, p.BreadCrumbManager, p.ActionNameEnum, p.LikeUnlikeCounter,p.IsMenu);
 
         }
 
         private void initialize(
-            string id, 
-            SortOrderENUM sortOrderEnum, 
-            string searchFor, 
-            string selectedId, 
-            ICommonWithId dudEntity, 
-            string webCompanyName, 
-            string logoaddress, 
-            ApplicationUser user, 
-            bool userIsAdmin, 
-            string returnUrl, 
-            bool isAndForSearch, 
-            ActionNameENUM actionNameEnum)
+            string id,
+            SortOrderENUM sortOrderEnum,
+            string searchFor,
+            string selectedId,
+            ICommonWithId dudEntity,
+            string webCompanyName,
+            string logoaddress,
+            string userId,
+            string userName,
+            bool isAndForSearch,
+            BreadCrumbManager breadCrumbManager,
+            ActionNameENUM actionNameEnum,
+            LikeUnlikeParameter likeUnlikesCounter,
+            bool isMenu)
         {
+            IsMenu = isMenu;
             SortOrderEnum = sortOrderEnum;
             Id = id;
             SearchFor = searchFor;
@@ -77,7 +63,7 @@ namespace ModelsClassLibrary.ViewModels
 
             //Menu = new MenuModel();
             //Menu.ReturnUrl = returnUrl;
-            MenuManager = new MenuManager(null, null, null, MenuENUM.unknown);
+            MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, breadCrumbManager, likeUnlikesCounter);
             Show = new Show();
             SelectedId = selectedId;
             WebCompanyName = webCompanyName;
@@ -95,8 +81,11 @@ namespace ModelsClassLibrary.ViewModels
 
             //this points to the logo
             Logo = new Logo(logoaddress);
-            User = user;
-            UserIsAdmin = userIsAdmin;
+            //User = user;
+            //UserIsAdmin = userIsAdmin;
+
+            UserId = userId;
+            UserName = userName;
 
             //setup.
             _listOfStopWords = StringTools.GetStopWords();
@@ -108,25 +97,8 @@ namespace ModelsClassLibrary.ViewModels
 
         public void Load(ControllerIndexParams p)
         {
-            //SortOrderEnum = p.SortBy;
-            //SearchFor = p.SearchFor;
-            //SelectedId = p.SelectedId;
-            //DudEntity = p.DudEntity;
-            //User = p.User;
-            ////Menu = new MenuModel();
-
-            ////Menu.MenuLevelEnum = parameters.Menu.MenuLevel;
-
-
-            //if (!p.LogoAddress.IsNullOrWhiteSpace())
-            //    Logo = new Logo(p.LogoAddress);
-            //else
-            //    Logo = new Logo();
-            //UserIsAdmin = p.UserIsAdmin;
-            //Menu.ReturnUrl = p.ReturnUrl;
-            //IsAndForSearch = p.IsAndForSearch;
             string webCompany = "";
-            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, webCompany, p.LogoAddress, p.User, p.UserIsAdmin, p.Menu.ReturnUrl, p.IsAndForSearch,p.ActionNameEnum);
+            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, webCompany, p.LogoAddress, p.UserId,p.UserName, p.IsAndForSearch, p.BreadCrumbManager, p.ActionNameEnum, p.LikeUnlikeCounter, p.IsMenu);
 
         }
 
@@ -139,6 +111,8 @@ namespace ModelsClassLibrary.ViewModels
         /// Always access this through the Menu
         /// </summary>
         protected string Id { get; set; }
+
+        public bool IsMenu { get; set; }
 
         public Logo Logo { get; set; }
         public PdfHeaderInfo PdfHeaderInfo { get; set; }
@@ -405,7 +379,7 @@ namespace ModelsClassLibrary.ViewModels
         public Headings Heading { get; set; }
         public string WebCompanyName { get; set; }
 
-
+        public string GlobalComment { get; set; }
 
         #region Data Related
 
@@ -417,6 +391,20 @@ namespace ModelsClassLibrary.ViewModels
             get
             {
                 return SortedAndFilteredData();
+            }
+        }
+        public IndexItemVM[] DataSortedAndFilteredArray
+        {
+            get
+            {
+                return SortedAndFilteredData().ToArray();
+            }
+        }
+        public List<IndexItemVM> DataSortedAndFilteredList
+        {
+            get
+            {
+                return SortedAndFilteredData().ToList();
             }
         }
 
@@ -801,18 +789,11 @@ namespace ModelsClassLibrary.ViewModels
         }
 
 
-        public string UserName
-        {
-            get
-            {
-                if (User.IsNull())
-                    return "";
-                return User.UserName;
-            }
-        }
-        public ApplicationUser User { get; set; }
+        public string UserName { get; set; }
+        public string UserId { get; set; }
+        //public ApplicationUser User { get; set; }
 
-        public bool UserIsAdmin { get; set; }
+        //public bool UserIsAdmin { get; set; }
 
 
         //public MenuModel Menu { get; set; }

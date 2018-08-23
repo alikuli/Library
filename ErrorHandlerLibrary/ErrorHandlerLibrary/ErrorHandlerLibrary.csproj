@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ErrorHandlerLibrary</RootNamespace>
     <AssemblyName>ErrorHandlerLibrary</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -152,7 +152,6 @@
     <Compile Include="Exceptions\UserExceptions\UserException.cs" />
     <Compile Include="Exceptions\UserExceptions\UserExistsException.cs" />
     <Compile Include="Exceptions\UserExceptions\UserNotFoundException.cs" />
-    <Compile Include="InterfacesNS\IErrorClass.cs" />
     <Compile Include="InterfacesNS\IErrorSet.cs" />
     <Compile Include="InterfacesNS\IErrorSingle.cs" />
     <Compile Include="ModelsNS\ErrorMsgClass.cs" />

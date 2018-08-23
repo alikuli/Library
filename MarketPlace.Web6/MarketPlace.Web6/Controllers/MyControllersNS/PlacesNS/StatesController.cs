@@ -1,10 +1,13 @@
 ﻿using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
+using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using UowLibrary;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.StateNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -15,10 +18,10 @@ namespace MarketPlace.Web6.Controllers
         #region Constructo and initializers
 
         StateBiz _stateBiz;
-        public StatesController(StateBiz stateBiz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
-            : base(stateBiz, errorSet, userbiz, breadCrumbManager)
+        public StatesController(StateBiz biz, BreadCrumbManager bcm, IErrorSet err)
+            : base(biz, bcm, err) 
         {
-            _stateBiz = stateBiz;
+            _stateBiz = biz;
         }
 
         StateBiz StateBiz

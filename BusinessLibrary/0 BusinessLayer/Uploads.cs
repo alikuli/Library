@@ -33,7 +33,7 @@ namespace UowLibrary
             {
                 foreach (UploadedFile file in lstUploadedFile)
                 {
-                    file.MetaData.Created.SetToTodaysDate(UserNameBiz);
+                    file.MetaData.Created.SetToTodaysDate(UserName);
 
 
                     //initializes navigation if it is null
@@ -44,7 +44,7 @@ namespace UowLibrary
 
                     //You need to add a refrence here to save the file in the UploadedFile as well.
                     AddEntityRecordIntoUpload(file, entity as TEntity, iuserHasUploadsTypeEnum);
-                    _uploadedFileBiz.Create(file);
+                    _uploadedFileBiz.Create(CreateControllerCreateEditParameter(file as ICommonWithId));
 
                 }
             }

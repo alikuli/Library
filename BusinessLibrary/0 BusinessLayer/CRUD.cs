@@ -3,7 +3,6 @@ using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -26,9 +25,9 @@ namespace UowLibrary
 
         #region Create
 
-        public virtual void Create(TEntity entity)
+        public virtual void Create(ControllerCreateEditParameter parm)
         {
-            createEngineSimple(entity);
+            createEngineSimple(parm);
         }
 
         //public virtual void Create(ControllerCreateEditParameter parm)
@@ -44,11 +43,11 @@ namespace UowLibrary
 
         //-----------------------------------------------------------------------------------------
 
-        public virtual void CreateAndSave(TEntity entity)
-        {
-            createEngineSimple(entity);
-            SaveChanges();
-        }
+        //public virtual void CreateAndSaveNoFileUpload(ControllerCreateEditParameter parm)
+        //{
+        //    createEngineSimple(parm);
+        //    SaveChanges();
+        //}
 
         /// <summary>
         /// This creates and saves for initialization only. It AUTOMATICLY looks for an image in the initialization folder and loads it, 
@@ -61,7 +60,7 @@ namespace UowLibrary
             {
                 Event_DoSpecialInitializationStuff(entity);
                 entity.MetaData.IsEditLocked = Event_LockEditDuringInitialization();
-                CreateAndSave(entity);
+                CreateAndSave(CreateControllerCreateEditParameter(entity as ICommonWithId));
             }
             catch (NoDuplicateException)
             {
@@ -103,16 +102,16 @@ namespace UowLibrary
 
         private void createEngineWithFileUpload(ControllerCreateEditParameter parm)
         {
-            fixEntityAndBussinessRulesAndErrorCheck_Helper(parm.Entity as TEntity);
+            fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
             handleRelatedFilesIfExist(parm);
-            createEngineSimple(parm.Entity as TEntity);
+            createEngineSimple(parm);
         }
 
-        private void createEngineSimple(TEntity entity)
+        private void createEngineSimple(ControllerCreateEditParameter parm)
         {
             //entity.IsCreating = true;
-            fixEntityAndBussinessRulesAndErrorCheck_Helper(entity);
-            CreateEntity(entity);
+            fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
+            CreateEntity(parm.Entity as TEntity);
             ClearSelectListInCache(SelectListCacheKey);
         }
 
@@ -127,11 +126,11 @@ namespace UowLibrary
         }
 
 
-        private void fixEntityAndBussinessRulesAndErrorCheck_Helper(TEntity entity)
+        private void fixEntityAndBussinessRulesAndErrorCheck_Helper(ControllerCreateEditParameter parm)
         {
-            Fix(entity);
-            BusinessRulesFor(entity);
-            ErrorCheck(entity);
+            Fix(parm);
+            BusinessRulesFor(parm);
+            ErrorCheck(parm);
         }
 
         #endregion
@@ -157,7 +156,7 @@ namespace UowLibrary
         private void updateEngine(ControllerCreateEditParameter parm)
         {
             //parm.Entity.IsUpdating = true;
-            fixEntityAndBussinessRulesAndErrorCheck_Helper(parm.Entity as TEntity);
+            fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
             handleRelatedFilesIfExist(parm);
             UpdateEntity(parm.Entity as TEntity);
             ClearSelectListInCache(SelectListCacheKey);
@@ -180,6 +179,24 @@ namespace UowLibrary
 
         #region Delete
 
+        public virtual bool Delete(string id)
+        {
+            try
+            {
+                Dal.Delete(id);
+                ErrorsGlobal.AddMessage(string.Format("*** Deleted ***"));
+                ClearSelectListInCache(SelectListCacheKey);
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                ErrorsGlobal.AddMessage(string.Format("*** NOT Deleted ***"));
+                ErrorsGlobal.Add(string.Format("Unable to find the {0} record", typeof(TEntity).Name.ToUpper()), MethodBase.GetCurrentMethod(), e);
+            }
+            return false;
+        }
+
         string _nameOfItemBeingDeleted;
         ///// <summary>
         ///// This stores the Entity name for onward use while deleting.
@@ -196,28 +213,18 @@ namespace UowLibrary
         //        return _nameOfItemBeingDeleted;
         //    }
         //}
-        public virtual bool Delete(string id)
+        public virtual bool DeleteAndSave(string id)
         {
-            TEntity entity = Dal.FindFor(id);
             try
             {
-                if (entity.IsNull())
-                {
-                    ErrorsGlobal.Add(string.Format("Unable to find the {0} record", typeof(TEntity).Name.ToUpper()), "Delete");
-                    ErrorsGlobal.AddMessage(string.Format("*** NOT Deleted ***"));
-                    return false;
-                }
-                _nameOfItemBeingDeleted = entity.Name; //NameOfItemBeingDeleted is updated here
-                Dal.Delete(id);
+                Delete(id);
                 Dal.SaveChanges();
-                ErrorsGlobal.AddMessage(string.Format("*** Deleted '{0}' ***", entity.Name));
-                ClearSelectListInCache(SelectListCacheKey);
                 return true;
             }
             catch (Exception e)
             {
 
-                ErrorsGlobal.AddMessage(string.Format("*** NOT Deleted '{0}' ***", entity.Name));
+                ErrorsGlobal.AddMessage(string.Format("*** NOT Deleted ***"));
                 ErrorsGlobal.Add(string.Format("Unable to find the {0} record", typeof(TEntity).Name.ToUpper()), MethodBase.GetCurrentMethod(), e);
             }
             return false;
@@ -493,6 +500,7 @@ namespace UowLibrary
 
 
         #endregion
+
 
     }
 }

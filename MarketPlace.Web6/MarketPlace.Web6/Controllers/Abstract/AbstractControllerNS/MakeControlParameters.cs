@@ -1,6 +1,8 @@
-﻿using EnumLibrary.EnumNS;
+﻿using BreadCrumbsLibraryNS.Programs;
+using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using System.Web.Mvc;
 using UserModels;
 
@@ -23,10 +25,13 @@ namespace MarketPlace.Web4.Controllers
             string selectedId,
             ICommonWithId entity,
             ICommonWithId dudEntity,
-            MenuENUM menuEnum = MenuENUM.unknown,
+            BreadCrumbManager breadCrumbManager,
+            string userId,
+            string userName,
+            bool isMenu,
+            MenuENUM menuEnum = MenuENUM.IndexDefault,
             SortOrderENUM sortBy = SortOrderENUM.Item1_Asc,
             bool print = false,
-            string returnUrl = "",
             ActionNameENUM actionNameEnum = ActionNameENUM.Unknown)
         {
             //FactoryParameters fp = new FactoryParameters();
@@ -34,13 +39,10 @@ namespace MarketPlace.Web4.Controllers
             //load parameters
             string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
 
-            ApplicationUser user = GetApplicationUser();
-            bool isUserAdmin = IsUserAdmin(user);
-
+ 
             //todo note... the company name is missing. We may need it.
 
             //the MenuController in the dudEntity entity needs to be set.
-
 
             ControllerIndexParams parms = new ControllerIndexParams(
                 id,
@@ -52,12 +54,15 @@ namespace MarketPlace.Web4.Controllers
                 logoAddress,
                 entity,
                 dudEntity as ICommonWithId,
-                user,
-                isUserAdmin,
-                returnUrl,
-                actionNameEnum);
+                userId,
+                userName,
+                false, 
+                isMenu,
+                breadCrumbManager,
+                actionNameEnum,
+                null);
 
-            ViewBag.ReturnUrl = returnUrl;
+            //ViewBag.ReturnUrl = returnUrl;
 
             return parms;
         }

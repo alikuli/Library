@@ -22,7 +22,7 @@ namespace DalLibrary.DalNS
                 throw new ArgumentException(ErrorsGlobal.ToString());
             }
 
-            canUpdate();
+            //canUpdate();
 
 
             //var entityDb = FindFor(entity.Id);

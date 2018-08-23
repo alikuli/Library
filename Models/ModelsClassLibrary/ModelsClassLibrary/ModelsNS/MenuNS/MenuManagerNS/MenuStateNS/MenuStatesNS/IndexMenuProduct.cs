@@ -2,6 +2,9 @@
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
+using AliKuli.Extentions;
+using System;
 
 
 namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
@@ -9,11 +12,11 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
     /// <summary>
     /// At this level we do not have the product. We just have the complete MenuPathMain.
     /// </summary>
-    public class IndexMenuProduct : MenuManagerAbstract
+    public class IndexMenuProduct : MenuStateAbstract
     {
 
-        public IndexMenuProduct(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum)
-            : base(menuPathMain, product, productChild, menuEnum) { }
+        public IndexMenuProduct(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameter likeUnlikesCounter)
+            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
 
 
         public override MenuENUM EditLink_MenuEnum
@@ -62,34 +65,12 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
             }
         }
 
-        public override string MenuPath1Id
-        {
-            get { throw new System.NotImplementedException(); }
-        }
 
-        public override string MenuPath2Id
-        {
-            get { throw new System.NotImplementedException(); }
-        }
-
-        public override string MenuPath3Id
-        {
-            get { throw new System.NotImplementedException(); }
-        }
-
-        public override string ProductId
+        public override string MenuDisplayName
         {
             get
             {
-                return "";
-            }
-        }
-
-        public override string ProductChildId
-        {
-            get
-            {
-                return "";
+                return string.Format("{0}", MenuPathMain.MenuPath3.FullName());
             }
         }
 

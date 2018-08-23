@@ -1,7 +1,9 @@
-﻿using EnumLibrary.EnumNS;
+﻿using BreadCrumbsLibraryNS.Programs;
+using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using UowLibrary.MenuNS.MenuStateNS;
 namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS
 {
@@ -22,5 +24,9 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS
         string SearchString { get; set; }
         string SelectedId { get; set; }
         SortOrderENUM SortOrderEnum { get; set; }
+        BreadCrumbManager BreadCrumbManager { get; set; }
+        LikeUnlikeParameter LikeUnlikesCounter { get; set; }
+
+
     }
 }

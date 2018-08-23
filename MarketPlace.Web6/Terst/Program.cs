@@ -8,7 +8,7 @@ namespace Terst
     {
         static void Main(string[] args)
         {
-            BreadCrumbManager bcm = new BreadCrumbManager();
+            BreadCrumbManager bcm = new BreadCrumbManager(null);
             BreadCrumb bc = new BreadCrumb(@"C:\Test1\", "Home");
             BreadCrumb bc1 = new BreadCrumb(@"C:\Test2\", "First");
             BreadCrumb bc2 = new BreadCrumb(@"C:\Test3\", "Second");

@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using BreadCrumbsLibraryNS.Programs;
+using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.MenuNS;
@@ -10,6 +11,8 @@ using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.MenuNS;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -18,12 +21,10 @@ namespace MarketPlace.Web6.Controllers
     {
 
         ProductBiz _productBiz;
-        MenuPath1Biz _menuPath1Biz;
-        public ProductsController(ProductBiz productBiz, IErrorSet errorSet, UserBiz userbiz, MenuPath1Biz menuPath1Biz, BreadCrumbManager breadCrumbManager)
-            : base(productBiz, errorSet, userbiz, breadCrumbManager)
+        public ProductsController(ProductBiz biz, BreadCrumbManager bcm, IErrorSet err)
+            : base(biz, bcm, err) 
         {
-            _productBiz = productBiz;
-            _menuPath1Biz = menuPath1Biz;
+            _productBiz = biz;
         }
 
         public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
@@ -36,10 +37,6 @@ namespace MarketPlace.Web6.Controllers
 
 
 
-        public override RedirectToRouteResult Event_UpdateCreateRedicrectToAction(ControllerCreateEditParameter parm)
-        {
-            return base.Event_UpdateCreateRedicrectToAction(parm);
-        }
 
         private void loadSelectLists(ControllerIndexParams parm)
         {

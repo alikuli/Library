@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Reflection;
 
@@ -9,14 +10,14 @@ namespace UowLibrary.StateNS
     {
 
 
-        public override void Fix(State entity)
+        public override void Fix(ControllerCreateEditParameter parm)
         {
-            base.Fix(entity);
+            base.Fix(parm);
+            State state = parm.Entity as State;
+            if (!state.Abbreviation.IsNullOrWhiteSpace())
+                state.Abbreviation = state.Abbreviation.ToUpper();
 
-            if (!entity.Abbreviation.IsNullOrWhiteSpace())
-                entity.Abbreviation = entity.Abbreviation.ToUpper();
-
-            fixTheCountry(entity);
+            fixTheCountry(state);
         }
 
 

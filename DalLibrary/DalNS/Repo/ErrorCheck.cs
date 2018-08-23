@@ -26,10 +26,14 @@ namespace DalLibrary.DalNS
             entity.SelfErrorCheck();
 
             if (IsCreating)
-                if (!IsDuplicateNameAllowed)
-                {
-                    Check_ForDuplicate_Name(entity);
-                }
+
+                if (entity.IsAllowDuplicates)
+                    return;
+
+            if (!IsDuplicateNameAllowed)
+            {
+                Check_ForDuplicate_Name(entity);
+            }
 
             if (ErrorsGlobal.HasErrors)
                 throw new Exception(ErrorsGlobal.ToString());

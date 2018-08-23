@@ -8,7 +8,8 @@ namespace EnumLibrary.EnumNS
     /// </summary>
     public enum MenuPath1ENUM
     {
-        Unknown,
+        //Unknown,
+        NotDefined,
         Automobiles,
         MensClothing,
         WomensClothing,

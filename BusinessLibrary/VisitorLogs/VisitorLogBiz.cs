@@ -1,8 +1,13 @@
 ﻿using AliKuli.UtilitiesNS;
 using ApplicationDbContextNS;
+using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.Interfaces;
 using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.Logs.VisitorsLogNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.RightsNS;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
 using WebLibrary.Programs;
@@ -11,8 +16,8 @@ namespace UowLibrary.VisitorLogNS
 {
     public partial class VisitorLogBiz : BusinessLayer<VisitorLog>
     {
-        public VisitorLogBiz(IRepositry<ApplicationUser> userDal, IRepositry<VisitorLog> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
-            : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
+        public VisitorLogBiz(IRepositry<VisitorLog> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
+            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
         {
 
         }

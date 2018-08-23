@@ -1,8 +1,12 @@
 ﻿using BreadCrumbsLibraryNS.Programs;
+using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using UowLibrary;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -10,20 +14,11 @@ namespace MarketPlace.Web6.Controllers
     {
 
 
-        public UomWeightsController(UomWeightBiz uomWeightBiz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
-            : base(uomWeightBiz, errorSet, userbiz, breadCrumbManager)
+        public UomWeightsController(UomWeightBiz biz, BreadCrumbManager bcm, IErrorSet err)
+            : base(biz, bcm, err) 
         {
         }
 
 
-
-
-        //    public async Task<ActionResult> DeleteUploadedFile(string productCatId, string uploadedFileId)
-        //    {
-        //        //delete from the productCategory1
-        //        await _uomLengthBiz.DeleteUploadedFile(uploadedFileId);
-        //        return RedirectToAction("Edit", new { id = productCatId });
-        //        //return RedirectToAction("DeleteConfirmed", "UploadedFiles", new { id = uploadedFileId });
-        //    }
     }
 }

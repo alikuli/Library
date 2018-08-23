@@ -111,10 +111,11 @@ namespace UowLibrary
 
 
 
-        public override void Create(ApplicationUser entity)
+        public override void Create(ControllerCreateEditParameter parm)
         {
+            ApplicationUser appUser = parm.Entity as ApplicationUser;
             string generatedPassword = System.Web.Security.Membership.GeneratePassword(8, 2);
-            Create(entity, generatedPassword);
+            Create(appUser, generatedPassword);
         }
         //public override Create(ApplicationUser entity)
         //{

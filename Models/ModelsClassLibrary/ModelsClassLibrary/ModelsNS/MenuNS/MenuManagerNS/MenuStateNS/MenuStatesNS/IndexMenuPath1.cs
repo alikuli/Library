@@ -3,13 +3,14 @@ using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 
 namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 {
-    public class IndexMenuPath1 : MenuManagerAbstract
+    public class IndexMenuPath1 : MenuStateAbstract
     {
-        public IndexMenuPath1(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum)
-            : base(menuPathMain, product, productChild, menuEnum) { }
+        public IndexMenuPath1(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameter likeUnlikesCounter)
+            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
 
         //public override string EditLink_Id
         //{
@@ -40,7 +41,7 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 
         public override MenuENUM BackLink_MenuEnum
         {
-            get { return MenuENUM.unknown; }
+            get { return MenuENUM.EditDefault; }
         }
 
         public override bool ShowCreateButton
@@ -58,34 +59,8 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
             get { return "MenuPath1s"; }
         }
 
-        public override string MenuPath1Id
-        {
-            get
-            {
-                MenuPathMain.MenuPath1Id.IsNullOrWhiteSpaceThrowException();
-                return MenuPathMain.MenuPath1Id;
-            }
-        }
 
-        public override string MenuPath2Id
-        {
-            get { throw new System.NotImplementedException(); }
-        }
 
-        public override string MenuPath3Id
-        {
-            get { throw new System.NotImplementedException(); }
-        }
-
-        public override string ProductId
-        {
-            get { return ""; }
-        }
-
-        public override string ProductChildId
-        {
-            get { return ""; }
-        }
 
     }
 }

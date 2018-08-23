@@ -16,49 +16,46 @@
 @{
     int count = 0;
     string returnurl = Request.Url.PathAndQuery;
-    //string controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
     Model.MenuManager.MenuState.ControllerCurrentName = this.ViewContext.RouteData.Values["controller"].ToString();
     string currController = Model.MenuManager.MenuState.ControllerCurrentName;
     string editController = Model.MenuManager.MenuState.CreateAndEditLink_ControllerName;
-    //these are the edit variables
-    
-    //string menuPathMainId = Model.MenuManager.MenuState.MenuPathMainId;
-    //string productId = Model.MenuManager.MenuState.ProductId;
-    //string productChildId = Model.MenuManager.MenuState.ProductChildId;
-            
-    //string idEditLink = Model.MenuManager.MenuState.e;
-
+    bool isProductChild = Model.MenuManager.MenuState.IsProductChild;
+    ModelsClassLibrary.ViewModels.IndexItemVM[] IndexListVMArray = Model.DataSortedAndFilteredArray;
+    string userId = Model.UserId ?? "";
+    string commentUrl = "";
+    string classSmileFace = " far fa-smile ";
+    string classUnhappyFace = "far fa-frown-open";
+    ModelsClassLibrary.ViewModels.IndexItemVM currIndexItemVM = null;
+    string shortNameOfProduct = "";
 }
-<div class="panel panel-default ">
 
 
 
-    <div class="akaFix panel-body ">
-        @foreach (ModelsClassLibrary.ViewModels.IndexItemVM indexItemVM in Model.DataSortedAndFiltered)
+<div class="">
+    <div class=" text-center text-lg-left akaFix">
+
+
+        @for (int i = 0; i < IndexListVMArray.Length; i++)
         {
+            count = i;
+            currIndexItemVM = IndexListVMArray[i];
 
             string imagePath = "";
             string mainMenuPath = "";
-            string alert = (@Model.SelectedIdMatchesThis(indexItemVM.Id) ? "alert-info " : " ");
-            string alertFont = (@Model.SelectedIdMatchesThis(indexItemVM.Id) ? " text-danger " : " ");
-            
-            //switch (Model.MenuManager.MenuState.MenuEnum)
-            //{
-            //    case MenuENUM.IndexMenuPath1:
-            //    case MenuENUM.IndexMenuPath2:
-            //    case MenuENUM.IndexMenuPath3:
-            //        menuPathMainId = indexItemVM.Id;
-            //        break;
-            //    case MenuENUM.IndexMenuProduct:
-            //        productId = indexItemVM.Id;
-            //        break;
-            //    case MenuENUM.IndexMenuProductChild:
-            //        productChildId = indexItemVM.Id;
-            //        break;
-            //    default:
-            //        break;
-            //}
-            
+            string alert = (@Model.SelectedIdMatchesThis(IndexListVMArray[i].Id) ? "alert-info " : " ");
+            string alertFont = (@Model.SelectedIdMatchesThis(IndexListVMArray[i].Id) ? " text-danger " : " ");
+            string modalBoxId = "myModal" + count;
+            string modalBoxIdInButton = "#" + modalBoxId;
+            string modalLabelId = "modalLabelId" + count;
+            string menuPath1Id = "";
+            string menuPath2Id = "";
+            string menuPath3Id = "";
+            string productId = "";
+            string productChildId = "";
+            string idForEdit = "";
+            string menuPathMainId = "";
+
+
             if (count % 2 == 0)
             {
                 alert += " background-ltgrey ";
@@ -66,10 +63,13 @@
 
 
 
-            if (indexItemVM.IsImageThere)
+
+            if (IndexListVMArray[i].IsImageThere)
             {
-                imagePath = Url.Content(indexItemVM.ImageAddressStr);
+                imagePath = Url.Content(IndexListVMArray[i].ImageAddressStr);
             }
+
+
 
 
             //this has to be updated for the menu
@@ -79,123 +79,315 @@
                 switch (Model.MenuManager.MenuState.MenuEnum)
                 {
                     case MenuENUM.IndexMenuProductChild:
-                        //Id = ProductChildId.
-                        mainMenuPath = Url.Action("ProductOwner", currController, new { id = indexItemVM.Id, menuEnum = Model.MenuManager.MenuState.NextMenu, });
+                        mainMenuPath = Url.Action("ProductOwner", currController, new { id = IndexListVMArray[i].Id, menuEnum = Model.MenuManager.MenuState.NextMenu, });
                         break;
                     default:
-                        mainMenuPath = Url.Action("index", currController, new { id = indexItemVM.Id, menuEnum = Model.MenuManager.MenuState.NextMenu, });
+                        mainMenuPath = Url.Action("index", currController, new { id = IndexListVMArray[i].Id, menuEnum = Model.MenuManager.MenuState.NextMenu, });
                         break;
                 }
 
             }
             else
             {
-                mainMenuPath = Url.Action("Edit", editController, new { id = indexItemVM.Id, menuEnum = EnumLibrary.EnumNS.MenuENUM.unknown, });
+                mainMenuPath = Url.Action("Edit", editController, new { id = IndexListVMArray[i].Id });
             }
 
-            <div class="gallery col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-sm-3 col-sm-offset-1 col-xs-6  thumbnail" style="margin-bottom:10px">
-                <a href="@mainMenuPath" title="@indexItemVM.FullName">
-                    <div id="MyDiv" class="caption ">
-                        <h4>@indexItemVM.ShortName</h4>
-                        <p class=""> 
-                            @indexItemVM.Description
-                        </p>
-                    </div>
-                    <p class="">
-                        <img src="@imagePath" alt="@indexItemVM.ShortName" class=" img-responsive  img-rounded ">
-                    </p>
-                </a>
-                <div class="row">
-                    @if (Model.User.IsNull())
+
+            //if (Model.UserIsAdmin)
+            menuPathMainId = "";
+            idForEdit = IndexListVMArray[i].Id;
+
+            switch (IndexListVMArray[i].MenuManager.MenuState.MenuEnum)
+            {
+                case MenuENUM.IndexDefault:
+                    break;
+                case MenuENUM.IndexMenuPath1:
+                    //item is menuPathMain
+                    menuPathMainId = IndexListVMArray[i].Id;
+                    idForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    menuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    break;
+                case MenuENUM.IndexMenuPath2:
+                    //item is menuPathMain
+                    menuPathMainId = IndexListVMArray[i].Id;
+                    idForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+                    menuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    menuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+
+                    break;
+                case MenuENUM.IndexMenuPath3:
+                    //item is menuPathMain
+                    menuPathMainId = IndexListVMArray[i].Id;
+                    idForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+                    menuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    menuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+                    menuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+                    break;
+                case MenuENUM.IndexMenuProduct:
+                    //item is product
+                    //productId = IndexListVMArray[i].Id;
+                    idForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductId;
+                    menuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    menuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+                    menuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+                    break;
+                case MenuENUM.IndexMenuProductChild:
+                    //item is productChild
+                    //productChildId = IndexListVMArray[i].Id;
+                    idForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductChildId;
+                    idForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductId;
+                    menuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    menuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+                    menuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+                    productChildId = IndexListVMArray[i].MenuManager.MenuState.ProductChildId;
+                    break;
+                default:
+                    break;
+            }
+
+            string likeId = "";
+            string likeUrl = "";
+            string likeCountUrl = "";
+            string likeClass = "";
+            string likeCountId = "";
+
+            string unlikeId = "";
+            string unlikeUrl = "";
+            string unlikeCountUrl = "";
+            string unlikeClass = "";
+            string unlikeCountId = "";
+
+            string shoppingCartId = "";
+            string shoppingCartUrl = "";
+            string shoppingCartCountId = "";
+
+            string handPointingId = "";
+            string handPointingUrl = "";
+            string handPointingCountId = "";
+
+            string commentId = "";
+            string commentCountId = "";
+
+
+            if (Model.IsMenu)
+            {
+
+                //plumbing for LikeUnlie
+                likeId = "like" + count.ToString();
+                likeUrl = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = menuPath1Id, menuPath2Id = menuPath2Id, menuPath3Id = menuPath3Id, productId = productId, productChildId = productChildId, userId = userId, isLike = true });
+                likeCountId = likeId + "count";
+                likeCountUrl = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = menuPath1Id, menuPath2Id = menuPath2Id, menuPath3Id = menuPath3Id, productId = productId, productChildId = productChildId, userId = userId, isLike = true });
+
+
+                unlikeId = "unlike" + count.ToString();
+                unlikeUrl = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = menuPath1Id, menuPath2Id = menuPath2Id, menuPath3Id = menuPath3Id, productId = productId, productChildId = productChildId, userId = userId, isLike = false });
+                unlikeCountId = unlikeId + "count";
+                unlikeCountUrl = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = menuPath1Id, menuPath2Id = menuPath2Id, menuPath3Id = menuPath3Id, productId = productId, productChildId = productChildId, userId = userId });
+
+                shoppingCartId = "shoppingcart" + count.ToString();
+                shoppingCartUrl = "";
+
+                shoppingCartCountId = shoppingCartId + "count";
+                //shoppingCartCountUrl = "";
+
+                handPointingId = "handpointingId" + count.ToString();
+                handPointingUrl = "";
+
+                handPointingCountId = handPointingId + "count";
+                //handPointingCountUrl = "";
+
+                commentId = "comment" + count.ToString();
+                commentUrl = Url.Action("AddComment", "GlobalComments", new { menuPath1Id = menuPath1Id, menuPath2Id = menuPath2Id, menuPath3Id = menuPath3Id, productId = productId, productChildId = productChildId, userId = userId });
+
+
+
+                commentCountId = commentId + "count";
+                //commentCountUrl = Url.Action("Count", "GlobalComments", new { menuPath1Id = menuPath1Id, menuPath2Id = menuPath2Id, menuPath3Id = menuPath3Id, productId = productId, productChildId = productChildId, userId = userId });
+                likeClass = classSmileFace;
+                unlikeClass = classUnhappyFace;
+                if (userId.IsNullOrWhiteSpace())
+                {
+                    likeClass += " disabled anchorButtons btn btn-xs btn-info   aria-label far fa-smile";
+                    unlikeClass = " disabled anchorButtons btn btn-xs btn-danger aria-label far fa-frown-open";
+                }
+                else
+                {
+                    likeClass += (IndexListVMArray[i].MenuManager.LikeUnlikesCounter.HasLiked ? " disabled anchorButtons btn btn-xs btn-info   aria-label far fa-smile" : " anchorButtons btn btn-xs btn-info   aria-label far fa-smile");
+
+                    unlikeClass += (IndexListVMArray[i].MenuManager.LikeUnlikesCounter.HasUnLiked ? " disabled anchorButtons btn btn-xs btn-danger aria-label far fa-frown-open" : " anchorButtons btn btn-xs btn-danger aria-label far fa-frown-open");
+                }
+
+
+            }
+            shortNameOfProduct = IndexListVMArray[i].ShortName;
+
+
+            @*<div class="col-lg-3 col-md-4 col-xs-6">
+                    <a href="#" class="d-block mb-4 h-100">
+                        <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                    </a>
+                </div>*@
+
+            <div class="container col-lg-3 col-md-4 col-xs-6 m-0">
+                <div class="border border-dark rounded text-center backgroundYellowOnHover ">
+
+                    <a href="@mainMenuPath" title="@IndexListVMArray[i].FullName" class="d-block h-100 text-center mb-0">
+                        <h4>@shortNameOfProduct</h4>
+                        <img class="img-fluid img-thumbnail" src="@imagePath" alt="@IndexListVMArray[i].ShortName">
+                    </a>
+                    @if (Model.IsMenu)
                     {
-                        <div class="text-center">@indexItemVM.FullName</div>
-                    }
-                    else
-                    {
-                        string editId = indexItemVM.Id;
-                        <div class="row fontHeavy">
-                            @if (Model.UserIsAdmin)
-                            {
-                                string id = indexItemVM.Id;
-                                switch (indexItemVM.MenuManager.MenuState.MenuEnum)
-                                {
-                                    case MenuENUM.IndexDefault:
-                                        break;
-                                    case MenuENUM.IndexMenuPath1:
-                                        id = indexItemVM.MenuManager.MenuState.MenuPath1Id;
-                                        break;
-                                    case MenuENUM.IndexMenuPath2:
-                                        id = indexItemVM.MenuManager.MenuState.MenuPath2Id;
-                                        break;
-                                    case MenuENUM.IndexMenuPath3:
-                                        id = indexItemVM.MenuManager.MenuState.MenuPath3Id;
-                                        break;
-                                    case MenuENUM.IndexMenuProduct:
-                                        id = indexItemVM.MenuManager.MenuState.ProductId;
-                                        break;
-                                    case MenuENUM.IndexMenuProductChild:
-                                        id = indexItemVM.MenuManager.MenuState.ProductChildId;
-                                        break;
-                                    default:
-                                        break;
-                                }
+                        <div class="m-0">
+
+                            @*These are all anchorButtons Class*@
+                            <a id="@shoppingCartId" class="anchorButtons btn btn-xs  btn-success aria-label fa fa-shopping-cart" data-url="@shoppingCartUrl" onclick="ShoppingCart();"></a>
+
+                            <a id="@handPointingId" class="anchorButtons btn btn-xs  btn-warning aria-label far fa-hand-point-up" data-url="@handPointingUrl" onclick="Bid();"></a>
 
 
-                                string url = Url.Action("Edit", editController, new { id = id, returnurl = returnurl, menuEnum = Model.MenuManager.MenuState.MenuEnum }, null); ;
+                            <a id="@likeId"
+                               class="@likeClass"
+                               data-nameofproduct="@shortNameOfProduct"
+                               data-url="@likeUrl"
+                               data-toggle="modal"
+                               data-target="#mymodalnew"
+                               onclick="EditlikeUnlikeModal(this);"></a>
+                            @*onclick="Like(this, document.getElementById(this));"></a>*@
 
-                                //if (Model.MenuManager.IsMenu)
-                                //{
-                                //    if (Model.MenuManager.MenuEnum != MenuLevelENUM.unknown)
-                                //    {
-                                //        if (Model.MenuManager.MenuEnum != MenuLevelENUM.Level_1)
-                                //        {
-                                //            controllerNameForEdit = Model.MenuManager.ControlerNameForProductVms;
-                                //        }
-                                //    }
+                            <a id="@unlikeId"
+                               class="@unlikeClass"
+                               data-nameofproduct="@shortNameOfProduct"
+                               data-url="@unlikeUrl"
+                               data-toggle="modal"
+                               data-target="#mymodalnew"
+                               onclick="EditlikeUnlikeModal(this);"></a>
+                            @*onclick="Like(this);"></a>*@
 
-                                //}
+                            <a id="@commentId"
+                               data-toggle="modal"
+                               href="#modalBoxId"
+                               data-url="@commentUrl"
+                               class="anchorButtons btn btn-xs btn-primary aria-label far fa-comment"
+                               onclick="LoadDataUrlInComment(this, document.getElementById('modalBoxId'));"></a>
 
-                                //switch (Model.MenuManager.MenuEnum)
-                                //{
-                                //    case MenuLevelENUM.unknown:
-                                //        break;
-                                //    case MenuLevelENUM.Level_1:
-                                //    case MenuLevelENUM.Level_2:
-                                //    case MenuLevelENUM.Level_3:
 
-                                //        url = Url.Action("Edit", editController, new { id = idEditLink, returnurl = returnurl, menuPathMainId = menuPathMainId, menuEnum = Model.MenuManager.MenuEnum }, null);
-                                //        break;
+                        </div>
 
-                                //    case MenuLevelENUM.Level_4:
-                                //        url = Url.Action("Edit", Model.MenuManager.GetProductVmName(), new { id = indexItemVM.Id, menuPathMainId = menuPathMainId, returnurl = returnurl, menuEnum = Model.MenuManager.MenuEnum, productId = productId }, null);
-                                //        break;
 
-                                //    case MenuLevelENUM.Level_5:
-                                //        url = Url.Action("Edit", "ProductChilds", new { id = indexItemVM.Id, menuPathMainId = menuPathMainId, returnurl = returnurl, menuEnum = Model.MenuManager.MenuEnum, productId = productId }, null);
-                                //        break;
-                                //    default:
-                                //        break;
-                                //}
-                                    <div class="text-center col-md-12">
-                                        <div class="col-md-1">&nbsp;</div>
-                                        <div class="col-md-11">
-                                            <a href="@url">@indexItemVM.FullName</a>
-                                        </div>
-                                    </div>
+                        <div>
+                            @*countClass are those items that show the count*@
+                            <a id="@shoppingCartCountId" class="btn btn-xs  aria-label disabled"></a>
+                            <a id="@handPointingCountId" class="btn btn-xs  aria-label disabled"></a>
 
-                            }
-                            else
-                            {
-                                <div class="text-center">@indexItemVM.FullName</div>
 
-                            }
+                            <a id="@likeCountId"
+                               class="btn btn-xs aria-label"
+                               data-nameofproduct="@shortNameOfProduct"
+                               data-url="@likeCountUrl"
+                               data-toggle="modal"
+                               data-target="#mymodalnew"
+                               onclick="ShowPplWhoLikeUnlikeThis(this)">@IndexListVMArray[i].MenuManager.LikeUnlikesCounter.LikeCount</a>
+
+                            <a id="@unlikeCountId"
+                               class="btn btn-xs aria-label"
+                               data-nameofproduct="@shortNameOfProduct"
+                               data-url="@unlikeCountUrl"
+                               data-toggle="modal"
+                               data-target="#mymodalnew"
+                               onclick="ShowPplWhoLikeUnlikeThis(this)">@IndexListVMArray[i].MenuManager.LikeUnlikesCounter.UnlikeCount</a>
+
+
+
+                            <a id="@commentCountId" class="btn btn-xs aria-label disabled"></a>
                         </div>
                     }
                 </div>
             </div>
+
         }
-
-
     </div>
-
 </div>
+
+
+
+
+
+
+
+
+<!-- Modal for comments -->
+<div class="modal fade" id="modalBoxId" tabindex="-1" role="dialog" aria-labelledby="modalLabelId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabelId">Comments</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="control-label col-md-2">
+                        Comment
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" name="comment" value=" " id="comment" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="commentSaveBtn" type="button" class="btn btn-primary" data-url="" onclick="AddComment(this, document.getElementById('modalBoxId'), document.getElementById('comment'))">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*Modal to show like/Unlike Users*@
+
+
+<div class="modal fade" id="mymodalnew" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalHeading"><span id="myModalHeading.span" class=""></span></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body" id="myModalbodyNewid">
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary invisible" id="modalNewCloseBtnId" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="modal fade" id="modalBoxId" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Large Modal</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <h3>Modal Body</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="AddComment(this, document.getElementById('modalBoxId'), document.getElementById('comment'))" >Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>*@

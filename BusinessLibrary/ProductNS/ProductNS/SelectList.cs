@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 using System.Linq;
 using System.Web.Mvc;
@@ -70,8 +71,21 @@ namespace UowLibrary.ProductNS
             return EnumExtention.ToSelectListSorted<FuelTypeENUM>(fuelEnum);
         }
 
+        private SelectList SelectList_Children(Product p)
+        {
+            p.IsNullThrowException();
+            var allItems = p.ProductChildren.AsQueryable();
+            return ProductChildBiz.SelectList_Engine(allItems);
+        }
 
+        public SelectList GetProductChildSelectListFor(string productId)
+        {
+            productId.IsNullOrWhiteSpaceThrowArgumentException();
+            Product p = Find(productId);
+            var s = SelectList_Children(p);
+            return s;
 
+        }
 
 
 

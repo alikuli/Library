@@ -1,9 +1,12 @@
 ﻿using ApplicationDbContextNS;
 using DalLibrary.Interfaces;
+using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.RightsNS;
 using System.Data.Entity;
+using UserModels;
 
 
 namespace DalLibrary.DalNS
@@ -25,6 +28,8 @@ namespace DalLibrary.DalNS
     public partial class Repositry<TEntity> : IRepositry<TEntity> where TEntity : class, ICommonWithId
     {
         //protected static DbSet<TEntity> _dbSet;
+        private readonly IErrorSet _err;
+        private readonly ApplicationDbContext _db;
 
         private DbSet<TEntity> DbSet
         {
@@ -34,13 +39,18 @@ namespace DalLibrary.DalNS
             }
         }
 
-        private readonly IErrorSet _err;
-        private readonly ApplicationDbContext _db;
-
+        //private IRepositry<ApplicationUser> userDAL { get { return _userDal; } }
+        ////private IRepositry<ApplicationUser> userDAL { get { return new Repositry<ApplicationUser>(_db, _err); } }
+        //private IRepositry<Right> rightDAL { get { return _rightDal; } }
+        //private IRepositry<Right> rightDAL { get { return new Repositry<Right>(_db, _err); } }
+        //IRepositry<ApplicationUser> _userDal;
+        //IRepositry<Right> _rightDal;
         public Repositry(ApplicationDbContext db, IErrorSet errorSet)
         {
             _err = errorSet;
             _db = db;
+            //_userDal = userDal;
+            //_rightDal = rightDal;
         }
         public ErrorSet ErrorsGlobal
         {

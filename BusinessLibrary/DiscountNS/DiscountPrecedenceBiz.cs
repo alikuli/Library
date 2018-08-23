@@ -1,12 +1,13 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.UtilitiesNS;
 using ApplicationDbContextNS;
-using DalLibrary.DalNS;
+using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.Interfaces;
-using DalNS;
 using EnumLibrary.EnumNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.DiscountNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.RightsNS;
 using ModelsClassLibrary.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
 using WebLibrary.Programs;
@@ -22,32 +25,34 @@ namespace UowLibrary.DiscountPrecedenceNS
 {
     public partial class DiscountPrecedenceBiz : BusinessLayer<DiscountPrecedence>
     {
-        public DiscountPrecedenceBiz(IRepositry<ApplicationUser> userDal, IRepositry<DiscountPrecedence> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
-            : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
+        public DiscountPrecedenceBiz(IRepositry<DiscountPrecedence> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
+            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
         {
 
         }
 
 
 
-        public override void Create(DiscountPrecedence entity)
+        public override void Create(ControllerCreateEditParameter parm)
         {
-            if (entity.DiscountRuleEnum == DiscountRuleENUM.Unknown || entity.DiscountTypeEnum == DiscountTypeENUM.Unknown)
+            DiscountPrecedence dp = parm.Entity as DiscountPrecedence;
+            if (dp.DiscountRuleEnum == DiscountRuleENUM.Unknown || dp.DiscountTypeEnum == DiscountTypeENUM.Unknown)
                 return;
 
-            base.Create(entity);
+            base.Create(parm);
         }
 
-        public override void Fix(DiscountPrecedence entity)
+        public override void Fix(ControllerCreateEditParameter parm)
         {
             //This uses the following fields to make the name
             // Rule
             // Type
             // UserName (If User is not null, o/w it leaves user out)
+            DiscountPrecedence dp = parm.Entity as DiscountPrecedence;
 
-            entity.Name = entity.FixNameFor(entity);
+            dp.Name = dp.FixNameFor(dp);
             //putCurrentPrecedenceInLastRank(entity);
-            base.Fix(entity);
+            base.Fix(parm);
         }
 
         public List<DiscountPrecedence> FindAllDiscountPrecWhereUserIsNull()

@@ -1,9 +1,14 @@
 ﻿using AliKuli.UtilitiesNS;
 using ApplicationDbContextNS;
+using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.Interfaces;
 using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.RightsNS;
 using UowLibrary.MenuNS;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.ProductChildNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -15,117 +20,54 @@ namespace UowLibrary.ProductNS
     {
 
 
-        readonly UomWeightBiz _uomWeightBiz;
-        readonly UomVolumeBiz _uomVolumeBiz;
-        readonly UomLengthBiz _uomLengthBiz;
-        readonly UomQuantityBiz _uomQuantityBiz;
-        readonly MenuPathMainBiz _menuPathMainBiz;
-        readonly MenuPath1Biz _menuPath1Biz;
-        readonly MenuPath2Biz _menuPath2Biz;
-        readonly MenuPath3Biz _menuPath3Biz;
-        readonly ProductIdentifierBiz _productIdentifierBiz;
-        readonly ProductChildBiz _productChildBiz;
-        public ProductBiz(IRepositry<ApplicationUser> userDal, IRepositry<Product> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz, UomVolumeBiz uomVolumeBiz, UomLengthBiz uomLengthBiz, UomQuantityBiz uomQuantityBiz, UomWeightBiz uomWeightBiz, MenuPathMainBiz menuPathMainBiz, MenuPath1Biz menuPath1Biz, MenuPath2Biz menuPath2Biz, MenuPath3Biz menuPath3Biz, ProductIdentifierBiz productIdentifierBiz, ProductChildBiz productChildBiz)
-            : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
+        MyWorkClassesProduct _myWorkClasses;
+        UserBiz _userBiz;
+        public ProductBiz(UserBiz userBiz, IRepositry<Product> entityDal, MyWorkClassesProduct myWorkClassesProduct, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
+            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
         {
-            _uomWeightBiz = uomWeightBiz;
-            _uomVolumeBiz = uomVolumeBiz;
-            _uomLengthBiz = uomLengthBiz;
-            _uomQuantityBiz = uomQuantityBiz;
-            _menuPathMainBiz = menuPathMainBiz;
-            _menuPath1Biz = menuPath1Biz;
-            _menuPath2Biz = menuPath2Biz;
-            _menuPath3Biz = menuPath3Biz;
-            _productIdentifierBiz = productIdentifierBiz;
-            _productChildBiz = productChildBiz;
+
+            _myWorkClasses = myWorkClassesProduct;
+            _userBiz = userBiz;
         }
 
 
-        public UomWeightBiz UomWeightBiz
+        public UserBiz UserBiz
         {
-            get
-            {
-                return _uomWeightBiz;
-            }
+            get { return _userBiz; }
         }
+        public UomVolumeBiz UomVolumeBiz { get { return _myWorkClasses.UomVolumeBiz; } }
+        public UomLengthBiz UomLengthBiz { get { return _myWorkClasses.UomLengthBiz; } }
+        public UomQuantityBiz UomQuantityBiz { get { return _myWorkClasses.UomQuantityBiz; } }
+        public UomWeightBiz UomWeightBiz { get { return _myWorkClasses.UomWeightBiz; } }
+        public MenuPathMainBiz MenuPathMainBiz { get { return _myWorkClasses.MenuPathMainBiz; } }
+        public ProductIdentifierBiz ProductIdentifierBiz { get { return _myWorkClasses.ProductIdentifierBiz; } }
+        public ProductChildBiz ProductChildBiz { get { return _myWorkClasses.ProductChildBiz; } }
 
 
-        public UomVolumeBiz UomVolumeBiz
-        {
-            get
-            {
-                return _uomVolumeBiz;
-            }
-        }
-
-        public UomLengthBiz UomLengthBiz
-        {
-            get
-            {
-                return _uomLengthBiz;
-            }
-        }
-
-        public UomQuantityBiz UomQuantityBiz
-        {
-            get
-            {
-                return _uomQuantityBiz;
-            }
-        }
-
-
-        public MenuPathMainBiz MenuPathMainBiz
-        {
-            get
-            {
-                return _menuPathMainBiz;
-            }
-        }
 
         public MenuPath1Biz MenuPath1Biz
         {
             get
             {
-                return _menuPath1Biz;
+                return _myWorkClasses.MenuPathMainBiz.MenuPath1Biz;
             }
         }
         public MenuPath2Biz MenuPath2Biz
         {
             get
             {
-                return _menuPath2Biz;
+                return _myWorkClasses.MenuPathMainBiz.MenuPath2Biz;
             }
         }
         public MenuPath3Biz MenuPath3Biz
         {
             get
             {
-                return _menuPath3Biz;
-            }
-        }
-
-        public ProductIdentifierBiz ProductIdentifierBiz
-        {
-            get
-            {
-                return _productIdentifierBiz;
+                return _myWorkClasses.MenuPathMainBiz.MenuPath3Biz;
             }
         }
 
 
-        public ProductChildBiz ProductChildBiz
-        {
-            get
-            {
-                return _productChildBiz;
-            }
-        }
-
-        //public override string SelectListCacheKey
-        //{
-        //    get { return "ProductSelectListCache"; }
-        //}
 
     }
 }

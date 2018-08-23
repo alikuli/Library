@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.UtilitiesNS;
 using ApplicationDbContextNS;
+using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.DalNS;
 using DalLibrary.Interfaces;
 using ErrorHandlerLibrary.ExceptionsNS;
@@ -9,12 +10,15 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.RightsNS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using UowLibrary.MyWorkClassesNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -24,44 +28,30 @@ namespace UowLibrary
 {
     public partial class UserBiz : BusinessLayer<ApplicationUser>
     {
-        //private ApplicationSignInManager _signInManager;
-        //private ApplicationUserManager _userManager;
-        private IErrorSet _ierrorSet;
-        private IRepositry<Country> _icountryDAL;
-        //private IRepositry<ApplicationUser> _iuserDAL;
+        private CountryBiz _countryBiz;
 
         private IAuthenticationManager _iAuthenticationManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IRoleStore<IdentityRole, string> _store;
-        //private RightBiz _rightBiz;
-        //public AccountController()
-        //{
-        //}
 
         public UserBiz(
-            ApplicationDbContext db,
             ApplicationUserManager userManager,
             ApplicationSignInManager signInManager,
             IAuthenticationManager iAuthenticationManager,
-            IErrorSet ierrSet,
-            IRepositry<Country> icountryDAL,
-            IRepositry<ApplicationUser> userDal,
-            IMemoryMain memoryMain,
-            IErrorSet errorSet,
-            ConfigManagerHelper configManager, 
-            UploadedFileBiz uploadedFileBiz)
-            : base(userDal, memoryMain, errorSet, userDal, db, configManager, uploadedFileBiz)
+            CountryBiz countryBiz,
+            IRepositry<ApplicationUser> entityDal,
+            MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
+            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
         {
+            _uploadedFileBiz = uploadedFileBiz;
+            //_userBiz = this as UserBiz;
+            _countryBiz = countryBiz;
             UserManager = userManager;
             SignInManager = signInManager;
-            _ierrorSet = ierrSet;
-            _icountryDAL = icountryDAL;
-            //_iuserDAL = iuserDAL;
             _iAuthenticationManager = iAuthenticationManager;
 
             _store = new RoleStore<IdentityRole>();
             _roleManager = new RoleManager<IdentityRole>(_store);
-            //_rightBiz = rightBiz;
 
         }
 
@@ -91,35 +81,16 @@ namespace UowLibrary
 
         //    }
         //}
-        private Repositry<Country> CountryDal
+        public CountryBiz CountryBiz
         {
             get
             {
-                if (_icountryDAL.IsNull())
-                {
-                    ErrorsGlobal.Add("Country DAL is null.", MethodBase.GetCurrentMethod());
-                    throw new Exception(ErrorsGlobal.ToString());
 
-                }
-
-                return (Repositry<Country>)_icountryDAL;
+                _countryBiz.IsNullThrowException();
+                return _countryBiz;
             }
         }
 
-        //private Repositry<ApplicationUser> UserDal
-        //{
-        //    get
-        //    {
-        //        if (_iuserDAL.IsNull())
-        //        {
-        //            ErrorsGlobal.Add("User DAL is null.", MethodBase.GetCurrentMethod());
-        //            throw new Exception(ErrorsGlobal.ToString());
-
-        //        }
-
-        //        return (Repositry<ApplicationUser>)_icountryDAL;
-        //    }
-        //}
         public async Task<string> GenerateChangePhoneNumberTokenAsync(string userId, string phoneNumber)
         {
             string code = await UserManager.GenerateChangePhoneNumberTokenAsync(userId, phoneNumber);

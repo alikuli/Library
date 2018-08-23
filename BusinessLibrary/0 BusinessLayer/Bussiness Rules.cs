@@ -4,6 +4,7 @@ using InterfacesLibrary.SharedNS;
 using UowLibrary.Abstract;
 using UowLibrary.Interface;
 using System.Linq;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 
 namespace UowLibrary
 {
@@ -24,9 +25,9 @@ namespace UowLibrary
         ///     entity.MetaData.IsEditLocked
         /// </summary>
         /// <param name="entity"></param>
-        public virtual void BusinessRulesFor(TEntity entity)
+        public virtual void BusinessRulesFor(ControllerCreateEditParameter parm)
         {
-            NoDuplicateNameAllowed(entity);
+            NoDuplicateNameAllowed(parm.Entity as TEntity);
 
             //other defaults
             //entity.MetaData.IsEditLocked = true; This is used during initialization mainly... but can be use
@@ -35,6 +36,8 @@ namespace UowLibrary
 
         private void NoDuplicateNameAllowed(TEntity entity)
         {
+            if (entity.IsAllowDuplicates)
+                return;
 
             TEntity entityFound = Dal.FindAll().FirstOrDefault(x =>
                 x.Name.ToLower() == entity.Name.ToLower() &&

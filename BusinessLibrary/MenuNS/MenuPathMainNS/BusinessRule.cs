@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.RightsNS;
 using System;
 using System.Text;
@@ -10,11 +11,12 @@ namespace UowLibrary.ProductNS
     {
 
 
-        public override void BusinessRulesFor(MenuPathMain menupathmain)
+        public override void BusinessRulesFor(ControllerCreateEditParameter parm)
         {
-            MakeName(menupathmain);
+            MenuPathMain mpm = parm.Entity as MenuPathMain;
+            MakeName(mpm);
 
-            base.BusinessRulesFor(menupathmain);
+            base.BusinessRulesFor(parm);
 
 
         }
@@ -51,30 +53,30 @@ namespace UowLibrary.ProductNS
 
 
 
-        private string MakeName(Right entity)
-        {
-            StringBuilder sb = new StringBuilder();
+        //private string MakeName(Right entity)
+        //{
+        //    StringBuilder sb = new StringBuilder();
 
-            sb.Append(entity.RightsFor.ToString());
+        //    sb.Append(entity.RightsFor.ToString());
 
-            if (!entity.Id.IsNullOrWhiteSpace())
-            {
-                //locate the user for whom you are creating the rights for.
-                var user = UserDal.FindForLightNoTracking(entity.UserId);
-                if (user.IsNull())
-                {
-                    ErrorsGlobal.Add("User for whom Rights are being created was not found!", "Business Rules");
-                    throw new Exception(ErrorsGlobal.ToString());
-                }
+        //    if (!entity.Id.IsNullOrWhiteSpace())
+        //    {
+        //        //locate the user for whom you are creating the rights for.
+        //        var user = UserBiz.Find(entity.UserId);
+        //        if (user.IsNull())
+        //        {
+        //            ErrorsGlobal.Add("User for whom Rights are being created was not found!", "Business Rules");
+        //            throw new Exception(ErrorsGlobal.ToString());
+        //        }
 
-                sb.Append(string.Format(" {0} [{1}]",
-                    user.UserName,
-                    user.Id));
+        //        sb.Append(string.Format(" {0} [{1}]",
+        //            user.UserName,
+        //            user.Id));
 
 
-            }
-            return sb.ToString();
-        }
+        //    }
+        //    return sb.ToString();
+        //}
 
     }
 }

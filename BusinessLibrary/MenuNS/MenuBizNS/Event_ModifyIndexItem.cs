@@ -4,6 +4,7 @@ using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.ViewModels;
 using System;
@@ -14,7 +15,7 @@ namespace UowLibrary.MenuNS
     public partial class MenuBiz
     {
 
-        
+
 
         /// <summary>
         /// The Menu will always run the MenuBiz.
@@ -28,6 +29,7 @@ namespace UowLibrary.MenuNS
         /// <param name="icommonWithId"></param>
         public override void Event_ModifyIndexItem(IndexListVM indexListVM, IndexItemVM indexItem, ICommonWithId icommonWithId)
         {
+            //The icommonWithId is the item that is running in the Forloop in the calling procedure
             //The icommonWithId comes here for the first 3 menus as a MenuPathMain item. 
             //Then on the 4th it comes as a product.
             //You must select the correct MenuState Here as well
@@ -38,12 +40,11 @@ namespace UowLibrary.MenuNS
             Product product = icommonWithId as Product;
 
 
-
+            LikeUnlikeParameter likeUnlikeCounter;
             UploadedFile uf;
+            string theUserId = indexListVM.UserId ?? "";
             switch (indexListVM.MenuManager.MenuState.MenuEnum)
             {
-                case MenuENUM.unknown:
-                    break;
 
                 case MenuENUM.IndexMenuPath1:
                     mpm.IsNullThrowException();
@@ -54,7 +55,11 @@ namespace UowLibrary.MenuNS
                     //we need to change the image address to image of MenuPath1
                     indexItem.ImageAddressStr = getImage(uf);
                     indexItem.Name = mpm.MenuPath1.FullName();
-                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath1);
+
+                    //get the likes and unlikes for MenuPath1
+                    likeUnlikeCounter = _likeUnlikeBiz.Count(mpm.MenuPath1.Id, null, null, null, null,theUserId);
+                    likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuPath1";
+                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath1, _breadCrumbManager, likeUnlikeCounter);
                     break;
 
                 case MenuENUM.IndexMenuPath2:
@@ -64,7 +69,9 @@ namespace UowLibrary.MenuNS
                     uf = mpm.MenuPath2.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted);
                     indexItem.ImageAddressStr = getImage(uf);
                     indexItem.Name = mpm.MenuPath2.FullName();
-                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath2);
+                    likeUnlikeCounter = _likeUnlikeBiz.Count(null, mpm.MenuPath2.Id, null, null, null, theUserId);
+                    likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuPath2";
+                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath2, _breadCrumbManager, likeUnlikeCounter);
                     break;
 
                 case MenuENUM.IndexMenuPath3:
@@ -74,7 +81,9 @@ namespace UowLibrary.MenuNS
                     uf = mpm.MenuPath3.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted);
                     indexItem.ImageAddressStr = getImage(uf);
                     indexItem.Name = mpm.MenuPath3.FullName();
-                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath3);
+                    likeUnlikeCounter = _likeUnlikeBiz.Count(null, null, mpm.MenuPath3.Id, null, null, theUserId);
+                    likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuPath3";
+                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath3, _breadCrumbManager, likeUnlikeCounter);
                     break;
 
                 case MenuENUM.IndexMenuProduct: //Products are coming
@@ -82,7 +91,10 @@ namespace UowLibrary.MenuNS
                     uf = product.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted);
                     indexItem.ImageAddressStr = getImage(uf);
                     //indexItem.Name = produc.FullName();
-                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuProduct);
+                    
+                    likeUnlikeCounter = _likeUnlikeBiz.Count(null, null, null, product.Id, null, theUserId);
+                    likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuProduct";
+                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuProduct, _breadCrumbManager, likeUnlikeCounter);
 
                     break;
 
@@ -91,48 +103,32 @@ namespace UowLibrary.MenuNS
                     uf = productChild.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted);
                     indexItem.ImageAddressStr = getImage(uf);
                     //indexItem.Name = produc.FullName();
-                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuProduct);
+                    likeUnlikeCounter = _likeUnlikeBiz.Count(null, null, null, null, productChild.Id, theUserId);
+                    likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuProductChild";
+                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuProduct, _breadCrumbManager, likeUnlikeCounter);
                     break;
 
                 case MenuENUM.EditMenuPath1:
-                    break;
-
                 case MenuENUM.EditMenuPath2:
-                    break;
-
                 case MenuENUM.EditMenuPath3:
-                    break;
-
                 case MenuENUM.EditMenuPathMain:
-                    break;
-
                 case MenuENUM.EditMenuProduct:
-                    break;
-
                 case MenuENUM.EditMenuProductChild:
-                    break;
-
                 case MenuENUM.CreateMenuPath1:
-                    break;
-
                 case MenuENUM.CreateMenuPath2:
-                    break;
-
                 case MenuENUM.CreateMenuPath3:
-                    break;
-
                 case MenuENUM.CreateMenuPathMenuPathMain:
-                    break;
-
                 case MenuENUM.CreateMenuProduct:
-                    break;
-
                 case MenuENUM.CreateMenuProductChild:
-                    break;
                 default:
+                    likeUnlikeCounter = _likeUnlikeBiz.Count(null, null, null, null, null, theUserId);
+                    likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.Default";
+
                     break;
             }
 
+            indexItem.MenuManager.LikeUnlikesCounter = likeUnlikeCounter;
+            indexItem.MenuManager.BreadCrumbManager = indexListVM.MenuManager.BreadCrumbManager;
 
         }
 

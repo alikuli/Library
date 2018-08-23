@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.DeliveryMethodNS;
 using ModelsClassLibrary.ModelsNS.DiscountNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FileDocsNS;
@@ -11,7 +12,6 @@ using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
-using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 using ModelsClassLibrary.ModelsNS.SharedNS.CounterNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.RightsNS;
@@ -27,6 +27,7 @@ namespace ApplicationDbContextNS
         //public virtual IDbSet<AddressWithId> Addresses { get; set; }
         //public IDbSet<AddressCategory> AddressCategories { get; set; }
         //public virtual IDbSet<City> Cities { get; set; }
+        public virtual IDbSet<GlobalComment> GlobalComments { get; set; }
         public virtual IDbSet<Country> Countries { get; set; }
         public virtual IDbSet<Counter> Counters { get; set; }
         //public IDbSet<Customer> Customers { get; set; }

@@ -1,8 +1,12 @@
 ﻿using BreadCrumbsLibraryNS.Programs;
+using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using UowLibrary;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -13,10 +17,10 @@ namespace MarketPlace.Web6.Controllers
         UploadedFileBiz _uploadedfilesBiz;
         #region Constructo and initializers
 
-        public UploadedFilesController(UploadedFileBiz UploadedFilesBiz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
-            : base(UploadedFilesBiz, errorSet, userbiz, breadCrumbManager)
+        public UploadedFilesController(UploadedFileBiz biz, BreadCrumbManager bcm, IErrorSet err)
+            : base(biz, bcm, err) 
         {
-            _uploadedfilesBiz = UploadedFilesBiz;
+            _uploadedfilesBiz = biz;
         }
 
         #endregion

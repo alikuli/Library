@@ -2,6 +2,7 @@
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using ModelsClassLibrary.ViewModels;
 using UowLibrary.Abstract;
 using UowLibrary.Interface;
@@ -42,7 +43,10 @@ namespace UowLibrary
             indexListVM.Heading.RecordName = indexListVM.Heading.Main; //This print as Number of Records.
             indexListVM.Heading.RecordNamePlural = indexListVM.Heading.Main + "s";
 
-            indexListVM.MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault);
+            //Note. The LikeCounter in the MenuManger for the List is always null. The likes are counted in
+            //the items.
+            indexListVM.MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, _breadCrumbManager, null);
+
 
 
         }

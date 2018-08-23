@@ -1,15 +1,20 @@
 ﻿using AliKuli.Extentions;
 using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
+using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
+using UowLibrary.Interface;
 using UowLibrary.MenuNS;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -18,15 +23,13 @@ namespace MarketPlace.Web6.Controllers
     {
 
         MenuPath1Biz _menupath1Biz;
-        #region Constructo and initializers
 
-        public MenuPath1sController(MenuPath1Biz menupath1Biz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
-            : base(menupath1Biz, errorSet, userbiz, breadCrumbManager)
+        public MenuPath1sController(MenuPath1Biz biz, BreadCrumbManager bcm, IErrorSet err)
+            : base(biz, bcm, err) 
         {
-            _menupath1Biz = menupath1Biz;
+            _menupath1Biz = biz;
         }
 
-        #endregion
 
 
 
@@ -35,17 +38,8 @@ namespace MarketPlace.Web6.Controllers
             //delete from the productCategory1
             await _menupath1Biz.DeleteUploadedFile(menupathId, uploadedFileId);
             return RedirectToAction("Edit", new { id = menupathId });
-            //return RedirectToAction("DeleteConfirmed", "UploadedFiles", new { id = uploadedFileId });
         }
 
-        public override ActionResult Event_CreateViewAndSetupSelectList(ModelsClassLibrary.ModelsNS.SharedNS.ControllerIndexParams parm)
-        {
-
-            var result = EnumExtention.Enum<MenuPath1ENUM>.Count;
-            MenuPath1ENUM mp1 = MenuPath1ENUM.Unknown;
-            var result2 = EnumExtention.ToSelectListSorted<MenuPath1ENUM>(mp1);
-            return base.Event_CreateViewAndSetupSelectList(parm);
-        }
 
     
     

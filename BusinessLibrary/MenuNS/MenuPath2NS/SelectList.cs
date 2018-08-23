@@ -14,10 +14,6 @@ namespace UowLibrary.ProductNS
         }
 
 
-        public SelectList SelectList_Engine(IQueryable<MenuPath2> data)
-        {
-            return Dal.SelectList_Engine(data);
-        }
 
 
     }

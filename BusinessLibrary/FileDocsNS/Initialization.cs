@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using ErrorHandlerLibrary.ExceptionsNS;
+using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FileDocsNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
 using System;
@@ -17,9 +18,9 @@ namespace UowLibrary.FileDocNS
             get
             {
                 //IRepositry<OldFileData> OldFileDataDAL = new Repositry<OldFileData>(_db, ErrorsGlobal);
-
-                var lstOldData = _db.OldFileDatas.ToList();
-                return lstOldData;
+                throw new NotImplementedException();
+                //var lstOldData = _db.OldFileDatas.ToList();
+                //return lstOldData;
             }
         }
 
@@ -52,11 +53,11 @@ namespace UowLibrary.FileDocNS
 
                 x.OldFileNumber = item.CompleteFileNumber;
 
-                x.UserId = UserIdBiz;
+                x.UserId = UserId;
 
                 try
                 {
-                    CreateAndSave(x);
+                    CreateAndSave(CreateControllerCreateEditParameter(x as ICommonWithId));
                 }
                 catch (NoDuplicateException)
                 {

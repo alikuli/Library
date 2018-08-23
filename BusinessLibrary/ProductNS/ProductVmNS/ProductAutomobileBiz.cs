@@ -1,14 +1,13 @@
-﻿using AliKuli.UtilitiesNS;
-using ApplicationDbContextNS;
+﻿using ApplicationDbContextNS;
+using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.Interfaces;
-using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
-using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Web.Mvc;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
-using UserModels;
-using WebLibrary.Programs;
 
 namespace UowLibrary.ProductNS.ProicuytVmNS
 {
@@ -17,8 +16,8 @@ namespace UowLibrary.ProductNS.ProicuytVmNS
 
 
         readonly ProductBiz _productBiz;
-        public ProductAutomobileBiz(IRepositry<ApplicationUser> userDal, IRepositry<ProductAutomobileVM> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz, ProductBiz productBiz)
-            : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
+        public ProductAutomobileBiz(ProductBiz productBiz, IRepositry<ProductAutomobileVM> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
+            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
         {
             _productBiz = productBiz;
         }

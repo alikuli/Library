@@ -5,10 +5,11 @@ using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 
 namespace UowLibrary.MenuNS.MenuStateNS
 {
-    public abstract class MenuManagerAbstract : IMenuState
+    public abstract class MenuStateAbstract : IMenuState
     {
         MenuPathMain _menuPathMain;
         Product _product;
@@ -18,22 +19,21 @@ namespace UowLibrary.MenuNS.MenuStateNS
         //MenuPath2 _menuPath2;
         //MenuPath3 _menuPath3;
 
-        public MenuManagerAbstract(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum)
+        public MenuStateAbstract(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameter likeUnlikesCounter)
         {
             _menuPathMain = menuPathMain;
             _product = product;
             _productChild = productChild;
             _menuEnum = menuEnum;
+            LikeUnlikesCounter = likeUnlikesCounter;
         }
 
         //public abstract string EditLink_Id { get; }
         public MenuENUM MenuEnum { get { return _menuEnum; } }
         public abstract MenuENUM EditLink_MenuEnum { get; }
-
         public abstract string CreateLink_Name { get; }
         public abstract MenuENUM CreateLink_MenuEnum { get; }
         public abstract string CreateAndEditLink_ControllerName { get; }
-
         public virtual bool IsMenu
         {
             get
@@ -66,13 +66,56 @@ namespace UowLibrary.MenuNS.MenuStateNS
         }
         public abstract string BackLink_Name { get; }
         public abstract MenuENUM BackLink_MenuEnum { get; }
-
         public abstract bool ShowCreateButton { get; }
         public abstract bool ShowEditButton { get; }
+        
+        
+        
+        //public abstract string MenuPath1Id { get; }
+        //public abstract string MenuPath2Id { get; }
+        //public abstract string MenuPath3Id { get; }
 
-        public abstract string MenuPath1Id { get; }
-        public abstract string MenuPath2Id { get; }
-        public abstract string MenuPath3Id { get; }
+
+        public virtual string MenuPath1Id
+        {
+            get
+            {
+                if (MenuPathMain.IsNull())
+                    return "";
+                if (MenuPathMain.MenuPath1Id.IsNullOrWhiteSpace())
+                    return "";
+                return MenuPathMain.MenuPath1Id;
+
+            }
+        }
+
+        public virtual string MenuPath2Id
+        {
+            get
+            {
+                if (MenuPathMain.IsNull())
+                    return "";
+                if (MenuPathMain.MenuPath2Id.IsNullOrWhiteSpace())
+                    return "";
+                return MenuPathMain.MenuPath2Id;
+
+            }
+        }
+
+        public virtual string MenuPath3Id
+        {
+            get
+            {
+                if (MenuPathMain.IsNull())
+                    return "";
+                if (MenuPathMain.MenuPath3Id.IsNullOrWhiteSpace())
+                    return "";
+                return MenuPathMain.MenuPath3Id;
+
+            }
+        }
+
+        
         public virtual string ProductId
         {
             get
@@ -91,10 +134,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
                 return ProductChild.Id;
             }
         }
-
         public string ControllerCurrentName { get; set; }
-
-
         public virtual string MenuPathMainId
         {
             get
@@ -104,13 +144,15 @@ namespace UowLibrary.MenuNS.MenuStateNS
                 return MenuPathMain.Id;
             }
         }
-
         public MenuENUM NextMenu
         {
             get
             {
                 switch (_menuEnum)
                 {
+                    case MenuENUM.IndexDefault:
+                        return MenuENUM.IndexMenuPath2;
+
                     case MenuENUM.IndexMenuPath1:
                         return MenuENUM.IndexMenuPath2;
 
@@ -126,7 +168,6 @@ namespace UowLibrary.MenuNS.MenuStateNS
                     case MenuENUM.IndexMenuProductChild:
                         return MenuENUM.IndexMenuProductChild;
 
-                    case MenuENUM.unknown:
                     case MenuENUM.EditMenuPath1:
                     case MenuENUM.EditMenuPath2:
                     case MenuENUM.EditMenuPath3:
@@ -140,12 +181,11 @@ namespace UowLibrary.MenuNS.MenuStateNS
                     case MenuENUM.CreateMenuProduct:
                     case MenuENUM.CreateMenuProductChild:
                     default:
-                        return MenuENUM.unknown;
+                        return MenuENUM.IndexDefault;
 
                 }
             }
         }
-
         public string GetProductVM()
         {
             switch (MenuPathMain.MenuPath1.MenuPath1Enum)
@@ -153,7 +193,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
 
                 case MenuPath1ENUM.Automobiles:
                     return new ProductAutomobileVM().GetType().Name + "s";
-                case MenuPath1ENUM.Unknown:
+                case MenuPath1ENUM.NotDefined:
                     break;
                 case MenuPath1ENUM.MensClothing:
                     break;
@@ -186,6 +226,35 @@ namespace UowLibrary.MenuNS.MenuStateNS
             }
             return "Products";
         }
+        string _menuDisplayName = "";
+        public virtual string MenuDisplayName
+        {
+            get
+            {
+                if (_menuDisplayName.IsNullOrWhiteSpace())
+                {
+                    if (ControllerCurrentName.IsNullOrWhiteSpace())
+                        return "Menu Display Name";
+                    else
+                        return ControllerCurrentName.ToTitleSentance();
+                }  
+                return _menuDisplayName;
+            }
 
+            set
+            {
+                _menuDisplayName = value;
+            }
+
+        }
+        public virtual bool IsProductChild
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual LikeUnlikeParameter LikeUnlikesCounter { get; set; }
     }
 }

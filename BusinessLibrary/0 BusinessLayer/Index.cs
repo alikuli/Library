@@ -37,11 +37,6 @@ namespace UowLibrary
         }
 
 
-        public virtual void Event_ApplyChangesAfterCreate(TEntity entity)
-        {
-
-        }
-
 
         public virtual IList<ICommonWithId> GetListForIndex()
         {

@@ -8,14 +8,18 @@ using UowLibrary.CounterNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.CounterNS;
 using UowLibrary;
 using BreadCrumbsLibraryNS.Programs;
+using UowLibrary.PlayersNS;
+using UowLibrary.MyWorkClassesNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
+using ErrorHandlerLibrary;
 
 namespace MarketPlace.Web6.Controllers
 {
     public class CountersController : EntityAbstractController<Counter>
     {
 
-        public CountersController(CounterBiz countersBiz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
-            : base(countersBiz, errorSet, userbiz, breadCrumbManager) { }
+        public CountersController(CounterBiz biz, BreadCrumbManager bcm, IErrorSet err)
+            : base(biz,bcm,err) { }
 
 
     }

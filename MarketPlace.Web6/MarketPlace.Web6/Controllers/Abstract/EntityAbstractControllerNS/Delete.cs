@@ -20,7 +20,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
     {
 
         // GET: Countries/Delete/5
-        public async Task<ActionResult> Delete(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, string productId, string menuPathMainId, string productChildId, MenuENUM menuEnum = MenuENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false)
+        public async Task<ActionResult> Delete(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, string productId, string menuPathMainId, string productChildId, MenuENUM menuEnum = MenuENUM.IndexDefault, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false)
         {
 
             if (id == null)
@@ -41,9 +41,9 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 //It will be passed on to a hidden field is Delete and then passed on
                 //to DeleteConfirmed via the hidden field
                 entity.ReturnUrl = returnUrl;
-                string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
-                ApplicationUser user = _userBiz.FindByUserName_UserManager(User.Identity.Name);
-                bool isUserAdmin = _userBiz.IsUserAdmin(user);
+                //string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
+                //ApplicationUser user = UserBiz.FindByUserName_UserManager(User.Identity.Name);
+                //bool isUserAdmin = UserBiz.IsUserAdmin(user);
 
                 ControllerIndexParams parms = MakeControlParameters(
                     id,
@@ -52,10 +52,13 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     selectedId,
                     entity,
                     entity,
+                    BreadCrumbManager,
+                    UserId,
+                    UserName, 
+                    isMenu,
                     menuEnum,
                     sortBy,
                     print,
-                    returnUrl,
                     ActionNameENUM.Delete);
 
                 return Event_CreateViewAndSetupSelectList(parms);

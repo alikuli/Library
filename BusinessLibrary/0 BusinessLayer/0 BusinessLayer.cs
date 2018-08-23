@@ -1,20 +1,22 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.UtilitiesNS;
 using ApplicationDbContextNS;
+using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.Interfaces;
-using EnumLibrary.EnumNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
 using InvoiceNS;
 using MigraDocLibrary.IndexNS;
 using MigraDocLibrary.InvoiceNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
 using System;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Data.Entity.Infrastructure;
 using System.Reflection;
 using UowLibrary.Abstract;
 using UowLibrary.Interface;
+using UowLibrary.LikeUnlikeNS;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
 using WebLibrary.Programs;
@@ -27,56 +29,27 @@ namespace UowLibrary
     /// <typeparam name="TEntity"></typeparam>
     public abstract partial class BusinessLayer<TEntity> : AbstractBiz, IBusinessLayer<TEntity> where TEntity : class, ICommonWithId
     {
-        /// <summary>
-        /// Remember to wire up _dal in the child CRUD class.
-        /// 
-        /// Example. In UowCountry it would be as follows
-        ///         readonly ICountryDAL _icountryDAL;
-        ///         public UowCountry(UserDAL userDAL, ICountryDAL icountryDAL, IMemoryMain memoryMain, IErrorSet errorSet)
-        ///               : base(userDAL, memoryMain, errorSet)
-        ///         {
-        ///             _icountryDAL = icountryDAL;
-        ///             _dal = CountryDAL;
-        ///         
-        ///         }
-        ///         
-        ///         protected CountryDAL CountryDAL
-        ///          {
-        ///             get
-        ///             {
-        ///                 if (_icountryDAL.IsNull())
-        ///                 {
-        ///                     ErrorsGlobal.Add("Country DAL not loaded.", MethodBase.GetCurrentMethod());
-        ///                     throw new Exception(ErrorsGlobal.ToString());
-        ///                 }
-        ///                 return (CountryDAL)_icountryDAL;
-        ///             }
-        ///         }
-
-        /// </summary>
         private IRepositry<TEntity> _dal;
-        protected ApplicationDbContext _db;
         protected ConfigManagerHelper _configManager;
+
+        //protected ApplicationDbContext _db;
         protected UploadedFileBiz _uploadedFileBiz;
-        public BusinessLayer(IRepositry<ApplicationUser> userDal, IMemoryMain memoryMain, IErrorSet errorSet, IRepositry<TEntity> dal, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
-            : base(memoryMain, errorSet)
+        protected BreadCrumbManager _breadCrumbManager;
+        //protected RightBiz _rightBiz;
+        //protected UserBiz _userBiz;
+
+        public BusinessLayer(MyWorkClasses myWorkClasses, IRepositry<TEntity> dal, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
+            : base(myWorkClasses)
         {
-            UserDal = userDal;
-            UserDal.UserName = UserNameBiz;
-            UserDal.UserId = UserIdBiz;
-
             _dal = dal;
-            _dal.UserName = UserNameBiz;
-            _dal.UserId = UserIdBiz;
-
-            _db = db;
-            _configManager = configManager;
             _uploadedFileBiz = uploadedFileBiz;
+            _breadCrumbManager = breadCrumbManager;
 
         }
 
 
-        public IRepositry<ApplicationUser> UserDal { get; private set; }
+
+
         protected IRepositry<TEntity> Dal
         {
             get
@@ -87,7 +60,7 @@ namespace UowLibrary
                     throw new Exception(ErrorsGlobal.ToString());
                 }
                 //This is where userName is passed to the Dal from Biz
-                _dal.UserName = UserNameBiz;
+                _dal.UserName = UserName?? "";
                 return _dal;
             }
         }

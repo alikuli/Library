@@ -2,6 +2,7 @@
 using ModelsClassLibrary.MenuNS;
 using System.Linq;
 using AliKuli.Extentions;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 
 
 namespace UowLibrary.ProductNS
@@ -9,11 +10,13 @@ namespace UowLibrary.ProductNS
     public partial class MenuPathMainBiz
     {
 
-        public override void Fix(MenuPathMain entity)
+        public override void Fix(ControllerCreateEditParameter parm)
         {
-            base.Fix(entity);
-            getMenuPaths(entity);
-            fixName(entity);
+            base.Fix(parm);
+            MenuPathMain mpm = new MenuPathMain();
+            mpm = parm.Entity as MenuPathMain;
+            getMenuPaths(mpm);
+            fixName(mpm);
 
         }
         private void getMenuPaths(MenuPathMain entity)

@@ -1,4 +1,5 @@
-﻿using EnumLibrary.EnumNS;
+﻿using BreadCrumbsLibraryNS.Programs;
+using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 namespace InterfacesLibrary.SharedNS
@@ -32,7 +33,9 @@ namespace InterfacesLibrary.SharedNS
         string ClassNameRaw { get; }
         string ClassName { get; }
         string ClassNamePlural { get; }
+        string DefaultDisplayImage { get; }
 
+        bool IsAllowDuplicates { get; }
         //bool IsCreating { get; set; }
 
         //bool IsDeleting { get; set; }

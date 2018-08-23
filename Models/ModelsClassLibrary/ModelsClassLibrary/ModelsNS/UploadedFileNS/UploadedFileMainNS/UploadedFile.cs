@@ -45,6 +45,7 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
             //    adjustedsizeFile.SaveAs(AbsolutePathWithFileName());
             //}
         }
+
         ///// <summary>
         ///// 
         ///// </summary>
@@ -66,6 +67,8 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
             Extention = extention;
             RelativeWebsitePath = saveToRelativePath;
         }
+
+
         //public UploadedFile(string getFromRelativePath, string saveToRelativePath, string nameWithExtention)
         //{
 

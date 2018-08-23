@@ -1,14 +1,18 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.UtilitiesNS;
 using ApplicationDbContextNS;
+using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.DalNS;
 using DalLibrary.Interfaces;
-using DalNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.RightsNS;
 using ModelsClassLibrary.ViewModels;
 using System;
 using System.Reflection;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
 using WebLibrary.Programs;
@@ -18,10 +22,10 @@ namespace UowLibrary.StateNS
     public partial class StateBiz : BusinessLayer<State>
     {
         readonly IRepositry<Country> _iCountryDal;
-        public StateBiz(IRepositry<ApplicationUser> userDal, IRepositry<Country> iCountryDal, IRepositry<State> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
-            : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
+        public StateBiz(IRepositry<Country> countryDal, IRepositry<State> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
+            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
         {
-            _iCountryDal = iCountryDal;
+            _iCountryDal = countryDal;
 
 
         }

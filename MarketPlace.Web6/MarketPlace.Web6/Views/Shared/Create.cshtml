@@ -2,36 +2,19 @@
 
 @{
     var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
-    string menuPathMainId = "";
-    string productId = "";
-    string productChildId = "";
     string returnUrl = Request.Url.PathAndQuery; 
-    string selectId = "";
-    string searchString = "";
     Model.MenuManager.MenuState.ControllerCurrentName = this.ViewContext.RouteData.Values["controller"].ToString();
-
-
-    ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.IHaveMenuManager ihaveMenuManager = Model as ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.IHaveMenuManager;
-    if (!ihaveMenuManager.IsNull())
-    {
-        //ihaveMenuManager.MenuManager.ControllerCurrentName = controllerName;
-        //controllerName = ihaveMenuManager.MenuManager.CreateAndEditLink_ControllerName;
-
-        //menuPathMainId = ihaveMenuManager.MenuManager.MenuPathMainId;
-        //returnUrl = Request.Url.PathAndQuery;
-        //productId = ihaveMenuManager.MenuManager.ProductId;
-        //productChildId = ihaveMenuManager.MenuManager.ProductChildId;
-        selectId = ihaveMenuManager.MenuManager.SelectedId;
-        searchString = ihaveMenuManager.MenuManager.SearchString;
-    }
-
+    string selectId = Model.MenuManager.SelectedId;
+    string searchString = Model.MenuManager.SearchString;
+    string createScreenName = string.Format("{0} - {1}", "Create", Model.FullName());
+    Model.MenuManager.BreadCrumbManager.Push(createScreenName, returnUrl);
     
 }
         @*@Html.Partial(@"ViewControls/index/_breadCrumbs")*@
 
 @Html.Partial(@"ViewControls/Create/_CreateHeading")
 
-@using (Html.BeginForm("Create", @controllerName, new { returnUrl = returnUrl, selectId = selectId, searchString = searchString }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", @controllerName, new { selectId = selectId, searchString = searchString }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -39,7 +22,7 @@
     @Html.Partial(@"_FieldsOnlyEditFormat")
     @Html.Partial(@"ViewControls/Uploads/_ShowUploads")
 
-        <div class="col-md-offset-2 col-md-10">
+    <div class="col-md-offset-2 col-md-10">
         <input type="submit" value="Create" class="btn btn-success" />
     </div>
 }
@@ -47,12 +30,8 @@
 
 
 <div>
-
-    @Html.ActionLink("Back to List", "Index", new { menuPathMainId = menuPathMainId, productId = productId, returnUrl = returnUrl, productChildId = productChildId,  searchString = searchString, selectedId = Model.Id })
+    <a href="@Model.MenuManager.BreadCrumbManager.Url_CurrMinusOne">Back to List</a>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
 
 

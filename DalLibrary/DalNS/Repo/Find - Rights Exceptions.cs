@@ -12,18 +12,18 @@ namespace DalLibrary.DalNS
         /// This allows for finds without checking for rights
         /// </summary>
         /// <param name="dud"></param>
-        private void checkRightExceptions(TEntity dud)
-        {
-            switch (dud.ClassNameForRights())
-            {
-                case ClassesWithRightsENUM.Country:
-                    break;
+        //private void checkRightExceptions(TEntity dud)
+        //{
+        //    switch (dud.ClassNameForRights())
+        //    {
+        //        case ClassesWithRightsENUM.Country:
+        //            break;
 
-                default:
-                    canRetrieve();
-                    break;
-            }
-        }
+        //        default:
+        //            //canRetrieve();
+        //            break;
+        //    }
+        //}
 
 
 

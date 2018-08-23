@@ -13,7 +13,7 @@ namespace ErrorHandlerLibrary.ExceptionsNS
     /// <summary>
     /// Use this class. This has lots of features. You can load a list of error messages and receive it back as a ToString or a ToList
     /// </summary>
-    public class ErrorSet : IErrorSet
+    public class ErrorSet : IErrorSet 
     {
 
         IMemoryMain _memory;

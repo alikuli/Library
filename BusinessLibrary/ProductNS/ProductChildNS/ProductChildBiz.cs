@@ -1,8 +1,13 @@
 ﻿using AliKuli.UtilitiesNS;
 using ApplicationDbContextNS;
+using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.Interfaces;
 using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.RightsNS;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
 using WebLibrary.Programs;
@@ -14,8 +19,8 @@ namespace UowLibrary.ProductChildNS
 
 
 
-        public ProductChildBiz(IRepositry<ApplicationUser> userDal, IRepositry<ProductChild> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
-            : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
+        public ProductChildBiz(IRepositry<ProductChild> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
+            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
         {
         }
 

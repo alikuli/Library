@@ -430,21 +430,21 @@ namespace DalLibrary.DalNS
         public virtual IQueryable<TEntity> FindAllLight(bool deleted = false)
         {
 
-            if (canRetrieve())
-            {
+            //if (canRetrieve())
+            //{
                 var query = from b in _db.Set<TEntity>()
                             where b.MetaData.IsDeleted == deleted
                             orderby b.Name
                             select b;
 
                 return query.AsQueryable();
-            }
-            else
-            {
-                //the code will never get here because error is thrown in isUserAuthourizedToRetrieve()
-                ErrorsGlobal.Add("User not autourized to receive.", MethodBase.GetCurrentMethod());
-                throw new Exception(ErrorsGlobal.ToString());
-            }
+            //}
+            //else
+            //{
+            //    //the code will never get here because error is thrown in isUserAuthourizedToRetrieve()
+            //    ErrorsGlobal.Add("User not autourized to receive.", MethodBase.GetCurrentMethod());
+            //    throw new Exception(ErrorsGlobal.ToString());
+            //}
         }
 
 

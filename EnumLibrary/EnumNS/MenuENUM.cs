@@ -3,7 +3,7 @@ namespace EnumLibrary.EnumNS
 {
     public enum MenuENUM
     {
-        unknown,
+//        unknown,
         IndexDefault,
         IndexMenuPath1,
         IndexMenuPath2,

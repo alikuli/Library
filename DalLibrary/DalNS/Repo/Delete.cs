@@ -58,7 +58,7 @@ namespace DalLibrary.DalNS
             if (entity == null)
                 throw new NoNullAllowedException();
 
-            canDelete();
+            //canDelete();
 
             //We will never delete anything... we just make Delete True
             entity.MetaData.IsDeleted = true;
@@ -76,7 +76,7 @@ namespace DalLibrary.DalNS
             if (entity == null)
                 throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing entity (T). Repository.DeleteActually (T)");
 
-            canDeleteActually();
+            //canDeleteActually();
 
             _db.Set<TEntity>().Remove(entity);
 

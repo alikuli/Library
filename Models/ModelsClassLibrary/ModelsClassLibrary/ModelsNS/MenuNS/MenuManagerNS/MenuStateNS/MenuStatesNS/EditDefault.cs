@@ -2,14 +2,15 @@
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 
 namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 {
-    public class EditDefault : MenuManagerAbstract
+    public class EditDefault : MenuStateAbstract
     {
 
-        public EditDefault(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum)
-            : base(menuPathMain, product, productChild, menuEnum) { }
+        public EditDefault(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameter likeUnlikesCounter)
+            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
 
         public override MenuENUM EditLink_MenuEnum
         {
@@ -54,27 +55,35 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
         }
         public override string MenuPath1Id
         {
-            get { throw new System.NotImplementedException(); }
+            get { return ""; }
         }
 
         public override string MenuPath2Id
         {
-            get { throw new System.NotImplementedException(); }
+            get { return ""; }
         }
 
         public override string MenuPath3Id
         {
-            get { throw new System.NotImplementedException(); }
+            get { return ""; }
         }
 
         public override string ProductId
         {
-            get { throw new System.NotImplementedException(); }
+            get { return ""; }
         }
 
         public override string ProductChildId
         {
-            get { throw new System.NotImplementedException(); }
+            get { return ""; }
+        }
+
+        public override string MenuDisplayName
+        {
+            get
+            {
+                return "Edit " + base.MenuDisplayName;
+            }
         }
 
     }

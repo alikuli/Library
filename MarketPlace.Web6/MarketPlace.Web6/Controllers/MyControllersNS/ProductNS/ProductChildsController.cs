@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using BreadCrumbsLibraryNS.Programs;
+using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
@@ -8,6 +9,8 @@ using System;
 using System.Reflection;
 using System.Web.Mvc;
 using UowLibrary;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
 
@@ -18,17 +21,25 @@ namespace MarketPlace.Web6.Controllers
 
         ProductBiz _productBiz;
         UserBiz _userBiz;
-        public ProductChildsController(ProductChildBiz productChildBiz, IErrorSet errorSet, ProductBiz productBiz, UserBiz userBiz, BreadCrumbManager breadCrumbManager)
-            : base(productChildBiz, errorSet, userBiz, breadCrumbManager)
+
+        public ProductChildsController(ProductBiz biz, UserBiz userBiz, BreadCrumbManager bcm, IErrorSet err)
+            : base(biz.ProductChildBiz, bcm, err) 
         {
-            _productBiz = productBiz;
+            _productBiz = biz;
             _userBiz = userBiz;
         }
 
+        UserBiz UserBiz
+        {
+            get
+            {
+                return UserBiz;
+            }
+        }
         public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
         {
             ViewBag.ProductSelectList = _productBiz.SelectList();
-            ViewBag.UserSelectList = _userBiz.SelectList();
+            ViewBag.UserSelectList = UserBiz.SelectList();
 
             return base.Event_CreateViewAndSetupSelectList(parm);
 

@@ -43,6 +43,19 @@ namespace AliKuli.Extentions
             return string.IsNullOrWhiteSpace(str);
         }
 
+        public static bool IsNullOrWhiteSpaceThrowArgumentException(this string str, string errMsg = "")
+        {
+            if (str.IsNullOrWhiteSpace())
+            {
+                if (errMsg.IsNullOrWhiteSpace())
+                    throw new ArgumentException(string.Format("String: '{0}' is null or only white space", str));
+                else
+                    throw new ArgumentException(errMsg);
+
+            }
+            return string.IsNullOrWhiteSpace(str);
+        }
+
         /// <summary>
         /// Accepts a string and convert as DateTime. It has an optional parameter throwExceptionIfFailed. 
         /// if it is true then caller of this method should expect exception and handle it. 

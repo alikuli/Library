@@ -1,16 +1,19 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.UtilitiesNS;
 using ApplicationDbContextNS;
-using DalLibrary.DalNS;
+using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.Interfaces;
-using DalNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
+using ModelsClassLibrary.RightsNS;
 using ModelsClassLibrary.ViewModels;
 using System;
 using System.Reflection;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
 using UowLibrary.StateNS;
 using UowLibrary.UploadFileNS;
@@ -23,8 +26,8 @@ namespace UowLibrary
     {
 
         //ProductBiz _productBiz;
-        public ProductIdentifierBiz(IRepositry<ApplicationUser> userDal, IRepositry<ProductIdentifier> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
-            : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
+        public ProductIdentifierBiz(IRepositry<ProductIdentifier> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
+            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
         {
             //_productBiz = productBiz;
         }

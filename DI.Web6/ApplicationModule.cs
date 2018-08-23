@@ -3,17 +3,22 @@ using ApplicationDbContextNS;
 using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.DalNS;
 using DalLibrary.Interfaces;
-using DalNS;
+using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using UowLibrary;
 using UowLibrary.CounterNS;
 using UowLibrary.FileDocNS;
+using UowLibrary.GlobalCommentsNS;
 using UowLibrary.Interface;
+using UowLibrary.LikeUnlikeNS;
 using UowLibrary.MenuNS;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
 using UowLibrary.StateNS;
@@ -58,6 +63,8 @@ namespace DependancyResolver
             Bind<ProductIdentifierBiz>().ToSelf();
 
             Bind<StateBiz>().ToSelf();
+            Bind<UserBiz>().ToSelf();
+            Bind<RightBiz>().ToSelf();
 
             Bind<UomLengthBiz>().ToSelf();
             Bind<UomQuantityBiz>().ToSelf();
@@ -66,7 +73,10 @@ namespace DependancyResolver
 
             Bind<UploadedFileBiz>().ToSelf();
 
-            Bind<UserBiz>().ToSelf();
+            //Bind<UserBiz>().ToSelf();
+            Bind<GlobalCommentBiz>().ToSelf();
+            Bind<LikeUnlikeBiz>().ToSelf();
+            Bind<MyWorkClasses>().ToSelf();
         }
 
         public void LoadDALs()
@@ -77,7 +87,7 @@ namespace DependancyResolver
 
             //https://stackoverflow.com/questions/4370515/ninject-bind-generic-repository
             Bind(typeof(IRepositry<>)).To(typeof(Repositry<>));
-            Bind<UserDAL>().ToSelf();
+            //Bind<UserDAL>().ToSelf();
         }
 
         public void LoadMisc()

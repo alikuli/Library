@@ -1,0 +1,80 @@
+﻿@model ModelsClassLibrary.ModelsNS.GlobalCommentsNS.GlobalComment
+
+<div class="form-horizontal">
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(x => x.UserId,
+                                                (@ViewBag.UserSelectList as IEnumerable<SelectListItem>),
+                                             "--- Select User ---",
+                                    new { @class = "form-control disabled" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MenuPath1Id, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(x => x.MenuPath1Id,
+            (@ViewBag.MenuPath1SelectList as IEnumerable<SelectListItem>),
+              "--- Select Menu 1 ---",
+                       new { @class = "form-control disabled" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MenuPath2Id, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(x => x.MenuPath2Id,
+            (@ViewBag.MenuPath2SelectList as IEnumerable<SelectListItem>),
+             "--- Select Menu 2 ---",
+                      new { @class = "form-control disabled" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MenuPath3Id, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(x => x.MenuPath3Id,
+               (@ViewBag.MenuPath3SelectList as IEnumerable<SelectListItem>),
+                "--- Select Menu 3 ---",
+                         new { @class = "form-control disabled" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProductId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(x => x.ProductId,
+            (@ViewBag.ProductSelectList as IEnumerable<SelectListItem>),
+             "--- Select Product ---",
+             new { @class = "form-control" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProductChildId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(x => x.ProductChildId,
+            (@ViewBag.ProductChildSelectList as IEnumerable<SelectListItem>),
+             "--- Select Product ---",
+             new { @class = "form-control" })
+        </div>
+    </div>
+
+ </div>
+

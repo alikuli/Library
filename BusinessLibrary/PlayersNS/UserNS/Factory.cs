@@ -64,7 +64,7 @@ namespace UowLibrary
                     ErrorsGlobal.Add("No Country Received", MethodBase.GetCurrentMethod());
                     throw new Exception(ErrorsGlobal.ToString());
                 }
-                Country country = CountryDal.FindForLight(r.CountryID);
+                Country country = CountryBiz.Find(r.CountryID);
                 if (country.IsNull())
                 {
                     ErrorsGlobal.Add("Country not found", MethodBase.GetCurrentMethod());

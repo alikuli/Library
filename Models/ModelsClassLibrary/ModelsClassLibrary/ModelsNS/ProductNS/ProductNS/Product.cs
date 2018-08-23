@@ -1,13 +1,10 @@
 ﻿using AliKuli.Extentions;
-using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
-using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
+using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 using ModelsClassLibrary.SharedNS;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,6 +20,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         public virtual ICollection<ProductChild> ProductChildren { get; set; }
 
+        public virtual ICollection<GlobalComment> GlobalComments { get; set; }
 
         /// <summary>
         /// A product can have ONE or Many ProductIdentifiers. It must have at least one.

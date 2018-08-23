@@ -33,13 +33,13 @@ namespace MarketPlace.Web6.Controllers
         /// <param name="menuLevelEnum"></param>
         /// <param name="returnUrl"></param>
         /// <returns></returns>
-        public virtual async Task<ActionResult> Edit(string id, string selectedId = "", string searchFor = "", string isandForSearch = "", string menuPathMainId = "", string productChildId = "", string productId = "", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false)
+        public virtual async Task<ActionResult> Edit(string id, string selectedId = "", string searchFor = "", string isandForSearch = "", string menuPathMainId = "", string productChildId = "", string productId = "", MenuENUM menuEnum = MenuENUM.EditDefault, string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false)
         {
 
             try
             {
                 //the id here is a product Id
-                ProductAutomobileVM productAutomobileVM = await makeTheVm(id, menuPathMainId, returnUrl, menuLevelEnum, selectedId, searchFor, ActionNameENUM.Edit);
+                ProductAutomobileVM productAutomobileVM = await makeTheVm(id, menuPathMainId, returnUrl, selectedId, searchFor, ActionNameENUM.Edit);
                 return View(productAutomobileVM);
 
             }
@@ -52,7 +52,7 @@ namespace MarketPlace.Web6.Controllers
             }
         }
 
-        private async Task<ProductAutomobileVM> makeTheVm(string id, string menuPathMainId, string returnUrl, MenuLevelENUM menuLevelEnum, string selectId, string searchString, ActionNameENUM actionNameEnum)
+        private async Task<ProductAutomobileVM> makeTheVm(string id, string menuPathMainId, string returnUrl, string selectId, string searchString, ActionNameENUM actionNameEnum)
         {
             id.IsNullThrowExceptionArgument("Id not received. Bad Request");
             menuPathMainId.IsNullOrWhiteSpaceThrowException("Menu path not defined.");
@@ -86,7 +86,7 @@ namespace MarketPlace.Web6.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> Edit(ProductAutomobileVM entity, HttpPostedFileBase[] httpMiscUploadedFiles, HttpPostedFileBase[] httpSelfieUploads, HttpPostedFileBase[] httpIdCardFrontUploads, HttpPostedFileBase[] httpIdCardBackUploads, HttpPostedFileBase[] httpPassportFrontUploads, HttpPostedFileBase[] httpPassportVisaUploads, HttpPostedFileBase[] httpLiscenseFrontUploads, HttpPostedFileBase[] httpLiscenseBackUploads, FormCollection fc, string returnUrl = "", string menuPathMainId = "", string productId = "", string productChildId = "", string searchFor = "", string isandForSearch = "", MenuLevelENUM menuLevelEnum = MenuLevelENUM.unknown, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string selectedId = "")
+        public virtual async Task<ActionResult> Edit(ProductAutomobileVM entity, HttpPostedFileBase[] httpMiscUploadedFiles, HttpPostedFileBase[] httpSelfieUploads, HttpPostedFileBase[] httpIdCardFrontUploads, HttpPostedFileBase[] httpIdCardBackUploads, HttpPostedFileBase[] httpPassportFrontUploads, HttpPostedFileBase[] httpPassportVisaUploads, HttpPostedFileBase[] httpLiscenseFrontUploads, HttpPostedFileBase[] httpLiscenseBackUploads, FormCollection fc, string returnUrl = "", string menuPathMainId = "", string productId = "", string productChildId = "", string searchFor = "", string isandForSearch = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, string selectedId = "")
         {
             //var req = Request;
             //string fileNameOnly = Path.GetFileNameWithoutExtension(files[0].FileName);
@@ -119,22 +119,19 @@ namespace MarketPlace.Web6.Controllers
                     httpPassportVisaUploads,
                     httpLiscenseFrontUploads,
                     httpLiscenseBackUploads,
-                    MenuENUM.unknown,
+                    MenuENUM.EditDefault,
                     User.Identity.Name,
                     returnUrl);
 
                 await _productBiz.UpdateAndSaveAsync(parm);
+                return Redirect(BreadCrumbManager.Url_CurrMinusOne);
 
-                if (entity.ReturnUrl.IsNullOrWhiteSpace())
-                    return RedirectToAction("Index", "Home", new { selectedId = entity.Id.ToString(), returnUrl = returnUrl });
-
-                return Redirect(entity.ReturnUrl);
             }
             catch (Exception e)
             {
                 ErrorsGlobal.Add(string.Format("Not saved!"), MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
-                return RedirectToAction("Index", "Home", new { selectedId = entity.Id.ToString(), returnUrl = returnUrl });
+                return RedirectToAction("Index", "Home", new { selectedId = entity.Id.ToString()});
             }
         }
 

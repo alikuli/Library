@@ -3,13 +3,13 @@ namespace BreadCrumbsLibraryNS.Models
 {
     public class BreadCrumb
     {
-        public BreadCrumb(string currentUrl, string linkName)
+        public BreadCrumb(string url, string linkName)
         {
-            CurrentUrl = currentUrl;
+            Url = url;
             LinkName = linkName;
         }
 
-        public string CurrentUrl { get; set; }
+        public string Url { get; set; }
         public string LinkName { get; set; }
     }
 }

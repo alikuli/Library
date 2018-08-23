@@ -2,17 +2,15 @@
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 
 namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 {
-    public class CreateMenuPath2 : MenuManagerAbstract
+    public class CreateMenuPath2 : MenuStateAbstract
     {
 
-        public CreateMenuPath2(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum)
-            : base(menuPathMain, product, productChild, menuEnum)
-        {
-
-        }
+        public CreateMenuPath2(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameter likeUnlikesCounter)
+            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
 
         public override MenuENUM EditLink_MenuEnum
         {
@@ -80,5 +78,12 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
             get { throw new System.NotImplementedException(); }
         }
 
+        //public override string MenuDisplayName
+        //{
+        //    get
+        //    {
+        //        return base.MenuDisplayName;
+        //    }
+        //}
     }
 }

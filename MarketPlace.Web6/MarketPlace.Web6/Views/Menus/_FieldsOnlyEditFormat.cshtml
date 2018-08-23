@@ -11,13 +11,13 @@
 @{
 
     var htmlAttributesMenuPath1 = ViewData["htmlAttributes"] ?? new { @class = "form-control", };
-    if (Model.MenuManager.CreateMenuState.Disable_MenuPath1)
+    if (Model.MenuManager.MenuState.CreateMenuState.Disable_MenuPath1)
     {
         htmlAttributesMenuPath1 =  new { @class = "form-control", disabled = "disabled" };
     }
     
     var htmlAttributesMenuPath2 = ViewData["htmlAttributes"] ?? new { @class = "form-control", };
-    if (Model.MenuManager.CreateMenuState.Disable_MenuPath2)
+    if (Model.MenuManager.MenuState.CreateMenuState.Disable_MenuPath2)
     {
         htmlAttributesMenuPath2 = new { @class = "form-control", disabled = "disabled" };
     }

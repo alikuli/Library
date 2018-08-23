@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ModelsClassLibrary</RootNamespace>
     <AssemblyName>ModelsClassLibrary</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -221,6 +221,7 @@
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerIsActiveSpec.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerIsBlackListedSpec.cs" />
     <Compile Include="ModelsNS\ClicksNS\Click.cs" />
+    <Compile Include="ModelsNS\GlobalCommentsNS\GlobalComment.cs" />
     <Compile Include="ModelsNS\FileDocsNS\Upload.cs" />
     <Compile Include="ModelsNS\FileDocsNS\FileNumber.cs" />
     <Compile Include="ModelsNS\FileDocsNS\UpdatePropertiesDuringModify.cs" />
@@ -243,6 +244,7 @@
     <Compile Include="ModelsNS\IndexNS\MenuIndexItem.cs" />
     <Compile Include="ModelsNS\IndexNS\MenuModel.cs" />
     <Compile Include="ModelsNS\IndexNS\Show.cs" />
+    <Compile Include="ModelsNS\SharedNS\ParticipatingUsers.cs" />
     <Compile Include="ModelsNS\LogsNS\VisitorLogNS\VisitorLog.cs" />
     <Compile Include="ModelsNS\MediaNS\FileType.cs">
       <SubType>Code</SubType>
@@ -348,9 +350,11 @@
     <Compile Include="ModelsNS\CounterNS\Counter.cs" />
     <Compile Include="ModelsNS\CounterNS\CounterTypeENUM.cs" />
     <Compile Include="ModelsNS\SharedNS\Parameters\AnnonymousStringType.cs" />
+    <Compile Include="ModelsNS\SharedNS\Parameters\GlobalCommentParameter.cs" />
+    <Compile Include="ModelsNS\SharedNS\Parameters\ControllerCreateEditParameter - Copy.cs" />
     <Compile Include="ModelsNS\SharedNS\Parameters\ControllerCreateEditParameter.cs" />
     <Compile Include="ModelsNS\SharedNS\Parameters\ControllerCreateEditParameterDetail.cs" />
-    <Compile Include="ModelsNS\SharedNS\Parameters\FactoryParameters.cs" />
+    <Compile Include="ModelsNS\SharedNS\Parameters\LikeUnlikeParameters.cs" />
     <Compile Include="ModelsNS\SharedNS\Parameters\MenuParameters.cs" />
     <Compile Include="ModelsNS\SharedNS\ProductCatMainVM.cs" />
     <Compile Include="InterfacesNS\SharedNS\FeaturesNS\IProductHasUploads.cs" />
@@ -404,6 +408,7 @@
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\AccountViewModels.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\ManageViewModels.cs" />
     <Compile Include="ModelsNS\SharedNS\RankingMetaData.cs" />
+    <Compile Include="ModelsNS\LikeUnlikeNS\LikeUnlike.cs" />
     <Compile Include="ModelsNS\UploadedFileNS\UploadedFileMainNS\UploadedFile - Image Adjustment.cs" />
     <Compile Include="ModelsNS\UploadedFileNS\UploadedFileMainNS\UploadedFile - Navigation.cs" />
     <Compile Include="ModelsNS\UploadedFileNS\UploadedFileMainNS\UploadedFile.cs" />

@@ -69,7 +69,11 @@ namespace ModelsClassLibrary.RightsNS
 
         public override string FullName()
         {
+            if (Name.IsNullOrWhiteSpace())
+                return "";
+
             var arrayName = Name.Split(' ');
+
             if (arrayName.IsNullOrEmpty())
                 return " ";
 

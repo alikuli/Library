@@ -48,7 +48,7 @@ namespace DalLibrary.DalNS
             if (!right.Retrieve)
             {
                 //No Rights.
-                string e = string.Format("User {0} Has no rights to Retrieve, FAILED for {1}",
+                string e = string.Format("User '{0}' Has no rights to Retrieve, FAILED for {1}",
                     UserName,
                     typeof(TEntity).Name.ToTitleSentance());
 
@@ -134,67 +134,66 @@ namespace DalLibrary.DalNS
         /// Gets user's rights.
         /// </summary>
         /// <returns></returns>
-        private IRight getUserRights()
-        {
-            TEntity entityDud = Factory() as TEntity;
+        //private IRight getUserRights()
+        //{
+        //    TEntity entityDud = Factory() as TEntity;
 
-            if (!isUserLoggedIn())
-            {
-                return getDefaultRights(entityDud.ClassNameForRights());
-            }
+        //    if (!isUserLoggedIn())
+        //    {
+        //        return getDefaultRights(entityDud.ClassNameForRights());
+        //    }
 
-            if (isUserAdmin())
-            {
-                return fullRights(entityDud);
-            }
+        //    if (isUserAdmin())
+        //    {
+        //        return fullRights(entityDud);
+        //    }
 
-            //if user is logged in.
-            //get the user record.
-            //Get the rights for the user.
+        //    //if user is logged in.
+        //    //get the user record.
+        //    //Get the rights for the user.
 
-            ApplicationUser user = _db.Users.FirstOrDefault(x => x.Id == UserId);
+        //    ApplicationUser user = userDAL.FindAll().FirstOrDefault(x => x.Id == UserId);
 
-            if (user.IsNull())
-            {
-                ErrorsGlobal.Add("No user found.", MethodBase.GetCurrentMethod());
-                return getDefaultRights(entityDud.ClassNameForRights());
-            }
+        //    if (user.IsNull())
+        //    {
+        //        ErrorsGlobal.Add("No user found.", MethodBase.GetCurrentMethod());
+        //        return getDefaultRights(entityDud.ClassNameForRights());
+        //    }
 
-            //This can be any kind of class
-            //we convert it to Right so that we can get the method MakeKey
-            //but this will only work when the admin is making rights....
-            //hopw will it work when rights are being determined for the user?
+        //    //This can be any kind of class
+        //    //we convert it to Right so that we can get the method MakeKey
+        //    //but this will only work when the admin is making rights....
+        //    //hopw will it work when rights are being determined for the user?
 
-            Right rightDud = new Right();
-            rightDud.RightsFor = entityDud.ClassNameForRights();
-            rightDud.User = user;
-            rightDud.UserId = user.Id;
+        //    Right rightDud = new Right();
+        //    rightDud.RightsFor = entityDud.ClassNameForRights();
+        //    rightDud.User = user;
+        //    rightDud.UserId = user.Id;
 
-            string userRightId = rightDud.MakeKey();
+        //    string userRightId = rightDud.MakeKey();
 
-            var userRightsList = _db.Rights.Where(x => !x.MetaData.IsDeleted).ToList();
-            Right userRight = userRightsList.FirstOrDefault(x => x.Id == userRightId);
+        //    Right userRight = rightDAL.FindAll().FirstOrDefault(x => x.Id == userRightId);
 
-            if (userRight.IsNull())
-            {
-                string e = string.Format("User {0} has no right for {1}!", user.UserName, entityDud.ClassNameForRights());
-                ErrorsGlobal.Add(e, "Get User Right");
-                throw new Exception(ErrorsGlobal.ToString());
+        //    if (userRight.IsNull())
+        //    {
+        //        string e = string.Format("User {0} has no right for {1}!", user.UserName, entityDud.ClassNameForRights());
+        //        ErrorsGlobal.Add(e, "Get User Right");
+        //        throw new Exception(ErrorsGlobal.ToString());
 
-            }
+        //    }
 
-            return userRight;
-        }
+        //    return userRight;
+        //}
 
 
         /// <summary>
         /// Checks to see if user is logged in. If UserId has no ID, then it is assumed user is not logged in.
         /// </summary>
         /// <returns></returns>
-        private bool isUserLoggedIn()
-        {
-            return !UserId.IsNullOrWhiteSpace();
-        }
+        //private bool isUserLoggedIn()
+        //{
+        //    return !UserId.IsNullOrWhiteSpace();
+        //}
 
 
 

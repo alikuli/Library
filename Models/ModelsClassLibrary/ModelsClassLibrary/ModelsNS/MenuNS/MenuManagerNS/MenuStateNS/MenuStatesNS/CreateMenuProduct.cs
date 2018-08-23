@@ -2,14 +2,15 @@
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 
 namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 {
-    public class CreateMenuProduct : MenuManagerAbstract
+    public class CreateMenuProduct : MenuStateAbstract
     {
 
-        public CreateMenuProduct(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum)
-            : base(menuPathMain, product, productChild, menuEnum) { }
+        public CreateMenuProduct(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameter likeUnlikesCounter)
+            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
 
         public override MenuENUM EditLink_MenuEnum
         {

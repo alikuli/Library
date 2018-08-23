@@ -28,9 +28,9 @@ namespace UowLibrary
         /// Default: It performs a self error check.
         /// </summary>
         /// <param name="entity"></param>
-        public virtual void ErrorCheck(TEntity entity)
+        public virtual void ErrorCheck(ControllerCreateEditParameter parm)
         {
-            entity.SelfErrorCheck();
+            parm.Entity.SelfErrorCheck();
         }
 
 

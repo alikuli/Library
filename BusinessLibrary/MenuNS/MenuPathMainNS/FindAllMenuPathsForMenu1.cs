@@ -10,13 +10,8 @@ namespace UowLibrary.ProductNS
         public IQueryable<MenuPathMain> FindAllMenuPathMainsFor(MenuPath1ENUM menuPath1Enum)
         {
             var allMenuPaths = FindAll();
+            allMenuPaths = allMenuPaths.Where(x => x.MenuPath1.MenuPath1Enum == menuPath1Enum);
 
-            if (menuPath1Enum != MenuPath1ENUM.Unknown)
-            {
-                //filter the allMenuPaths
-                //find the menuPath1 which holds this
-                allMenuPaths = allMenuPaths.Where(x => x.MenuPath1.MenuPath1Enum == menuPath1Enum);
-            }
             return allMenuPaths;
         }
 

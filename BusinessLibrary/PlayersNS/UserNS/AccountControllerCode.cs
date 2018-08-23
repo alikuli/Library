@@ -40,14 +40,14 @@ namespace UowLibrary
         public RegisterViewModel CreateRegisterViewModel()
         {
             RegisterViewModel r = new RegisterViewModel();
-            r.CountrySelectList = CountryDal.SelectList();
+            r.CountrySelectList = CountryBiz.SelectList();
             return r;
         }
 
 
         public RegisterViewModel LoadCountrySelectListIn(RegisterViewModel rvm)
         {
-            rvm.CountrySelectList = CountryDal.SelectList();
+            rvm.CountrySelectList = CountryBiz.SelectList();
             return rvm;
         }
 
@@ -60,7 +60,7 @@ namespace UowLibrary
         public async Task RegisterAsync(RegisterViewModel model)
         {
 
-            Country country = CountryDal.FindFor(model.CountryID);
+            Country country = CountryBiz.Find(model.CountryID);
 
             if (country.IsNull())
             {

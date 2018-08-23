@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,11 +12,11 @@ namespace UowLibrary.ProductNS
         private List<string> lstOfIds = new List<string>();
         private Stack<Product> trailStack = new Stack<Product>();
 
-        public override void BusinessRulesFor(Product entity)
+        public override void BusinessRulesFor(ControllerCreateEditParameter parm)
         {
-            base.BusinessRulesFor(entity);
-            checkParentageIsNotCircular(entity);
-            GetDataFromMenuPathCheckBoxes(entity);
+            base.BusinessRulesFor(parm);
+            checkParentageIsNotCircular(parm.Entity as Product);
+            GetDataFromMenuPathCheckBoxes(parm.Entity as Product);
         }
 
 

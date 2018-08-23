@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WebLibrary.Programs;
+
 namespace BreadCrumbsLibraryNS.Programs
 {
     /// <summary>
@@ -14,30 +15,93 @@ namespace BreadCrumbsLibraryNS.Programs
     /// </summary>
     public class BreadCrumbManager
     {
+        const int MAX_LENTH = 6;
         IMemoryMain _memory;
-        CacheMemory _cache;
+        SessionMemory _sessionMemory;
 
-        public BreadCrumbManager()
-        {
-            _breadCrumbStack = GetFromMemory();
-        }
         public BreadCrumbManager(IMemoryMain memory)
-            : this()
         {
             _memory = memory;
-            _cache = _memory.CacheMemory;
+            _sessionMemory = _memory.SessionMemory;
+            _breadCrumbStack = GetFromMemory();
         }
 
-        Stack<BreadCrumb> _breadCrumbStack;
         const string LOCATION_NAME = "BreadCrumbManagerMemory";
 
-        private Stack<BreadCrumb> breadCrumbStack
+        public void Push(BreadCrumb bc)
+        {
+            if (bc.LinkName.IsNullOrWhiteSpace())
+                return;
+            if (bc.Url.IsNullOrWhiteSpace())
+                return;
+            if (bc.Url == "#")
+                return;
+            if(!BreadCrumbStack.IsNull())
+            {
+                if(BreadCrumbStack.Count > 0)
+                {
+                    if(BreadCrumbStack.Peek().Url == bc.Url)
+                    {
+                        return;
+                    }
+                }
+            }
+
+            BreadCrumbStack.Push(bc);
+            SaveToMemory();
+
+        }
+
+        public void Push(string linkName, string url)
+        {
+
+            BreadCrumb bc = new BreadCrumb(url, linkName);
+            Push(bc);
+
+        }
+
+        public BreadCrumb Pop()
+        {
+            if (BreadCrumbStack.Count() == 0)
+            {
+                Console.WriteLine("Stack is Empty!");
+                return null;
+            }
+
+            BreadCrumb bc = BreadCrumbStack.Pop();
+            SaveToMemory();
+            Console.WriteLine("Pop!");
+            return bc;
+
+        }
+
+
+        public List<BreadCrumb> ToList()
+        {
+            if (_breadCrumbStack.IsNull())
+            {
+                Console.WriteLine("BreadCrumbStack is null");
+                return null;
+            }
+            return _breadCrumbStack.ToList();
+        }
+
+        public string HomeUrl { get; set; }
+        public BreadCrumb[] ToArray()
+        {
+            if (BreadCrumbStack.IsNull())
+            {
+                Console.WriteLine("BreadCrumbStack is null");
+                return null;
+            }
+            return BreadCrumbStack.ToArray();
+
+        }
+        private Stack<BreadCrumb> _breadCrumbStack;
+        private Stack<BreadCrumb> BreadCrumbStack
         {
             get
             {
-                if (!_cache.IsNull())
-                    _breadCrumbStack = GetFromMemory();
-
                 if (_breadCrumbStack.IsNull())
                     _breadCrumbStack = new Stack<BreadCrumb>();
 
@@ -46,75 +110,21 @@ namespace BreadCrumbsLibraryNS.Programs
             set
             {
                 _breadCrumbStack = value;
+
             }
-        }
-
-        public void Push(BreadCrumb bc)
-        {
-            if (bc.IsNull())
-                return;
-            breadCrumbStack.Push(bc);
-            SaveToMemory();
-
-        }
-
-
-        public BreadCrumb Pop()
-        {
-            if (breadCrumbStack.IsNull())
-            {
-                Console.WriteLine("BreadCrumbStack is null");
-                return null;
-            }
-            if (breadCrumbStack.Count() == 0)
-            {
-                Console.WriteLine("Stack is Empty!");
-                return null;
-            }
-
-            Console.WriteLine("Pop!");
-            BreadCrumb bc = breadCrumbStack.Pop();
-            SaveToMemory();
-            return bc;
-
-        }
-
-
-        public List<BreadCrumb> ToList()
-        {
-            if (breadCrumbStack.IsNull())
-            {
-                Console.WriteLine("BreadCrumbStack is null");
-                return null;
-            }
-            return breadCrumbStack.ToList();
-        }
-
-        public string HomeUrl { get; set; }
-        public BreadCrumb[] ToArray()
-        {
-            if (breadCrumbStack.IsNull())
-            {
-                Console.WriteLine("BreadCrumbStack is null");
-                return null;
-            }
-            return breadCrumbStack.ToArray();
-
         }
 
         public int Count()
         {
-            if (breadCrumbStack.IsNull())
-                return 0;
-            return breadCrumbStack.Count();
+            return BreadCrumbStack.Count();
         }
 
         public bool IsNullOrEmpty()
         {
-            if (breadCrumbStack.IsNull())
+            if (_breadCrumbStack.IsNull())
                 return true;
 
-            if (breadCrumbStack.Count() == 0)
+            if (_breadCrumbStack.Count() == 0)
                 return true;
 
             return false;
@@ -124,10 +134,10 @@ namespace BreadCrumbsLibraryNS.Programs
         private Stack<BreadCrumb> GetFromMemory()
         {
 
-            if (!_cache.IsNull())
+            if (!_sessionMemory.IsNull())
             {
-                Stack<BreadCrumb> stack = _cache.GetFrom(LOCATION_NAME) as Stack<BreadCrumb>;
-                return stack;
+                Stack<BreadCrumb> memoryStack = _sessionMemory.GetFrom(LOCATION_NAME) as Stack<BreadCrumb>;
+                return memoryStack;
             }
 
             return null;
@@ -137,14 +147,10 @@ namespace BreadCrumbsLibraryNS.Programs
         {
             if (_memory.IsNull())
                 return;
-            _cache.ClearFor(LOCATION_NAME);
-            _cache.Add(LOCATION_NAME, _breadCrumbStack);
+            _sessionMemory.ClearFor(LOCATION_NAME);
+            _sessionMemory.Add(LOCATION_NAME, _breadCrumbStack);
         }
 
-        //private void ClearMemory()
-        //{
-        //    _cache.Clear();
-        //}
 
 
         public string a(string url, string classString, string linkName)
@@ -167,7 +173,7 @@ namespace BreadCrumbsLibraryNS.Programs
 
         public string a(BreadCrumb breadCrumb)
         {
-            string s = a(breadCrumb.CurrentUrl, "", breadCrumb.LinkName);
+            string s = a(breadCrumb.Url, "", breadCrumb.LinkName);
             return s;
         }
 
@@ -203,27 +209,108 @@ namespace BreadCrumbsLibraryNS.Programs
 
             if (!breadCrumbLst.IsNullOrEmpty())
             {
+                string anchor = "";
+                string _li = "";
                 int startingPoint = (breadCrumbLst.Count() - 1);
-                for (int i = startingPoint; i >= 0; i--)
-                {
-                    string _li = "";
-                    if (i == 0) //this is the last one, not clickable
-                    {
-                        _li = liActive(breadCrumbLst[i].LinkName);
-                    }
-                    else
-                    {
-                        string anchor = a(breadCrumbLst[i]);
-                        _li = li(anchor);
-                    }
 
+                if (startingPoint > MAX_LENTH)
+                {
+                    anchor = a(breadCrumbLst[startingPoint]);
+                    _li = li(anchor);
+
+                    startingPoint = MAX_LENTH;
+                    sb.Append(_li);
+
+                    anchor = a("#", "", "..");
+                    _li = li(anchor);
                     sb.Append(_li);
                 }
+
+                    for (int i = startingPoint; i >= 0; i--)
+                    {
+                        _li = "";
+                        anchor = "";
+                        if (i == 0) //this is the last one, not clickable
+                        {
+                            _li = liActive(breadCrumbLst[i].LinkName);
+                        }
+                        else
+                        {
+                            anchor = a(breadCrumbLst[i]);
+                            _li = li(anchor);
+                        }
+
+                        sb.Append(_li);
+                    }
+
             }
 
             sb.Append(closeOl);
             return sb.ToString();
 
+        }
+
+        public string Url_Curr
+        {
+            get
+            {
+                if (BreadCrumbStack.Count == 0)
+                    return "";
+
+                return BreadCrumbStack.Peek().Url;
+            }
+        }
+        public string Url_CurrMinusOne
+        {
+            get
+            {
+                if (BreadCrumbStack.Count == 0)
+                    return "";
+
+                if (BreadCrumbStack.Count == 1)
+                    return ToArray()[0].Url;
+
+                return ToArray()[1].Url;
+            }
+        }
+        public string Url_CurrMinusTwo
+        {
+            get
+            {
+                if (BreadCrumbStack.Count == 0)
+                    return "";
+
+                if (BreadCrumbStack.Count == 1)
+                    return ToArray()[0].Url;
+
+
+                if (BreadCrumbStack.Count == 2)
+                    return ToArray()[1].Url;
+
+                return ToArray()[2].Url;
+            }
+        }
+
+        public string Url_CurrMinusThree
+        {
+            get
+            {
+                if (BreadCrumbStack.Count == 0)
+                    return "";
+
+                if (BreadCrumbStack.Count == 1)
+                    return ToArray()[0].Url;
+
+
+                if (BreadCrumbStack.Count == 2)
+                    return ToArray()[1].Url;
+
+
+                if (BreadCrumbStack.Count == 3)
+                    return ToArray()[2].Url;
+
+                return ToArray()[3].Url;
+            }
         }
 
         public string Render()

@@ -1,14 +1,12 @@
-﻿using System;
+﻿using AliKuli.Extentions;
+using InterfacesLibrary.SharedNS;
+using System;
+using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
-using AliKuli.Extentions;
-using DalLibrary.Interfaces;
-using ErrorHandlerLibrary.ExceptionsNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
 using UowLibrary.Abstract;
 using UowLibrary.Interface;
 using WebLibrary.Programs;
-using InterfacesLibrary.SharedNS;
 
 namespace UowLibrary
 {
@@ -36,17 +34,17 @@ namespace UowLibrary
             return selectList;
         }
 
-        public SelectList UsersSelectList()
-        {
-            SelectList selectList = getSelectListFromCache();
-            if (selectList.IsNull())
-            {
-                selectList = UserDal.SelectList();
-                storeIntoCache(selectList);
-            }
-            return selectList;
+        //public SelectList UsersSelectList()
+        //{
+        //    SelectList selectList = getSelectListFromCache();
+        //    if (selectList.IsNull())
+        //    {
+        //        selectList = _userBiz.SelectList();
+        //        storeIntoCache(selectList);
+        //    }
+        //    return selectList;
 
-        }
+        //}
 
         public abstract string SelectListCacheKey { get; }
 
@@ -74,5 +72,9 @@ namespace UowLibrary
             throw new NotImplementedException();
         }
 
+        public SelectList SelectList_Engine(IQueryable<TEntity> data)
+        {
+            return Dal.SelectList_Engine(data);
+        }
     }
 }

@@ -9,45 +9,39 @@ using AliKuli.Extentions;
 using UowLibrary;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using BreadCrumbsLibraryNS.Programs;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
+using ErrorHandlerLibrary;
 
 namespace MarketPlace.Web6.Controllers
 {
-    public class FileDocsController : EntityAbstractController<FileDoc>
+    public partial class FileDocsController : EntityAbstractController<FileDoc>
     {
         FileDocBiz _fileDocBiz;
-        UserBiz _userBiz;
 
-        public FileDocsController(FileDocBiz FileDocsBiz, IErrorSet errorSet, UserBiz userBiz, BreadCrumbManager breadCrumbManager)
-            : base(FileDocsBiz, errorSet, userBiz, breadCrumbManager)
+        public FileDocsController(FileDocBiz biz, BreadCrumbManager bcm, IErrorSet err)
+            : base(biz, bcm, err) 
         {
-            _fileDocBiz = FileDocsBiz;
-            _userBiz = userBiz;
+            _fileDocBiz = biz;
+            
         }
 
 
         public override System.Web.Mvc.RedirectToRouteResult Event_UpdateCreateRedicrectToAction(ControllerCreateEditParameter parm)
         {
-            return RedirectToAction("Index", new { selectedId = parm.Entity.Id.ToString(), sortBy = SortOrderENUM.Item2_Dsc });
+//            return RedirectToAction("Index", new { selectedId = parm.Entity.Id.ToString(), sortBy = SortOrderENUM.Item2_Dsc });
+            throw new NotImplementedException();
 
         }
 
-        //public override void Event_LoadUserIntoEntity(FileDoc entity)
-        //{
-        //    if (entity.UserId.IsNullOrWhiteSpace())
-        //    {
-        //        ErrorsGlobal.Add("The Owner is required. The Id is missing.", MethodBase.GetCurrentMethod());
-        //        throw new Exception(ErrorsGlobal.ToString());
-        //    }
 
-        //    entity.User = _userBiz.Find(entity.UserId);
-
-        //    if (entity.User.IsNull())
-        //    {
-        //        ErrorsGlobal.Add("The User was not found.", MethodBase.GetCurrentMethod());
-        //        throw new Exception(ErrorsGlobal.ToString());
-        //    }
-
-        //}
+        public FileDocBiz FileDocBiz
+        {
+            get
+            {
+                return _fileDocBiz;
+            }
+        }
 
 
     }

@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UowLibrary</RootNamespace>
     <AssemblyName>UowLibrary</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -145,14 +145,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="0 BusinessLayer\EntityFramework Tools.cs" />
+    <Compile Include="0 BusinessLayer\CreateControllerCreateEditParameter.cs" />
     <Compile Include="0 BusinessLayer\HasUploadsProperties.cs" />
     <Compile Include="0 BusinessLayer\Get.cs" />
     <Compile Include="0 BusinessLayer\File Tools.cs" />
     <Compile Include="0 BusinessLayer\Initialize Admin.cs" />
     <Compile Include="0 BusinessLayer\Factory.cs" />
     <Compile Include="0 BusinessLayer\Initialization -LockEdit.cs" />
-    <Compile Include="0 BusinessLayer\Index -Index Items.cs" />
-    <Compile Include="0 BusinessLayer\Menu.cs" />
+    <Compile Include="0 BusinessLayer\Event_ModifyIndexItem.cs" />
     <Compile Include="Abstract\Memory.cs" />
     <Compile Include="Abstract\Errors.cs" />
     <Compile Include="Abstract\AbstractBiz.cs" />
@@ -164,37 +164,44 @@
     <Compile Include="0 BusinessLayer\SelectList.cs" />
     <Compile Include="0 BusinessLayer\CRUD.cs" />
     <Compile Include="0 BusinessLayer\Index.cs" />
-    <Compile Include="Abstract\User.cs" />
     <Compile Include="AKATest.cs" />
+    <Compile Include="BizClasses.cs" />
     <Compile Include="CounterNS\Index.cs" />
     <Compile Include="CounterNS\Initialization.cs" />
     <Compile Include="CounterNS\CounterBiz.cs" />
     <Compile Include="CounterNS\SelectList.cs" />
     <Compile Include="DiscountNS\SelectList.cs" />
     <Compile Include="DiscountNS\Index.cs" />
+    <Compile Include="FileDocsNS\Factory.cs" />
     <Compile Include="FileDocsNS\Upload.cs" />
-    <Compile Include="FileDocsNS\GetNextFileNumber.cs" />
-    <Compile Include="FileDocsNS\Bussiness Rule.cs" />
     <Compile Include="FileDocsNS\Find.cs" />
     <Compile Include="FileDocsNS\Fix.cs" />
-    <Compile Include="FileDocsNS\Index - Controller.cs" />
     <Compile Include="FileDocsNS\Index.cs" />
     <Compile Include="FileDocsNS\Initialization.cs" />
     <Compile Include="FileDocsNS\SelectList.cs" />
     <Compile Include="FileDocsNS\FileDocBiz.cs" />
+    <Compile Include="GlobalCommentsNS\BusinessRules.cs" />
+    <Compile Include="GlobalCommentsNS\Add.cs" />
+    <Compile Include="GlobalCommentsNS\Index.cs" />
+    <Compile Include="GlobalCommentsNS\Initialization.cs" />
+    <Compile Include="GlobalCommentsNS\GlobalCommentBiz.cs" />
+    <Compile Include="GlobalCommentsNS\SelectList.cs" />
     <Compile Include="LanguagesNS\SelectList.cs" />
     <Compile Include="LanguagesNS\Fix.cs" />
     <Compile Include="LanguagesNS\Index.cs" />
+    <Compile Include="LikeUnLikeNS\Count.cs" />
+    <Compile Include="LikeUnLikeNS\Add.cs" />
+    <Compile Include="LikeUnLikeNS\LikeUnlikeBiz.cs" />
     <Compile Include="MenuNS\MenuBizNS\Event_ModifyIndexList.cs" />
     <Compile Include="MenuNS\MenuBizNS\BusinessRules.cs" />
     <Compile Include="MenuNS\MenuBizNS\GetListForIndexAsync.cs" />
     <Compile Include="MenuNS\MenuBizNS\Event_ModifyIndexItem.cs" />
     <Compile Include="MenuNS\MenuBizNS\Fix.cs" />
     <Compile Include="MenuNS\MenuBizNS\SelectList.cs" />
-    <Compile Include="MenuNS\MenuBizNS\Index.cs" />
     <Compile Include="MenuNS\MenuBizNS\MenuBiz.cs" />
     <Compile Include="MenuNS\MenuPathMainNS\Fix.cs" />
     <Compile Include="MenuNS\MenuPathMainNS\FindAllMenuPathsForMenu1.cs" />
+    <Compile Include="MyWorkClassesNS\MyWorkClasses.cs" />
     <Compile Include="PaymentsNS\Methods\SelectList.cs" />
     <Compile Include="PaymentsNS\Methods\Index.cs" />
     <Compile Include="PaymentsNS\Terms\Index.cs" />
@@ -245,6 +252,7 @@
     <Compile Include="MenuNS\MenuPathMainNS\MenuPathMainBiz.cs" />
     <Compile Include="MenuNS\MenuPathMainNS\SelectList.cs" />
     <Compile Include="MenuNS\MenuPathMainNS\BusinessRule.cs" />
+    <Compile Include="ProductNS\BizClassesProduct.cs" />
     <Compile Include="ProductNS\ProductIdentifierNS\Index.cs" />
     <Compile Include="ProductNS\ProductIdentifierNS\HandleRelatedRecord.cs" />
     <Compile Include="ProductNS\ProductIdentifierNS\SelectList.cs" />
@@ -296,21 +304,23 @@
     <Compile Include="ProductNS\UomWeightNS\Uploads.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RightsNS\DefaultRights.cs" />
+    <Compile Include="RightsNS\Fix.cs" />
+    <Compile Include="RightsNS\Event_ModifyIndexList.cs" />
+    <Compile Include="RightsNS\SelectList.cs" />
     <Compile Include="RightsNS\RightBiz.cs" />
     <Compile Include="Interface\IUpload.cs" />
     <Compile Include="MenuNS\MenuPath1NS\Uploads.cs" />
-    <Compile Include="MenuNS\MenuPath1NS\Index.cs" />
+    <Compile Include="MenuNS\MenuPath1NS\Event_ModifyIndexList.cs" />
     <Compile Include="MenuNS\MenuPath1NS\SelectList.cs" />
     <Compile Include="MenuNS\MenuPath1NS\Initialization.cs" />
     <Compile Include="MenuNS\MenuPath1NS\MenuPath1Biz.cs" />
     <Compile Include="MenuNS\MenuPath2NS\Uploads.cs" />
-    <Compile Include="MenuNS\MenuPath2NS\Index.cs" />
+    <Compile Include="MenuNS\MenuPath2NS\Event_ModifyIndexList.cs" />
     <Compile Include="MenuNS\MenuPath2NS\Initialization.cs" />
     <Compile Include="MenuNS\MenuPath2NS\SelectList.cs" />
     <Compile Include="MenuNS\MenuPath2NS\MenuPath2Biz.cs" />
     <Compile Include="MenuNS\MenuPath3NS\Uploads.cs" />
-    <Compile Include="MenuNS\MenuPath3NS\Index.cs" />
+    <Compile Include="MenuNS\MenuPath3NS\Event_ModifyIndexList.cs" />
     <Compile Include="MenuNS\MenuPath3NS\Initialization.cs" />
     <Compile Include="MenuNS\MenuPath3NS\SelectList.cs" />
     <Compile Include="MenuNS\MenuPath3NS\MenuPath3Biz.cs" />
@@ -325,11 +335,16 @@
     <Compile Include="PlayersNS\UserNS\UserBiz.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UserAndRightsAndUploadsBizNS\UserAndRightsAndUploadsBiz.cs" />
     <Compile Include="VisitorLogs\VisitorLogBiz - Index.cs" />
     <Compile Include="VisitorLogs\VisitorLogBiz - SelectList.cs" />
     <Compile Include="VisitorLogs\VisitorLogBiz.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BreadCrumbsLibrary\BreadCrumbsLibrary\BreadCrumbsLibrary.csproj">
+      <Project>{93822697-db5f-4569-b425-1f0ca6bb3ff4}</Project>
+      <Name>BreadCrumbsLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ConfigManagerLibrary\ConfigManagerLibrary\ConfigManagerLibrary.csproj">
       <Project>{d8cdc81c-a8af-4315-8d06-c35053723927}</Project>
       <Name>ConfigManagerLibrary</Name>
@@ -369,6 +384,10 @@
     <ProjectReference Include="..\Models\ModelsClassLibrary\ModelsClassLibrary\ModelsClassLibrary.csproj">
       <Project>{d136798c-8556-4423-9c6c-e3384e99cd26}</Project>
       <Name>ModelsClassLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhoneUtilitiesLibrary\PhoneUtilitiesLibrary\PhoneUtilitiesLibrary.csproj">
+      <Project>{604c1d25-5b22-48ad-a325-6c682288857d}</Project>
+      <Name>PhoneUtilitiesLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\UploadingLibrary\UploadingLibrary.csproj">
       <Project>{58e68141-bb0a-4c37-a1a3-84edb24b2497}</Project>

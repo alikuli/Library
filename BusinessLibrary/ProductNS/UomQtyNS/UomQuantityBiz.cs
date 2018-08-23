@@ -1,9 +1,14 @@
 ﻿using AliKuli.UtilitiesNS;
 using ApplicationDbContextNS;
+using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.Interfaces;
 using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
+using ModelsClassLibrary.RightsNS;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.StateNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -14,8 +19,8 @@ namespace UowLibrary
     public partial class UomQuantityBiz : BusinessLayer<UomQty>
     {
 
-        public UomQuantityBiz(IRepositry<ApplicationUser> userDal, IRepositry<UomQty> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
-            : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
+        public UomQuantityBiz(IRepositry<UomQty> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
+            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
         {
 
         }

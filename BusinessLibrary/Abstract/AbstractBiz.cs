@@ -5,6 +5,11 @@ using WebLibrary.Programs;
 using AliKuli.Extentions;
 using System.Reflection;
 using Microsoft.AspNet.Identity;
+using UowLibrary.MyWorkClassesNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
+using BreadCrumbsLibraryNS.Programs;
+using UowLibrary.PlayersNS;
+using UowLibrary.UploadFileNS;
 
 namespace UowLibrary.Abstract
 {
@@ -15,57 +20,101 @@ namespace UowLibrary.Abstract
     /// </summary>
     public abstract partial class AbstractBiz : IBiz
     {
+        private readonly IMemoryMain _imemoryMain;
+        MyWorkClasses _myWorkClasses;
 
-
-
-        public AbstractBiz(IMemoryMain memoryMain, IErrorSet errorsGlobal)
+        public AbstractBiz(MyWorkClasses myWorkClasses)
         {
             //Get parameters
-            _imemoryMain = memoryMain;
-            _ierrorsGlobal = errorsGlobal;
+            _imemoryMain = myWorkClasses.MemoryMain;
+            _ierrorsGlobal = myWorkClasses.ErrorSet;
+            _myWorkClasses = myWorkClasses;
             _ierrorsGlobal.SetLibAndClass("Uow Library", "UOW_Abstract");
 
+
         }
 
-
-        /// <summary>
-        /// This only works in an Internet enviroment.
-        /// </summary>
-        private string _userIdBiz;
-        public string UserIdBiz
+        string _userId;
+        string _userName;
+        public string UserId
         {
             get
             {
-                return _userIdBiz ?? (_userIdBiz = HttpContextBaseBiz.ApplicationInstance.Context.User.Identity.GetUserId());
+                _userId.IsNullOrWhiteSpaceThrowException("Programming Error. UserId in Business Abstract Layer not set.");
+                return _userId;
+            }
+            set
+            {
+                _userId = value;
             }
         }
-
-
-        private string _userNameBiz;
-        public string UserNameBiz
+        public string UserName
         {
             get
             {
-                return _userNameBiz ?? (_userNameBiz = HttpContextBaseBiz.ApplicationInstance.Context.User.Identity.GetUserName());
+                //_userName.IsNullOrWhiteSpaceThrowException("Programming Error. User Name in Business Abstract Layer not set.");
+                return _userName;
             }
-        }
-
-
-        protected string GetUserIdOrThrowErrorIfNull()
-        {
-            if (UserIdBiz.IsNullOrWhiteSpace())
+            set
             {
-                ErrorsGlobal.Add("Unable to create a file. User is not logged in.", MethodBase.GetCurrentMethod().Name);
-                throw new Exception(ErrorsGlobal.ToString());
+                _userName = value;
             }
-            string userId = UserIdBiz;
-            return userId;
         }
+
+        //public UploadedFileBiz UploadedFileBiz
+        //{
+        //    get
+        //    {
+        //        return _uploadedFileBiz;
+        //    }
+        //}
+
+        //public UserBiz UserBiz
+        //{
+        //    get
+        //    {
+        //        return _rightBiz.UserBiz;
+        //    }
+        //}
+
+        //public RightBiz RightBiz
+        //{
+        //    get
+        //    {
+        //        return _rightBiz;
+        //    }
+        //}
+
+        public MyWorkClasses MyWorkClasses
+        {
+            get
+            {
+                return _myWorkClasses;
+            }
+        }
+
+
+        //public CountryBiz CountryBiz
+        //{
+        //    get
+        //    {
+        //        return RightBiz.UserBiz.CountryBiz;
+        //    }
+        //}
+        //public BreadCrumbManager BreadCrumbManager
+        //{
+        //    get
+        //    {
+        //        return MyWorkClasses.BreadCrumbManager;
+        //    }
+        //}
 
         public virtual void EncryptDecrypt()
         {
             throw new NotImplementedException();
         }
+
+
 
     }
 

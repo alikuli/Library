@@ -2,13 +2,14 @@
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 
 namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 {
-    public class IndexDefault : MenuManagerAbstract
+    public class IndexDefault : MenuStateAbstract
     {
-        public IndexDefault(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum)
-            : base(menuPathMain, product, productChild, menuEnum) { }
+        public IndexDefault(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameter likeUnlikesCounter)
+            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
 
         //public override string EditLink_Id
         //{
@@ -39,7 +40,7 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 
         public override MenuENUM BackLink_MenuEnum
         {
-            get { return MenuENUM.unknown; }
+            get { return MenuENUM.IndexDefault; }
         }
 
         public override bool ShowCreateButton
@@ -82,5 +83,19 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
             get { return ""; }
         }
 
+        public override string MenuDisplayName
+        {
+            get
+            {
+                return "Home " + base.MenuDisplayName;
+            }
+        }
+        public override bool IsMenu
+        {
+            get
+            {
+                return false;
+            }
+        }
     }
 }

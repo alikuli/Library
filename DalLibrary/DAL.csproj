@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DAL</RootNamespace>
     <AssemblyName>DAL</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -103,8 +103,8 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PhoneNumbers, Version=8.8.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\libphonenumber-csharp.8.8.3\lib\net40\PhoneNumbers.dll</HintPath>
+    <Reference Include="PhoneNumbers, Version=8.9.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\MarketPlace.Web6\packages\libphonenumber-csharp.8.9.10\lib\net40\PhoneNumbers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -159,18 +159,15 @@
     <Compile Include="DalNS\Repo\ErrorCheck.cs" />
     <Compile Include="DalNS\Repo\Get.cs" />
     <Compile Include="DalNS\Repo\Fix.cs" />
-    <Compile Include="DalNS\Repo\Rights - Default Rights.cs" />
     <Compile Include="DalNS\Repo\Selectlist.cs" />
     <Compile Include="DalNS\Repo\Save.cs" />
     <Compile Include="DalNS\Repo\Delete.cs" />
-    <Compile Include="DalNS\Repo\Rights.cs" />
     <Compile Include="DalNS\Repo\Update.cs" />
     <Compile Include="DalNS\Repo\Create.cs" />
     <Compile Include="DalNS\Repo\Find.cs" />
     <Compile Include="DalNS\Repo\EntityFramework.cs" />
     <Compile Include="DalNS\Repo\Repositry.cs" />
     <Compile Include="DalNS\Misc\UploadDAL.cs" />
-    <Compile Include="DalNS\UserDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -205,10 +202,6 @@
     <ProjectReference Include="..\RandomNumberGeneratorLibrary\RandomNumberGeneratorLibrary\RandomNumberGeneratorLibrary.csproj">
       <Project>{b515f145-b58b-4e4f-9462-b140ceeb9061}</Project>
       <Name>RandomNumberGeneratorLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WebLibrary\WebLibrary.csproj">
-      <Project>{74ab826c-5db4-4291-9778-c6307deff24b}</Project>
-      <Name>WebLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\DbContextLib\DbContextLib.csproj">
       <Project>{3757b5f3-0c88-4632-8a84-756732396d29}</Project>

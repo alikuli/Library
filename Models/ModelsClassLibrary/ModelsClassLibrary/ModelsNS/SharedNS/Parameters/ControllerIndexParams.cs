@@ -1,6 +1,8 @@
 ﻿using AliKuli.Extentions;
+using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using System.ComponentModel.DataAnnotations.Schema;
 using UserModels;
 
@@ -29,10 +31,13 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             string logoAddress,
             ICommonWithId entity,
             ICommonWithId dudEntity,
-            ApplicationUser user,
+            string userId,
+            string userName,
             bool isUserAdmin,
-            string returnUrl,
-            ActionNameENUM actionNameEnum)
+            bool isMenu,
+            BreadCrumbManager breadCrumbManager,
+            ActionNameENUM actionNameEnum,
+            LikeUnlikeParameter likesCounter)
         {
             Id = id;
             SearchFor = searchFor;
@@ -40,13 +45,24 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             SelectedId = selectedId;
             Entity = entity;
             SortBy = sortBy;
-            Menu = new MenuParameters(menuEnum, id, returnUrl);
+            Menu = new MenuParameters(menuEnum, id);
             LogoAddress = logoAddress;
-            User = user;
+            UserName = userName;
+            UserId = userId;
+            //User = user;
             _isUserAdmin = isUserAdmin;
             ActionNameEnum = actionNameEnum;
             DudEntity = dudEntity;
+            BreadCrumbManager = breadCrumbManager;
+            LikeUnlikeCounter = likesCounter; 
+            IsMenu = isMenu;
         }
+
+        /// <summary>
+        /// If this is true then Menu features will work in the View: _IndexMiddlePart - TiledPictures
+        /// </summary>
+        public bool IsMenu { get; set; }
+        public BreadCrumbManager BreadCrumbManager { get; set; }
         public ActionNameENUM ActionNameEnum { get; set; }
         public bool IsAndForSearch { get; set; }
         public ICommonWithId Entity { get; set; }
@@ -60,20 +76,15 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         /// </summary>
         public string Id { get; set; }
         public string LogoAddress { get; set; }
-        public string UserName
-        {
-            get
-            {
-                if (User.IsNull())
-                    return "";
-                return User.UserName;
-            }
-        }
-        public ApplicationUser User { get; set; }
+        public string UserName { get; set; }
+        public string UserId { get; set; }
+
+        //public ApplicationUser User { get; set; }
 
         public bool UserIsAdmin { get { return _isUserAdmin; } }
         //public string ReturnUrl { get; set; }
         public MenuParameters Menu { get; set; }
+        public LikeUnlikeParameter LikeUnlikeCounter { get; set; }
 
     }
 }

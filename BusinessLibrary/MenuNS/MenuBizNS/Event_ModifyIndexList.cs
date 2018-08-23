@@ -120,7 +120,6 @@ namespace UowLibrary.MenuNS
                     break;
 
                 case EnumLibrary.EnumNS.MenuENUM.IndexMenuPath1:
-                case EnumLibrary.EnumNS.MenuENUM.unknown:
                 case EnumLibrary.EnumNS.MenuENUM.EditMenuPath1:
                 case EnumLibrary.EnumNS.MenuENUM.EditMenuPath2:
                 case EnumLibrary.EnumNS.MenuENUM.EditMenuPath3:
@@ -137,7 +136,8 @@ namespace UowLibrary.MenuNS
                     break;
             }
 
-            MenuManager mm = new MenuManager(mpm, p, pc, parm.Menu.MenuEnum);
+            MenuManager mm = new MenuManager(mpm, p, pc, parm.Menu.MenuEnum, parm.BreadCrumbManager, parm.LikeUnlikeCounter);
+            mm.BreadCrumbManager = parm.BreadCrumbManager;
 
             return mm as IMenuManager;
 

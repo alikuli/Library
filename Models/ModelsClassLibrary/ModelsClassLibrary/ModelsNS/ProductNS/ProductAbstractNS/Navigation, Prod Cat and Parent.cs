@@ -1,4 +1,5 @@
 ﻿using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,6 +27,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         [Display(Name = "Parent")]
         public virtual Product Parent { get; set; }
+        public virtual ICollection<LikeUnlike> LikeUnlikes { get; set; }
 
 
 

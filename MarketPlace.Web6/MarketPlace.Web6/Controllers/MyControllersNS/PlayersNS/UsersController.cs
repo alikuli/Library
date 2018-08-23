@@ -1,10 +1,13 @@
 ﻿using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
+using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using UowLibrary;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.StateNS;
 using UserModels;
 
@@ -14,8 +17,8 @@ namespace MarketPlace.Web6.Controllers
     {
 
         StateBiz _stateBiz;
-        public UsersController(UserBiz userBiz, IErrorSet errorSet, StateBiz stateBiz, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
-            : base(userBiz, errorSet, userbiz, breadCrumbManager)
+        public UsersController(StateBiz stateBiz, UserBiz userBiz, BreadCrumbManager bcm, IErrorSet err)
+            : base(userBiz, bcm, err) 
         {
             _stateBiz =stateBiz;
         }

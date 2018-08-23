@@ -1,14 +1,17 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.UtilitiesNS;
 using ApplicationDbContextNS;
-using DalLibrary.DalNS;
+using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.Interfaces;
-using DalNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.DeliveryMethodNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.RightsNS;
 using ModelsClassLibrary.ViewModels;
 using System;
 using System.Reflection;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
 using WebLibrary.Programs;
@@ -17,8 +20,8 @@ namespace UowLibrary.PaymentTermNS
 {
     public partial class PaymentTermBiz : BusinessLayer<PaymentTerm>
     {
-        public PaymentTermBiz(IRepositry<ApplicationUser> userDal, IRepositry<PaymentTerm> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
-            : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
+        public PaymentTermBiz(IRepositry<PaymentTerm> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
+            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
         {
 
         }

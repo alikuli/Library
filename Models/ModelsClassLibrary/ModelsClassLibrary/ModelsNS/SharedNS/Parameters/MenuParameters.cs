@@ -8,10 +8,9 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public MenuParameters()
         {
         }
-        public MenuParameters(MenuENUM menuEnum, string id, string returnUrl)
+        public MenuParameters(MenuENUM menuEnum, string id)
         {
             MenuEnum = menuEnum;
-            ReturnUrl = returnUrl;
             Id = id;
         }
 
@@ -23,7 +22,18 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         /// </summary>
         public string Id { get; set; }
         public MenuENUM MenuEnum { get; set; }
-        public string ReturnUrl { get; set; }
+
+        //public string ReturnUrl //This is now depreciated. Use the BreadCrumbManager
+        //{
+        //    get
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //    set
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
 
         public string MenuPathMainId
         {
@@ -38,7 +48,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
                     case EnumLibrary.EnumNS.MenuENUM.IndexMenuPath1:
                     case EnumLibrary.EnumNS.MenuENUM.IndexMenuProductChild:
-                    case EnumLibrary.EnumNS.MenuENUM.unknown:
                     case EnumLibrary.EnumNS.MenuENUM.EditMenuPath1:
                     case EnumLibrary.EnumNS.MenuENUM.EditMenuPath2:
                     case EnumLibrary.EnumNS.MenuENUM.EditMenuPath3:
@@ -64,23 +73,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
                 {
                     case EnumLibrary.EnumNS.MenuENUM.IndexMenuProductChild:
                         return Id;
-                    case EnumLibrary.EnumNS.MenuENUM.IndexMenuProduct:
-                    case EnumLibrary.EnumNS.MenuENUM.IndexMenuPath1:
-                    case EnumLibrary.EnumNS.MenuENUM.IndexMenuPath2:
-                    case EnumLibrary.EnumNS.MenuENUM.IndexMenuPath3:
-                    case EnumLibrary.EnumNS.MenuENUM.unknown:
-                    case EnumLibrary.EnumNS.MenuENUM.EditMenuPath1:
-                    case EnumLibrary.EnumNS.MenuENUM.EditMenuPath2:
-                    case EnumLibrary.EnumNS.MenuENUM.EditMenuPath3:
-                    case EnumLibrary.EnumNS.MenuENUM.EditMenuPathMain:
-                    case EnumLibrary.EnumNS.MenuENUM.EditMenuProduct:
-                    case EnumLibrary.EnumNS.MenuENUM.EditMenuProductChild:
-                    case EnumLibrary.EnumNS.MenuENUM.CreateMenuPath1:
-                    case EnumLibrary.EnumNS.MenuENUM.CreateMenuPath2:
-                    case EnumLibrary.EnumNS.MenuENUM.CreateMenuPath3:
-                    case EnumLibrary.EnumNS.MenuENUM.CreateMenuPathMenuPathMain:
-                    case EnumLibrary.EnumNS.MenuENUM.CreateMenuProduct:
-                    case EnumLibrary.EnumNS.MenuENUM.CreateMenuProductChild:
                     default:
                         return "";
                 }
@@ -94,23 +86,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
                 {
                     case EnumLibrary.EnumNS.MenuENUM.IndexMenuProductChild:
                         return Id;
-                    case EnumLibrary.EnumNS.MenuENUM.IndexMenuPath1:
-                    case EnumLibrary.EnumNS.MenuENUM.IndexMenuPath2:
-                    case EnumLibrary.EnumNS.MenuENUM.IndexMenuPath3:
-                    case EnumLibrary.EnumNS.MenuENUM.IndexMenuProduct:
-                    case EnumLibrary.EnumNS.MenuENUM.unknown:
-                    case EnumLibrary.EnumNS.MenuENUM.EditMenuPath1:
-                    case EnumLibrary.EnumNS.MenuENUM.EditMenuPath2:
-                    case EnumLibrary.EnumNS.MenuENUM.EditMenuPath3:
-                    case EnumLibrary.EnumNS.MenuENUM.EditMenuPathMain:
-                    case EnumLibrary.EnumNS.MenuENUM.EditMenuProduct:
-                    case EnumLibrary.EnumNS.MenuENUM.EditMenuProductChild:
-                    case EnumLibrary.EnumNS.MenuENUM.CreateMenuPath1:
-                    case EnumLibrary.EnumNS.MenuENUM.CreateMenuPath2:
-                    case EnumLibrary.EnumNS.MenuENUM.CreateMenuPath3:
-                    case EnumLibrary.EnumNS.MenuENUM.CreateMenuPathMenuPathMain:
-                    case EnumLibrary.EnumNS.MenuENUM.CreateMenuProduct:
-                    case EnumLibrary.EnumNS.MenuENUM.CreateMenuProductChild:
                     default:
                         return "";
                 }

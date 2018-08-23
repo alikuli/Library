@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EnumLibrary</RootNamespace>
     <AssemblyName>EnumLibrary</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -98,7 +98,6 @@
     <Compile Include="EnumNS\CommonSortingENUM.cs" />
     <Compile Include="EnumNS\DocumentTypeENUM.cs" />
     <Compile Include="EnumNS\FileUploadTypeEnum.cs" />
-    <Compile Include="EnumNS\MenuLevelENUM.cs" />
     <Compile Include="EnumNS\PaymentTermsENUM.cs" />
     <Compile Include="EnumNS\MenuPathNS\MenuPath3ENUM.cs" />
     <Compile Include="EnumNS\Serviceman\BoardingENUM.cs" />

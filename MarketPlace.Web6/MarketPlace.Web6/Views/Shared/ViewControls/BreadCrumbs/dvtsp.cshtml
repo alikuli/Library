@@ -1,0 +1,954 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - My ASP.NET Application</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-grid.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-reboot.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="/Content/site.css" rel="stylesheet" />
+    <link href="/Content/PrintStyleSheet.css" rel="stylesheet" />
+
+    <script src="/Scripts/modernizr-2.8.3.js"></script>
+
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+    <style>
+        /* CSS used here will be applied after bootstrap.css */
+
+        body {
+            padding-top: 50px;
+        }
+
+        .thumbnail {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .caption {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(90, 90, 90, 0.75);
+            width: 100%;
+            height: 100%;
+            padding: 2%;
+            display: none;
+            text-align: left;
+            font-size: 7pt;
+            color: #fff !important;
+            z-index: 2;
+        }
+    </style>
+
+
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-inverse navbar-dark">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+
+            <div class="form-inline my-2 my-lg-0">
+                <form action="/Account/LogOff" class="navbar-right" id="logoutForm" method="post">
+                    <input name="__RequestVerificationToken" type="hidden" value="RJUfAqxNqnGyoUfgM2YQuBQ8MWprjYBn33Of3IldWWDPM-D2eNQ2V-TjFWqjsHk8vyVggZbFXewDtQjsvPfKXT4qDFLZbWEeor9hrdH-ETsfNNHLIm5nDI1B0LlJVivZKaK3g1QtO-8cwqgdStlC5g2" />        <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a class="nav-link" href="/Manage" id="helloLink" title="Manage">Hello Admin!</a>
+                        </li>
+
+                        <li><a id="loginOutId" class="nav-link" href="#" onclick="LogOut(this,'/Account/LogOff', document.getElementById('helloLink'));">Log off</a></li>
+                    </ul>
+                </form>
+                <script>
+
+                </script>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+    <div class="container body-content">
+
+        <input data-val="true" data-val-required="The MenuEnum field is required." id="MenuManager_MenuState_MenuEnum" name="MenuManager.MenuState.MenuEnum" type="hidden" value="IndexMenuPath1" />
+
+
+
+
+
+
+
+
+        <p>
+
+        </p>
+
+
+
+
+
+
+
+        <div class="row">
+            <div class="col-xs-6 col-lg-6">
+
+
+
+
+
+                <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item active" aria-current="page">Home</li></ol></nav>
+
+
+
+
+            </div>
+
+            <div class="col-xs-6 col-lg-6">
+                <h4 class="pull-right">
+                    5 Menu Path Mains
+                </h4>
+
+            </div>
+
+        </div>
+
+
+        <div>
+            <div class="panel-group ">
+                <div class="panel panel-info">
+                    <div class="panel-heading ">
+                        <div class="panel-title">
+
+                            <div class="row">
+                                <div class="col-xs-12 col-lg-3 ">
+                                    <a data-toggle="collapse" href="#collapse1">
+                                        <strong>
+                                            <small>Sorted By Name Asc</small>
+                                        </strong>
+                                    </a>
+
+                                </div>
+                                <div class="col-xs-12 col-lg-4 ">
+                                    <div>
+                                        <form action="/Menus" method="post">
+                                            <span>
+                                                <input id="searchFor" name="searchFor" placeholder="Search/Find" size="12" type="text" value="" />
+                                                <button type="submit" class="btn btn-info btn-sm">
+                                                    <span class="glyphicon glyphicon-search"></span>
+                                                </button>
+
+                                            </span>
+                                            <br />
+                                            <div class="col-xs-4">
+                                                <input checked="checked" data-val="true" data-val-required="The IsAndForSearch field is required." id="IsAnd" name="isandForSearch" type="radio" value="And" />
+                                                <label for="IsAnd" data-toggle="tooltip" title="Use AND if you want both all the search words to be present"><span><span>And</span></span></label>
+
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <input id="IsOr" name="isandForSearch" type="radio" value="Or" />
+                                                <label for="IsOr" data-toggle="tooltip" title="Use OR if you want to find any occourance of any of the search words"><span><span>OR</span></span></label>
+                                            </div>
+                                        </form>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-xs-6 col-lg-2">
+                                    <div>
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="col-xs-6 col-lg-1 ">
+                                    <div>
+                                        <a class="btn btn-danger btn-sm" href="/Menus?sortBy=Item1_Asc&amp;print=True&amp;menuEnum=IndexMenuPath1" target="_blank">Print</a>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row ">
+                                <div class="container">
+
+
+
+
+                                    <div class="col-sm-2 ">
+                                        <a class="btn btn-primary" href="/Menus?sortBy=Item1_Asc&amp;menuEnum=IndexMenuPath1">By Name Asc</a> <br />
+                                        <a class="btn btn-danger" href="/Menus?sortBy=Item1_Dsc&amp;print=False&amp;menuEnum=IndexMenuPath1">By Name Dsc</a>
+                                    </div>
+
+                                    <div class="col-sm-2 ">
+                                    </div>
+
+                                    <div class="col-sm-2 ">
+                                    </div>
+
+                                    <div class="col-sm-2  text-right">
+
+                                    </div>
+
+                                    <div class="row ">
+                                        <div class="col-sm-8">
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="">
+
+                <div>
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="container">
+                        <div class="row text-center text-lg-left akaFix">
+
+
+                            <div class="container">
+
+                                <div class="col-lg-3 col-md-4 col-xs-6 img-fluid img-thumbnail">
+                                    <a href="/Menus/index/c6ad688d-e2f2-423f-abdf-8d8a0cb1ff6c?menuEnum=IndexMenuPath2" title="Automobiles" class="d-block mb-4 h-100">
+                                        <div id=" mydiv" class="caption ">
+                                            <h4>Automobiles</h4>
+                                            <p class="">
+
+                                            </p>
+                                        </div>
+
+                                        <img src="/Content/Uploads/MenuPath1/636678734511520932.Jpg" alt="Automobiles" class="img-fluid img-thumbnail">
+
+                                    </a>
+
+                                    <div class="container   text-center">
+                                        <div class="row background-ltgrey">
+                                            <div class="text-center">
+
+                                                Automobiles
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <span class="">
+                                                <a class="btn btn-xs btn-warning far fa-hand-point-up" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510" title="Bid"> </a>
+                                            </span>
+
+                                            <span>
+                                                <a class="btn btn-xs btn-success aria-label fa fa-shopping-cart" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510"> </a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="like1" class="btn   btn-xs  btn-info aria-label far fa-smile" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=ce02dfbd-a45f-4126-920f-4894fbbc45b6&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=True')"></a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="unlike1" class="btn btn-xs btn-danger aria-label far fa-frown-open" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=ce02dfbd-a45f-4126-920f-4894fbbc45b6&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=False' )"></a>
+
+                                            </span>
+
+                                            <span>
+                                                <a data-toggle="modal" href="#modalBoxId" id="comment1" data-url="/GlobalComments/AddComment?menuPath1Id=ce02dfbd-a45f-4126-920f-4894fbbc45b6&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510" class="btn btn-xs btn-primary aria-label far fa-comment" onclick="LoadDataUrlInComment(this, document.getElementById('commentSaveBtn')); "></a>
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="row ">
+                                            <span class="">
+                                                <a class="btn btn-xs btn-warning far fa-hand-point-up" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510" title="Bid"> </a>
+                                            </span>
+
+                                            <span>
+                                                <a class="btn btn-xs btn-success aria-label fa fa-shopping-cart" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510"> </a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="like1count" class=" btn   btn-xs  btn-default disabled noBorderButton" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=ce02dfbd-a45f-4126-920f-4894fbbc45b6&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=True')">+99</a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="unlike1" class="btn btn-xs btn-danger aria-label far fa-frown-open noBorderButton" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=ce02dfbd-a45f-4126-920f-4894fbbc45b6&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=False' )">98</a>
+
+                                            </span>
+
+                                            <span>
+                                                <a data-toggle="modal" href="#modalBoxId" id="comment1" data-url="/GlobalComments/AddComment?menuPath1Id=ce02dfbd-a45f-4126-920f-4894fbbc45b6&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510" class="btn btn-xs btn-primary aria-label far fa-comment" onclick="LoadDataUrlInComment(this, document.getElementById('commentSaveBtn')); "></a>
+                                            </span>
+
+                                        </div>
+
+
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+
+                                            <div class="row fontHeavy">
+
+                                                <div class="text-center">
+                                                    <a href="/MenuPath1s/Edit/ce02dfbd-a45f-4126-920f-4894fbbc45b6?returnurl=%2FMenus&amp;menuEnum=IndexMenuPath1&amp;menuPathMainId=c6ad688d-e2f2-423f-abdf-8d8a0cb1ff6c">Edit</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="container">
+
+                                <div class="col-lg-3 col-md-4 col-xs-6 img-fluid img-thumbnail">
+                                    <a href="/Menus/index/7dcc0c32-449f-4dbe-ba5a-00f3d7f4f3f9?menuEnum=IndexMenuPath2" title="Electronics" class="d-block mb-4 h-100">
+                                        <div id=" mydiv" class="caption ">
+                                            <h4>Electronics</h4>
+                                            <p class="">
+
+                                            </p>
+                                        </div>
+
+                                        <img src="/Content/Uploads/MenuPath1/636678734524261661.Jpg" alt="Electronics" class="img-fluid img-thumbnail">
+
+                                    </a>
+
+                                    <div class="container   text-center">
+                                        <div class="row background-ltgrey">
+                                            <div class="text-center">
+
+                                                Electronics
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <span class="">
+                                                <a class="btn btn-xs btn-warning far fa-hand-point-up" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510" title="Bid"> </a>
+                                            </span>
+
+                                            <span>
+                                                <a class="btn btn-xs btn-success aria-label fa fa-shopping-cart" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510"> </a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="like2" class="btn   btn-xs  btn-info aria-label far fa-smile" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=606c57a0-e50d-4fe0-a06a-3b19c68289ed&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=True')"></a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="unlike2" class="btn btn-xs btn-danger aria-label far fa-frown-open" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=606c57a0-e50d-4fe0-a06a-3b19c68289ed&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=False' )"></a>
+
+                                            </span>
+
+                                            <span>
+                                                <a data-toggle="modal" href="#modalBoxId" id="comment2" data-url="/GlobalComments/AddComment?menuPath1Id=606c57a0-e50d-4fe0-a06a-3b19c68289ed&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510" class="btn btn-xs btn-primary aria-label far fa-comment" onclick="LoadDataUrlInComment(this, document.getElementById('commentSaveBtn')); "></a>
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="row ">
+                                            <span class="">
+                                                <a class="btn btn-xs btn-warning far fa-hand-point-up" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510" title="Bid"> </a>
+                                            </span>
+
+                                            <span>
+                                                <a class="btn btn-xs btn-success aria-label fa fa-shopping-cart" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510"> </a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="like2count" class=" btn   btn-xs  btn-default disabled noBorderButton" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=606c57a0-e50d-4fe0-a06a-3b19c68289ed&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=True')">+99</a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="unlike2" class="btn btn-xs btn-danger aria-label far fa-frown-open noBorderButton" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=606c57a0-e50d-4fe0-a06a-3b19c68289ed&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=False' )">98</a>
+
+                                            </span>
+
+                                            <span>
+                                                <a data-toggle="modal" href="#modalBoxId" id="comment2" data-url="/GlobalComments/AddComment?menuPath1Id=606c57a0-e50d-4fe0-a06a-3b19c68289ed&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510" class="btn btn-xs btn-primary aria-label far fa-comment" onclick="LoadDataUrlInComment(this, document.getElementById('commentSaveBtn')); "></a>
+                                            </span>
+
+                                        </div>
+
+
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+
+                                            <div class="row fontHeavy">
+
+                                                <div class="text-center">
+                                                    <a href="/MenuPath1s/Edit/606c57a0-e50d-4fe0-a06a-3b19c68289ed?returnurl=%2FMenus&amp;menuEnum=IndexMenuPath1&amp;menuPathMainId=7dcc0c32-449f-4dbe-ba5a-00f3d7f4f3f9">Edit</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="container">
+
+                                <div class="col-lg-3 col-md-4 col-xs-6 img-fluid img-thumbnail">
+                                    <a href="/Menus/index/5c070847-e8a3-4d06-8e5b-1322b9478ee2?menuEnum=IndexMenuPath2" title="Foods" class="d-block mb-4 h-100">
+                                        <div id=" mydiv" class="caption ">
+                                            <h4>Foods</h4>
+                                            <p class="">
+
+                                            </p>
+                                        </div>
+
+                                        <img src="/Content/Uploads/MenuPath1/636678734528181885.Jpg" alt="Foods" class="img-fluid img-thumbnail">
+
+                                    </a>
+
+                                    <div class="container   text-center">
+                                        <div class="row background-ltgrey">
+                                            <div class="text-center">
+
+                                                Foods
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <span class="">
+                                                <a class="btn btn-xs btn-warning far fa-hand-point-up" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510" title="Bid"> </a>
+                                            </span>
+
+                                            <span>
+                                                <a class="btn btn-xs btn-success aria-label fa fa-shopping-cart" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510"> </a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="like3" class="btn   btn-xs  btn-info aria-label far fa-smile" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=f94f2b8a-e3f0-4bb1-82df-6a6ead780ac1&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=True')"></a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="unlike3" class="btn btn-xs btn-danger aria-label far fa-frown-open" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=f94f2b8a-e3f0-4bb1-82df-6a6ead780ac1&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=False' )"></a>
+
+                                            </span>
+
+                                            <span>
+                                                <a data-toggle="modal" href="#modalBoxId" id="comment3" data-url="/GlobalComments/AddComment?menuPath1Id=f94f2b8a-e3f0-4bb1-82df-6a6ead780ac1&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510" class="btn btn-xs btn-primary aria-label far fa-comment" onclick="LoadDataUrlInComment(this, document.getElementById('commentSaveBtn')); "></a>
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="row ">
+                                            <span class="">
+                                                <a class="btn btn-xs btn-warning far fa-hand-point-up" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510" title="Bid"> </a>
+                                            </span>
+
+                                            <span>
+                                                <a class="btn btn-xs btn-success aria-label fa fa-shopping-cart" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510"> </a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="like3count" class=" btn   btn-xs  btn-default disabled noBorderButton" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=f94f2b8a-e3f0-4bb1-82df-6a6ead780ac1&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=True')">+99</a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="unlike3" class="btn btn-xs btn-danger aria-label far fa-frown-open noBorderButton" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=f94f2b8a-e3f0-4bb1-82df-6a6ead780ac1&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=False' )">98</a>
+
+                                            </span>
+
+                                            <span>
+                                                <a data-toggle="modal" href="#modalBoxId" id="comment3" data-url="/GlobalComments/AddComment?menuPath1Id=f94f2b8a-e3f0-4bb1-82df-6a6ead780ac1&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510" class="btn btn-xs btn-primary aria-label far fa-comment" onclick="LoadDataUrlInComment(this, document.getElementById('commentSaveBtn')); "></a>
+                                            </span>
+
+                                        </div>
+
+
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+
+                                            <div class="row fontHeavy">
+
+                                                <div class="text-center">
+                                                    <a href="/MenuPath1s/Edit/f94f2b8a-e3f0-4bb1-82df-6a6ead780ac1?returnurl=%2FMenus&amp;menuEnum=IndexMenuPath1&amp;menuPathMainId=5c070847-e8a3-4d06-8e5b-1322b9478ee2">Edit</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="container">
+
+                                <div class="col-lg-3 col-md-4 col-xs-6 img-fluid img-thumbnail">
+                                    <a href="/Menus/index/9c1fd791-5bea-4fd5-b45c-6210943d8c4d?menuEnum=IndexMenuPath2" title="Mens Clothing" class="d-block mb-4 h-100">
+                                        <div id=" mydiv" class="caption ">
+                                            <h4>Mens Clothing</h4>
+                                            <p class="">
+
+                                            </p>
+                                        </div>
+
+                                        <img src="/Content/Uploads/MenuPath1/636678734516331207.Jpg" alt="Mens Clothing" class="img-fluid img-thumbnail">
+
+                                    </a>
+
+                                    <div class="container   text-center">
+                                        <div class="row background-ltgrey">
+                                            <div class="text-center">
+
+                                                Mens Clothing
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <span class="">
+                                                <a class="btn btn-xs btn-warning far fa-hand-point-up" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510" title="Bid"> </a>
+                                            </span>
+
+                                            <span>
+                                                <a class="btn btn-xs btn-success aria-label fa fa-shopping-cart" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510"> </a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="like4" class="btn   btn-xs  btn-info aria-label far fa-smile" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=cd6227e5-3b89-4cf6-b4b0-96382e9dfe85&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=True')"></a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="unlike4" class="btn btn-xs btn-danger aria-label far fa-frown-open" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=cd6227e5-3b89-4cf6-b4b0-96382e9dfe85&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=False' )"></a>
+
+                                            </span>
+
+                                            <span>
+                                                <a data-toggle="modal" href="#modalBoxId" id="comment4" data-url="/GlobalComments/AddComment?menuPath1Id=cd6227e5-3b89-4cf6-b4b0-96382e9dfe85&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510" class="btn btn-xs btn-primary aria-label far fa-comment" onclick="LoadDataUrlInComment(this, document.getElementById('commentSaveBtn')); "></a>
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="row ">
+                                            <span class="">
+                                                <a class="btn btn-xs btn-warning far fa-hand-point-up" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510" title="Bid"> </a>
+                                            </span>
+
+                                            <span>
+                                                <a class="btn btn-xs btn-success aria-label fa fa-shopping-cart" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510"> </a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="like4count" class=" btn   btn-xs  btn-default disabled noBorderButton" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=cd6227e5-3b89-4cf6-b4b0-96382e9dfe85&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=True')">+99</a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="unlike4" class="btn btn-xs btn-danger aria-label far fa-frown-open noBorderButton" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=cd6227e5-3b89-4cf6-b4b0-96382e9dfe85&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=False' )">98</a>
+
+                                            </span>
+
+                                            <span>
+                                                <a data-toggle="modal" href="#modalBoxId" id="comment4" data-url="/GlobalComments/AddComment?menuPath1Id=cd6227e5-3b89-4cf6-b4b0-96382e9dfe85&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510" class="btn btn-xs btn-primary aria-label far fa-comment" onclick="LoadDataUrlInComment(this, document.getElementById('commentSaveBtn')); "></a>
+                                            </span>
+
+                                        </div>
+
+
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+
+                                            <div class="row fontHeavy">
+
+                                                <div class="text-center">
+                                                    <a href="/MenuPath1s/Edit/cd6227e5-3b89-4cf6-b4b0-96382e9dfe85?returnurl=%2FMenus&amp;menuEnum=IndexMenuPath1&amp;menuPathMainId=9c1fd791-5bea-4fd5-b45c-6210943d8c4d">Edit</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="container">
+
+                                <div class="col-lg-3 col-md-4 col-xs-6 img-fluid img-thumbnail">
+                                    <a href="/Menus/index/7c3bce32-377e-4592-9a0e-28f130611de0?menuEnum=IndexMenuPath2" title="Womens Clothing" class="d-block mb-4 h-100">
+                                        <div id=" mydiv" class="caption ">
+                                            <h4>Womens Clothing</h4>
+                                            <p class="">
+
+                                            </p>
+                                        </div>
+
+                                        <img src="/Content/Uploads/MenuPath1/636678734520231430.Jpg" alt="Womens Clothing" class="img-fluid img-thumbnail">
+
+                                    </a>
+
+                                    <div class="container   text-center">
+                                        <div class="row background-ltgrey">
+                                            <div class="text-center">
+
+                                                Womens Clothing
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <span class="">
+                                                <a class="btn btn-xs btn-warning far fa-hand-point-up" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510" title="Bid"> </a>
+                                            </span>
+
+                                            <span>
+                                                <a class="btn btn-xs btn-success aria-label fa fa-shopping-cart" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510"> </a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="like5" class="btn   btn-xs  btn-info aria-label far fa-smile" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=7728330d-f1ba-40c9-9810-9089b302a177&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=True')"></a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="unlike5" class="btn btn-xs btn-danger aria-label far fa-frown-open" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=7728330d-f1ba-40c9-9810-9089b302a177&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=False' )"></a>
+
+                                            </span>
+
+                                            <span>
+                                                <a data-toggle="modal" href="#modalBoxId" id="comment5" data-url="/GlobalComments/AddComment?menuPath1Id=7728330d-f1ba-40c9-9810-9089b302a177&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510" class="btn btn-xs btn-primary aria-label far fa-comment" onclick="LoadDataUrlInComment(this, document.getElementById('commentSaveBtn')); "></a>
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="row ">
+                                            <span class="">
+                                                <a class="btn btn-xs btn-warning far fa-hand-point-up" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510" title="Bid"> </a>
+                                            </span>
+
+                                            <span>
+                                                <a class="btn btn-xs btn-success aria-label fa fa-shopping-cart" href="/%20/%20?userId=261439ce-6744-46bb-99bd-c3cc862b2510"> </a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="like5count" class=" btn   btn-xs  btn-default disabled noBorderButton" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=7728330d-f1ba-40c9-9810-9089b302a177&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=True')">+99</a>
+
+                                            </span>
+
+                                            <span>
+                                                <a id="unlike5" class="btn btn-xs btn-danger aria-label far fa-frown-open noBorderButton" onclick="Like(this, '/LikeUnlikes/Like?menuPath1Id=7728330d-f1ba-40c9-9810-9089b302a177&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510&amp;isLike=False' )">98</a>
+
+                                            </span>
+
+                                            <span>
+                                                <a data-toggle="modal" href="#modalBoxId" id="comment5" data-url="/GlobalComments/AddComment?menuPath1Id=7728330d-f1ba-40c9-9810-9089b302a177&amp;userId=261439ce-6744-46bb-99bd-c3cc862b2510" class="btn btn-xs btn-primary aria-label far fa-comment" onclick="LoadDataUrlInComment(this, document.getElementById('commentSaveBtn')); "></a>
+                                            </span>
+
+                                        </div>
+
+
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+                                                <span class="fa fa-star-o" aria-hidden="false"></span>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+
+                                            <div class="row fontHeavy">
+
+                                                <div class="text-center">
+                                                    <a href="/MenuPath1s/Edit/7728330d-f1ba-40c9-9810-9089b302a177?returnurl=%2FMenus&amp;menuEnum=IndexMenuPath1&amp;menuPathMainId=7c3bce32-377e-4592-9a0e-28f130611de0">Edit</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="modalBoxId" tabindex="-1" role="dialog" aria-labelledby="modalLabelId" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabelId">Comments</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <div class="control-label col-md-2">
+                                            Comment
+                                        </div>
+                                        <div class="col-md-10">
+                                            <input type="text" name="comment" value=" " id="comment" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button id="commentSaveBtn" type="button" class="btn btn-primary" data-url="" onclick="AddComment(this, document.getElementById('modalBoxId'), document.getElementById('comment'))">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+        <hr />
+        <footer>
+            <p>&copy; 2018 - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+
+    <script src="/Scripts/jquery-3.3.1.js"></script>
+
+    <script src="/Scripts/umd/popper.js"></script>
+    <script src="/Scripts/bootstrap.js"></script>
+
+    <script src="/Scripts/modernizr-2.8.3.js"></script>
+
+    <script src="/Scripts/respond.min.js"></script>
+
+
+
+
+    <script src="/Scripts/notifyNS/notify.min.js"></script>
+
+    <script src="/Scripts/MyScripts/IndexScripts.js"></script>
+
+    <script>
+
+
+
+
+
+        $('#AddUser').on('click', function () {
+            $("#AddUserForm").dialog({
+                autoOpen: true,
+                position: { my: "center", at: "top+350", of: window },
+                width: 1000,
+                resizable: false,
+                title: 'Add User Form',
+                modal: true,
+                open: function () {
+                    $(this).load('/Home/AddUserPartialView');
+                },
+                buttons: {
+                    "Add User": function () {
+                        addUserInfo();
+                    },
+                    Cancel: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+            return false;
+        });
+        function addUserInfo() {
+            $.ajax({
+                url: '/Home/AddUserInfo',
+                type: 'POST',
+                data: $("#myForm").serialize(),
+                success: function (data) {
+                    if (data.result) {
+                        $(':input', '#myForm')
+                            .not(':button, :submit, :reset, :hidden')
+                            .val('')
+                            .removeAttr('checked')
+                            .removeAttr('selected');
+                    } else {
+                        $("#showErrorMessage").append(data.responseText);
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script src="/Scripts/MyScripts/_MyGlobalScripts.js"></script>
+
+
+
+
+    <!-- Visual Studio Browser Link -->
+    <script type="application/json" id="__browserLink_initializationData">
+        {"appName":"Chrome","requestId":"19c926b7d8bf42f6a6d7cbc0af5ec94b"}
+    </script>
+    <script type="text/javascript" src="http://localhost:2231/a4f05e81c11e486caa7b976bbc2f79c5/browserLink" async="async"></script>
+    <!-- End Browser Link -->
+
+</body>
+</html>
+
+

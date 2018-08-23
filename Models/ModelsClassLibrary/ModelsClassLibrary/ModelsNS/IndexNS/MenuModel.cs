@@ -21,7 +21,7 @@ namespace ModelsClassLibrary.ViewModels
 
         //public List<Product> ProductList { get; set; }
 
-        public MenuLevelENUM MenuLevelEnum { get; set; }
+        public MenuENUM MenuEnum { get; set; }
         public bool IsMenu
         {
             get
@@ -151,27 +151,32 @@ namespace ModelsClassLibrary.ViewModels
         }
 
         //This gets the previous menu level
-        public MenuLevelENUM GetPreviousMenuLevel()
+        public MenuENUM GetPreviousMenuLevel()
         {
             //for the sort we need to go back one menu level
-            MenuLevelENUM previousMenuLevel = MenuLevelENUM.unknown;
-            switch (MenuLevelEnum)
+            MenuENUM previousMenuLevel = MenuENUM.IndexMenuPath1;
+
+            switch (MenuEnum)
             {
-                case MenuLevelENUM.unknown:
+                case MenuENUM.IndexMenuPath1:
+                    previousMenuLevel = MenuENUM.IndexMenuPath1;
                     break;
-                case MenuLevelENUM.Level_1:
-                    break;
-                case MenuLevelENUM.Level_2:
-                    previousMenuLevel = MenuLevelENUM.Level_1;
+                
+                case MenuENUM.IndexMenuPath2:
+                    previousMenuLevel = MenuENUM.IndexMenuPath1;
 
                     break;
-                case MenuLevelENUM.Level_3:
-                    previousMenuLevel = MenuLevelENUM.Level_2;
+                case MenuENUM.IndexMenuPath3:
+                    previousMenuLevel = MenuENUM.IndexMenuPath2;
                     break;
-                case MenuLevelENUM.Level_4:
-                    previousMenuLevel = MenuLevelENUM.Level_3;
+                case MenuENUM.IndexMenuProduct:
+                    previousMenuLevel = MenuENUM.IndexMenuPath3;
+                    break;
+                case MenuENUM.IndexMenuProductChild:
+                    previousMenuLevel = MenuENUM.IndexMenuProduct;
                     break;
                 default:
+                    previousMenuLevel = MenuENUM.IndexMenuPath1;
                     break;
             }
 
@@ -193,7 +198,7 @@ namespace ModelsClassLibrary.ViewModels
 
                 switch (MenuPath1.MenuPath1Enum)
                 {
-                    case MenuPath1ENUM.Unknown:
+                    case MenuPath1ENUM.NotDefined:
                         break;
                     case MenuPath1ENUM.Automobiles:
                         return typeof(ProductAutomobileVM).Name + "s";

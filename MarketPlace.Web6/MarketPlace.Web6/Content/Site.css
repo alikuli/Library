@@ -193,3 +193,39 @@ textarea {
     }
 
 
+.btn-xs {
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+.notVisible{
+    visibility: hidden;
+}
+
+.noBorderButton{
+    border-width: 0px;
+    padding: 0px;
+}
+
+
+
+.minWidthHeight{
+    min-width: 200px !important; 
+    min-height: 200px !important
+
+}
+
+.backgroundYellowOnHover{
+  background-color:inherit;
+  border-top-color: inherit;    
+  border-top-width: inherit;
+}
+
+.selectedItem{
+  background-color:white;
+  border-top-color: blue;    
+  border-top-width: 5px;
+
+}

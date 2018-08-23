@@ -47,7 +47,7 @@ namespace UowLibrary.FileDocNS
                 if (lstAsFileDoc.IsNullOrEmpty())
                     return null;
 
-                var lst = lstAsFileDoc.Where(x => x.UserId == UserIdBiz).ToList();
+                var lst = lstAsFileDoc.Where(x => x.UserId == UserId).ToList();
 
                 if (lst.IsNullOrEmpty())
                     return null;
@@ -74,14 +74,14 @@ namespace UowLibrary.FileDocNS
                 return null;
 
             
-            var lstIcommonwithId = (lst.Where(x => x.UserId == UserIdBiz)).Cast<ICommonWithId>().ToList();
+            var lstIcommonwithId = (lst.Where(x => x.UserId == UserId)).Cast<ICommonWithId>().ToList();
 
             return lstIcommonwithId;
         }
 
         private void errIfNotLoggedIn()
         {
-            if (UserIdBiz.IsNullOrWhiteSpace())
+            if (UserId.IsNullOrWhiteSpace())
             {
                 ErrorsGlobal.Add("You must log in to continue", "");
                 throw new Exception(ErrorsGlobal.ToString());

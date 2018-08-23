@@ -1,5 +1,4 @@
-﻿using AliKuli.Extentions;
-using EnumLibrary.EnumNS;
+﻿using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using MarketPlace.Web4.Controllers;
 using ModelsClassLibrary.ModelsNS.SharedNS;
@@ -22,7 +21,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
 
         // GET: Countries/Create
-        public virtual ActionResult Create(string isandForSearch, MenuENUM menuEnum = MenuENUM.unknown, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false)
+        public virtual ActionResult Create(string isandForSearch, MenuENUM menuEnum = MenuENUM.CreateDefault, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, bool isMenu = false)
         {
             //for product this needs to create the correct vm.
 
@@ -30,10 +29,6 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
             try
             {
-                ApplicationUser user = GetApplicationUser();
-
-
-                bool isUserAdmin = IsUserAdmin(user);
 
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
 
@@ -44,10 +39,13 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     selectedId,
                     dudEntity,
                     dudEntity,
+                    BreadCrumbManager,
+                    UserId,
+                    UserName,
+                    isMenu,
                     menuEnum,
                     sortBy,
                     print,
-                    returnUrl,
                     ActionNameENUM.Create);
 
 
@@ -72,13 +70,13 @@ namespace MarketPlace.Web6.Controllers.Abstract
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> Create(TEntity entity, string returnUrl, System.Web.HttpPostedFileBase[] httpMiscUploadedFiles = null, System.Web.HttpPostedFileBase[] httpSelfieUploads = null, System.Web.HttpPostedFileBase[] httpIdCardFrontUploads = null, System.Web.HttpPostedFileBase[] httpIdCardBackUploads = null, System.Web.HttpPostedFileBase[] httpPassportFrontUploads = null, System.Web.HttpPostedFileBase[] httpPassportVisaUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseFrontUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseBackUploads = null, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch = "", MenuENUM menuEnum = MenuENUM.unknown, FormCollection fc = null)
+        public virtual async Task<ActionResult> Create(TEntity entity, string returnUrl, System.Web.HttpPostedFileBase[] httpMiscUploadedFiles = null, System.Web.HttpPostedFileBase[] httpSelfieUploads = null, System.Web.HttpPostedFileBase[] httpIdCardFrontUploads = null, System.Web.HttpPostedFileBase[] httpIdCardBackUploads = null, System.Web.HttpPostedFileBase[] httpPassportFrontUploads = null, System.Web.HttpPostedFileBase[] httpPassportVisaUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseFrontUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseBackUploads = null, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch = "", MenuENUM menuEnum = MenuENUM.CreateDefault, FormCollection fc = null)
         {
             try
             {
                 //entity = ifProductVmThenMakeEntityIntoProduct(entity);
 
-                LoadUserIntoEntity(entity);
+                //LoadUserIntoEntity(entity);
 
                 ControllerCreateEditParameter parm = new ControllerCreateEditParameter(
                     entity,
@@ -90,17 +88,17 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     httpPassportVisaUploads,
                     httpLiscenseFrontUploads,
                     httpLiscenseBackUploads,
-                    MenuENUM.unknown,
+                    MenuENUM.CreateDefault,
                     User.Identity.Name,
                     returnUrl);
 
                 await Biz.CreateAndSaveAsync(parm);
 
-                if (returnUrl.IsNullOrWhiteSpace())
-                {
-                    return Event_UpdateCreateRedicrectToAction(parm);
-                }
-                return Redirect(returnUrl);
+                //if (returnUrl.IsNullOrWhiteSpace())
+                //{
+                //    return Event_UpdateCreateRedicrectToAction(parm);
+                //}
+                return Redirect(BreadCrumbManager.Url_CurrMinusOne);
 
             }
             catch (Exception e)

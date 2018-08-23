@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
+using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.DiscountNS;
@@ -9,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.DiscountPrecedenceNS;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -17,19 +20,28 @@ namespace MarketPlace.Web6.Controllers
         DiscountPrecedenceBiz _discountPrecBiz;
         readonly static string[] bindArray;
 
-        #region Constructo and initializers
 
-        public DiscountPrecedencesController(DiscountPrecedenceBiz DiscountPrecedencesBiz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
-            : base(DiscountPrecedencesBiz, errorSet, userbiz, breadCrumbManager)
+        public DiscountPrecedencesController(DiscountPrecedenceBiz biz, UserBiz userBiz, BreadCrumbManager bcm, IErrorSet err)
+            : base(biz, bcm, err) 
         {
-            _discountPrecBiz = DiscountPrecedencesBiz;
+            _discountPrecBiz = biz;
+            _userBiz = userBiz;
         }
         static DiscountPrecedencesController()
         {
             bindArray = new DiscountPrecedence().FieldsToLoadFromView().ToArray();
 
         }
-        #endregion
+
+
+        UserBiz _userBiz;
+        UserBiz UserBiz
+        {
+            get
+            {
+                return _userBiz;
+            }
+        }
 
         public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
         {
@@ -37,7 +49,7 @@ namespace MarketPlace.Web6.Controllers
             //we want to send a VM
             DiscountPrecedence entity = (DiscountPrecedence)parm.Entity;
             DiscountPrecedenceVM dpVm = new DiscountPrecedenceVM(entity);
-            dpVm.UsersSelectList = _discountPrecBiz.UsersSelectList();
+            dpVm.UsersSelectList = UserBiz.SelectList();
             return View(dpVm);
         }
 

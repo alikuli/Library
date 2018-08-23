@@ -16,7 +16,7 @@ namespace DalLibrary.DalNS
         /// <param name="entity"></param>
         public virtual void Create(TEntity entity)
         {
-            canCreate();
+            //canCreate();
 
             //Initialize();
             IsCreating = true;

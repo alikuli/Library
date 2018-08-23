@@ -5,26 +5,23 @@
     string menuPathMainId = "";
     string productId = "";
     string productChildId = "";
-    string returnUrl = "";
     string selectId = "";
     string searchString = "";
-    MenuENUM menuEnum = MenuENUM.unknown;
-
-
-    ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.IHaveMenuManager ihaveMenuManager = Model as ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.IHaveMenuManager;
+    MenuENUM menuEnum = MenuENUM.EditDefault;
     
-    if (!ihaveMenuManager.IsNull())
-    {
-        Model.MenuManager.MenuState.ControllerCurrentName = controllerName;
-        controllerName = Model.MenuManager.MenuState.CreateAndEditLink_ControllerName;
-        menuPathMainId = Model.MenuManager.MenuState.MenuPathMainId;
-        productId = Model.MenuManager.MenuState.ProductId;
-        productChildId = Model.MenuManager.MenuState.ProductChildId;
-        selectId = Model.MenuManager.SelectedId;
-        returnUrl = Model.MenuManager.CurrentUrl;
-        searchString = Model.MenuManager.SearchString;
-        menuEnum = Model.MenuManager.MenuState.MenuEnum;
-    }
+    Model.MenuManager.MenuState.ControllerCurrentName = controllerName;
+    controllerName = Model.MenuManager.MenuState.CreateAndEditLink_ControllerName;
+    menuPathMainId = Model.MenuManager.MenuState.MenuPathMainId;
+    productId = Model.MenuManager.MenuState.ProductId;
+    productChildId = Model.MenuManager.MenuState.ProductChildId;
+    selectId = Model.MenuManager.SelectedId;
+    searchString = Model.MenuManager.SearchString;
+    menuEnum = Model.MenuManager.MenuState.MenuEnum;
+
+    string returnUrl = Request.Url.PathAndQuery;
+    string editScreenName = string.Format("{0} - {1}", "Edit", Model.FullName());
+    Model.MenuManager.BreadCrumbManager.Push(editScreenName, returnUrl);
+    string urlMinusOne = Model.MenuManager.BreadCrumbManager.Url_CurrMinusOne;
     
 }
     
@@ -32,6 +29,7 @@
 
 
 @*@Html.Partial(@"ViewControls/Edit/_breadCrumbs - Edit")*@
+@Html.Partial(@"ViewControls/BreadCrumbs/_newBreadCrumbs", @Model.MenuManager.BreadCrumbManager)
 @Html.Partial(@"ViewControls/Edit/_EditHeading")
 
 @*@using (Html.BeginForm("Edit", @controllerName, new { returnUrl = returnUrl}, FormMethod.Post, new { enctype = "multipart/form-data" }))*@
@@ -48,21 +46,5 @@
 }
 
 <div>
-    @{
-
-    }
-        @if (returnUrl.IsNullOrWhiteSpace())
-        { 
-            @Html.ActionLink("Back to List", "Index")
-        }
-        else
-        {
-            <a href="@returnUrl">Back to List</a>
-        }
+        <a href="@urlMinusOne">Back to List</a>
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-

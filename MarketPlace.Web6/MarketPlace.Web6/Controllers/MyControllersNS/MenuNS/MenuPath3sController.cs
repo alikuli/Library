@@ -1,12 +1,16 @@
 ﻿using BreadCrumbsLibraryNS.Programs;
+using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -17,10 +21,10 @@ namespace MarketPlace.Web6.Controllers
         MenuPath3Biz _menupath3Biz;
         #region Constructo and initializers
 
-        public MenuPath3sController(MenuPath3Biz menupath3Biz, IErrorSet errorSet, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
-            : base(menupath3Biz, errorSet, userbiz, breadCrumbManager)
+        public MenuPath3sController(MenuPath3Biz biz, BreadCrumbManager bcm, IErrorSet err)
+            : base(biz, bcm, err) 
         {
-            _menupath3Biz = menupath3Biz;
+            _menupath3Biz = biz;
         }
 
         #endregion

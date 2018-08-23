@@ -3,6 +3,7 @@ using InterfacesLibrary.SharedNS.FeaturesNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ModelsClassLibrary.ModelsNS.AddressNS;
+using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.UserNameSpace;
@@ -18,6 +19,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using ModelsClassLibrary.ModelsNS;
+using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 
 namespace UserModels
 {
@@ -102,21 +105,23 @@ namespace UserModels
         public virtual ICollection<FileDoc> FileDocs { get; set; }
 
         public virtual ICollection<ProductChild> ProductChildren { get; set; }
+
+
+        public virtual ICollection<GlobalComment> GlobalComments { get; set; }
+        public virtual ICollection<LikeUnlike> LikeUnlikes { get; set; }
+
         public bool DisableNameInView()
         {
             return false;
         }
+        [NotMapped]
+        public string DefaultDisplayImage { get { return AliKuli.ConstantsNS.MyConstants.DEFAULT_IMAGE_LOCATION; } }
 
 
-        //[NotMapped]
 
-
-        //public bool IsCreating { get; set; }
-        //[NotMapped]
-
-        //public bool IsDeleting { get; set; }
-        //[NotMapped]
-
-        //public bool IsUpdating { get; set; }
+        public bool IsAllowDuplicates
+        {
+            get { return true; }
+        }
     }
 }

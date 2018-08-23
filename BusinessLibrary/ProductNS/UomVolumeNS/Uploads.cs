@@ -41,7 +41,7 @@ namespace UowLibrary
 
                     //add the owner of the file here....
                     entity.MiscFiles.Add(file);
-                    _uploadedFileBiz.Create(file);
+                    _uploadedFileBiz.Create(CreateControllerCreateEditParameter(file as ICommonWithId));
 
                 }
             }

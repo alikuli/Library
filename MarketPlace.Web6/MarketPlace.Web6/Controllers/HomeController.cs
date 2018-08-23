@@ -1,31 +1,47 @@
 ﻿using AliKuli.UtilitiesNS;
 using BreadCrumbsLibraryNS.Programs;
+using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web4.Controllers;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Reflection;
 using System.Web.Mvc;
 using UowLibrary;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 
 namespace MarketPlace.Web6.Controllers
 {
     public class HomeController : AbstractController
     {
-        UserBiz _userBiz;
-        ConfigManagerHelper _configManager;
-        public HomeController(IErrorSet errorSet, UserBiz userBiz, BreadCrumbManager breadCrumbManager)
-            : base(errorSet, userBiz, breadCrumbManager)
+        public HomeController(BreadCrumbManager bcm, IErrorSet err)
+            : base(bcm, err) 
         {
-            _userBiz = userBiz;
-            _configManager = new ConfigManagerHelper();
 
         }
 
+
+        public PartialViewResult AddUserPartialView()
+        {
+            return PartialView("AddUserPartialView", new AddUserViewModel());
+        }
+
+        [HttpPost]
+        public JsonResult AddUserInfo(AddUserViewModel model)
+        {
+            bool isSuccess = false;
+            if (ModelState.IsValid)
+            {
+                //isSuccess = Save data here return boolean
+            }
+            return Json(new { result = isSuccess, responseText = "Something wrong!" });
+        }
         public ActionResult Index()
         {
             try
             {
-                _userBiz.InitializeSystem();
+                //UserBiz.InitializeSystem();
                 return View();
             }
             catch (Exception e)

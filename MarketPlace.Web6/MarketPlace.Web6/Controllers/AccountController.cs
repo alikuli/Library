@@ -1,35 +1,34 @@
-﻿using System;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using BreadCrumbsLibraryNS.Programs;
+using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web4.Controllers;
 using Microsoft.AspNet.Identity.Owin;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsNS.Models;
+using System;
+using System.Reflection;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using UowLibrary;
-using BreadCrumbsLibraryNS.Programs;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 
 namespace MarketPlace.Web6.Controllers
 {
     [Authorize]
     public class AccountController : AbstractController
     {
-
-        public AccountController(UserBiz userDAL, IErrorSet errorSet, UserBiz userBiz, BreadCrumbManager breadCrumbManager)
-            : base(errorSet, userBiz, breadCrumbManager)
+        UserBiz _userBiz;
+        public AccountController(UserBiz userBiz, BreadCrumbManager bcm, IErrorSet err)
+            : base(bcm, err) 
         {
-            UserDAL = userDAL;
-
+            _userBiz = userBiz;
         }
-        //public AccountController(AccountControllerBiz accountControllerUow, IErrorSet errorSet)
-        //    : base(errorSet)
-        //{
-        //    AccountControllerUow = accountControllerUow;
 
-        //}
 
-        private UserBiz UserDAL { get; set; }
 
+
+        UserBiz UserBiz { get { return _userBiz; } }
 
 
         #region Log In
@@ -54,7 +53,7 @@ namespace MarketPlace.Web6.Controllers
                 return View(model);
             }
 
-            var result = await UserDAL.LoginAsync(model);
+            var result = await UserBiz.LoginAsync(model);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -84,7 +83,7 @@ namespace MarketPlace.Web6.Controllers
         {
             try
             {
-                VerifyCodeViewModel vm = await UserDAL.VerifyCode(provider, returnUrl, rememberMe);
+                VerifyCodeViewModel vm = await UserBiz.VerifyCode(provider, returnUrl, rememberMe);
                 return View(vm);
             }
             catch (Exception e)
@@ -108,7 +107,7 @@ namespace MarketPlace.Web6.Controllers
 
             try
             {
-                SignInStatus signInStatus = await UserDAL.VerifyCodeAsync(model);
+                SignInStatus signInStatus = await UserBiz.VerifyCodeAsync(model);
 
                 // The following code protects for brute force attacks against the two factor codes. 
                 // If a user enters incorrect codes for a specified amount of time then the user account 
@@ -147,7 +146,7 @@ namespace MarketPlace.Web6.Controllers
         public ActionResult Register()
         {
 
-            var model = UserDAL.CreateRegisterViewModel();
+            var model = UserBiz.CreateRegisterViewModel();
             return View(model);
 
         }
@@ -163,7 +162,7 @@ namespace MarketPlace.Web6.Controllers
             {
                 try
                 {
-                    await UserDAL.RegisterAsync(model);
+                    await UserBiz.RegisterAsync(model);
                 }
                 catch (Exception e)
                 {
@@ -174,7 +173,7 @@ namespace MarketPlace.Web6.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            model = UserDAL.LoadCountrySelectListIn(model);
+            model = UserBiz.LoadCountrySelectListIn(model);
 
             // If we got this far, something failed, redisplay form
             ErrorsGlobal.Add("Registration failed", MethodBase.GetCurrentMethod());
@@ -193,7 +192,7 @@ namespace MarketPlace.Web6.Controllers
                 return View("Error");
             }
 
-            var result = await UserDAL.ConfirmEmailAsync(userId, code);
+            var result = await UserBiz.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
@@ -220,14 +219,14 @@ namespace MarketPlace.Web6.Controllers
             if (ModelState.IsValid)
             {
 
-                if (!(await UserDAL.IsUserConfirmedThenGenerateCode(model)))
+                if (!(await UserBiz.IsUserConfirmedThenGenerateCode(model)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
                 }
 
-                UserDAL.CallBackUrl = Url.Action("ResetPassword", "Account", new { userId = UserDAL.AppUser.Id, code = UserDAL.Code }, protocol: Request.Url.Scheme);
-                await UserDAL.SendendEmailToConfirmedUserAndUrlAsync();
+                UserBiz.CallBackUrl = Url.Action("ResetPassword", "Account", new { userId = UserBiz.AppUser.Id, code = UserBiz.Code }, protocol: Request.Url.Scheme);
+                await UserBiz.SendendEmailToConfirmedUserAndUrlAsync();
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -269,7 +268,7 @@ namespace MarketPlace.Web6.Controllers
                 return View(model);
             }
 
-            if (await UserDAL.ResetPasswordAsync(model))
+            if (await UserBiz.ResetPasswordAsync(model))
             {
                 //both conditions, success and failure come here.
                 //we do not want to reveal that the user failed.
@@ -302,7 +301,7 @@ namespace MarketPlace.Web6.Controllers
 
             try
             {
-                SendCodeViewModel scvm = await UserDAL.SendCodeAsync(returnUrl, rememberMe);
+                SendCodeViewModel scvm = await UserBiz.SendCodeAsync(returnUrl, rememberMe);
                 return View(scvm);
 
             }
@@ -327,7 +326,7 @@ namespace MarketPlace.Web6.Controllers
             }
 
             // Generate the token and send it
-            if (!await UserDAL.SendTwoFactorCodeAsync(model))
+            if (!await UserBiz.SendTwoFactorCodeAsync(model))
             {
                 return View("Error");
             }
@@ -344,10 +343,10 @@ namespace MarketPlace.Web6.Controllers
         //
         // POST: /Account/LogOff
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            UserDAL.LogOff();
+            UserBiz.LogOff();
             return RedirectToAction("Index", "Home");
         }
 

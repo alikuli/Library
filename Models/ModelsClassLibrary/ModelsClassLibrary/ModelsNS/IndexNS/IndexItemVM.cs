@@ -1,5 +1,4 @@
 ﻿using AliKuli.Extentions;
-using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,23 +9,10 @@ namespace ModelsClassLibrary.ViewModels
     public class IndexItemVM : IIndexListItems
     {
         private const int MAX_LENGTH_ALLOWED = 100;
-        //public IndexItemVM(string id, string name, string input1SortStr, bool isEditLocked, string description)
-        //{
-        //    Id = id;
-        //    Name = name;
-        //    Input1SortString = input1SortStr;
-        //    IsEditLocked = isEditLocked;
-        //    Description = description;
-        //    PrintLineNumber = "";
-        //    //Menu = new Menu();
-        //}
+        public IndexItemVM()
+        {
 
-        //public IndexItemVM(string id, string name, string input1SortStr, string input2SortStr, bool isEditLocked, string description)
-        //    : this(id, name, input1SortStr, isEditLocked, description)
-        //{
-        //    Input2SortString = input2SortStr;
-        //}
-
+        }
         public IndexItemVM(string id, string name, string input1SortStr, string input2SortStr, string input3SortStr, bool isEditLocked, string description)
         {
             Input3SortString = input3SortStr;
@@ -44,6 +30,9 @@ namespace ModelsClassLibrary.ViewModels
         public string ImageAddressStr { get; set; }
 
         public string Description { get; set; }
+
+        public string GlobalComment { get; set; }
+
 
         #region Sort strings
 

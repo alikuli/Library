@@ -1,4 +1,5 @@
 ﻿using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using UowLibrary.Abstract;
 using UowLibrary.Interface;
 
@@ -18,8 +19,9 @@ namespace UowLibrary
         /// Default. 
         /// </summary>
         /// <param name="entity"></param>
-        public virtual void Fix(TEntity entity)
+        public virtual void Fix(ControllerCreateEditParameter parm)
         {
+
 
         }
 

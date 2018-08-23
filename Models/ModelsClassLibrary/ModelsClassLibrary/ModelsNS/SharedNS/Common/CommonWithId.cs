@@ -17,6 +17,11 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
     public abstract class CommonWithId : ICommonWithId, IIndexListItems, IFieldsToLoadFromView
     {
 
+        /// <summary>
+        /// If true, then duplicates are allowed.
+        /// </summary>
+        [NotMapped]
+        public virtual bool IsAllowDuplicates { get { return false; } }
 
         public CommonWithId()
         {
@@ -146,8 +151,9 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         #region Checks
         private void Check_NameIsNullOrEmpty()
         {
-            if (Name.IsNullOrWhiteSpace())
-                throw new ErrorHandlerLibrary.ExceptionsNS.RequiredDataMissingException("Name is empty. CommonWithId.");
+            //if (Name.IsNullOrWhiteSpace())
+            //    throw new ErrorHandlerLibrary.ExceptionsNS.RequiredDataMissingException("Name is empty. CommonWithId.");
+            Name.IsNullOrWhiteSpaceThrowException();
         }
 
 
@@ -309,6 +315,9 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             }
         }
 
+
+        [NotMapped]
+        public string DefaultDisplayImage { get { return AliKuli.ConstantsNS.MyConstants.DEFAULT_IMAGE_LOCATION; } }
     }
 
 }

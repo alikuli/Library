@@ -1,9 +1,12 @@
 ﻿using AliKuli.Extentions;
+using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
+using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -29,6 +32,10 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
         [Display(Name = "Product")]
         public string ProductId { get; set; }
         public Product Product { get; set; }
+
+        public virtual ICollection<GlobalComment> GlobalComments { get; set; }
+        public virtual ICollection<LikeUnlike> LikeUnlikes { get; set; }
+
     }
 
 

@@ -10,14 +10,12 @@
         <div class="col-md-12">
             <h1 class="text-center thumbnail ">Menu</h1>
         </div>
-
         <div>
             <p>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             </p>
 
         </div>
-
 
         <div class="container">
             <h2>Modal Example</h2>
@@ -49,6 +47,7 @@
         <div class="col-lg-4 text-center">
             <p class="text-success h3 text-center">View</p>
             <p> @Html.ActionLink("Menus", "Index", "Menus", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Global Comments", "Index", "GlobalComments", null, new { @class = "btn btn-success" })</p>
             <p> @Html.ActionLink("Menu Path 1", "Index", "MenuPath1s", null, new { @class = "btn btn-success" })</p>
             <p> @Html.ActionLink("Menu Path 2", "Index", "MenuPath2s", null, new { @class = "btn btn-success" })</p>
             <p> @Html.ActionLink("Menu Path 3", "Index", "MenuPath3s", null, new { @class = "btn btn-success" })</p>
@@ -93,6 +92,7 @@
         <div class="col-lg-4 text-center">
             <p class="text-warning h3 text-center">Initializers</p>
             <p> @Html.ActionLink("Invoice Pdf", "PrintInvoice", "Languages", null, new { @class = "btn btn-warning" })</p>
+            <p> @Html.ActionLink("Global Comments", "InitializeDb", "GlobalComments", null, new { @class = "btn btn-warning" })</p>
             <p>@Html.ActionLink("Menu Path 1", "InitializeDb", "MenuPath1s", null, new { @class = "btn btn-warning" })</p>
             <p>@Html.ActionLink("Menu Path 2", "InitializeDb", "MenuPath2s", null, new { @class = "btn btn-warning" })</p>
             <p>@Html.ActionLink("Menu Path 3", "InitializeDb", "MenuPath3s", null, new { @class = "btn btn-warning" })</p>
@@ -133,6 +133,7 @@
         <div class="col-lg-4 h3 text-center">
             <p class="text-danger  h3 text-center">Delete ALL</p>
             <p>@Html.ActionLink("Menus", "DeleteAll", "ProductIdentifiers", null, new { @class = "btn btn-danger disabled" })</p>
+            <p>@Html.ActionLink("Global Comments", "DeleteAll", "GlobalComments", null, new { @class = "btn btn-danger" })</p>
             <p>@Html.ActionLink("Menu Path 1", "DeleteAll", "MenuPath1s", null, new { @class = "btn btn-danger" })</p>
             <p>@Html.ActionLink("Menu Path 2", "DeleteAll", "MenuPath2s", null, new { @class = "btn btn-danger" })</p>
             <p>@Html.ActionLink("Menu Path 3", "DeleteAll", "MenuPath3s", null, new { @class = "btn btn-danger" })</p>
@@ -171,12 +172,3 @@
         </div>
     </div>
 
-    <div>
-        <p>
-            @Html.ActionLink("Back to List", "Index", "Home")
-        </p>
-    </div>
-
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }

@@ -19,7 +19,7 @@ namespace UowLibrary.ProductNS
             IProduct product = iproduct;
             product.MenuManager.MenuState.MenuPath1Id.IsNullOrWhiteSpaceThrowException("Menu Path 1 is null.");
 
-            MenuPath1 mp1 = _menuPath1Biz.Find(product.MenuManager.MenuState.MenuPath1Id);
+            MenuPath1 mp1 = MenuPath1Biz.Find(product.MenuManager.MenuState.MenuPath1Id);
             mp1.IsNullThrowException("Menu path 1 not found");
 
 
@@ -115,7 +115,7 @@ namespace UowLibrary.ProductNS
                     continue;
 
 
-                mpm = _menuPathMainBiz.FindAll().FirstOrDefault(x => x.Id == cbi.Id);
+                mpm = MenuPathMainBiz.FindAll().FirstOrDefault(x => x.Id == cbi.Id);
                 mpm.IsNullThrowException("Main path not found! Programming error.");
 
                 product.MenuPathMains.Add(mpm);

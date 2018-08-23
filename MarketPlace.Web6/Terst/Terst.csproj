@@ -52,6 +52,10 @@
       <Project>{93822697-db5f-4569-b425-1f0ca6bb3ff4}</Project>
       <Name>BreadCrumbsLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\WebLibrary\WebLibrary.csproj">
+      <Project>{74ab826c-5db4-4291-9778-c6307deff24b}</Project>
+      <Name>WebLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

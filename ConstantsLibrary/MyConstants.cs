@@ -98,6 +98,8 @@ namespace AliKuli.ConstantsNS
         public const string SIZE_PIC_BYTES_TO_SAVE = "1000000";
         public const string SIZE_PIC_HEIGHT_IN_PTS_MAX = "1000";
         public const string SIZE_PIC_WIDTH_IN_PTS_MAX = "1000";
+        public const string DEFAULT_IMAGE_LOCATION = @"~\Content\MyImages\BlankImage.jpg";
+
     }
 
 

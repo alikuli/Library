@@ -1,8 +1,12 @@
 ﻿using BreadCrumbsLibraryNS.Programs;
+using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using UowLibrary;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -11,10 +15,10 @@ namespace MarketPlace.Web6.Controllers
     {
         ProductBiz _productBiz;
 
-        public ProductIdentifiersController(ProductIdentifierBiz productIdentifierBiz, IErrorSet errorSet, ProductBiz productBiz, UserBiz userbiz, BreadCrumbManager breadCrumbManager)
-            : base(productIdentifierBiz, errorSet, userbiz, breadCrumbManager)
+        public ProductIdentifiersController(ProductBiz biz, BreadCrumbManager bcm, IErrorSet err)
+            : base(biz.ProductIdentifierBiz, bcm, err) 
         {
-            _productBiz = productBiz;
+            _productBiz = biz;
         }
 
 

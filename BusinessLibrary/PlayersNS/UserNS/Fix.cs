@@ -30,10 +30,11 @@ namespace UowLibrary
     public partial class UserBiz : BusinessLayer<ApplicationUser>
     {
 
-        public override void Fix(ApplicationUser entity)
+        public override void Fix(ControllerCreateEditParameter parm)
         {
-            entity.Name = entity.UserName;
-            base.Fix(entity);
+            ApplicationUser appUser = parm.Entity as ApplicationUser;
+            parm.Entity.Name = appUser.UserName;
+            base.Fix(parm);
         }
 
 

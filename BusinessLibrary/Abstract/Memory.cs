@@ -10,7 +10,6 @@ namespace UowLibrary.Abstract
     public abstract partial class AbstractBiz : IBiz
     {
 
-        private readonly IMemoryMain _imemoryMain;
 
         #region Memory Related
         public System.Web.HttpContextBase HttpContextBaseBiz

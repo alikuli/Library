@@ -24,6 +24,8 @@ namespace UowLibrary.MenuNS.MenuStateNS
         MenuENUM MenuEnum { get; }
         string GetProductVM();
         string ControllerCurrentName { get; set; }
+        string MenuDisplayName { get; set; }
+        bool IsProductChild { get; }
 
 
     }

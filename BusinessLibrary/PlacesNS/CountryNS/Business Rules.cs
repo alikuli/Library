@@ -1,4 +1,6 @@
-﻿using ModelsClassLibrary.ModelsNS.PlacesNS;
+﻿using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.PlacesNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using UowLibrary.StateNS;
 
 namespace UowLibrary
@@ -7,27 +9,31 @@ namespace UowLibrary
     {
 
 
-        public override void BusinessRulesFor(Country entity)
+        public override void BusinessRulesFor(ControllerCreateEditParameter parm)
         {
-            base.BusinessRulesFor(entity);
-
+            base.BusinessRulesFor(parm);
+            Country country = parm.Entity as Country;
             //Make sure a blank state exists for the country... if not, create one.
-            createCreateBlankStateForCountry(entity);
-            entity.Abbreviation = entity.Abbreviation.ToUpper();
+            createCreateBlankStateForCountry(parm);
+            country.Abbreviation = country.Abbreviation.ToUpper();
 
 
         }
 
-        private void createCreateBlankStateForCountry(Country entity)
+        private void createCreateBlankStateForCountry(ControllerCreateEditParameter parm)
         {
-            if (StateBiz.BlankStateExistsForCountryId(entity.Id))
+            Country country = parm.Entity as Country;
+            if (StateBiz.BlankStateExistsForCountryId(country.Id))
                 return;
 
             State s = StateBiz.Factory() as State;
-            s.Country = entity;
-            s.CountryId = entity.Id;
+            s.Country = country;
+            s.CountryId = country.Id;
             s.MetaData.IsEditLocked = true;
-            StateBiz.Create(s);
+
+            ControllerCreateEditParameter parmState = new ControllerCreateEditParameter();
+            parmState.Entity = s as ICommonWithId;
+            StateBiz.Create(parmState);
         }
 
     }

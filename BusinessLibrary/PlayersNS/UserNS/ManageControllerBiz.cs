@@ -72,10 +72,10 @@ namespace UowLibrary
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(UserIdBiz),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(UserIdBiz),
-                Logins = await UserManager.GetLoginsAsync(UserIdBiz),
-                BrowserRemembered = await GetTwoFactorBrowserRememberedAsync(UserIdBiz)
+                PhoneNumber = await UserManager.GetPhoneNumberAsync(UserId),
+                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(UserId),
+                Logins = await UserManager.GetLoginsAsync(UserId),
+                BrowserRemembered = await GetTwoFactorBrowserRememberedAsync(UserId)
             };
             return model;
         }
@@ -83,7 +83,7 @@ namespace UowLibrary
         private bool HasPassword()
         {
 
-            var user = FindById_UserManager(UserIdBiz);
+            var user = FindById_UserManager(UserId);
 
             if (user != null)
             {
@@ -124,10 +124,10 @@ namespace UowLibrary
         public async Task<ManageMessageId?> RemoveLogin(string loginProvider, string providerKey)
         {
             ManageMessageId? message;
-            var result = await UserManager.RemoveLoginAsync(UserIdBiz, new UserLoginInfo(loginProvider, providerKey));
+            var result = await UserManager.RemoveLoginAsync(UserId, new UserLoginInfo(loginProvider, providerKey));
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(UserIdBiz);
+                var user = await UserManager.FindByIdAsync(UserId);
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -151,7 +151,7 @@ namespace UowLibrary
         {
             try
             {
-                ApplicationUser user = await UserManager.FindByIdAsync(UserIdBiz);
+                ApplicationUser user = await UserManager.FindByIdAsync(UserId);
                 if (user.IsNull())
                 {
                     ErrorsGlobal.Add("No User found.", MethodBase.GetCurrentMethod());
@@ -161,7 +161,7 @@ namespace UowLibrary
                 string fixedPhoneNumber = PhoneNumberFixer(model.Number, user.CountryAbbreviation);
                 model.FixedPhoneNumber = fixedPhoneNumber;
                 // Generate the token and send it
-                var code = await UserManager.GenerateChangePhoneNumberTokenAsync(UserIdBiz, model.FixedPhoneNumber);
+                var code = await UserManager.GenerateChangePhoneNumberTokenAsync(UserId, model.FixedPhoneNumber);
                 if (UserManager.SmsService != null)
                 {
                     var message = new IdentityMessage
@@ -222,8 +222,8 @@ namespace UowLibrary
 
         public async Task EnableTwoFactorAuthenticationAsync()
         {
-            await UserManager.SetTwoFactorEnabledAsync(UserIdBiz, true);
-            var user = await UserManager.FindByIdAsync(UserIdBiz);
+            await UserManager.SetTwoFactorEnabledAsync(UserId, true);
+            var user = await UserManager.FindByIdAsync(UserId);
             if (user != null)
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -234,8 +234,8 @@ namespace UowLibrary
 
         public async Task DisableTwoFactorAuthenticationAsync()
         {
-            await UserManager.SetTwoFactorEnabledAsync(UserIdBiz, false);
-            var user = await UserManager.FindByIdAsync(UserIdBiz);
+            await UserManager.SetTwoFactorEnabledAsync(UserId, false);
+            var user = await UserManager.FindByIdAsync(UserId);
             if (user != null)
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -288,17 +288,17 @@ namespace UowLibrary
 
         public async Task<string> VerifyPhoneNumberAsync(string phoneNumber)
         {
-            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(UserIdBiz, phoneNumber);
+            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(UserId, phoneNumber);
             return code;
         }
 
 
         public async Task<bool> VerifyPhoneNumberAsync(VerifyPhoneNumberViewModel model)
         {
-            var result = await UserManager.ChangePhoneNumberAsync(UserIdBiz, model.PhoneNumber, model.Code);
+            var result = await UserManager.ChangePhoneNumberAsync(UserId, model.PhoneNumber, model.Code);
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(UserIdBiz);
+                var user = await UserManager.FindByIdAsync(UserId);
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -321,12 +321,12 @@ namespace UowLibrary
         // GET: /Manage/RemovePhoneNumber
         public async Task<ManageMessageId> RemovePhoneNumber()
         {
-            var result = await UserManager.SetPhoneNumberAsync(UserIdBiz, null);
+            var result = await UserManager.SetPhoneNumberAsync(UserId, null);
             if (!result.Succeeded)
             {
                 return ManageMessageId.Error;
             }
-            var user = await UserManager.FindByIdAsync(UserIdBiz);
+            var user = await UserManager.FindByIdAsync(UserId);
             if (user != null)
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -370,10 +370,10 @@ namespace UowLibrary
         /// <returns></returns>
         public async Task<bool> ChangePassword(ChangePasswordViewModel model)
         {
-            var result = await UserManager.ChangePasswordAsync(UserIdBiz, model.OldPassword, model.NewPassword);
+            var result = await UserManager.ChangePasswordAsync(UserId, model.OldPassword, model.NewPassword);
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(UserIdBiz);
+                var user = await UserManager.FindByIdAsync(UserId);
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -425,10 +425,10 @@ namespace UowLibrary
         // POST: /Manage/SetPassword
         public async Task<bool> SetPasswordAsync(SetPasswordViewModel model)
         {
-            var result = await UserManager.AddPasswordAsync(UserIdBiz, model.NewPassword);
+            var result = await UserManager.AddPasswordAsync(UserId, model.NewPassword);
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(UserIdBiz);
+                var user = await UserManager.FindByIdAsync(UserId);
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -480,31 +480,31 @@ namespace UowLibrary
         // GET: /Manage/ManageLogins
 
 
-        public async Task<ManageLoginsViewModel> ManageLoginsAsync(ManageMessageId? message)
-        {
-            ManageLoginStatusMessage =
-                message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : "";
-            var user = await UserManager.FindByIdAsync(UserIdBiz);
+        //public async Task<ManageLoginsViewModel> ManageLoginsAsync(ManageMessageId? message)
+        //{
+        //    ManageLoginStatusMessage =
+        //        message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
+        //        : message == ManageMessageId.Error ? "An error has occurred."
+        //        : "";
+        //    var user = await UserManager.FindByIdAsync(UserId);
 
-            if (user == null)
-            {
-                return null;
-            }
+        //    if (user == null)
+        //    {
+        //        return null;
+        //    }
 
-            var userLogins = await UserManager.GetLoginsAsync(UserIdBiz);
-            var otherLogins = GetExternalAuthenticationTypes
-                .Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider))
-                .ToList();
+        //    var userLogins = await UserManager.GetLoginsAsync(UserId);
+        //    var otherLogins = GetExternalAuthenticationTypes
+        //        .Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider))
+        //        .ToList();
 
-            ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
-            return new ManageLoginsViewModel
-            {
-                CurrentLogins = userLogins,
-                OtherLogins = otherLogins
-            };
-        }
+        //    ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
+        //    return new ManageLoginsViewModel
+        //    {
+        //        CurrentLogins = userLogins,
+        //        OtherLogins = otherLogins
+        //    };
+        //}
 
 
         #endregion
@@ -529,13 +529,13 @@ namespace UowLibrary
         // GET: /Manage/LinkLoginCallback
         public async Task<IdentityResult> LinkLoginCallbackAsync()
         {
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, UserIdBiz);
+            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, UserId);
 
             if (loginInfo == null)
             {
                 return null;
             }
-            var result = await UserManager.AddLoginAsync(UserIdBiz, loginInfo.Login);
+            var result = await UserManager.AddLoginAsync(UserId, loginInfo.Login);
             return result;
         }
 

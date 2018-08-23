@@ -7,6 +7,7 @@ using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -63,15 +64,7 @@ namespace MarketPlace.Web6.Controllers
                 pvm.MenuPathMains = new List<MenuPathMain>();
 
             pvm.MenuPathMains.Add(mpm);//this is the default MenuPathMain
-
-            pvm.MenuManager = new MenuManager(mpm, pvm, null, MenuENUM.CreateMenuProduct);
-
-            ////now before sending it to LoadMenuPathCheckedBoxes you need to add the MenuPath1 for this
-            //MenuPath1 mp1 = _menuPath1Biz.FindByMenuPath1EnumFor(MenuPath1ENUM.Automobiles);
-            //mp1.IsNullThrowException("Unable to find Menu Path 1");
-
-
-            pvm.MenuManager = new MenuManager(mpm, pvm as Product, null, MenuENUM.CreateMenuProduct); ;
+            pvm.MenuManager = new MenuManager(mpm, pvm as Product, null, MenuENUM.CreateMenuProduct, BreadCrumbManager, null);
             _productBiz.LoadMenuPathCheckedBoxes(pvm as IProduct);
 
             return pvm;
@@ -86,14 +79,14 @@ namespace MarketPlace.Web6.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> Create(ProductAutomobileVM entity, HttpPostedFileBase[] httpMiscUploadedFiles = null, MenuENUM menuEnum = MenuENUM.unknown, string returnUrl = "")
+        public virtual async Task<ActionResult> Create(ProductAutomobileVM entity, HttpPostedFileBase[] httpMiscUploadedFiles = null, MenuENUM menuEnum = MenuENUM.CreateDefault, string returnUrl = "")
         {
             try
             {
 
 
                 Product product = entity.SetupAndMakeProduct(entity);
-                LoadUserIntoEntity(product);
+                //LoadUserIntoEntity(product);
 
                 ControllerCreateEditParameter parm = new ControllerCreateEditParameter(
                     product,
@@ -105,7 +98,7 @@ namespace MarketPlace.Web6.Controllers
                     null,
                     null,
                     null,
-                    MenuENUM.unknown,
+                    MenuENUM.CreateDefault,
                     User.Identity.Name,
                     returnUrl);
 

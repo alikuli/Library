@@ -2,14 +2,14 @@
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
-
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 
 namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 {
-    public class IndexMenuPath2 : MenuManagerAbstract
+    public class IndexMenuPath2 : MenuStateAbstract
     {
-        public IndexMenuPath2(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum)
-            : base(menuPathMain, product, productChild, menuEnum) { }
+        public IndexMenuPath2(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameter likeUnlikesCounter)
+            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
 
         //public override string EditLink_Id
         //{
@@ -58,30 +58,14 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
             get { return "MenuPath2s"; }
         }
 
-        public override string MenuPath1Id
-        {
-            get { return MenuPathMain.MenuPath1Id; }
-        }
 
-        public override string MenuPath2Id
+        public override string MenuDisplayName
         {
-            get { return MenuPathMain.MenuPath2Id; }
-        }
-
-        public override string MenuPath3Id
-        {
-            get { throw new System.NotImplementedException(); }
-        }
-
-        public override string ProductId
-        {
-            get { return ""; }
-        }
-
-        public override string ProductChildId
-        {
-            get { return ""; }
-
+            get
+            {
+                return string.Format("{0}", MenuPathMain.MenuPath1.Name);
+                //return string.Format("{0}", "CHANGED!");
+            }
         }
 
     }

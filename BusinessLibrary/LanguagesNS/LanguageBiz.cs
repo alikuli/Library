@@ -1,11 +1,16 @@
 ﻿using AliKuli.UtilitiesNS;
 using ApplicationDbContextNS;
+using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.Interfaces;
 using ErrorHandlerLibrary.ExceptionsNS;
 using InvoiceNS;
 using MigraDocLibrary;
 using MigraDocLibrary.InvoiceNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.RightsNS;
+using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
 using WebLibrary.Programs;
@@ -14,8 +19,8 @@ namespace UowLibrary.LanguageNS
 {
     public partial class LanguageBiz : BusinessLayer<Language>
     {
-        public LanguageBiz(IRepositry<ApplicationUser> userDal, IRepositry<Language> entityDal, IMemoryMain memoryMain, IErrorSet errorSet, ApplicationDbContext db, ConfigManagerHelper configManager, UploadedFileBiz uploadedFileBiz)
-            : base(userDal, memoryMain, errorSet, entityDal, db, configManager, uploadedFileBiz)
+        public LanguageBiz(IRepositry<Language> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
+            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
         {
             
         }

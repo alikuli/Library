@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DbContextLib</RootNamespace>
     <AssemblyName>DbContextLib</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -176,6 +176,14 @@
     <Compile Include="Migrations\201806161450111_16-06-2018.Designer.cs">
       <DependentUpon>201806161450111_16-06-2018.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807230905360_23-07-2018.cs" />
+    <Compile Include="Migrations\201807230905360_23-07-2018.Designer.cs">
+      <DependentUpon>201807230905360_23-07-2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808071107391_07-08-2018.cs" />
+    <Compile Include="Migrations\201808071107391_07-08-2018.Designer.cs">
+      <DependentUpon>201808071107391_07-08-2018.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -223,6 +231,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806161450111_16-06-2018.resx">
       <DependentUpon>201806161450111_16-06-2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807230905360_23-07-2018.resx">
+      <DependentUpon>201807230905360_23-07-2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808071107391_07-08-2018.resx">
+      <DependentUpon>201808071107391_07-08-2018.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

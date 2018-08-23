@@ -9,8 +9,9 @@ using System.Web;
 namespace ModelsClassLibrary.ModelsNS.SharedNS
 {
     /// <summary>
-    /// This class will carry all the information from the create and edit modules in the controller all the way through
-    /// Morevover, it will also dea
+    /// This class will carry all the information from the create and edit modules in the controller all the way through.
+    /// You will need to add the locations of the files later from the entity. This will have to happen in the Biz class Fix event where 
+    /// user info will be available.
     /// </summary>
     /// 
     [NotMapped]
@@ -55,39 +56,40 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             LiscenseBack.HttpBase = httpLiscenseBack;
 
             UserName = userName;
+            //Menu = new MenuParameters(menuEnum, entity.Id);
 
             //Menu = new MenuParameters(menuEnum, menuPathMainId, productId, productChildId, returnUrl);
             //todo what should we do if userName is empty?
 
-            if (IsIHasUploads)
-            {
-                MiscUploadedFiles.FileLocationConst = Entity_IHasUploads.MiscFilesLocation();
-            }
+            //if (IsIHasUploads)
+            //{
+            //    //we need to load the user in entities that require user right here...
+            //    //because user is required to find where to store the file.
+                
+                //MiscUploadedFiles.FileLocationConst = Entity_IHasUploads.MiscFilesLocation();
+            //}
 
-            //this is where the file gets it's location. The location comes from the constants
-            if (IsIUserHasUploads)
-            {
-                SelfieUpload.FileLocationConst = Entity_IUserHasUploads.SelfieLocationConst(UserName);
+            ////this is where the file gets it's location. The location comes from the constants
+            //if (IsIUserHasUploads)
+            //{
+            //    SelfieUpload.FileLocationConst = Entity_IUserHasUploads.SelfieLocationConst(UserName);
 
-                IdCardFront.FileLocationConst = Entity_IUserHasUploads.IdCardFrontLocationConst(UserName);
-                IdCardBack.FileLocationConst = Entity_IUserHasUploads.IdCardBackLocationConst(UserName);
+            //    IdCardFront.FileLocationConst = Entity_IUserHasUploads.IdCardFrontLocationConst(UserName);
+            //    IdCardBack.FileLocationConst = Entity_IUserHasUploads.IdCardBackLocationConst(UserName);
 
-                PassportFront.FileLocationConst = Entity_IUserHasUploads.PassportFrontLocationConst(UserName);
-                PassportVisa.FileLocationConst = Entity_IUserHasUploads.PassportVisaLocationConst(UserName);
+            //    PassportFront.FileLocationConst = Entity_IUserHasUploads.PassportFrontLocationConst(UserName);
+            //    PassportVisa.FileLocationConst = Entity_IUserHasUploads.PassportVisaLocationConst(UserName);
 
-                LiscenseFront.FileLocationConst = Entity_IUserHasUploads.LiscenseFrontLocationConst(UserName);
-                LiscenseBack.FileLocationConst = Entity_IUserHasUploads.LiscenseBackLocationConst(UserName);
-            }
+            //    LiscenseFront.FileLocationConst = Entity_IUserHasUploads.LiscenseFrontLocationConst(UserName);
+            //    LiscenseBack.FileLocationConst = Entity_IUserHasUploads.LiscenseBackLocationConst(UserName);
+            //}
 
         }
 
         public ICommonWithId Entity { get; set; }
         public string UserName { get; set; }
 
-        //public string menuPath1Id { get; set; }
-        //public string menuPath2Id { get; set; }
-        //public string menuPath3Id { get; set; }
-        public MenuParameters Menu { get; set; }
+        //public MenuParameters Menu { get; set; }
 
         #region Uploads
 
@@ -102,9 +104,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public ControllerCreateEditParameterDetail LiscenseFront { get; set; }
         public ControllerCreateEditParameterDetail LiscenseBack { get; set; }
 
-
-        //public ControllerCreateEditParameterDetail ProductBigPic { get; set; }
-        //public ControllerCreateEditParameterDetail ProductSmallPic { get; set; }
 
 
 

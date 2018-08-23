@@ -41,9 +41,8 @@ namespace UowLibrary
 
             try
             {
-                throw new NotImplementedException();
-                //PhoneNumbersUtility phoneUtility = new PhoneNumbersUtility(oldPhoneNumber, countryAbbreviation);
-                //return phoneUtility.CompletePhoneNumber;
+                PhoneNumbersUtility phoneUtility = new PhoneNumbersUtility(oldPhoneNumber, countryAbbreviation);
+                return phoneUtility.CompletePhoneNumber;
 
             }
             catch (Exception)

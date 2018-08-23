@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,25 +10,27 @@ namespace UowLibrary.StateNS
     public partial class StateBiz : BusinessLayer<State>
     {
 
-        public override void BusinessRulesFor(State entity)
+        public override void BusinessRulesFor(ControllerCreateEditParameter parm)
         {
-            bool isBlankState = entity.Name.IsNullOrWhiteSpace();
+            State state = parm.Entity as State;
+
+            bool isBlankState = state.Name.IsNullOrWhiteSpace();
 
             if (isBlankState)
             {
                 List<State> blankStates = FindAll().Where(x => x.Name == "").ToList();
-                State blankCountryStateFound = blankStates.FirstOrDefault(x => x.CountryId == entity.CountryId);
+                State blankCountryStateFound = blankStates.FirstOrDefault(x => x.CountryId == state.CountryId);
 
                 if (!blankCountryStateFound.IsNull())
                 {
-                    string err = string.Format("Blank state exists for {0}", entity.Country.FullName());
+                    string err = string.Format("Blank state exists for {0}", state.Country.FullName());
                     ErrorsGlobal.AddMessage(err);
                     throw new NoDuplicateException(err);
 
                 }
             }
             else
-                base.BusinessRulesFor(entity);
+                base.BusinessRulesFor(parm);
             
 
         }
