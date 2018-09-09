@@ -4,7 +4,9 @@ using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS;
+using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using System.Collections.Generic;
 
 namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 {
@@ -26,6 +28,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 
         }
 
+        public virtual ICollection<Feature> Features { get; set; }
 
         /// <summary>
         /// This will be unique for product/customer. If it does not exist, then it will be considered a general product.

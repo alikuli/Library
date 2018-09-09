@@ -26,6 +26,20 @@ namespace AliKuli.Extentions
             return e.IsNull() || e.ToList<T>().Count() == 0;
         }
 
+        public static string ConvertToSemiColanString(this string[] p)
+        {
+            string theString = "";
+            if (p.IsNullOrEmpty())
+                return theString;
+
+            foreach (var item in p)
+            {
+                theString += string.Format("{0}; ", item);
+            }
+
+            return theString.Trim();
+
+        }
 
 
 

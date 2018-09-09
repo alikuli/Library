@@ -172,6 +172,9 @@
     <Compile Include="CounterNS\SelectList.cs" />
     <Compile Include="DiscountNS\SelectList.cs" />
     <Compile Include="DiscountNS\Index.cs" />
+    <Compile Include="FeaturesNS\Fix.cs" />
+    <Compile Include="FeaturesNS\SelectList.cs" />
+    <Compile Include="FeaturesNS\FeatureBiz.cs" />
     <Compile Include="FileDocsNS\Factory.cs" />
     <Compile Include="FileDocsNS\Upload.cs" />
     <Compile Include="FileDocsNS\Find.cs" />
@@ -180,6 +183,7 @@
     <Compile Include="FileDocsNS\Initialization.cs" />
     <Compile Include="FileDocsNS\SelectList.cs" />
     <Compile Include="FileDocsNS\FileDocBiz.cs" />
+    <Compile Include="GlobalCommentsNS\Fix.cs" />
     <Compile Include="GlobalCommentsNS\BusinessRules.cs" />
     <Compile Include="GlobalCommentsNS\Add.cs" />
     <Compile Include="GlobalCommentsNS\Index.cs" />
@@ -202,6 +206,12 @@
     <Compile Include="MenuNS\MenuPathMainNS\Fix.cs" />
     <Compile Include="MenuNS\MenuPathMainNS\FindAllMenuPathsForMenu1.cs" />
     <Compile Include="MyWorkClassesNS\MyWorkClasses.cs" />
+    <Compile Include="PageViewNS\SavePageView.cs" />
+    <Compile Include="PageViewNS\Event_ModifyIndex.cs" />
+    <Compile Include="PageViewNS\SelectList.cs" />
+    <Compile Include="PageViewNS\Fix.cs" />
+    <Compile Include="PageViewNS\Index.cs" />
+    <Compile Include="PageViewNS\PageViewBiz.cs" />
     <Compile Include="PaymentsNS\Methods\SelectList.cs" />
     <Compile Include="PaymentsNS\Methods\Index.cs" />
     <Compile Include="PaymentsNS\Terms\Index.cs" />
@@ -257,7 +267,6 @@
     <Compile Include="ProductNS\ProductIdentifierNS\HandleRelatedRecord.cs" />
     <Compile Include="ProductNS\ProductIdentifierNS\SelectList.cs" />
     <Compile Include="ProductNS\ProductIdentifierNS\ProductIdentifierBiz.cs" />
-    <Compile Include="ProductNS\ProductChildNS\Bussiness Rules.cs" />
     <Compile Include="ProductNS\ProductChildNS\Index.cs" />
     <Compile Include="ProductNS\ProductChildNS\Initialize.cs" />
     <Compile Include="ProductNS\ProductChildNS\ProductChildBiz.cs" />

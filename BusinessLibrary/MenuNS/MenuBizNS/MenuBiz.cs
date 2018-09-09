@@ -13,7 +13,9 @@ using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
+using AliKuli.Extentions;
 using WebLibrary.Programs;
+using UowLibrary.PageViewNS;
 
 namespace UowLibrary.MenuNS
 {
@@ -23,16 +25,20 @@ namespace UowLibrary.MenuNS
         protected ProductBiz _productBiz;
         protected ProductChildBiz _productChildBiz;
         protected LikeUnlikeBiz _likeUnlikeBiz;
+        UserBiz _userBiz;
+        PageViewBiz _pageViewBiz;
 
-        public MenuBiz(MenuPathMainBiz menuPathMainBiz, LikeUnlikeBiz likeUnlikeBiz, ProductBiz productBiz, IRepositry<MenuPathMain> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
+        public MenuBiz(MenuPathMainBiz menuPathMainBiz, LikeUnlikeBiz likeUnlikeBiz, ProductBiz productBiz, IRepositry<MenuPathMain> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager, UserBiz userBiz, PageViewBiz pageViewBiz)
             : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
         {
 
             _menuPathMainBiz = menuPathMainBiz;
             _productBiz = productBiz;
             _productChildBiz = productBiz.ProductChildBiz;
-
+            _userBiz = userBiz;
             _likeUnlikeBiz = likeUnlikeBiz;
+            _pageViewBiz = pageViewBiz;
+
             //_likeUnlikeBiz.UserIdFromBiz = myWorkClasses.UserId;
             //_likeUnlikeBiz.UserNameBiz = myWorkClasses.UserName;
             //_menuPath1Biz = menuPath1Biz;
@@ -52,6 +58,15 @@ namespace UowLibrary.MenuNS
             get { return _menuPathMainBiz; }
         }
 
+
+        public UserBiz UserBiz
+        {
+            get
+            {
+                _userBiz.IsNullThrowExceptionArgument();
+                return _userBiz;
+            }
+        }
 
 
     }

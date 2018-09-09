@@ -98,7 +98,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         //[Required]
         //[Display(Name = "Name for Reference")]
-        [MaxLength(2000, ErrorMessage = "Max length allowed in {0} is {1} charecters")]
+        //[MaxLength(2000, ErrorMessage = "Max length allowed in {0} is {1} charecters")]
         /// <summary>
         /// The name can be empty. In cases such as States, sometimes a country does not have a state. So then we use the country
         /// but so that we can connect the city with the country we are allowing blank states

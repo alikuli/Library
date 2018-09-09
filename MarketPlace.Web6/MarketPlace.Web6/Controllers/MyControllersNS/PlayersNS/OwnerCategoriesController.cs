@@ -14,6 +14,7 @@ using UowLibrary.MyWorkClassesNS;
 using UowLibrary.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ErrorHandlerLibrary;
+using UowLibrary.PageViewNS;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -23,8 +24,8 @@ namespace MarketPlace.Web6.Controllers
         OwnerCategoryBiz _OwnerCategoryBiz;
         #region Constructo and initializers
 
-        public OwnerCategoriesController(OwnerCategoryBiz biz, BreadCrumbManager bcm, IErrorSet err)
-            : base(biz, bcm, err) 
+        public OwnerCategoriesController(OwnerCategoryBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
+            : base(biz, bcm, err, pageViewBiz) 
         {
             _OwnerCategoryBiz = biz;
         }

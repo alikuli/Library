@@ -27,7 +27,7 @@ namespace AliKuli.Extentions
                 .Select(x =>
                     new SelectListItem
                     {
-                        Text = Enum.GetName(typeof(TEnum), x),
+                        Text = Enum.GetName(typeof(TEnum), x).ToTitleSentance(),
                         Value = (Convert.ToInt32(x)).ToString()
                     });
 

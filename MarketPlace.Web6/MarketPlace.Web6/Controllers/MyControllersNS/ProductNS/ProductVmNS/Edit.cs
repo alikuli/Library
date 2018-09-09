@@ -54,30 +54,31 @@ namespace MarketPlace.Web6.Controllers
 
         private async Task<ProductAutomobileVM> makeTheVm(string id, string menuPathMainId, string returnUrl, string selectId, string searchString, ActionNameENUM actionNameEnum)
         {
-            id.IsNullThrowExceptionArgument("Id not received. Bad Request");
-            menuPathMainId.IsNullOrWhiteSpaceThrowException("Menu path not defined.");
-            returnUrl.IsNullOrWhiteSpaceThrowException("Return URL not defined.");
+            throw new NotImplementedException();
+            //id.IsNullThrowExceptionArgument("Id not received. Bad Request");
+            //menuPathMainId.IsNullOrWhiteSpaceThrowException("Menu path not defined.");
+            //returnUrl.IsNullOrWhiteSpaceThrowException("Return URL not defined.");
 
-            Product product = await _productBiz.FindAsync(id);
-            product.IsNullThrowException("Product not found.");
+            //Product product = await _productBiz.FindAsync(id);
+            //product.IsNullThrowException("Product not found.");
 
 
-            MenuPathMain mpm = await _menuPathMainBiz.FindAsync(menuPathMainId);
-            mpm.IsNullThrowException("MenuPathMain not found.");
+            //MenuPathMain mpm = await _menuPathMainBiz.FindAsync(menuPathMainId);
+            //mpm.IsNullThrowException("MenuPathMain not found.");
 
-            //Not Id is ProductId
-            //product.MenuManager = new MenuManager(id, mpm, product, null, menuLevelEnum, returnUrl, false, "", selectId, searchString, SortOrderENUM.Item1_Asc, actionNameEnum);
+            ////Not Id is ProductId
+            ////product.MenuManager = new MenuManager(id, mpm, product, null, menuLevelEnum, returnUrl, false, "", selectId, searchString, SortOrderENUM.Item1_Asc, actionNameEnum);
 
-            //convert to the derived class.
-            ProductAutomobileVM productAutomobileVM = ProductAutomobileVM.MakeThisClassFrom(product);
+            ////convert to the derived class.
+            //ProductAutomobileVM productAutomobileVM = ProductAutomobileVM.MakeThisClassFrom(product);
 
-            //load 
-            productAutomobileVM.RestoreNameFields();
-            loadSelectLists(productAutomobileVM as ICommonWithId);
-            ViewBag.ReturnUrl = returnUrl;
-            _productBiz.LoadMenuPathCheckedBoxes(productAutomobileVM as IProduct);
+            ////load 
+            ////productAutomobileVM.RestoreNameFields();
+            //loadSelectLists(productAutomobileVM as ICommonWithId);
+            //ViewBag.ReturnUrl = returnUrl;
+            //_productBiz.LoadMenuPathCheckedBoxes(productAutomobileVM as IProduct);
 
-            return productAutomobileVM;
+            //return productAutomobileVM;
         }
 
 
@@ -101,7 +102,7 @@ namespace MarketPlace.Web6.Controllers
                 entity.SaveNameFields();
 
                 //LoadUserIntoEntity(entity);
-                Product entityConvertedToProduct = entity.MakeProductFromThis();
+                Product entityConvertedToProduct = entity.ConvertToPresistentClass();
 
                 //get the Db Entity for this...
                 Product dbEntity = _productBiz.Find(entity.Id);

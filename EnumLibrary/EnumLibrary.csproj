@@ -108,13 +108,14 @@
     <Compile Include="EnumNS\Discounts\DiscountENUM.cs" />
     <Compile Include="EnumNS\Discounts\DiscountTyoeENUM.cs" />
     <Compile Include="EnumNS\Discounts\DiscountValOrPctENUM.cs" />
+    <Compile Include="EnumNS\FeaturesTypeENUM.cs" />
     <Compile Include="EnumNS\UomNS\UomLengthtENUM.cs" />
     <Compile Include="EnumNS\UomNS\UomVolumetENUM.cs" />
     <Compile Include="EnumNS\UomNS\UomWeightENUM.cs" />
     <Compile Include="EnumNS\User Related\IUserHasUploadsTypeENUM.cs" />
     <Compile Include="EnumNS\User Related\EducationLevelENUM.cs" />
     <Compile Include="EnumNS\EmailProviderEnum.cs" />
-    <Compile Include="EnumNS\Misc\EnumTypes.cs" />
+    <Compile Include="EnumNS\Misc\TypeENUM.cs" />
     <Compile Include="EnumNS\Misc\FileTypeENUM.cs" />
     <Compile Include="EnumNS\User Related\MaritalStatusENUM.cs" />
     <Compile Include="EnumNS\MethodOfContactEnum.cs" />

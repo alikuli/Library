@@ -1,28 +1,68 @@
-﻿using System.IO;
+﻿using MarketPlace.Web6.Models;
+using ModelsClassLibrary.DelegatesNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
+using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using UowLibrary.ProductNS;
 namespace MarketPlace.Web6.Controllers
 {
+    public delegate void Print(int value);
     public class TestController : Controller
     {
-
+        ProductBiz _productBiz;
+        public TestController(ProductBiz productBiz)
+        {
+            _productBiz = productBiz;
+        }
         public ActionResult Index()
         {
-            //C:\Users\ALI\Documents\Visual Studio 2013\Projects\Libraries\MarketPlace.Web6\MarketPlace.Web6\Content\MyImages\Initialization\Chinese Food.jpg
-            string sourceDirectory = AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY;
-            string nameOfSourceFile = "Chinese Food.jpg";
-            string targetPath = Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY,"test");
+            FeaturesListModel model = new FeaturesListModel();
+            loadDataIntoVm(model);
+            model.SetupDirtyFlags();
 
-            string sourceDirectoryWebMapped = HttpContext.Server.MapPath(sourceDirectory);
-            string targetDirectoryWebMapped = HttpContext.Server.MapPath(targetPath);
+            return View(model);
 
-            AliKuli.ToolsNS.FileTools.CopyFileAndGiveNewName(sourceDirectoryWebMapped, targetDirectoryWebMapped, nameOfSourceFile);
-            return View();
         }
 
-        [HttpPost]
-        public ActionResult Index(string msg)
+        private static void loadDataIntoVm(FeaturesListModel model)
         {
-            return View();
+            model.Features = new List<FeaturesModel>
+            {
+                new FeaturesModel{FeatureName = "No of Seats", FeatureValue = "4"},
+                new FeaturesModel{FeatureName = "Automatic", FeatureValue = "No"},
+                new FeaturesModel{FeatureName = "Engine", FeatureValue = "2500CC"}
+            };
         }
+
+
+        public ActionResult Delete(int index, FeaturesListModel model)
+        {
+            deleteFromDb(model.Features[index].Id);
+            model.Delete(index);
+            return Json(model);
+        }
+
+        private void deleteFromDb(string p)
+        {
+            //throw new System.NotImplementedException();
+        }
+
+        public ActionResult Add(FeaturesListModel model)
+        {
+            model.Add();
+
+
+
+
+            return Json(model);
+        }
+        public ActionResult Save(FeaturesListModel model)
+        {
+
+            model.Save();
+            return Json(model);
+        }
+
     }
 }

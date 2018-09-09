@@ -44,9 +44,11 @@
     </div>
 
     <div class="col-xs-6 col-lg-6">
-            <h4 class="pull-right">
-                @Model.NoOfRecords
-            </h4>
+            <div class="pull-right">
+                <h5>@Model.NoOfRecords <span class="text-danger">(@Model.MenuManager.WebClicksCount)</span> </h5>
+                
+            </div>
+        
     </div>
 
 </div>
@@ -233,7 +235,7 @@ else
 
 
     @section scripts{
-    <script src="~/Scripts/MyScripts/IndexScripts.js"></script>
+    <script src="~/Scripts/MyScripts/IndexScripts1.js"></script>
 
         <script>
 

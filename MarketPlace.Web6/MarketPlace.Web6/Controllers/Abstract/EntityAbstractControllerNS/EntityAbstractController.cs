@@ -15,6 +15,7 @@ using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.Interface;
 using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -34,8 +35,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
         //private UserBiz _userBiz;
         //RightBiz _rightBiz;
         //MyWorkClasses _myWorkClasses;
-        public EntityAbstractController(IBusinessLayer<TEntity> icrudUow, BreadCrumbManager bcm, IErrorSet err)
-            : base(bcm,  err)
+        public EntityAbstractController(IBusinessLayer<TEntity> icrudUow, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
+            : base(bcm, err, pageViewBiz) 
         {
             _icrudBiz = icrudUow;
             _tEntityType = typeof(TEntity);

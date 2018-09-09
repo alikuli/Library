@@ -1,0 +1,468 @@
+﻿@*https://www.bootply.com/jf5wQlQVGI*@
+@*https://stackoverflow.com/questions/24276367/how-to-make-an-entire-bootstrap-thumbnail-clickable-for-mobile-and-tablet*@
+
+@*https://stackoverflow.com/questions/24590222/bootstrap-3-grid-with-different-height-in-each-item-is-it-solvable-using-only*@
+@*<style>
+        .akaFix
+        {
+            display:flex;
+            flex-wrap:wrap;
+            width:100%;
+        }
+    </style>*@
+
+@model ModelsClassLibrary.ViewModels.IndexListVM
+
+@{
+    Model.MenuManager.MenuState.ControllerCurrentName = this.ViewContext.RouteData.Values["controller"].ToString();
+    ModelsClassLibrary.ViewModels.IndexItemVM[] IndexListVMArray = Model.DataSortedAndFilteredArray;
+    ModelsClassLibrary.ViewModels.IndexItemVM currIndexItemVM = null;
+
+
+
+    //int count = 0;
+    //string returnurl = Request.Url.PathAndQuery;
+    //string currController = Model.MenuManager.MenuState.ControllerCurrentName;
+    //string editController = Model.MenuManager.MenuState.CreateAndEditLink_ControllerName;
+    //bool isProductChild = Model.MenuManager.MenuState.IsProductChild;
+    //string userId = Model.UserId ?? "";
+    //string commentUrl = "";
+    //string classSmileFace = " far fa-smile ";
+    //string classUnhappyFace = "far fa-frown-open";
+    //string shortNameOfProduct = "";
+    var vv = Model.MenuManager.IndexMenuVariables;
+    vv.Count = 0;
+    vv.Returnurl = Request.Url.PathAndQuery; ;
+    vv.CurrController = Model.MenuManager.MenuState.ControllerCurrentName;
+    vv.EditController = Model.MenuManager.MenuState.CreateAndEditLink_ControllerName;
+    vv.IsProductChild = Model.MenuManager.MenuState.IsProductChild;
+    vv.UserId = Model.UserId ?? "";
+    vv.CommentUrl = "";
+    vv.ShortNameOfProduct = "";
+
+
+}
+
+
+
+<div class="">
+    <div class=" text-center text-lg-left akaFix">
+
+
+        @for (int i = 0; i < IndexListVMArray.Length; i++)
+        {
+            //count = i;
+            currIndexItemVM = IndexListVMArray[i];
+
+            string alert = (@Model.SelectedIdMatchesThis(IndexListVMArray[i].Id) ? "alert-info " : " ");
+            string alertFont = (@Model.SelectedIdMatchesThis(IndexListVMArray[i].Id) ? " text-danger " : " ");
+
+
+            //string imagePath = "";
+
+            //string mainMenuPath = "";
+            //string modalBoxId = "myModal" + count;
+            //string modalBoxIdInButton = "#" + modalBoxId;
+            //string modalLabelId = "modalLabelId" + count;
+            //string menuPath1Id = "";
+            //string menuPath2Id = "";
+            //string menuPath3Id = "";
+            //string productId = "";
+            //string productChildId = "";
+            //string idForEdit = "";
+            //string menuPathMainId = "";
+
+            vv.Count = i;
+            vv.ImagePath = "";
+            vv.MainMenuPath = "";
+            vv.MenuPath1Id = "";
+            vv.MenuPath2Id = "";
+            vv.MenuPath3Id = "";
+            vv.ProductId = "";
+            vv.ProductChildId = "";
+            vv.IdForEdit = "";
+            vv.MenuPathMainId = "";
+
+
+
+
+            //            if (count % 2 == 0)
+            if (vv.Count % 2 == 0)
+            {
+                alert += " background-ltgrey ";
+            }
+
+
+
+
+            if (IndexListVMArray[i].IsImageThere)
+            {
+                //imagePath = Url.Content(IndexListVMArray[i].ImageAddressStr);
+                vv.ImagePath = Url.Content(IndexListVMArray[i].ImageAddressStr);
+            }
+
+
+
+
+            //this has to be updated for the menu
+            if (Model.MenuManager.MenuState.IsMenu)
+            {
+
+                switch (Model.MenuManager.MenuState.MenuEnum)
+                {
+                    case MenuENUM.IndexMenuProductChild:
+                        //mainMenuPath = Url.Action("ProductOwner", currController, new { id = IndexListVMArray[i].Id, menuEnum = Model.MenuManager.MenuState.NextMenu, });
+                        vv.MainMenuPath = Url.Action("ProductOwner", vv.CurrController, new { id = IndexListVMArray[i].Id, menuEnum = Model.MenuManager.MenuState.NextMenu, });
+                        break;
+                    default:
+                        vv.MainMenuPath = Url.Action("index", vv.CurrController, new { id = IndexListVMArray[i].Id, menuEnum = Model.MenuManager.MenuState.NextMenu, });
+                        //mainMenuPath = Url.Action("index", currController, new { id = IndexListVMArray[i].Id, menuEnum = Model.MenuManager.MenuState.NextMenu, });
+                        break;
+                }
+
+            }
+            else
+            {
+                vv.MainMenuPath = Url.Action("Edit", vv.EditController, new { id = IndexListVMArray[i].Id });
+                //mainMenuPath = Url.Action("Edit", editController, new { id = IndexListVMArray[i].Id });
+            }
+
+
+            //if (Model.UserIsAdmin)
+            vv.MenuPathMainId = "";
+            //menuPathMainId = "";
+            vv.IdForEdit = IndexListVMArray[i].Id;
+            //idForEdit = IndexListVMArray[i].Id;
+
+            switch (IndexListVMArray[i].MenuManager.MenuState.MenuEnum)
+            {
+                case MenuENUM.IndexDefault:
+                    break;
+                case MenuENUM.IndexMenuPath1:
+                    //item is menuPathMain
+                    vv.MenuPathMainId = IndexListVMArray[i].Id;
+                    vv.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    vv.MenuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    //menuPathMainId = IndexListVMArray[i].Id;
+                    //idForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    //menuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    break;
+                case MenuENUM.IndexMenuPath2:
+                    //item is menuPathMain
+
+                    vv.MenuPathMainId = IndexListVMArray[i].Id;
+                    vv.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+                    vv.MenuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    vv.MenuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+
+
+                    //menuPathMainId = IndexListVMArray[i].Id;
+                    //idForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+                    //menuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    //menuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+
+                    break;
+                case MenuENUM.IndexMenuPath3:
+                    //item is menuPathMain
+                    vv.MenuPathMainId = IndexListVMArray[i].Id;
+                    vv.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+                    vv.MenuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    vv.MenuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+                    vv.MenuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+
+
+                    //menuPathMainId = IndexListVMArray[i].Id;
+                    //idForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+                    //menuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    //menuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+                    //menuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+                    break;
+                case MenuENUM.IndexMenuProduct:
+                    //item is product
+                    //productId = IndexListVMArray[i].Id;
+                    vv.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductId;
+                    vv.MenuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    vv.MenuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+                    vv.MenuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+
+                    //idForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductId;
+                    //menuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    //menuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+                    //menuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+                    break;
+                case MenuENUM.IndexMenuProductChild:
+                    //item is productChild
+                    //productChildId = IndexListVMArray[i].Id;
+
+                    vv.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductId;
+                    vv.MenuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    vv.MenuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+                    vv.MenuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+                    vv.ProductChildId = IndexListVMArray[i].MenuManager.MenuState.ProductChildId;
+
+                    //idForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductChildId;
+                    //idForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductId;
+                    //menuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                    //menuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+                    //menuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+                    //productChildId = IndexListVMArray[i].MenuManager.MenuState.ProductChildId;
+
+
+                    break;
+                default:
+                    break;
+            }
+
+
+            //vv.LikeId = "";
+            vv.LikeUrl = "";
+            vv.LikeCountUrl = "";
+            vv.UnlikeUrl = "";
+            vv.UnlikeCountUrl = "";
+            vv.ShoppingCartUrl = "";
+            vv.HandPointingUrl = "";
+
+
+            if (Model.IsMenu)
+            {
+
+
+                vv.LikeUrl = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = true });
+                vv.LikeCountUrl = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = true });
+
+
+                vv.UnlikeUrl = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = false });
+                vv.UnlikeCountUrl = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId });
+
+
+                vv.CommentUrl = Url.Action("AddComment", "GlobalComments", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId });
+
+
+
+            }
+            vv.ShortNameOfProduct = IndexListVMArray[i].ShortName;
+
+
+            @*<div class="col-lg-3 col-md-4 col-xs-6">
+                    <a href="#" class="d-block mb-4 h-100">
+                        <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                    </a>
+                </div>*@
+
+            <div class="container col-lg-3 col-md-4 col-xs-6 m-0">
+                <div class="border border-dark rounded text-center backgroundYellowOnHover ">
+
+                    <a href="@vv.MainMenuPath" title="@IndexListVMArray[i].FullName" class="d-block h-100 text-center mb-0">
+                        <h4>@vv.ShortNameOfProduct</h4>
+                        <img class="img-fluid img-thumbnail" src="@vv.ImagePath" alt="@IndexListVMArray[i].ShortName">
+                    </a>
+                    @if (Model.IsMenu)
+                    {
+                        <div class="m-0">
+
+                            @*These are all anchorButtons Class*@
+                            <a id="@vv.ShoppingCartId" class="anchorButtons btn btn-xs  btn-success aria-label fa fa-shopping-cart" data-url="@vv.ShoppingCartUrl" onclick="ShoppingCart();"></a>
+
+                            <a id="@vv.HandPointingId" class="anchorButtons btn btn-xs  btn-warning aria-label far fa-hand-point-up" data-url="@vv.HandPointingUrl" onclick="Bid();"></a>
+
+
+                            <a id="@vv.LikeId"
+                               class="@vv.LikeClass"
+                               data-nameofproduct="@vv.ShortNameOfProduct"
+                               data-url="@vv.LikeUrl"
+                               data-toggle="modal"
+                               data-target="#mymodalnew"
+                               onclick="EditlikeUnlikeModal(this);"></a>
+
+                            <a id="@vv.UnlikeId"
+                               class="@vv.UnlikeClass"
+                               data-nameofproduct="@vv.ShortNameOfProduct"
+                               data-url="@vv.UnlikeUrl"
+                               data-toggle="modal"
+                               data-target="#mymodalnew"
+                               onclick="EditlikeUnlikeModal(this);"></a>
+
+
+                            <a id="@vv.CommentId"
+                               data-toggle="modal"
+                               href="#modalBoxId"
+                               data-url="@vv.CommentUrl"
+                               class="anchorButtons btn btn-xs btn-primary aria-label far fa-comment"
+                               onclick="LoadDataUrlInComment(this, document.getElementById('modalBoxId'));"></a>
+
+
+                        </div>
+
+
+                        <div>
+                            @*countClass are those items that show the count*@
+                            <a id="@vv.ShoppingCartCountId"
+                               class="btn btn-xs  aria-label disabled"
+                               data-nameofproduct="@vv.ShortNameOfProduct"
+                               data-url="@vv.UnlikeCountUrl"
+                               data-toggle="modal"
+                               data-target="#mymodalnew"
+                               onclick="">&nbsp;</a>
+
+                            <a id="@vv.HandPointingCountId"
+                               class="btn btn-xs  aria-label disabled"
+                               data-nameofproduct="@vv.ShortNameOfProduct"
+                               data-url="@vv.UnlikeCountUrl"
+                               data-toggle="modal"
+                               data-target="#mymodalnew"
+                               onclick="">&nbsp;</a>
+
+
+                            <a id="@vv.LikeCountId"
+                               class="btn btn-xs aria-label"
+                               data-nameofproduct="@vv.ShortNameOfProduct"
+                               data-url="@vv.LikeCountUrl"
+                               data-toggle="modal"
+                               data-target="#mymodalnew"
+                               onclick="ShowPplWhoLikeUnlikeThis(this)">@IndexListVMArray[i].MenuManager.LikeUnlikesCounter.LikeCount</a>
+
+                            <a id="@vv.UnlikeCountId"
+                               class="btn btn-xs aria-label"
+                               data-nameofproduct="@vv.ShortNameOfProduct"
+                               data-url="@vv.UnlikeCountUrl"
+                               data-toggle="modal"
+                               data-target="#mymodalnew"
+                               onclick="ShowPplWhoLikeUnlikeThis(this)">@IndexListVMArray[i].MenuManager.LikeUnlikesCounter.UnlikeCount</a>
+
+
+
+                            <a id="@vv.CommentCountId" class="btn btn-xs aria-label disabled"></a>
+                        </div>
+
+                        if (vv.IsAdmin)
+                        {
+                            <div>
+                                @*countClass are those items that show the count*@
+                                <a id="@vv.ShoppingCartCountId"
+                                   class="btn btn-xs  aria-label disabled"
+                                   data-nameofproduct="@vv.ShortNameOfProduct"
+                                   data-url="@vv.UnlikeCountUrl"
+                                   data-toggle="modal"
+                                   data-target="#mymodalnew"
+                                   onclick="">&nbsp;</a>
+
+                                <a id="@vv.HandPointingCountId"
+                                   class="btn btn-xs  aria-label disabled"
+                                   data-nameofproduct="@vv.ShortNameOfProduct"
+                                   data-url="@vv.UnlikeCountUrl"
+                                   data-toggle="modal"
+                                   data-target="#mymodalnew"
+                                   onclick="">&nbsp;</a>
+
+
+                                <a id="@vv.LikeCountId"
+                                   class="btn btn-xs aria-label"
+                                   data-nameofproduct="@vv.ShortNameOfProduct"
+                                   data-url="@vv.LikeCountUrl"
+                                   data-toggle="modal"
+                                   data-target="#mymodalnew"
+                                   onclick="ShowPplWhoLikeUnlikeThis(this)">@IndexListVMArray[i].MenuManager.LikeUnlikesCounter.LikeCount</a>
+
+                                <a id="@vv.UnlikeCountId"
+                                   class="btn btn-xs aria-label"
+                                   data-nameofproduct="@vv.ShortNameOfProduct"
+                                   data-url="@vv.UnlikeCountUrl"
+                                   data-toggle="modal"
+                                   data-target="#mymodalnew"
+                                   onclick="ShowPplWhoLikeUnlikeThis(this)">@IndexListVMArray[i].MenuManager.LikeUnlikesCounter.UnlikeCount</a>
+
+
+
+                                <a id="@vv.CommentCountId" class="btn btn-xs aria-label disabled"></a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- Modal for comments -->
+<div class="modal fade" id="modalBoxId" tabindex="-1" role="dialog" aria-labelledby="modalLabelId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabelId">Comments</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="control-label col-md-2">
+                        Comment
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" name="comment" value=" " id="comment" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="commentSaveBtn" type="button" class="btn btn-primary" data-url="" onclick="AddComment(this, document.getElementById('modalBoxId'), document.getElementById('comment'))">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*Modal to show like/Unlike Users*@
+
+
+<div class="modal fade" id="mymodalnew" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalHeading"><span id="myModalHeading.span" class=""></span></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body" id="myModalbodyNewid">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary invisible" id="modalNewCloseBtnId" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="modal fade" id="modalBoxId" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Large Modal</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <h3>Modal Body</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="AddComment(this, document.getElementById('modalBoxId'), document.getElementById('comment'))" >Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>*@

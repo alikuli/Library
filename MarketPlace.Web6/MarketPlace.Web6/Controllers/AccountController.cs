@@ -11,16 +11,17 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
-
+using AliKuli.Extentions;
 namespace MarketPlace.Web6.Controllers
 {
     [Authorize]
     public class AccountController : AbstractController
     {
         UserBiz _userBiz;
-        public AccountController(UserBiz userBiz, BreadCrumbManager bcm, IErrorSet err)
-            : base(bcm, err) 
+        public AccountController(UserBiz userBiz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
+            : base(bcm, err, pageViewBiz) 
         {
             _userBiz = userBiz;
         }
@@ -37,7 +38,7 @@ namespace MarketPlace.Web6.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            ViewBag.ReturnUrl = returnUrl;
+
             return View();
         }
 
@@ -168,9 +169,12 @@ namespace MarketPlace.Web6.Controllers
                 {
                     ErrorsGlobal.Add("Registration failed", MethodBase.GetCurrentMethod(), e);
                     ErrorsGlobal.MemorySave();
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToLocal("");
+                    //return RedirectToAction("Index", "Home");
                 }
-                return RedirectToAction("Index", "Home");
+                return RedirectToLocal("");
+
+                //return RedirectToAction("Index", "Home");
             }
 
             model = UserBiz.LoadCountrySelectListIn(model);
@@ -347,18 +351,22 @@ namespace MarketPlace.Web6.Controllers
         public ActionResult LogOff()
         {
             UserBiz.LogOff();
-            return RedirectToAction("Index", "Home");
+            //return RedirectToLocal("");
+            return RedirectToAction("Index", "Menus");
         }
 
 
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
+            if(returnUrl.IsNullOrWhiteSpace())
+                return RedirectToAction("Index","Menus",null);
+
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+           return RedirectToAction("Index","Menus",null);
         }
 
 

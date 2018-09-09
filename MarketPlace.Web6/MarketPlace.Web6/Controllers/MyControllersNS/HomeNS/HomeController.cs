@@ -9,14 +9,15 @@ using System.Reflection;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 
 namespace MarketPlace.Web6.Controllers
 {
     public class HomeController : AbstractController
     {
-        public HomeController(BreadCrumbManager bcm, IErrorSet err)
-            : base(bcm, err) 
+        public HomeController(BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
+            : base(bcm, err, pageViewBiz) 
         {
 
         }

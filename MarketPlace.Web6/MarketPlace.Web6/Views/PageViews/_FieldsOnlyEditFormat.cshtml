@@ -1,0 +1,136 @@
+﻿@model ModelsClassLibrary.ModelsNS.PageViewNS.PageView
+
+
+<div class="form-horizontal">
+    @Html.Partial(@"_Name_And_DetailInfo")
+
+    <div class="row">
+        <div class="col-2">
+            @Html.LabelFor(model => model.ControllerName , htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ControllerName, new { @class = "form-control disabled", @placeholder = "Enter details to display on web page" })
+            @Html.ValidationMessageFor(model => model.ControllerName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-2">
+            @Html.LabelFor(model => model.ActionName, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ActionName, new { @class = "form-control disabled", @placeholder = "Enter details to display on web page" })
+            @Html.ValidationMessageFor(model => model.ActionName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2">
+            @Html.LabelFor(model => model.BrowserType, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.BrowserType, new { @class = "form-control disabled", @placeholder = "Enter details to display on web page" })
+            @Html.ValidationMessageFor(model => model.BrowserType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2">
+            @Html.LabelFor(model => model.IsCrawler, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.IsCrawler, new { @class = "form-control disabled", @placeholder = "Enter details to display on web page" })
+            @Html.ValidationMessageFor(model => model.IsCrawler, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            @Html.LabelFor(model => model.IsMobileDevice, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.IsMobileDevice, new { @class = "form-control disabled", @placeholder = "Enter details to display on web page" })
+            @Html.ValidationMessageFor(model => model.IsMobileDevice, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            @Html.LabelFor(model => model.UrlRefererrerHost, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UrlRefererrerHost, new { @class = "form-control disabled", @placeholder = "Enter details to display on web page" })
+            @Html.ValidationMessageFor(model => model.UrlRefererrerHost, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            @Html.LabelFor(model => model.UserAgent, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserAgent, new { @class = "form-control  disabled", @placeholder = "Enter details to display on web page" })
+            @Html.ValidationMessageFor(model => model.UserAgent, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            @Html.LabelFor(model => model.UserHostAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserHostAddress, new { @class = "form-control  disabled", @placeholder = "Enter details to display on web page" })
+            @Html.ValidationMessageFor(model => model.UserHostAddress, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            @Html.LabelFor(model => model.UserHostName, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserHostName, new { @class = "form-control  disabled", @placeholder = "Enter details to display on web page" })
+            @Html.ValidationMessageFor(model => model.UserHostName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            @Html.LabelFor(model => model.UserInfo, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserInfo, new { @class = "form-control disabled", @placeholder = "Enter details to display on web page" })
+            @Html.ValidationMessageFor(model => model.UserInfo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            @Html.LabelFor(model => model.UserLanguages, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserLanguages, new { @class = "form-control disabled", @placeholder = "Enter details to display on web page" })
+            @Html.ValidationMessageFor(model => model.UserLanguages, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-2">
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserName, new { @class = "form-control disabled", @placeholder = "Enter details to display on web page" })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+</div>
+

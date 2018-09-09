@@ -16,8 +16,6 @@ namespace UowLibrary.LikeUnlikeNS
         public LikeUnlikeParameter AddLikeAndReturnCount(string menuPath1Id, string menuPath2Id, string menuPath3Id, string productId, string productChildId, string userId, bool isLike, string comment)
         {
             userId.IsNullOrWhiteSpaceThrowException("No user is logged in!");
-                //if it is a like delete the similar dislike. If it is a dislike delete the similar like
-            deleteTheRelatedLikeUnlike(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, userId, isLike);
 
             LikeUnlike likeUnlike = Factory() as LikeUnlike;
             likeUnlike.Initialize(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, userId, isLike, comment);
@@ -74,7 +72,8 @@ namespace UowLibrary.LikeUnlikeNS
                 user.IsNullThrowException();
                 user.LikeUnlikes.Add(likeUnlike);
             }
-
+            //if it is a like delete the similar dislike. If it is a dislike delete the similar like
+            bool relatedOppoisteDeleted = deleteTheRelatedLikeUnlike(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, userId, isLike);
             CreateAndSave(CreateControllerCreateEditParameter(likeUnlike as ICommonWithId));
 
             return Count(
@@ -83,11 +82,12 @@ namespace UowLibrary.LikeUnlikeNS
                 menuPath3Id,
                 productId,
                 productChildId,
-                userId);
+                userId, 
+                relatedOppoisteDeleted);
 
         }
 
-        private void deleteTheRelatedLikeUnlike(string menuPath1Id, string menuPath2Id, string menuPath3Id, string productId, string productChildId, string userId, bool isLike)
+        private bool deleteTheRelatedLikeUnlike(string menuPath1Id, string menuPath2Id, string menuPath3Id, string productId, string productChildId, string userId, bool isLike)
         {
             LikeUnlike dummy = Factory() as LikeUnlike;
             dummy.Initialize(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, userId, !isLike, "dummy content");
@@ -95,7 +95,11 @@ namespace UowLibrary.LikeUnlikeNS
             string nameId = dummy.KeyGenerator();
             LikeUnlike lu = FindAll().FirstOrDefault(x => x.Name == nameId);
             if (!lu.IsNull())
+            {
                 Delete(lu.Id);
+                return true; //there was a related opposite which was deleted!
+            }
+            return false;
         }
     }
 }

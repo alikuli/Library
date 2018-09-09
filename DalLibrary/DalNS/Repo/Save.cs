@@ -72,6 +72,18 @@ namespace DalLibrary.DalNS
 
             catch (Exception e)
             {
+                //foreach (var validationErrors in e.EntityValidationErrors)
+                //{
+                //    foreach (var validationError in validationErrors.ValidationErrors)
+                //    {
+                //        Trace.TraceInformation(
+                //              "Class: {0}, Property: {1}, Error: {2}",
+                //              validationErrors.Entry.Entity.GetType().FullName,
+                //              validationError.PropertyName,
+                //              validationError.ErrorMessage);
+                //    }
+                //}
+
                 ErrorsGlobal.Add("Exception. Data not saved.", MethodBase.GetCurrentMethod(), e);
 
             }

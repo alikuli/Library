@@ -18,6 +18,7 @@ using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.MenuNS;
 using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
 
@@ -30,8 +31,8 @@ namespace MarketPlace.Web6.Controllers
         MenuPath1Biz _menuPath1Biz;
         //UserBiz _userBiz;
         MenuPathMainBiz _menuPathMainBiz;
-        public ProductAutomobileVMsController(ProductBiz productBiz, MenuPathMainBiz menuPathMainBiz, BreadCrumbManager bcm, IErrorSet err)
-            : base(bcm, err) 
+        public ProductAutomobileVMsController(ProductBiz productBiz, MenuPathMainBiz menuPathMainBiz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
+            : base(bcm, err, pageViewBiz) 
         {
             _productBiz = productBiz;
             _menuPath1Biz = menuPathMainBiz.MenuPath1Biz;

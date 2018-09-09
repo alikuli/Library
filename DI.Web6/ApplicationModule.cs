@@ -7,17 +7,20 @@ using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using UowLibrary;
 using UowLibrary.CounterNS;
+using UowLibrary.FeaturesNS;
 using UowLibrary.FileDocNS;
 using UowLibrary.GlobalCommentsNS;
 using UowLibrary.Interface;
 using UowLibrary.LikeUnlikeNS;
 using UowLibrary.MenuNS;
 using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
@@ -77,6 +80,8 @@ namespace DependancyResolver
             Bind<GlobalCommentBiz>().ToSelf();
             Bind<LikeUnlikeBiz>().ToSelf();
             Bind<MyWorkClasses>().ToSelf();
+            Bind<FeatureBiz>().ToSelf();
+            Bind<PageViewBiz>().ToSelf();
         }
 
         public void LoadDALs()

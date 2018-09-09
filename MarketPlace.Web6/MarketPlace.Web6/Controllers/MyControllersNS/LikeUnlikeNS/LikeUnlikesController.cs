@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.LikeUnlikeNS;
 using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -22,8 +23,8 @@ namespace MarketPlace.Web6.Controllers
 
         #region Construction and initializers
 
-        public LikeUnlikesController(LikeUnlikeBiz biz, BreadCrumbManager bcm, IErrorSet err)
-            : base(biz, bcm, err) 
+        public LikeUnlikesController(LikeUnlikeBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
+            : base(biz, bcm, err, pageViewBiz) 
         {
             _likeUnlikeBiz = biz;
         }
@@ -54,6 +55,7 @@ namespace MarketPlace.Web6.Controllers
                         success = true,
                         thisButtonCount = param.LikeCount,
                         otherButtonCount = param.UnlikeCount,
+                        oppositeDeleted = param.OppositeDeleted
                     },
                     JsonRequestBehavior.DenyGet);
 
@@ -66,6 +68,7 @@ namespace MarketPlace.Web6.Controllers
                         success = true,
                         thisButtonCount = param.UnlikeCount,
                         otherButtonCount = param.LikeCount,
+                        oppositeDeleted = param.OppositeDeleted
                         
                     },
                     JsonRequestBehavior.DenyGet);
@@ -97,7 +100,7 @@ namespace MarketPlace.Web6.Controllers
                 JsonResult likeJsonResult = new JsonResult();
                 //bool hasThisUserHasLiked = false;
                 //bool hasThisUserHasUnliked = false;
-                LikeUnlikeParameter param = _likeUnlikeBiz.Count(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, userId);
+                LikeUnlikeParameter param = _likeUnlikeBiz.Count(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, userId, false);
 
 
                 //UNLIKE
@@ -133,8 +136,7 @@ namespace MarketPlace.Web6.Controllers
                     unLikeCount = param.UnlikeCount,
                     likedUserLst = likeJsonResult,
                     unlikedUsersLst = unlikeJsonResult,
-                    thisUserLiked = false,
-                    thisUserUnliked = false,
+                    oppositeDeleted = param.OppositeDeleted
                 },
                 JsonRequestBehavior.AllowGet);
 
@@ -152,8 +154,6 @@ namespace MarketPlace.Web6.Controllers
                     likecount = 0,
                     unlikecount = 0,
                     message = e.Message,
-                    thisUserLiked = false,
-                    thisUserUnliked = false,
 
                 },
                 JsonRequestBehavior.DenyGet);

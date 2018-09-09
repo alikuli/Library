@@ -63,7 +63,7 @@ namespace ModelsClassLibrary.ViewModels
 
             //Menu = new MenuModel();
             //Menu.ReturnUrl = returnUrl;
-            MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, breadCrumbManager, likeUnlikesCounter);
+            MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, breadCrumbManager, likeUnlikesCounter, UserId);
             Show = new Show();
             SelectedId = selectedId;
             WebCompanyName = webCompanyName;

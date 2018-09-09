@@ -40,7 +40,6 @@ namespace UowLibrary.Abstract
         {
             get
             {
-                _userId.IsNullOrWhiteSpaceThrowException("Programming Error. UserId in Business Abstract Layer not set.");
                 return _userId;
             }
             set

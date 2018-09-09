@@ -86,8 +86,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 ErrorsGlobal.Add("Something went wrong while printing Index.", MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
 
+                return RedirectToAction("Index");
 
-                return RedirectToAction("Index", "Home", null);
 
             }
 

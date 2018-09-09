@@ -1,4 +1,10 @@
-﻿using System.Web.Mvc;
+﻿using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.PageViewNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
+using System;
+using System.Web.Mvc;
+using AliKuli.Extentions;
+
 
 namespace MarketPlace.Web4.Controllers
 {
@@ -16,10 +22,16 @@ namespace MarketPlace.Web4.Controllers
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
+
+
             ErrorsGlobal.MemorySave();
+
             base.OnActionExecuted(filterContext);
 
+            PageViewBiz.SavePageView(filterContext, Request);
+
         }
+
 
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)

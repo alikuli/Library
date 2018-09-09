@@ -30,27 +30,6 @@ namespace UowLibrary.ProductNS.ProicuytVmNS
             get { return "ProductSelectListCache"; }
         }
 
-        //private void makeNameAndSaveFields(ProductAutomobileVM entity)
-        //{
-        //    entity.SaveName();
-        //    entity.saveNameFields();
-
-        //}
-
-        //public override void CreateEntity(ProductAutomobileVM entity)
-        //{
-        //    makeNameAndSaveFields(entity);
-        //    Product product = entity as Product;
-        //    _productBiz.CreateEntity(product);
-        //}
-
-        //public override void UpdateEntity(ProductAutomobileVM entity)
-        //{
-        //    makeNameAndSaveFields(entity);
-        //    Product product = entity as Product;
-        //    _productBiz.UpdateEntity(product);
-        //}
-
         public SelectList SelectList_ForParent(ICommonWithId entity)
         {
             return _productBiz.SelectList_ForParent(entity);

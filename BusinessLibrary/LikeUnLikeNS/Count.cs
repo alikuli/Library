@@ -2,6 +2,7 @@
 using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
+using System;
 using System.Linq;
 
 namespace UowLibrary.LikeUnlikeNS
@@ -19,28 +20,46 @@ namespace UowLibrary.LikeUnlikeNS
         /// <param name="userId"></param>
         /// <param name="isLike"></param>
         /// <returns></returns>
-        public LikeUnlikeParameter Count(string menuPath1Id, string menuPath2Id, string menuPath3Id, string productId, string productChildId, string userId)
+        public LikeUnlikeParameter Count(string menuPath1Id, string menuPath2Id, string menuPath3Id, string productId, string productChildId, string userId, bool oppositeWasDeleted)
         {
 
-
+            LikeUnlikeParameter likeUnlikeParameter = new LikeUnlikeParameter(0, 0, "Count Default");
             if (!productChildId.IsNullOrWhiteSpace())
-                return CountProductChildLikes(productChildId, userId);
+            {
+                likeUnlikeParameter = CountProductChildLikes(productChildId, userId);
+
+            }
 
             if (!productId.IsNullOrWhiteSpace())
-                return ProductLikes(productId, userId);
+            {
+                likeUnlikeParameter = ProductLikes(productId, userId);
+
+            }
 
 
             if (!menuPath3Id.IsNullOrWhiteSpace())
-                return CountMenuPath3Likes(menuPath3Id, userId);
+            {
+                likeUnlikeParameter = CountMenuPath3Likes(menuPath3Id, userId);
+
+            }
 
 
             if (!menuPath2Id.IsNullOrWhiteSpace())
-                return countMenuPath2Likes(menuPath2Id, userId);
+            {
+                likeUnlikeParameter = countMenuPath2Likes(menuPath2Id, userId);
+            }
 
             if (!menuPath1Id.IsNullOrWhiteSpace())
-                return countMenuPath1Likes(menuPath1Id, userId);
+            {
+                likeUnlikeParameter = countMenuPath1Likes(menuPath1Id, userId);;
 
-            return new LikeUnlikeParameter(0, 0, "Count Default", false, false);
+            }
+
+            //this is true if opposite was deleted and signals the Javascript to
+            //reduce the oppoiste number by 1.
+            likeUnlikeParameter.OppositeDeleted = oppositeWasDeleted;
+            
+            return likeUnlikeParameter;
 
 
         }
@@ -58,7 +77,9 @@ namespace UowLibrary.LikeUnlikeNS
             if (!hasLiked)
                 hasUnliked = !(all.FirstOrDefault(x => x.UserId == userId && x.IsLike == false)).IsNull();
 
-            LikeUnlikeParameter param = new LikeUnlikeParameter(likes, unlikes, "menuPath1Id", hasLiked, hasUnliked);
+            LikeUnlikeParameter param = new LikeUnlikeParameter(likes, unlikes, "menuPath1Id");
+            param.HasLiked = hasLiked;
+            param.HasUnLiked = hasUnliked;
 
             addUsersWhoLikeAndDidNotLike(all, param);
             return param;
@@ -78,7 +99,9 @@ namespace UowLibrary.LikeUnlikeNS
             if (!hasLiked)
                 hasUnliked = !(all.FirstOrDefault(x => x.UserId == userId && x.IsLike == false)).IsNull();
 
-            LikeUnlikeParameter param = new LikeUnlikeParameter(likes, unlikes, "menuPath2Id", hasLiked, hasUnliked);
+            LikeUnlikeParameter param = new LikeUnlikeParameter(likes, unlikes, "menuPath2Id");
+            param.HasLiked = hasLiked;
+            param.HasUnLiked = hasUnliked;
 
 
             return param;
@@ -98,7 +121,10 @@ namespace UowLibrary.LikeUnlikeNS
             if (!hasLiked)
                 hasUnliked = !(all.FirstOrDefault(x => x.UserId == userId && x.IsLike == false)).IsNull();
 
-            LikeUnlikeParameter param = new LikeUnlikeParameter(likes, unlikes, "menuPath3Id", hasLiked, hasUnliked);
+            LikeUnlikeParameter param = new LikeUnlikeParameter(likes, unlikes, "menuPath3Id");
+            param.HasLiked = hasLiked;
+            param.HasUnLiked = hasUnliked;
+
             addUsersWhoLikeAndDidNotLike(all, param);
 
             return param;
@@ -119,7 +145,10 @@ namespace UowLibrary.LikeUnlikeNS
             if (!hasLiked)
                 hasUnliked = !(all.FirstOrDefault(x => x.UserId == userId && x.IsLike == false)).IsNull();
 
-            LikeUnlikeParameter param = new LikeUnlikeParameter(likes, unlikes, "productId", hasLiked, hasUnliked);
+            LikeUnlikeParameter param = new LikeUnlikeParameter(likes, unlikes, "productId");
+            param.HasLiked = hasLiked;
+            param.HasUnLiked = hasUnliked;
+
             addUsersWhoLikeAndDidNotLike(all, param);
 
             return param;
@@ -139,7 +168,10 @@ namespace UowLibrary.LikeUnlikeNS
             if (!hasLiked)
                 hasUnliked = !(all.FirstOrDefault(x => x.UserId == userId && x.IsLike == false)).IsNull();
 
-            LikeUnlikeParameter param = new LikeUnlikeParameter(likes, unlikes, "productChildId", hasLiked, hasUnliked);
+            LikeUnlikeParameter param = new LikeUnlikeParameter(likes, unlikes, "productChildId");
+            param.HasLiked = hasLiked;
+            param.HasUnLiked = hasUnliked;
+
             addUsersWhoLikeAndDidNotLike(all, param);
 
             return param;
@@ -149,14 +181,14 @@ namespace UowLibrary.LikeUnlikeNS
             var listOfLikeUsers = all
                 .Where(x => x.IsLike == true)
                 .ToList()
-                .Select(x => new ParticipatingUsers(x.UserId, x.User.UserName, @"\Content\MyImages\BlankImage.jpg", x.Comment))
+                .Select(x => new ParticipatingUsers(x.UserId, x.User.UserName, @"\Content\MyImages\BlankImage.jpg", x.Comment, x.MetaData.Created.Date?? DateTime.MaxValue))
                 .Distinct<ParticipatingUsers>()
                 .ToList();
 
             var listOfUsersWhoDidNotLike = all
                 .Where(x => x.IsLike == false)
                 .ToList()
-                .Select(x => new ParticipatingUsers (x.UserId,  x.User.UserName, @"\Content\MyImages\BlankImage.jpg", x.Comment ))
+                .Select(x => new ParticipatingUsers(x.UserId, x.User.UserName, @"\Content\MyImages\BlankImage.jpg", x.Comment, x.MetaData.Created.Date?? DateTime.MaxValue))
                 .Distinct<ParticipatingUsers>()
                 .ToList();
 

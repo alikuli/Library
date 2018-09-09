@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
@@ -22,8 +23,8 @@ namespace MarketPlace.Web6.Controllers
         ProductBiz _productBiz;
         UserBiz _userBiz;
 
-        public ProductChildsController(ProductBiz biz, UserBiz userBiz, BreadCrumbManager bcm, IErrorSet err)
-            : base(biz.ProductChildBiz, bcm, err) 
+        public ProductChildsController(ProductBiz biz, UserBiz userBiz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
+            : base(biz.ProductChildBiz,bcm, err, pageViewBiz) 
         {
             _productBiz = biz;
             _userBiz = userBiz;

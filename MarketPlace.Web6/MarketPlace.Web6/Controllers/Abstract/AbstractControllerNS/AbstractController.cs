@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.Interface;
 using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -29,6 +30,7 @@ namespace MarketPlace.Web4.Controllers
     {
 
         private string _userId;
+        readonly PageViewBiz _pageViewBiz;
         /// <summary>
         /// All errorsets taken from DI point to the same reference.
         /// </summary>
@@ -36,10 +38,11 @@ namespace MarketPlace.Web4.Controllers
 
         BreadCrumbManager _bcm;
         IErrorSet _err;
-        public AbstractController(BreadCrumbManager bcm, IErrorSet err)
+        public AbstractController(BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
         {
             _bcm = bcm;
             _err = err ;
+            _pageViewBiz = pageViewBiz;
         }
         /// <summary>
         /// There is a complication with UserStringId. It gets initialized here in the OnActionExecuting(ActionExecutingContext filterContext).
@@ -82,9 +85,10 @@ namespace MarketPlace.Web4.Controllers
         {
             get
             {
-                var req = new System.Web.Routing.RequestContext();
-                string home = UrlHelper.GenerateUrl("Default", "Index", "Home", null, null, req, false);
-                return home;
+                throw new NotImplementedException();
+                //var req = new System.Web.Routing.RequestContext();
+                //string home = UrlHelper.GenerateUrl("Default", "Index", "Home", null, null, req, false);
+                //return home;
             }
         }
 
@@ -115,7 +119,10 @@ namespace MarketPlace.Web4.Controllers
         }
 
 
-
+        protected PageViewBiz PageViewBiz
+        {
+            get { return _pageViewBiz; }
+        }
 
 
 

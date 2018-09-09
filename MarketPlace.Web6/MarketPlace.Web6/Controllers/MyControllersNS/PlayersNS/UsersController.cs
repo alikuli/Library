@@ -7,6 +7,7 @@ using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using UowLibrary;
 using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.StateNS;
 using UserModels;
@@ -17,8 +18,8 @@ namespace MarketPlace.Web6.Controllers
     {
 
         StateBiz _stateBiz;
-        public UsersController(StateBiz stateBiz, UserBiz userBiz, BreadCrumbManager bcm, IErrorSet err)
-            : base(userBiz, bcm, err) 
+        public UsersController(StateBiz stateBiz, UserBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
+            : base(biz, bcm, err, pageViewBiz) 
         {
             _stateBiz =stateBiz;
         }

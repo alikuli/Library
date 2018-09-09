@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace AliKuli.Extentions
 {
@@ -25,5 +22,37 @@ namespace AliKuli.Extentions
         {
             return currDate < dateIn;
         }
+
+
+
+
+
+
+
+
+        public static double ToWeeks(this TimeSpan timeSpan)
+        {
+            if (timeSpan.Days < 7)
+                return 0;
+
+            return timeSpan.Days / 7;
+        }
+        public static double ToMonths(this TimeSpan timeSpan)
+        {
+            if (timeSpan.Days < 365)
+                return 0;
+
+            return timeSpan.Days / 30;
+        }
+
+        public static double ToYears(this TimeSpan timeSpan)
+        {
+            if (timeSpan.TotalDays < 365.2425)
+                return 0;
+
+            return (timeSpan.TotalDays / 365.2425);
+        }
+
+
     }
 }

@@ -12,6 +12,7 @@ using BreadCrumbsLibraryNS.Programs;
 using UowLibrary.MyWorkClassesNS;
 using UowLibrary.PlayersNS;
 using ErrorHandlerLibrary;
+using UowLibrary.PageViewNS;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -19,8 +20,8 @@ namespace MarketPlace.Web6.Controllers
     {
         FileDocBiz _fileDocBiz;
 
-        public FileDocsController(FileDocBiz biz, BreadCrumbManager bcm, IErrorSet err)
-            : base(biz, bcm, err) 
+        public FileDocsController(FileDocBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
+            : base(biz, bcm, err, pageViewBiz) 
         {
             _fileDocBiz = biz;
             

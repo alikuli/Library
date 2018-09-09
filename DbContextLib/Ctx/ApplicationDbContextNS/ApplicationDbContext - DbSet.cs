@@ -17,6 +17,8 @@ using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.RightsNS;
 using System.Data.Entity;
 using UserModels;
+using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
+using ModelsClassLibrary.ModelsNS.PageViewNS;
 
 namespace ApplicationDbContextNS
 {
@@ -36,6 +38,8 @@ namespace ApplicationDbContextNS
         //public IDbSet<Discount> Discounts { get; set; }
         public virtual IDbSet<DiscountPrecedence> DiscountPrecedences { get; set; }
         ////public IDbSet<EmailAddress> EmailAddresses { get; set; }
+        public virtual IDbSet<Feature> Features { get; set; }
+        
         public virtual IDbSet<FileDoc> FileDocs { get; set; }
         public virtual IDbSet<OldFileData> OldFileDatas { get; set; }
         //public IDbSet<FileCategory> FileCategories { get; set; }
@@ -57,7 +61,8 @@ namespace ApplicationDbContextNS
         //public IDbSet<PaymentAppliedSalesOrder> PaymentAppliedSalesOrders { get; set; }
 
         public virtual IDbSet<PaymentTerm> PaymentTerms { get; set; }
-
+        public virtual IDbSet<PageView> PageViews { get; set; }
+        
 
 
         public IDbSet<MenuPath1> MenuPath1s { get; set; }

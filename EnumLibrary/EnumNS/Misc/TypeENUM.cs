@@ -5,8 +5,9 @@ using System.Web;
 
 namespace EnumLibrary.EnumNS
 {
-    public enum EnumTypes
+    public enum TypeENUM
     {
+        Unknown,
         Boolean,
         DefaultCountry,
         EmailingMethod,

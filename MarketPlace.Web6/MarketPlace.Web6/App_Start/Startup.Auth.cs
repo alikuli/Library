@@ -27,6 +27,7 @@ namespace MarketPlace.Web6
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
+                //CookieSecure = CookieSecureOption.Always, //https://stackoverflow.com/questions/20628996/how-does-redirect-to-returnurl-work-in-asp-net-mvc5
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.
@@ -34,7 +35,7 @@ namespace MarketPlace.Web6
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
-                }
+                },
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 

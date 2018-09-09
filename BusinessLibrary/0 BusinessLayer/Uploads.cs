@@ -261,6 +261,17 @@ namespace UowLibrary
 
             if (parm.IsIUserHasUploads)
             {
+                parm.SelfieUpload.FileLocationConst = parm.Entity_IUserHasUploads.SelfieLocationConst(UserName);
+
+                parm.IdCardFront.FileLocationConst = parm.Entity_IUserHasUploads.IdCardFrontLocationConst(UserName);
+                parm.IdCardBack.FileLocationConst = parm.Entity_IUserHasUploads.IdCardBackLocationConst(UserName);
+
+                parm.PassportFront.FileLocationConst = parm.Entity_IUserHasUploads.PassportFrontLocationConst(UserName);
+                parm.PassportVisa.FileLocationConst = parm.Entity_IUserHasUploads.PassportVisaLocationConst(UserName);
+
+                parm.LiscenseFront.FileLocationConst = parm.Entity_IUserHasUploads.LiscenseFrontLocationConst(UserName);
+                parm.LiscenseBack.FileLocationConst = parm.Entity_IUserHasUploads.LiscenseBackLocationConst(UserName);
+
                 uploadFilesHelperGeneral(
                     parm.SelfieUpload,
                     parm.Entity as TEntity,
@@ -315,7 +326,7 @@ namespace UowLibrary
         {
             if (parm.IsIHasUploads)
             {
-
+                parm.MiscUploadedFiles.FileLocationConst = parm.Entity_IHasUploads.MiscFilesLocation();
 
                 uploadFilesHelperGeneral(
                     parm.MiscUploadedFiles,
@@ -337,6 +348,7 @@ namespace UowLibrary
 
             if (filesIn.HttpBase.Count() == 0)
                 return;
+
 
             UploadObject uploadObj = new UploadObject(filesIn.HttpBase, filesIn.FileLocationConst);
 

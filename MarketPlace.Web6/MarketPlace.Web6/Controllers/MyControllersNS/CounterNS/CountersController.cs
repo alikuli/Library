@@ -12,14 +12,15 @@ using UowLibrary.PlayersNS;
 using UowLibrary.MyWorkClassesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ErrorHandlerLibrary;
+using UowLibrary.PageViewNS;
 
 namespace MarketPlace.Web6.Controllers
 {
     public class CountersController : EntityAbstractController<Counter>
     {
 
-        public CountersController(CounterBiz biz, BreadCrumbManager bcm, IErrorSet err)
-            : base(biz,bcm,err) { }
+        public CountersController(CounterBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
+            : base(biz, bcm, err, pageViewBiz) { }
 
 
     }

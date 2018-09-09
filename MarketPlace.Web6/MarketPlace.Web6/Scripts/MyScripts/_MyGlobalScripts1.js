@@ -2,10 +2,15 @@
 
     OnLoadModelSelectFirstInput();
     OnHoverClassImgThumbnailBackgroundYellow();
-    AttachToolTips();
+    initializeToolTipsBootStrap4();
 
 });
 
+
+function initializeToolTipsBootStrap4()
+{
+    $('[data-toggle="tooltip"]').tooltip();
+}
 function PreviewImage(uploader, theImage)
 {
     if(uploader && uploader.files && uploader.files[0])
@@ -24,7 +29,7 @@ function PreviewImage(uploader, theImage)
     }
 }
 
-function AttachToolTips() {
+function AttachToolTipsBootStrap3() {
     $("[rel='tooltip']").tooltip();
 
 }

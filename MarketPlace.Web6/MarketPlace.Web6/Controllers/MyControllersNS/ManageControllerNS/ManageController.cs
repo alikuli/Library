@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 using UserModelsLibrary.ModelsNS;
 
@@ -21,8 +22,8 @@ namespace MarketPlace.Web6.Controllers
     public partial class ManageController : AbstractController
     {
         readonly ManageControllerBiz _manageControllerUOW;
-        public ManageController(ManageControllerBiz biz, BreadCrumbManager bcm, IErrorSet err)
-            : base(bcm, err) 
+        public ManageController(ManageControllerBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
+            : base(bcm, err, pageViewBiz) 
         {
             _manageControllerUOW = biz;
         }

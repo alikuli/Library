@@ -129,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AKATest.cs" />
+    <Compile Include="DelegatesNS\Delegates.cs" />
     <Compile Include="InterfacesNS\AddressNS\IAddressString.cs" />
     <Compile Include="InterfacesNS\AddressNS\IAddressStringPartial.cs" />
     <Compile Include="InterfacesNS\AddressNS\IAddressStringWithTown.cs" />
@@ -220,7 +221,8 @@
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerHasAvailableUnitsSpec.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerIsActiveSpec.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerIsBlackListedSpec.cs" />
-    <Compile Include="ModelsNS\ClicksNS\Click.cs" />
+    <Compile Include="ModelsNS\SharedNS\CountModel.cs" />
+    <Compile Include="ModelsNS\PageViewNS\PageView.cs" />
     <Compile Include="ModelsNS\GlobalCommentsNS\GlobalComment.cs" />
     <Compile Include="ModelsNS\FileDocsNS\Upload.cs" />
     <Compile Include="ModelsNS\FileDocsNS\FileNumber.cs" />
@@ -244,7 +246,12 @@
     <Compile Include="ModelsNS\IndexNS\MenuIndexItem.cs" />
     <Compile Include="ModelsNS\IndexNS\MenuModel.cs" />
     <Compile Include="ModelsNS\IndexNS\Show.cs" />
-    <Compile Include="ModelsNS\SharedNS\ParticipatingUsers.cs" />
+    <Compile Include="ModelsNS\FeaturesNS\Feature.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\IndexMenuVariables.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\IconProperties.cs" />
+    <Compile Include="ModelsNS\ProductNS\ViewModelsNS\IProductAutomobileAdditionalFields.cs" />
+    <Compile Include="ModelsNS\ProductNS\ViewModelsNS\ProductAutomobileNS\ProductAutomobileAdditionalFields.cs" />
+    <Compile Include="ModelsNS\LikeUnlikeNS\ParticipatingUsers.cs" />
     <Compile Include="ModelsNS\LogsNS\VisitorLogNS\VisitorLog.cs" />
     <Compile Include="ModelsNS\MediaNS\FileType.cs">
       <SubType>Code</SubType>
@@ -254,15 +261,14 @@
     </Compile>
     <Compile Include="ModelsNS\IndexNS\Headings.cs" />
     <Compile Include="InterfacesNS\SharedNS\FeaturesNS\IHaveMenuManager.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateAbstract OLD.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\IMenuManager.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\CreateDefault.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\EditDefault.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\IndexDefault.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuPathMainNS\Menu.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\IMenuState.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuManager.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuManagerAbstract.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuManager.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuManagerAbstract.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\CreateMenuPath1.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\CreateMenuPath2.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\CreateMenuPath3.cs" />
@@ -437,6 +443,7 @@
     <Folder Include="InterfacesNS\Operational\" />
     <Folder Include="ModelsNS\DocumentsNS\Abstract\" />
     <Folder Include="ModelsNS\DocumentsNS\PaymentsNS\Abstract\" />
+    <Folder Include="ModelsNS\GuaranteeNS\" />
     <Folder Include="ModelsNS\PeopleNS\EnumsNS\" />
     <Folder Include="ModelsNS\PlacesNS\Salepoint\" />
   </ItemGroup>

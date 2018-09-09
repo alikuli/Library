@@ -74,16 +74,17 @@ function Like(thisButton)
             if (response.success) {
 
                 //enables/disables buttons
-                $(thisButtonId).addClass("disabled");
-                $(otherButtonId).removeClass('disabled');
+                //$(thisButtonId).addClass("disabled");
+                //$(otherButtonId).removeClass('disabled');
 
                 //the controller sends back the data correctly
                 thisButtonCount.html(response.thisButtonCount);
                 otherButtonCount.html(response.otherButtonCount);
-                $.notify(response.message, "success");
+                updateTheLikeButtonCountsAndOnClick(thisButtonId, otherButtonId, response.thisButtonCount, response.otherButtonCount, response.hasLiked, response.hasUnliked);
+                //$.notify(response.message, "success");
             }
             else {
-                $.notify(response.message, "error");
+                //$.notify(response.message, "error");
             }
         }
     });
@@ -118,6 +119,8 @@ function EditlikeUnlikeModal(sender,isLike) {
 
     //remove all previous elements
     clearAllModalHtml(modalBody);
+
+    ShowPplWhoLikeUnlikeThis(sender);
     EditlikeUnlikeModalHTML(modalBody);
 
 
@@ -167,7 +170,8 @@ function EditlikeUnlikeModalHTML(modalBody) {
 function ShowPplWhoLikeUnlikeThis(sender) {
 
     var modalBody = document.getElementById("myModalbodyNewid");
-    var dataUrl = $(sender).attr('data-url');
+    var dataUrl = $(sender).attr('data-counturl');
+    //var dataUrl = $(sender).attr('data-url');
     var senderId = $(sender).attr('id');
     var nameOfProduct = $(sender).attr('data-nameofproduct');
     var spanInModalHeading = document.getElementById("myModalHeading.span");
@@ -186,6 +190,7 @@ function ShowPplWhoLikeUnlikeThis(sender) {
     //ShowSaveBtnInLikeUnlike('Close');
     //remove all previous elements
     clearAllModalHtml(modalBody);
+    HideSaveBtnInLikeUnlike();
 
     $.ajax({
         type: 'GET',
@@ -212,24 +217,39 @@ function ShowPplWhoLikeUnlikeThis(sender) {
 
 //This will make the modal. The modalBody is the body in which we want the Html to show.
 //the un
-function makeModalToShowUsers(usersLst, modalBody) {
-    var len = usersLst.length;
-    //build the inner data
-    var counter = 0;
-    for (var item in usersLst.Data) {
-        currData = usersLst.Data[item];
-        var theImage = "/Content/MyImages/logo.jpg";
-        makeModalToShowUsersHtml(modalBody, currData, theImage, counter);
-        counter++;
+function makeModalToShowUsers(usersLst, modalBody)
+{
+    if (usersLst) {
+        if (usersLst.Data) {
+            var len = usersLst.length;
+            //build the inner data
+            var counter = 0;
+            for (var item in usersLst.Data) {
+                currData = usersLst.Data[item];
 
-    }; //End for
+                var userComment = currData.UserComment;
+                var userAddressFixed = currData.UserAddressFixed;
+                var nameWithDateTime = currData.NameWithDateTime;
+                var theImage = "/Content/MyImages/logo.jpg";
 
+                makeModalToShowUsersHtml(modalBody, theImage, counter, userComment, userAddressFixed, nameWithDateTime);
+                counter++;
+
+            }; //End for
+        }
+        else {
+
+            makeModalToShowUsersHtml(modalBody, null, 0, "No Comments.", null, null);
+
+        }
+    }
     //$("#modalNewCloseBtnId").innerHTML = "Close";
 
 
 }
 
-function makeModalToShowUsersHtml(modalBody, currData, theImage, counter) {
+function makeModalToShowUsersHtml(modalBody, theImage, counter, userComment, userAddressFixed, nameWithDateTime)
+{
     //create
     let div = document.createElement('div');
     div.className = 'row';
@@ -237,40 +257,46 @@ function makeModalToShowUsersHtml(modalBody, currData, theImage, counter) {
     let spanImage = document.createElement('span');
     spanImage.className = 'col-md-2';
 
-    let spanNameLink = document.createElement('span');
-    spanNameLink.className = 'col-md-2';
+    let divNameLink = document.createElement('div');
+    //spanNameLink.className = 'col-md-2';
+    divNameLink.style = 'margin: 2px;'
+
+
+    if (userAddressFixed) {
+        let anchor = document.createElement('a');
+        anchor.href = userAddressFixed;
+        anchor.textContent = nameWithDateTime + ": ";
+        divNameLink.appendChild(anchor);
+    }
+
+    if (theImage)
+    {
+        let image = document.createElement('img');
+        image.src = theImage;
+        image.height = '75';
+        image.width = '75';
+        var theId = 'image' + counter;
+        image.id = theId;
+        image.style.margin = '3';
+        image.className = 'img-thumbnail';
+        spanImage.appendChild(image);
+    }
+    
 
     let spanComment = document.createElement('span');
     spanComment.className = 'col-md-8';
     spanComment.className = 'text-left';
-    spanComment.innerHTML = currData.UserComment;
-
-
-    let anchor = document.createElement('a');
-    anchor.href = currData.UserAddressFixed;
-    anchor.textContent = currData.Name + ": ";
-
-    let image = document.createElement('img');
-    image.src = theImage;
-    image.height = '75';
-    image.width = '75';
-    var theId = 'image' + counter;
-    image.id = theId;
-    image.style.margin = '3';
-    image.className = 'img-thumbnail';
-
-    
+    spanComment.innerHTML = userComment;
 
     //append
-    spanImage.appendChild(image);
-    spanNameLink.appendChild(anchor);
     
 
     div.appendChild(spanImage);
-    div.appendChild(spanNameLink);
+    //div.appendChild(spanNameLink);
     div.appendChild(spanComment);
+    modalBody.appendChild(divNameLink);
     modalBody.appendChild(div);
-    HideSaveBtnInLikeUnlike();
+    //HideSaveBtnInLikeUnlike();
 }
 
 
@@ -290,8 +316,8 @@ function ShoppingCart() {
 
 //Looks at the id and decides if it is a like button or not.
 
-function IsLike(thisButton) {
-    var currBtnId = $('#' + thisButton).attr("id");
+function IsLike(thisButtonId) {
+    var currBtnId = $('#' + thisButtonId).attr("id");
     if (currBtnId.indexOf("unlike") == -1) {
         //thisButton is a like button
         return true;
@@ -323,17 +349,19 @@ function FocusOnCommentFieldInLikeUnlikeModal() {
 }
 
 function ShowSaveBtnInLikeUnlike() {
-    $("#modalNewCloseBtnId").removeClass('invisible');
+    $("#modalNewCloseBtnId").removeClass('d-none');
 }
 
 function HideSaveBtnInLikeUnlike() {
-    $("#modalNewCloseBtnId").addClass('invisible');
+    $("#modalNewCloseBtnId").addClass('d-none');
 }
 
 //This deletes all the previous HTML. If we dont do this then the old HTML from the previous Modal will show.
 function clearAllModalHtml(modalBody) {
-    while (modalBody.firstChild) {
-        modalBody.removeChild(modalBody.firstChild);
+    if (modalBody) {
+        while (modalBody.firstChild) {
+            modalBody.removeChild(modalBody.firstChild);
+        }
     }
 }
 
@@ -342,8 +370,36 @@ function clearAllModalHtml(modalBody) {
 
 //------------------------------------------------------
 
+//after ud
+function updateTheLikeButtonCountsAndOnClick(thisBtnId, otherbthId, countOfThisBtn, countOfOtherBtn, oppositeWasDeleted)
+{
+    var idOfCountSpanOfThisBtn = thisBtnId + "count";
+    var idOfCountSpanOfOtherBtn = otherbthId + "count";
+    
+    
+    AddCountToSpan(thisBtnId, idOfCountSpanOfThisBtn, countOfThisBtn, "ShowPplWhoLikeUnlikeThis(this);");
+    AddCountToSpan(otherbthId, idOfCountSpanOfOtherBtn, countOfOtherBtn, "EditlikeUnlikeModal(this);");
+
+}
 
 
+function AddCountToSpan(likeUnlikeIdWithPound, spanIdWithPound, count, onclick)
+{
+    var newCountThisBtn = count;
+    var spanOfThisBtn = document.getElementById(spanIdWithPound.substr(1, spanIdWithPound.length));
+    txt = document.createTextNode(newCountThisBtn);
+    clearAllModalHtml(spanOfThisBtn);
+    spanOfThisBtn.appendChild(txt);
+
+    if (newCountThisBtn > 0)
+        $(spanIdWithPound).removeClass("d-none");
+    else
+        $(spanIdWithPound).addClass("d-none");
+
+    $(likeUnlikeIdWithPound).attr("onclick", onclick);
+
+
+}
 
 function AddComment(saveBtn, theModal, commentCtrl) {
     //get the data url

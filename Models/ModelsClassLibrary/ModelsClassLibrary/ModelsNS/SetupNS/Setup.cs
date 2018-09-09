@@ -21,7 +21,7 @@ namespace ModelsClassLibrary.ModelsNS
         public string Description { get; set; }
 
         [Required]
-        public EnumTypes Type { get; set; }
+        public TypeENUM Type { get; set; }
 
 
         public string Value { get; set; }

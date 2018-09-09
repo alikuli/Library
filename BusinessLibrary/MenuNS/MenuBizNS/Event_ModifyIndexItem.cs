@@ -42,7 +42,9 @@ namespace UowLibrary.MenuNS
 
             LikeUnlikeParameter likeUnlikeCounter;
             UploadedFile uf;
-            string theUserId = indexListVM.UserId ?? "";
+            //string theUserId = indexListVM.UserId ?? "";
+            string theUserId = UserId;
+
             switch (indexListVM.MenuManager.MenuState.MenuEnum)
             {
 
@@ -55,57 +57,64 @@ namespace UowLibrary.MenuNS
                     //we need to change the image address to image of MenuPath1
                     indexItem.ImageAddressStr = getImage(uf);
                     indexItem.Name = mpm.MenuPath1.FullName();
+                    indexItem.Description = mpm.MenuPath1.DetailInfoToDisplayOnWebsite;
 
                     //get the likes and unlikes for MenuPath1
-                    likeUnlikeCounter = _likeUnlikeBiz.Count(mpm.MenuPath1.Id, null, null, null, null,theUserId);
+                    likeUnlikeCounter = _likeUnlikeBiz.Count(mpm.MenuPath1.Id, null, null, null, null,theUserId, false);
                     likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuPath1";
-                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath1, _breadCrumbManager, likeUnlikeCounter);
+                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath1, _breadCrumbManager, likeUnlikeCounter, UserId);
                     break;
 
                 case MenuENUM.IndexMenuPath2:
                     mpm.IsNullThrowException();
                     mpm.MenuPath2.IsNullThrowException();
+                    indexItem.Description = mpm.MenuPath2.DetailInfoToDisplayOnWebsite;
 
                     uf = mpm.MenuPath2.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted);
                     indexItem.ImageAddressStr = getImage(uf);
                     indexItem.Name = mpm.MenuPath2.FullName();
-                    likeUnlikeCounter = _likeUnlikeBiz.Count(null, mpm.MenuPath2.Id, null, null, null, theUserId);
+                    likeUnlikeCounter = _likeUnlikeBiz.Count(null, mpm.MenuPath2.Id, null, null, null, theUserId, false);
                     likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuPath2";
-                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath2, _breadCrumbManager, likeUnlikeCounter);
+                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath2, _breadCrumbManager, likeUnlikeCounter, UserId);
                     break;
 
                 case MenuENUM.IndexMenuPath3:
                     mpm.IsNullThrowException();
                     mpm.MenuPath3.IsNullThrowException();
+                    indexItem.Description = mpm.MenuPath3.DetailInfoToDisplayOnWebsite;
 
                     uf = mpm.MenuPath3.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted);
                     indexItem.ImageAddressStr = getImage(uf);
                     indexItem.Name = mpm.MenuPath3.FullName();
-                    likeUnlikeCounter = _likeUnlikeBiz.Count(null, null, mpm.MenuPath3.Id, null, null, theUserId);
+                    likeUnlikeCounter = _likeUnlikeBiz.Count(null, null, mpm.MenuPath3.Id, null, null, theUserId, false);
                     likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuPath3";
-                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath3, _breadCrumbManager, likeUnlikeCounter);
+                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath3, _breadCrumbManager, likeUnlikeCounter, UserId);
                     break;
 
                 case MenuENUM.IndexMenuProduct: //Products are coming
                     product.IsNullThrowException();
+                    indexItem.Description = product.DetailInfoToDisplayOnWebsite;
+
                     uf = product.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted);
                     indexItem.ImageAddressStr = getImage(uf);
                     //indexItem.Name = produc.FullName();
-                    
-                    likeUnlikeCounter = _likeUnlikeBiz.Count(null, null, null, product.Id, null, theUserId);
+
+                    likeUnlikeCounter = _likeUnlikeBiz.Count(null, null, null, product.Id, null, theUserId, false);
                     likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuProduct";
-                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuProduct, _breadCrumbManager, likeUnlikeCounter);
+                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuProduct, _breadCrumbManager, likeUnlikeCounter, UserId);
 
                     break;
 
                 case MenuENUM.IndexMenuProductChild:
                     productChild.IsNullThrowException();
+                    indexItem.Description = productChild.DetailInfoToDisplayOnWebsite;
+
                     uf = productChild.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted);
                     indexItem.ImageAddressStr = getImage(uf);
                     //indexItem.Name = produc.FullName();
-                    likeUnlikeCounter = _likeUnlikeBiz.Count(null, null, null, null, productChild.Id, theUserId);
+                    likeUnlikeCounter = _likeUnlikeBiz.Count(null, null, null, null, productChild.Id, theUserId, false);
                     likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuProductChild";
-                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuProduct, _breadCrumbManager, likeUnlikeCounter);
+                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuProduct, _breadCrumbManager, likeUnlikeCounter, UserId);
                     break;
 
                 case MenuENUM.EditMenuPath1:
@@ -121,7 +130,7 @@ namespace UowLibrary.MenuNS
                 case MenuENUM.CreateMenuProduct:
                 case MenuENUM.CreateMenuProductChild:
                 default:
-                    likeUnlikeCounter = _likeUnlikeBiz.Count(null, null, null, null, null, theUserId);
+                    likeUnlikeCounter = _likeUnlikeBiz.Count(null, null, null, null, null, theUserId, false);
                     likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.Default";
 
                     break;
@@ -141,89 +150,7 @@ namespace UowLibrary.MenuNS
         }
 
 
-        //TODO move this to Menu
-        private void makeNameForMenuItem(IndexListVM indexListVM, IndexItemVM indexItem, MenuPathMain pcm)
-        {
-            //The id in parameters belongs to ProductMainControler. Extract the Id from there...
-            //switch (indexListVM.MenuManager.MenuLevelEnum)
-            //{
-            //    case MenuLevelENUM.unknown:
-            //        break;
 
-            //    case MenuLevelENUM.Level_1:
-            //        if (pcm.IsNull())
-            //        {
-            //            ErrorsGlobal.Add("Unable to cast ICommonWithId to ProductCategoryMain. Programming error", MethodBase.GetCurrentMethod());
-            //            throw new Exception(ErrorsGlobal.ToString());
-            //        }
-
-
-            //        if (pcm.MenuPath1.IsNull())
-            //        {
-            //            indexItem.Name = "";
-            //            return;
-            //        }
-
-            //        if (pcm.MenuPath1.MiscFiles.IsNull())
-            //            return;
-
-            //        indexItem.Name = pcm.MenuPath1.Name;
-            //        if (pcm.MenuPath1.MiscFiles.FirstOrDefault().IsNull())
-            //            return;
-
-            //        indexItem.ImageAddressStr = pcm.MenuPath1.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted).RelativePathWithFileName();
-
-            //        break;
-
-            //    case MenuLevelENUM.Level_2:
-            //        if (pcm.IsNull())
-            //        {
-            //            ErrorsGlobal.Add("Unable to cast ICommonWithId to ProductCategoryMain. Programming error", MethodBase.GetCurrentMethod());
-            //            throw new Exception(ErrorsGlobal.ToString());
-            //        }
-
-
-            //        if (pcm.MenuPath2.IsNull())
-            //        {
-            //            indexItem.Name = "";
-            //            return;
-            //        }
-
-            //        indexItem.Name = pcm.MenuPath2.Name;
-
-            //        if (pcm.MenuPath2.MiscFiles.FirstOrDefault().IsNull())
-            //            return;
-
-            //        indexItem.ImageAddressStr = pcm.MenuPath2.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted).RelativePathWithFileName();
-            //        break;
-            //    case MenuLevelENUM.Level_3:
-            //        if (pcm.IsNull())
-            //        {
-            //            ErrorsGlobal.Add("Unable to cast ICommonWithId to ProductCategoryMain. Programming error", MethodBase.GetCurrentMethod());
-            //            throw new Exception(ErrorsGlobal.ToString());
-            //        }
-
-
-            //        if (pcm.MenuPath3.IsNull())
-            //        {
-            //            indexItem.Name = "";
-            //            return;
-            //        }
-
-            //        indexItem.Name = pcm.MenuPath3.Name;
-            //        if (pcm.MenuPath3.MiscFiles.FirstOrDefault().IsNull())
-            //            return;
-
-            //        indexItem.ImageAddressStr = pcm.MenuPath3.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted).RelativePathWithFileName();
-
-            //        break;
-            //    case MenuLevelENUM.Level_4:
-            //        break;
-            //    default:
-            //        break;
-            //}
-            throw new NotImplementedException();
-        }
 
     }
 }

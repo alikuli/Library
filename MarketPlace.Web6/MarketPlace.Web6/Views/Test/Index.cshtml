@@ -1,17 +1,62 @@
-﻿<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+﻿@model MarketPlace.Web6.Models.FeaturesListModel
+@using PerpetuumSoft.Knockout
 
-<h2> Click Here</h2>
-<a id="button" class ="btn btn-default" href="javascript:void(0)"><span>Enter In</span></a>
+
+@{
+
+    var ko = Html.CreateKnockoutContext();
+}
+
+
+    <p>You have @ko.Html.Span(x => x.Features.Count) Feature(s)</p>
+
+
+    <form id="myform">
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            @using (var item = @ko.Foreach(x => x.Features))
+            {
+                <tr>
+                    <td> @item.Html.TextBox(x => x.FeatureName, new { @class = "required" }).UniqueName().</td>
+                    <td>@item.Html.TextBox(x => x.FeatureValue, new { @class = "required" }).UniqueName()</td>
+                    <td>@ko.Html.Span("", new { @class = " far fa-trash-alt btn btn-sm btn-danger" }).Click("Delete", "Test", new { index = item.GetIndex()}).ValueUpdate(KnockoutValueUpdateKind.Change)</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        @ko.Html.Button("Add", "Add", "Test")
+        <button type="submit" @ko.Bind.Enable(x => x.Features.Count > 0)>Save</button>
+
+    </form>
+
+@using (@ko.If(x => x.SaveTime.Length > 0))
+{
+    <p>Saved on: @ko.Html.Span(x => x.SaveTime)</p>
+}
+
+
+
 
 @section scripts{
 
-<script>
+    <script>
+        $("#myform").ajaxForm();
 
+        $("#myform").validate({
+            submitHandler: function () {
+                @ko.ServerAction("Save", "Test");
+            }
+        })
 
-</script>
+    </script>
+
+@ko.Apply(Model)
+
+   
 }

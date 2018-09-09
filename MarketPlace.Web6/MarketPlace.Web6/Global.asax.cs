@@ -16,11 +16,13 @@ namespace MarketPlace.Web6
 
         protected void Application_Start()
         {
+      ModelBinders.Binders.DefaultBinder = new PerpetuumSoft.Knockout.KnockoutModelBinder();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             CreateInitializationDirectories();
+
 
         }
 

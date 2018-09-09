@@ -64,7 +64,7 @@ namespace MarketPlace.Web6.Controllers
                 pvm.MenuPathMains = new List<MenuPathMain>();
 
             pvm.MenuPathMains.Add(mpm);//this is the default MenuPathMain
-            pvm.MenuManager = new MenuManager(mpm, pvm as Product, null, MenuENUM.CreateMenuProduct, BreadCrumbManager, null);
+            pvm.MenuManager = new MenuManager(mpm, pvm as Product, null, MenuENUM.CreateMenuProduct, BreadCrumbManager, null, UserId);
             _productBiz.LoadMenuPathCheckedBoxes(pvm as IProduct);
 
             return pvm;

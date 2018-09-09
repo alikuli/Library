@@ -25,7 +25,11 @@ namespace UowLibrary.MenuNS
             IMenuManager mm = makeMenuManager(parameters);
             indexListVM.MenuManager = mm;
             indexListVM.Heading.Column = "Menu Items";
-
+            int webClicksCount = _pageViewBiz.GetClickCount();
+            string recordStr = (webClicksCount == 1 ? "view" : "views");
+            indexListVM.MenuManager.WebClicksCount = string.Format("{0:n0} {1}",
+                webClicksCount,
+                recordStr);
             //indexListVM.MenuManager.MenuLevelEnum = parameters.Menu.MenuLevelEnum;
 
             #region Old Code
@@ -136,9 +140,9 @@ namespace UowLibrary.MenuNS
                     break;
             }
 
-            MenuManager mm = new MenuManager(mpm, p, pc, parm.Menu.MenuEnum, parm.BreadCrumbManager, parm.LikeUnlikeCounter);
+            MenuManager mm = new MenuManager(mpm, p, pc, parm.Menu.MenuEnum, parm.BreadCrumbManager, parm.LikeUnlikeCounter, UserId);
             mm.BreadCrumbManager = parm.BreadCrumbManager;
-
+            mm.IndexMenuVariables.IsAdmin = UserBiz.IsAdmin(UserId);
             return mm as IMenuManager;
 
         }

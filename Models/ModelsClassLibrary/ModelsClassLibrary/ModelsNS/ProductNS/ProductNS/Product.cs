@@ -2,6 +2,7 @@
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
+using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 using ModelsClassLibrary.SharedNS;
@@ -21,6 +22,8 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         public virtual ICollection<ProductChild> ProductChildren { get; set; }
 
         public virtual ICollection<GlobalComment> GlobalComments { get; set; }
+
+        public virtual ICollection<Feature> Features { get; set; }
 
         /// <summary>
         /// A product can have ONE or Many ProductIdentifiers. It must have at least one.

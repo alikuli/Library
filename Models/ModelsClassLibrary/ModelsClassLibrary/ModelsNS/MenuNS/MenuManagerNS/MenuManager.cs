@@ -7,6 +7,7 @@ using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using UowLibrary.MenuNS.MenuStateNS.MenuStatesNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 
 namespace UowLibrary.MenuNS.MenuStateNS
 {
@@ -15,7 +16,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
         public MenuManager()
         {
         }
-        public MenuManager(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, BreadCrumbManager breadCrumbManager, LikeUnlikeParameter likesCounter)
+        public MenuManager(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, BreadCrumbManager breadCrumbManager, LikeUnlikeParameter likesCounter, string userId)
             : this()
         {
             MenuPathMain = menuPathMain;
@@ -23,10 +24,15 @@ namespace UowLibrary.MenuNS.MenuStateNS
             ProductChild = productChild;
             MenuEnum = menuEnum;
             BreadCrumbManager = breadCrumbManager;
-            LikeUnlikesCounter = likesCounter;
+            LikeUnlikesCounter = likesCounter ?? new LikeUnlikeParameter(0,0,"Initialized in MenuManager because it was null");
             LoadMenuState();
+            UserId = userId;
         }
 
+        /// <summary>
+        /// This is used in the Icons IndexMenuVariables
+        /// </summary>
+        private string UserId { get; set; }
         private void LoadMenuState()
         {
             switch (MenuEnum)
@@ -133,5 +139,22 @@ namespace UowLibrary.MenuNS.MenuStateNS
         public string SearchString { get; set; }
         public SortOrderENUM SortOrderEnum { get; set; }
         public LikeUnlikeParameter LikeUnlikesCounter { get; set; }
+
+        IndexMenuVariables _indexMenuVariables;
+        public IndexMenuVariables IndexMenuVariables 
+        { 
+            get 
+            { 
+                return _indexMenuVariables?? new IndexMenuVariables(UserId); 
+            }
+            set
+            {
+                _indexMenuVariables = value;
+            }
+        }
+        public string WebClicksCount { get; set; }
+
+
+
     }
 }

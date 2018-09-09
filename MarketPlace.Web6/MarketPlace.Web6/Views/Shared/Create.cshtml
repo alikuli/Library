@@ -6,7 +6,7 @@
     Model.MenuManager.MenuState.ControllerCurrentName = this.ViewContext.RouteData.Values["controller"].ToString();
     string selectId = Model.MenuManager.SelectedId;
     string searchString = Model.MenuManager.SearchString;
-    string createScreenName = string.Format("{0} - {1}", "Create", Model.FullName());
+    string createScreenName = string.Format("{0} {1}", "Create", Model.ClassName.ToTitleCase());
     Model.MenuManager.BreadCrumbManager.Push(createScreenName, returnUrl);
     
 }

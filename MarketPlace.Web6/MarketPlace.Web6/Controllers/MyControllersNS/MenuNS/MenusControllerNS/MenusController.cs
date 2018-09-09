@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.MenuNS;
 using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
 
@@ -25,8 +26,8 @@ namespace MarketPlace.Web6.Controllers
         MenuPath1Biz _menuPath1Biz;
         MenuPath2Biz _menuPath2Biz;
 
-        public MenusController(MenuBiz biz, BreadCrumbManager bcm, IErrorSet err)
-            : base(biz, bcm, err) 
+        public MenusController(MenuBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
+            : base(biz, bcm, err, pageViewBiz) 
         {
             _menuBiz = biz;
             _menuPath1Biz = biz.MenuPathMainBiz.MenuPath1Biz;

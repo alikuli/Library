@@ -27,6 +27,7 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS
         BreadCrumbManager BreadCrumbManager { get; set; }
         LikeUnlikeParameter LikeUnlikesCounter { get; set; }
 
-
+        IndexMenuVariables IndexMenuVariables { get; set; }
+        string WebClicksCount { get; set; }
     }
 }

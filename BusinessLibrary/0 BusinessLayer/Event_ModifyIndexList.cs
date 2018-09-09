@@ -45,7 +45,7 @@ namespace UowLibrary
 
             //Note. The LikeCounter in the MenuManger for the List is always null. The likes are counted in
             //the items.
-            indexListVM.MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, _breadCrumbManager, null);
+            indexListVM.MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, _breadCrumbManager, null, UserId);
 
 
 

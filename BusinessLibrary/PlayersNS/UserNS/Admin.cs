@@ -249,12 +249,12 @@ namespace UowLibrary
 
         }
 
-        public bool IsUserAdmin(ApplicationUser user)
+        public bool IsAdmin(string userId)
         {
-            if (user.IsNull())
+            if (userId.IsNullOrWhiteSpace())
                 return false;
             ConfigManagerHelper cfg = new ConfigManagerHelper();
-            return UserManager.IsInRole(user.Id, cfg.AdminRole);
+            return UserManager.IsInRole(userId, cfg.AdminRole);
         }
 
     }
