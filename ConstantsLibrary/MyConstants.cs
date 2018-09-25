@@ -63,6 +63,12 @@ namespace AliKuli.ConstantsNS
 
         public const string LOGO_LOCATION = @"~/Content/MyImages/Logo.jpg";
 
+        public const string MINDATE = "01/Jan/2010";
+        public const string MAXDATE = "31/Dec/2050";
+
+
+
+
         //save locations for products
         //public const string SAVE_LOCATION_PRODUCT_CATEGORY1 = SAVE_LOCATION_ROOT_DIRECTORY + @"Category1";
         //public const string SAVE_LOCATION_PRODUCT_CATEGORY2 = SAVE_LOCATION_ROOT_DIRECTORY + @"Category2";

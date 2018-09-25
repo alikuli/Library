@@ -7,7 +7,7 @@ using ModelsClassLibrary.ModelsNS.PeopleNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.CounterNS;
 using ModelsClassLibrary.RightsNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -19,8 +19,8 @@ namespace UowLibrary.CounterNS
     public partial class CounterBiz : BusinessLayer<Counter>
     {
 
-        public CounterBiz(IRepositry<Counter> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public CounterBiz(IRepositry<Counter> entityDal, BizParameters bizParameters)
+            : base(entityDal,bizParameters)
         {
         }
 

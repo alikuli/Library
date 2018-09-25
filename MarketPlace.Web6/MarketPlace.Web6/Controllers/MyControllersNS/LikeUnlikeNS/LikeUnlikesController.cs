@@ -10,7 +10,7 @@ using System;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.LikeUnlikeNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 
@@ -23,8 +23,8 @@ namespace MarketPlace.Web6.Controllers
 
         #region Construction and initializers
 
-        public LikeUnlikesController(LikeUnlikeBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(biz, bcm, err, pageViewBiz) 
+        public LikeUnlikesController(LikeUnlikeBiz biz,  AbstractControllerParameters param)
+            : base(biz, param) 
         {
             _likeUnlikeBiz = biz;
         }

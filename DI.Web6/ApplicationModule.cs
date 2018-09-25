@@ -7,8 +7,6 @@ using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using UowLibrary;
@@ -19,9 +17,8 @@ using UowLibrary.GlobalCommentsNS;
 using UowLibrary.Interface;
 using UowLibrary.LikeUnlikeNS;
 using UowLibrary.MenuNS;
-using UowLibrary.MyWorkClassesNS;
 using UowLibrary.PageViewNS;
-using UowLibrary.PlayersNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
 using UowLibrary.StateNS;
@@ -67,7 +64,7 @@ namespace DependancyResolver
 
             Bind<StateBiz>().ToSelf();
             Bind<UserBiz>().ToSelf();
-            Bind<RightBiz>().ToSelf();
+            //Bind<RightBiz>().ToSelf();
 
             Bind<UomLengthBiz>().ToSelf();
             Bind<UomQuantityBiz>().ToSelf();
@@ -79,9 +76,13 @@ namespace DependancyResolver
             //Bind<UserBiz>().ToSelf();
             Bind<GlobalCommentBiz>().ToSelf();
             Bind<LikeUnlikeBiz>().ToSelf();
-            Bind<MyWorkClasses>().ToSelf();
+            Bind<AbstractControllerParameters>().ToSelf();
+            Bind<BizParameters>().ToSelf();
             Bind<FeatureBiz>().ToSelf();
             Bind<PageViewBiz>().ToSelf();
+            Bind<MenuPath1FeatureBiz>().ToSelf();
+            Bind<MenuPath2FeatureBiz>().ToSelf();
+            Bind<MenuPath3FeatureBiz>().ToSelf();
         }
 
         public void LoadDALs()

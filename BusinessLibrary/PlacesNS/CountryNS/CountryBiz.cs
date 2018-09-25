@@ -11,7 +11,7 @@ using ModelsClassLibrary.RightsNS;
 using ModelsClassLibrary.ViewModels;
 using System;
 using System.Reflection;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.StateNS;
 using UowLibrary.UploadFileNS;
@@ -24,8 +24,9 @@ namespace UowLibrary
     {
         readonly StateBiz _stateBiz;
 
-        public CountryBiz(StateBiz stateBiz, IRepositry<Country> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public CountryBiz(StateBiz stateBiz, IRepositry<Country> entityDal, BizParameters bizParameters)
+            : base(entityDal, bizParameters)
+
         {
             _stateBiz = stateBiz;
 

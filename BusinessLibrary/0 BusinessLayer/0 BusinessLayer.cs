@@ -3,6 +3,7 @@ using AliKuli.UtilitiesNS;
 using ApplicationDbContextNS;
 using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.Interfaces;
+using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
 using InvoiceNS;
@@ -15,7 +16,8 @@ using System.Reflection;
 using UowLibrary.Abstract;
 using UowLibrary.Interface;
 using UowLibrary.LikeUnlikeNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.PageViewNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -30,24 +32,34 @@ namespace UowLibrary
     public abstract partial class BusinessLayer<TEntity> : AbstractBiz, IBusinessLayer<TEntity> where TEntity : class, ICommonWithId
     {
         private IRepositry<TEntity> _dal;
-        protected ConfigManagerHelper _configManager;
+        //BizParameters _param;
 
+        //private ConfigManagerHelper _configManager;
         //protected ApplicationDbContext _db;
-        protected UploadedFileBiz _uploadedFileBiz;
-        protected BreadCrumbManager _breadCrumbManager;
+        //private UploadedFileBiz _uploadedFileBiz;
+        //private BreadCrumbManager _breadCrumbManager;
         //protected RightBiz _rightBiz;
         //protected UserBiz _userBiz;
 
-        public BusinessLayer(MyWorkClasses myWorkClasses, IRepositry<TEntity> dal, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses)
+        public BusinessLayer( IRepositry<TEntity> dal, BizParameters param)
+            : base(param)
         {
             _dal = dal;
-            _uploadedFileBiz = uploadedFileBiz;
-            _breadCrumbManager = breadCrumbManager;
+            //_param = param;
+
+            //_uploadedFileBiz = param.UploadedFileBiz;
 
         }
 
+        public BusinessLayer(IRepositry<TEntity> dal, UploadedFileBiz uploadedFileBiz, IMemoryMain memoryMain, PageViewBiz pageViewBiz, IErrorSet errorSet, ConfigManagerHelper configManagerHelper, BreadCrumbManager breadCrumbManager)
+            : base(uploadedFileBiz, memoryMain, pageViewBiz, errorSet, configManagerHelper, breadCrumbManager)
+        {
+            _dal = dal;
+            //_param = param;
 
+            //_uploadedFileBiz = param.UploadedFileBiz;
+
+        }
 
 
         protected IRepositry<TEntity> Dal
@@ -96,6 +108,31 @@ namespace UowLibrary
 
 
         }
+
+        //public UploadedFileBiz UploadedFileBiz
+        //{
+        //    get
+        //    {
+        //        return _uploadedFileBiz;
+        //    }
+        //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         ////https://stackoverflow.com/questions/12553639/ef-codefirst-get-all-poco-types-for-dbcontext
         ////returns a list of all POCO class names

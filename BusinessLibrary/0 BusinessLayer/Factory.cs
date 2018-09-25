@@ -41,7 +41,7 @@ namespace UowLibrary
             Product p = entity as Product;
             MenuPathMain mpm = entity as MenuPathMain;
 
-            entity.MenuManager = new MenuManager(mpm, p, null, MenuENUM.CreateDefault, _breadCrumbManager, new LikeUnlikeParameter(0,0,"Initialization in Factory"), UserId);
+            entity.MenuManager = new MenuManager(mpm, p, null, MenuENUM.CreateDefault, BreadCrumbManager, new LikeUnlikeParameter(0,0,"Initialization in Factory"), UserId);
 
             return entity;
         }

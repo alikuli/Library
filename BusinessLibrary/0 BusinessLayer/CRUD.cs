@@ -2,6 +2,7 @@
 using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
+using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Collections.Generic;
@@ -122,6 +123,7 @@ namespace UowLibrary
         /// <param name="entity"></param>
         public virtual void CreateEntity(TEntity entity)
         {
+            FixChildEntityForCreate(entity);
             Dal.Create(entity);
         }
 
@@ -158,8 +160,16 @@ namespace UowLibrary
             //parm.Entity.IsUpdating = true;
             fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
             handleRelatedFilesIfExist(parm);
+
+            MenuPath1Feature mp1Test = parm.Entity as MenuPath1Feature;
+            AddParentChildCode(parm);
             UpdateEntity(parm.Entity as TEntity);
             ClearSelectListInCache(SelectListCacheKey);
+
+        }
+
+        public virtual void AddParentChildCode(ControllerCreateEditParameter parm)
+        {
 
         }
 
@@ -169,6 +179,7 @@ namespace UowLibrary
         /// <param name="parm"></param>
         public virtual void UpdateEntity(TEntity entity)
         {
+
             Dal.Update(entity);
         }
 
@@ -326,7 +337,7 @@ namespace UowLibrary
 
             foreach (var id in lstUploadIdsToDelete)
             {
-                _uploadedFileBiz.DeleteActuallyAndSave(id);
+                UploadedFileBiz.DeleteActuallyAndSave(id);
 
             }
         }

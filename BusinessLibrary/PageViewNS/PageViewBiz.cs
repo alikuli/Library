@@ -10,19 +10,20 @@ using ModelsClassLibrary.ModelsNS.PageViewNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.RightsNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
 using WebLibrary.Programs;
 using System.Linq;
+using ErrorHandlerLibrary;
 
 namespace UowLibrary.PageViewNS
 {
     public partial class PageViewBiz : BusinessLayer<PageView>
     {
-        public PageViewBiz(IRepositry<PageView> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public PageViewBiz(IRepositry<PageView> entityDal,  IMemoryMain memoryMain, IErrorSet errorSet, ConfigManagerHelper configManagerHelper, BreadCrumbManager breadCrumbManager)
+            : base(entityDal, null, memoryMain, null, errorSet, configManagerHelper, breadCrumbManager)
         {
             
         }

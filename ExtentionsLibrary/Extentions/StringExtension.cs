@@ -30,12 +30,12 @@ namespace AliKuli.Extentions
         {
             return string.IsNullOrWhiteSpace(str);
         }
-        public static bool IsNullOrWhiteSpaceThrowException(this string str, string errMsg ="")
+        public static bool IsNullOrWhiteSpaceThrowException(this string str, string errMsg = "")
         {
             if (str.IsNullOrWhiteSpace())
             {
-                if(errMsg.IsNullOrWhiteSpace())
-                    throw new Exception(string.Format("String: '{0}' is null or only white space",str));
+                if (errMsg.IsNullOrWhiteSpace())
+                    throw new Exception(string.Format("String: '{0}' is null or only white space", str));
                 else
                     throw new Exception(errMsg);
 
@@ -242,7 +242,9 @@ namespace AliKuli.Extentions
             if (string.IsNullOrWhiteSpace(queryString) || string.IsNullOrWhiteSpace(paramName)) return string.Empty;
 
             var query = queryString.Replace("?", "");
+
             if (!query.Contains("=")) return string.Empty;
+
             var queryValues = query.Split('&').Select(piQ => piQ.Split('=')).ToDictionary(
               piKey => piKey[0].ToLower().Trim(), piValue => piValue[1]);
             string result;
@@ -378,6 +380,17 @@ namespace AliKuli.Extentions
             }
 
             string s = Regex.Replace(input, @"\s+", string.Empty);
+            return s;
+        }
+
+        public static string RemoveAllDashes(this string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return input;
+            }
+            //https://stackoverflow.com/questions/33643637/regex-to-remove-dash-between-alphanumeric
+            string s = Regex.Replace(input, @"(?<=\w)-(?=\w)", string.Empty);
             return s;
         }
 

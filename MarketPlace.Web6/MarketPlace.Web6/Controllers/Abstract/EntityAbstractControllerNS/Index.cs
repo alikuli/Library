@@ -85,7 +85,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
             {
                 ErrorsGlobal.Add("Something went wrong while printing Index.", MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
-
+                //you must redirect this to some index that is surely available
+                //i.e. even unauthourized people can get to it.
                 return RedirectToAction("Index");
 
 

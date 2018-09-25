@@ -60,6 +60,7 @@ namespace UowLibrary.Interface
         void Attach(TEntity entity);
 
         SelectList SelectList_Engine(IQueryable<TEntity> data);
+        void FixChildEntityForCreate(TEntity entity);
 
     }
 }

@@ -7,7 +7,7 @@ using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.RightsNS;
 using UowLibrary.MenuNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.ProductChildNS;
 using UowLibrary.UploadFileNS;
@@ -22,8 +22,8 @@ namespace UowLibrary.ProductNS
 
         MyWorkClassesProduct _myWorkClasses;
         UserBiz _userBiz;
-        public ProductBiz(UserBiz userBiz, IRepositry<Product> entityDal, MyWorkClassesProduct myWorkClassesProduct, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public ProductBiz(UserBiz userBiz, IRepositry<Product> entityDal, MyWorkClassesProduct myWorkClassesProduct, BizParameters bizParameters)
+            : base(entityDal, bizParameters)
         {
 
             _myWorkClasses = myWorkClassesProduct;

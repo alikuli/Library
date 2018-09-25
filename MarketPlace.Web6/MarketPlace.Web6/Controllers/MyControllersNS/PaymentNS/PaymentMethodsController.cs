@@ -8,7 +8,7 @@ using ModelsClassLibrary.ModelsNS.PlacesNS;
 using UowLibrary.PaymentMethodNS;
 using UowLibrary;
 using BreadCrumbsLibraryNS.Programs;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ErrorHandlerLibrary;
@@ -22,8 +22,8 @@ namespace MarketPlace.Web6.Controllers
         PaymentMethodBiz _PaymentMethodsBiz;
         #region Constructo and initializers
 
-        public PaymentMethodsController(PaymentMethodBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(biz, bcm, err, pageViewBiz) 
+        public PaymentMethodsController(PaymentMethodBiz biz, AbstractControllerParameters param)
+            : base(biz, param) 
         {
             _PaymentMethodsBiz = biz;
         }

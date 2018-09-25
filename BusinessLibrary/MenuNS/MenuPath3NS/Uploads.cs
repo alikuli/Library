@@ -38,7 +38,7 @@ namespace UowLibrary.ProductNS
         //            file.ProductCategory3Id = entity.Id;
 
         //            entity.UploadedFiles.Add(file);
-        //            _uploadedFileBiz.Create(file);
+        //            UploadedFileBiz.Create(file);
 
         //        }
         //    }
@@ -54,7 +54,7 @@ namespace UowLibrary.ProductNS
         {
 
             //Delete the upload
-            await _uploadedFileBiz.DeleteAsync(uploadedObjectId);
+            await UploadedFileBiz.DeleteAsync(uploadedObjectId);
 
             //Note. this just marks delete as true.
 

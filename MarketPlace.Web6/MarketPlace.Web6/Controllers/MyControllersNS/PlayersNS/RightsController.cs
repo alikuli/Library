@@ -10,7 +10,7 @@ using ModelsClassLibrary.RightsNS;
 using EnumLibrary.EnumNS;
 using UowLibrary;
 using BreadCrumbsLibraryNS.Programs;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using ErrorHandlerLibrary;
 using UowLibrary.PageViewNS;
 
@@ -19,8 +19,8 @@ namespace MarketPlace.Web6.Controllers
     public class RightsController : EntityAbstractController<Right>
     {
         RightBiz _biz;
-        public RightsController(RightBiz biz, UserBiz userBiz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(biz, bcm, err, pageViewBiz) 
+        public RightsController(RightBiz biz, UserBiz userBiz, AbstractControllerParameters param)
+            : base(biz, param) 
         {
             _biz = biz;
             _userBiz = userBiz;

@@ -9,31 +9,26 @@ using AliKuli.Extentions;
 using UowLibrary;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using BreadCrumbsLibraryNS.Programs;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using ErrorHandlerLibrary;
 using UowLibrary.PageViewNS;
+using System.Web.Mvc;
 
 namespace MarketPlace.Web6.Controllers
 {
+    [Authorize]
     public partial class FileDocsController : EntityAbstractController<FileDoc>
     {
         FileDocBiz _fileDocBiz;
 
-        public FileDocsController(FileDocBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(biz, bcm, err, pageViewBiz) 
+        public FileDocsController(FileDocBiz biz,  AbstractControllerParameters param)
+            : base(biz, param) 
         {
             _fileDocBiz = biz;
             
         }
 
-
-        public override System.Web.Mvc.RedirectToRouteResult Event_UpdateCreateRedicrectToAction(ControllerCreateEditParameter parm)
-        {
-//            return RedirectToAction("Index", new { selectedId = parm.Entity.Id.ToString(), sortBy = SortOrderENUM.Item2_Dsc });
-            throw new NotImplementedException();
-
-        }
 
 
         public FileDocBiz FileDocBiz

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using UowLibrary.Abstract;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -23,8 +23,8 @@ namespace UowLibrary
     {
 
         UserBiz _userBiz;
-        public ManageControllerBiz(MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager, UserBiz userBiz)
-            : base(myWorkClasses)
+        public ManageControllerBiz(BizParameters bizParam, UserBiz userBiz)
+            : base(bizParam)
         {
             _userBiz = userBiz;
         }

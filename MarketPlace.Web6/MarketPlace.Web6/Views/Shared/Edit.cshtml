@@ -32,8 +32,13 @@
 @Html.Partial(@"ViewControls/BreadCrumbs/_newBreadCrumbs", @Model.MenuManager.BreadCrumbManager)
 @Html.Partial(@"ViewControls/Edit/_EditHeading")
 
+@{
+    
+    string actionName = this.ViewContext.RouteData.Values["action"].ToString();
+}
+
 @*@using (Html.BeginForm("Edit", @controllerName, new { returnUrl = returnUrl}, FormMethod.Post, new { enctype = "multipart/form-data" }))*@
-@using (Html.BeginForm("Edit", @controllerName, new { menuPathMainId = menuPathMainId, productId = productId, returnUrl = returnUrl, productChildId = productChildId, menuEnum = menuEnum, selectId = selectId, searchString = searchString }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm(actionName, @controllerName, new { menuPathMainId = menuPathMainId, productId = productId, returnUrl = returnUrl, productChildId = productChildId, menuEnum = menuEnum, selectId = selectId, searchString = searchString }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(model => model.Id)
     @Html.AntiForgeryToken()

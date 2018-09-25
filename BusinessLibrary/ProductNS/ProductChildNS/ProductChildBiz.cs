@@ -6,7 +6,7 @@ using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.RightsNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -19,8 +19,9 @@ namespace UowLibrary.ProductChildNS
 
 
 
-        public ProductChildBiz(IRepositry<ProductChild> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public ProductChildBiz(IRepositry<ProductChild> entityDal,  BizParameters bizParameters)
+            : base(entityDal, bizParameters)
+
         {
         }
 

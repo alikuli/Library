@@ -9,7 +9,7 @@ using AliKuli.Extentions;
 using UowLibrary;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using BreadCrumbsLibraryNS.Programs;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using ErrorHandlerLibrary;
 using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
@@ -23,8 +23,8 @@ namespace MarketPlace.Web6.Controllers
 
         private FeatureBiz _biz;
         //private UserBiz _userBiz;
-        public FeaturesController(FeatureBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(biz, bcm, err, pageViewBiz) 
+        public FeaturesController(FeatureBiz biz, AbstractControllerParameters param)
+            : base(biz, param) 
         {
             _biz = biz;
             //_userBiz = userBiz;

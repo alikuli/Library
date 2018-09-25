@@ -11,7 +11,7 @@ using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.RightsNS;
 using System;
 using System.Reflection;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -22,8 +22,8 @@ namespace UowLibrary.ProductNS
     public partial class MenuPath3Biz : BusinessLayer<MenuPath3>
     {
 
-        public MenuPath3Biz(IRepositry<MenuPath3> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public MenuPath3Biz(IRepositry<MenuPath3> entityDal, BizParameters bizParameters)
+            : base(entityDal, bizParameters)
         {
         }
 

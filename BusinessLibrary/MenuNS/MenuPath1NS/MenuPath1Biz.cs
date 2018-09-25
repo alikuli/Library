@@ -11,7 +11,7 @@ using ModelsClassLibrary.RightsNS;
 using System;
 using System.Linq;
 using System.Reflection;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -24,8 +24,8 @@ namespace UowLibrary.MenuNS
     {
 
 
-        public MenuPath1Biz(IRepositry<MenuPath1> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public MenuPath1Biz(IRepositry<MenuPath1> entityDal, BizParameters bizParameters)
+            : base(entityDal, bizParameters)
         {
         }
 

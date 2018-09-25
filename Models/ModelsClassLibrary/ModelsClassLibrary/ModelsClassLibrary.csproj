@@ -221,6 +221,16 @@
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerHasAvailableUnitsSpec.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerIsActiveSpec.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerIsBlackListedSpec.cs" />
+    <Compile Include="ModelsNS\DashBoardNS\DashBoardMain.cs" />
+    <Compile Include="ModelsNS\DashBoardNS\DashBoardSingle.cs" />
+    <Compile Include="ModelsNS\DashBoardNS\DashBoardGroup.cs" />
+    <Compile Include="ModelsNS\FeaturesNS\MenuPath1Feature.cs" />
+    <Compile Include="ModelsNS\FeaturesNS\MenuPath2Feature.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelsNS\FeaturesNS\MenuPath3Feature.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ModelsNS\SharedNS\CountModel.cs" />
     <Compile Include="ModelsNS\PageViewNS\PageView.cs" />
     <Compile Include="ModelsNS\GlobalCommentsNS\GlobalComment.cs" />
@@ -355,6 +365,7 @@
     <Compile Include="ModelsNS\RightsNS\Right.cs" />
     <Compile Include="ModelsNS\CounterNS\Counter.cs" />
     <Compile Include="ModelsNS\CounterNS\CounterTypeENUM.cs" />
+    <Compile Include="ModelsNS\SharedNS\DateParameter.cs" />
     <Compile Include="ModelsNS\SharedNS\Parameters\AnnonymousStringType.cs" />
     <Compile Include="ModelsNS\SharedNS\Parameters\GlobalCommentParameter.cs" />
     <Compile Include="ModelsNS\SharedNS\Parameters\ControllerCreateEditParameter - Copy.cs" />

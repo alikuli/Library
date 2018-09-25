@@ -39,7 +39,7 @@ namespace UowLibrary.FileDocNS
             {
 
 
-                errIfNotLoggedIn();
+                //errIfNotLoggedIn();
 
 
                 var lstAsFileDoc = base.GetListForIndex().ToList() as IList<FileDoc>;
@@ -66,7 +66,7 @@ namespace UowLibrary.FileDocNS
 
         public override async Task<IList<ICommonWithId>> GetListForIndexAsync(ControllerIndexParams parms)
         {
-            errIfNotLoggedIn();
+           // errIfNotLoggedIn();
 
             var lst = (await base.GetListForIndexAsync(parms)).Cast<FileDoc>().ToList();
 
@@ -79,14 +79,13 @@ namespace UowLibrary.FileDocNS
             return lstIcommonwithId;
         }
 
-        private void errIfNotLoggedIn()
-        {
-            if (UserId.IsNullOrWhiteSpace())
-            {
-                ErrorsGlobal.Add("You must log in to continue", "");
-                throw new Exception(ErrorsGlobal.ToString());
-            }
-        }
+        //private void errIfNotLoggedIn()
+        //{
+        //    if (UserId.IsNullOrWhiteSpace())
+        //    {
+        //        ErrorsGlobal.Add("You must log in to continue", "");
+        //    }
+        //}
 
         public override void Event_ModifyIndexItem(IndexListVM indexListVM, IndexItemVM indexItem, ICommonWithId icommonWithid)
         {

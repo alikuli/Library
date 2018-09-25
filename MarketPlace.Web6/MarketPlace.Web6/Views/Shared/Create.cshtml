@@ -3,7 +3,10 @@
 @{
     var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
     string returnUrl = Request.Url.PathAndQuery; 
-    Model.MenuManager.MenuState.ControllerCurrentName = this.ViewContext.RouteData.Values["controller"].ToString();
+    if(!Model.MenuManager.IsNull())
+    { 
+        Model.MenuManager.MenuState.ControllerCurrentName = this.ViewContext.RouteData.Values["controller"].ToString();
+    }
     string selectId = Model.MenuManager.SelectedId;
     string searchString = Model.MenuManager.SearchString;
     string createScreenName = string.Format("{0} {1}", "Create", Model.ClassName.ToTitleCase());

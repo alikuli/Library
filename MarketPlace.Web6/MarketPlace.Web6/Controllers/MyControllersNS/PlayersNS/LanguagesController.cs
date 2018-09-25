@@ -8,7 +8,7 @@ using System;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.LanguageNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 
@@ -19,8 +19,8 @@ namespace MarketPlace.Web6.Controllers
 
         #region Constructo and initializers
 
-        public LanguagesController(LanguageBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(biz, bcm, err, pageViewBiz) { }
+        public LanguagesController(LanguageBiz biz, AbstractControllerParameters param)
+            : base(biz, param) { }
 
         #endregion
 

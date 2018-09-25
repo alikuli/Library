@@ -10,7 +10,7 @@ using ModelsClassLibrary.RightsNS;
 using ModelsClassLibrary.ViewModels;
 using System;
 using System.Reflection;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -20,8 +20,8 @@ namespace UowLibrary.PaymentTermNS
 {
     public partial class PaymentTermBiz : BusinessLayer<PaymentTerm>
     {
-        public PaymentTermBiz(IRepositry<PaymentTerm> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public PaymentTermBiz(IRepositry<PaymentTerm> entityDal, BizParameters bizParameters)
+            : base(entityDal, bizParameters)
         {
 
         }

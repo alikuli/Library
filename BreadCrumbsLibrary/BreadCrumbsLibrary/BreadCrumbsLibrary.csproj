@@ -100,7 +100,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="WebLibrary">
-      <HintPath>..\..\WebLibrary\bin\Debug\WebLibrary.dll</HintPath>
+      <HintPath>..\..\WebLibrary\obj\Debug\WebLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

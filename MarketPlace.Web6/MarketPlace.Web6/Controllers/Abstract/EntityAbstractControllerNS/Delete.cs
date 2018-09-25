@@ -61,6 +61,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     print,
                     ActionNameENUM.Delete);
 
+                InitializeMenuManager(parms);
+
                 return Event_CreateViewAndSetupSelectList(parms);
 
             }
@@ -95,7 +97,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 if (!returnUrl.IsNullOrWhiteSpace())
                     return Redirect(returnUrl);
 
-                return RedirectToAction("Index");
+//                return RedirectToAction("Index");
+                return Redirect(BreadCrumbManager.Url_CurrMinusOne);
 
 
             }

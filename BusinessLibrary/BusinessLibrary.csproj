@@ -146,6 +146,7 @@
   <ItemGroup>
     <Compile Include="0 BusinessLayer\EntityFramework Tools.cs" />
     <Compile Include="0 BusinessLayer\CreateControllerCreateEditParameter.cs" />
+    <Compile Include="0 BusinessLayer\FixChildEntityForCreate.cs" />
     <Compile Include="0 BusinessLayer\HasUploadsProperties.cs" />
     <Compile Include="0 BusinessLayer\Get.cs" />
     <Compile Include="0 BusinessLayer\File Tools.cs" />
@@ -153,6 +154,36 @@
     <Compile Include="0 BusinessLayer\Factory.cs" />
     <Compile Include="0 BusinessLayer\Initialization -LockEdit.cs" />
     <Compile Include="0 BusinessLayer\Event_ModifyIndexItem.cs" />
+    <Compile Include="FeatureNS\Index.cs" />
+    <Compile Include="MenuPath1FeatureNS\MenuPath1FeatureBiz.cs" />
+    <Compile Include="MenuPath1FeatureNS\FixChildEntityForCreate.cs" />
+    <Compile Include="MenuPath1FeatureNS\Index.cs" />
+    <Compile Include="MenuPath1FeatureNS\SelectList.cs" />
+    <Compile Include="MenuPath2FeatureNS\FixChildEntityForCreate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MenuPath2FeatureNS\Index.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MenuPath2FeatureNS\MenuPath2FeatureBiz.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MenuPath2FeatureNS\SelectList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MenuPath3FeatureNS\FixChildEntityForCreate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MenuPath3FeatureNS\Index.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MenuPath3FeatureNS\MenuPath3FeatureBiz.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MenuPath3FeatureNS\SelectList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ParametersNS\AbstractControllerParameters.cs" />
     <Compile Include="Abstract\Memory.cs" />
     <Compile Include="Abstract\Errors.cs" />
     <Compile Include="Abstract\AbstractBiz.cs" />
@@ -170,11 +201,12 @@
     <Compile Include="CounterNS\Initialization.cs" />
     <Compile Include="CounterNS\CounterBiz.cs" />
     <Compile Include="CounterNS\SelectList.cs" />
+    <Compile Include="DashboardNS\DashBoardBiz.cs" />
     <Compile Include="DiscountNS\SelectList.cs" />
     <Compile Include="DiscountNS\Index.cs" />
-    <Compile Include="FeaturesNS\Fix.cs" />
-    <Compile Include="FeaturesNS\SelectList.cs" />
-    <Compile Include="FeaturesNS\FeatureBiz.cs" />
+    <Compile Include="FeatureNS\Fix.cs" />
+    <Compile Include="FeatureNS\SelectList.cs" />
+    <Compile Include="FeatureNS\FeatureBiz.cs" />
     <Compile Include="FileDocsNS\Factory.cs" />
     <Compile Include="FileDocsNS\Upload.cs" />
     <Compile Include="FileDocsNS\Find.cs" />
@@ -203,15 +235,16 @@
     <Compile Include="MenuNS\MenuBizNS\Fix.cs" />
     <Compile Include="MenuNS\MenuBizNS\SelectList.cs" />
     <Compile Include="MenuNS\MenuBizNS\MenuBiz.cs" />
+    <Compile Include="MenuNS\MenuPath1NS\AddFeature.cs" />
     <Compile Include="MenuNS\MenuPathMainNS\Fix.cs" />
     <Compile Include="MenuNS\MenuPathMainNS\FindAllMenuPathsForMenu1.cs" />
-    <Compile Include="MyWorkClassesNS\MyWorkClasses.cs" />
     <Compile Include="PageViewNS\SavePageView.cs" />
     <Compile Include="PageViewNS\Event_ModifyIndex.cs" />
     <Compile Include="PageViewNS\SelectList.cs" />
-    <Compile Include="PageViewNS\Fix.cs" />
+    <Compile Include="PageViewNS\DashBoard.cs" />
     <Compile Include="PageViewNS\Index.cs" />
     <Compile Include="PageViewNS\PageViewBiz.cs" />
+    <Compile Include="ParametersNS\BizParameters.cs" />
     <Compile Include="PaymentsNS\Methods\SelectList.cs" />
     <Compile Include="PaymentsNS\Methods\Index.cs" />
     <Compile Include="PaymentsNS\Terms\Index.cs" />

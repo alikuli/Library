@@ -18,7 +18,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -40,11 +40,8 @@ namespace UowLibrary
             IAuthenticationManager iAuthenticationManager,
             CountryBiz countryBiz,
             IRepositry<ApplicationUser> entityDal,
-            MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+            BizParameters bizParameters) : base(entityDal, bizParameters)
         {
-            _uploadedFileBiz = uploadedFileBiz;
-            //_userBiz = this as UserBiz;
             _countryBiz = countryBiz;
             UserManager = userManager;
             SignInManager = signInManager;

@@ -3,6 +3,7 @@ using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS;
+using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System;
@@ -35,6 +36,8 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 
         public virtual ICollection<GlobalComment> GlobalComments { get; set; }
         public virtual ICollection<LikeUnlike> LikeUnlikes { get; set; }
+        //public virtual ICollection<Feature> Features { get; set; }
+
 
     }
 

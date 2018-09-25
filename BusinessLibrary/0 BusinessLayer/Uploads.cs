@@ -44,7 +44,7 @@ namespace UowLibrary
 
                     //You need to add a refrence here to save the file in the UploadedFile as well.
                     AddEntityRecordIntoUpload(file, entity as TEntity, iuserHasUploadsTypeEnum);
-                    _uploadedFileBiz.Create(CreateControllerCreateEditParameter(file as ICommonWithId));
+                    UploadedFileBiz.Create(CreateControllerCreateEditParameter(file as ICommonWithId));
 
                 }
             }
@@ -179,7 +179,7 @@ namespace UowLibrary
 
         //            TEntity entity = ihasUploads as TEntity;
         //            AddEntityRecordIntoUpload(file, entity);
-        //            _uploadedFileBiz.Create(file);
+        //            UploadedFileBiz.Create(file);
 
         //        }
         //    }
@@ -201,7 +201,7 @@ namespace UowLibrary
 
         //            TEntity entity = ihasUploads as TEntity;
         //            AddEntityRecordIntoUpload(file, entity);
-        //            _uploadedFileBiz.Create(file);
+        //            UploadedFileBiz.Create(file);
 
         //        }
         //    }

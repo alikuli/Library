@@ -1,9 +1,4 @@
-﻿using InterfacesLibrary.SharedNS;
-using ModelsClassLibrary.ModelsNS.PageViewNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
-using System;
-using System.Web.Mvc;
-using AliKuli.Extentions;
+﻿using System.Web.Mvc;
 
 
 namespace MarketPlace.Web4.Controllers
@@ -19,7 +14,7 @@ namespace MarketPlace.Web4.Controllers
 
 
 
-
+        [AllowAnonymous]
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
 
@@ -33,7 +28,7 @@ namespace MarketPlace.Web4.Controllers
         }
 
 
-
+        [AllowAnonymous]
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             //get any errors that are in the memory and save them in the list

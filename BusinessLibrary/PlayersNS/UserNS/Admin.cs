@@ -234,8 +234,8 @@ namespace UowLibrary
 
         private ApplicationUser initializeAdminUser()
         {
-            string adminName = _configManager.AdminName;
-            string password = _configManager.AdminPassword;
+            string adminName = ConfigManagerHelper.AdminName;
+            string password = ConfigManagerHelper.AdminPassword;
             ApplicationUser user = CreateUser_UserManager(adminName, password);
 
             return user;
@@ -243,7 +243,7 @@ namespace UowLibrary
 
         private IdentityRole initializeAdminRole()
         {
-            string adminRole = _configManager.AdminRole;
+            string adminRole = ConfigManagerHelper.AdminRole;
             IdentityRole role = CreateRole_UserManager(adminRole);
             return role;
 
@@ -253,8 +253,7 @@ namespace UowLibrary
         {
             if (userId.IsNullOrWhiteSpace())
                 return false;
-            ConfigManagerHelper cfg = new ConfigManagerHelper();
-            return UserManager.IsInRole(userId, cfg.AdminRole);
+            return UserManager.IsInRole(userId, ConfigManagerHelper.AdminRole);
         }
 
     }

@@ -147,6 +147,7 @@ namespace UowLibrary
             catch (Exception e)
             {
                 ErrorsGlobal.Add("Error during initialization", MethodBase.GetCurrentMethod(), e);
+                throw new Exception(ErrorsGlobal.ToString());
             }
         }
 

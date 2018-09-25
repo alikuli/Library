@@ -11,11 +11,15 @@
     @Scripts.Render("~/bundles/modernizr")
 
     
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+          crossorigin="anonymous">
     @RenderSection("styles", required: false)
 
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryuobtrsive")
     @Scripts.Render("~/bundles/popper")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
@@ -41,7 +45,15 @@
                     <a class="nav-link" href="@Url.Action("Index","Home",null)">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index","Menus",null)">Menus</a>
+                    <a class="nav-link" href="@Url.Action("Index", "MenuPath1s", null)">Menus 1</a>
+
+@*                    <a class="nav-link" href="@Url.Action("Index","Menus",null)">Menus</a>*@
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("GetGroupedCount", "DashBoard", null)">PageViews</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index","FileDocs",null)">Filing</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>

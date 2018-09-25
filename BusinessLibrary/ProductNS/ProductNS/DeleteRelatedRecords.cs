@@ -49,7 +49,7 @@ namespace UowLibrary.ProductNS
                 {
                     foreach (var id in lstOfUploadsToDelete)
                     {
-                        _uploadedFileBiz.DeleteActuallyAndSave(id);
+                        UploadedFileBiz.DeleteActuallyAndSave(id);
                     }
                 }
 
@@ -74,7 +74,7 @@ namespace UowLibrary.ProductNS
 
         //    foreach (var id in lstIdsToDelete)
         //    {
-        //        _uploadedFileBiz.DeleteActuallyAndSave(id);
+        //        UploadedFileBiz.DeleteActuallyAndSave(id);
         //    }
         //    productUploads.Clear();
         //}

@@ -5,11 +5,14 @@ using WebLibrary.Programs;
 using AliKuli.Extentions;
 using System.Reflection;
 using Microsoft.AspNet.Identity;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using BreadCrumbsLibraryNS.Programs;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
+using UowLibrary.PageViewNS;
+using ErrorHandlerLibrary;
+using AliKuli.UtilitiesNS;
 
 namespace UowLibrary.Abstract
 {
@@ -20,78 +23,110 @@ namespace UowLibrary.Abstract
     /// </summary>
     public abstract partial class AbstractBiz : IBiz
     {
-        private readonly IMemoryMain _imemoryMain;
-        MyWorkClasses _myWorkClasses;
 
-        public AbstractBiz(MyWorkClasses myWorkClasses)
+        UploadedFileBiz _uploadedFileBiz;
+        IMemoryMain _memoryMain;
+        PageViewBiz _pageViewBiz;
+        IErrorSet _errorSet;
+        ConfigManagerHelper _configManagerHelper;
+        BreadCrumbManager _breadCrumbManager;
+        public AbstractBiz(BizParameters param)
+            : this(param.UploadedFileBiz, param.MemoryMain, param.PageViewBiz, param.ErrorSet, param.ConfigManagerHelper, param.BreadCrumbManager)
         {
-            //Get parameters
-            _imemoryMain = myWorkClasses.MemoryMain;
-            _ierrorsGlobal = myWorkClasses.ErrorSet;
-            _myWorkClasses = myWorkClasses;
-            _ierrorsGlobal.SetLibAndClass("Uow Library", "UOW_Abstract");
 
 
         }
 
+
+
+
+
+        public AbstractBiz(UploadedFileBiz uploadedFileBiz, IMemoryMain memoryMain, PageViewBiz pageViewBiz, IErrorSet errorSet, ConfigManagerHelper configManagerHelper, BreadCrumbManager breadCrumbManager)
+        {
+            _uploadedFileBiz = uploadedFileBiz;
+
+            _memoryMain = memoryMain;
+            _pageViewBiz = pageViewBiz;
+            _errorSet = errorSet;
+            _configManagerHelper = configManagerHelper;
+            _breadCrumbManager = breadCrumbManager;
+
+            errorSet.SetLibAndClass("Uow Library", "UOW_Abstract");
+
+        }
+        //public AbstractBiz(AbstractControllerParameters param)
+        //{
+        //    //Get parameters
+
+        //    _memoryMain = param.MemoryMain;
+        //    _pageViewBiz = param.PageViewBiz;
+        //    _errorSet = param.ErrorSet;
+        //    _configManagerHelper = param.ConfigManagerHelper;
+        //    _breadCrumbManager = param.BreadCrumbManager;
+
+        //    param.ErrorSet.SetLibAndClass("Uow Library", "UOW_Abstract");
+
+
+        //}
         string _userId;
         string _userName;
         public string UserId
         {
-            get
-            {
-                return _userId;
-            }
-            set
-            {
-                _userId = value;
-            }
+            get{return _userId;}
+            set{_userId = value;}
         }
         public string UserName
         {
-            get
-            {
-                //_userName.IsNullOrWhiteSpaceThrowException("Programming Error. User Name in Business Abstract Layer not set.");
-                return _userName;
-            }
-            set
-            {
-                _userName = value;
-            }
+            get{return _userName;}
+            set{_userName = value;}
         }
 
-        //public UploadedFileBiz UploadedFileBiz
-        //{
-        //    get
-        //    {
-        //        return _uploadedFileBiz;
-        //    }
-        //}
+        public UploadedFileBiz UploadedFileBiz
+        {
+            get { return _uploadedFileBiz; }
+        }
 
-        //public UserBiz UserBiz
-        //{
-        //    get
-        //    {
-        //        return _rightBiz.UserBiz;
-        //    }
-        //}
 
-        //public RightBiz RightBiz
-        //{
-        //    get
-        //    {
-        //        return _rightBiz;
-        //    }
-        //}
-
-        public MyWorkClasses MyWorkClasses
+        public MemoryMain MemoryMain
         {
             get
             {
-                return _myWorkClasses;
+                return _memoryMain as MemoryMain;
             }
         }
 
+
+        public PageViewBiz PageViewBiz
+        {
+            get 
+            {
+                return _pageViewBiz; 
+            }
+        }
+
+        public ErrorSet ErrorsGlobal
+        {
+            get
+            {
+                return _errorSet as ErrorSet;
+            }
+        }
+
+        public ConfigManagerHelper ConfigManagerHelper
+        {
+            get
+            {
+                return _configManagerHelper;
+            }
+        }
+
+        public BreadCrumbManager BreadCrumbManager
+        {
+            get
+            {
+                return _breadCrumbManager;
+            }
+        }
 
         //public CountryBiz CountryBiz
         //{
@@ -102,10 +137,7 @@ namespace UowLibrary.Abstract
         //}
         //public BreadCrumbManager BreadCrumbManager
         //{
-        //    get
-        //    {
-        //        return MyWorkClasses.BreadCrumbManager;
-        //    }
+        //    get{return _bizParam.BreadCrumbManager;}
         //}
 
         public virtual void EncryptDecrypt()

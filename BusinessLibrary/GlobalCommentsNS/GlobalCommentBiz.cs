@@ -13,7 +13,7 @@ using AliKuli.Extentions;
 using UowLibrary.ProductChildNS;
 using ModelsClassLibrary.RightsNS;
 using UowLibrary.PlayersNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 
 
@@ -25,8 +25,9 @@ namespace UowLibrary.GlobalCommentsNS
         ProductBiz _productBiz;
         UserBiz _userBiz;
 
-        public GlobalCommentBiz(MenuPathMainBiz menuPathMainBiz, ProductBiz productBiz, UserBiz userBiz, IRepositry<GlobalComment> entityDal, MyWorkClasses myWorkClasses, RightBiz rightBiz, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public GlobalCommentBiz(MenuPathMainBiz menuPathMainBiz, ProductBiz productBiz, UserBiz userBiz, IRepositry<GlobalComment> entityDal, BizParameters bizParameters)
+            : base(entityDal, bizParameters)
+
         {
             _menuPathMainBiz = menuPathMainBiz;
             _productBiz = productBiz;

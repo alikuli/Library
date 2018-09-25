@@ -21,13 +21,13 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
 
         #region Initialize
-        public ActionResult InitializeDb()
+        public virtual ActionResult InitializeDb()
         {
             try
             {
                 //Biz.SaveAfterEveryAddition(IsSavingAfterEveryAddition);
                 Biz.InitializationData();
-                ErrorsGlobal.Add(string.Format("*** {0} Initialized", typeof(TEntity).Name), "");
+                //ErrorsGlobal.Add(string.Format("*** {0} Initialized", typeof(TEntity).Name), "");
 
             }
             catch (Exception e)

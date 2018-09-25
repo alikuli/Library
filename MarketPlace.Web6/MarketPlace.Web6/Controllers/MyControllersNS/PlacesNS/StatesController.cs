@@ -6,7 +6,7 @@ using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using UowLibrary;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.StateNS;
@@ -19,8 +19,8 @@ namespace MarketPlace.Web6.Controllers
         #region Constructo and initializers
 
         StateBiz _stateBiz;
-        public StatesController(StateBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(biz, bcm, err, pageViewBiz) 
+        public StatesController(StateBiz biz, AbstractControllerParameters param)
+            : base(biz, param) 
         {
             _stateBiz = biz;
         }

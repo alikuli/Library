@@ -11,7 +11,7 @@ using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.RightsNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
 using UowLibrary.UploadFileNS;
@@ -27,8 +27,8 @@ namespace UowLibrary.LikeUnlikeNS
         MenuPathMainBiz _menuPathMainBiz;
         ProductBiz _productBiz;
         UserBiz _userBiz;
-        public LikeUnlikeBiz(MenuPathMainBiz menuPathMainBiz, ProductBiz productBiz, MyWorkClasses myWorkClasses, IRepositry<LikeUnlike> entityDal, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager, UserBiz userBiz)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public LikeUnlikeBiz(MenuPathMainBiz menuPathMainBiz, UserBiz userBiz, ProductBiz productBiz, AbstractControllerParameters myWorkClasses, IRepositry<LikeUnlike> entityDal, BizParameters bizParameters)
+            : base(entityDal, bizParameters)
         {
             _menuPathMainBiz = menuPathMainBiz;
             _productBiz = productBiz;

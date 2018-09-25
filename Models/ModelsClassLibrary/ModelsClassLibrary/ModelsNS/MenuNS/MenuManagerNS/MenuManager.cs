@@ -24,7 +24,6 @@ namespace UowLibrary.MenuNS.MenuStateNS
             ProductChild = productChild;
             MenuEnum = menuEnum;
             BreadCrumbManager = breadCrumbManager;
-            LikeUnlikesCounter = likesCounter ?? new LikeUnlikeParameter(0,0,"Initialized in MenuManager because it was null");
             LoadMenuState();
             UserId = userId;
         }
@@ -153,6 +152,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
             }
         }
         public string WebClicksCount { get; set; }
+
 
 
 

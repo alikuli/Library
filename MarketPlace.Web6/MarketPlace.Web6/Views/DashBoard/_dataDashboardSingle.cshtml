@@ -1,0 +1,75 @@
+﻿@model ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle
+@{
+    int count = 0;
+}
+@*<table class="table">
+    <tr>
+        <th>#</th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfTrx)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.DataDetail) {
+    <tr>
+        <td>
+           @(++count).
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfTrx)
+        </td>
+        <td>
+            @if(item.IsCrawler)
+            {
+                <span>Crawler</span>
+            }
+        </td>
+    </tr>
+}
+
+</table>*@
+<div class="row">
+    <div class="col-1">
+        Sr#
+
+    </div>
+    <div class="col-2">
+        Date
+
+    </div>
+    <div class="col-7">
+        Name
+
+
+    </div>
+    <div class="col-2">
+        Is Crawler
+    </div>
+</div>
+
+
+
+@foreach (var item in Model.DataDetail)
+{
+    ++count;
+    <div class="row">
+        <div class="col-1">
+            @count) 
+
+        </div>
+        <div class="col-2">
+            @Html.DisplayFor(modelItem => item.DateOfTrx)
+
+        </div>
+        <div class="col-7">
+            @Html.DisplayFor(modelItem => item.Name)
+
+
+        </div>
+        <div class="col-2">
+            @Html.DisplayFor(modelItem => item.IsCrawler)
+        </div>
+    </div>
+}
+

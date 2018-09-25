@@ -3,6 +3,7 @@ using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Data.Entity;
 using UserModels;
@@ -138,9 +139,43 @@ namespace ApplicationDbContextNS
                 .WithOptional(x => x.MenuPath3)
                 .HasForeignKey(x => x.MenuPath3Id)
                 .WillCascadeOnDelete(false);
-
-
             #endregion
+
+
+            //#region Features
+
+            //modelBuilder.Entity<MenuPath1>()
+            //    .HasMany<Feature>(x => x.Features)
+            //    .WithOptional(x => x.MenuPath1)
+            //    .HasForeignKey(x => x.MenuPath1Id)
+            //    .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<MenuPath2>()
+            //    .HasMany<Feature>(x => x.Features)
+            //    .WithOptional(x => x.MenuPath2)
+            //    .HasForeignKey(x => x.MenuPath2Id)
+            //    .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<MenuPath3>()
+            //    .HasMany<Feature>(x => x.Features)
+            //    .WithOptional(x => x.MenuPath3)
+            //    .HasForeignKey(x => x.MenuPath3Id)
+            //    .WillCascadeOnDelete(false);
+
+
+            //modelBuilder.Entity<Product>()
+            //    .HasMany<Feature>(x => x.Features)
+            //    .WithOptional(x => x.Product)
+            //    .HasForeignKey(x => x.ProductId)
+            //    .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<ProductChild>()
+            //    .HasMany<Feature>(x => x.Features)
+            //    .WithOptional(x => x.ProductChild)
+            //    .HasForeignKey(x => x.ProductChildId)
+            //    .WillCascadeOnDelete(false);
+            
+            //#endregion
 
             #region Product
 
@@ -221,7 +256,7 @@ namespace ApplicationDbContextNS
                 .HasForeignKey(x => x.UserId)
                 .WillCascadeOnDelete(false);
 
-                
+
             //modelBuilder.Entity<ApplicationUser>().ToTable("Users");
             //modelBuilder.Entity<IdentityRole>().ToTable("Roles");
             //modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");

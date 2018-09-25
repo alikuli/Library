@@ -20,10 +20,11 @@ namespace MarketPlace.Web6.Controllers
             ViewBag.SelectListProduct = FeatureBiz.ProductBiz.SelectList();
             ViewBag.SelectListProductChild = FeatureBiz.ProductChildBiz.SelectList();
 
-            FeaturesTypeENUM TypeEnum = FeaturesTypeENUM.Unknown;
-            ViewBag.SelectListFeaturesTypeEnum = EnumExtention.ToSelectListSorted<FeaturesTypeENUM>(TypeEnum);
+            FeatureTypeENUM TypeEnum = FeatureTypeENUM.Unknown;
+            ViewBag.SelectListFeaturesTypeEnum = EnumExtention.ToSelectListSorted<FeatureTypeENUM>(TypeEnum);
             //ViewBag.SelectListUser = FeatureBiz.UserBiz.SelectList();
 
+            InitializeMenuManager(parm);
 
             return base.Event_CreateViewAndSetupSelectList(parm);
         }

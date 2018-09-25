@@ -36,7 +36,7 @@ namespace UowLibrary
 
                     //add the owner of the file here....
                     entity.MiscFiles.Add(file);
-                    _uploadedFileBiz.Create(CreateControllerCreateEditParameter(file as ICommonWithId));
+                    UploadedFileBiz.Create(CreateControllerCreateEditParameter(file as ICommonWithId));
 
                 }
             }
@@ -54,7 +54,7 @@ namespace UowLibrary
         {
 
             //Delete the upload
-            await _uploadedFileBiz.DeleteAsync(uploadedObjectId);
+            await UploadedFileBiz.DeleteAsync(uploadedObjectId);
 
         }
 

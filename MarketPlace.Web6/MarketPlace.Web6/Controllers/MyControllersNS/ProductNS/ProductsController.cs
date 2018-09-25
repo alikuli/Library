@@ -11,7 +11,7 @@ using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.MenuNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
@@ -22,8 +22,8 @@ namespace MarketPlace.Web6.Controllers
     {
 
         ProductBiz _productBiz;
-        public ProductsController(ProductBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(biz, bcm, err, pageViewBiz) 
+        public ProductsController(ProductBiz biz, AbstractControllerParameters param)
+            : base(biz, param)
         {
             _productBiz = biz;
         }

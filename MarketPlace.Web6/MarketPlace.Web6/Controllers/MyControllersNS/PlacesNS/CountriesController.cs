@@ -5,8 +5,8 @@ using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using UowLibrary;
-using UowLibrary.MyWorkClassesNS;
 using UowLibrary.PageViewNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 namespace MarketPlace.Web6.Controllers
 {
@@ -15,8 +15,8 @@ namespace MarketPlace.Web6.Controllers
 
         #region Constructo and initializers
 
-        public CountriesController(CountryBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(biz, bcm, err, pageViewBiz) { }
+        public CountriesController(CountryBiz biz, AbstractControllerParameters param)
+            : base(biz, param) { }
 
         #endregion
 

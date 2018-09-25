@@ -10,7 +10,7 @@ using UowLibrary;
 using UowLibrary.GlobalCommentsNS;
 using System.Collections;
 using System.Linq;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ErrorHandlerLibrary;
@@ -25,8 +25,8 @@ namespace MarketPlace.Web6.Controllers
 
         #region Construction and initializers
 
-        public GlobalCommentsController(GlobalCommentBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(biz, bcm, err, pageViewBiz) 
+        public GlobalCommentsController(GlobalCommentBiz biz, AbstractControllerParameters param)
+            : base(biz, param) 
         {
             _globalCommentBiz = biz;
         }

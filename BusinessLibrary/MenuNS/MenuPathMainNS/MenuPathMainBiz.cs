@@ -8,7 +8,7 @@ using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.RightsNS;
 using System.Linq;
 using UowLibrary.MenuNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -16,14 +16,15 @@ using WebLibrary.Programs;
 
 namespace UowLibrary.ProductNS
 {
+    
     public partial class MenuPathMainBiz : BusinessLayer<MenuPathMain>
     {
         MenuPath1Biz _menupath1Biz;
         MenuPath2Biz _menupath2Biz;
         MenuPath3Biz _menupath3Biz;
         UserBiz _userBiz;
-        public MenuPathMainBiz(MenuPath1Biz menupath1Biz, MenuPath2Biz menupath2Biz, MenuPath3Biz menupath3Biz, IRepositry<MenuPathMain> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager, UserBiz userBiz)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public MenuPathMainBiz(MenuPath1Biz menupath1Biz, UserBiz userBiz, MenuPath2Biz menupath2Biz, MenuPath3Biz menupath3Biz, IRepositry<MenuPathMain> entityDal, BizParameters bizParameters)
+            : base(entityDal, bizParameters)
         {
             _menupath1Biz = menupath1Biz;
             _menupath2Biz = menupath2Biz;

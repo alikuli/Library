@@ -10,7 +10,7 @@ using ModelsClassLibrary.RightsNS;
 using ModelsClassLibrary.ViewModels;
 using System;
 using System.Reflection;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
 using WebLibrary.Programs;
@@ -19,8 +19,8 @@ namespace UowLibrary.PlayersNS.CustomerCategoryNS
 {
     public partial class CustomerCategoryBiz : BusinessLayer<CustomerCategory>
     {
-        public CustomerCategoryBiz(IRepositry<CustomerCategory> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public CustomerCategoryBiz(IRepositry<CustomerCategory> entityDal, BizParameters bizParameters)
+            : base(entityDal, bizParameters)
         {
 
         }

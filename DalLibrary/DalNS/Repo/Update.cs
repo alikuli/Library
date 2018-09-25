@@ -1,6 +1,7 @@
 ﻿using DalLibrary.Interfaces;
 using InterfacesLibrary.SharedNS;
 using System;
+using System.Data.Entity;
 using System.Reflection;
 
 namespace DalLibrary.DalNS
@@ -43,7 +44,7 @@ namespace DalLibrary.DalNS
             Fix(entity);
 
             //old code
-            //_db.Entry(entity).State = EntityState.Modified;
+            _db.Entry(entity).State = EntityState.Modified;
 
             ErrorsGlobal.AddMessage(string.Format("'{0}' Updated!", entity.Name));
 

@@ -7,7 +7,7 @@ using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.RightsNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.StateNS;
 using UowLibrary.UploadFileNS;
@@ -19,8 +19,8 @@ namespace UowLibrary
     public partial class UomWeightBiz : BusinessLayer<UomWeight>
     {
 
-        public UomWeightBiz(IRepositry<UomWeight> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public UomWeightBiz(IRepositry<UomWeight> entityDal, BizParameters bizParameters)
+            : base(entityDal, bizParameters)
         {
         }
 

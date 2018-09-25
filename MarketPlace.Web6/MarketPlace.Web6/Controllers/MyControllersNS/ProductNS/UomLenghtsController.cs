@@ -8,7 +8,7 @@ using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
@@ -21,8 +21,8 @@ namespace MarketPlace.Web6.Controllers
         UomLengthBiz _uomLengthBiz;
         #region Constructo and initializers
 
-        public UomLengthsController(UomLengthBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(biz, bcm, err, pageViewBiz) 
+        public UomLengthsController(UomLengthBiz biz, AbstractControllerParameters param)
+            : base(biz, param)
         {
             _uomLengthBiz = biz;
         }

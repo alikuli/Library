@@ -12,7 +12,7 @@ using ModelsClassLibrary.RightsNS;
 using ModelsClassLibrary.ViewModels;
 using System;
 using System.Reflection;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
 using UowLibrary.StateNS;
@@ -26,8 +26,8 @@ namespace UowLibrary
     {
 
         //ProductBiz _productBiz;
-        public ProductIdentifierBiz(IRepositry<ProductIdentifier> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public ProductIdentifierBiz(IRepositry<ProductIdentifier> entityDal, BizParameters bizParameters)
+            : base(entityDal, bizParameters)
         {
             //_productBiz = productBiz;
         }

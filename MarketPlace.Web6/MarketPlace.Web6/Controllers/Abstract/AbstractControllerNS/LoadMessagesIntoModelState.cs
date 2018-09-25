@@ -14,7 +14,7 @@ namespace MarketPlace.Web4.Controllers
 
         private void LoadMessagesIntoModelState()
         {
-            if (new ConfigManagerHelper().IsVerbose)
+            if (ConfigManagerHelper.IsVerbose)
             {
                 bool UowHasMessages = ErrorsGlobal.HasMessages;
 

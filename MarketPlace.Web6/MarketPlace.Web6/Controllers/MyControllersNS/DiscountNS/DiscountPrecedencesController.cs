@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.DiscountPrecedenceNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 
@@ -22,8 +22,8 @@ namespace MarketPlace.Web6.Controllers
         readonly static string[] bindArray;
 
 
-        public DiscountPrecedencesController(DiscountPrecedenceBiz biz, UserBiz userBiz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(biz, bcm, err, pageViewBiz) 
+        public DiscountPrecedencesController(DiscountPrecedenceBiz biz, UserBiz userBiz, AbstractControllerParameters param)
+            : base(biz, param) 
         {
             _discountPrecBiz = biz;
             _userBiz = userBiz;

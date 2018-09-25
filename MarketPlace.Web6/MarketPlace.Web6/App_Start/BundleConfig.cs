@@ -12,6 +12,11 @@ namespace MarketPlace.Web6
             //jquery.validate.unobtrusive
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
+            
+
+           bundles.Add(new ScriptBundle("~/bundles/jqueryuobtrsive").Include(
+                        "~/Scripts/jquery.unobtrusive-ajax.js"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/Knockout").Include(
                         "~/Scripts/knockout-3.1.0.js.js",

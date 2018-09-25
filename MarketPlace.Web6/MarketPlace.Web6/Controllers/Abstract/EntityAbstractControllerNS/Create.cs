@@ -6,7 +6,6 @@ using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using UserModels;
 
 namespace MarketPlace.Web6.Controllers.Abstract
 {
@@ -21,7 +20,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
 
         // GET: Countries/Create
-        public virtual ActionResult Create(string isandForSearch, MenuENUM menuEnum = MenuENUM.CreateDefault, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, bool isMenu = false)
+        public virtual ActionResult Create(string isandForSearch, MenuENUM menuEnum = MenuENUM.CreateDefault, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, bool isMenu = false, string parentId = "")
         {
             //for product this needs to create the correct vm.
 
@@ -31,7 +30,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
             {
 
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
-
+                
                 ControllerIndexParams parms = MakeControlParameters(
                     "",
                     searchFor,
@@ -49,7 +48,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     ActionNameENUM.Create);
 
 
-
+                InitializeMenuManager(parms);
+                AddParentIdIfChild(parms, parentId);
                 return Event_CreateViewAndSetupSelectList(parms);
 
             }
@@ -61,6 +61,12 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                 return RedirectToAction("Index", new { id = "", searchFor = searchFor, isandForSearch = isandForSearch, selectedId = selectedId, returnUrl = returnUrl, productId = productId, menuPathMainId = menuPathMainId, productChildId = productChildId, menuLevelEnum = menuEnum, sortBy = sortBy, print = print });
             }
+        }
+
+        public virtual void AddParentIdIfChild(ControllerIndexParams parms, string parentId)
+        {
+            //Use this to send the parentId into the HttpCreate. When you call the parent from its create button
+            //make sure you send the Id of the parent in a field named parentId!
         }
 
 
@@ -92,6 +98,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     User.Identity.Name,
                     returnUrl);
 
+                InitializeMenuManager(parm);
                 await Biz.CreateAndSaveAsync(parm);
 
                 //if (returnUrl.IsNullOrWhiteSpace())

@@ -10,7 +10,7 @@ using UowLibrary.PaymentMethodNS;
 using UowLibrary.PlayersNS.OwnerCategoryNS;
 using UowLibrary;
 using BreadCrumbsLibraryNS.Programs;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ErrorHandlerLibrary;
@@ -24,8 +24,8 @@ namespace MarketPlace.Web6.Controllers
         OwnerCategoryBiz _OwnerCategoryBiz;
         #region Constructo and initializers
 
-        public OwnerCategoriesController(OwnerCategoryBiz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(biz, bcm, err, pageViewBiz) 
+        public OwnerCategoriesController(OwnerCategoryBiz biz,  AbstractControllerParameters param)
+            : base(biz, param) 
         {
             _OwnerCategoryBiz = biz;
         }

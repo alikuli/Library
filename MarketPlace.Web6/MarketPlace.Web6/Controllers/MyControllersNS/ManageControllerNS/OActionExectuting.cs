@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UserModelsLibrary.ModelsNS;
 

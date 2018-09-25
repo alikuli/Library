@@ -23,7 +23,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         public virtual ICollection<GlobalComment> GlobalComments { get; set; }
 
-        public virtual ICollection<Feature> Features { get; set; }
+        //public virtual ICollection<Feature> Features { get; set; }
 
         /// <summary>
         /// A product can have ONE or Many ProductIdentifiers. It must have at least one.

@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using AliKuli.UtilitiesNS;
 using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
 using ErrorHandlerLibrary;
@@ -17,7 +18,7 @@ using System.Web;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.MenuNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
@@ -31,8 +32,8 @@ namespace MarketPlace.Web6.Controllers
         MenuPath1Biz _menuPath1Biz;
         //UserBiz _userBiz;
         MenuPathMainBiz _menuPathMainBiz;
-        public ProductAutomobileVMsController(ProductBiz productBiz, MenuPathMainBiz menuPathMainBiz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(bcm, err, pageViewBiz) 
+        public ProductAutomobileVMsController(ProductBiz productBiz, MenuPathMainBiz menuPathMainBiz, AbstractControllerParameters param)
+            : base(param) 
         {
             _productBiz = productBiz;
             _menuPath1Biz = menuPathMainBiz.MenuPath1Biz;

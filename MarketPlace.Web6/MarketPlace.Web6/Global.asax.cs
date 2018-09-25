@@ -7,6 +7,7 @@ using System.Web.Management;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using UowLibrary;
 
 namespace MarketPlace.Web6
 {
@@ -16,7 +17,7 @@ namespace MarketPlace.Web6
 
         protected void Application_Start()
         {
-      ModelBinders.Binders.DefaultBinder = new PerpetuumSoft.Knockout.KnockoutModelBinder();
+            ModelBinders.Binders.DefaultBinder = new PerpetuumSoft.Knockout.KnockoutModelBinder();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -54,7 +55,6 @@ namespace MarketPlace.Web6
             string filename = AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY;
             string path = HttpContext.Current.Server.MapPath(filename);
             AliKuli.ToolsNS.FileTools.CreateDirectory(path);
-
             //foreach (var entityType in lstClassesNames)
             //{
 

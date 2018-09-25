@@ -2,21 +2,16 @@
 using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
 using ErrorHandlerLibrary;
-using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.ProductNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
-using System;
+using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using UowLibrary;
-using UowLibrary.Interface;
+using UowLibrary.FeaturesNS;
 using UowLibrary.MenuNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PageViewNS;
-using UowLibrary.PlayersNS;
-using UowLibrary.ProductNS;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -24,11 +19,15 @@ namespace MarketPlace.Web6.Controllers
     {
 
         MenuPath1Biz _menupath1Biz;
-
-        public MenuPath1sController(MenuPath1Biz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(biz, bcm, err, pageViewBiz) 
+        //FeatureBiz _featureBiz;
+        //MenuPath1FeatureBiz _menuPath1FeatureBiz;
+        public MenuPath1sController(MenuPath1Biz biz,  AbstractControllerParameters param)
+            : base(biz, param) 
         {
             _menupath1Biz = biz;
+            //featureBiz.IsNullThrowException();
+            //_featureBiz = featureBiz;
+            //_menuPath1FeatureBiz = menuPath1FeatureBiz;
         }
 
 
@@ -42,7 +41,53 @@ namespace MarketPlace.Web6.Controllers
         }
 
 
-    
-    
+
+
+
+
+
+
+
+
+
+        //public ActionResult AddNewField(string id)
+        //{
+        //    //Feature feature = _featureBiz.Factory() as Feature;
+        //    //feature.MenuPath1Id = id;
+
+
+        //    FeatureTypeENUM TypeEnum = FeatureTypeENUM.Unknown;
+        //    ViewBag.SelectListFeaturesTypeEnum = EnumExtention.ToSelectListSorted<FeatureTypeENUM>(TypeEnum);
+
+
+        //    return View(feature);
+
+
+        //}
+
+        //[HttpPost]
+        //public ActionResult AddNewField(Feature feature)
+        //{
+        //    //first get the Menupath
+        //    //add the feature to it
+        //    //save it.
+
+        //    try
+        //    {
+        //        _menupath1Biz.AddFeature(feature.MenuPath1Id, feature);
+        //        return RedirectToAction("Edit", new { id = feature.MenuPath1Id });
+        //    }
+
+        //    catch (System.Exception e)
+        //    {
+
+        //        ErrorsGlobal.Add("Error while adding new field", MethodBase.GetCurrentMethod(), e);
+        //        return RedirectToAction("Edit", new { id = feature.MenuPath1Id });
+        //    }
+
+
+        //}
+
+
     }
 }

@@ -28,7 +28,6 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 
         }
 
-        public virtual ICollection<Feature> Features { get; set; }
 
         /// <summary>
         /// This will be unique for product/customer. If it does not exist, then it will be considered a general product.

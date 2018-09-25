@@ -36,14 +36,16 @@
             currIndexItemVM = IndexListVMArray[i];
             vv.IdForEdit = IndexListVMArray[i].Id;
 
-            vv.UnLikeIcon.HasPressed = IndexListVMArray[i].MenuManager.LikeUnlikesCounter.HasUnLiked;
-            //vv.LikeIcon.HasLiked = IndexListVMArray[i].MenuManager.LikeUnlikesCounter.HasLiked;
-            vv.LikeIcon.HasPressed = IndexListVMArray[i].MenuManager.LikeUnlikesCounter.HasLiked;
-
-            //vv..LikeCount = @IndexListVMArray[i].MenuManager.LikeUnlikesCounter.LikeCount;
-            vv.LikeIcon.CountIcon = @IndexListVMArray[i].MenuManager.LikeUnlikesCounter.LikeCount;
-            vv.UnLikeIcon.CountIcon = @IndexListVMArray[i].MenuManager.LikeUnlikesCounter.UnlikeCount;
-
+            if (!IndexListVMArray[i].MenuManager.IsNull())
+            {
+                if (!IndexListVMArray[i].MenuManager.LikeUnlikesCounter.IsNull())
+                {
+                    vv.UnLikeIcon.HasPressed = IndexListVMArray[i].MenuManager.LikeUnlikesCounter.HasUnLiked;
+                    vv.LikeIcon.HasPressed = IndexListVMArray[i].MenuManager.LikeUnlikesCounter.HasLiked;
+                    vv.LikeIcon.CountIcon = @IndexListVMArray[i].MenuManager.LikeUnlikesCounter.LikeCount;
+                    vv.UnLikeIcon.CountIcon = @IndexListVMArray[i].MenuManager.LikeUnlikesCounter.UnlikeCount;
+                }
+            }
             vv.ImagePath = "";
             vv.MainMenuPath = "";
             vv.MenuPath1Id = "";
@@ -156,6 +158,7 @@
                         vv.MenuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
                         vv.MenuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
                         vv.MenuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+                        vv.ProductId = IndexListVMArray[i].MenuManager.MenuState.ProductId;
                         break;
 
 

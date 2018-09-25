@@ -1,4 +1,5 @@
-﻿using ModelsClassLibrary.ModelsNS.SharedNS;
+﻿using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
 
 namespace UowLibrary.MenuNS
@@ -17,6 +18,13 @@ namespace UowLibrary.MenuNS
             indexListVM.Show.EditDeleteAndCreate = false;
 
             //indexListVM.MainHeading = "Product Category 1";
+
+
+            //int webClicksCount = _pageViewBiz.GetClickCount();
+            //string recordStr = (webClicksCount == 1 ? "view" : "views");
+            //indexListVM.MenuManager.WebClicksCount = string.Format("{0:n0} {1}",
+            //    webClicksCount,
+            //    recordStr);
 
 
             //we need to make  indexListVM.Show.EditDeleteAndCreate false because we want to control

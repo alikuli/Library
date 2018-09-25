@@ -1,27 +1,25 @@
-﻿using BreadCrumbsLibraryNS.Programs;
+﻿using AliKuli.Extentions;
+using AliKuli.UtilitiesNS;
+using BreadCrumbsLibraryNS.Programs;
 using ErrorHandlerLibrary;
-using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web4.Controllers;
 using Microsoft.AspNet.Identity.Owin;
-using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsNS.Models;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PageViewNS;
-using UowLibrary.PlayersNS;
-using AliKuli.Extentions;
 namespace MarketPlace.Web6.Controllers
 {
     [Authorize]
     public class AccountController : AbstractController
     {
         UserBiz _userBiz;
-        public AccountController(UserBiz userBiz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(bcm, err, pageViewBiz) 
+        public AccountController(UserBiz userBiz, AbstractControllerParameters param)
+            : base(param) 
         {
             _userBiz = userBiz;
         }
@@ -38,7 +36,7 @@ namespace MarketPlace.Web6.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -188,7 +186,7 @@ namespace MarketPlace.Web6.Controllers
 
 
         //// GET: /Account/ConfirmEmail
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
@@ -347,7 +345,7 @@ namespace MarketPlace.Web6.Controllers
         //
         // POST: /Account/LogOff
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             UserBiz.LogOff();
@@ -359,14 +357,14 @@ namespace MarketPlace.Web6.Controllers
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
-            if(returnUrl.IsNullOrWhiteSpace())
-                return RedirectToAction("Index","Menus",null);
+            if (returnUrl.IsNullOrWhiteSpace())
+                return RedirectToAction("Index", "Menus");
 
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
             }
-           return RedirectToAction("Index","Menus",null);
+            return RedirectToAction("Index", "Menus");
         }
 
 

@@ -1,21 +1,13 @@
-﻿using AliKuli.UtilitiesNS;
-using ApplicationDbContextNS;
+﻿using AliKuli.Extentions;
 using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.Interfaces;
-using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.RightsNS;
 using UowLibrary.LikeUnlikeNS;
-using UowLibrary.MyWorkClassesNS;
-using UowLibrary.PlayersNS;
+using UowLibrary.ParametersNS;
+using UowLibrary.PageViewNS;
 using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
 using UowLibrary.UploadFileNS;
-using UserModels;
-using AliKuli.Extentions;
-using WebLibrary.Programs;
-using UowLibrary.PageViewNS;
 
 namespace UowLibrary.MenuNS
 {
@@ -26,10 +18,10 @@ namespace UowLibrary.MenuNS
         protected ProductChildBiz _productChildBiz;
         protected LikeUnlikeBiz _likeUnlikeBiz;
         UserBiz _userBiz;
-        PageViewBiz _pageViewBiz;
+        //PageViewBiz _pageViewBiz;
 
-        public MenuBiz(MenuPathMainBiz menuPathMainBiz, LikeUnlikeBiz likeUnlikeBiz, ProductBiz productBiz, IRepositry<MenuPathMain> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager, UserBiz userBiz, PageViewBiz pageViewBiz)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public MenuBiz(MenuPathMainBiz menuPathMainBiz, LikeUnlikeBiz likeUnlikeBiz, ProductBiz productBiz, UserBiz userBiz, IRepositry<MenuPathMain> entityDal, BizParameters bizParameters)
+            : base(entityDal, bizParameters)
         {
 
             _menuPathMainBiz = menuPathMainBiz;
@@ -37,13 +29,7 @@ namespace UowLibrary.MenuNS
             _productChildBiz = productBiz.ProductChildBiz;
             _userBiz = userBiz;
             _likeUnlikeBiz = likeUnlikeBiz;
-            _pageViewBiz = pageViewBiz;
-
-            //_likeUnlikeBiz.UserIdFromBiz = myWorkClasses.UserId;
-            //_likeUnlikeBiz.UserNameBiz = myWorkClasses.UserName;
-            //_menuPath1Biz = menuPath1Biz;
-            //_menuPath2Biz = menuPath2Biz;
-            //_menuPath3Biz = menuPath3Biz;
+          //  _pageViewBiz = pageViewBiz;
         }
 
 

@@ -9,7 +9,7 @@ using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
@@ -22,8 +22,8 @@ namespace MarketPlace.Web6.Controllers
         MenuPath2Biz _menupath2Biz;
         #region Constructo and initializers
 
-        public MenuPath2sController(MenuPath2Biz biz, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(biz, bcm, err, pageViewBiz) 
+        public MenuPath2sController(MenuPath2Biz biz, AbstractControllerParameters param)
+            : base(biz,param) 
         {
             _menupath2Biz = biz;
         }

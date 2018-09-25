@@ -22,10 +22,11 @@ namespace UowLibrary.MenuNS
             indexListVM.Heading.Main = "Menu";
             //indexListVM.Show.Create = true;
             //we mus select the correct menu state
+
             IMenuManager mm = makeMenuManager(parameters);
             indexListVM.MenuManager = mm;
             indexListVM.Heading.Column = "Menu Items";
-            int webClicksCount = _pageViewBiz.GetClickCount();
+            int webClicksCount = PageViewBiz.IsNull() ? 0 : PageViewBiz.GetClickCount();
             string recordStr = (webClicksCount == 1 ? "view" : "views");
             indexListVM.MenuManager.WebClicksCount = string.Format("{0:n0} {1}",
                 webClicksCount,

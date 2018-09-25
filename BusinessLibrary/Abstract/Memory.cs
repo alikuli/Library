@@ -7,7 +7,7 @@ using WebLibrary.Programs;
 
 namespace UowLibrary.Abstract
 {
-    public abstract partial class AbstractBiz : IBiz
+    public abstract partial class AbstractBiz 
     {
 
 
@@ -16,22 +16,22 @@ namespace UowLibrary.Abstract
         {
             get
             {
-                return _imemoryMain.HttpContextBase;
+                return MemoryMain.HttpContextBase;
             }
         }
 
-        public MemoryMain MemoryMain
-        {
-            get
-            {
-                if (_imemoryMain.IsNull())
-                {
-                    ErrorsGlobal.Add("Memory not initialized.", MethodBase.GetCurrentMethod());
-                    throw new Exception(ErrorsGlobal.ToString());
-                }
-                return (MemoryMain)_imemoryMain;
-            }
-        }
+        //public MemoryMain MemoryMain
+        //{
+        //    get
+        //    {
+        //        if (_bizParam.MemoryMain.IsNull())
+        //        {
+        //            ErrorsGlobal.Add("Memory not initialized.", MethodBase.GetCurrentMethod());
+        //            throw new Exception(ErrorsGlobal.ToString());
+        //        }
+        //        return _bizParam.MemoryMain;
+        //    }
+        //}
 
         public ApplicationMemory ApplicationMemory
         {

@@ -5,7 +5,7 @@ using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Web.Mvc;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 
@@ -16,8 +16,8 @@ namespace UowLibrary.ProductNS.ProicuytVmNS
 
 
         readonly ProductBiz _productBiz;
-        public ProductAutomobileBiz(ProductBiz productBiz, IRepositry<ProductAutomobileVM> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public ProductAutomobileBiz(ProductBiz productBiz, IRepositry<ProductAutomobileVM> entityDal, BizParameters bizParameter)
+            : base(entityDal, bizParameter)
         {
             _productBiz = productBiz;
         }

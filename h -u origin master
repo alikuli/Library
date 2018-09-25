@@ -1,0 +1,174 @@
+A	BusinessLibrary/0 BusinessLayer/Class1.cs
+M	BusinessLibrary/0 BusinessLayer/Event_ModifyIndexList.cs
+M	BusinessLibrary/0 BusinessLayer/Factory.cs
+M	BusinessLibrary/0 BusinessLayer/Uploads.cs
+M	BusinessLibrary/Abstract/AbstractBiz.cs
+M	BusinessLibrary/BusinessLibrary.csproj
+A	BusinessLibrary/FeaturesNS/FeatureBiz.cs
+A	BusinessLibrary/FeaturesNS/Fix.cs
+A	BusinessLibrary/FeaturesNS/SelectList.cs
+A	BusinessLibrary/GlobalCommentsNS/Fix.cs
+M	BusinessLibrary/LikeUnLikeNS/Add.cs
+M	BusinessLibrary/LikeUnLikeNS/Count.cs
+M	BusinessLibrary/MenuNS/MenuBizNS/Event_ModifyIndexItem.cs
+M	BusinessLibrary/MenuNS/MenuBizNS/Event_ModifyIndexList.cs
+M	BusinessLibrary/MenuNS/MenuBizNS/MenuBiz.cs
+M	BusinessLibrary/MenuNS/MenuPath1NS/SelectList.cs
+A	BusinessLibrary/PageViewNS/Event_ModifyIndex.cs
+A	BusinessLibrary/PageViewNS/Fix.cs
+A	BusinessLibrary/PageViewNS/Index.cs
+A	BusinessLibrary/PageViewNS/PageViewBiz.cs
+A	BusinessLibrary/PageViewNS/SavePageView.cs
+A	BusinessLibrary/PageViewNS/SelectList.cs
+M	BusinessLibrary/PlayersNS/UserNS/AccountControllerCode.cs
+M	BusinessLibrary/PlayersNS/UserNS/Admin.cs
+D	BusinessLibrary/ProductNS/ProductChildNS/Bussiness Rules.cs
+M	BusinessLibrary/ProductNS/ProductVmNS/ProductAutomobileBiz.cs
+M	DI.Web6/ApplicationModule.cs
+M	DalLibrary/DalNS/Repo/Save.cs
+M	DbContextLib/Ctx/ApplicationDbContextNS/ApplicationDbContext - DbSet.cs
+M	DbContextLib/DbContextLib.csproj
+A	DbContextLib/Migrations/201808250923297_25-08-2018.Designer.cs
+A	DbContextLib/Migrations/201808250923297_25-08-2018.cs
+A	DbContextLib/Migrations/201808250923297_25-08-2018.resx
+A	DbContextLib/Migrations/201808250942526_25-08-2018-1.Designer.cs
+A	DbContextLib/Migrations/201808250942526_25-08-2018-1.cs
+A	DbContextLib/Migrations/201808250942526_25-08-2018-1.resx
+A	DbContextLib/Migrations/201809061216136_06-09-2018.Designer.cs
+A	DbContextLib/Migrations/201809061216136_06-09-2018.cs
+A	DbContextLib/Migrations/201809061216136_06-09-2018.resx
+A	DbContextLib/Migrations/201809061254400_06-09-2018-1.Designer.cs
+A	DbContextLib/Migrations/201809061254400_06-09-2018-1.cs
+A	DbContextLib/Migrations/201809061254400_06-09-2018-1.resx
+A	DbContextLib/Migrations/201809061255476_06-09-2018-2.Designer.cs
+A	DbContextLib/Migrations/201809061255476_06-09-2018-2.cs
+A	DbContextLib/Migrations/201809061255476_06-09-2018-2.resx
+A	DbContextLib/Migrations/201809061502166_06-09-2018-3.Designer.cs
+A	DbContextLib/Migrations/201809061502166_06-09-2018-3.cs
+A	DbContextLib/Migrations/201809061502166_06-09-2018-3.resx
+A	DbContextLib/Migrations/201809081102043_08-09-2018.Designer.cs
+A	DbContextLib/Migrations/201809081102043_08-09-2018.cs
+A	DbContextLib/Migrations/201809081102043_08-09-2018.resx
+M	EnumLibrary/EnumLibrary.csproj
+M	EnumLibrary/EnumNS/ClassesWithRightsENUM.cs
+A	EnumLibrary/EnumNS/FeaturesTypeENUM.cs
+R086	EnumLibrary/EnumNS/Misc/EnumTypes.cs	EnumLibrary/EnumNS/Misc/TypeENUM.cs
+M	ExtentionsLibrary/Extentions/CollectionExtentions.cs
+M	ExtentionsLibrary/Extentions/DateTimeExtentions.cs
+M	ExtentionsLibrary/Extentions/EnumExtentions.cs
+M	MarketPlace.Web6/MarketPlace.Web6/App_Start/BundleConfig.cs
+M	MarketPlace.Web6/MarketPlace.Web6/App_Start/RouteConfig.cs
+M	MarketPlace.Web6/MarketPlace.Web6/App_Start/Startup.Auth.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Content/Site.css
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/Abstract/AbstractControllerNS/AbstractController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/Abstract/AbstractControllerNS/OnActionExecutedAndExecuting.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/Abstract/EntityAbstractControllerNS/EntityAbstractController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/Abstract/EntityAbstractControllerNS/Event_CreateViewAndSetupSelectList.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/Abstract/EntityAbstractControllerNS/Index.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/AccountController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/CounterNS/CountersController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/DiscountNS/DiscountPrecedencesController.cs
+A	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/FeaturesNS/Event_CreateViewAndSetupSelectList.cs
+A	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/FeaturesNS/FeaturesController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/FileDocsNS/FileDocsController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/GlobalCommentsNS/GlobalCommentsController.cs
+R096	MarketPlace.Web6/MarketPlace.Web6/Controllers/HomeController.cs	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/HomeNS/HomeController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/LikeUnlikeNS/LikeUnlikesController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/LogsNS/VisitorLogsController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/ManageControllerNS/ManageController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/MenuNS/MenuPath1sController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/MenuNS/MenuPath2sController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/MenuNS/MenuPath3sController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/MenuNS/MenuPathMainsController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/MenuNS/MenusControllerNS/MenusController.cs
+A	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/PageViewNS/PageViewsController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/PaymentNS/PaymentMethodsController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/PaymentNS/PaymentTermsController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/PlacesNS/CountriesController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/PlacesNS/StatesController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/PlayersNS/CustomerCategoriesController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/PlayersNS/LanguagesController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/PlayersNS/OwnerCategoriesController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/PlayersNS/RightsController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/PlayersNS/UsersController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/ProductNS/ProductChildsController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/ProductNS/ProductIdentifiersController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/ProductNS/ProductVmNS/Create.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/ProductNS/ProductVmNS/Edit.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/ProductNS/ProductVmNS/ProductAutomobileVMsController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/ProductNS/ProductsController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/ProductNS/UomLenghtsController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/ProductNS/UomQuantitiesController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/ProductNS/UomVolumesController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/ProductNS/UomWeightsController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/MyControllersNS/UploadedFiles/UploadedFilesController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Controllers/TestController.cs
+M	MarketPlace.Web6/MarketPlace.Web6/Global.asax.cs
+M	MarketPlace.Web6/MarketPlace.Web6/MarketPlace.Web6.csproj
+A	MarketPlace.Web6/MarketPlace.Web6/Models/CountModel.cs
+A	MarketPlace.Web6/MarketPlace.Web6/Models/FeaturesListModel.cs
+A	MarketPlace.Web6/MarketPlace.Web6/Models/FeaturesModel.cs
+R068	MarketPlace.Web6/MarketPlace.Web6/Scripts/MyScripts/IndexScripts.js	MarketPlace.Web6/MarketPlace.Web6/Scripts/MyScripts/IndexScripts1.js
+A	MarketPlace.Web6/MarketPlace.Web6/Scripts/MyScripts/_AddNewFieldScript.js
+A	MarketPlace.Web6/MarketPlace.Web6/Scripts/MyScripts/_AliBabaImagesAPI.js
+R089	MarketPlace.Web6/MarketPlace.Web6/Scripts/MyScripts/_MyGlobalScripts.js	MarketPlace.Web6/MarketPlace.Web6/Scripts/MyScripts/_MyGlobalScripts1.js
+A	MarketPlace.Web6/MarketPlace.Web6/Scripts/jquery.form.js
+A	MarketPlace.Web6/MarketPlace.Web6/Scripts/jquery.form.min.js
+A	MarketPlace.Web6/MarketPlace.Web6/Scripts/jquery.form.min.js.map
+A	MarketPlace.Web6/MarketPlace.Web6/Scripts/jquery.validate-vsdoc.js
+A	MarketPlace.Web6/MarketPlace.Web6/Scripts/jquery.validate.js
+A	MarketPlace.Web6/MarketPlace.Web6/Scripts/jquery.validate.min.js
+A	MarketPlace.Web6/MarketPlace.Web6/Scripts/knockout-3.1.0.debug.js
+A	MarketPlace.Web6/MarketPlace.Web6/Scripts/knockout-3.1.0.js
+A	MarketPlace.Web6/MarketPlace.Web6/Scripts/knockout.mapping-latest.debug.js
+A	MarketPlace.Web6/MarketPlace.Web6/Scripts/knockout.mapping-latest.js
+A	MarketPlace.Web6/MarketPlace.Web6/Scripts/perpetuum.knockout.js
+A	MarketPlace.Web6/MarketPlace.Web6/Views/Account/Register - OLD.cshtml
+M	MarketPlace.Web6/MarketPlace.Web6/Views/Account/Register.cshtml
+A	MarketPlace.Web6/MarketPlace.Web6/Views/Features/_FieldsOnlyEditFormat.cshtml
+M	MarketPlace.Web6/MarketPlace.Web6/Views/Home/Index.cshtml
+M	MarketPlace.Web6/MarketPlace.Web6/Views/MenuPath1s/_FieldsOnlyEditFormat.cshtml
+D	MarketPlace.Web6/MarketPlace.Web6/Views/OwnerCategories/_FieldsOnlyEditFormat.cshtml
+A	MarketPlace.Web6/MarketPlace.Web6/Views/PageViews/_FieldsOnlyEditFormat.cshtml
+M	MarketPlace.Web6/MarketPlace.Web6/Views/Shared/Create.cshtml
+M	MarketPlace.Web6/MarketPlace.Web6/Views/Shared/Edit.cshtml
+M	MarketPlace.Web6/MarketPlace.Web6/Views/Shared/EditorTemplates/AddressComplex.cshtml
+M	MarketPlace.Web6/MarketPlace.Web6/Views/Shared/Index.cshtml
+A	MarketPlace.Web6/MarketPlace.Web6/Views/Shared/ViewControls/Index/_IndexMiddlePart - TiledPictures - Copy (2).cshtml
+M	MarketPlace.Web6/MarketPlace.Web6/Views/Shared/ViewControls/Index/_IndexMiddlePart - TiledPictures.cshtml
+M	MarketPlace.Web6/MarketPlace.Web6/Views/Shared/ViewControls/Uploads/_IUserHasUploadsSingle.cshtml
+M	MarketPlace.Web6/MarketPlace.Web6/Views/Shared/ViewControls/Uploads/_ShowUploads.cshtml
+M	MarketPlace.Web6/MarketPlace.Web6/Views/Shared/_Layout.cshtml
+M	MarketPlace.Web6/MarketPlace.Web6/Views/Shared/_LoginPartial.cshtml
+M	MarketPlace.Web6/MarketPlace.Web6/Views/Shared/_Name_And_DetailInfo.cshtml
+A	MarketPlace.Web6/MarketPlace.Web6/Views/Shared/_numberOfCounts.cshtml
+M	MarketPlace.Web6/MarketPlace.Web6/Views/Test/Index.cshtml
+M	MarketPlace.Web6/MarketPlace.Web6/Web.config
+M	MarketPlace.Web6/MarketPlace.Web6/packages.config
+A	Models/ModelsClassLibrary/ModelsClassLibrary/DelegatesNS/Delegates.cs
+M	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsClassLibrary.csproj
+D	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/ClicksNS/Click.cs
+A	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/FeaturesNS/Feature.cs
+M	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/IndexNS/IndexListVM.cs
+A	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/LikeUnlikeNS/ParticipatingUsers.cs
+A	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/MenuNS/MenuManagerNS/IndexMenuVariables.cs
+R087	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/MenuNS/MenuManagerNS/MenuStateNS/MenuManager.cs	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/MenuNS/MenuManagerNS/MenuManager.cs
+R100	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/MenuNS/MenuManagerNS/MenuStateNS/MenuManagerAbstract.cs	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/MenuNS/MenuManagerNS/MenuManagerAbstract.cs
+D	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/MenuNS/MenuManagerNS/MenuStateAbstract OLD.cs
+M	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/MenuNS/MenuManagerNS/MenuStateNS/IMenuManager.cs
+A	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/MenuNS/MenuManagerNS/MenuStateNS/IconProperties.cs
+M	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/MenuNS/MenuPath1.cs
+M	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/MenuNS/MenuPath2.cs
+M	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/MenuNS/MenuPath3.cs
+A	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/PageViewNS/PageView.cs
+M	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/ProductNS/ProductChildNS/ProductChild.cs
+M	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/ProductNS/ProductNS/Product.cs
+A	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/ProductNS/ViewModelsNS/IProductAutomobileAdditionalFields.cs
+M	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/ProductNS/ViewModelsNS/ProductAutomobileNS/IProductAutomobileVM.cs
+A	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/ProductNS/ViewModelsNS/ProductAutomobileNS/ProductAutomobileAdditionalFields.cs
+M	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/ProductNS/ViewModelsNS/ProductAutomobileNS/ProductAutomobileVM.cs
+M	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/SetupNS/Setup.cs
+M	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/SharedNS/Common/CommonWithId.cs
+A	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/SharedNS/CountModel.cs
+M	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/SharedNS/Parameters/LikeUnlikeParameters.cs
+D	Models/ModelsClassLibrary/ModelsClassLibrary/ModelsNS/SharedNS/ParticipatingUsers.cs

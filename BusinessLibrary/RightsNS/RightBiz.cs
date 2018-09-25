@@ -7,7 +7,7 @@ using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.RightsNS;
 using ModelsClassLibrary.ViewModels;
 using System.Web.Mvc;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
 using WebLibrary.Programs;
@@ -17,8 +17,8 @@ namespace UowLibrary.PlayersNS
     {
 
 
-        public RightBiz(IRepositry<Right> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public RightBiz(BizParameters bizParameters, IRepositry<Right> entityDal )
+            : base(entityDal,bizParameters)
         {
         }
 

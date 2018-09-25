@@ -12,7 +12,7 @@ using ModelsClassLibrary.RightsNS;
 using ModelsClassLibrary.ViewModels;
 using System;
 using System.Reflection;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.StateNS;
 using UowLibrary.UploadFileNS;
@@ -24,8 +24,8 @@ namespace UowLibrary
     public partial class UomLengthBiz : BusinessLayer<UomLength>
     {
 
-        public UomLengthBiz(IRepositry<UomLength> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public UomLengthBiz(IRepositry<UomLength> entityDal, BizParameters bizParameters)
+            : base(entityDal, bizParameters)
         {
 
         }

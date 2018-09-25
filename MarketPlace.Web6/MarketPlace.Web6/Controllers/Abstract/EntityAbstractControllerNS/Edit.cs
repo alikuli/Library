@@ -44,6 +44,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     print,
                     ActionNameENUM.Edit);
 
+                InitializeMenuManager(parms);
                 return Event_CreateViewAndSetupSelectList(parms);
 
             }
@@ -81,6 +82,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 dbEntity.IsNullThrowException("Entity not found!");
 
                 //we dont need entity after this
+                //remember to add the UpdatePropertiesDuringModify when you are adding new stuff.
+                //You forget this.
                 dbEntity.UpdatePropertiesDuringModify(entity);
 
                 ControllerCreateEditParameter parm = new ControllerCreateEditParameter(
@@ -107,13 +110,16 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 if (BreadCrumbManager.Url_Curr != BreadCrumbManager.Url_CurrMinusOne)
                     return Redirect(BreadCrumbManager.Url_CurrMinusOne);
 
+                InitializeMenuManager(parm);
+
                 return RedirectToAction("Index", new { selectedId = selectedId, menuEnum = menuEnum });
             }
             catch (Exception e)
             {
                 ErrorsGlobal.Add(string.Format("Not saved!"), MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
-                return Redirect(BreadCrumbManager.Url_CurrMinusOne);
+                return Redirect(BreadCrumbManager.Url_CurrMinusTwo);
+                //return Redirect(BreadCrumbManager.Url_CurrMinusOne);
             }
         }
 

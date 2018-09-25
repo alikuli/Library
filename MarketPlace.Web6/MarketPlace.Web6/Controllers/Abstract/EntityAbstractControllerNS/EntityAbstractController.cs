@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using AliKuli.UtilitiesNS;
 using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
 using ErrorHandlerLibrary;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.Interface;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
@@ -35,14 +36,11 @@ namespace MarketPlace.Web6.Controllers.Abstract
         //private UserBiz _userBiz;
         //RightBiz _rightBiz;
         //MyWorkClasses _myWorkClasses;
-        public EntityAbstractController(IBusinessLayer<TEntity> icrudUow, BreadCrumbManager bcm, IErrorSet err, PageViewBiz pageViewBiz)
-            : base(bcm, err, pageViewBiz) 
+        public EntityAbstractController(IBusinessLayer<TEntity> icrudUow, AbstractControllerParameters param)
+            : base(param) 
         {
             _icrudBiz = icrudUow;
             _tEntityType = typeof(TEntity);
-
-            //_rightBiz = rightBiz;
-            //_myWorkClasses = myWorkClasses;
         }
 
         public BusinessLayer<TEntity> Biz

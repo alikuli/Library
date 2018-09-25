@@ -16,26 +16,9 @@ namespace UowLibrary.Abstract
     /// To see how a controller sends it see the OnActionExecuting(ActionExecutingContext filterContext) method in the Abstract Controller.
     /// and then the properties Uow and UowManagment/UowAccounts in ManagementController and AccountController 
     /// </summary>
-    public abstract partial class AbstractBiz : IBiz
+    public abstract partial class AbstractBiz 
     {
 
-        private readonly IErrorSet _ierrorsGlobal;
-
-
-
-        public ErrorSet ErrorsGlobal
-        {
-            get
-            {
-
-                if (_ierrorsGlobal.IsNull())
-                {
-                    throw new Exception("_err_UowAbstract not working. UOW_Abstrac");
-                }
-
-                return (ErrorSet)_ierrorsGlobal;
-            }
-        }
 
 
         /// <summary>

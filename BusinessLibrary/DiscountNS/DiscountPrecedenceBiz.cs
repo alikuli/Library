@@ -15,7 +15,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
@@ -25,8 +25,9 @@ namespace UowLibrary.DiscountPrecedenceNS
 {
     public partial class DiscountPrecedenceBiz : BusinessLayer<DiscountPrecedence>
     {
-        public DiscountPrecedenceBiz(IRepositry<DiscountPrecedence> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public DiscountPrecedenceBiz(IRepositry<DiscountPrecedence> entityDal, BizParameters bizParameters)
+            : base(entityDal, bizParameters)
+
         {
 
         }

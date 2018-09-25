@@ -13,15 +13,15 @@ using UowLibrary.UploadFileNS;
 using BreadCrumbsLibraryNS.Programs;
 using ModelsClassLibrary.RightsNS;
 using UowLibrary.PlayersNS;
-using UowLibrary.MyWorkClassesNS;
+using UowLibrary.ParametersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 
 namespace UowLibrary.PaymentMethodNS
 {
     public partial class PaymentMethodBiz : BusinessLayer<PaymentMethod>
     {
-        public PaymentMethodBiz(IRepositry<PaymentMethod> entityDal, MyWorkClasses myWorkClasses, UploadedFileBiz uploadedFileBiz, BreadCrumbManager breadCrumbManager)
-            : base(myWorkClasses, entityDal, uploadedFileBiz, breadCrumbManager)
+        public PaymentMethodBiz(IRepositry<PaymentMethod> entityDal, BizParameters bizParameters)
+            : base(entityDal, bizParameters)
         {
 
         }

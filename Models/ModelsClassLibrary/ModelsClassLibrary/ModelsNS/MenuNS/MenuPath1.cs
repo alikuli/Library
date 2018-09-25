@@ -2,6 +2,7 @@
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS;
+using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 using ModelsClassLibrary.ModelsNS.MenuNS;
@@ -28,7 +29,7 @@ namespace ModelsClassLibrary.MenuNS
         public virtual ICollection<MenuPathMain> MenuPathMains { get; set; }
         public virtual ICollection<GlobalComment> GlobalComments { get; set; }
         public virtual ICollection<LikeUnlike> LikeUnlikes { get; set; }
-        public virtual ICollection<Feature> Features { get; set; }
+        public virtual ICollection<MenuPath1Feature> MenuPath1Features { get; set; }
 
 
         string IHasUploads.MiscFilesLocation()

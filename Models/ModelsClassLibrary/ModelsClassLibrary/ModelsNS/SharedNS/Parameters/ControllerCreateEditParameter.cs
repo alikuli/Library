@@ -56,8 +56,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             LiscenseBack.HttpBase = httpLiscenseBack;
 
             UserName = userName;
-            //Menu = new MenuParameters(menuEnum, entity.Id);
-
+            MenuParameters = new MenuParameters(menuEnum, Entity.Id );
             //Menu = new MenuParameters(menuEnum, menuPathMainId, productId, productChildId, returnUrl);
             //todo what should we do if userName is empty?
 
@@ -89,6 +88,14 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public ICommonWithId Entity { get; set; }
         public string UserName { get; set; }
 
+        public MenuParameters MenuParameters { get; set; }
+        public ControllerIndexParams ConvertToControllerIndexParams()
+        {
+            ControllerIndexParams cip = new ControllerIndexParams();
+            cip.Entity = Entity;
+            cip.Menu = MenuParameters; 
+            return cip;
+        }
         //public MenuParameters Menu { get; set; }
 
         #region Uploads

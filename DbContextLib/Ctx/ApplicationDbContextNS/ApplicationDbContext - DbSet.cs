@@ -19,6 +19,7 @@ using System.Data.Entity;
 using UserModels;
 using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.PageViewNS;
+using ModelsClassLibrary.ModelsNS.FeaturesNS;
 
 namespace ApplicationDbContextNS
 {
@@ -62,15 +63,19 @@ namespace ApplicationDbContextNS
 
         public virtual IDbSet<PaymentTerm> PaymentTerms { get; set; }
         public virtual IDbSet<PageView> PageViews { get; set; }
-        
+
 
 
         public IDbSet<MenuPath1> MenuPath1s { get; set; }
 
-
         public IDbSet<MenuPath2> MenuPath2s { get; set; }
 
         public IDbSet<MenuPath3> MenuPath3s { get; set; }
+
+        public IDbSet<MenuPath1Feature> MenuPath1Features { get; set; }
+        public IDbSet<MenuPath2Feature> MenuPath2Features { get; set; }
+        public IDbSet<MenuPath3Feature> MenuPath3Features { get; set; }
+
 
         public IDbSet<MenuPathMain> ProductCategoryMains { get; set; }
 
