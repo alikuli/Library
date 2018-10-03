@@ -3,7 +3,12 @@
 @{
     int count = 0;
     string controller = this.ViewContext.RouteData.Values["controller"].ToString();
-    
+    IEnumerable<ModelsClassLibrary.ModelsNS.FeaturesNS.MenuPath3Feature> features = null;
+    if (!Model.MenuPath3Features.IsNull())
+    {
+        features = Model.MenuPath3Features.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).AsEnumerable();
+    }
+   
     
 }
 <p>
@@ -21,22 +26,37 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.MenuPath3Features.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).AsEnumerable())
+@if(features.IsNull())
 {
     <tr>
+        <td></td>
         <td>
-            @{count++;}
-            @count)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-
-        <td>
-            @Html.ActionLink(" ", "Edit", "MenuPath3Features", new { id = item.Id, menuPath3Id = item.Id }, new { @class = "fas fa-edit text-success" }) 
-            @Html.ActionLink(" ", "Delete", "MenuPath3Features", new { id = item.Id }, new { @class = "fas fa-trash-alt text-danger" })
+            <span class="text-danger"> No Features</span>
         </td>
     </tr>
 }
+else
+{
+
+    foreach (var item in features)
+    {
+        <tr>
+            <td>
+                @{count++;}
+                @count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+
+            <td>
+                @Html.ActionLink(" ", "Edit", "MenuPath3Features", new { id = item.Id, menuPath3Id = item.Id }, new { @class = "fas fa-edit text-success" })
+                @Html.ActionLink(" ", "Delete", "MenuPath3Features", new { id = item.Id }, new { @class = "fas fa-trash-alt text-danger" })
+            </td>
+        </tr>
+    }
+
+}
+
 
 </table>

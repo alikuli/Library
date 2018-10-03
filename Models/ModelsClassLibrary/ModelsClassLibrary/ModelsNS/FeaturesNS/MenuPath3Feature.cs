@@ -2,7 +2,6 @@
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,10 +10,18 @@ namespace ModelsClassLibrary.ModelsNS.FeaturesNS
 {
     public class MenuPath3Feature : CommonWithId
     {
+
+        public MenuPath3Feature()
+        {
+            FeatureTypeEnum = FeatureTypeENUM.Value;
+
+        }
         [Display(Name = "Menu Path 3")]
         public string MenuPath3Id { get; set; }
         public virtual MenuPath3 MenuPath3 { get; set; }
 
+        [Display(Name = "Feature Type")]
+        public FeatureTypeENUM FeatureTypeEnum { get; set; }
 
         //[Display(Name = "Feature")]
         //public string FeatureId { get; set; }

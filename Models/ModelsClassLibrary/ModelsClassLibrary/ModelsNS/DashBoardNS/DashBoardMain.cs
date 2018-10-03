@@ -4,7 +4,6 @@ using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EnumLibrary;
 namespace ModelsClassLibrary.ModelsNS.DashBoardNS
 {
     /// <summary>
@@ -20,7 +19,6 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
         }
 
 
-        #region Initialize Data
 
 
         /// <summary>
@@ -89,7 +87,6 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
                     pv.UserLanguages,
                     pv.UserName,
                     pv.MetaData.Created.Date ?? DateTime.MinValue,
-
                     dateParam, dataType);
             }
         }
@@ -155,6 +152,9 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
 
         }
 
+        #region Add Date
+        //all the methods below add the data to lists from a list of data which has been filtered within date.
+
         private void AddUserHostName(string userHostName, DateTime dateCreated, bool isCrawler, DateParameter dateParam, string dataType)
         {
             UserHostNames = addRecord(userHostName, dateCreated, isCrawler, dateParam, dataType, UserHostNames);
@@ -163,16 +163,6 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
 
         private void AddUserHostAddress(string userHostAddress, DateTime dateCreated, bool isCrawler, DateParameter dateParam, string dataType)
         {
-            //if (dataType.IsNullOrWhiteSpace())
-            //    dataType = DashBoardConstants.YEAR;
-
-            //string _userHostAddress = string.Format("{0}", userHostAddress);
-            //DashBoardSingle ds = new DashBoardSingle(_userHostAddress, dateCreated, isCrawler, _userHostAddress, 0, dateParam.BeginDate, dateParam.EndDate, dataType);
-            //if (UserHostAddresses.IsNull())
-            //{
-            //    UserHostAddresses = new DashBoardSingle("All Is UserHostAddresses  Actions", dateCreated, isCrawler, _userHostAddress, 0, dateParam.BeginDate, dateParam.EndDate, dataType);
-            //}
-            //UserHostAddresses.DataDetail.Add(ds);
             UserHostAddresses = addRecord(userHostAddress, dateCreated, isCrawler, dateParam, dataType, UserHostAddresses);
 
 
@@ -180,32 +170,12 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
 
         private void AddUserAgent(string userAgent, DateTime dateCreated, bool isCrawler, DateParameter dateParam, string dataType)
         {
-            //if (dataType.IsNullOrWhiteSpace())
-            //    dataType = DashBoardConstants.YEAR;
-
-            //string _userAgent = string.Format("{0}", userAgent);
-            //DashBoardSingle ds = new DashBoardSingle(_userAgent, dateCreated, isCrawler, _userAgent, 0, dateParam.BeginDate, dateParam.EndDate, dataType);
-            //if (UserAgents.IsNull())
-            //{
-            //    UserAgents = new DashBoardSingle("All Is UserAgents  Actions", dateCreated, isCrawler, _userAgent, 0, dateParam.BeginDate, dateParam.EndDate, dataType);
-            //}
-            //UserAgents.DataDetail.Add(ds);
             UserAgents = addRecord(userAgent, dateCreated, isCrawler, dateParam, dataType, UserAgents);
 
         }
 
         private void AddUrlReferHost(string urlRefererHost, DateTime dateCreated, bool isCrawler, DateParameter dateParam, string dataType)
         {
-            //if (dataType.IsNullOrWhiteSpace())
-            //    dataType = DashBoardConstants.YEAR;
-
-            //string _urlRefererHost = string.Format("{0}", urlRefererHost);
-            //DashBoardSingle ds = new DashBoardSingle(_urlRefererHost, dateCreated, isCrawler, _urlRefererHost, 0, dateParam.BeginDate, dateParam.EndDate, dataType);
-            //if (ReferalHosts.IsNull())
-            //{
-            //    ReferalHosts = new DashBoardSingle("All Is ReferalHosts  Actions", dateCreated, isCrawler, _urlRefererHost, 0, dateParam.BeginDate, dateParam.EndDate, dataType);
-            //}
-            //ReferalHosts.DataDetail.Add(ds);
             ReferalHosts = addRecord(urlRefererHost, dateCreated, isCrawler, dateParam, dataType, ReferalHosts);
 
         }
@@ -214,17 +184,6 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
         {
             if (!isMobileDevice)
                 return;
-
-            //if (dataType.IsNullOrWhiteSpace())
-            //    dataType = DashBoardConstants.YEAR;
-
-            //string _isMobileDevice = string.Format("{0}", userAgent);
-            //DashBoardSingle ds = new DashBoardSingle(_isMobileDevice, dateCreated, isCrawler, _isMobileDevice, 0, dateParam.BeginDate, dateParam.EndDate, dataType);
-            //if (MobileDeviceConnections.IsNull())
-            //{
-            //    MobileDeviceConnections = new DashBoardSingle("All Is Mobile Device Actions", dateCreated, isCrawler, _isMobileDevice, 0, dateParam.BeginDate, dateParam.EndDate, dataType);
-            //}
-            //MobileDeviceConnections.DataDetail.Add(ds);
             addRecord(isMobileDevice.ToString(), dateCreated, isCrawler, dateParam, dataType, Crawlers);
         }
 
@@ -233,48 +192,17 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
             if (!isCrawler)
                 return;
 
-            //if (dataType.IsNullOrWhiteSpace())
-            //    dataType = DashBoardConstants.YEAR;
-
-            //string isCrawlerStr = string.Format("{0}", userAgent);
-            //DashBoardSingle ds = new DashBoardSingle(isCrawlerStr, dateCreated, isCrawler, isCrawlerStr, 0, dateParam.BeginDate, dateParam.EndDate, dataType);
-            //if (Crawlers.IsNull())
-            //{
-            //    Crawlers = new DashBoardSingle("All Crawler Actions", dateCreated, isCrawler, isCrawlerStr, 0, dateParam.BeginDate, dateParam.EndDate, dataType);
-            //}
-            //Crawlers.DataDetail.Add(ds);
             Crawlers = addRecord(isCrawler.ToString(), dateCreated, isCrawler, dateParam, dataType, Crawlers);
 
         }
 
         private void AddBrowserType(string browserType, DateTime dateCreated, bool isCrawler, DateParameter dateParam, string dataType)
         {
-            //if (dataType.IsNullOrWhiteSpace())
-            //    dataType = DashBoardConstants.YEAR;
-
-            //string _browserType = string.Format("{0}", browserType);
-            //DashBoardSingle ds = new DashBoardSingle(_browserType, dateCreated, isCrawler, _browserType, 0, dateParam.BeginDate, dateParam.EndDate, dataType);
-            //if (BrowserTypes.IsNull())
-            //{
-            //    BrowserTypes = new DashBoardSingle("All BrowserTypes Actions", dateCreated, isCrawler, _browserType, 0, dateParam.BeginDate, dateParam.EndDate, dataType);
-            //}
-            //BrowserTypes.DataDetail.Add(ds);
             addRecord(browserType, dateCreated, isCrawler, dateParam, dataType, BrowserTypes);
         }
 
         private void AddControllerActions(string controller, string action, DateTime dateCreated, bool isCrawler, DateParameter dateParam, string dataType)
         {
-            //if (dataType.IsNullOrWhiteSpace())
-            //    dataType = DashBoardConstants.YEAR;
-
-            //string controllerAction = string.Format("{0}-{1}", controller, action);
-            //DashBoardSingle ds = new DashBoardSingle(controllerAction, dateCreated, isCrawler, controllerAction, 0, dateParam.BeginDate, dateParam.EndDate, dataType);
-            //if (ControllerActions.IsNull())
-            //{
-            //    ControllerActions = new DashBoardSingle("All Controller Actions", dateCreated, isCrawler, controllerAction, 0, dateParam.BeginDate, dateParam.EndDate, dataType);
-            //}
-            //ControllerActions.DataDetail.Add(ds);
-
             ControllerActions = addRecord(controller, dateCreated, isCrawler, dateParam, dataType, ControllerActions);
         }
 
@@ -295,14 +223,27 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
 
         }
 
-
         #endregion
 
 
-        #region Access Data
 
-        public DashBoardSingle ControllerActions { get; set; }
-        public DashBoardSingle ControllerActionsGrouped { get { return GetDataGroupedMain(ControllerActions, DashBoardConstants.YEAR); } }
+        #region Access Data
+        DashBoardSingle _controllerActions;
+        public DashBoardSingle ControllerActions 
+        {
+            get
+            {
+                
+                return _controllerActions;
+            }
+            set
+            {
+                _controllerActions = value;
+            } 
+        }
+        public DashBoardSingle ControllerActionsGroupedByYear { get { return GetDataGroupedMain(ControllerActions, DashBoardConstants.YEAR); } }
+        public DashBoardSingle ControllerActionsGroupedByYearMonth { get { return GetDataGroupedMain(ControllerActions, DashBoardConstants.YEAR_MONTH); } }
+        //public DashBoardSingle ControllerActionsGroupedByYearMonthDay { get { return GetDataGroupedMain(ControllerActions, DashBoardConstants.YEAR_MONTH_D); } }
 
 
 
@@ -331,7 +272,7 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
         public DashBoardSingle UserAgentsGrouped { get { return GetDataGroupedMain(UserAgents, DashBoardConstants.YEAR); } }
 
 
-
+                                                                                                                                                                                                        
         public DashBoardSingle UserHostAddresses { get; set; }
         public DashBoardSingle UserHostAddressesGrouped { get { return GetDataGroupedMain(UserHostAddresses, DashBoardConstants.YEAR); } }
 

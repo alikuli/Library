@@ -138,6 +138,7 @@ namespace UowLibrary.MenuNS
             if (listOfMenuPath2Ids.IsNullOrEmpty())
                 return null;
 
+
             List<ICommonWithId> mpmlst = new List<ICommonWithId>();
 
             foreach (var mp2Id in listOfMenuPath2Ids)
@@ -148,10 +149,11 @@ namespace UowLibrary.MenuNS
 
 
             }
+            if (mpmlst.IsNullOrEmpty())
+                return null;
 
             return mpmlst;
         }
-
 
         #endregion
 
@@ -183,6 +185,20 @@ namespace UowLibrary.MenuNS
             if (uniqueListOfMainPaths.IsNullOrEmpty())
                 return null;
 
+            //in case the menu has not been set we need to check if there are any items.
+            //if there are no menu 3 items, then there will be no MenuPath3
+            bool thereAreNoItems = true;
+            foreach (var item in uniqueListOfMainPaths)
+            {
+                if (!item.MenuPath3.IsNull())
+                {
+                    thereAreNoItems = false;
+                    break;
+                }
+            }
+
+            if (thereAreNoItems)
+                return null;
 
             List<ICommonWithId> mpmlst = uniqueListOfMainPaths.Cast<ICommonWithId>().ToList();
 

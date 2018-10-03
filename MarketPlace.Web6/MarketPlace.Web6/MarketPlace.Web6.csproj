@@ -246,11 +246,6 @@
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductChildsController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductsController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductIdentifiersController.cs" />
-    <Compile Include="Controllers\MyControllersNS\ProductNS\ProductVmNS\loadSelectLists.cs" />
-    <Compile Include="Controllers\MyControllersNS\ProductNS\ProductVmNS\Edit.cs" />
-    <Compile Include="Controllers\MyControllersNS\ProductNS\ProductVmNS\Create.cs" />
-    <Compile Include="Controllers\MyControllersNS\ProductNS\ProductVmNS\Index.cs" />
-    <Compile Include="Controllers\MyControllersNS\ProductNS\ProductVmNS\ProductAutomobileVMsController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomVolumesController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomQuantitiesController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\UomWeightsController.cs" />
@@ -409,6 +404,7 @@
     <Content Include="Views\MenuPath3Features\EditMenuPath1Feature.cshtml" />
     <Content Include="Views\MenuPath2s\_ListFeatures.cshtml" />
     <Content Include="Views\MenuPath3s\_ListFeatures.cshtml" />
+    <Content Include="Views\DashBoard\_textView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css" />

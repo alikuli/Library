@@ -22,7 +22,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
         bool IsMenu { get; }
         MenuENUM NextMenu { get; }
         MenuENUM MenuEnum { get; }
-        string GetProductVM();
+        //string GetProductVM();
         string ControllerCurrentName { get; set; }
         string MenuDisplayName { get; set; }
         bool IsProductChild { get; }

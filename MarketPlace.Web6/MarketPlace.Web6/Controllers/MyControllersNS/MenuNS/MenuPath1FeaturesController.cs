@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using UowLibrary.FeaturesNS;
@@ -32,6 +33,15 @@ namespace MarketPlace.Web6.Controllers
 
 
 
+        public override System.Web.Mvc.ActionResult Event_CreateViewAndSetupSelectList(ModelsClassLibrary.ModelsNS.SharedNS.ControllerIndexParams parm)
+        {
+            FeatureTypeENUM TypeEnum = FeatureTypeENUM.Unknown;
+            ViewBag.SelectListFeaturesTypeEnum = EnumExtention.ToSelectListSorted<FeatureTypeENUM>(TypeEnum);
 
+            
+            
+            return base.Event_CreateViewAndSetupSelectList(parm);
+
+        }
     }
 }

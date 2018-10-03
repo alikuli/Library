@@ -3,6 +3,7 @@ using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
+using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Collections.Generic;
@@ -161,7 +162,7 @@ namespace UowLibrary
             fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
             handleRelatedFilesIfExist(parm);
 
-            MenuPath1Feature mp1Test = parm.Entity as MenuPath1Feature;
+            Product productTest = parm.Entity as Product;
             AddParentChildCode(parm);
             UpdateEntity(parm.Entity as TEntity);
             ClearSelectListInCache(SelectListCacheKey);

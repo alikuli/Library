@@ -20,6 +20,7 @@ namespace MarketPlace.Web4.Controllers
 
         protected ControllerIndexParams MakeControlParameters(
             string id,
+            string menuPathMainId,
             string searchFor,
             string isandForSearch,
             string selectedId,
@@ -46,6 +47,7 @@ namespace MarketPlace.Web4.Controllers
 
             ControllerIndexParams parms = new ControllerIndexParams(
                 id,
+                menuPathMainId,
                 searchFor,
                 isandForSearch,
                 selectedId,

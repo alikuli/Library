@@ -1,4 +1,5 @@
-﻿@model ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle
+﻿@model List<ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle>
+
 @{
     int count = 0;
 }
@@ -50,7 +51,7 @@
 
 
 
-@foreach (var item in Model.DataDetail)
+@foreach (var item in Model)
 {
     ++count;
     <div class="row">

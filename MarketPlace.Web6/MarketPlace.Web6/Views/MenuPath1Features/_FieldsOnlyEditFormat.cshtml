@@ -5,6 +5,23 @@
         @Html.Partial(@"_Name_And_DetailInfo")
 
 
+<div class="container">
+    <div class="row">
+
+        @Html.LabelFor(model => model.FeatureTypeEnum, htmlAttributes: new { @class = "control-label col-md-2 " })
+
+        <div class="col-md-10">
+            <div class="form-group">
+                @Html.DropDownListFor(x => x.FeatureTypeEnum,
+                                       (@ViewBag.SelectListFeaturesTypeEnum as IEnumerable<SelectListItem>),
+              "--- Value Type ---",
+              new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
      </div>
 

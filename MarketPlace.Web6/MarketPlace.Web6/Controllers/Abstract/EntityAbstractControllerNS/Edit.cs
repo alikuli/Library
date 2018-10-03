@@ -18,7 +18,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
     {
 
         // GET: Countries/Edit/5
-        public virtual async Task<ActionResult> Edit(string id, string selectedId = "", string searchFor = "", string isandForSearch = "", MenuENUM menuEnum = MenuENUM.EditDefault, string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false)
+        public virtual async Task<ActionResult> Edit(string id, string selectedId = "", string searchFor = "", string isandForSearch = "", MenuENUM menuEnum = MenuENUM.EditDefault, string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "")
         {
             TEntity entity = _icrudBiz.Factory() as TEntity;
             try
@@ -30,6 +30,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                 ControllerIndexParams parms = MakeControlParameters(
                     id,
+                    menuPathMainId,
                     searchFor,
                     isandForSearch,
                     selectedId,

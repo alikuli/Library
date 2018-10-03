@@ -31,7 +31,7 @@ namespace MarketPlace.Web6.Controllers
         public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
         {
             loadSelectLists(parm);
-            _productBiz.LoadMenuPathCheckedBoxes(parm.Entity as IProduct);
+            _productBiz.LoadMenuPathCheckedBoxes(parm);
             return base.Event_CreateViewAndSetupSelectList(parm);
 
         }

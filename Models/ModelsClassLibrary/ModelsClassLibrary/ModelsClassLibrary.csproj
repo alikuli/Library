@@ -221,9 +221,7 @@
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerHasAvailableUnitsSpec.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerIsActiveSpec.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerIsBlackListedSpec.cs" />
-    <Compile Include="ModelsNS\DashBoardNS\DashBoardMain.cs" />
     <Compile Include="ModelsNS\DashBoardNS\DashBoardSingle.cs" />
-    <Compile Include="ModelsNS\DashBoardNS\DashBoardGroup.cs" />
     <Compile Include="ModelsNS\FeaturesNS\MenuPath1Feature.cs" />
     <Compile Include="ModelsNS\FeaturesNS\MenuPath2Feature.cs">
       <SubType>Code</SubType>

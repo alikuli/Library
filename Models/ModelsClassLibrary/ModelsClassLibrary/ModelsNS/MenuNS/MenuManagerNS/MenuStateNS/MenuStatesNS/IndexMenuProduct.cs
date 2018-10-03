@@ -61,7 +61,7 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
             get
             {
 
-                return base.GetProductVM();
+                return ControllerCurrentName;
             }
         }
 

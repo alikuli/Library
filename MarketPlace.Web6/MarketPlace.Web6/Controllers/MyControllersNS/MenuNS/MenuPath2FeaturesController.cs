@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using UowLibrary.FeaturesNS;
@@ -17,10 +18,6 @@ namespace MarketPlace.Web6.Controllers
         }
 
 
-        //public ActionResult CreateMenuPath2Feature(string isandForSearch, MenuENUM menuEnum = MenuENUM.CreateDefault, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item2_Asc, string searchFor = "", string selectedId = "", bool print = false, bool isMenu = false, string menuPath2Id = "")
-        //{
-        //    return base.Create(isandForSearch, menuEnum, productChildId, menuPathMainId, productId, returnUrl, sortBy, searchFor, selectedId, print, isMenu);
-        //}
 
         public override void AddParentIdIfChild(ModelsClassLibrary.ModelsNS.SharedNS.ControllerIndexParams parms, string parentId)
         {
@@ -29,6 +26,21 @@ namespace MarketPlace.Web6.Controllers
             mpf.MenuPath2Id = parentId;
             base.AddParentIdIfChild(parms, parentId);
         }
+
+
+
+        public override System.Web.Mvc.ActionResult Event_CreateViewAndSetupSelectList(ModelsClassLibrary.ModelsNS.SharedNS.ControllerIndexParams parm)
+        {
+            FeatureTypeENUM TypeEnum = FeatureTypeENUM.Unknown;
+            ViewBag.SelectListFeaturesTypeEnum = EnumExtention.ToSelectListSorted<FeatureTypeENUM>(TypeEnum);
+
+
+
+            return base.Event_CreateViewAndSetupSelectList(parm);
+
+        }
+
+
 
 
 

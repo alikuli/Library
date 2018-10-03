@@ -13,17 +13,20 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
             //DataGrouped = new List<DashBoardSingle>();
             //DataDetail = new List<DashBoardSingle>();
         }
-        public DashBoardSingle(string name, DateTime date, bool isCrawler, string key, double amount, DateTime beginDate, DateTime endDate, string dataType)
+        public DashBoardSingle(string name, DateTime date, bool isCrawler, string key, double amount, DateTime beginDate, DateTime endDate, string groupBy, string showDataFor, string belongsToGroup)
             : this()
         {
             Key = key;
+
             Name = name;
             DateOfTrx = date;
             IsCrawler = isCrawler;
             Amount = amount;
             BeginDate = beginDate;
             EndDate = endDate;
-            DataType = dataType;
+            GroupBy = groupBy;
+            ShowDataFor = showDataFor;
+            BelongsToGroup = belongsToGroup;
         }
 
         public DateTime BeginDate { get; set; }
@@ -35,6 +38,10 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
 
         public string Name { get; set; }
 
+        /// <summary>
+        /// Eg Controller
+        /// </summary>
+        public string ShowDataFor { get; set; }
 
         [Display(Name = "Date")]
         public DateTime DateOfTrx { get; set; }
@@ -48,10 +55,13 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
         public double Percent { get { return _percent; } set { _percent = value; } }
 
 
-        public string GroupName { get { return Name.RemoveAllSpaces().RemoveAllDashes().ToLower(); } }
+        /// <summary>
+        /// This keeps the value of which group the data belongs to.
+        /// </summary>
+        public string BelongsToGroup { get; set; }
 
 
-
+        public string NameCalculated { get; set; }
 
         public string DisplayName
         {
@@ -79,7 +89,7 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
 
         public override string ToString()
         {
-            string str = string.Format("{0} - {1:n0}", Name, Amount);
+            string str = string.Format("{0} - {1:n0}", NameCalculated, Amount);
             return str;
         }
 
@@ -108,30 +118,50 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
 
 
 
-        public string DataType { get; set; }
+        public string GroupBy { get; set; }
 
-        public static string NextDataType(string currDataType)
+        public static string NextGroupBy(string groupBy)
         {
-            switch (currDataType)
+            switch (groupBy)
             {
-                case DashBoardConstants.YEAR:
-                    return DashBoardConstants.YEAR_MONTH;
+                case GroupByConstants.MAIN:
+                    return GroupByConstants.NAME;
 
-                case DashBoardConstants.YEAR_MONTH:
-                    return DashBoardConstants.YEAR_MONTH_DAY;
+                case GroupByConstants.NAME:
+                    return GroupByConstants.YEAR;
 
-                case DashBoardConstants.YEAR_MONTH_DAY:
-                    return DashBoardConstants.YEAR_MONTH_DAY_HOUR;
+                case GroupByConstants.YEAR:
+                    return GroupByConstants.YEAR_MONTH;
 
-                case DashBoardConstants.YEAR_MONTH_DAY_HOUR:
-                    return DashBoardConstants.YEAR_MONTH_DAY_HOUR_MINUTE;
 
-                case DashBoardConstants.YEAR_MONTH_DAY_HOUR_MINUTE:
-                    return DashBoardConstants.YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
+                case GroupByConstants.YEAR_MONTH:
+                    return GroupByConstants.YEAR_MONTH_DAY;
+
+
+                case GroupByConstants.YEAR_MONTH_DAY:
+                    return GroupByConstants.YEAR_MONTH_DAY_HOUR;
+
+
+                case GroupByConstants.YEAR_MONTH_DAY_HOUR:
+                    return GroupByConstants.YEAR_MONTH_DAY_HOUR_MINUTE;
+
+
+                case GroupByConstants.YEAR_MONTH_DAY_HOUR_MINUTE:
+                    return GroupByConstants.YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
+
+
+                case GroupByConstants.YEAR_MONTH_DAY_HOUR_MINUTE_SECOND:
+                    return GroupByConstants.DETAIL;
+
                 default:
-                    return DashBoardConstants.YEAR;
+                    return GroupByConstants.MAIN;
+
             }
         }
+
+
+
+
 
 
     }

@@ -11,10 +11,18 @@ namespace ModelsClassLibrary.ModelsNS.FeaturesNS
 {
     public class MenuPath1Feature : CommonWithId
     {
+
+
+        public MenuPath1Feature()
+        {
+            FeatureTypeEnum = FeatureTypeENUM.Value;
+        }
         [Display(Name = "Menu Path 1")]
         public string MenuPath1Id { get; set; }
         public virtual MenuPath1 MenuPath1 { get; set; }
 
+        [Display(Name = "Feature Type")]
+        public FeatureTypeENUM FeatureTypeEnum { get; set; }
 
         //[Display(Name = "Feature")]
         //public string FeatureId { get; set; }

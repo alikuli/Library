@@ -23,6 +23,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         readonly bool _isUserAdmin;
         public ControllerIndexParams(
             string id,
+            string menuPathMainId,
             string searchFor,
             string isandForSearch,
             string selectedId,
@@ -56,12 +57,14 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             BreadCrumbManager = breadCrumbManager;
             LikeUnlikeCounter = likesCounter; 
             IsMenu = isMenu;
+            MenuPathMainId = menuPathMainId;
         }
 
         /// <summary>
         /// If this is true then Menu features will work in the View: _IndexMiddlePart - TiledPictures
         /// </summary>
         public bool IsMenu { get; set; }
+        public string MenuPathMainId { get; set; }
         public BreadCrumbManager BreadCrumbManager { get; set; }
         public ActionNameENUM ActionNameEnum { get; set; }
         public bool IsAndForSearch { get; set; }

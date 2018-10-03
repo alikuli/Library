@@ -44,6 +44,36 @@ namespace ModelsClassLibrary.ModelsNS.PageViewNS
         [MaxLength(128)]
         public string UserHostAddress { get; set; }
 
+
+        public override void UpdatePropertiesDuringModify(InterfacesLibrary.SharedNS.ICommonWithId ic)
+        {
+            base.UpdatePropertiesDuringModify(ic);
+
+            PageView c = ic as PageView;
+
+            if (c == null)
+                throw new Exception("Unable to box Page View");
+
+            UserId = c.UserId;
+            ActionName = c.ActionName;
+            ControllerName = c.ControllerName;
+            UserName = c.UserName;
+            HttpMethod = c.HttpMethod;
+            UserHostName = c.UserHostName;
+            UserHostAddress = c.UserHostAddress;
+            UrlRefererrerHost = c.UrlRefererrerHost;
+            UserInfo = c.UserInfo;
+            UserAgent = c.UserAgent;
+            UserLanguages = c.UserLanguages;
+            BrowserType = c.BrowserType;
+            IsCrawler = c.IsCrawler;
+            IsMobileDevice = c.IsMobileDevice;
+            IsClientWin16Based = c.IsClientWin16Based;
+            IsClientWin32Based = c.IsClientWin32Based;
+            IsAjaxRequest = c.IsAjaxRequest;
+
+        }
+
         [Display(Name = "url Refererrer Host")]
         [MaxLength(128)]
         public string UrlRefererrerHost { get; set; }
@@ -83,24 +113,16 @@ namespace ModelsClassLibrary.ModelsNS.PageViewNS
         }
 
         
-        public override void UpdatePropertiesDuringModify(InterfacesLibrary.SharedNS.ICommonWithId ic)
-        {
-            base.UpdatePropertiesDuringModify(ic);
-
-            PageView c = ic as PageView;
-
-            if (c == null)
-                throw new Exception("Unable to box Page View");
-
-            UserId = c.UserId;
-            ActionName = c.ActionName;
-            ControllerName = c.ControllerName;
-        }
 
         public override bool DisableNameInView()
         {
             return true;
+
         }
+
+        #region Make Name
+
+
         public string MakeName()
         {
             StringBuilder sb = new StringBuilder();
@@ -118,6 +140,7 @@ namespace ModelsClassLibrary.ModelsNS.PageViewNS
             return sb.ToString();
         }
 
+        
         private void appendTime(StringBuilder sb)
         {
             sb.Append(string.Format("{0} {1}",
@@ -187,6 +210,9 @@ namespace ModelsClassLibrary.ModelsNS.PageViewNS
                 sb.Append(UserName);
             sb.Append("; ");
         }
+
+        #endregion
+
     }
 
     

@@ -4,9 +4,7 @@
     @if (!Model.HideNameInView())
     {
         <div class="row">
-            <div class="col-2">
                 @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            </div>
             <div class="col-md-10">
                 @if (Model.DisableNameInView())
                 {
@@ -25,9 +23,7 @@
         </div>
     }
     <div class="row">
-        <div class="col-2">
             @Html.LabelFor(model => model.DetailInfoToDisplayOnWebsite, "Detail To Display on Webstite", htmlAttributes: new { @class = "control-label col-md-2" })
-        </div>
 
         <div class="col-md-10">
             @Html.TextAreaFor(model => model.DetailInfoToDisplayOnWebsite, 5, 50, new { @class = "form-control", @placeholder = "Enter details to display on web page" })

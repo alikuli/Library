@@ -1,9 +1,9 @@
-﻿@model ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.IProduct
+﻿@model ModelsClassLibrary.ModelsNS.ProductNS.Product
 
 
 <div class="well">
 
-
+    @Html.HiddenFor(x => x.Name)
 
     @Html.Partial(@"_Name_And_DetailInfo")
     @Html.Partial(@"~/Views/Products/_WeightActual.cshtml")

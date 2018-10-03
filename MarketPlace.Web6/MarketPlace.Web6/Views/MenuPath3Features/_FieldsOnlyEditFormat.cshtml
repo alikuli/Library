@@ -1,8 +1,45 @@
 ﻿@model ModelsClassLibrary.ModelsNS.FeaturesNS.MenuPath3Feature
-
+@{
+    
+    var menuPath3Id = Model.MenuPath3Id;
+    
+    
+}
     <div class="form-horizontal">
-        @Html.HiddenFor(x => x.MenuPath3Id)
         @Html.Partial(@"_Name_And_DetailInfo")
+
+        <div class="container">
+            <div class="row">
+
+                @Html.LabelFor(model => model.FeatureTypeEnum, htmlAttributes: new { @class = "control-label col-md-2 " })
+
+                <div class="col-md-10">
+                    <div class="form-group">
+                        @Html.DropDownListFor(x => x.FeatureTypeEnum,
+                                       (@ViewBag.SelectListFeaturesTypeEnum as IEnumerable<SelectListItem>),
+              "--- Value Type ---",
+              new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                @Html.LabelFor(model => model.MenuPath3Id, htmlAttributes: new { @class = "control-label col-md-2 " })
+
+                <div class="col-md-10">
+                    <div class="form-group">
+                        @Html.DropDownListFor(x => x.MenuPath3Id,
+                                                (@ViewBag.SelectListMenuPath3 as IEnumerable<SelectListItem>),
+              "--- Value Type ---",
+              new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
 
 
 

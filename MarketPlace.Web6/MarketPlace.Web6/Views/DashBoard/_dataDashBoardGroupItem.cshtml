@@ -1,120 +1,71 @@
-﻿@model ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle
+﻿@model List<ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle>
 
 @{
 
-    int count = 0;
-    string accordianName = "accordian" + DateTime.Now.Ticks.ToString();
-    string accordianNameWithPound = "#" + accordianName;
-    string ajaxDivIdName = "divId";
-}
-
-
-
-
-
-<div id="@accordianName">
-    @{
-    string collapseHref = "collapse" + DateTime.Now.Ticks.ToString();
-    string collapseHrefWithPound = "#" + collapseHref;
-    string collapseClass = "collapse";
-
+    //int innerCount = 0;
+    int outterCount = 0;
+    string accordianId = "accordian" + Guid.NewGuid().ToString().Substring(0, 5);
+    string accordianIdWithPound = "#" + accordianId;
+    string ajaxIdWithPound = "";
     }
 
-
-    <div class="card">
-        <div class="card-header">
-            <a class="card-link" data-toggle="collapse" href="@collapseHrefWithPound">
-                <h5>All the data</h5>
-            </a>
-        </div>
-
-        <div id="@collapseHref" class="@collapseClass" data-parent="@accordianNameWithPound">
-
-            <div class="card-body">
-                @if (Model.DataDetail.IsNullOrEmpty())
-                {
-                    <span>Sorry. No data report</span>
-                }
-                else
-                {
-                    <h6>This is all the data</h6>
-                    @Html.Partial("_dataDashboardSingle", Model);
+<div id="@accordianId">
 
 
-
-                }
-
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-    @foreach (var item in Model.DataGrouped)
+    @foreach (var item in Model)
     {
-        ++count;
-        collapseHref = "collapse" + item.GroupName + count;
-        collapseHrefWithPound = "#" + collapseHref;
-        collapseClass = "collapse";
-        ajaxDivIdName = "div" + count;
+        string guid = Guid.NewGuid().ToString().Substring(0, 5);
+        outterCount++;
+        string ajaxId = "ajax" + guid;
+        ajaxIdWithPound += "#" + ajaxId;
+        
+        string displayName = outterCount + ". " + item.NameCalculated;
+        string cardBodyId2 = "child" + guid;
+        string cardBodyId2WithPound = "#" + cardBodyId2;
+        string controllerName = "DashBoard";
+        string actionName = "GetAjax";
         
         <div class="card">
             <div class="card-header">
-                    @*@if (item.DataGrouped.IsNullOrEmpty() && item.DataDetail.IsNullOrEmpty())
-                    {
-                        <a class="card-link" data-toggle="collapse" href="@collapseHrefWithPound">
-                                @count. @item.DisplayName
-                        </a>
-                    }
-                    else
-                    {*@
-                        @*<a class="card-link" data-toggle="collapse" href="@collapseHrefWithPound">
-                            @count. @item.DisplayName
-                        </a>*@
+                        <span data-toggle="collapse" class="card-link" href="@cardBodyId2WithPound">
 
-                        @{string displayName = count + ". " + item.DisplayName;
-    }
+                        
+                            @Ajax.ActionLink(
+                                    displayName,
+                                    actionName,
+                                    controllerName, new
+                                    {
+                                        beginDate = item.BeginDate,
+                                        endDate = item.EndDate,
+                                        showDataBelongingTo = item.BelongsToGroup,
+                                        groupBy = ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle.NextGroupBy(item.GroupBy),
+                                        name = item.Name,
+                                    },
+                                    new AjaxOptions()
+                                    {
+                                        HttpMethod = "GET",
+                                        InsertionMode = InsertionMode.ReplaceWith,
+                                        UpdateTargetId = ajaxId,
+                                        AllowCache = false,
 
-                        <a class="card-link" data-toggle="collapse" href="@collapseHrefWithPound">
-                            @displayName
-                        </a>
 
-@*                    }*@
+                                    },
+                                    new { @class = "" })
+                        </span>
+
             </div>
-            <div id="@collapseHref" class="@collapseClass" data-parent="@accordianNameWithPound">
-
-                <div class="card-body" >
-                    @foreach (var itemLvl2 in item.DataGrouped)
-                    {
-                        
-                        if (itemLvl2.DataGrouped.IsNullOrEmpty() && itemLvl2.DataDetail.IsNullOrEmpty())
-                        {
-                            //Html.Partial("_dataDashboardSingle", itemLvl2);
-
-                        }
-                        else
-                        {
-                            string displayName2 = count + ". " + itemLvl2.DisplayName;
-                            @Ajax.ActionLink(displayName2, "GetAjaxData", "DashBoard", new { key = itemLvl2.Key, beginDate = itemLvl2.BeginDate, endDate = itemLvl2.EndDate, dataType = ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle.NextDataType(itemLvl2.DataType) }, new AjaxOptions
-                                {
-                                    HttpMethod = "GET",
-                                    InsertionMode = InsertionMode.Replace,
-                                    UpdateTargetId = ajaxDivIdName,
-                                    AllowCache = false,
-
-
-                                }, new { @class = "" })
-                        }
-
-                    }
-                        
+            <div id="@cardBodyId2" class="collapse" data-parent="@accordianIdWithPound">
+                <div class="card-body">
+                    <div id="@ajaxId">
+                        (Please wait... Fetching Data)
+                    </div>
                 </div>
             </div>
         </div>
+
     }
+
+
 </div>
 
 
@@ -123,6 +74,33 @@
 
 
 
+    @*<div class="card">
+            <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="@collapseHrefWithPound">
+                    @displayName
+                </a>
+            </div>
+
+            <div id="@collapseHref" class="@collapseClass" data-parent="@accordianNameWithPound">
+                <div class="card-body">
+
+
+                    @foreach (var itemLvl2 in item.DataGrouped)
+                    {
+                        ajaxDivIdName = "div" + DateTime.Now.Ticks + "ajax";
+                        innerCount++;
+                        string innercollapseHref = "innercollapse" + itemLvl2.Key + DateTime.Now.Ticks.ToString();
+                        string innercollapseHrefWithPound = "#" + innercollapseHref;
+                        string displayName2 = innerCount + ". " + itemLvl2.DisplayName;
+                        ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle ds = itemLvl2 as ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle;
+
+                        @Html.Partial("_datadashboardgroupitem", ds)
+
+
+                    }
+                </div>
+            </div>
+        </div>*@
 
 
 
@@ -130,6 +108,38 @@
 
 
 
+
+
+
+
+
+    @*<div class="card">
+            <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="@innercollapseHrefWithPound">
+                    @if (itemLvl2.DataGrouped.IsNullOrEmpty() && itemLvl2.DataDetail.IsNullOrEmpty())
+                    {
+                        //Html.Partial("_dataDashboardSingle", itemLvl2);
+
+                    }
+                    else
+                    {
+                        @Ajax.ActionLink(displayName2, "GetAjaxData", "DashBoard", new { key = itemLvl2.Key, beginDate = itemLvl2.BeginDate, endDate = itemLvl2.EndDate, dataType = ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle.NextDataType(itemLvl2.DataType) }, new AjaxOptions
+                                        {
+                                            HttpMethod = "GET",
+                                            InsertionMode = InsertionMode.Replace,
+                                            UpdateTargetId = ajaxDivIdName,
+                                            AllowCache = false,
+
+
+                                        },
+                                        new { @class = "" })
+                    }
+                </a>
+
+                <div id="@ajaxDivIdName"></div>
+
+            </div>
+        </div>*@
 
 
 

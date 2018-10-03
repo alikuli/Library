@@ -8,7 +8,6 @@ using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using UserModels;
 
 namespace MarketPlace.Web6.Controllers.Abstract
 {
@@ -47,6 +46,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                 ControllerIndexParams parms = MakeControlParameters(
                     id,
+                    menuPathMainId,
                     searchFor,
                     isandForSearch,
                     selectedId,
@@ -54,7 +54,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     entity,
                     BreadCrumbManager,
                     UserId,
-                    UserName, 
+                    UserName,
                     isMenu,
                     menuEnum,
                     sortBy,
@@ -97,7 +97,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 if (!returnUrl.IsNullOrWhiteSpace())
                     return Redirect(returnUrl);
 
-//                return RedirectToAction("Index");
+                //                return RedirectToAction("Index");
                 return Redirect(BreadCrumbManager.Url_CurrMinusOne);
 
 

@@ -27,6 +27,10 @@ namespace MarketPlace.Web6.Controllers.Abstract
             
 
             TEntity entity = (TEntity)parm.Entity;
+
+            //The item being used, must always be MenuPathMain. Sometimes, MenuPath1, MenuPath2 and MenuPath3 will come, bit it has to
+            //be fixed.
+
             if (entity.MenuManager.IsNull())
             {
                 switch (parm.Menu.MenuEnum)
@@ -53,6 +57,21 @@ namespace MarketPlace.Web6.Controllers.Abstract
                         break;
                 }
             }
+        }
+
+        private MenuPathMain getSuitableMenuPathMain(TEntity entity)
+        {
+            throw new NotImplementedException();
+            //MenuPathMain menuPathMain = entity as MenuPathMain;
+            //if (!menuPathMain.IsNull())
+            //    return menuPathMain;
+
+            //MenuPath1 mp1 = entity as MenuPath1;
+            //if(!mp1.IsNull())
+            //{
+            //    //this is an MP1 item.... find a similar item in MenuPathMain
+            //    //menuPathMain = MenuPath1Biz
+            //}
         }
 
         protected void InitializeMenuManager(ControllerCreateEditParameter parmIn)

@@ -3,7 +3,7 @@ namespace DbContextLib.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class _22092018 : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -81,9 +81,9 @@ namespace DbContextLib.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.FileDocs", t => t.FileDocId, cascadeDelete: true)
+                .ForeignKey("dbo.MenuPath3", t => t.MenuPath3Id, cascadeDelete: true)
                 .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: true)
                 .ForeignKey("dbo.ProductChilds", t => t.ProductChildId)
-                .ForeignKey("dbo.MenuPath3", t => t.MenuPath3Id, cascadeDelete: true)
                 .ForeignKey("dbo.MenuPath2", t => t.MenuPath2Id, cascadeDelete: true)
                 .ForeignKey("dbo.MenuPath1", t => t.MenuPath1Id, cascadeDelete: true)
                 .ForeignKey("dbo.AspNetUsers", t => t.IdCardBackUploadId)
@@ -314,11 +314,11 @@ namespace DbContextLib.Migrations
                         MetaData_UnDeleted_By = c.String(maxLength: 50),
                     })
                 .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.MenuPath1", t => t.MenuPath1Id)
                 .ForeignKey("dbo.MenuPath2", t => t.MenuPath2Id)
                 .ForeignKey("dbo.MenuPath3", t => t.MenuPath3Id)
                 .ForeignKey("dbo.Products", t => t.ProductId)
                 .ForeignKey("dbo.ProductChilds", t => t.ProductChildId)
-                .ForeignKey("dbo.MenuPath1", t => t.MenuPath1Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId)
                 .Index(t => t.UserId)
                 .Index(t => t.MenuPath1Id)
@@ -351,78 +351,11 @@ namespace DbContextLib.Migrations
                         MetaData_UnDeleted_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
                         MetaData_UnDeleted_Date = c.DateTime(precision: 7, storeType: "datetime2"),
                         MetaData_UnDeleted_By = c.String(maxLength: 50),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.Features",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Value = c.String(),
-                        FeaturesTypeEnum = c.Int(nullable: false),
-                        MenuPath1Id = c.String(maxLength: 128),
-                        MenuPath2Id = c.String(maxLength: 128),
-                        MenuPath3Id = c.String(maxLength: 128),
-                        ProductId = c.String(maxLength: 128),
-                        ProductChildId = c.String(maxLength: 128),
-                        FeatureTypeEnum = c.Int(nullable: false),
-                        Comment = c.String(maxLength: 1000),
-                        DetailInfoToDisplayOnWebsite = c.String(),
-                        Name = c.String(),
-                        MetaData_IsEditLocked = c.Boolean(nullable: false),
-                        MetaData_IsActive = c.Boolean(nullable: false),
-                        MetaData_IsDeleted = c.Boolean(nullable: false),
-                        MetaData_Created_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_Created_Date = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_Created_By = c.String(maxLength: 50),
-                        MetaData_Deleted_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_Deleted_Date = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_Deleted_By = c.String(maxLength: 50),
-                        MetaData_Modified_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_Modified_Date = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_Modified_By = c.String(maxLength: 50),
-                        MetaData_UnDeleted_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_UnDeleted_Date = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_UnDeleted_By = c.String(maxLength: 50),
+                        Feature_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.MenuPath2", t => t.MenuPath2Id, cascadeDelete: true)
-                .ForeignKey("dbo.MenuPath3", t => t.MenuPath3Id, cascadeDelete: true)
-                .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: true)
-                .ForeignKey("dbo.ProductChilds", t => t.ProductChildId)
-                .ForeignKey("dbo.MenuPath1", t => t.MenuPath1Id, cascadeDelete: true)
-                .Index(t => t.MenuPath1Id)
-                .Index(t => t.MenuPath2Id)
-                .Index(t => t.MenuPath3Id)
-                .Index(t => t.ProductId)
-                .Index(t => t.ProductChildId);
-            
-            CreateTable(
-                "dbo.MenuPath2",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Comment = c.String(maxLength: 1000),
-                        DetailInfoToDisplayOnWebsite = c.String(),
-                        Name = c.String(),
-                        MetaData_IsEditLocked = c.Boolean(nullable: false),
-                        MetaData_IsActive = c.Boolean(nullable: false),
-                        MetaData_IsDeleted = c.Boolean(nullable: false),
-                        MetaData_Created_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_Created_Date = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_Created_By = c.String(maxLength: 50),
-                        MetaData_Deleted_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_Deleted_Date = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_Deleted_By = c.String(maxLength: 50),
-                        MetaData_Modified_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_Modified_Date = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_Modified_By = c.String(maxLength: 50),
-                        MetaData_UnDeleted_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_UnDeleted_Date = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MetaData_UnDeleted_By = c.String(maxLength: 50),
-                    })
-                .PrimaryKey(t => t.Id);
+                .ForeignKey("dbo.Features", t => t.Feature_Id)
+                .Index(t => t.Feature_Id);
             
             CreateTable(
                 "dbo.LikeUnlikes",
@@ -470,7 +403,7 @@ namespace DbContextLib.Migrations
                 .Index(t => t.UserId);
             
             CreateTable(
-                "dbo.MenuPath3",
+                "dbo.MenuPath2",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
@@ -494,6 +427,71 @@ namespace DbContextLib.Migrations
                         MetaData_UnDeleted_By = c.String(maxLength: 50),
                     })
                 .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Features",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Value = c.String(),
+                        FeaturesTypeEnum = c.Int(nullable: false),
+                        FeatureTypeEnum = c.Int(nullable: false),
+                        Comment = c.String(maxLength: 1000),
+                        DetailInfoToDisplayOnWebsite = c.String(),
+                        Name = c.String(),
+                        MetaData_IsEditLocked = c.Boolean(nullable: false),
+                        MetaData_IsActive = c.Boolean(nullable: false),
+                        MetaData_IsDeleted = c.Boolean(nullable: false),
+                        MetaData_Created_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Created_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Created_By = c.String(maxLength: 50),
+                        MetaData_Deleted_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Deleted_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Deleted_By = c.String(maxLength: 50),
+                        MetaData_Modified_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Modified_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Modified_By = c.String(maxLength: 50),
+                        MetaData_UnDeleted_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_UnDeleted_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_UnDeleted_By = c.String(maxLength: 50),
+                        MenuPath2_Id = c.String(maxLength: 128),
+                        MenuPath3_Id = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.MenuPath2", t => t.MenuPath2_Id)
+                .ForeignKey("dbo.MenuPath3", t => t.MenuPath3_Id)
+                .Index(t => t.MenuPath2_Id)
+                .Index(t => t.MenuPath3_Id);
+            
+            CreateTable(
+                "dbo.MenuPath2Feature",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        MenuPath2Id = c.String(maxLength: 128),
+                        FeatureTypeEnum = c.Int(nullable: false),
+                        Comment = c.String(maxLength: 1000),
+                        DetailInfoToDisplayOnWebsite = c.String(),
+                        Name = c.String(),
+                        MetaData_IsEditLocked = c.Boolean(nullable: false),
+                        MetaData_IsActive = c.Boolean(nullable: false),
+                        MetaData_IsDeleted = c.Boolean(nullable: false),
+                        MetaData_Created_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Created_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Created_By = c.String(maxLength: 50),
+                        MetaData_Deleted_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Deleted_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Deleted_By = c.String(maxLength: 50),
+                        MetaData_Modified_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Modified_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Modified_By = c.String(maxLength: 50),
+                        MetaData_UnDeleted_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_UnDeleted_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_UnDeleted_By = c.String(maxLength: 50),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.MenuPath2", t => t.MenuPath2Id)
+                .Index(t => t.MenuPath2Id);
             
             CreateTable(
                 "dbo.MenuPathMains",
@@ -528,6 +526,62 @@ namespace DbContextLib.Migrations
                 .ForeignKey("dbo.MenuPath1", t => t.MenuPath1Id)
                 .Index(t => t.MenuPath1Id)
                 .Index(t => t.MenuPath2Id)
+                .Index(t => t.MenuPath3Id);
+            
+            CreateTable(
+                "dbo.MenuPath3",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Comment = c.String(maxLength: 1000),
+                        DetailInfoToDisplayOnWebsite = c.String(),
+                        Name = c.String(),
+                        MetaData_IsEditLocked = c.Boolean(nullable: false),
+                        MetaData_IsActive = c.Boolean(nullable: false),
+                        MetaData_IsDeleted = c.Boolean(nullable: false),
+                        MetaData_Created_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Created_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Created_By = c.String(maxLength: 50),
+                        MetaData_Deleted_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Deleted_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Deleted_By = c.String(maxLength: 50),
+                        MetaData_Modified_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Modified_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Modified_By = c.String(maxLength: 50),
+                        MetaData_UnDeleted_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_UnDeleted_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_UnDeleted_By = c.String(maxLength: 50),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.MenuPath3Feature",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        MenuPath3Id = c.String(maxLength: 128),
+                        FeatureTypeEnum = c.Int(nullable: false),
+                        Comment = c.String(maxLength: 1000),
+                        DetailInfoToDisplayOnWebsite = c.String(),
+                        Name = c.String(),
+                        MetaData_IsEditLocked = c.Boolean(nullable: false),
+                        MetaData_IsActive = c.Boolean(nullable: false),
+                        MetaData_IsDeleted = c.Boolean(nullable: false),
+                        MetaData_Created_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Created_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Created_By = c.String(maxLength: 50),
+                        MetaData_Deleted_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Deleted_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Deleted_By = c.String(maxLength: 50),
+                        MetaData_Modified_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Modified_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Modified_By = c.String(maxLength: 50),
+                        MetaData_UnDeleted_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_UnDeleted_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_UnDeleted_By = c.String(maxLength: 50),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.MenuPath3", t => t.MenuPath3Id)
                 .Index(t => t.MenuPath3Id);
             
             CreateTable(
@@ -764,6 +818,36 @@ namespace DbContextLib.Migrations
                         MetaData_UnDeleted_By = c.String(maxLength: 50),
                     })
                 .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.MenuPath1Feature",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        MenuPath1Id = c.String(maxLength: 128),
+                        FeatureTypeEnum = c.Int(nullable: false),
+                        Comment = c.String(maxLength: 1000),
+                        DetailInfoToDisplayOnWebsite = c.String(),
+                        Name = c.String(),
+                        MetaData_IsEditLocked = c.Boolean(nullable: false),
+                        MetaData_IsActive = c.Boolean(nullable: false),
+                        MetaData_IsDeleted = c.Boolean(nullable: false),
+                        MetaData_Created_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Created_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Created_By = c.String(maxLength: 50),
+                        MetaData_Deleted_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Deleted_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Deleted_By = c.String(maxLength: 50),
+                        MetaData_Modified_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Modified_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_Modified_By = c.String(maxLength: 50),
+                        MetaData_UnDeleted_DateStart = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_UnDeleted_Date = c.DateTime(precision: 7, storeType: "datetime2"),
+                        MetaData_UnDeleted_By = c.String(maxLength: 50),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.MenuPath1", t => t.MenuPath1Id)
+                .Index(t => t.MenuPath1Id);
             
             CreateTable(
                 "dbo.AspNetUserLogins",
@@ -1156,13 +1240,10 @@ namespace DbContextLib.Migrations
             DropForeignKey("dbo.GlobalComments", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.UploadedFiles", "MenuPath1Id", "dbo.MenuPath1");
             DropForeignKey("dbo.MenuPathMains", "MenuPath1Id", "dbo.MenuPath1");
-            DropForeignKey("dbo.GlobalComments", "MenuPath1Id", "dbo.MenuPath1");
-            DropForeignKey("dbo.Features", "MenuPath1Id", "dbo.MenuPath1");
+            DropForeignKey("dbo.MenuPath1Feature", "MenuPath1Id", "dbo.MenuPath1");
+            DropForeignKey("dbo.LikeUnlikes", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.UploadedFiles", "MenuPath2Id", "dbo.MenuPath2");
             DropForeignKey("dbo.MenuPathMains", "MenuPath2Id", "dbo.MenuPath2");
-            DropForeignKey("dbo.LikeUnlikes", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.UploadedFiles", "MenuPath3Id", "dbo.MenuPath3");
-            DropForeignKey("dbo.MenuPathMains", "MenuPath3Id", "dbo.MenuPath3");
             DropForeignKey("dbo.Products", "UomWeightListedId", "dbo.UomWeights");
             DropForeignKey("dbo.Products", "UomWeightActualId", "dbo.UomWeights");
             DropForeignKey("dbo.Products", "UomVolumeId", "dbo.UomVolumes");
@@ -1175,21 +1256,25 @@ namespace DbContextLib.Migrations
             DropForeignKey("dbo.UploadedFiles", "ProductChildId", "dbo.ProductChilds");
             DropForeignKey("dbo.LikeUnlikes", "ProductChildId", "dbo.ProductChilds");
             DropForeignKey("dbo.GlobalComments", "ProductChildId", "dbo.ProductChilds");
-            DropForeignKey("dbo.Features", "ProductChildId", "dbo.ProductChilds");
             DropForeignKey("dbo.Products", "ParentId", "dbo.Products");
             DropForeignKey("dbo.UploadedFiles", "ProductId", "dbo.Products");
             DropForeignKey("dbo.ProductMenuPathMains", "MenuPathMain_Id", "dbo.MenuPathMains");
             DropForeignKey("dbo.ProductMenuPathMains", "Product_Id", "dbo.Products");
             DropForeignKey("dbo.LikeUnlikes", "ProductId", "dbo.Products");
             DropForeignKey("dbo.GlobalComments", "ProductId", "dbo.Products");
-            DropForeignKey("dbo.Features", "ProductId", "dbo.Products");
+            DropForeignKey("dbo.UploadedFiles", "MenuPath3Id", "dbo.MenuPath3");
+            DropForeignKey("dbo.MenuPathMains", "MenuPath3Id", "dbo.MenuPath3");
+            DropForeignKey("dbo.MenuPath3Feature", "MenuPath3Id", "dbo.MenuPath3");
             DropForeignKey("dbo.LikeUnlikes", "MenuPath3Id", "dbo.MenuPath3");
             DropForeignKey("dbo.GlobalComments", "MenuPath3Id", "dbo.MenuPath3");
-            DropForeignKey("dbo.Features", "MenuPath3Id", "dbo.MenuPath3");
+            DropForeignKey("dbo.Features", "MenuPath3_Id", "dbo.MenuPath3");
+            DropForeignKey("dbo.MenuPath2Feature", "MenuPath2Id", "dbo.MenuPath2");
             DropForeignKey("dbo.LikeUnlikes", "MenuPath2Id", "dbo.MenuPath2");
-            DropForeignKey("dbo.LikeUnlikes", "MenuPath1Id", "dbo.MenuPath1");
             DropForeignKey("dbo.GlobalComments", "MenuPath2Id", "dbo.MenuPath2");
-            DropForeignKey("dbo.Features", "MenuPath2Id", "dbo.MenuPath2");
+            DropForeignKey("dbo.Features", "MenuPath2_Id", "dbo.MenuPath2");
+            DropForeignKey("dbo.MenuPath1", "Feature_Id", "dbo.Features");
+            DropForeignKey("dbo.LikeUnlikes", "MenuPath1Id", "dbo.MenuPath1");
+            DropForeignKey("dbo.GlobalComments", "MenuPath1Id", "dbo.MenuPath1");
             DropForeignKey("dbo.FileDocs", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.UploadedFiles", "FileDocId", "dbo.FileDocs");
             DropForeignKey("dbo.AspNetUsers", "CountryId", "dbo.Countries");
@@ -1203,6 +1288,7 @@ namespace DbContextLib.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
+            DropIndex("dbo.MenuPath1Feature", new[] { "MenuPath1Id" });
             DropIndex("dbo.ProductIdentifiers", new[] { "ProductId" });
             DropIndex("dbo.ProductChilds", new[] { "ProductId" });
             DropIndex("dbo.ProductChilds", new[] { "UserId" });
@@ -1213,20 +1299,20 @@ namespace DbContextLib.Migrations
             DropIndex("dbo.Products", new[] { "UomSaleId" });
             DropIndex("dbo.Products", new[] { "UomPurchaseId" });
             DropIndex("dbo.Products", new[] { "ParentId" });
+            DropIndex("dbo.MenuPath3Feature", new[] { "MenuPath3Id" });
             DropIndex("dbo.MenuPathMains", new[] { "MenuPath3Id" });
             DropIndex("dbo.MenuPathMains", new[] { "MenuPath2Id" });
             DropIndex("dbo.MenuPathMains", new[] { "MenuPath1Id" });
+            DropIndex("dbo.MenuPath2Feature", new[] { "MenuPath2Id" });
+            DropIndex("dbo.Features", new[] { "MenuPath3_Id" });
+            DropIndex("dbo.Features", new[] { "MenuPath2_Id" });
             DropIndex("dbo.LikeUnlikes", new[] { "UserId" });
             DropIndex("dbo.LikeUnlikes", new[] { "ProductChildId" });
             DropIndex("dbo.LikeUnlikes", new[] { "ProductId" });
             DropIndex("dbo.LikeUnlikes", new[] { "MenuPath3Id" });
             DropIndex("dbo.LikeUnlikes", new[] { "MenuPath2Id" });
             DropIndex("dbo.LikeUnlikes", new[] { "MenuPath1Id" });
-            DropIndex("dbo.Features", new[] { "ProductChildId" });
-            DropIndex("dbo.Features", new[] { "ProductId" });
-            DropIndex("dbo.Features", new[] { "MenuPath3Id" });
-            DropIndex("dbo.Features", new[] { "MenuPath2Id" });
-            DropIndex("dbo.Features", new[] { "MenuPath1Id" });
+            DropIndex("dbo.MenuPath1", new[] { "Feature_Id" });
             DropIndex("dbo.GlobalComments", new[] { "ProductChildId" });
             DropIndex("dbo.GlobalComments", new[] { "ProductId" });
             DropIndex("dbo.GlobalComments", new[] { "MenuPath3Id" });
@@ -1268,6 +1354,7 @@ namespace DbContextLib.Migrations
             DropTable("dbo.Rights");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
+            DropTable("dbo.MenuPath1Feature");
             DropTable("dbo.UomWeights");
             DropTable("dbo.UomVolumes");
             DropTable("dbo.UomQties");
@@ -1275,11 +1362,13 @@ namespace DbContextLib.Migrations
             DropTable("dbo.ProductIdentifiers");
             DropTable("dbo.ProductChilds");
             DropTable("dbo.Products");
-            DropTable("dbo.MenuPathMains");
+            DropTable("dbo.MenuPath3Feature");
             DropTable("dbo.MenuPath3");
-            DropTable("dbo.LikeUnlikes");
-            DropTable("dbo.MenuPath2");
+            DropTable("dbo.MenuPathMains");
+            DropTable("dbo.MenuPath2Feature");
             DropTable("dbo.Features");
+            DropTable("dbo.MenuPath2");
+            DropTable("dbo.LikeUnlikes");
             DropTable("dbo.MenuPath1");
             DropTable("dbo.GlobalComments");
             DropTable("dbo.FileDocs");

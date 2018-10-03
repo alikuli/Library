@@ -1,10 +1,12 @@
-﻿@model ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardMain
+﻿@model ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle
 @using System.Linq;
 @{
 
-    //var userNamesIn = Model.UserNamesGrouped;
+    //int innerCount = 0;
+    int outterCount = 0;
 
 }
+
 <h1 class="text-center">Dashboard </h1>
 @*<h5>@Model.DisplayName</h5>*@
 
@@ -17,161 +19,29 @@
 
 <div id="accordion">
 
-    <div class="card">
-        <div class="card-header">
-            <a class="card-link" data-toggle="collapse" href="#collapseOne">
-                <h5>Controller Actions @*(@Model.ControllerActionsGrouped.Count() year data)*@</h5>
-            </a>
-        </div>
-        <div id="collapseOne" class="collapse show" data-parent="#accordion">
-            <div class="card-body">
-                @{ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle ds = Model.ControllerActionsGrouped as ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle;}
-                @Html.Partial("_datadashboardgroupitem", ds)
+
+    @foreach (var item in Model.DataGrouped)
+    {
+        outterCount++;
+        string displayName = outterCount + ". " + item.DisplayName;
+        string cardBodyId2 = "Parent" + Guid.NewGuid().ToString().Substring(0, 5);
+        string cardBodyId2WithPound = "#" + cardBodyId2;
+        <div class="card">
+            <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="@cardBodyId2WithPound">
+                    <h5>@item.NameCalculated</h5>
+                </a>
+            </div>
+            <div id="@cardBodyId2" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                    @Html.Partial("_dataDashBoardGroupItem", item.DataGrouped)
+                </div>
             </div>
         </div>
-    </div>
+
+    }
+
 
 </div>
-
-
-@*<div class="card">
-            <div class="card-header">
-                <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
-                    <h5>User Agents (@Model.UserAgentsGrouped.Count() year data)</h5>
-                </a>
-            </div>
-            <div id="collapseTwo" class="collapse" data-parent="#accordion">
-                <div class="card-body">
-                    @Html.Partial("_dataDashBoardGroupItem", Model.UserAgentsGrouped)
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header">
-                <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-                    <h5>User Languages (@Model.UserLanguagesGrouped.Count() year data)</h5>
-                </a>
-            </div>
-            <div id="collapseThree" class="collapse" data-parent="#accordion">
-                <div class="card-body">
-                    @Html.Partial("_dataDashBoardGroupItem", Model.UserLanguagesGrouped)
-                </div>
-            </div>
-        </div>
-
-
-        <div class="card">
-            <div class="card-header">
-                <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour">
-                    <h5>Browser Types (@Model.BrowserTypesGrouped.Count() year data)</h5>
-                </a>
-            </div>
-            <div id="collapseFour" class="collapse" data-parent="#accordion">
-                <div class="card-body">
-                    @Html.Partial("_dataDashBoardGroupItem", Model.BrowserTypesGrouped)
-                </div>
-            </div>
-        </div>
-
-
-        <div class="card">
-            <div class="card-header">
-                <a class="collapsed card-link" data-toggle="collapse" href="#collapseFive">
-                    <h5>Mobile Connections (@Model.MobileDeviceConnectionsGrouped.Count() year data)</h5>
-                </a>
-            </div>
-            <div id="collapseFive" class="collapse" data-parent="#accordion">
-                <div class="card-body">
-                    @Html.Partial("_dataDashBoardGroupItem", Model.MobileDeviceConnectionsGrouped)
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="card">
-            <div class="card-header">
-                <a class="collapsed card-link" data-toggle="collapse" href="#collapseSix">
-                    <h5>Referal Hosts (@Model.ReferalHostsGrouped.Count() year data)</h5>
-                </a>
-            </div>
-            <div id="collapseSix" class="collapse" data-parent="#accordion">
-                <div class="card-body">
-                    @Html.Partial("_dataDashBoardGroupItem", Model.ReferalHostsGrouped)
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="card">
-            <div class="card-header">
-                <a class="collapsed card-link" data-toggle="collapse" href="#collapseSeven">
-                    <h5 >Crawlers (@Model.CrawlersTypeGrouped.Count() year data)</h5>
-                </a>
-            </div>
-            <div id="collapseSeven" class="collapse" data-parent="#accordion">
-                <div class="card-body">
-                    @Html.Partial("_dataDashBoardGroupItem", Model.CrawlersTypeGrouped)
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="card">
-            <div class="card-header">
-                <a class="collapsed card-link" data-toggle="collapse" href="#collapseEight">
-                    <h5>User Host Addresses (@Model.UserHostAddressesGrouped.Count() year data)</h5>
-                </a>
-            </div>
-            <div id="collapseEight" class="collapse" data-parent="#accordion">
-                <div class="card-body">
-                    @Html.Partial("_dataDashBoardGroupItem", Model.UserHostAddressesGrouped)
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="card">
-            <div class="card-header">
-                <a class="collapsed card-link" data-toggle="collapse" href="#collapseNine">
-                    <h5>User Host Names (@Model.UserHostNamesGrouped.Count() year data)</h5>
-                </a>
-            </div>
-            <div id="collapseNine" class="collapse" data-parent="#accordion">
-                <div class="card-body">
-                    @Html.Partial("_dataDashBoardGroupItem", Model.UserHostNamesGrouped)
-                </div>
-            </div>
-        </div>
-
-
-
-
-        <div class="card">
-            <div class="card-header">
-                <a class="collapsed card-link" data-toggle="collapse" href="#collapseTen">
-                    <h5>User Names (@Model.UserNamesGrouped.Count() year data)</h5>
-                </a>
-            </div>
-            <div id="collapseTen" class="collapse" data-parent="#accordion">
-                <div class="card-body">
-                    @Html.Partial("_dataDashBoardGroupItem", Model.UserNamesGrouped)
-                </div>
-            </div>
-        </div>
-
-    </div>*@
-
-
-
-
-
-
-
-
 
 

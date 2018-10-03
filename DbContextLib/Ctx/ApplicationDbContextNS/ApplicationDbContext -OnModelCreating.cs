@@ -237,6 +237,15 @@ namespace ApplicationDbContextNS
                 .HasForeignKey(x => x.ProductId)
                 .WillCascadeOnDelete(true);
 
+
+            modelBuilder.Entity<Product>()
+                    .HasOptional(x => x.Parent)
+                    .WithMany(x => x.ParentChildren)
+                    .HasForeignKey(x => x.ParentId)
+                    .WillCascadeOnDelete(false);
+
+
+
             modelBuilder.Entity<ProductChild>()
                 .HasOptional<ApplicationUser>(x => x.User)
                 .WithMany(x => x.ProductChildren)

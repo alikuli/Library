@@ -14,8 +14,8 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ProductAbstractNS
         ICollection<UploadedFile> MiscFiles { get; set; }
         string MiscFilesLocation();
         string MiscFilesLocation_Initialization();
-        Product Parent { get; set; }
-        string ParentId { get; set; }
+        //Product Parent { get; set; }
+        //string ParentId { get; set; }
         Quantity Qty { get; set; }
         //void SelfErrorCheck();
         SalePriceComplex Sell { get; set; }

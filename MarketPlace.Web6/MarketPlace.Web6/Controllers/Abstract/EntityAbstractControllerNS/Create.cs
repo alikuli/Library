@@ -22,7 +22,6 @@ namespace MarketPlace.Web6.Controllers.Abstract
         // GET: Countries/Create
         public virtual ActionResult Create(string isandForSearch, MenuENUM menuEnum = MenuENUM.CreateDefault, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, bool isMenu = false, string parentId = "")
         {
-            //for product this needs to create the correct vm.
 
             TEntity dudEntity = Biz.EntityFactoryForHttpGet() as TEntity;
 
@@ -30,9 +29,10 @@ namespace MarketPlace.Web6.Controllers.Abstract
             {
 
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
-                
+
                 ControllerIndexParams parms = MakeControlParameters(
                     "",
+                    menuPathMainId,
                     searchFor,
                     isandForSearch,
                     selectedId,

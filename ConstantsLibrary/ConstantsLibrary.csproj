@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AKATest.cs" />
+    <Compile Include="DashBoardConstants.cs" />
     <Compile Include="MyConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

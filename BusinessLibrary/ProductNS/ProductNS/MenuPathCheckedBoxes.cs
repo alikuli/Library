@@ -2,6 +2,7 @@
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.SharedNS;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +15,22 @@ namespace UowLibrary.ProductNS
         //this returns a list of checked boxes marked true
         //public List<CheckBoxItem> LoadMenuPathCheckedBoxes(IProduct product, MenuPath1ENUM menuPath1Enum = MenuPath1ENUM.Unknown)
         //Note, the MenuPath1 of the Product should have the correct Menupath or a MenuPath1 has to be passed.
-        public void LoadMenuPathCheckedBoxes(IProduct iproduct)
+        public void LoadMenuPathCheckedBoxes(ControllerIndexParams parm)
         {
-            IProduct product = iproduct;
-            product.MenuManager.MenuState.MenuPath1Id.IsNullOrWhiteSpaceThrowException("Menu Path 1 is null.");
+            Product product = parm.Entity as Product;
+            product.IsNullThrowException("Product was not boxed/unboxed. ProductBiz.LoadMenuPathCheckedBoxes");
+            //product.MenuManager.MenuState.MenuPath1Id.IsNullOrWhiteSpaceThrowException("Menu Path 1 is null.");
+            //MenuPath1 mp1 = MenuPath1Biz.Find(product.MenuManager.MenuState.MenuPath1Id);
 
-            MenuPath1 mp1 = MenuPath1Biz.Find(product.MenuManager.MenuState.MenuPath1Id);
-            mp1.IsNullThrowException("Menu path 1 not found");
+            
+            MenuPathMain mpm  = product.MenuPathMains.FirstOrDefault();
+            mpm.IsNullThrowException(string.Format("No Menu Path for this product (ProductBiz.LoadMenuPathCheckedBoxes): {0}.",product.FullName()));
 
+            string mp1Id = mpm.MenuPath1Id;
+            mp1Id.IsNullOrWhiteSpaceThrowException(string.Format("No Id found for Menu Path 1 in  (ProductBiz.LoadMenuPathCheckedBoxes)"));
+            MenuPath1 mp1 = MenuPath1Biz.Find(mp1Id);
+
+            mp1.IsNullThrowException("Menu path 1 not found  (ProductBiz.LoadMenuPathCheckedBoxes)");
 
             var allMenuPaths = MenuPathMainBiz.FindAllMenuPathMainsFor(mp1.MenuPath1Enum);
 

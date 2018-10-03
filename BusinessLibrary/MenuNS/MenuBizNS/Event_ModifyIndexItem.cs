@@ -7,7 +7,6 @@ using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.ViewModels;
-using System;
 using System.Linq;
 using UowLibrary.MenuNS.MenuStateNS;
 namespace UowLibrary.MenuNS
@@ -60,7 +59,7 @@ namespace UowLibrary.MenuNS
                     indexItem.Description = mpm.MenuPath1.DetailInfoToDisplayOnWebsite;
 
                     //get the likes and unlikes for MenuPath1
-                    likeUnlikeCounter = _likeUnlikeBiz.Count(mpm.MenuPath1.Id, null, null, null, null,theUserId, false);
+                    likeUnlikeCounter = _likeUnlikeBiz.Count(mpm.MenuPath1.Id, null, null, null, null, theUserId, false);
                     likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuPath1";
                     indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath1, BreadCrumbManager, likeUnlikeCounter, UserId);
                     break;
@@ -80,13 +79,17 @@ namespace UowLibrary.MenuNS
 
                 case MenuENUM.IndexMenuPath3:
                     mpm.IsNullThrowException();
-                    mpm.MenuPath3.IsNullThrowException();
+                    //mpm.MenuPath3.IsNullThrowException(""); //this means there are no menu 3s. This is not allowed.
+                    if (mpm.MenuPath3.IsNull())
+                    {
+                        return;
+                    }
                     indexItem.Description = mpm.MenuPath3.DetailInfoToDisplayOnWebsite;
-
                     uf = mpm.MenuPath3.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted);
                     indexItem.ImageAddressStr = getImage(uf);
                     indexItem.Name = mpm.MenuPath3.FullName();
                     likeUnlikeCounter = _likeUnlikeBiz.Count(null, null, mpm.MenuPath3.Id, null, null, theUserId, false);
+
                     likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuPath3";
                     indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath3, BreadCrumbManager, likeUnlikeCounter, UserId);
                     break;

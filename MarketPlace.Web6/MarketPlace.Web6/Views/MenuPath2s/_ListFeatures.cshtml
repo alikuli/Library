@@ -3,11 +3,21 @@
 @{
     int count = 0;
     string controller = this.ViewContext.RouteData.Values["controller"].ToString();
+    IEnumerable<ModelsClassLibrary.ModelsNS.FeaturesNS.MenuPath2Feature> features = null;
+
+    if (!Model.MenuPath2Features.IsNull())
+    {
+        features = Model.MenuPath2Features.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).AsEnumerable();
+    }
+
+    @Html.HiddenFor(x => x.Name)
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.MetaData.Created.DateStart)
     
     
 }
 <p>
-    @Html.ActionLink("Create New", "Create", "MenuPath2Features", new { parentId = Model.Id }, null)
+    @Html.ActionLink("Create New", "CreateParentChild", "MenuPath2s", new { parent = Model }, null)
 </p>
 
 
@@ -21,22 +31,29 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.MenuPath2Features.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).AsEnumerable())
+@if (features.IsNull())
 {
-    <tr>
-        <td>
-            @{count++;}
-            @count)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
+    <span>No features added</span>
+}
+else
+{
+    foreach (var item in features)
+    {
+        <tr>
+            <td>
+                @{count++;}
+                @count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
 
-        <td>
-            @Html.ActionLink(" ", "Edit", "MenuPath2Features", new { id = item.Id, menuPath2Id = item.Id }, new { @class = "fas fa-edit text-success" }) 
-            @Html.ActionLink(" ", "Delete", "MenuPath2Features", new { id = item.Id }, new { @class = "fas fa-trash-alt text-danger" })
-        </td>
-    </tr>
+            <td>
+                @Html.ActionLink(" ", "Edit", "MenuPath2Features", new { id = item.Id, menuPath2Id = item.Id }, new { @class = "fas fa-edit text-success" })
+                @Html.ActionLink(" ", "Delete", "MenuPath2Features", new { id = item.Id }, new { @class = "fas fa-trash-alt text-danger" })
+            </td>
+        </tr>
+    }
 }
 
 </table>
