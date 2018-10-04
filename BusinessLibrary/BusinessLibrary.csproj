@@ -184,8 +184,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PageViewNS\Cache.cs" />
+    <Compile Include="PageViewNS\filterForBeginEndDate.cs" />
     <Compile Include="PageViewNS\GetDataFor.cs" />
-    <Compile Include="PageViewNS\filterDataForDates.cs" />
+    <Compile Include="PageViewNS\filterDataForTrxDates.cs" />
+    <Compile Include="PageViewNS\PageViewDataNS\FixDateInGroupAndChild.cs" />
     <Compile Include="PageViewNS\PageViewDataNS\SqlController.cs" />
     <Compile Include="PageViewNS\PageViewDataNS\Sql.cs" />
     <Compile Include="PageViewNS\PageViewDataNS\makeName.cs" />

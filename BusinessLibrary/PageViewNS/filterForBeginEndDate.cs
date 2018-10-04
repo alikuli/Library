@@ -12,8 +12,6 @@ namespace UowLibrary.PageViewNS
     public partial class PageViewBiz
     {
 
-        //const string MINDATE = "01-Jan-2010";
-        //const string MAXDATE = "31-Dec-2050";
 
         List<PageView> _pageViewList;
 
@@ -25,14 +23,12 @@ namespace UowLibrary.PageViewNS
             }
         }
 
-
-
         /// <summary>
         /// This shapes the data. It basically adds all the dates that fall within begin date and end date
         /// </summary>
         /// <param name="dp"></param>
         /// <returns></returns>
-        private List<PageView> filterDataForDates(DateParameter dp)
+        private List<PageView> filterForBeginEndDate(DateParameter dp)
         {
 
             dp.ErrorCheck();

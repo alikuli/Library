@@ -239,52 +239,42 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
         /// <param name="noOfReccursions"></param>
         /// <param name="thisGroupDataType">Eg. Year, Year-Month etc the constants listed to identify where you are coming from</param>
         /// <returns></returns>
-        private List<DashBoardSingle> sql(DashBoardSingle dbs, string currDataType, string nextGroupBy)
+        private List<DashBoardSingle> sql(DashBoardSingle dbs, string currGroupBy, string nextGroupBy)
         {
-            ////Dont allow more than MAX_NO_OF_RECCURSIONS deep recursions.
-            //if (dbs.ReccursionNum > DashBoardConstants.MAX_NO_OF_RECCURSIONS)
-            //    return null;
+
+            
             if (dbs.IsNull())
                 return null;
 
-            long totalCount = dbs.DataDetail.Count();
             var listOfDataGrouped = dbs
                 .DataDetail
                 .OrderBy(x => x.Key)
-                //.ThenBy(x => x.DateOfTrx.Year)
-                //.ThenBy(x => x.DateOfTrx.Month)
-                //.ThenBy(x => x.DateOfTrx.Month)
-                //.ThenBy(x => x.DateOfTrx.Day)
-                //.ThenBy(x => x.DateOfTrx.Hour)
-                //.ThenBy(x => x.DateOfTrx.Minute)
-                //.ThenBy(x => x.DateOfTrx.Second)
                 .GroupBy(x => x.Key)
                 .Select(y =>
                 new DashBoardSingle
                 {
-                    Amount = GetDataFor(
-                                        y.First().Key,
-                                        dbs.DataDetail)
-                                        .Count(),
+                    Amount = GetDataFor(  y.First().Key,
+                                          dbs.DataDetail)
+                                          .Count(),
 
                     //we need to give a new key each time
-                    Key = makeKey(
-                                        nextGroupBy,
-                                        y.First().DateOfTrx,
-                                        y.First().GroupBy,
-                                        y.First().Name),
+                    Key = makeKey(  nextGroupBy,
+                                    y.First().DateOfTrx,
+                                    y.First().GroupBy,
+                                    y.First().Name),
 
                     Name = y.First().Name,
 
-                    NameCalculated = makeName(
-                                        y.First().DateOfTrx,
-                                        currDataType,
-                                        y.First().ShowDataFor,
-                                        y.First().Name),
+                    NameCalculated = makeName(  y.First().DateOfTrx,
+                                                currGroupBy,
+                                                y.First().ShowDataFor,
+                                                y.First().Name),
+                    NameForSorting = makeNameForSorting(y.First().DateOfTrx,
+                                                currGroupBy,
+                                                y.First().ShowDataFor,
+                                                y.First().Name),
 
-                    Percent = calculatePct(
-                                        y.Count(),
-                                        totalCount),
+                    TotalAmount = dbs.DataDetail.Count(),
 
                     //Percent = y.Count() == 0 ? 0 : (y.Count() / count) & 100,
 
@@ -298,18 +288,27 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
 
                     BeginDate = dbs.BeginDate,
                     EndDate = dbs.EndDate,
-                    GroupBy = currDataType,
+                    GroupBy = currGroupBy,
                     ShowDataFor = y.First().ShowDataFor,
                     BelongsToGroup = y.First().BelongsToGroup,
                 })
-                //.OrderByDescending(x => x.Percent)
-                .OrderBy(x => x.Name)
                 .ToList();
 
 
             return listOfDataGrouped;
 
         }
+
+        private long totalCountForController(List<DashBoardSingle> list)
+        {
+            if(list.IsNull())
+            {
+                return 0;
+            }
+            var noOfControllerHits = list.Where(x => x.BelongsToGroup == DataOwner.CONTROLLER).Count();
+            return list.Count();
+        }
+
 
 
 
@@ -345,7 +344,10 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
             foreach (var item in parentData)
             {
                 item.Key = makeKey(nextGroupBy, item.DateOfTrx, item.ShowDataFor, item.Name);
+
                 item.NameCalculated = makeName(item.DateOfTrx, nextGroupBy, item.ShowDataFor, item.Name);
+                item.NameForSorting = makeNameForSorting(item.DateOfTrx, nextGroupBy, item.ShowDataFor, item.Name);
+                
                 item.BeginDate = beginDate; //need these for Ajax parameters
                 item.EndDate = endDate;
                 item.ShowDataFor = belongToGroup;

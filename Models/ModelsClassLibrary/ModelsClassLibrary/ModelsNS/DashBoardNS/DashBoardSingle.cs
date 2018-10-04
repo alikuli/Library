@@ -1,5 +1,4 @@
-﻿using AliKuli.Extentions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -49,10 +48,22 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
         public bool IsCrawler { get; set; }
 
         public double Amount { get; set; }
-
+        public double TotalAmount { get; set; }
 
         private double _percent;
-        public double Percent { get { return _percent; } set { _percent = value; } }
+        public double Percent 
+        { 
+            get 
+            {
+                if (Amount == 0)
+                    return 0;
+                if (TotalAmount == 0)
+                    return 0;
+
+                return Amount / TotalAmount * 100; 
+            } 
+            //set { _percent = value; } 
+        }
 
 
         /// <summary>
@@ -62,6 +73,14 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
 
 
         public string NameCalculated { get; set; }
+        public string NameForSorting { get; set; }
+        //{
+        //    get
+        //    {
+        //        string newName  = Name +
+        //        return 
+        //    }
+        //}
 
         public string DisplayName
         {
@@ -89,7 +108,7 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
 
         public override string ToString()
         {
-            string str = string.Format("{0} - {1:n0}", NameCalculated, Amount);
+            string str = string.Format("{0} [{1:n0}]", NameCalculated, Amount);
             return str;
         }
 

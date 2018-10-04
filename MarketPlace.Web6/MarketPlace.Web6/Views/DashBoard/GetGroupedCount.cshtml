@@ -1,14 +1,15 @@
-﻿@model ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle
+﻿@model List<ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle>
+
 @using System.Linq;
 @{
 
     //int innerCount = 0;
     int outterCount = 0;
-
+    string guid = Guid.NewGuid().ToString().Substring(0, 6);
+    string accordianId = "parAccordian" + guid;
+    string accordianIdWithPound = "#" + accordianId; 
 }
 
-<h1 class="text-center">Dashboard </h1>
-@*<h5>@Model.DisplayName</h5>*@
 
 
 
@@ -16,23 +17,24 @@
 
 
 
+<div id="@accordianId">
 
-<div id="accordion">
 
-
-    @foreach (var item in Model.DataGrouped)
+    @foreach (var item in Model.OrderBy(x => x.NameForSorting).ToList())
     {
         outterCount++;
         string displayName = outterCount + ". " + item.DisplayName;
         string cardBodyId2 = "Parent" + Guid.NewGuid().ToString().Substring(0, 5);
         string cardBodyId2WithPound = "#" + cardBodyId2;
-        <div class="card">
+
+
+        <div class="card bg-info ">
             <div class="card-header">
-                <a class="card-link" data-toggle="collapse" href="@cardBodyId2WithPound">
-                    <h5>@item.NameCalculated</h5>
+                <a class="card-link text-light" data-toggle="collapse" href="@cardBodyId2WithPound">
+                    <h5>@item.DisplayName</h5>
                 </a>
             </div>
-            <div id="@cardBodyId2" class="collapse" data-parent="#accordion">
+            <div id="@cardBodyId2" class="collapse" data-parent="@accordianIdWithPound">
                 <div class="card-body">
                     @Html.Partial("_dataDashBoardGroupItem", item.DataGrouped)
                 </div>

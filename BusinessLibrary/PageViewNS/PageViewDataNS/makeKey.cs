@@ -9,13 +9,12 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
     public partial class PageViewData
     {
 
-        private static string makeKey(string dataType, DateTime dateOfTrx, string dataOwner, string name)
+        private static string makeKey(string groupBy, DateTime dateOfTrx, string belongsToGroup, string name)
         {
-            string key = dataOwner;
-            switch (dataType)
+            string key = belongsToGroup;
+            switch (groupBy)
             {
                 case GroupByConstants.MAIN:
-                    key += dataOwner;
                     break;
 
                 case GroupByConstants.NAME:
@@ -23,7 +22,7 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
 
                     break;
                 case GroupByConstants.YEAR:
-                    key += dataOwner + "Y" + dateOfTrx.Year.ToString();
+                    key += name + "Y" + dateOfTrx.Year.ToString();
                     break;
 
 

@@ -9,6 +9,11 @@ namespace AliKuli.Extentions
     public static class StringExtension
     {
 
+
+
+
+
+
         private const string splittingSequence = "&#@";
 
         /// <summary>

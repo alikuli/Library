@@ -12,14 +12,14 @@
 <div id="@accordianId">
 
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.OrderBy(x => x.NameForSorting).ToList())
     {
         string guid = Guid.NewGuid().ToString().Substring(0, 5);
         outterCount++;
         string ajaxId = "ajax" + guid;
         ajaxIdWithPound += "#" + ajaxId;
         
-        string displayName = outterCount + ". " + item.NameCalculated;
+        string displayName = outterCount + ". " + item.DisplayName;
         string cardBodyId2 = "child" + guid;
         string cardBodyId2WithPound = "#" + cardBodyId2;
         string controllerName = "DashBoard";
@@ -31,7 +31,7 @@
 
                         
                             @Ajax.ActionLink(
-                                    displayName,
+                                    displayName ,
                                     actionName,
                                     controllerName, new
                                     {
@@ -40,6 +40,8 @@
                                         showDataBelongingTo = item.BelongsToGroup,
                                         groupBy = ModelsClassLibrary.ModelsNS.DashBoardNS.DashBoardSingle.NextGroupBy(item.GroupBy),
                                         name = item.Name,
+                                        dateOfTrx = (item.DateOfTrx == null? DateTime.MinValue : item.DateOfTrx ),
+                                        
                                     },
                                     new AjaxOptions()
                                     {

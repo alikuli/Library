@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using ModelsClassLibrary.ModelsNS.DashBoardNS;
+using System;
 namespace UowLibrary.PageViewNS.PageViewDataNS
 {
     /// <summary>
@@ -88,6 +89,7 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
                 foreach (var item in theData.DataDetail)
                 {
                     item.Key = makeKey(GroupByConstants.YEAR, item.DateOfTrx, item.BelongsToGroup, item.Name);
+                    
                 }
             }
 
@@ -107,8 +109,13 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
             return theData;
         }
 
-
-        public DashBoardSingle FixDataController(DashBoardSingle dbs, string dataType)
+        /// <summary>
+        /// This fixes the key of the main DataDetail
+        /// </summary>
+        /// <param name="dbs"></param>
+        /// <param name="dataType"></param>
+        /// <returns></returns>
+        public DashBoardSingle Controller_FixKey(DashBoardSingle dbs, string dataType)
         {
             if (dbs.IsNull())
                 return dbs;

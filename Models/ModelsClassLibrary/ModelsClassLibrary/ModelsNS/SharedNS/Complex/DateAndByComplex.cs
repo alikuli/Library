@@ -26,7 +26,8 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime? Date { get; set; }
 
-
+        [NotMapped]
+        public DateTime Date_NotNull { get { return Date ?? DateTime.MinValue; } }
 
         [Display(Name = "By")]
         [MaxLength(50)]

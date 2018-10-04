@@ -41,12 +41,17 @@ namespace MarketPlace.Web6.Controllers
             try
             {
                 string showDataBelongingTo = GroupByConstants.ALL;
+                //dummy
+                DateTime dateOfTrx_Dummy = dateParameter.BeginDate;
+
                 var model = PageViewBiz.GetFinalData(
-                    dateParameter,
-                    showDataBelongingTo,
-                    GroupByConstants.MAIN,
-                    name);
-                return View(model);
+                                                        dateParameter,
+                                                        dateOfTrx_Dummy,
+                                                        showDataBelongingTo,
+                                                        GroupByConstants.MAIN,
+                                                        name);
+
+                return View(model.DataGrouped);
 
             }
             catch (Exception e)
@@ -57,15 +62,15 @@ namespace MarketPlace.Web6.Controllers
 
         }
 
-        public ActionResult GetAjax(DateTime beginDate, DateTime endDate, string showDataBelongingTo, string groupBy, string name)
+        public ActionResult GetAjax(string showDataBelongingTo, string groupBy, string name, DateTime beginDate, DateTime endDate, DateTime dateOfTrx)
         {
             try
             {
-                var model = PageViewBiz.AjaxData(beginDate, endDate, showDataBelongingTo, groupBy, name);
+                var model = PageViewBiz.AjaxData(beginDate, endDate, dateOfTrx, showDataBelongingTo, groupBy, name);
                 if (groupBy == GroupByConstants.DETAIL)
-                    return PartialView("_dataDashboardSingle", model.DataDetail);
+                    return PartialView("_dataDashboardSingle", model.DataGrouped.First().DataDetail);
 
-                return PartialView("_dataDashBoardGroupItem", model.DataGrouped);
+                return PartialView("GetGroupedCount", model.DataGrouped);
 
             }
             catch (Exception e)
