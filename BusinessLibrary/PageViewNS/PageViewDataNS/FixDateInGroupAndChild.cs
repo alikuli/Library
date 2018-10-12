@@ -6,12 +6,26 @@ using System.Linq;
 
 namespace UowLibrary.PageViewNS.PageViewDataNS
 {
+
+
+
     /// <summary>
     /// This prepares the data for the dash board.
     /// First thing it is preparing is the PageViews.
     /// </summary>
     public partial class PageViewData
     {
+
+
+
+        public DashBoardSingle FixDateInGroupAndChild(DashBoardSingle dbsGrouped, string groupBy)
+        {
+            addTrxDateToDataGroupsFor(dbsGrouped.DataGrouped, groupBy);
+            return dbsGrouped;
+        }
+
+
+        
         /// <summary>
         /// TWe have received a list of groups. Now we will update the DateOfTrx of each
         /// group according to its groupBy and the date will come from the list.DataList
@@ -63,16 +77,11 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
             item.DateOfTrx = item.DataDetail.First().DateOfTrx;
 
             //Now fix the date for the Child
-            foreach (var groupedData in item.DataGrouped)
+            foreach (var childGroupedData in item.DataGrouped)
             {
-                groupedData.DateOfTrx = groupedData.DataDetail.First().DateOfTrx;
+                childGroupedData.DateOfTrx = childGroupedData.DataDetail.First().DateOfTrx;
             }
         }
 
-        public DashBoardSingle FixDateInGroupAndChild(DashBoardSingle dbsGrouped, string groupBy)
-        {
-            addTrxDateToDataGroupsFor(dbsGrouped.DataGrouped, groupBy);
-            return dbsGrouped;
-        }
     }
 }

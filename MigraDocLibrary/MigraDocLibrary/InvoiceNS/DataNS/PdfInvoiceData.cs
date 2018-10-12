@@ -151,7 +151,7 @@ namespace InvoiceNS
             _buyer.CountryName = "pakistan";
             _buyer.Phone = "03318783120";
             _buyer.Attention = "ali KULI aMinuddin";
-            _buyer.Name = "ali KULI aMinuddin";
+            //_buyer.Name = "ali KULI aMinuddin";
 
             _seller = new AddressStringWithNames();
             _seller.HouseNo = "Ali House";
@@ -163,7 +163,7 @@ namespace InvoiceNS
             _seller.CountryName = "pakistan";
             _seller.Phone = "03318783122";
             _seller.Attention = "Aila azhar/Azhar";
-            _seller.Name = "Aila azhar";
+            //_seller.Name = "Aila azhar";
 
             _shipTo = new AddressStringWithNames();
             _shipTo.HouseNo = "7";
@@ -175,7 +175,7 @@ namespace InvoiceNS
             _shipTo.CountryName = "pakistan";
             _shipTo.Phone = "03318783120";
             _shipTo.Attention = "Nida/Ali";
-            _shipTo.Name = "Nida";
+            //_shipTo.Name = "Nida";
 
             _informTo = new AddressStringWithNames();
             _informTo.HouseNo = "7";
@@ -198,7 +198,7 @@ namespace InvoiceNS
             _webCompany.CountryName = "pakistan";
             _webCompany.Phone = "03314474120";
             _webCompany.WebAddress = "alikuli@gmail.com";
-            _webCompany.Name = "Nida.com";
+            //_webCompany.Name = "Nida.com";
         }
     }
 }

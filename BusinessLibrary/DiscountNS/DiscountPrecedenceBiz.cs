@@ -34,13 +34,13 @@ namespace UowLibrary.DiscountPrecedenceNS
 
 
 
-        public override void Create(ControllerCreateEditParameter parm)
+        public override void CreateSimple(ControllerCreateEditParameter parm)
         {
             DiscountPrecedence dp = parm.Entity as DiscountPrecedence;
             if (dp.DiscountRuleEnum == DiscountRuleENUM.Unknown || dp.DiscountTypeEnum == DiscountTypeENUM.Unknown)
                 return;
 
-            base.Create(parm);
+            base.CreateSimple(parm);
         }
 
         public override void Fix(ControllerCreateEditParameter parm)

@@ -7,9 +7,11 @@ using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using ModelsClassLibrary.ModelsNS.AddressNS;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using UowLibrary;
+using UowLibrary.AddressNS;
 using UowLibrary.CounterNS;
 using UowLibrary.FeaturesNS;
 using UowLibrary.FileDocNS;
@@ -83,6 +85,7 @@ namespace DependancyResolver
             Bind<MenuPath1FeatureBiz>().ToSelf();
             Bind<MenuPath2FeatureBiz>().ToSelf();
             Bind<MenuPath3FeatureBiz>().ToSelf();
+            Bind<AddressBiz>().ToSelf();
         }
 
         public void LoadDALs()

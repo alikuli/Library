@@ -48,6 +48,58 @@ namespace DalLibrary.DalNS
 
         #region FindForName and FindForNameAsync
 
+        /// <summary>
+        /// The domain data for this can be narowed so that the search takes place
+        /// between bounds as sometimes is required. Eg. Same user cannot have a duplicate address, 
+        /// but other users can have the same address with a different record.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private TEntity FindDuplicateNameFor(TEntity entity)
+        {
+
+            if (entity.Name.IsNullOrWhiteSpace())
+            {
+                entity.Name = "";
+            }
+
+            //This part can be overridden to insert only that data where the duplication is
+            //relevant.
+            var dataForSearching = GetDomainDataForDuplicateNameSearch(entity);
+
+            TEntity foundIt;
+            if(entity.Name.IsNullOrWhiteSpace())
+            {
+                foundIt = dataForSearching
+                    .FirstOrDefault(x => x.Name.ToLower() == entity.Name || x.Name == null);
+
+            }
+            else
+            {
+                foundIt = dataForSearching
+                    .FirstOrDefault(x => x.Name.ToLower() == entity.Name.ToLower());
+
+            }
+
+
+            return foundIt;
+
+        }
+        /// <summary>
+        /// This will be used to narrow down the search data when doing a duplicate search. For example, if we are
+        /// searching for a duplicate address, this data will be narrowed down to all addresses that are for a 
+        /// certain user. Normally, the whole data will be searched.
+        /// </summary>
+        /// <returns></returns>
+        public virtual IQueryable<TEntity> GetDomainDataForDuplicateNameSearch(TEntity entity)
+        {
+            return FindAll();
+        }
+
+
+
+
+
         public virtual TEntity FindForName(string name)
         {
 
@@ -62,11 +114,11 @@ namespace DalLibrary.DalNS
                 return null;
 
 
-            TEntity foundIt = foundall
+            TEntity first = foundall
                 .FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
 
 
-            return foundIt;
+            return first;
 
         }
 
@@ -432,12 +484,12 @@ namespace DalLibrary.DalNS
 
             //if (canRetrieve())
             //{
-                var query = from b in _db.Set<TEntity>()
-                            where b.MetaData.IsDeleted == deleted
-                            orderby b.Name
-                            select b;
+            var query = from b in _db.Set<TEntity>()
+                        where b.MetaData.IsDeleted == deleted
+                        orderby b.Name
+                        select b;
 
-                return query.AsQueryable();
+            return query.AsQueryable();
             //}
             //else
             //{

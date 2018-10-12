@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace MarketPlace.Web4.Controllers
 {
@@ -12,17 +13,32 @@ namespace MarketPlace.Web4.Controllers
     {
 
 
-        private void LoadErrorsIntoModelState()
+        private void LoadErrorsForDisplay()
         {
-            bool UowHasErrors = ErrorsGlobal.HasErrors;
+            //bool UowHasErrors = ErrorsGlobal.HasErrors;
 
-            if (UowHasErrors)
+            //if (UowHasErrors)
+            //{
+            //    foreach (var item in ErrorsGlobal.ToList())
+            //        ModelState.AddModelError("", item);
+
+            //    ErrorsGlobal.Errors.Clear();
+            //}
+
+
+
+
+            if (ErrorsGlobal.HasErrors)
             {
-                foreach (var item in ErrorsGlobal.ToList())
-                    ModelState.AddModelError("", item);
+                List<string> errorsList = new List<string>();
+                foreach (var item in ErrorsGlobal.ToListErrs())
+                    errorsList.Add(item);
 
                 ErrorsGlobal.Errors.Clear();
+                ViewBag.ListOfErrors = errorsList;
+
             }
+
         }
 
 

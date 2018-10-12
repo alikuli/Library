@@ -1,11 +1,11 @@
-﻿using System;
+﻿using AliKuli.Extentions;
+using Ninject;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using AliKuli.Extentions;
-using Ninject;
 using WebLibrary.Programs;
 
 namespace ErrorHandlerLibrary.ExceptionsNS
@@ -13,7 +13,7 @@ namespace ErrorHandlerLibrary.ExceptionsNS
     /// <summary>
     /// Use this class. This has lots of features. You can load a list of error messages and receive it back as a ToString or a ToList
     /// </summary>
-    public class ErrorSet : IErrorSet 
+    public class ErrorSet : IErrorSet
     {
 
         IMemoryMain _memory;
@@ -32,28 +32,59 @@ namespace ErrorHandlerLibrary.ExceptionsNS
                 throw new Exception("Memory is null. ErrorSet");
             //UserName = userName;
         }
+        List<string> _listOfErrors = new List<string>();
+        //public List<string> ListOfErrors
+        //{
+        //    get
+        //    {
+        //        _listOfErrors.Clear();
 
+        //        if(!_dbEntityValidationErrors.IsNullOrEmpty())
+        //        {
+        //            foreach (var err in _dbEntityValidationErrors)
+        //            {
+        //                _listOfErrors.Add(err);
+        //            }
+        //        }
+
+        //        if(!Errors.IsNullOrEmpty())
+        //        {
+        //            foreach (var err in Errors)
+        //            {
+        //                _listOfErrors.Add(err.ToString());
+        //            }
+
+        //        }
+        //        return _listOfErrors;
+        //    }
+        //}
+
+        //List<string> _dbEntityValidationErrors = new List<string>();
 
         public string Get_DbEntityValidationException(DbEntityValidationException e)
         {
             //List<String> lstErrors = new List<string>();
             StringBuilder sb = new StringBuilder();
-
+            int count = 0;
             if (e.EntityValidationErrors != null && e.EntityValidationErrors.Count() > 0)
             {
                 foreach (var eve in e.EntityValidationErrors)
                 {
-                    string msg = string.Format("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                    count++;
+                    string msg = string.Format("{2}. Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
                         eve.Entry.Entity.GetType().Name,
-                        eve.Entry.State);
+                        eve.Entry.State,
+                        count);
 
                     sb.Append(msg);
-
+                    //_dbEntityValidationErrors.Add(msg);
                     foreach (var ve in eve.ValidationErrors)
                     {
                         msg = string.Format("- Property: \"{0}\", Error: \"{1}\"",
                             ve.PropertyName, ve.ErrorMessage);
                         sb.Append(msg);
+                        //_dbEntityValidationErrors.Add(msg);
+
                     }
                 }
             }
@@ -62,8 +93,12 @@ namespace ErrorHandlerLibrary.ExceptionsNS
 
             //Now add any inner Exception errors
             if (!innerException.IsNullOrWhiteSpace())
-                sb.Append("Inner Exception is: '" + ErrorHelpers.GetInnerException(e) + "'");
+            {
+                string msg = "Inner Exception is: '" + ErrorHelpers.GetInnerException(e) + "'";
+                sb.Append(msg);
+                //_dbEntityValidationErrors.Add(msg);
 
+            }
             return sb.ToString();
         }
 
@@ -74,13 +109,26 @@ namespace ErrorHandlerLibrary.ExceptionsNS
 
         #region Add
 
-        public void Add(string customMsg, MethodBase methodBase, Exception e = null)
+
+        public string GetExceptionMessageString(string customMsg, MethodBase methodBase, Exception e = null)
+        {
+            var errSingle = setupExceptionMessage(customMsg, methodBase, e);
+            return errSingle.ToString();
+        }
+
+        private ErrorSingle setupExceptionMessage(string customMsg, MethodBase methodBase, Exception e = null)
         {
             if (e.IsNull())
                 if (customMsg.IsNullOrWhiteSpace())
-                    return;
+                    return null;
 
             ErrorSingle errSingle = new ErrorSingle(LibraryName, ClassName, customMsg, methodBase, e);
+            return errSingle;
+        }
+
+        public void Add(string customMsg, MethodBase methodBase, Exception e = null)
+        {
+            var errSingle = setupExceptionMessage(customMsg, methodBase, e);
             Errors.Add(errSingle);
         }
 
@@ -155,7 +203,7 @@ namespace ErrorHandlerLibrary.ExceptionsNS
             }
         }
 
-        public List<string> ToList()
+        public List<string> ToListErrs()
         {
             List<string> strList = new List<string>();
 

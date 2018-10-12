@@ -20,6 +20,48 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
         public DashBoardSingle DataAll { get; set; }
 
 
+
+        public DashBoardSingle InitializePageViews(
+            List<PageView> pageViewList,
+            DateParameter dateParam,
+            string groupBy,
+            string showDataFor)
+        {
+            if (pageViewList.IsNullOrEmpty())
+                return null;
+
+
+
+
+            //this is running through the raw list and converting it to its type.
+            //Data is saved in a property DataAll
+            foreach (PageView pv in pageViewList)
+            {
+                InitializePageViews(
+                    pv.ControllerName,
+                    pv.ActionName,
+                    pv.BrowserType,
+                    pv.IsCrawler,
+                    pv.IsMobileDevice,
+                    pv.UrlRefererrerHost,
+                    pv.UserAgent,
+                    pv.UserHostAddress,
+                    pv.UserHostName,
+                    pv.UserLanguages,
+                    pv.UserName,
+                    pv.MetaData.Created.Date ?? DateTime.MinValue,
+                    dateParam,
+                    groupBy,
+                    showDataFor);
+            }
+
+            return DataAll;
+
+        }
+
+
+
+
         /// <summary>
         /// This is to be used for getting data from the PageViews. Filtered data by date is to be passed here.
         /// If DataType is not blank, then only that item's data is received.
@@ -68,70 +110,70 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
                 case DataOwner.BROWSER:
 
 
-                    AddBrowserType(browserType, dateCreated, isCrawler, dateParam, groupBy);
+                    addBrowserType(browserType, dateCreated, isCrawler, dateParam, groupBy);
                     break;
 
 
 
                 case DataOwner.CONTROLLER:
-                    AddControllerActions(controller, action, dateCreated, isCrawler, dateParam, groupBy);
+                    addControllerActions(controller, action, dateCreated, isCrawler, dateParam, groupBy);
                     break;
 
 
 
                 case DataOwner.CRAWLER:
-                    AddIsCrawler(isCrawler, dateCreated, userAgent, dateParam, groupBy);
+                    addIsCrawler(isCrawler, dateCreated, userAgent, dateParam, groupBy);
                     break;
 
 
                 case DataOwner.MOBILE_DEVICE:
-                    AddIsMobileDevice(isMobileDevice, dateCreated, userAgent, isCrawler, dateParam, groupBy);
+                    addIsMobileDevice(isMobileDevice, dateCreated, userAgent, isCrawler, dateParam, groupBy);
                     break;
 
 
                 case DataOwner.REFERAL_HOST:
-                    AddUrlReferHost(urlRefererHost, dateCreated, isCrawler, dateParam, groupBy);
+                    addUrlReferHost(urlRefererHost, dateCreated, isCrawler, dateParam, groupBy);
                     break;
 
 
                 case DataOwner.USER_AGENT:
-                    AddUserAgent(userAgent, dateCreated, isCrawler, dateParam, groupBy);
+                    addUserAgent(userAgent, dateCreated, isCrawler, dateParam, groupBy);
                     break;
 
 
                 case DataOwner.USER_HOST_ADDRESS:
-                    AddUserHostAddress(userHostAddress, dateCreated, isCrawler, dateParam, groupBy);
+                    addUserHostAddress(userHostAddress, dateCreated, isCrawler, dateParam, groupBy);
                     break;
 
 
                 case DataOwner.USER_HOST_NAMES:
-                    AddUserHostName(userHostName, dateCreated, isCrawler, dateParam, groupBy);
+                    addUserHostName(userHostName, dateCreated, isCrawler, dateParam, groupBy);
                     break;
 
 
                 case DataOwner.USER_LANGUAGES:
-                    AddUserLanguages(userLanguages, dateCreated, isCrawler, dateParam, groupBy);
+                    addUserLanguages(userLanguages, dateCreated, isCrawler, dateParam, groupBy);
                     break;
 
 
                 case DataOwner.USER_NAMES:
-                    AddUserName(userName, dateCreated, isCrawler, dateParam, groupBy);
+                    addUserName(userName, dateCreated, isCrawler, dateParam, groupBy);
                     break;
-                
+
                 case GroupByConstants.ALL:
                 default:
 
                     //if blank... do all
-                    AddControllerActions(controller, action, dateCreated, isCrawler, dateParam, groupBy);
-                    AddBrowserType(browserType, dateCreated, isCrawler, dateParam, groupBy);
-                    AddIsCrawler(isCrawler, dateCreated, userAgent, dateParam, groupBy);
-                    AddIsMobileDevice(isMobileDevice, dateCreated, userAgent, isCrawler, dateParam, groupBy);
-                    AddUrlReferHost(urlRefererHost, dateCreated, isCrawler, dateParam, groupBy);
-                    AddUserAgent(userAgent, dateCreated, isCrawler, dateParam, groupBy);
-                    AddUserHostAddress(userHostAddress, dateCreated, isCrawler, dateParam, groupBy);
-                    AddUserHostName(userHostName, dateCreated, isCrawler, dateParam, groupBy);
-                    AddUserLanguages(userLanguages, dateCreated, isCrawler, dateParam, groupBy);
-                    AddUserName(userName, dateCreated, isCrawler, dateParam, groupBy);
+                    addControllerActions(controller, action, dateCreated, isCrawler, dateParam, groupBy);
+                    addBrowserType(browserType, dateCreated, isCrawler, dateParam, groupBy);
+                    addIsCrawler(isCrawler, dateCreated, userAgent, dateParam, groupBy);
+                    addIsMobileDevice(isMobileDevice, dateCreated, userAgent, isCrawler, dateParam, groupBy);
+                    addUrlReferHost(urlRefererHost, dateCreated, isCrawler, dateParam, groupBy);
+                    addUserAgent(userAgent, dateCreated, isCrawler, dateParam, groupBy);
+                    addUserHostAddress(userHostAddress, dateCreated, isCrawler, dateParam, groupBy);
+                    addUserHostName(userHostName, dateCreated, isCrawler, dateParam, groupBy);
+                    addUserLanguages(userLanguages, dateCreated, isCrawler, dateParam, groupBy);
+                    addUserName(userName, dateCreated, isCrawler, dateParam, groupBy);
                     break;
             }
 
@@ -140,47 +182,11 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
         }
 
 
-        public DashBoardSingle InitializePageViews(
-            List<PageView> pageViewList,
-            DateParameter dateParam,
-            string groupBy,
-            string showDataFor)
-        {
-            if (pageViewList.IsNullOrEmpty())
-                return null;
 
-
-
-
-            //this is running through the raw list and converting it to its type.
-            //Data is saved in a property DataAll
-            foreach (PageView pv in pageViewList)
-            {
-                InitializePageViews(
-                    pv.ControllerName,
-                    pv.ActionName,
-                    pv.BrowserType,
-                    pv.IsCrawler,
-                    pv.IsMobileDevice,
-                    pv.UrlRefererrerHost,
-                    pv.UserAgent,
-                    pv.UserHostAddress,
-                    pv.UserHostName,
-                    pv.UserLanguages,
-                    pv.UserName,
-                    pv.MetaData.Created.Date ?? DateTime.MinValue,
-                    dateParam,
-                    groupBy,
-                    showDataFor);
-            }
-
-            return DataAll;
-
-        }
 
 
         //all the methods below add the data to lists from a list of data which has been filtered within date.
-        private void AddUserName(
+        private void addUserName(
             string userName,
             DateTime dateCreated,
             bool isCrawler,
@@ -198,7 +204,8 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
         }
 
 
-        private void AddUserLanguages(
+
+        private void addUserLanguages(
             string userLanguages,
             DateTime dateCreated,
             bool isCrawler,
@@ -242,7 +249,7 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
 
 
 
-        private void AddUserHostName(
+        private void addUserHostName(
             string userHostName,
             DateTime dateCreated,
             bool isCrawler,
@@ -260,7 +267,9 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
 
         }
 
-        private void AddUserHostAddress(
+
+
+        private void addUserHostAddress(
             string userHostAddress,
             DateTime dateCreated,
             bool isCrawler,
@@ -279,7 +288,9 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
 
         }
 
-        private void AddUserAgent(string userAgent,
+
+
+        private void addUserAgent(string userAgent,
             DateTime dateCreated,
             bool isCrawler,
             DateParameter dateParam,
@@ -296,7 +307,9 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
 
         }
 
-        private void AddUrlReferHost(
+
+
+        private void addUrlReferHost(
             string urlRefererHost,
             DateTime dateCreated,
             bool isCrawler,
@@ -314,7 +327,9 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
 
         }
 
-        private void AddIsMobileDevice(
+
+
+        private void addIsMobileDevice(
             bool isMobileDevice,
             DateTime dateCreated,
             string userAgent,
@@ -337,7 +352,9 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
 
         }
 
-        private void AddIsCrawler(
+
+
+        private void addIsCrawler(
             bool isCrawler,
             DateTime dateCreated,
             string userAgent,
@@ -361,7 +378,9 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
 
         }
 
-        private void AddBrowserType(
+
+
+        private void addBrowserType(
             string browserType,
             DateTime dateCreated,
             bool isCrawler,
@@ -378,7 +397,10 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
 
         }
 
-        private void AddControllerActions(
+
+
+
+        private void addControllerActions(
             string controller,
             string action,
             DateTime dateCreated,
@@ -396,6 +418,7 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
                 DataOwner.CONTROLLER);
 
         }
+
 
 
 
@@ -427,9 +450,6 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
 
             DataAll.DataDetail.Add(ds);
         }
-
-
-
 
 
     }

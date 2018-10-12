@@ -6,12 +6,13 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS
     /// This is either General, ShipTo, InformTo, default is true for both.
     /// </summary>
     [ComplexType]
-    public class AddressType
+    public class AddressTypeComplex
     {
-        public AddressType()
+        public AddressTypeComplex()
         {
             ShipTo = true;
             InformTo = true;
+            BillTo = true;
         }
         /// <summary>
         /// this can be used for shipto only
@@ -24,11 +25,8 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS
         /// </summary>
         public bool InformTo { get; set; }
 
-        public void LoadFrom(AddressType a)
-        {
-            ShipTo = a.ShipTo;
-            InformTo = a.InformTo;
-        }
+        public bool BillTo { get; set; }
+
 
 
 

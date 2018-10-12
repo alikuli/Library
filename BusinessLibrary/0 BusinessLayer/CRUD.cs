@@ -2,12 +2,15 @@
 using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
-using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -27,9 +30,14 @@ namespace UowLibrary
 
         #region Create
 
-        public virtual void Create(ControllerCreateEditParameter parm)
+        public virtual void CreateSimple(ControllerCreateEditParameter parm)
         {
             createEngineSimple(parm);
+        }
+
+        private void create(TEntity entity)
+        {
+            Dal.Create(entity);
         }
 
         //public virtual void Create(ControllerCreateEditParameter parm)
@@ -104,8 +112,9 @@ namespace UowLibrary
 
         private void createEngineWithFileUpload(ControllerCreateEditParameter parm)
         {
-            fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
-            handleRelatedFilesIfExist(parm);
+            //this was removed because it shows up twice... it is also in CreateEngineSimple
+            //fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
+            //handleRelatedFilesIfExist(parm);
             createEngineSimple(parm);
         }
 
@@ -113,6 +122,8 @@ namespace UowLibrary
         {
             //entity.IsCreating = true;
             fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
+            handleRelatedFilesIfExist(parm);
+
             CreateEntity(parm.Entity as TEntity);
             ClearSelectListInCache(SelectListCacheKey);
         }
@@ -125,7 +136,7 @@ namespace UowLibrary
         public virtual void CreateEntity(TEntity entity)
         {
             FixChildEntityForCreate(entity);
-            Dal.Create(entity);
+            create(entity);
         }
 
 
@@ -143,7 +154,7 @@ namespace UowLibrary
         public void UpdateAndSave(ControllerCreateEditParameter param)
         {
             updateEngine(param);
-            Dal.SaveChanges();
+            SaveChanges();
 
         }
 
@@ -152,7 +163,7 @@ namespace UowLibrary
         public async Task UpdateAndSaveAsync(ControllerCreateEditParameter parm)
         {
             updateEngine(parm);
-            await Dal.SaveChangesAsync();
+            await SaveChangesAsync();
 
         }
 
@@ -164,7 +175,7 @@ namespace UowLibrary
 
             Product productTest = parm.Entity as Product;
             AddParentChildCode(parm);
-            UpdateEntity(parm.Entity as TEntity);
+            Update(parm.Entity as TEntity);
             ClearSelectListInCache(SelectListCacheKey);
 
         }
@@ -178,7 +189,7 @@ namespace UowLibrary
         /// This will need to be updated in each individual Product VM
         /// </summary>
         /// <param name="parm"></param>
-        public virtual void UpdateEntity(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
 
             Dal.Update(entity);
@@ -230,7 +241,7 @@ namespace UowLibrary
             try
             {
                 Delete(id);
-                Dal.SaveChanges();
+                SaveChanges();
                 return true;
             }
             catch (Exception e)
@@ -282,7 +293,7 @@ namespace UowLibrary
                 }
                 _nameOfItemBeingDeleted = entity.Name; //NameOfItemBeingDeleted is updated here
                 Dal.Delete(id);
-                await Dal.SaveChangesAsync();
+                await SaveChangesAsync();
                 ErrorsGlobal.AddMessage(string.Format("*** Deleted '{0}' ***", entity.Name));
                 ClearSelectListInCache(SelectListCacheKey);
                 return true;
@@ -503,11 +514,123 @@ namespace UowLibrary
 
         public virtual int SaveChanges()
         {
-            return Dal.SaveChanges();
+
+
+            try
+            {
+                return Dal.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                ErrorsGlobal.Add("DbEntityValidationException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+
+            }
+
+            catch (NotSupportedException e)
+            {
+
+                ErrorsGlobal.Add("NotSupportedException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+            }
+
+
+            catch (ObjectDisposedException e)
+            {
+
+                ErrorsGlobal.Add("ObjectDisposedException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+
+            }
+
+            catch (InvalidOperationException e)
+            {
+                ErrorsGlobal.Add("InvalidOperationException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+            }
+
+            catch (DbUpdateConcurrencyException e)
+            {
+                ErrorsGlobal.Add("DbUpdateConcurrencyException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+            }
+
+            catch (DbUpdateException e)
+            {
+                ErrorsGlobal.Add("DbUpdateException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+            }
+
+            catch (EntityException e)
+            {
+                ErrorsGlobal.Add("EntityException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+            }
+
+            catch (DataException e)
+            {
+                ErrorsGlobal.Add("DataException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+            }
+
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Exception. Data not saved.", MethodBase.GetCurrentMethod(), e);
+
+            }
+            throw new Exception("Data not saved.");
         }
         public virtual async Task<int> SaveChangesAsync()
         {
-            return await Dal.SaveChangesAsync();
+
+            try
+            {
+                return await Dal.SaveChangesAsync();
+            }
+            catch (DbEntityValidationException e)
+            {
+                ErrorsGlobal.Add("DbEntityValidationException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+
+            }
+
+            catch (NotSupportedException e)
+            {
+
+                ErrorsGlobal.Add("NotSupportedException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+            }
+
+
+            catch (ObjectDisposedException e)
+            {
+
+                ErrorsGlobal.Add("ObjectDisposedException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+
+            }
+
+            catch (InvalidOperationException e)
+            {
+                ErrorsGlobal.Add("InvalidOperationException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+            }
+
+            catch (DbUpdateConcurrencyException e)
+            {
+                ErrorsGlobal.Add("DbUpdateConcurrencyException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+            }
+
+            catch (DbUpdateException e)
+            {
+                ErrorsGlobal.Add("DbUpdateException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+            }
+
+            catch (EntityException e)
+            {
+                ErrorsGlobal.Add("EntityException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+            }
+
+            catch (DataException e)
+            {
+                ErrorsGlobal.Add("DataException. Data not saved.", MethodBase.GetCurrentMethod(), e);
+            }
+
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Exception. Data not saved.", MethodBase.GetCurrentMethod(), e);
+
+            }
+            throw new Exception("Data not saved.");
+
         }
 
 

@@ -50,6 +50,7 @@ namespace UowLibrary
                 //This is required otherwise all the previous entries that were found remain in the cache and get added. The Notracking does not work.
                 Dal.Detach(entity);
                 throw new NoDuplicateException(string.Format("{0}: '{1}' already exists in the db.", entity.GetType().Name, entity.Name));
+                //throw new NoDuplicateException(string.Format("{0}: '{1}' already exists in the db.", entity.GetType().Name, entity.Name));
 
             }
             else

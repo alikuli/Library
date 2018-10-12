@@ -9,6 +9,61 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
     /// </summary>
     public partial class PageViewData
     {
+
+
+        /// <summary>
+        /// This fixes the key of the main DataDetail
+        /// </summary>
+        /// <param name="dbs"></param>
+        /// <param name="dataType"></param>
+        /// <returns></returns>
+        public DashBoardSingle Controller_FixKey(DashBoardSingle dbs, string dataType)
+        {
+            if (dbs.IsNull())
+                return dbs;
+
+            if (dbs.DataDetail.IsNull())
+                return dbs;
+
+            switch (dataType)
+            {
+                case GroupByConstants.MAIN:
+                    dbs = FixDataForMain(dbs);
+                    break;
+
+                case GroupByConstants.YEAR:
+                    dbs = FixDataForYear(dbs);
+                    break;
+
+                case GroupByConstants.YEAR_MONTH:
+                    dbs = FixDataForYearMonth(dbs);
+                    break;
+
+                case GroupByConstants.YEAR_MONTH_DAY:
+                    dbs = FixDataForYearMonthDay(dbs);
+                    break;
+
+                case GroupByConstants.YEAR_MONTH_DAY_HOUR:
+                    dbs = FixDataForYearMonthDayHour(dbs);
+                    break;
+
+                case GroupByConstants.YEAR_MONTH_DAY_HOUR_MINUTE:
+                    dbs = FixDataForYearMonthDayHourMinute(dbs);
+                    break;
+
+                case GroupByConstants.YEAR_MONTH_DAY_HOUR_MINUTE_SECOND:
+                    dbs = FixDataForYearMonthDayHourMinuteSecond(dbs);
+                    break;
+
+
+                default:
+                    break;
+            }
+
+            return dbs;
+        }
+        
+        
         //GroupName. Eg Controller
         private DashBoardSingle FixDataForYearMonthDayHourMinuteSecond(DashBoardSingle theData)
         {
@@ -109,56 +164,5 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
             return theData;
         }
 
-        /// <summary>
-        /// This fixes the key of the main DataDetail
-        /// </summary>
-        /// <param name="dbs"></param>
-        /// <param name="dataType"></param>
-        /// <returns></returns>
-        public DashBoardSingle Controller_FixKey(DashBoardSingle dbs, string dataType)
-        {
-            if (dbs.IsNull())
-                return dbs;
-
-            if (dbs.DataDetail.IsNull())
-                return dbs;
-
-            switch (dataType)
-            {
-                case GroupByConstants.MAIN:
-                    dbs = FixDataForMain(dbs);
-                    break;
-
-                case GroupByConstants.YEAR:
-                    dbs = FixDataForYear(dbs);
-                    break;
-
-                case GroupByConstants.YEAR_MONTH:
-                    dbs = FixDataForYearMonth(dbs);
-                    break;
-
-                case GroupByConstants.YEAR_MONTH_DAY:
-                    dbs = FixDataForYearMonthDay(dbs);
-                    break;
-
-                case GroupByConstants.YEAR_MONTH_DAY_HOUR:
-                    dbs = FixDataForYearMonthDayHour(dbs);
-                    break;
-
-                case GroupByConstants.YEAR_MONTH_DAY_HOUR_MINUTE:
-                    dbs = FixDataForYearMonthDayHourMinute(dbs);
-                    break;
-
-                case GroupByConstants.YEAR_MONTH_DAY_HOUR_MINUTE_SECOND:
-                    dbs = FixDataForYearMonthDayHourMinuteSecond(dbs);
-                    break;
-
-
-                default:
-                    break;
-            }
-
-            return dbs;
-        }
     }
 }

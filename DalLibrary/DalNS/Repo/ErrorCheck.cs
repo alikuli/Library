@@ -40,17 +40,15 @@ namespace DalLibrary.DalNS
 
         }
 
-        private void Check_ForDuplicate_Name(TEntity entity)
+        public virtual void Check_ForDuplicate_Name(TEntity entity)
         {
-            TEntity entityInDb = FindForName(entity.Name);
+            TEntity entityInDb = FindDuplicateNameFor(entity);
 
             if (entityInDb != null)
             {
                 string error = string.Format("Name: '{0}' already exists.", entity.Name);
 
                 ErrorsGlobal.Add(error, MethodBase.GetCurrentMethod());
-                //string errMsg = ErrorsGlobal.ToString();
-                //ErrorsGlobal.Errors.Clear(); //This is an optional Error so it is cleared here
 
                 throw new NoDuplicateException();
             }

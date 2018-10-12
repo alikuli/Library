@@ -156,6 +156,22 @@
     <Compile Include="Migrations\201809250848325_initial.Designer.cs">
       <DependentUpon>201809250848325_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810111013573_11-10-2018.cs" />
+    <Compile Include="Migrations\201810111013573_11-10-2018.Designer.cs">
+      <DependentUpon>201810111013573_11-10-2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810111512044_11-10-2018-1.cs" />
+    <Compile Include="Migrations\201810111512044_11-10-2018-1.Designer.cs">
+      <DependentUpon>201810111512044_11-10-2018-1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810111602323_11-10-2018-4.cs" />
+    <Compile Include="Migrations\201810111602323_11-10-2018-4.Designer.cs">
+      <DependentUpon>201810111602323_11-10-2018-4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810111917162_11-10-2018-6.cs" />
+    <Compile Include="Migrations\201810111917162_11-10-2018-6.Designer.cs">
+      <DependentUpon>201810111917162_11-10-2018-6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -188,6 +204,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201809250848325_initial.resx">
       <DependentUpon>201809250848325_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810111013573_11-10-2018.resx">
+      <DependentUpon>201810111013573_11-10-2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810111512044_11-10-2018-1.resx">
+      <DependentUpon>201810111512044_11-10-2018-1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810111602323_11-10-2018-4.resx">
+      <DependentUpon>201810111602323_11-10-2018-4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810111917162_11-10-2018-6.resx">
+      <DependentUpon>201810111917162_11-10-2018-6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -43,6 +43,7 @@
     @Html.HiddenFor(model => model.Id)
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.Partial("_messages")
 
         <div class="row">
             <div class="col-8">

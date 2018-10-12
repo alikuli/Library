@@ -50,7 +50,6 @@ namespace ModelsClassLibrary.ModelsNS.DashBoardNS
         public double Amount { get; set; }
         public double TotalAmount { get; set; }
 
-        private double _percent;
         public double Percent 
         { 
             get 

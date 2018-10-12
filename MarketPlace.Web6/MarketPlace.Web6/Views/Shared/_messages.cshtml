@@ -1,0 +1,77 @@
+﻿@using System.Collections.Generic;
+
+@{
+    List<string> msgList = ViewBag.ListOfMessages as List<string>;
+    List<string> errList = ViewBag.ListOfErrors as List<string>;
+    
+ }
+
+@if (!errList.IsNullOrEmpty())
+{
+    int count = 0;
+    foreach (var item in errList)
+    {
+        count++;
+        string guid = Guid.NewGuid().ToString().Substring(0,5);
+        string id = "id" + guid;
+        string idPound = "#" + id;
+        
+        @*<div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>ERROR!</strong> @item
+        </div>*@
+    
+
+    <div class="container">
+        <a href="@idPound" class="btn btn-danger" data-toggle="collapse">Press this button to see Error List No. @count</a>
+        <div id="@id" class="collapse">
+            @{
+        string[] splitOn = { " at " };
+        string[] itemArray = item.Split(splitOn, StringSplitOptions.RemoveEmptyEntries);
+
+        if (!itemArray.IsNullOrEmpty())
+        {
+            for (int i = 0; i < itemArray.Count(); i++)
+            {
+                int errNo = i + 1;
+                <div class="alert alert-danger alert-dismissible fade show">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>ERROR!</strong> @errNo. @itemArray[i]
+                    </div>
+                        
+                    }
+                }
+            }
+        </div>
+    </div>
+
+
+    }
+
+}
+
+
+
+
+@*<div class="container">
+    <h2>Simple Collapsible</h2>
+    <a href="#demo" class="btn btn-primary" data-toggle="collapse">Simple collapsible</a>
+    <div id="demo" class="collapse">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    </div>
+</div>*@
+
+@if (!msgList.IsNullOrEmpty())
+{
+        foreach (var item in msgList)
+        {
+            <div class="alert alert-info alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>System Msg!</strong> @item
+            </div>
+        }
+
+}
+

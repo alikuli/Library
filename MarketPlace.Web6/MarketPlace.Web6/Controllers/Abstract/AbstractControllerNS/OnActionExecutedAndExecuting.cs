@@ -34,8 +34,13 @@ namespace MarketPlace.Web4.Controllers
             //get any errors that are in the memory and save them in the list
             ErrorsGlobal.MemoryRetrieve();
             LoadValidationErrorsIntoErrorsGlobal();
-            LoadErrorsIntoModelState();
-            LoadMessagesIntoModelState();
+            LoadErrorsForDisplay();
+
+            //If we load messages, we casue the ModelState.IsValid to become false. 
+            //use some other way to transport messages.
+
+            LoadMessagesIntoAlerts();
+
             base.OnActionExecuting(filterContext);
 
         }

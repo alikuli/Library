@@ -21,6 +21,8 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.Partial("_messages")
+
     @Html.HiddenFor(model => model.Id)
     @Html.Partial(@"_FieldsOnlyEditFormat")
     @Html.Partial(@"ViewControls/Uploads/_ShowUploads")

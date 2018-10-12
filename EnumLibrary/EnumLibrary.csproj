@@ -91,7 +91,6 @@
   <ItemGroup>
     <Compile Include="AKATest.cs" />
     <Compile Include="EnumNS\ActionNameENUM.cs" />
-    <Compile Include="EnumNS\AddressTypeENUM.cs" />
     <Compile Include="EnumNS\MenuENUM.cs" />
     <Compile Include="EnumNS\MenuPathNS\MenuPath2ENUM.cs" />
     <Compile Include="EnumNS\ClassesWithRightsENUM.cs" />

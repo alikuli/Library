@@ -33,7 +33,7 @@ namespace UserModels
         public Country Country { get; set; }
 
 
-        public ICollection<Right> UserRights { get; set; }
+        //public ICollection<Right> UserRights { get; set; }
 
 
         public virtual ICollection<UploadedFile> MiscFiles { get; set; }
@@ -104,16 +104,28 @@ namespace UserModels
 
         public virtual ICollection<FileDoc> FileDocs { get; set; }
 
+
+
+        /// <summary>
+        /// Every user can have many addresses.
+        /// </summary>
+        public virtual ICollection<AddressWithId> Addresses { get; set; }
+        
+
         public virtual ICollection<ProductChild> ProductChildren { get; set; }
 
 
         public virtual ICollection<GlobalComment> GlobalComments { get; set; }
+
+
         public virtual ICollection<LikeUnlike> LikeUnlikes { get; set; }
 
         public bool DisableNameInView()
         {
             return false;
         }
+
+
         [NotMapped]
         public string DefaultDisplayImage { get { return AliKuli.ConstantsNS.MyConstants.DEFAULT_IMAGE_LOCATION; } }
 
@@ -123,5 +135,6 @@ namespace UserModels
         {
             get { return true; }
         }
+
     }
 }

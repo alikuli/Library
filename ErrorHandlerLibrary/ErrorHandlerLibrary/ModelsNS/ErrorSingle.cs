@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using AliKuli.Extentions;
 using AliKuli.UtilitiesNS;
+using System.Collections.Generic;
 
 namespace ErrorHandlerLibrary.ExceptionsNS
 {
@@ -18,7 +19,8 @@ namespace ErrorHandlerLibrary.ExceptionsNS
             ClassName = className;
 
         }
-        public ErrorSingle(string libName, string className, string customErrorMessage, string methodName): this(libName,className,customErrorMessage)
+        public ErrorSingle(string libName, string className, string customErrorMessage, string methodName)
+            : this(libName, className, customErrorMessage)
         {
             MethodName = methodName;
             Date = DateTime.UtcNow;
@@ -104,6 +106,8 @@ namespace ErrorHandlerLibrary.ExceptionsNS
             return sb.ToString();
         }
 
+
+
         public override string ToString()
         {
             ConfigManagerHelper configHelper = new ConfigManagerHelper();
@@ -139,11 +143,26 @@ namespace ErrorHandlerLibrary.ExceptionsNS
             if (sb.ToString().IsNullOrWhiteSpace())
                 return "";
 
-            string dateString = (configHelper.IsVerbose? string.Format("{0:yyyy-MM-dd H:mm:ss:ffff} ", Date) : "");
-            
+            string dateString = (configHelper.IsVerbose ? string.Format("{0:yyyy-MM-dd H:mm:ss:ffff} ", Date) : "");
+
             return string.Format(dateString + sb.ToString());
         }
 
+
+        //public string[] ErrorMessagesSplit()
+        //{
+        //    if(!ToString().IsNullOrEmpty())
+        //    {
+        //        string [] strToSplitOn = {" at "};
+        //        var msgs = ToString().Split(
+        //            strToSplitOn, 
+        //            StringSplitOptions.RemoveEmptyEntries);
+        //        return msgs;
+        //    }
+        //    return null;
+        //}
         #endregion
+
     }
+        
 }

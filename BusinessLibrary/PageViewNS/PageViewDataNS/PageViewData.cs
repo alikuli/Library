@@ -6,6 +6,7 @@
     /// </summary>
     public partial class PageViewData
     {
+        public string Heading { get; set; }
 
     }
 }

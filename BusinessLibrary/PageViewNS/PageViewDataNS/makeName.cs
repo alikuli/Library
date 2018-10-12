@@ -49,13 +49,13 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
 
 
                 case GroupByConstants.YEAR_MONTH_DAY_HOUR:
-                    string hrs = convertHoursToAmAndPm(dateTime.Hour);
+                    string hrs = convertHoursToAmAndPm_Helper(dateTime.Hour);
                     calculatedName = string.Format("{1}/{2}/{3} at {4}", name, dateTime.Year.ToString(), dateTime.Month.ToString(), dateTime.Day.ToString(), hrs);
                     break;
 
 
                 case GroupByConstants.YEAR_MONTH_DAY_HOUR_MINUTE:
-                    calculatedName = string.Format("{1}/{2}/{3} at {4} and {5} Minutes", name, dateTime.Year.ToString(), dateTime.Month.ToString(), dateTime.Day.ToString(), convertHoursToAmAndPm(dateTime.Hour), dateTime.Minute.ToString(), dateTime.Second.ToString());
+                    calculatedName = string.Format("{1}/{2}/{3} at {4} and {5} Minutes", name, dateTime.Year.ToString(), dateTime.Month.ToString(), dateTime.Day.ToString(), convertHoursToAmAndPm_Helper(dateTime.Hour), dateTime.Minute.ToString(), dateTime.Second.ToString());
                     break;
 
 
@@ -65,7 +65,7 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
                         dateTime.Year.ToString(),
                         dateTime.Month.ToString(),
                         dateTime.Day.ToString(),
-                        convertHoursToAmAndPm(dateTime.Hour),
+                        convertHoursToAmAndPm_Helper(dateTime.Hour),
                         dateTime.Minute.ToString(),
                         dateTime.Second.ToString());
                     break;
@@ -114,7 +114,7 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
             return calculatedName;
 
         }
-        private static string convertHoursToAmAndPm(int p)
+        private static string convertHoursToAmAndPm_Helper(int p)
         {
             string hrs = "";
             switch (p)

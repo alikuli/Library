@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
+using System.Reflection;
 namespace ErrorHandlerLibrary
 {
     public interface IErrorSet
@@ -22,11 +22,13 @@ namespace ErrorHandlerLibrary
         bool HasErrors { get; }
         bool HasMessages { get; }
         string LibraryName { get; set; }
+        //List<string> ListOfErrors { get; }
+        string GetExceptionMessageString(string customMsg, MethodBase methodBase, Exception e);
         global::ErrorHandlerLibrary.ExceptionsNS.ErrorSet MemoryRetrieve();
         bool MemorySave();
         global::System.Collections.Generic.ICollection<global::ErrorHandlerLibrary.IErrorSingle> Messages { get; set; }
         void SetLibAndClass(string libraryname, string className);
-        global::System.Collections.Generic.List<string> ToList();
+        global::System.Collections.Generic.List<string> ToListErrs();
         global::System.Collections.Generic.ICollection<string> ToList_Messages();
         string ToString();
         string ToString_Messages();

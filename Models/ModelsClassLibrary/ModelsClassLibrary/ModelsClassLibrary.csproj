@@ -131,10 +131,7 @@
     <Compile Include="AKATest.cs" />
     <Compile Include="DelegatesNS\Delegates.cs" />
     <Compile Include="InterfacesNS\AddressNS\IAddressString.cs" />
-    <Compile Include="InterfacesNS\AddressNS\IAddressStringPartial.cs" />
-    <Compile Include="InterfacesNS\AddressNS\IAddressStringWithTown.cs" />
     <Compile Include="InterfacesNS\AddressNS\IAddressWithId.cs" />
-    <Compile Include="InterfacesNS\AddressNS\IAddressWithIdComplex.cs" />
     <Compile Include="InterfacesNS\Address\IAddress.cs" />
     <Compile Include="InterfacesNS\Address\IAddressCommon.cs" />
     <Compile Include="InterfacesNS\Address\IAddressComplex.cs" />
@@ -200,11 +197,14 @@
     <Compile Include="InterfacesNS\SharedNS\CommonNS\ICommonNoId.cs" />
     <Compile Include="InterfacesNS\SharedNS\IEntity.cs" />
     <Compile Include="InterfacesNS\SharedNS\FeaturesNS\IHasUser.cs" />
-    <Compile Include="ModelsNS\AddressNS\Address\Address.cs" />
-    <Compile Include="ModelsNS\AddressNS\Address\AddressComplex.cs" />
-    <Compile Include="ModelsNS\AddressNS\Address\AddressStringWithNames.cs" />
-    <Compile Include="ModelsNS\AddressNS\Address\AddressType.cs" />
-    <Compile Include="ModelsNS\AddressNS\Address\AddressWithId.cs" />
+    <Compile Include="ModelsNS\AddressNS\AddressNS\Address.cs" />
+    <Compile Include="ModelsNS\AddressNS\AddressNS\AddressComplex.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelsNS\AddressNS\AddressNS\AddressStringWithNames.cs" />
+    <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\AddressTypeComplex.cs" />
+    <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\AddressWithId.cs" />
+    <Compile Include="ModelsNS\AddressNS\PhoneNumberNS\PhoneNumber.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\AndSpec.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\CompositeSpec.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\NotSpec.cs" />
@@ -437,7 +437,7 @@
     <None Include="InterfacesNS\AddressNS\AddressInterfaceDiagram.cd" />
     <None Include="InterfacesNS\DocumentsNS\DocumentDiagram.cd" />
     <None Include="InterfacesNS\PlacesNS\PlacesDiagram.cd" />
-    <None Include="ModelsNS\AddressNS\AddressDiagram.cd" />
+    <None Include="ModelsNS\AddressNS\AddressNS\Address.cd" />
     <None Include="ModelsNS\PlacesNS\PlacesDiagram.cd" />
     <None Include="ModelsNS\SharedNS\Common\CommonDiagram.cd" />
     <None Include="packages.config" />

@@ -128,7 +128,7 @@ namespace UowLibrary.ProductNS
 
                     pcHasuploads.MiscFiles.Add(file);
 
-                    UploadedFileBiz.Create(CreateControllerCreateEditParameter(file as ICommonWithId));
+                    UploadedFileBiz.CreateSimple(CreateControllerCreateEditParameter(file as ICommonWithId));
 
                 }
             }

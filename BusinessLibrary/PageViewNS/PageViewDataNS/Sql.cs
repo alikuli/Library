@@ -231,6 +231,47 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
 
         //#endregion
 
+
+
+        /// <summary>
+        /// This first sorts the DataDetail according to it's key, then groups the main DataDetail, and then the ChildDataDetail
+        /// </summary>
+        /// <param name="dbs"></param>
+        /// <param name="groupBy"></param>
+        /// <returns></returns>
+        public DashBoardSingle Controller_SQL(DashBoardSingle dbs, string groupBy)
+        {
+
+            dbs.DataDetail = dbs.DataDetail.OrderBy(x => x.Key).ToList();
+
+
+            string nextDataType = DashBoardSingle.NextGroupBy(groupBy);
+            dbs.DataGrouped = sql(dbs, groupBy, nextDataType);
+
+
+
+            string nextDataTypeAfterNext = DashBoardSingle.NextGroupBy(nextDataType);
+            groupTheChild(dbs, nextDataType, nextDataTypeAfterNext);
+
+            return dbs;
+        }
+
+
+        /// <summary>
+        /// This groups the child item
+        /// </summary>
+        /// <param name="dbs"></param>
+        /// <param name="nextDataType"></param>
+        /// <param name="nextDataTypeAfterNext"></param>
+        private void groupTheChild(DashBoardSingle dbs, string nextDataType, string nextDataTypeAfterNext)
+        {
+            foreach (var item in dbs.DataGrouped)
+            {
+                item.DataGrouped = sql(item, nextDataType, nextDataTypeAfterNext);
+            }
+        }
+
+
         /// <summary>
         /// Note. After this, the DataGroup will contain the groups of DataDetail
         /// </summary>
@@ -242,7 +283,7 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
         private List<DashBoardSingle> sql(DashBoardSingle dbs, string currGroupBy, string nextGroupBy)
         {
 
-            
+
             if (dbs.IsNull())
                 return null;
 
@@ -253,19 +294,19 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
                 .Select(y =>
                 new DashBoardSingle
                 {
-                    Amount = GetDataFor(  y.First().Key,
+                    Amount = GetDataFor(y.First().Key,
                                           dbs.DataDetail)
                                           .Count(),
 
                     //we need to give a new key each time
-                    Key = makeKey(  nextGroupBy,
+                    Key = makeKey(nextGroupBy,
                                     y.First().DateOfTrx,
                                     y.First().GroupBy,
                                     y.First().Name),
 
                     Name = y.First().Name,
 
-                    NameCalculated = makeName(  y.First().DateOfTrx,
+                    NameCalculated = makeName(y.First().DateOfTrx,
                                                 currGroupBy,
                                                 y.First().ShowDataFor,
                                                 y.First().Name),
@@ -301,7 +342,7 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
 
         private long totalCountForController(List<DashBoardSingle> list)
         {
-            if(list.IsNull())
+            if (list.IsNull())
             {
                 return 0;
             }
@@ -309,18 +350,6 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
             return list.Count();
         }
 
-
-
-
-        //private List<DashBoardSingle> detailForThis(string key, List<DashBoardSingle> fixedData)
-        //{
-        //    var data = GetDataFor(key, fixedData);
-        //    if (!nextGrouping.IsNullOrWhiteSpace()) //dont want to run this during count
-        //    {
-
-        //    }
-        //    return data;
-        //}
 
 
 
@@ -347,9 +376,10 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
 
                 item.NameCalculated = makeName(item.DateOfTrx, nextGroupBy, item.ShowDataFor, item.Name);
                 item.NameForSorting = makeNameForSorting(item.DateOfTrx, nextGroupBy, item.ShowDataFor, item.Name);
-                
-                item.BeginDate = beginDate; //need these for Ajax parameters
-                item.EndDate = endDate;
+
+                item.BeginDate = beginDate; //need this for Ajax parameters
+                item.EndDate = endDate;     //need this for Ajax parameters
+
                 item.ShowDataFor = belongToGroup;
                 item.BelongsToGroup = belongToGroup;
                 item.GroupBy = nextGroupBy;
@@ -366,54 +396,6 @@ namespace UowLibrary.PageViewNS.PageViewDataNS
             var datafiltered = data.Where(x => x.Key == key).ToList();
             return datafiltered;
         }
-
-
-        //private double calculatePct(double currCount, double totalCount)
-        //{
-        //    if (currCount == 0)
-        //        return 0;
-
-        //    double ans = currCount / totalCount * 100;
-        //    return ans;
-        //}
-
-        //private List<DashBoardSingle> detailForThis(string key, List<DashBoardSingle> fixedData, string nextGrouping)
-        //{
-        //    var data = GetDataFor(key, fixedData);
-        //    if (!nextGrouping.IsNullOrWhiteSpace()) //dont want to run this during count
-        //    {
-        //        if (!data.IsNullOrEmpty())
-        //        {
-        //            foreach (var item in data)
-        //            {
-        //                item.Key = makeKey(item.Key, item.DateOfTrx, nextGrouping);
-        //            }
-        //        }
-        //    }
-        //    return data;
-        //}
-
-        //private static List<DashBoardSingle> GetDataFor(string key, List<DashBoardSingle> fixedData)
-        //{
-        //    var data = fixedData.Where(x => x.Key == key).ToList();
-        //    return data;
-        //}
-
-        //private List<DashBoardSingle> getDetailedData(List<DashBoardSingle> theAction, string name)
-        //{
-        //    return theAction.Where(x => x.Name == name)
-        //        .OrderByDescending(z => z.DateOfTrx)
-        //        .ToList();
-        //}
-        //private double getPercentage(double amount, double totalCount)
-        //{
-        //    double amt = amount;
-        //    double ttl = totalCount;
-
-        //    if (amt == 0)
-        //        return 0;
-        //    return amt / ttl * 100;
-        //}
 
 
 

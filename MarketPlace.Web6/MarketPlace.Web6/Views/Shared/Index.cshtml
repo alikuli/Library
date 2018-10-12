@@ -31,6 +31,8 @@
     <p>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     </p>
+    
+    @Html.Partial("_messages")
 
     @*This is the heading*@
 
@@ -45,7 +47,14 @@
 
     <div class="col-xs-6 col-lg-6">
             <div class="pull-right">
-                <h5>@Model.NoOfRecords <span class="text-danger">(@Model.MenuManager.WebClicksCount)</span> </h5>
+                <h5>@Model.NoOfRecords 
+                    @if (!@Model.MenuManager.WebClicksCount.IsNullOrWhiteSpace())
+                    {
+                        <span class="text-danger">
+                            (@Model.MenuManager.WebClicksCount)
+                        </span>
+                    }
+                </h5>
                 
             </div>
         

@@ -1,36 +1,25 @@
 ﻿
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using System.ComponentModel.DataAnnotations;
 namespace ModelsClassLibrary.ModelsNS.GeoLocationNS
 {
-    public class GeoLocationAbstract:CommonWithId
+    public class GeoLocationAbstract
     {
-        #region Properties
-        #region Latitude
+        public GeoLocationAbstract()
+        {
+            Created = new DateAndByComplex();
+            Modified = new DateAndByComplex();
+        }
+
         [MaxLength(100, ErrorMessage = "Max length allowed is {0} charecters")]
-        [Required]
         public string Latitude { get; set; }
 
-        #endregion
-
-
-        #region Longitude
         [MaxLength(100, ErrorMessage = "Max length allowed is {0} charecters")]
-        [Required]
         public string Longitude { get; set; }
 
-        #endregion
-        public double Radius { get; set; }
-        
-        #endregion
-        public void LoadFrom(GeoLocationAbstract g)
-        {
-            Longitude = g.Longitude;
-            Latitude = g.Latitude;
-            Radius = g.Radius;
-        }
+        public DateAndByComplex Created { get; set; }
+        public DateAndByComplex Modified { get; set; }
+
 
     }
 }

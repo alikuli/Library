@@ -22,7 +22,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         /// </summary>
         [NotMapped]
         public virtual bool IsAllowDuplicates { get { return false; } }
-
+        
         public CommonWithId()
         {
             MetaData = new MetaDataComplex();
@@ -162,7 +162,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         #endregion
 
-        #region IdString
 
 
 
@@ -172,7 +171,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public virtual bool IsAllowNameToBeSentanceCased { get { return true; } }
 
 
-        #endregion
 
 
         #region MakeName...

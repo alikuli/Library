@@ -44,7 +44,7 @@ namespace UowLibrary
 
                     //You need to add a refrence here to save the file in the UploadedFile as well.
                     AddEntityRecordIntoUpload(file, entity as TEntity, iuserHasUploadsTypeEnum);
-                    UploadedFileBiz.Create(CreateControllerCreateEditParameter(file as ICommonWithId));
+                    UploadedFileBiz.CreateSimple(CreateControllerCreateEditParameter(file as ICommonWithId));
 
                 }
             }

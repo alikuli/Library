@@ -8,10 +8,10 @@ namespace InterfacesLibrary.AddressNS
 {
     public interface IAddressWithId : ICommonWithId
     {
-        AddressType AddressType { get; set; }
+        AddressTypeComplex AddressType { get; set; }
         ApplicationUser User { get; set; }
         string UserId { get; set; }
-        AddressComplex AddressComplex { get; set; }
+        //AddressComplex AddressComplex { get; set; }
 
 
     }

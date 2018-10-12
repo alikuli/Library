@@ -88,55 +88,6 @@ namespace UowLibrary.PageViewNS
             }
             return list;
         }
-        ////const string MINDATE = "01-Jan-2010";
-        ////const string MAXDATE = "31-Dec-2050";
-
-        //List<PageView> _pageViewList;
-
-        //List<PageView> PageViewList
-        //{
-        //    get
-        //    {
-        //        return _pageViewList ?? (_pageViewList = FindAll().ToList());
-        //    }
-        //}
-
-
-
-        ///// <summary>
-        ///// This shapes the data. It basically adds all the dates that fall within begin date and end date
-        ///// </summary>
-        ///// <param name="dp"></param>
-        ///// <returns></returns>
-        //private List<PageView> filterForBeginEndDate(DateParameter dp)
-        //{
-
-        //    dp.ErrorCheck();
-
-        //    List<PageView> lstWithinDate = new List<PageView>();
-
-        //    if (lstWithinDate.IsNullOrEmpty())
-        //    {
-        //        lstWithinDate = new List<PageView>();
-
-        //        foreach (PageView pageView in PageViewList)
-        //        {
-        //            DateTime date =
-        //                pageView.MetaData.Created.Date ??
-        //                DateTime.MinValue;
-
-        //            if (dp.IsDateWithinBeginAndEndDatesInclusive(date))
-        //                lstWithinDate.Add(pageView);
-        //        }
-
-        //      }
-        //    return lstWithinDate;
-
-
-        //}
-
-
-
 
 
 
