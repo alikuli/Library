@@ -1,0 +1,44 @@
+﻿@model ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS.MailerNS.CreateMailerVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>CreateMailerVM</h4>
+        <hr />
+        @Html.Partial("_messages")
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "" })
+
+            @Html.DropDownListFor(x => x.UserId,
+                 (Model.UserSelect as IEnumerable<SelectListItem>),
+                  "--- Select User ---",
+                  new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TrustLevelEnum, htmlAttributes: new { @class = "" })
+            @Html.DropDownListFor(x => x.TrustLevelEnum,
+                 (Model.TrustLevelSelectList as IEnumerable<SelectListItem>),
+                  "--- Select Trust Level---",
+                  new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CurrentAccountBalance, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.CurrentAccountBalance, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CurrentAccountBalance, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

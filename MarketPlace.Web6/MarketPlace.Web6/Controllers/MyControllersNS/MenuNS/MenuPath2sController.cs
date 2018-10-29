@@ -77,7 +77,8 @@ namespace MarketPlace.Web6.Controllers
                 httpLiscenseFrontUploads,
                 httpLiscenseBackUploads,
                 MenuENUM.CreateDefault,
-                User.Identity.Name,
+                UserName,
+                UserId,
                 returnUrl);
 
             InitializeMenuManager(parm);
@@ -99,7 +100,8 @@ namespace MarketPlace.Web6.Controllers
                 httpLiscenseFrontUploads,
                 httpLiscenseBackUploads,
                 MenuENUM.CreateDefault,
-                User.Identity.Name,
+                UserName,
+                UserId,
                 returnUrl);
 
             InitializeMenuManager(parm);

@@ -36,14 +36,15 @@ namespace UowLibrary
 
         private void NoDuplicateNameAllowed(TEntity entity)
         {
+
             if (entity.IsAllowDuplicates)
                 return;
 
-            TEntity entityFound = Dal.FindAll().FirstOrDefault(x =>
+
+            bool found = GetDataToCheckDuplicateName(entity).Any(x =>
                 x.Name.ToLower() == entity.Name.ToLower() &&
                 x.Id != entity.Id);
-
-            bool found = !entityFound.IsNull();
+            ;
 
             if (found)
             {
@@ -55,6 +56,12 @@ namespace UowLibrary
             }
             else
                 return;
+        }
+
+        public virtual IQueryable<TEntity> GetDataToCheckDuplicateName(TEntity entity)
+        {
+            IQueryable<TEntity> dataSet = Dal.FindAll();
+            return dataSet;
         }
 
 

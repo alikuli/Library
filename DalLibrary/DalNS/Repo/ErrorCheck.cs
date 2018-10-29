@@ -1,8 +1,6 @@
 ﻿using DalLibrary.Interfaces;
-using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
 using System;
-using System.Reflection;
 
 
 namespace DalLibrary.DalNS
@@ -25,34 +23,35 @@ namespace DalLibrary.DalNS
         {
             entity.SelfErrorCheck();
 
-            if (IsCreating)
+            //duplicate check is in Business layer now.
+            //if (IsCreating)
 
-                if (entity.IsAllowDuplicates)
-                    return;
+            //    if (entity.IsAllowDuplicates)
+            //        return;
 
-            if (!IsDuplicateNameAllowed)
-            {
-                Check_ForDuplicate_Name(entity);
-            }
+            //if (!IsDuplicateNameAllowed)
+            //{
+            //    Check_ForDuplicate_Name(entity);
+            //}
 
             if (ErrorsGlobal.HasErrors)
                 throw new Exception(ErrorsGlobal.ToString());
 
         }
 
-        public virtual void Check_ForDuplicate_Name(TEntity entity)
-        {
-            TEntity entityInDb = FindDuplicateNameFor(entity);
+        //public virtual void Check_ForDuplicate_Name(TEntity entity)
+        //{
+        //    TEntity entityInDb = FindDuplicateNameFor(entity);
 
-            if (entityInDb != null)
-            {
-                string error = string.Format("Name: '{0}' already exists.", entity.Name);
+        //    if (entityInDb != null)
+        //    {
+        //        string error = string.Format("Name: '{0}' already exists.", entity.Name);
 
-                ErrorsGlobal.Add(error, MethodBase.GetCurrentMethod());
+        //        ErrorsGlobal.Add(error, MethodBase.GetCurrentMethod());
 
-                throw new NoDuplicateException();
-            }
-        }
+        //        throw new NoDuplicateException();
+        //    }
+        //}
 
         #endregion
 

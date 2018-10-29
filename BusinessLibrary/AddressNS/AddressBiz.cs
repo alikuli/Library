@@ -1,21 +1,7 @@
-﻿using AliKuli.UtilitiesNS;
-using ApplicationDbContextNS;
-using BreadCrumbsLibraryNS.Programs;
-using DalLibrary.Interfaces;
-using ErrorHandlerLibrary.ExceptionsNS;
-using InvoiceNS;
-using MigraDocLibrary;
-using MigraDocLibrary.InvoiceNS;
+﻿using DalLibrary.Interfaces;
 using ModelsClassLibrary.ModelsNS.AddressNS;
-using ModelsClassLibrary.ModelsNS.PeopleNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.RightsNS;
 using System.Web.Mvc;
 using UowLibrary.ParametersNS;
-using UowLibrary.PlayersNS;
-using UowLibrary.UploadFileNS;
-using UserModels;
-using WebLibrary.Programs;
 
 namespace UowLibrary.AddressNS
 {
@@ -24,12 +10,13 @@ namespace UowLibrary.AddressNS
 
         UserBiz _userBiz;
         CountryBiz _countryBiz;
-        public AddressBiz(IRepositry<AddressWithId> entityDal, BizParameters bizParameters, UserBiz userBiz, CountryBiz countryBiz)
+        AddressVerificationTrxBiz _addressVerificationTrxBiz;
+        public AddressBiz(IRepositry<AddressWithId> entityDal, BizParameters bizParameters, UserBiz userBiz, CountryBiz countryBiz, AddressVerificationTrxBiz addressVerificationTrxBiz)
             : base(entityDal, bizParameters)
-
         {
             _userBiz = userBiz;
             _countryBiz = countryBiz;
+            _addressVerificationTrxBiz = addressVerificationTrxBiz;
         }
 
         UserBiz UserBiz
@@ -54,6 +41,14 @@ namespace UowLibrary.AddressNS
             get
             {
                 return CountryBiz.SelectList();
+            }
+        }
+
+        AddressVerificationTrxBiz AddressVerificationTrxBiz
+        {
+            get
+            {
+                return _addressVerificationTrxBiz;
             }
         }
     }

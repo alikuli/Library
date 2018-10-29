@@ -2,10 +2,12 @@
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.AddressNS;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS;
 using ModelsClassLibrary.ModelsNS.GeoLocationNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using UserModels;
@@ -17,17 +19,18 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS
     /// The Dal layer checks only against the User's addresses to make sure the address is unique.
     /// That is because GetDomainDataForDuplicateNameSearch is overridden
     /// </summary>
-    public class AddressWithId : CommonWithId, IAddressWithId
+    public class AddressWithId : CommonWithId, IAddressWithId, IHasVerification
     {
         public AddressWithId()
         {
             //default is true for all address types
             //AddressComplex = new AddressComplex();
+
             AddressType = new AddressTypeComplex();
 
 
             GeoPosition = new GeoLocationComplex();
-
+            Verification = new Verification();
         }
 
 
@@ -88,12 +91,24 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS
 
         [Display(Name = "Country")]
         public string CountryId { get; set; }
-        public Country Country { get; set; }
+        public virtual Country Country { get; set; }
 
+        public string CountryName
+        {
+            get
+            {
+                //   Country.IsNullThrowException("Country not loaded. Programming error");
+                if (Country.IsNull())
+                    return "";
+
+                string countryName = Country.Name;
+                return countryName;
+
+            }
+        }
 
         [Display(Name = "Geo Position")]
         public GeoLocationComplex GeoPosition { get; set; }
-
 
 
 
@@ -112,10 +127,17 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS
 
 
 
+        public Verification Verification { get; set; }
+
+
+        public virtual ICollection<AddressVerificationTrx> AddressVerificationTrxs { get; set; }
+
+
         public override ClassesWithRightsENUM ClassNameForRights()
         {
             return ClassesWithRightsENUM.Address;
         }
+
 
         //this makes sure the same address is not added several times.
         public override string MakeUniqueName()
@@ -197,10 +219,15 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS
             WebAddress = addy.WebAddress;
             Phone = addy.Phone;
 
+
             CountryId = addy.CountryId;
             UserId = addy.UserId;
             GeoPosition = addy.GeoPosition;
             AddressType = addy.AddressType;
+            Attention = addy.Attention;
+
+            Verification = addy.Verification;
+
 
             //AddressWithId a = ic as AddressWithId;
 
@@ -217,7 +244,211 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS
 
         }
 
+        public override string ToString()
+        {
+            return CreateAddressWithLineBreakAs("");
+        }
 
+
+
+        public string CreateAddressWithLineBreakAs(string lineBreak)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            //if (!Name.IsNullOrWhiteSpace())
+            //{
+            //    sb.AppendLine(Name.ToUpper());
+            //}
+
+            if (!HouseNo.IsNullOrWhiteSpace())
+            {
+                sb.Append("House#: " + HouseNo);
+            }
+
+            if (Road.IsNullOrWhiteSpace())
+            {
+                //sb.AppendLine();
+            }
+            else
+            {
+                if (!HouseNo.IsNullOrWhiteSpace())
+                    sb.Append(",");
+
+                sb.Append(" " + Road + ", ");
+            }
+
+            if (!Address2.IsNullOrWhiteSpace())
+            {
+                sb.Append(lineBreak);
+                sb.AppendLine(Address2);
+            }
+            if (!TownName.IsNullOrWhiteSpace())
+            {
+                sb.Append(lineBreak);
+                sb.AppendLine(TownName);
+            }
+            if (!CityName.IsNullOrWhiteSpace())
+            {
+                sb.Append(lineBreak);
+                sb.Append(CityName);
+
+                if (!StateName.IsNullOrEmpty())
+                    sb.Append(", " + StateName);
+            }
+            else
+            {
+                if (!StateName.IsNullOrEmpty())
+                    sb.Append(StateName);
+
+            }
+            sb.Append(lineBreak);
+            sb.AppendLine();
+
+            if (!CountryName.IsNullOrWhiteSpace())
+            {
+                sb.Append(CountryName.ToUpper());
+
+                if (!Zip.IsNullOrWhiteSpace())
+                {
+                    sb.Append(" " + Zip);
+                }
+                sb.Append(lineBreak);
+                sb.AppendLine();
+            }
+            else
+            {
+                if (!Zip.IsNullOrWhiteSpace())
+                {
+                    sb.Append("Postal Code: " + Zip);
+                    sb.Append(lineBreak);
+                    sb.AppendLine();
+                }
+
+            }
+
+            if (!Phone.IsNullOrWhiteSpace())
+            {
+                sb.Append(lineBreak);
+                sb.AppendLine("Ph: " + Phone);
+            }
+            if (!Attention.IsNullOrWhiteSpace())
+            {
+                sb.Append(lineBreak);
+                sb.AppendLine("ATTENTION: " + Attention.ToTitleCase());
+                sb.Append(lineBreak);
+
+            }
+            return sb.ToString();
+
+        }
+        public string ToStringTwoLine()
+        {
+            StringBuilder sb = new StringBuilder();
+            //if (!Name.IsNullOrWhiteSpace())
+            //{
+            //    sb.Append(Name.ToUpper() + ", ");
+            //}
+
+            if (!HouseNo.IsNullOrWhiteSpace())
+            {
+                sb.Append("House#: " + HouseNo.ToUpper() + ", ");
+            }
+
+
+            if (!Road.IsNullOrWhiteSpace())
+            {
+                sb.Append(Road.ToTitleCase() + ", ");
+                //sb.AppendLine();
+            }
+
+            if (!Address2.IsNullOrWhiteSpace())
+                sb.Append(Address2.ToTitleCase() + ", ");
+
+
+            if (!TownName.IsNullOrWhiteSpace())
+                sb.Append(TownName.ToTitleCase() + ", ");
+
+
+            if (!CityName.IsNullOrWhiteSpace())
+            {
+                sb.Append(CityName.ToTitleCase() + ", ");
+
+            }
+
+            if (!StateName.IsNullOrEmpty())
+                sb.Append(StateName.ToTitleCase() + ", ");
+
+
+            if (!CountryName.IsNullOrWhiteSpace())
+            {
+                sb.Append(CountryName.ToUpper());
+
+                if (!Zip.IsNullOrWhiteSpace())
+                {
+                    sb.Append(" " + Zip.ToUpper());
+                }
+            }
+            else
+            {
+                if (!Zip.IsNullOrWhiteSpace())
+                {
+                    sb.Append("Postal Code: " + Zip.ToUpper() + ", ");
+                }
+
+            }
+
+            sb.AppendLine();
+
+            if (!Phone.IsNullOrWhiteSpace())
+            {
+                sb.Append("Ph: " + Phone.ToUpper());
+            }
+            if (!WebAddress.IsNullOrWhiteSpace())
+            {
+                sb.Append(" - Web: " + WebAddress);
+            }
+
+            if (!sb.ToString().IsNullOrWhiteSpace())
+                sb.Append(".");
+            return sb.ToString();
+        }
+
+
+        public string ToPostal()
+        {
+            return ToString();
+        }
+
+        public string ToPostalHTML()
+        {
+            return CreateAddressWithLineBreakAs("<BR />");
+        }
+
+        //public double GetPaymentAmoung()
+        //{
+        //    switch (IsLocal)
+        //    {
+        //        case true:
+        //            switch (MailServiceEnum)
+        //            {
+        //                case MailServiceENUM.Post:
+        //                    break;
+
+        //                case MailServiceENUM.Courier:
+        //                    break;
+
+        //                default:
+        //                    break;
+        //            }
+        //            break;
+        //        case false:
+        //            break;
+
+        //        default:
+        //            break;
+        //    }
+
+        //}
 
     }
 }

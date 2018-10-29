@@ -197,6 +197,9 @@
     <Compile Include="InterfacesNS\SharedNS\CommonNS\ICommonNoId.cs" />
     <Compile Include="InterfacesNS\SharedNS\IEntity.cs" />
     <Compile Include="InterfacesNS\SharedNS\FeaturesNS\IHasUser.cs" />
+    <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\IHasVerification.cs" />
+    <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\IVerification.cs" />
+    <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\Verification.cs" />
     <Compile Include="ModelsNS\AddressNS\AddressNS\Address.cs" />
     <Compile Include="ModelsNS\AddressNS\AddressNS\AddressComplex.cs">
       <SubType>Code</SubType>
@@ -204,7 +207,12 @@
     <Compile Include="ModelsNS\AddressNS\AddressNS\AddressStringWithNames.cs" />
     <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\AddressTypeComplex.cs" />
     <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\AddressWithId.cs" />
+    <Compile Include="ModelsNS\AddressNS\AddressVerificationNS\AddressVerificationModel.cs" />
+    <Compile Include="ModelsNS\AddressNS\AddressVerificationNS\AddressVerificationModel_Header.cs" />
+    <Compile Include="ModelsNS\AddressNS\AddressVerificationRequest.cs" />
+    <Compile Include="ModelsNS\AddressVerificationHdrNS\AddressVerificationHdr.cs" />
     <Compile Include="ModelsNS\AddressNS\PhoneNumberNS\PhoneNumber.cs" />
+    <Compile Include="ModelsNS\AddressVerificationTrxNS\AddressVerificationTrx.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\AndSpec.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\CompositeSpec.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\NotSpec.cs" />
@@ -229,6 +237,11 @@
     <Compile Include="ModelsNS\FeaturesNS\MenuPath3Feature.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MailerNS\CreateMailerVM.cs" />
+    <Compile Include="MailerNS\VerificationsCounter.cs" />
+    <Compile Include="MailerNS\MailCounter.cs" />
+    <Compile Include="MailerNS\Mailer.cs" />
+    <Compile Include="MailerNS\MailerVMForAssigningVerifList.cs" />
     <Compile Include="ModelsNS\SharedNS\CountModel.cs" />
     <Compile Include="ModelsNS\PageViewNS\PageView.cs" />
     <Compile Include="ModelsNS\GlobalCommentsNS\GlobalComment.cs" />
@@ -414,7 +427,7 @@
     <Compile Include="ModelsNS\SharedNS\ExcelUtilityClass.cs" />
     <Compile Include="ModelsNS\SharedNS\GlobalSetupValues.cs" />
     <Compile Include="ModelsNS\SharedNS\GlobalValuesVM.cs" />
-    <Compile Include="ModelsNS\SharedNS\ICommonNoIdBasics.cs" />
+    <Compile Include="ModelsNS\SharedNS\Common\ICommonNoIdBasics.cs" />
     <Compile Include="ModelsNS\SharedNS\IndexWithNameAndIsAutoCreatedVM.cs" />
     <Compile Include="ModelsNS\SharedNS\InternalMessage.cs" />
     <Compile Include="ModelsNS\SharedNS\NameWithStringValue.cs" />
@@ -424,9 +437,13 @@
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\ManageViewModels.cs" />
     <Compile Include="ModelsNS\SharedNS\RankingMetaData.cs" />
     <Compile Include="ModelsNS\LikeUnlikeNS\LikeUnlike.cs" />
+    <Compile Include="ModelsNS\SharedNS\SuccessEnumNS\IAmHeader.cs" />
+    <Compile Include="ModelsNS\SharedNS\SuccessEnumNS\IHasSuccessEnum.cs" />
+    <Compile Include="ModelsNS\SharedNS\SuccessEnumNS\SuccessEnum_Helper.cs" />
     <Compile Include="ModelsNS\UploadedFileNS\UploadedFileMainNS\UploadedFile - Image Adjustment.cs" />
     <Compile Include="ModelsNS\UploadedFileNS\UploadedFileMainNS\UploadedFile - Navigation.cs" />
     <Compile Include="ModelsNS\UploadedFileNS\UploadedFileMainNS\UploadedFile.cs" />
+    <Compile Include="ModelsNS\VerificatonNS\VerificationIconResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModelsNS\IndexNS\IndexListVM.cs" />
     <Compile Include="ModelsNS\IndexNS\IndexItemVM.cs" />
@@ -460,6 +477,10 @@
     <ProjectReference Include="..\..\..\BreadCrumbsLibrary\BreadCrumbsLibrary\BreadCrumbsLibrary.csproj">
       <Project>{93822697-db5f-4569-b425-1f0ca6bb3ff4}</Project>
       <Name>BreadCrumbsLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ConfigManagerLibrary\ConfigManagerLibrary\ConfigManagerLibrary.csproj">
+      <Project>{d8cdc81c-a8af-4315-8d06-c35053723927}</Project>
+      <Name>ConfigManagerLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ConstantsLibrary\ConstantsLibrary.csproj">
       <Project>{88109ea7-d29b-4833-8fd0-8b1ea0605260}</Project>

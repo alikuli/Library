@@ -180,18 +180,16 @@
             <!-- #region if (Model.IsMenu) Like/Unlike/Finger Up Icons URLS -->
             @if (Model.IsMenu)
                 {
-                    vv.LikeIcon.Url = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = true });
-                    //vv.LikeUrl = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = true });
-                    vv.LikeIcon.UrlCount = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = true });
+                vv.LikeIcon.Url = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = true });
 
-                    //vv.LikeCountUrl = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = true });
+                vv.LikeIcon.UrlCount = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = true });
 
-
-                    vv.UnLikeIcon.Url = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = false });
-                    vv.UnLikeIcon.UrlCount = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId });
+                vv.UnLikeIcon.Url = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = false });
+                
+                vv.UnLikeIcon.UrlCount = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId });
 
 
-                    vv.CommentUrl = Url.Action("AddComment", "GlobalComments", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId });
+                vv.CommentUrl = Url.Action("AddComment", "GlobalComments", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId });
 
                 }
 

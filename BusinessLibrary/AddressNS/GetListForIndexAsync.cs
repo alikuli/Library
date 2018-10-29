@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
@@ -14,9 +15,6 @@ namespace UowLibrary.AddressNS
 {
     public partial class AddressBiz
     {
-
-
-
 
         public override async Task<IList<ICommonWithId>> GetListForIndexAsync(ControllerIndexParams parms)
         {

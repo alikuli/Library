@@ -98,7 +98,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     httpLiscenseFrontUploads,
                     httpLiscenseBackUploads,
                     MenuENUM.EditDefault,
-                    User.Identity.Name,
+                    UserName,
+                    UserId,
                     returnUrl);
 
                 await Biz.UpdateAndSaveAsync(parm);

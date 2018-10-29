@@ -42,6 +42,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             HttpPostedFileBase[] httpLiscenseBack,
             MenuENUM menuEnum,
             string userName,
+            string userId,
             string returnUrl)
             : this()
         {
@@ -56,7 +57,8 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             LiscenseBack.HttpBase = httpLiscenseBack;
 
             UserName = userName;
-            MenuParameters = new MenuParameters(menuEnum, Entity.Id );
+            UserId = userId;
+            MenuParameters = new MenuParameters(menuEnum, Entity.Id);
             //Menu = new MenuParameters(menuEnum, menuPathMainId, productId, productChildId, returnUrl);
             //todo what should we do if userName is empty?
 
@@ -64,8 +66,8 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             //{
             //    //we need to load the user in entities that require user right here...
             //    //because user is required to find where to store the file.
-                
-                //MiscUploadedFiles.FileLocationConst = Entity_IHasUploads.MiscFilesLocation();
+
+            //MiscUploadedFiles.FileLocationConst = Entity_IHasUploads.MiscFilesLocation();
             //}
 
             ////this is where the file gets it's location. The location comes from the constants
@@ -87,13 +89,14 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         public ICommonWithId Entity { get; set; }
         public string UserName { get; set; }
+        public string UserId { get; set; }
 
         public MenuParameters MenuParameters { get; set; }
         public ControllerIndexParams ConvertToControllerIndexParams()
         {
             ControllerIndexParams cip = new ControllerIndexParams();
             cip.Entity = Entity;
-            cip.Menu = MenuParameters; 
+            cip.Menu = MenuParameters;
             return cip;
         }
         //public MenuParameters Menu { get; set; }

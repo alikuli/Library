@@ -7,7 +7,6 @@ using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using ModelsClassLibrary.ModelsNS.AddressNS;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using UowLibrary;
@@ -18,6 +17,7 @@ using UowLibrary.FileDocNS;
 using UowLibrary.GlobalCommentsNS;
 using UowLibrary.Interface;
 using UowLibrary.LikeUnlikeNS;
+using UowLibrary.MailerNS;
 using UowLibrary.MenuNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.ParametersNS;
@@ -86,6 +86,7 @@ namespace DependancyResolver
             Bind<MenuPath2FeatureBiz>().ToSelf();
             Bind<MenuPath3FeatureBiz>().ToSelf();
             Bind<AddressBiz>().ToSelf();
+            Bind<MailerBiz>().ToSelf();
         }
 
         public void LoadDALs()

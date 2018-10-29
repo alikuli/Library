@@ -25,15 +25,17 @@ namespace MarketPlace.Web4.Controllers
             //    ErrorsGlobal.Errors.Clear();
             //}
 
-
-
+            //Note. These errors are displayed from
+            //\Views\Shared\_messages.cshtml
 
             if (ErrorsGlobal.HasErrors)
             {
                 List<string> errorsList = new List<string>();
                 foreach (var item in ErrorsGlobal.ToListErrs())
+                {
                     errorsList.Add(item);
-
+                    //ModelState.AddModelError("", item);
+                }
                 ErrorsGlobal.Errors.Clear();
                 ViewBag.ListOfErrors = errorsList;
 

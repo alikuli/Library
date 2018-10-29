@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="AKATest.cs" />
     <Compile Include="EnumNS\ActionNameENUM.cs" />
+    <Compile Include="EnumNS\VerificationNS\AddressVerificaionENUM.cs" />
     <Compile Include="EnumNS\MenuENUM.cs" />
     <Compile Include="EnumNS\MenuPathNS\MenuPath2ENUM.cs" />
     <Compile Include="EnumNS\ClassesWithRightsENUM.cs" />
@@ -130,6 +131,10 @@
     <Compile Include="EnumNS\Product Related\UomQtyENUM.cs" />
     <Compile Include="EnumNS\Product Related\UomVolumeENUM.cs" />
     <Compile Include="EnumNS\Product Related\UomWeightEnum.cs" />
+    <Compile Include="EnumNS\VerificationNS\MailLocalOrForigenENUM.cs" />
+    <Compile Include="EnumNS\VerificationNS\MailServiceENUM.cs" />
+    <Compile Include="EnumNS\VerificationNS\SuccessENUM.cs" />
+    <Compile Include="EnumNS\VerificationNS\TrustLevelENUM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EnumNS\Sale Documents\SaleOrderTypeEnum.cs" />
     <Compile Include="EnumNS\SalesmanCategoryENUM.cs" />

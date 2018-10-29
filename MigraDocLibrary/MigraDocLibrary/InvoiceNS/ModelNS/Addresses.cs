@@ -4,7 +4,7 @@ namespace InvoiceNS
 {
     public class Addresses
     {
-        public Addresses():
+        public Addresses() :
             this(new Address(), new Address(), new Address(), new Address(), new Address())
         {
 

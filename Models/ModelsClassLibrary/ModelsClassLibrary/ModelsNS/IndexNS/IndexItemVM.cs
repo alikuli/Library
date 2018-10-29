@@ -1,6 +1,8 @@
 ﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.ModelsNS.VerificatonNS;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModelsClassLibrary.ViewModels
@@ -13,7 +15,7 @@ namespace ModelsClassLibrary.ViewModels
         {
 
         }
-        public IndexItemVM(string id, string name, string input1SortStr, string input2SortStr, string input3SortStr, bool isEditLocked, string description)
+        public IndexItemVM(string id, string name, string input1SortStr, string input2SortStr, string input3SortStr, bool isEditLocked, string description, VerificaionStatusENUM verificationStatus)
         {
             Input3SortString = input3SortStr;
             Input2SortString = input2SortStr;
@@ -24,7 +26,11 @@ namespace ModelsClassLibrary.ViewModels
             Description = description;
             PrintLineNumber = "";
             MenuManager = null;
+            VerificationStatus = verificationStatus;
+            VerificationIconResult = new VerificationIconResult();
         }
+
+
         public string Id { get; set; }
 
         public string ImageAddressStr { get; set; }
@@ -33,6 +39,8 @@ namespace ModelsClassLibrary.ViewModels
 
         public string GlobalComment { get; set; }
 
+        public VerificaionStatusENUM VerificationStatus { get; set; }
+        public VerificationIconResult VerificationIconResult { get; set; }
 
         #region Sort strings
 
@@ -76,6 +84,7 @@ namespace ModelsClassLibrary.ViewModels
         {
             return FullName;
         }
+
 
         public IMenuManager MenuManager { get; set; }
 

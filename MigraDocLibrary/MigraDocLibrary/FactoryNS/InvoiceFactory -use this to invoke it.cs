@@ -22,6 +22,7 @@ namespace MigraDocLibrary.InvoiceNS
                 //PdfParameter param = new Data().Load();
                 var document = new InvoiceEngine().CreateNewDocument(param);
                 document.UseCmykColor = true;
+                
 
 //#if DEBUG
 //                // For debugging only...

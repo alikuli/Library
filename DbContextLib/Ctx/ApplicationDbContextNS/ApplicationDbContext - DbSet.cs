@@ -1,25 +1,26 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.DeliveryMethodNS;
 using ModelsClassLibrary.ModelsNS.DiscountNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FileDocsNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.PaymentsNS;
+using ModelsClassLibrary.ModelsNS.FeaturesNS;
+using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.Logs.VisitorsLogNS;
+using ModelsClassLibrary.ModelsNS.PageViewNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS;
+using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.CounterNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.RightsNS;
 using System.Data.Entity;
 using UserModels;
-using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
-using ModelsClassLibrary.ModelsNS.PageViewNS;
-using ModelsClassLibrary.ModelsNS.FeaturesNS;
 
 namespace ApplicationDbContextNS
 {
@@ -40,7 +41,7 @@ namespace ApplicationDbContextNS
         public virtual IDbSet<DiscountPrecedence> DiscountPrecedences { get; set; }
         ////public IDbSet<EmailAddress> EmailAddresses { get; set; }
         public virtual IDbSet<Feature> Features { get; set; }
-        
+
         public virtual IDbSet<FileDoc> FileDocs { get; set; }
         public virtual IDbSet<OldFileData> OldFileDatas { get; set; }
         //public IDbSet<FileCategory> FileCategories { get; set; }
@@ -55,7 +56,13 @@ namespace ApplicationDbContextNS
         //public IDbSet<Owner> Owners { get; set; }
         //public virtual IDbSet<UploadedFile> Medias { get; set; }
         //public IDbSet<MediaNS.Movie> Movies { get; set; }
+
+        /// <summary>
+        /// These are the Mailers that mail out address verifications
+        /// </summary>
+        public virtual IDbSet<Mailer> Mailers { get; set; }
         public virtual IDbSet<PaymentMethod> PaymentMethods { get; set; }
+        //public IDbSet<Payment> Payments { get; set; }
         //public IDbSet<Payment> Payments { get; set; }
         public IDbSet<PaymentType> PaymentTypes { get; set; }
         //public IDbSet<PaymentAppliedInvoice> PaymentAppliedInvoices { get; set; }

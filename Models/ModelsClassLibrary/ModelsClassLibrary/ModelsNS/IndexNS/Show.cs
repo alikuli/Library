@@ -7,14 +7,18 @@ namespace ModelsClassLibrary.ViewModels
         {
             set
             {
-                bool isTrue = value;
+                bool isTrueOrFalse = value;
 
-                if (isTrue)
-                {
-                    Edit = true;
-                    Delete = true;
-                    Create = true;
-                }
+                Edit = isTrueOrFalse;
+                Delete = isTrueOrFalse;
+                Create = isTrueOrFalse;
+
+                //if (isTrue)
+                //{
+                //    Edit = true;
+                //    Delete = true;
+                //    Create = true;
+                //}
             }
         }
 
@@ -47,5 +51,7 @@ namespace ModelsClassLibrary.ViewModels
         public bool Create { get; set; }
 
         public bool ImageInList { get; set; }
+
+        public bool VerificationIcon { get; set; }
     }
 }

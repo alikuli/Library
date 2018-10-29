@@ -68,7 +68,6 @@ namespace AliKuli.ConstantsNS
 
 
 
-
         //save locations for products
         //public const string SAVE_LOCATION_PRODUCT_CATEGORY1 = SAVE_LOCATION_ROOT_DIRECTORY + @"Category1";
         //public const string SAVE_LOCATION_PRODUCT_CATEGORY2 = SAVE_LOCATION_ROOT_DIRECTORY + @"Category2";

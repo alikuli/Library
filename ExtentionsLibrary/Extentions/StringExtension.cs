@@ -220,12 +220,19 @@ namespace AliKuli.Extentions
             return match.Success;
         }
 
-        public static bool IsNumber(this string input)
+        public static bool IsInt(this string input)
         {
-            var match = Regex.Match(input, @"^[0-9]+$", RegexOptions.IgnoreCase);
-            return match.Success;
+            int result;
+            var success = int.TryParse(input, out result);
+            return success;
         }
 
+        public static bool IsDouble(this string input)
+        {
+            double result;
+            var success = double.TryParse(input, out result);
+            return success;
+        }
         public static int ExtractNumber(this string input)
         {
             if (string.IsNullOrWhiteSpace(input)) return 0;

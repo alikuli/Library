@@ -1,4 +1,5 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace ModelsClassLibrary.ModelsNS.AddressNS
 {
@@ -17,14 +18,18 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS
         /// <summary>
         /// this can be used for shipto only
         /// </summary>
+        /// 
+        [Display(Name = "Ship to me")]
         public bool ShipTo { get; set; }
 
 
         /// <summary>
         /// this can be used for inform to only
         /// </summary>
+        [Display(Name = "Inform me")]
         public bool InformTo { get; set; }
 
+        [Display(Name = "Bill me")]
         public bool BillTo { get; set; }
 
 

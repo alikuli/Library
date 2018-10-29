@@ -1,100 +1,168 @@
 ﻿@model ModelsClassLibrary.ModelsNS.AddressNS.AddressWithId
 
 
-<div class="form-horizontal">
-    <div class="container">
 
         @Html.HiddenFor(x => x.GeoPosition.Latitude)
         @Html.HiddenFor(x => x.GeoPosition.Longitude)
         @Html.HiddenFor(x => x.Id)
-        <div class="row">
-            @Html.LabelFor(model => model.HouseNo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HouseNo, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter house/flat number" } })
-            </div>
+
+<div class="row">
+    <div class="col">
+        <div class="form-group">
+            @Html.LabelFor(model => model.HouseNo, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.HouseNo, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter house/flat number" } })
         </div>
 
 
 
-        <div class="row">
-            @Html.LabelFor(model => model.Road, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Road, new { htmlAttributes = new { @class = "form-control", placeholder = "Name of road" } })
-            </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Road, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.Road, new { htmlAttributes = new { @class = "form-control", placeholder = "Name of road" } })
         </div>
 
 
 
-        <div class="row">
-            @Html.LabelFor(model => model.Address2, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", placeholder = "Additional address info" } })
-            </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address2, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", placeholder = "Additional address info" } })
         </div>
 
 
-        <div class="row">
-            @Html.LabelFor(model => model.TownName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TownName, new { htmlAttributes = new { @class = "form-control", placeholder = "Eg: Gulberg, Johar Town, Defense 8" } })
-            </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.TownName, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.TownName, new { htmlAttributes = new { @class = "form-control", placeholder = "Eg: Gulberg, Johar Town, Defense 8" } })
         </div>
 
 
-        <div class="row">
-            @Html.LabelFor(model => model.CityName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CityName, new { htmlAttributes = new { @class = "form-control", placeholder = "Name of city" } })
-            </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CityName, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.CityName, new { htmlAttributes = new { @class = "form-control", placeholder = "Name of city" } })
         </div>
 
 
 
-        <div class="row">
-            @Html.LabelFor(model => model.StateName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StateName, new { htmlAttributes = new { @class = "form-control", placeholder = "The name of province / state" } })
-            </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.StateName, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.StateName, new { htmlAttributes = new { @class = "form-control", placeholder = "The name of province / state" } })
         </div>
 
 
 
-        <div class="row">
-            @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(x => x.CountryId,
+        <div class="form-group">
+            @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "" })
+            @Html.DropDownListFor(x => x.CountryId,
                  (@ViewBag.CountrySelectList as IEnumerable<SelectListItem>),
                   "--- Select Country---",
                   new { @class = "form-control" })
-            </div>
         </div>
 
 
-        <div class="row">
-            @Html.LabelFor(model => model.Zip, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Zip, new { htmlAttributes = new { @class = "form-control", placeholder = "Code for address" } })
-            </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Zip, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.Zip, new { htmlAttributes = new { @class = "form-control", placeholder = "Code for address" } })
         </div>
 
 
-        <div class="row">
-            @Html.LabelFor(model => model.Attention, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Attention, new { htmlAttributes = new { @class = "form-control", placeholder = "Name of contact person" } })
-            </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Attention, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.Attention, new { htmlAttributes = new { @class = "form-control", placeholder = "Name of contact person" } })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control", placeholder = "A comment that you may have" } })
         </div>
 
 
-        <div class="row">
-            @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control", placeholder = "A comment that you may have" } })
+        <div class="card">
+            <div class="card Header bg-info text-white">
+                This address can be used To:
+            </div>
+            <div class="card-body">
+                <div class="form-check">
+                    @Html.EditorFor(model => model.AddressType.InformTo, new { htmlAttributes = new { @class = "form-check-input" } })
+                    @Html.LabelFor(model => model.AddressType.InformTo, htmlAttributes: new { @class = "form-check-label" })
+                </div>
+
+                <div class="form-check">
+                    @Html.EditorFor(model => model.AddressType.BillTo, new { htmlAttributes = new { @class = "form-check-input" } })
+                    @Html.LabelFor(model => model.AddressType.BillTo, htmlAttributes: new { @class = "form-check-label" })
+                </div>
+
+                <div class="form-check">
+                    @Html.EditorFor(model => model.AddressType.ShipTo, new { htmlAttributes = new { @class = "form-check-input" } })
+                    @Html.LabelFor(model => model.AddressType.ShipTo, htmlAttributes: new { @class = "form-check-label" })
+                </div>
             </div>
         </div>
+
     </div>
 
- </div>
+
+
+
+
+    <div class="col">
+        <div class="form-group  ">
+            @Html.LabelFor(model => model.Verification.VerificaionStatusEnum, htmlAttributes: new { @class = "" })
+            @Html.DisplayFor(model => model.Verification.VerificaionStatusEnumToString, new { @class = "" })
+        </div>
+
+        <a href="#RequestDateWell" data-toggle="collapse">@Html.LabelFor(model => model.Verification.RequestDate, htmlAttributes: new { @class = "" })</a>
+        <div class="form-group" >
+            <div class="well p-3 collapse" id="RequestDateWell">
+                @Html.EditorFor(model => model.Verification.RequestDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+            </div>
+        </div>
+
+
+
+
+
+        <a href="#AcceptDateWell" data-toggle="collapse">@Html.LabelFor(model => model.Verification.AcceptDate, htmlAttributes: new { @class = "" })</a>
+        <div class="form-group">
+            <div class="well p-3 collapse" id="AcceptDateWell">
+                @Html.EditorFor(model => model.Verification.AcceptDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+            </div>
+        </div>
+
+
+
+
+        <a href="#PrintedDateWell" data-toggle="collapse">@Html.LabelFor(model => model.Verification.PrintedDate, htmlAttributes: new { @class = "" })</a>
+        <div class="form-group">
+            <div class="well p-3 collapse" id="PrintedDateWell">
+                @Html.EditorFor(model => model.Verification.AcceptDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+            </div>
+        </div>
+
+
+
+        <a href="#FailedDateWell" data-toggle="collapse">@Html.LabelFor(model => model.Verification.FailedDate, htmlAttributes: new { @class = "" })</a>
+        <div class="form-group">
+            <div class="well p-3 collapse" id="FailedDateWell">
+                @Html.EditorFor(model => model.Verification.FailedDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 @section scripts{
     <script>
@@ -113,7 +181,7 @@
             });
         });
         function error(err) {
-            console.warn('Error Code: ' + err.code + ". Msg: " + err.message );
+            console.warn('Error Code: ' + err.code + ". Msg: " + err.message);
         }
         function initialize(pos) {
             var crd = pos.coords;

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
+using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
-using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Data.Entity;
 using UserModels;
@@ -19,6 +19,17 @@ namespace ApplicationDbContextNS
 
 
             base.OnModelCreating(modelBuilder);
+
+
+            //https://stackoverflow.com/questions/14701378/implementing-zero-or-one-to-zero-or-one-relationship-in-ef-code-first-by-fluent
+            modelBuilder.Entity<ApplicationUser>()
+                .HasOptional(x => x.Mailer)
+                .WithOptionalPrincipal();
+
+            modelBuilder.Entity<Mailer>()
+                .HasRequired(x => x.User)
+                .WithRequiredPrincipal();
+
 
             //This causes the uploads to be deleted along with the main file.
             //we need to delete the physical uploads seperately
@@ -174,7 +185,7 @@ namespace ApplicationDbContextNS
             //    .WithOptional(x => x.ProductChild)
             //    .HasForeignKey(x => x.ProductChildId)
             //    .WillCascadeOnDelete(false);
-            
+
             //#endregion
 
             #region Product

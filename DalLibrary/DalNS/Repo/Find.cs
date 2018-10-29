@@ -55,36 +55,36 @@ namespace DalLibrary.DalNS
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        private TEntity FindDuplicateNameFor(TEntity entity)
-        {
+        //private TEntity FindDuplicateNameFor(TEntity entity)
+        //{
 
-            if (entity.Name.IsNullOrWhiteSpace())
-            {
-                entity.Name = "";
-            }
+        //    if (entity.Name.IsNullOrWhiteSpace())
+        //    {
+        //        entity.Name = "";
+        //    }
 
-            //This part can be overridden to insert only that data where the duplication is
-            //relevant.
-            var dataForSearching = GetDomainDataForDuplicateNameSearch(entity);
+        //    //This part can be overridden to insert only that data where the duplication is
+        //    //relevant.
+        //    var dataForSearching = GetDomainDataForDuplicateNameSearch(entity);
 
-            TEntity foundIt;
-            if(entity.Name.IsNullOrWhiteSpace())
-            {
-                foundIt = dataForSearching
-                    .FirstOrDefault(x => x.Name.ToLower() == entity.Name || x.Name == null);
+        //    TEntity foundIt;
+        //    if(entity.Name.IsNullOrWhiteSpace())
+        //    {
+        //        foundIt = dataForSearching
+        //            .FirstOrDefault(x => x.Name.ToLower() == entity.Name || x.Name == null);
 
-            }
-            else
-            {
-                foundIt = dataForSearching
-                    .FirstOrDefault(x => x.Name.ToLower() == entity.Name.ToLower());
+        //    }
+        //    else
+        //    {
+        //        foundIt = dataForSearching
+        //            .FirstOrDefault(x => x.Name.ToLower() == entity.Name.ToLower());
 
-            }
+        //    }
 
 
-            return foundIt;
+        //    return foundIt;
 
-        }
+        //}
         /// <summary>
         /// This will be used to narrow down the search data when doing a duplicate search. For example, if we are
         /// searching for a duplicate address, this data will be narrowed down to all addresses that are for a 

@@ -8,7 +8,20 @@
 
         string alertRow = (@Model.SelectedIdMatchesThis(item.Id) ? "alert-info " : " ");
         string alertFont = (@Model.SelectedIdMatchesThis(item.Id) ? " text-danger " : " ");
+        
+        string urlGetAddressForVerification = "#";
 
+        //The icon is only clickable if notverified, unknown, or verification failed.
+        if (item.VerificationStatus == VerificaionStatusENUM.NotVerified 
+            || item.VerificationStatus == VerificaionStatusENUM.Unknown 
+            || item.VerificationStatus == VerificaionStatusENUM.Failed)
+        {
+            urlGetAddressForVerification = Url.Action("GetAddressForVerification", "Addresses", new { id = item.Id });
+            
+        }
+        //string urlForGettingVerification = Url.Action("IssueAddressVerificationRequest", "Addresses", new { id = item.Id });
+        //string urlSaveAddress = Url.Action("VerifiyAddressRequest", "Addresses", new { id = item.Id });
+        //string oncClick = Url.Action("GetAddressForVerification", "Addresses", new { id = item.Id });
         if (count % 2 == 0)
         {
             alertRow += " background-ltgrey ";
@@ -24,46 +37,67 @@
             item.PrintLineNumber = count.ToString();
         }
 
+                }
+
+                @if (Model.Show.VerificationIcon)
+                {
+                    string src = @Url.Content(item.VerificationIconResult.IconAddress);
+                    string toolTip = item.VerificationIconResult.ToolTip;
+                    //double paymentAmnt = 22;
+//                    <span><img src="#" height="16" width="16" /></span> 
+
+                    <span data-toggle="tooltip" title="@toolTip" data-placement="top">
+
+                        <a id="id123"
+                           href="@urlGetAddressForVerification">
+                                <img src="@src" height="16" width="16" />
+                        </a>
+                    </span>
 
                 }
-                @if(Model.Show.ImageInList)
+
+                @*@if (Model.Show.ImageInList)
                 {
+                    var imagePath = "";
                     if (@item.IsImageThere)
                     {
+                        imagePath = Url.Content(item.ImageAddressStr);
+
                         <div class="col-lg-4">
                             <div class="container">
-                                @*<h2>Rounded Corners</h2>
-                                    <p>The .img-rounded class adds rounded corners to an image (not available in IE8):</p>*@
                                 @{
-                        var imagePath = "";
-                        if (item.IsImageThere)
-                        {
-                            imagePath = Url.Content(item.ImageAddressStr);
-                        }
                                 }
-                                <img src="@imagePath" class="img-rounded" alt="Cinque Terre" width="102" height="73">
+                                @*<span data-toggle="tooltip" title="I LIKE it! Press to register and tell us why." data-placement="top">
+                                    <img src="@imagePath" class="img-rounded" alt="Cinque Terre" width="102" height="73" onclick="onClick();" onmouseover="    mouseOver();">
+
+                                </span>
+
                             </div>
                         </div>
                     }
-                }
-                <div class="col-lg-8">
-                    @if (Model.Show.Edit)
+                }*@
+
+
+                @if (Model.Show.Edit)
+                {
+                    if (item.AllowEdit)
                     {
-                        if (item.AllowEdit)
-                        {
-                            <span class="@alertFont">@item.PrintLineNumber. @Html.ActionLink(item.ShortName, "Edit", new { id = item.Id }, new { @id = item.Id, @title = item.FullName, @class = @alertFont })</span>
-                        }
-                        else
-                        {
-                            <span class="@alertFont">@item.PrintLineNumber.  @Html.DisplayFor(x => item.ShortName, null, new { @title = item.FullName })</span>
-                        }
+                        <span class="@alertFont">
+                            @item.PrintLineNumber. @Html.ActionLink(item.ShortName, "Edit", new { id = item.Id }, new { @id = item.Id, @title = item.FullName, @class = @alertFont })
+                        </span>
                     }
                     else
                     {
-                        <span class="@alertFont">@item.PrintLineNumber. @Html.DisplayFor(x => item.ShortName, null, new { @title = item.FullName })</span>
+                        <span class="@alertFont">@item.PrintLineNumber.  @Html.DisplayFor(x => item.ShortName, null, new { @title = item.FullName })</span>
                     }
+                }
+                else
+                {
+                    <span class="@alertFont">@item.PrintLineNumber. @Html.DisplayFor(x => item.ShortName, null, new { @title = item.FullName })</span>
+                }
 
-                </div>
+
+
 
 
             </div>
@@ -159,8 +193,25 @@
     }
 </div>
 
-@*<script>
-    //This causes the edited entry to appear in the middle of the viewport
-    document.getElementById('@Model.SelectedId').scrollIntoView(top);
+<div class="modal fade" id="mymodalnew" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalHeading"><span id="myModalHeading.span" class=""></span></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-</script>*@
+            <div class="modal-body" id="myModalbodyNewid">
+                
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success d-none" id="modalNewCloseBtnId" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+

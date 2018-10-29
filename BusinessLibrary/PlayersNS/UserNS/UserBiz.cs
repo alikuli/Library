@@ -1,28 +1,16 @@
 ﻿using AliKuli.Extentions;
-using AliKuli.UtilitiesNS;
-using ApplicationDbContextNS;
-using BreadCrumbsLibraryNS.Programs;
-using DalLibrary.DalNS;
 using DalLibrary.Interfaces;
-using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.App_Start;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
-using ModelsClassLibrary.ModelsNS.PlacesNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.RightsNS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary.ParametersNS;
-using UowLibrary.PlayersNS;
-using UowLibrary.UploadFileNS;
 using UserModels;
-using WebLibrary.Programs;
 
 namespace UowLibrary
 {
@@ -40,7 +28,8 @@ namespace UowLibrary
             IAuthenticationManager iAuthenticationManager,
             CountryBiz countryBiz,
             IRepositry<ApplicationUser> entityDal,
-            BizParameters bizParameters) : base(entityDal, bizParameters)
+            BizParameters bizParameters)
+            : base(entityDal, bizParameters)
         {
             _countryBiz = countryBiz;
             UserManager = userManager;
@@ -95,6 +84,27 @@ namespace UowLibrary
         }
 
 
+        //public  SelectList SelectListExcept(string userId)
+        //{
+        //    if (this.IsNull())
+        //        return null;
+
+        //    var allUsers = UserManager.Users.Where(x => x.Id != userId).ToList();
+
+        //    if (allUsers.IsNull() || allUsers.Count() == 0)
+        //        return null;
+
+        //    var sortedList = allUsers.OrderBy(x => x.UserName)
+        //        .Select(x =>
+        //        new
+        //        {
+        //            Text = x.UserName,
+        //            Value = x.Id
+        //        })
+        //        .ToList();
+        //    var selectList = new SelectList(sortedList, "Value", "Text");
+        //    return selectList;
+        //}
 
         public override SelectList SelectList()
         {

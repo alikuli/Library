@@ -93,7 +93,10 @@
     <Compile Include="AKATest.cs" />
     <Compile Include="ConfigManagerHelper.cs" />
     <Compile Include="ErrorHandlerConfigManagerHelper.cs" />
+    <Compile Include="CompanyConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MailersTrustLevelConfig.cs" />
+    <Compile Include="VerificationConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ConstantsLibrary\ConstantsLibrary.csproj">

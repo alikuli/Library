@@ -257,11 +257,12 @@ namespace AliKuli.UtilitiesNS.RandomNumberGeneratorNS
     {
 
         private readonly ErrorSet _err;
-        private readonly long _maxNoLength;
-        public RandomNoGenerator(long maxNoLength)
+        private readonly int _maxNoLength;
+        private long _maxNumber;
+        public RandomNoGenerator(int maxNoLength)
         {
             _maxNoLength = maxNoLength;
-
+            _maxNumber = MaxNumberForLength(_maxNoLength);
             _err = new ErrorSet();
             _err.SetLibAndClass("RandomNumberGeneratorLibrary", "RandomNoGenerator");
         }
@@ -272,7 +273,7 @@ namespace AliKuli.UtilitiesNS.RandomNumberGeneratorNS
         /// <param name="minNumber"></param>
         /// <param name="maxNumber"></param>
         /// <returns></returns>
-        public ICollection<long> GenerateNumbers(long Quantity, Int64 minNumber, Int64 maxNumber)
+        public ICollection<long> GenerateNumbers(long Quantity, Int64 minNumber = 0)
         {
             HashSet<long> hashSetOfRandomNumbers = new HashSet<long>();
             //long totalProcessed = 0;
@@ -287,9 +288,9 @@ namespace AliKuli.UtilitiesNS.RandomNumberGeneratorNS
                     randonNoProvider.GetBytes(data);
 
                     //convert to int 64
-                    long longNumber = BitConverter.ToInt64(data, 0) % maxNumber;
+                    long longNumber = BitConverter.ToInt64(data, 0) % _maxNumber;
 
-                    if (longNumber >= minNumber && longNumber <= maxNumber)
+                    if (longNumber >= minNumber && longNumber <= _maxNumber)
                     {
                         hashSetOfRandomNumbers.Add(longNumber);
                         if (hashSetOfRandomNumbers.Count() > Quantity - 1)
@@ -305,15 +306,15 @@ namespace AliKuli.UtilitiesNS.RandomNumberGeneratorNS
 
 
 
-        public List<string> GetStringListOfRandomNumbers(long quantity, Int64 minNumber, Int64 maxNumber)
+        public List<string> GetStringListOfRandomNumbers(long quantity, Int64 minNumber = 0)
         {
-            List<long> lstOfRandomNumber = GenerateNumbers(quantity, minNumber, maxNumber).ToList();
+            List<long> lstOfRandomNumber = GenerateNumbers(quantity, minNumber).ToList();
 
             if (lstOfRandomNumber == null)
                 return null;
 
             List<string> lstStringOfRandomNumbers = new List<string>();
-            int numberLength = maxNumber.ToString().Length;
+            int numberLength = _maxNumber.ToString().Length;
 
             foreach (var item in lstOfRandomNumber)
             {
@@ -365,7 +366,7 @@ namespace AliKuli.UtilitiesNS.RandomNumberGeneratorNS
                 do
                 {
                     //This is a temporary list
-                    var rgStringList = GetStringListOfRandomNumbers(cardNumbers.NewQtyRequired, 0, MaxNumberForLength(numberLength));
+                    var rgStringList = GetStringListOfRandomNumbers(cardNumbers.NewQtyRequired, 0);
 
                     //Add the values to the final list
                     foreach (var item in rgStringList)

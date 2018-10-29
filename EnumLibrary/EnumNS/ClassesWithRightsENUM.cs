@@ -5,6 +5,8 @@ namespace EnumLibrary.EnumNS
     {
         ApplicationUser,
         Address,
+        AddressVerificationHdr,
+        AddressVerificationTrx,
         City,
         Click,
         Country,
@@ -25,6 +27,7 @@ namespace EnumLibrary.EnumNS
         PaymentType,
         Product,
         ProductIdentifier,
+        Mailer,
         MenuPath1,
         MenuPath1Feature,
         MenuPath2Feature,

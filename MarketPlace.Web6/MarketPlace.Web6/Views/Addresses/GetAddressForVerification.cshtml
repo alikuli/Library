@@ -1,0 +1,105 @@
+﻿@model ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationRequest
+
+
+    @using (Html.BeginForm("DisplayAddressVerifcationForConfirmation", "Addresses",FormMethod.Get))
+    {
+
+        <h2 class="mb-3">Please check and make sure the address is correct. </h2>
+
+
+            <div class="card alert-info p-3 mb-3" >
+            @Html.Raw(Model.AddressMailForm)
+            <div class="row ">
+                @Html.ActionLink("Fix Address", "Edit", "Addresses", new { id = Model.AddressId }, new { @class = "m-3 btn btn-default btn-outline-dark" })
+
+
+
+
+            </div>
+
+        </div>
+        
+
+    <table class="table table-bordered table-responsive table-hover">
+        <caption>List of Verification Prices</caption>
+        <thead>
+
+            <tr>
+                <th>Verification Prices</th>
+                <th>Postal</th>
+                <th>Courier</th>
+            </tr>
+        </thead>
+
+        <tr>
+            <th scope="row">Local</th>
+            <td>
+                @Html.DisplayFor(x => x.PostalLocalPayment)
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.CourierLocalPayment)
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">International</th>
+            <td>
+                @Html.DisplayFor(x => x.PostalInternationalPayment)
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.CourierInternationalPayment)
+            </td>
+        </tr>
+    </table>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MailServiceEnum, htmlAttributes: new { @class = "" })
+            @Html.DropDownListFor(x => x.MailServiceEnum,
+                    (Model.MailServiceEnumSelectList as IEnumerable<SelectListItem>),
+                    "--- Select Mail Type ---",
+                    new { @class = "form-control" })
+        </div>
+
+
+        @Html.HiddenFor(x => x.AddressId)
+    @*<div class="form-group">
+        @Html.LabelFor(model => model.AddressId, htmlAttributes: new { @class = "" })
+        @Html.DisplayFor(x => x.AddressId)
+
+    </div>*@
+
+
+
+
+        <div class="form-check mb-3">
+            @Html.CheckBoxFor(model => model.IsSure1, htmlAttributes: new { @class = "form-check-input checkbox_class" })
+            @Html.LabelFor(model => model.IsSure1, htmlAttributes: new { @class = "form-check-label" })
+
+        </div>
+
+
+        <div class="">
+            @Html.ActionLink("Cancel", "DisplayAddressVerifcationForConfirmationCancel", null, new { @class = "btn btn-danger" })
+            <input type="submit" value="Verify Address" class="btn btn-success" id="acceptButton" disabled="disabled" />
+        </div>
+
+    }
+
+
+@section scripts{
+
+    <script>
+        $(document).on('click', '.form-check-input', function () {
+            if ($('.checkbox_class:checked').length > 0) {
+                console.log("remove attr");
+                $('#acceptButton').removeAttr("disabled");
+            }
+            else {
+                console.log("add attr");
+                $('#acceptButton').attr("disabled", "disabled");
+            }
+        });
+    </script>
+
+
+}

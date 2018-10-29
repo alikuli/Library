@@ -7,11 +7,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ModelsClassLibrary.ModelsNS.SharedNS
 {
     [ComplexType]
-    
+
     public class DateAndByComplex : IDateAndBy, IFieldsToLoadFromView
     {
-
-
 
         [Column(TypeName = "DateTime2")]
         [Display(Name = "Date Start (UTC)")]
@@ -20,17 +18,21 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public DateTime? DateStart { get; set; }
 
 
+
         [Display(Name = "Created End (UTC)")]
         [Column(TypeName = "DateTime2")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime? Date { get; set; }
 
+
         [NotMapped]
         public DateTime Date_NotNull { get { return Date ?? DateTime.MinValue; } }
 
+
         [Display(Name = "By")]
         [MaxLength(50)]
+
         public string By { get; set; }
 
 
@@ -40,12 +42,20 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public void SetToTodaysDate(string byUser)
         {
             Date = DateTime.UtcNow;
+            By = byUser;
         }
-        public void SetToTodaysDateStart()
+        public void SetToTodaysDateStart(string byUser)
         {
             DateStart = DateTime.UtcNow;
+            By = byUser;
+
         }
 
+        public void SetDateTo(string byUser, int noOfDays)
+        {
+            Date = DateTime.UtcNow.AddDays(noOfDays);
+            By = byUser;
+        }
 
         public void CopyMeInto(object obj)
         {

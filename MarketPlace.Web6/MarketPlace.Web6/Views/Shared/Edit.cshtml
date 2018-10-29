@@ -37,7 +37,6 @@
     string actionName = this.ViewContext.RouteData.Values["action"].ToString();
 }
 
-@*@using (Html.BeginForm("Edit", @controllerName, new { returnUrl = returnUrl}, FormMethod.Post, new { enctype = "multipart/form-data" }))*@
 @using (Html.BeginForm(actionName, @controllerName, new { menuPathMainId = menuPathMainId, productId = productId, returnUrl = returnUrl, productChildId = productChildId, menuEnum = menuEnum, selectId = selectId, searchString = searchString }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(model => model.Id)
@@ -45,6 +44,7 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.Partial("_messages")
 
+    
         <div class="row">
             <div class="col-8">
                 @Html.Partial(@"_FieldsOnlyEditFormat")

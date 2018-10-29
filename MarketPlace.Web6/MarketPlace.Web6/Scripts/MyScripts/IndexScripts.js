@@ -1,4 +1,8 @@
 ﻿$(document).ready(function () {
+
+
+
+
 });
 
 
@@ -415,17 +419,70 @@ function AddComment(saveBtn, theModal, commentCtrl) {
             success: function (response) {
                 if (response.success) {
                     console.log(response.success);
-                    $.notify(response.message, "success");
+                    //$.notify(response.message, "success");
                 }
                 else {
                     console.log(response.success);
-                    $.notify(response.message, "error");
+                    //$.notify(response.message, "error");
 
                 }
             }
         });
     }
     return false;
+
+}
+
+
+//--------------------------------------------------------------------------------------
+
+
+function issueRequestToConfirmAddy(paymentAmnt, dataUrl) {
+    if (confirm('There will be a payment amount of ' + paymentAmnt + '. Are you sure?')) {
+        // Save it!
+        $.ajax({
+            type: 'POST',
+            url: dataUrl,
+            success: function (response) {
+                if (response.success) {
+                    console.log(response.success);
+//                    $.notify(response.message, "success");
+                }
+                else {
+                    console.log(response.success);
+  //                  $.notify(response.message, "error");
+
+                }
+            }
+        });
+
+    } else {
+        // Do nothing!
+    }
+}
+
+function confirmAddressMain(anchorTag, myModal, myModalHeading, saveBtn, paymentAmnt) {
+    console.log("in getModal");
+    //var modalBody = $("#myModalbodyNewid");
+
+    var url = $(anchorTag).attr('data-url');
+    var dataUrl = $(anchorTag).attr('data-urldoverification');
+
+    console.log("url " + url);
+    console.log("dataUrl " + dataUrl);
+
+    //myModalHeading.innerHTML = "Is address is correct?";
+
+    //saveBtn.classList.remove("d-none");
+    //saveBtn.innerHTML = "Verify";
+    //var paymentJavaScript = "issueRequestToConfirmAddy( " + paymentAmnt + ",'" + dataUrl + "');";
+    //saveBtn.setAttribute("onclick", paymentJavaScript);
+    //var url = $(this).data('url');
+
+
+    $.get(url, function (data) {
+        myModal.replaceWith(data);
+    });
 
 }
 

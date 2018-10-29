@@ -1,8 +1,6 @@
 ﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
-using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
-using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
 using System;
@@ -88,7 +86,7 @@ namespace UowLibrary
         private IndexListVM createIndexList(IList<ICommonWithId> lstEntities, ControllerIndexParams parameters)
         {
 
-            
+
 
             //This names the sort links. They come directly from the entity
             parameters.DudEntity = Dal.Factory();
@@ -116,6 +114,8 @@ namespace UowLibrary
                     bool isEditLocked = entity.MetaData.IsEditLocked;
                     string detailInfoToDisplayOnWebsite = entity.DetailInfoToDisplayOnWebsite.IsNullOrWhiteSpace() ? "" : entity.DetailInfoToDisplayOnWebsite;
 
+                    VerificaionStatusENUM addressVerificaionEnum = doVerificationWork(entity);
+
                     IndexItemVM indexItem = new IndexItemVM(
                         id,
                         fullName,
@@ -123,16 +123,19 @@ namespace UowLibrary
                         input2SortString,
                         input3SortString,
                         isEditLocked,
-                        detailInfoToDisplayOnWebsite);
+                        detailInfoToDisplayOnWebsite,
+                        addressVerificaionEnum);
 
                     //indexItem.MenuManager = indexListVM.MenuManager as IMenuManager;
-                    
+
+                    indexItem.VerificationIconResult = GetVerificationIcon(indexItem.VerificationStatus);
                     //image address is added in here.
                     Event_ModifyIndexItem(indexListVM, indexItem, entity);
 
                     if (AddEntryToIndex)
                         if (!indexItem.IsNull())
                             indexListVM.Add(indexItem);
+
                 }
                 catch (Exception e)
                 {
@@ -148,6 +151,20 @@ namespace UowLibrary
 
             return indexListVM;
         }
+
+        private static VerificaionStatusENUM doVerificationWork(ICommonWithId entity)
+        {
+            IHasVerification iHasVerification = entity as IHasVerification;
+            VerificaionStatusENUM addressVerificaionEnum = VerificaionStatusENUM.Unknown;
+
+            //this is where the verification icon is given
+            if (!iHasVerification.IsNull())
+            {
+                addressVerificaionEnum = iHasVerification.Verification.VerificaionStatusEnum;
+            }
+            return addressVerificaionEnum;
+        }
+
 
 
 

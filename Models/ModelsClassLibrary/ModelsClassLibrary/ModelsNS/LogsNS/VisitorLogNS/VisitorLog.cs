@@ -18,7 +18,7 @@ namespace ModelsClassLibrary.ModelsNS.Logs.VisitorsLogNS
 
         public void LoadVisitorLog(string controllerName, string actionName, string postOrGet, string user, string browser, string ip, string machineName, string urlReferrer)
         {
-            MetaData.Created.SetToTodaysDateStart();
+            //MetaData.Created.SetToTodaysDateStart(User);
 
             ControllerName = controllerName;
             ActionName = actionName;

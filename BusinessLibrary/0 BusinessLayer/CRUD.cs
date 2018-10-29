@@ -83,6 +83,15 @@ namespace UowLibrary
 
             }
         }
+
+        public virtual void CreateAndSave(TEntity entity)
+        {
+            ControllerCreateEditParameter parm = new ControllerCreateEditParameter();
+            parm.Entity = entity;
+            CreateAndSave(parm);
+            //SaveChanges();
+        }
+
         public virtual void CreateAndSave(ControllerCreateEditParameter parm)
         {
             createEngineWithFileUpload(parm);
@@ -135,7 +144,7 @@ namespace UowLibrary
         /// <param name="entity"></param>
         public virtual void CreateEntity(TEntity entity)
         {
-            FixChildEntityForCreate(entity);
+            //FixChildEntityForCreate(entity);
             create(entity);
         }
 
@@ -150,6 +159,13 @@ namespace UowLibrary
         #endregion
 
         #region Update
+
+        public void UpdateAndSave(TEntity entity)
+        {
+            ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+            param.Entity = entity as ICommonWithId;
+            UpdateAndSave(param);
+        }
 
         public void UpdateAndSave(ControllerCreateEditParameter param)
         {

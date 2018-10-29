@@ -32,6 +32,9 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     </p>
     
+@**********************************************************
+This is where the error messages are displayed
+**********************************************************@
     @Html.Partial("_messages")
 
     @*This is the heading*@
@@ -244,7 +247,7 @@ else
 
 
     @section scripts{
-    <script src="~/Scripts/MyScripts/IndexScripts1.js"></script>
+    <script src="~/Scripts/MyScripts/IndexScripts.js"></script>
 
         <script>
 

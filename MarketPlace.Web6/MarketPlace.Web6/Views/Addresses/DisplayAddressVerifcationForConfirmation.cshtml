@@ -1,0 +1,78 @@
+﻿@model ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationRequest
+
+
+
+@using (Html.BeginForm("DisplayAddressVerifcationForConfirmation", "Addresses",  FormMethod.Post))
+{
+
+    @Html.HiddenFor(x => x.CountryId)
+    @Html.HiddenFor(x => x.IsSure1)
+    @Html.HiddenFor(x => x.DateIsSure1)
+    @Html.HiddenFor(x => x.AddressId)
+    @Html.HiddenFor(x => x.PaymentAmount)
+    @Html.HiddenFor(x => x.MailServiceEnum)
+
+    <h2 class="mb-3">Please check and make sure the address is correct. </h2>
+
+    <div class="card alert-info p-3 mb-3">
+        @Html.Raw(Model.AddressMailForm)
+        <div class="row ">
+            @Html.ActionLink("Fix Address", "Edit", "Addresses", new { id = Model.AddressId }, new { @class = "m-3 btn btn-default btn-outline-dark" })
+        </div>
+
+    </div>
+
+    <div class="card alert-danger p-3 mb-3">
+        <div class="form-group">
+            <h2>
+                @Html.LabelFor(model => model.MailServiceEnum, htmlAttributes: new { @class = "" }):
+                <strong>@Html.DisplayFor(x => x.MailServiceEnumToString)</strong>
+            </h2>
+        </div>
+
+        <div class="form-group">
+            <h2>
+                @Html.LabelFor(x => x.PaymentAmount):
+                <strong>Pk Rs @Html.DisplayFor(x => x.PaymentAmount)</strong>
+            </h2>
+        </div>
+        <div class="row">
+            @Html.ActionLink("Change Service Type", "GetAddressForVerification", new { id = Model.AddressId }, new { @class = "m-3 btn btn-default  btn-outline-dark" })
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="form-check mb-3">
+        @Html.CheckBoxFor(model => model.IsSure2, htmlAttributes: new { @class = "form-check-input checkbox_class" })
+        @Html.LabelFor(model => model.IsSure2, htmlAttributes: new { @class = "form-check-label" })
+
+    </div>
+
+
+    <div class="">
+        @Html.ActionLink("Cancel", "DisplayAddressVerifcationForConfirmationCancel", null, new { @class = "btn btn-danger" })
+        <input type="submit" value="Verify Address" class="btn btn-success" id="acceptButton" disabled="disabled" />
+    </div>
+
+}
+
+
+@section scripts{
+
+    <script>
+        $(document).on('click', '.form-check-input', function () {
+            if ($('.checkbox_class:checked').length > 0) {
+                console.log("remove attr");
+                $('#acceptButton').removeAttr("disabled");
+            }
+            else {
+                console.log("add attr");
+                $('#acceptButton').attr("disabled", "disabled");
+            }
+        });    </script>
+}

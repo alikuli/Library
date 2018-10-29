@@ -1,14 +1,9 @@
 ﻿using AliKuli.Extentions;
-using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
-using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.ViewModels;
 using System.Linq;
-using UowLibrary.Abstract;
-using UowLibrary.Interface;
-using UowLibrary.MenuNS.MenuStateNS;
 
 namespace UowLibrary
 {
@@ -16,7 +11,7 @@ namespace UowLibrary
     /// This is where all the Fix, bussiness Rules and ErrorChecks are implemented
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public abstract partial class BusinessLayer<TEntity> : AbstractBiz, IBusinessLayer<TEntity> where TEntity : class, ICommonWithId
+    public abstract partial class BusinessLayer<TEntity>
     {
 
 
@@ -39,7 +34,7 @@ namespace UowLibrary
 
 
             }
-             //LikeUnlikeParameter likeUnlikeCounter = _likeUnlikeBiz.Count(indexItem.Id, null null, null, null, theUserId);
+            //LikeUnlikeParameter likeUnlikeCounter = _likeUnlikeBiz.Count(indexItem.Id, null null, null, null, theUserId);
             //indexItem.MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, _breadCrumbManager, likeUnlikeCounter);
 
 

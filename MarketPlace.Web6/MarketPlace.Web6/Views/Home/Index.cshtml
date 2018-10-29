@@ -44,9 +44,14 @@
             </div>
 
         </div>
+
+
         <div class="col-lg-4 text-center">
             <p class="text-success h3 text-center">View</p>
             <p> @Html.ActionLink("Menus", "Index", "Menus", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Address Verification Hdrs", "Index", "AddressVerificationHdrs", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Address Verification Trxs", "Index", "AddressVerificationTrxs", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Mailers", "Index", "Mailers", null, new { @class = "btn btn-success" })</p>
             <p> @Html.ActionLink("Address", "Index", "Addresses", null, new { @class = "btn btn-success" })</p>
             <p> @Html.ActionLink("Menu 1 Features", "Index", "MenuPath1Features", null, new { @class = "btn btn-success" })</p>
             <p> @Html.ActionLink("Menu 2 Features", "Index", "MenuPath2Features", null, new { @class = "btn btn-success" })</p>
@@ -98,7 +103,10 @@
 
         <div class="col-lg-4 text-center">
             <p class="text-warning h3 text-center">Initializers</p>
-            <p> @Html.ActionLink("Invoice Pdf", "PrintInvoice", "Languages", null, new { @class = "btn btn-warning  disabled" })</p>
+            <p> @Html.ActionLink("Invoice Pdf", "PrintInvoice", "Languages", null, new { @class = "btn btn-warning " })</p>
+            <p>@Html.ActionLink("AddressVerificationHdrs", "InitializeDb", "AddressVerificationHdrs", null, new { @class = "btn btn-warning disabled" })</p>
+            <p>@Html.ActionLink("AddressVerificationTrxs", "InitializeDb", "AddressVerificationTrxs", null, new { @class = "btn btn-warning disabled" })</p>
+            <p>@Html.ActionLink("Mailers", "InitializeDb", "Mailers", null, new { @class = "btn btn-warning disabled" })</p>
             <p> @Html.ActionLink("Address", "InitializeDb", "Addresses", null, new { @class = "btn btn-warning  disabled" })</p>
             <p> @Html.ActionLink("Menu 1 Features", "GetGroupedCount", "DashBoard", null, new { @class = "btn btn-warning disabled" })</p>
             <p> @Html.ActionLink("Menu 2 Features", "GetGroupedCount", "DashBoard", null, new { @class = "btn btn-warning disabled" })</p>
@@ -146,6 +154,9 @@
         <div class="col-lg-4 h3 text-center">
             <p class="text-danger  h3 text-center">Delete ALL</p>
             <p>@Html.ActionLink("Menu", "DeleteAll", "ProductIdentifiers", null, new { @class = "btn btn-danger disabled" })</p>
+            <p>@Html.ActionLink("AddressVerificationHdrs", "DeleteAll", "AddressVerificationHdrs", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("AddressVerificationTrxs", "DeleteAll", "AddressVerificationTrxs", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Mailers", "DeleteAll", "Mailers", null, new { @class = "btn btn-danger" })</p>
             <p>@Html.ActionLink("Address", "DeleteAll", "Addresses", null, new { @class = "btn btn-danger " })</p>
             <p>@Html.ActionLink("Menu 1 features", "DeleteAll", "ProductIdentifiers", null, new { @class = "btn btn-danger disabled" })</p>
             <p>@Html.ActionLink("Menu 2 features", "DeleteAll", "ProductIdentifiers", null, new { @class = "btn btn-danger disabled" })</p>

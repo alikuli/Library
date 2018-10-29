@@ -36,7 +36,7 @@ namespace UowLibrary
         public virtual ICommonWithId Factory()
         {
             ICommonWithId entity = Dal.Factory();
-            entity.MetaData.Created.SetToTodaysDateStart();
+            entity.MetaData.Created.SetToTodaysDateStart(UserName);
 
             Product p = entity as Product;
             MenuPathMain mpm = entity as MenuPathMain;

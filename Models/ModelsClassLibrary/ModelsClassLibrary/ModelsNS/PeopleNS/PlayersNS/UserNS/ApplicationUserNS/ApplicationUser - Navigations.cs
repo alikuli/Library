@@ -1,26 +1,19 @@
 ﻿using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ModelsClassLibrary.ModelsNS.AddressNS;
-using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
+using ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
+using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
+using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
-using ModelsClassLibrary.ModelsNS.PeopleNS.UserNameSpace;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
-using ModelsClassLibrary.RightsNS;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using ModelsClassLibrary.ModelsNS;
-using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 
 namespace UserModels
 {
@@ -30,29 +23,34 @@ namespace UserModels
 
         [Display(Name = "Country")]
         public string CountryId { get; set; }
-        public Country Country { get; set; }
+        public virtual Country Country { get; set; }
+
+        public string MailerId { get; set; }
+
+        public virtual Mailer Mailer { get; set; }
 
 
+        //public ICollection<AddressVerificationTrx> AddressVerificationTrxs { get; set; }
         //public ICollection<Right> UserRights { get; set; }
 
 
         public virtual ICollection<UploadedFile> MiscFiles { get; set; }
 
-        public string MiscFilesLocation ()
+        public string MiscFilesLocation()
         {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY,"User");
+            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "User");
         }
 
         public virtual ICollection<UploadedFile> SelfieUploads { get; set; }
 
-        public string SelfieLocationConst (string userName)
+        public string SelfieLocationConst(string userName)
         {
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "Selfie");
 
         }
 
         public virtual ICollection<UploadedFile> IdCardFrontUploads { get; set; }
-        
+
         public string IdCardFrontLocationConst(string userName)
         {
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "IdCardfront");
@@ -61,15 +59,15 @@ namespace UserModels
 
         public virtual ICollection<UploadedFile> IdCardBackUploads { get; set; }
 
-        public string IdCardBackLocationConst (string userName)
+        public string IdCardBackLocationConst(string userName)
         {
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "IdCardBack");
         }
 
         public virtual ICollection<UploadedFile> PassportFrontUploads { get; set; }
 
-        
-        public string PassportFrontLocationConst (string userName)
+
+        public string PassportFrontLocationConst(string userName)
         {
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "PassportFront");
 
@@ -77,8 +75,8 @@ namespace UserModels
 
 
         public virtual ICollection<UploadedFile> PassportVisaUploads { get; set; }
-        
-        public string PassportVisaLocationConst (string userName)
+
+        public string PassportVisaLocationConst(string userName)
         {
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "PassportVisa");
 
@@ -110,7 +108,7 @@ namespace UserModels
         /// Every user can have many addresses.
         /// </summary>
         public virtual ICollection<AddressWithId> Addresses { get; set; }
-        
+
 
         public virtual ICollection<ProductChild> ProductChildren { get; set; }
 

@@ -10,6 +10,7 @@ namespace AliKuli.UtilitiesNS
     public class ConfigManagerHelper
     {
 
+        public VerificationConfig Verification { get; set; }
         private ErrorHandlerConfigManagerHelper _err;
         public ConfigManagerHelper()
         {

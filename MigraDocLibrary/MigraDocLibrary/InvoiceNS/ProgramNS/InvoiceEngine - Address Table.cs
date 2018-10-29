@@ -1,9 +1,6 @@
-﻿using AliKuli.Extentions;
-using MigraDoc.DocumentObjectModel;
+﻿using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDocLibrary.InvoiceNS;
-using System;
-using System.Collections.Generic;
 
 namespace InvoiceNS
 {

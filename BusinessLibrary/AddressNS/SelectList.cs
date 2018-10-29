@@ -20,8 +20,6 @@ namespace UowLibrary.AddressNS
 {
     public partial class AddressBiz 
     {
-
-
         public override string SelectListCacheKey
         {
             get { return "AddresssSelectListData"; }

@@ -1,7 +1,6 @@
 ﻿using AliKuli.Extentions;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
-using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +17,6 @@ namespace UowLibrary.AddressNS
 
             try
             {
-
-
-                //errIfNotLoggedIn();
-
-
                 var lstAsFileDoc = base.GetListForIndex().Cast<AddressWithId>().ToList();
 
                 if (lstAsFileDoc.IsNullOrEmpty())

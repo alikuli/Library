@@ -19,7 +19,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             Modified = new DateAndByComplex();
             Deleted = new DateAndByComplex();
             UnDeleted = new DateAndByComplex();
-            Created.SetToTodaysDateStart();
+            Created.SetToTodaysDateStart("");
 
             IsActive = false;
             IsEditLocked = false;

@@ -1,0 +1,35 @@
+﻿@model ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS.MailerNS.CreateMailerVM
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Mailer dashboard</h4>
+        <hr />
+        @Html.Partial("_messages")
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "" })
+            @Html.DropDownListFor(x => x.UserId,
+                 (Model.UserSelect as IEnumerable<SelectListItem>),
+                  "--- Select User ---",
+                  new { @class = "form-control" })
+        </div>*@
+
+
+        <div class="form-group" >
+            @Html.LabelFor(model => model.CurrentAccountBalance, htmlAttributes: new { @class = "" })
+            @Html.DisplayFor(model => model.CurrentAccountBalance)
+        </div>
+
+        @Html.ActionLink("Get Mailing List", "CreateMailingList", null, new { @class = "btn btn-default" })
+        @Html.ActionLink("Print", "", null, new { @class = "btn btn-default" })
+        @Html.ActionLink("Enter Cost","",null,new {@class="btn btn-default"})
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

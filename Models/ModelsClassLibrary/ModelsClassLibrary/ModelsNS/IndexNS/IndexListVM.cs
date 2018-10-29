@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UowLibrary.MenuNS.MenuStateNS;
-using UserModels;
 namespace ModelsClassLibrary.ViewModels
 {
     /// <summary>
@@ -29,7 +28,7 @@ namespace ModelsClassLibrary.ViewModels
 
         public IndexListVM(ControllerIndexParams p)
         {
-            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.UserId, p.UserName,p.IsAndForSearch, p.BreadCrumbManager, p.ActionNameEnum, p.LikeUnlikeCounter,p.IsMenu);
+            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.UserId, p.UserName, p.IsAndForSearch, p.BreadCrumbManager, p.ActionNameEnum, p.LikeUnlikeCounter, p.IsMenu);
 
         }
 
@@ -98,7 +97,7 @@ namespace ModelsClassLibrary.ViewModels
         public void Load(ControllerIndexParams p)
         {
             string webCompany = "";
-            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, webCompany, p.LogoAddress, p.UserId,p.UserName, p.IsAndForSearch, p.BreadCrumbManager, p.ActionNameEnum, p.LikeUnlikeCounter, p.IsMenu);
+            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, webCompany, p.LogoAddress, p.UserId, p.UserName, p.IsAndForSearch, p.BreadCrumbManager, p.ActionNameEnum, p.LikeUnlikeCounter, p.IsMenu);
 
         }
 
@@ -791,6 +790,7 @@ namespace ModelsClassLibrary.ViewModels
 
         public string UserName { get; set; }
         public string UserId { get; set; }
+
         //public ApplicationUser User { get; set; }
 
         //public bool UserIsAdmin { get; set; }

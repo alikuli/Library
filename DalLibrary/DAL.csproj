@@ -150,8 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AKATestClass.cs" />
-    <Compile Include="DalNS\AddressNS\GetDomainDataForDuplicateNameSearch.cs" />
-    <Compile Include="DalNS\AddressNS\AddressDAL.cs" />
     <Compile Include="DalNS\Misc\IRepositryOLD.cs" />
     <Compile Include="DalNS\Repo\Factory.cs" />
     <Compile Include="DalNS\Repo\DetachAll.cs" />

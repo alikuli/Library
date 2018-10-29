@@ -1,28 +1,25 @@
 ﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS.FileDoc
 
-@Html.HiddenFor(x => x.UserId);
+@Html.HiddenFor(x => x.UserId)
 
 <div class="form-horizontal">
     <div class="form-group">
-        @Html.LabelFor(model => model.FileNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.FileNumber, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.FileNumber, "", new { @class = "text-danger" })
-        </div>
+        @Html.LabelFor(model => model.FileNumber, htmlAttributes: new { @class = "" })
+        @Html.EditorFor(model => model.FileNumber, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.FileNumber, "", new { @class = "text-danger" })
+
     </div>
 
     @Html.Partial(@"_Name_And_DetailInfo")
 
-
-
     <div class="form-group">
-        @Html.LabelFor(model => model.OldFileNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.OldFileNumber, new { htmlAttributes = new { @class = "form-control", disabled = "disabled"} })
-            @Html.ValidationMessageFor(model => model.OldFileNumber, "", new { @class = "text-danger" })
-        </div>
+
+
+        @Html.LabelFor(model => model.OldFileNumber, htmlAttributes: new { @class = "" })
+        @Html.EditorFor(model => model.OldFileNumber, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+        @Html.ValidationMessageFor(model => model.OldFileNumber, "", new { @class = "text-danger" })
     </div>
-
-
 </div>
+
+
 

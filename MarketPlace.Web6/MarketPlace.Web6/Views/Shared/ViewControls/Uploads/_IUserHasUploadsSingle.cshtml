@@ -16,9 +16,10 @@
         <div class="control-label col-md-2"><strong>@ViewBag.panelHeading</strong></div>
 
         @*This is the upload button*@
-        <div class="">
-            <img src="@Url.Content(Model.DefaultDisplayImage)" alt="Image for Upload" id="theImage" width="200" height="200" style="margin: 10px;" /><br />
-            <input type="file" name="@ViewBag.httpUpload" onchange="PreviewImage(this, document.getElementById('theImage'))">
+        <img src="@Url.Content(Model.DefaultDisplayImage)" alt="Image for Upload" class="rounded mx-auto d-block" id="theImage" width="200" height="200" style="margin: 10px;" /><br />
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" name="@ViewBag.httpUpload" onchange="PreviewImage(this, document.getElementById('theImage'))">
+            <label class="custom-file-label" for="customFile">Choose file</label>
         </div>
     </div>
 

@@ -22,8 +22,9 @@ namespace MarketPlace.Web4.Controllers
             ErrorsGlobal.MemorySave();
 
             base.OnActionExecuted(filterContext);
-
-            PageViewBiz.SavePageView(filterContext, Request);
+            
+            if(!ErrorsGlobal.HasErrors)
+                PageViewBiz.SavePageView(filterContext, Request);
 
         }
 

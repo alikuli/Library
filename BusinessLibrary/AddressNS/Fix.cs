@@ -24,14 +24,13 @@ namespace UowLibrary.AddressNS
 
         private void AttachCountry(AddressWithId addy)
         {
-            if (!addy.CountryId.IsNullOrEmpty())
+            addy.CountryId.IsNullOrWhiteSpaceThrowException("Country ID is null. Programming Error");
+
+            if (addy.Country.IsNull())
             {
-                if (addy.Country.IsNull())
-                {
-                    Country country = CountryBiz.Find(addy.CountryId);
-                    country.IsNullThrowException("Country not found.");
-                    addy.Country = country;
-                }
+                Country country = CountryBiz.Find(addy.CountryId);
+                country.IsNullThrowException("Country not found.");
+                addy.Country = country;
             }
         }
 
@@ -39,7 +38,10 @@ namespace UowLibrary.AddressNS
         {
 
             UserId.IsNullOrWhiteSpaceThrowException();
-            entity.User = UserBiz.Find(UserId);
+
+            //if we dont do this, the userId is overwritten during Resetting Addresses for testing
+            if (entity.UserId.IsNullOrEmpty())
+                entity.UserId = UserId;
 
             if (entity.User.IsNull())
             {
@@ -48,19 +50,6 @@ namespace UowLibrary.AddressNS
             }
 
 
-            //UserId.IsNullOrWhiteSpaceThrowException();
-            //ApplicationUser user = UserBiz.Find(UserId);
-            //user.Addresses.Add(entity);
-
-            //entity.User = user;
-            //entity.UserId = UserId;
-            //entity.User.Addresses.Add(entity);
-            //;
-            //if (entity.User.IsNull())
-            //{
-            //    ErrorsGlobal.Add("User not found!", MethodBase.GetCurrentMethod());
-            //    throw new Exception(ErrorsGlobal.ToString());
-            //}
         }
 
     }

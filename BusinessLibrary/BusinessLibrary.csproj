@@ -147,6 +147,7 @@
     <Compile Include="0 BusinessLayer\EntityFramework Tools.cs" />
     <Compile Include="0 BusinessLayer\CreateControllerCreateEditParameter.cs" />
     <Compile Include="0 BusinessLayer\FixChildEntityForCreate.cs" />
+    <Compile Include="0 BusinessLayer\GetVerificationIcon.cs" />
     <Compile Include="0 BusinessLayer\HasUploadsProperties.cs" />
     <Compile Include="0 BusinessLayer\Get.cs" />
     <Compile Include="0 BusinessLayer\File Tools.cs" />
@@ -154,17 +155,40 @@
     <Compile Include="0 BusinessLayer\Factory.cs" />
     <Compile Include="0 BusinessLayer\Initialization -LockEdit.cs" />
     <Compile Include="0 BusinessLayer\Event_ModifyIndexItem.cs" />
+    <Compile Include="AddressNS\IssueAddressVerificationRequest.cs" />
+    <Compile Include="AddressNS\GetAddressVerificationRequestConfirmation.cs" />
+    <Compile Include="AddressNS\GetAddressVerificationRequest.cs" />
+    <Compile Include="AddressNS\GetDataToCheckDuplicateName.cs" />
+    <Compile Include="AddressNS\SetAllAddressesToNotVerified.cs" />
+    <Compile Include="AddressVerificationHdrNS\AddressVerificationHdrBiz.cs" />
     <Compile Include="AddressNS\Event_ModifyIndexList.cs" />
     <Compile Include="AddressNS\Fix.cs" />
-    <Compile Include="AddressNS\Event_ModifyIndexItem.cs" />
     <Compile Include="AddressNS\GetListForIndex.cs" />
     <Compile Include="AddressNS\GetListForIndexAsync.cs" />
     <Compile Include="AddressNS\SelectList.cs" />
     <Compile Include="AddressNS\AddressBiz.cs" />
+    <Compile Include="AddressVerificationHdrNS\Event_ModifyIndexItem.cs" />
+    <Compile Include="AddressVerificationTrxNS\Event_ModifyIndexItem.cs" />
+    <Compile Include="AddressVerificationTrxNS\GetDataToCheckDuplicateName.cs" />
+    <Compile Include="AddressVerificationTrxNS\GetVerificationRequestTrx.cs" />
+    <Compile Include="AddressVerificationTrxNS\AddressVerificationTrxBiz.cs" />
     <Compile Include="FeatureNS\Index.cs" />
     <Compile Include="FileDocsNS\Event_ModifyIndexList.cs" />
     <Compile Include="FileDocsNS\Event_ModifyIndexItem.cs" />
     <Compile Include="FileDocsNS\GetListForIndexAsync.cs" />
+    <Compile Include="MailerBizNS\BusinessRulesFor.cs" />
+    <Compile Include="MailerBizNS\CreateMailerVMForAssigningVerifList.cs" />
+    <Compile Include="MailerBizNS\Event_ModifyIndexItem.cs" />
+    <Compile Include="MailerBizNS\Fix.cs" />
+    <Compile Include="MailerBizNS\numberOfOpenMailingsAllowedToMailer.cs" />
+    <Compile Include="MailerBizNS\Factory_CreateMailerVm.cs" />
+    <Compile Include="MailerBizNS\CreateMailer.cs" />
+    <Compile Include="MailerBizNS\PdfVerificationLetterData.cs" />
+    <Compile Include="MailerBizNS\TotalOpenMailingsForMailer.cs" />
+    <Compile Include="MailerBizNS\IsMailerAllowedMoreMailings.cs" />
+    <Compile Include="MailerBizNS\CreateVerificationMailingList.cs" />
+    <Compile Include="MailerBizNS\SelectList.cs" />
+    <Compile Include="MailerBizNS\MailerBiz.cs" />
     <Compile Include="MenuNS\MenuPath1FeatureNS\MenuPath1FeatureBiz.cs" />
     <Compile Include="MenuNS\MenuPath1FeatureNS\FixChildEntityForCreate.cs" />
     <Compile Include="MenuNS\MenuPath1FeatureNS\Index.cs" />
@@ -268,6 +292,7 @@
     <Compile Include="PaymentsNS\Terms\SelectList.cs" />
     <Compile Include="PlacesNS\CountryNS\Business Rules.cs" />
     <Compile Include="PlacesNS\CountryNS\Index.cs" />
+    <Compile Include="PlacesNS\CountryNS\Pakistan.cs" />
     <Compile Include="PlacesNS\CountryNS\SelectList.cs" />
     <Compile Include="PlacesNS\StateNS\Business Rules.cs" />
     <Compile Include="PlacesNS\StateNS\Index.cs" />
@@ -447,6 +472,10 @@
     <ProjectReference Include="..\PhoneUtilitiesLibrary\PhoneUtilitiesLibrary\PhoneUtilitiesLibrary.csproj">
       <Project>{604c1d25-5b22-48ad-a325-6c682288857d}</Project>
       <Name>PhoneUtilitiesLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RandomNumberGeneratorLibrary\RandomNumberGeneratorLibrary\RandomNumberGeneratorLibrary.csproj">
+      <Project>{b515f145-b58b-4e4f-9462-b140ceeb9061}</Project>
+      <Name>RandomNumberGeneratorLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\UploadingLibrary\UploadingLibrary.csproj">
       <Project>{58e68141-bb0a-4c37-a1a3-84edb24b2497}</Project>

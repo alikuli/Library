@@ -14,10 +14,16 @@ namespace MarketPlace.Web6
                         "~/Scripts/jquery-{version}.js"));
             
 
-           bundles.Add(new ScriptBundle("~/bundles/jqueryuobtrsive").Include(
+           
+            
+            
+            bundles.Add(new ScriptBundle("~/bundles/jqueryuobtrsive").Include(
                         "~/Scripts/jquery.unobtrusive-ajax.js"));
 
 
+            
+            
+            
             bundles.Add(new ScriptBundle("~/bundles/Knockout").Include(
                         "~/Scripts/knockout-3.1.0.js.js",
                         "~/Scripts/knockout-3.1.0.debug.js",
@@ -25,30 +31,56 @@ namespace MarketPlace.Web6
                         "~/Scripts/perpetuum.knockout.js"
                         ));
 
+
+
+
+
             bundles.Add(new ScriptBundle("~/bundles/FormAjaxPlugIn").Include(
                         "~/Scripts/jquery.form.min.js"));
 
+            
+            
+            
             bundles.Add(new ScriptBundle("~/bundles/JqueryIntelisense").Include(
             "~/Scripts/jquery-{version}.intellisense.js"));
 
+            
+            
+            
+            
             bundles.Add(new ScriptBundle("~/bundles/JquerySlim").Include(
             "~/Scripts/jquery-{version}.slim.js"));
 
+            
+            
+            
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
+            
+            
+            
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            
+            
+            
             bundles.Add(new ScriptBundle("~/bundles/respond").Include(
                         "~/Scripts/respond.min.js"));
 
+            
+            
+            
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
+            
+            
+            
             bundles.Add(new ScriptBundle("~/bundles/popper").Include(
                       "~/Scripts/umd/popper.js"));
 
