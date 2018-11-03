@@ -1,0 +1,82 @@
+﻿@model ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS.MailerNS.MailerVMForAssigningVerifList
+
+
+
+@if (!Model.AddressVerificationHdrList_InProcessOrPrinted.IsNullOrEmpty())
+{
+    int count = 0;
+    <div class="well p-3 pl-4">
+
+
+        @foreach (var hdr in Model.AddressVerificationHdrList_InProcessOrPrinted)
+        {
+            count++;
+
+            if (hdr.SuccessEnum == SuccessENUM.InProccess)
+            {
+                
+                <p>
+                    @count.
+
+                    
+                    @if (hdr.Verification.VerificaionStatusEnum == VerificaionStatusENUM.SelectedForProcessing)
+                    {
+                        <span class="text-danger"> Please Print </span>
+                        @Html.ActionLink(hdr.FullName(), "PrintVerificationLetters", new { id = hdr.Id });
+                    
+                    }
+
+                    
+                    @if (hdr.Verification.VerificaionStatusEnum == VerificaionStatusENUM.Printed)
+                    {
+                        <span class="text-warning"> Enter Costs </span>
+                        @Html.ActionLink(hdr.FullName(), "EnterCosts", new { addressVerificationHdrId = hdr.Id });
+                    }
+                
+
+                    @if (hdr.Verification.VerificaionStatusEnum == VerificaionStatusENUM.Mailed)
+                    {
+                        <span class="text-info"> Mailed </span>
+                        <span>@hdr.FullName()</span> 
+                    }
+
+                </p>
+            
+            }
+            
+            
+            
+            if (hdr.SuccessEnum == SuccessENUM.Successful)
+            {
+                <p>
+                    <span class="text-success"> Successful! </span>
+                    <span>@hdr.FullName()</span>
+
+                </p>
+            }
+
+            
+            
+            if (hdr.SuccessEnum == SuccessENUM.Unsuccessful)
+            {
+                <p>
+                    <span class="text-danger">UNSUCCESSFUL </span>
+                    <span>@hdr.FullName()</span>
+
+                </p>
+            }
+            
+            
+            
+            if (hdr.SuccessEnum == SuccessENUM.Unknown)
+            {
+                <p>
+                    <span class="text-dark">UNKNOWN </span>
+                    <span>@hdr.FullName()</span>
+
+                </p>
+            }
+
+        }
+    </div>
+}

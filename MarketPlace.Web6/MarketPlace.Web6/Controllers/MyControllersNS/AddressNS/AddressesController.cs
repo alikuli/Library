@@ -1,5 +1,6 @@
 ﻿using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.AddressNS;
+using ModelsClassLibrary.ModelsNS.AddressNS.AddessWithIdNS;
 using System.Reflection;
 using System.Web.Mvc;
 using UowLibrary.AddressNS;
@@ -92,23 +93,36 @@ namespace MarketPlace.Web6.Controllers
             }
 
         }
-        //public ActionResult DisplayAddressVerifcationForConfirmation(string theAddressId, MailServiceENUM mailServiceEnum, FormCollection fc)
-        //{
 
-        //    try
-        //    {
-        //        //avr = AddressBiz.GetAddressVerificationRequestConfirmation(avr);
-
-        //    }
-        //    catch (System.Exception e)
-        //    {
-
-        //        ErrorsGlobal.AddMessage("Something went wrong. Action not completed", MethodBase.GetCurrentMethod(), e);
-
-        //    }
-        //    return View();
-        //}
-
+        public ActionResult EnterVerificationNumber(string addressId)
+        {
+            try
+            {
+                AddressVerificationNumberVm vm = AddressBiz.CreateEnterVerificationNumberVm(addressId); ;
+                return View(vm);
+            }
+            catch (System.Exception e)
+            {
+                ErrorsGlobal.Add("Something Went wrong",MethodBase.GetCurrentMethod(),e);
+                ErrorsGlobal.MemorySave();
+                return RedirectToAction("Index", "Menus");
+            }
+        }
+        
+        [HttpPost]
+        public ActionResult EnterVerificationNumber(AddressVerificationNumberVm avnVM)
+        {
+            try
+            {
+                AddressBiz.VerifiyAddressCode(avnVM);
+            }
+            catch (System.Exception e)
+            {
+                ErrorsGlobal.Add("Something Went wrong", MethodBase.GetCurrentMethod(), e);
+                ErrorsGlobal.MemorySave();
+            }
+            return RedirectToAction("Index", "Menus");
+        }
 
         /// <summary>
         /// This displays the canceled messae
@@ -119,6 +133,7 @@ namespace MarketPlace.Web6.Controllers
         {
             //add the costs here.
             ErrorsGlobal.AddMessage("Your request have been canceled");
+            ErrorsGlobal.MemorySave();
             return RedirectToAction("Index", "Menus");
         }
 

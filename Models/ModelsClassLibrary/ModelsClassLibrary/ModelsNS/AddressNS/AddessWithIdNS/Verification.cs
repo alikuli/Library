@@ -60,7 +60,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public DateAndByComplex MailedDate { get; set; }
 
         //this updates the correct verification.
-        public void UpdateDateFor(VerificaionStatusENUM addressVerificaionEnum)
+        public void SetTo(VerificaionStatusENUM addressVerificaionEnum)
         {
             VerificaionStatusEnum = addressVerificaionEnum;
 

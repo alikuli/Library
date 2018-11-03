@@ -39,19 +39,19 @@
         </tr>
     </thead>
 
-    @if (!Model.AddressVerificationTrx.IsNull())
+    @if (!Model.AddressVerificationTrxs.IsNull())
     {
         int counter = 0;
-        foreach (var item in Model.AddressVerificationTrx)
+        foreach (var item in Model.AddressVerificationTrxs)
         {
             counter++;
             <tr>
                 <td>
-                    @counter. @item.Name
+                     @counter. @Html.ActionLink(item.Name, "Edit", "AddressVerificationTrxs", new { id = item.Id },null)
                 </td>
             </tr>
         }
     }
 
 
-</table>
+</table>                                                                                                            

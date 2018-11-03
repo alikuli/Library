@@ -1,16 +1,32 @@
 ﻿@model ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS.MailerNS.MailerVMForAssigningVerifList
 
+
+
+
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+        
+    string pakistanPostBtn = string.Format("Pakistan Post [{0}]", Model.Pakistan_Postal_Verifications_Available);
+    string pakistanCourierBtn = string.Format("Pakistan Courier [{0}]", Model.Pakistan_Courier_Verifications_Available);
+    string foreignPostBtn = string.Format("Foriegn Postal [{0}]", Model.Foreign_Postal_Verifications_Available);
+    string foreignCourierBtn = string.Format("Foriegn Courier [{0}]", Model.Foreign_Postal_Verifications_Available);
+
+    string pkPost = Model.Pakistan_Postal_Verifications_Available > 0 ? "" : "disabled";
+    string pkCourier = Model.Pakistan_Courier_Verifications_Available > 0 ? "" : "disabled";
+    string foreignPost = Model.Foreign_Postal_Verifications_Available > 0 ? "" : "disabled";
+    string foreignCourier = Model.Foreign_Postal_Verifications_Available > 0 ? "" : "disabled";
+    
+
+    <div class="form-horizontal m-5">
         <h4>Get Verification Letters</h4>
         <hr />
         @Html.Partial("_messages")
 
         
-    @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
         @Html.HiddenFor(x => x.MailerId)
 
         <div class="form-group">
@@ -18,65 +34,25 @@
             <strong> @Html.DisplayFor(model => model.Total_Open_Mailings_For_Mailer)</strong>
         </div>
 
-
-        @if (!Model.AddressVerificationHdrList.IsNullOrEmpty())
-        {
-            int count = 0;
-            <div class="well p-3 pl-4">
-
-                @foreach (var hdr in Model.AddressVerificationHdrList)
-                {
-                    count++;
-                    <span>
-                        @count. 
-                    </span>
-                        @Html.ActionLink(hdr.FullName(), "PrintVerificationLetters", new { id = hdr.Id });
-                }
-            </div>
-        }
-
         <div class="form-group">
-            @Html.LabelFor(model => model.Pakistan_Postal_Verifications_Available, htmlAttributes: new { @class = "" }): 
-            <strong> @Html.DisplayFor(model => model.Pakistan_Postal_Verifications_Available)</strong>
+            @Html.LabelFor(model => model.Total_Mails_Awaiting_Costs, htmlAttributes: new { @class = "" }):
+            <strong> @Html.DisplayFor(model => model.Total_Mails_Awaiting_Costs)</strong>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Pakistan_Courier_Verifications_Available, htmlAttributes: new { @class = "" }):
-            <strong> @Html.DisplayFor(model => model.Pakistan_Courier_Verifications_Available)</strong>
+        @*Print letters*@
+
+        <div id="verificationListId">
+            @Html.Partial("_verificationList")
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Foreign_Postal_Verifications_Available, htmlAttributes: new { @class = "" }):
-            <strong> @Html.DisplayFor(model => model.Foreign_Postal_Verifications_Available)</strong>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Foreign_Courier_Verifications_Available, htmlAttributes: new { @class = "" }): 
-            <strong> @Html.DisplayFor(model => model.Foreign_Courier_Verifications_Available)</strong>
-        </div>
+        <input type="submit" name="name" value="@pakistanPostBtn" formaction="PakistanPost" @pkPost class="btn btn-success m-3"/><br />
+        <input type="submit" name="name" value="@pakistanCourierBtn" formaction="PakistanCourier" @pkCourier class="btn btn-success m-3" /><br />
+        <input type="submit" name="name" value="@foreignPostBtn" formaction="ForeignPost" @foreignPost class="btn btn-dark m-3" /><br />
+        <input type="submit" name="name" value="@foreignCourierBtn" formaction="ForeignCourier" @foreignCourier class="btn btn-dark m-3" /><br />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MailServiceEnum, htmlAttributes: new { @class = "" })
-            @Html.DropDownListFor(x => x.MailServiceEnum,
-              (Model.SelectList_MailServiceEnum as IEnumerable<SelectListItem>),
-                  "--- Select Courier/Postal---",
-                  new { @class = "form-control" })
+        
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MailLocalOrForiegnEnum, htmlAttributes: new { @class = "" })
-            @Html.DropDownListFor(x => x.MailLocalOrForiegnEnum,
-                 (Model.SelectList_MailLocalOrForiegnEnum as IEnumerable<SelectListItem>),
-                  "--- Select Local/Foreign---",
-                  new { @class = "form-control" })
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
 }
 
 <div>

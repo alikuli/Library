@@ -197,6 +197,8 @@
     <Compile Include="InterfacesNS\SharedNS\CommonNS\ICommonNoId.cs" />
     <Compile Include="InterfacesNS\SharedNS\IEntity.cs" />
     <Compile Include="InterfacesNS\SharedNS\FeaturesNS\IHasUser.cs" />
+    <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\AddressVerificationNumberVm.cs" />
+    <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\IamVerified.cs" />
     <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\IHasVerification.cs" />
     <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\IVerification.cs" />
     <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\Verification.cs" />
@@ -237,11 +239,12 @@
     <Compile Include="ModelsNS\FeaturesNS\MenuPath3Feature.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MailerNS\CreateMailerVM.cs" />
-    <Compile Include="MailerNS\VerificationsCounter.cs" />
-    <Compile Include="MailerNS\MailCounter.cs" />
-    <Compile Include="MailerNS\Mailer.cs" />
-    <Compile Include="MailerNS\MailerVMForAssigningVerifList.cs" />
+    <Compile Include="ModelsNS\MailerNS\CreateMailerVM.cs" />
+    <Compile Include="ModelsNS\MailerNS\MailingCostsVM.cs" />
+    <Compile Include="ModelsNS\MailerNS\VerificationsCounter.cs" />
+    <Compile Include="ModelsNS\MailerNS\MailCounter.cs" />
+    <Compile Include="ModelsNS\MailerNS\Mailer.cs" />
+    <Compile Include="ModelsNS\MailerNS\MailerVMForAssigningVerifList.cs" />
     <Compile Include="ModelsNS\SharedNS\CountModel.cs" />
     <Compile Include="ModelsNS\PageViewNS\PageView.cs" />
     <Compile Include="ModelsNS\GlobalCommentsNS\GlobalComment.cs" />

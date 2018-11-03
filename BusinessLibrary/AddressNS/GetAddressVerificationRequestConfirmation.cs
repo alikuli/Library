@@ -19,11 +19,11 @@ namespace UowLibrary.AddressNS
             avr2.MailServiceEnum = avr.MailServiceEnum;
             avr2.IsSure1 = avr.IsSure1;
             avr2.DateIsSure1 = DateTime.UtcNow;
-            avr2.PaymentAmount = getVerificaionCost(avr2);
+            avr2.PaymentAmount = getVerificaionCharges(avr2);
             return avr2;
         }
 
-        double getVerificaionCost(AddressVerificationRequest avr)
+        double getVerificaionCharges(AddressVerificationRequest avr)
         {
             string error = "";
             double verificationCost = 0;
@@ -35,11 +35,11 @@ namespace UowLibrary.AddressNS
                     {
                         case true:
                             //is in Pakistan
-                            verificationCost = VerificationConfig.Cost_Postal_Local;
+                            verificationCost = VerificationConfig.Sale_Postal_Local;
                             break;
                         case false:
                             //is foreign
-                            verificationCost = VerificationConfig.Cost_Postal_International;
+                            verificationCost = VerificationConfig.Sale_Postal_International;
                             break;
                         default:
                             error = string.Format("No such option");
@@ -51,10 +51,10 @@ namespace UowLibrary.AddressNS
                     {
                         case true:
                             //is in Pakistan
-                            verificationCost = VerificationConfig.Cost_Courier_Local;
+                            verificationCost = VerificationConfig.Sale_Courier_Local;
                             break;
                         case false:
-                            verificationCost = VerificationConfig.Cost_Courier_International;
+                            verificationCost = VerificationConfig.Sale_Courier_International;
                             //is foreign
                             break;
                         default:

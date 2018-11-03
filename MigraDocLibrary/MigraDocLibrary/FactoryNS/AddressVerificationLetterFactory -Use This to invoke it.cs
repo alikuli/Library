@@ -22,13 +22,6 @@ namespace MigraDocLibrary.InvoiceNS
                 var document = new LetterEngine().CreateNewDocument(header);
                 document.UseCmykColor = true;
 
-                //#if DEBUG
-                //                // For debugging only...
-                //                MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToFile(document, "MigraDoc.mdddl");
-                //                var document2 = MigraDoc.DocumentObjectModel.IO.DdlReader.DocumentFromFile("MigraDoc.mdddl");
-                //                //document = document2;
-                //                // With PDFsharp 1.50 beta 3 there is a known problem: the blank before "by" gets lost while persisting as MDDDL.
-                //#endif
 
                 // Create a renderer for PDF that uses Unicode font encoding.
                 var pdfRenderer = new PdfDocumentRenderer(true);
@@ -42,10 +35,10 @@ namespace MigraDocLibrary.InvoiceNS
                 // Save the PDF document...
                 //var filename = "Invoice.pdf";
 
-                #if DEBUG
+                //#if DEBUG
                 // I don't want to close the document constantly...
-                var filename = "AddressVerification-" + Guid.NewGuid().ToString("N").ToUpper() + ".pdf";
-                #endif
+                //var filename = "AddressVerification-" + Guid.NewGuid().ToString("N").ToUpper() + ".pdf";
+                //#endif
 
                 //pdfRenderer.Save(filename);
 

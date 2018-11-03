@@ -19,9 +19,13 @@
             urlGetAddressForVerification = Url.Action("GetAddressForVerification", "Addresses", new { id = item.Id });
             
         }
-        //string urlForGettingVerification = Url.Action("IssueAddressVerificationRequest", "Addresses", new { id = item.Id });
-        //string urlSaveAddress = Url.Action("VerifiyAddressRequest", "Addresses", new { id = item.Id });
-        //string oncClick = Url.Action("GetAddressForVerification", "Addresses", new { id = item.Id });
+        else
+        {
+            if(item.VerificationStatus == VerificaionStatusENUM.Mailed)
+            {
+                urlGetAddressForVerification = Url.Action("EnterVerificationNumber", "Addresses", new { addressId = item.Id });
+            }
+        }
         if (count % 2 == 0)
         {
             alertRow += " background-ltgrey ";
@@ -43,8 +47,6 @@
                 {
                     string src = @Url.Content(item.VerificationIconResult.IconAddress);
                     string toolTip = item.VerificationIconResult.ToolTip;
-                    //double paymentAmnt = 22;
-//                    <span><img src="#" height="16" width="16" /></span> 
 
                     <span data-toggle="tooltip" title="@toolTip" data-placement="top">
 

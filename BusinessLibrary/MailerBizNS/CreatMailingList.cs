@@ -27,15 +27,20 @@ namespace UowLibrary.MailerNS
 
 
 
-        public void CreatMailingList(MailerVMForAssigningVerifList mv)
+        public void CreatMailingList(MailLocalOrForiegnENUM mailLocalOrForiegnEnum, MailServiceENUM mailServiceEnum)
         {
-            mv.IsNullThrowExceptionArgument("Model is null");
-            var verificationHdr = CreateVerificationMailingList(mv);
-            _addressVerifHdrBiz.CreateAndSave(verificationHdr);
+            if(mailLocalOrForiegnEnum == MailLocalOrForiegnENUM.Unknown)
+                throw new Exception("Mail Local Or Foriegn is UNKNOWN.");
+            
+            if (mailServiceEnum == MailServiceENUM.Unknown)
+                throw new Exception("Mail Service is UNKNOWN.");
+
+            var verificationHdr = CreateVerificationMailingList_Helper(mailLocalOrForiegnEnum, mailServiceEnum);
+            AddressVerificationHdrBiz.CreateAndSave(verificationHdr);
 
         }
 
-        private AddressVerificationHdr CreateVerificationMailingList(MailerVMForAssigningVerifList mv)
+        private AddressVerificationHdr CreateVerificationMailingList_Helper(MailLocalOrForiegnENUM mailLocalOrForiegnEnum, MailServiceENUM mailServiceEnum)
         {
             //mv.MailerId.IsNullOrWhiteSpaceThrowArgumentException("View lost the data of Mailer Id");
             //always a mailer will be logged in and the mailer id will be with the User id.
@@ -46,25 +51,37 @@ namespace UowLibrary.MailerNS
 
             Mailer mailer = appuser.Mailer;
 
-            var verificationHdr = CreateVerificationMailingList(mailer, mv.MailServiceEnum, mv.MailLocalOrForiegnEnum);
+            var verificationHdr = CreateVerificationMailingListFor(mailer, mailServiceEnum, mailLocalOrForiegnEnum, VerificaionStatusENUM.Requested);
 
             return verificationHdr;
         }
 
-        public AddressVerificationHdr CreateVerificationMailingList(Mailer mailer, MailServiceENUM mailServiceEnum, MailLocalOrForiegnENUM mailLocalOrForiegnEnum)
+        private AddressVerificationHdr CreateVerificationMailingListFor(Mailer mailer, MailServiceENUM mailServiceEnum, MailLocalOrForiegnENUM mailLocalOrForiegnEnum, VerificaionStatusENUM VerificaionStatusEnum)
         {
-            List<AddressVerificationTrx> mailingList = createVerificationListFor(mailer, mailLocalOrForiegnEnum, mailServiceEnum);
+            List<AddressVerificationTrx> mailingList = createVerificationListFor(mailer, mailLocalOrForiegnEnum, mailServiceEnum, VerificaionStatusEnum);
 
             if (mailingList.IsNullOrEmpty())
                 return null;
+
+            updateTrxs(mailingList);
 
             AddressVerificationHdr header = AddressVerificationHdrBiz.Factory() as AddressVerificationHdr;
             string dateTickStr = DateTime.UtcNow.Ticks.ToString();
 
             dateTickStr = dateTickStr.Substring(dateTickStr.Length - 5); //gets last 5 digits
-            
+
             header.Name = string.Format("{1} -{0} ", dateTickStr, UserName);
             header.AddBeginAndEndDateController(mailLocalOrForiegnEnum, mailServiceEnum, UserName);
+
+            header.MailLocalOrForiegnEnum = mailLocalOrForiegnEnum;
+            header.MailServiceEnum = mailServiceEnum;
+            header.BatchNo = getNextBatchNo();
+            header.BeginDate.SetToTodaysDate(UserId);
+
+            header.EndDate.SetToTodaysDate(UserId);
+            int timeAllowed = NoOfDaysAllowed(mailServiceEnum, mailLocalOrForiegnEnum);
+            header.EndDate.Date = header.EndDate.Date.Value.AddDays(timeAllowed);
+            header.Verification.SetTo(VerificaionStatusENUM.SelectedForProcessing);
             //header.SuccessEnum = SuccessENUM.Inproccess;
 
             //db stuff
@@ -76,8 +93,89 @@ namespace UowLibrary.MailerNS
             return header;
         }
 
+        //this numbers the letter 1 to ?
+        private void updateTrxs(List<AddressVerificationTrx> mailingList)
+        {
+            int letterNo = 0;
+            foreach (AddressVerificationTrx letter in mailingList)
+            {
+                letterNo++;
+                letter.LetterNo = letterNo;
+                letter.Address.Verification.SetTo(VerificaionStatusENUM.SelectedForProcessing);
+                letter.Verification.SetTo(VerificaionStatusENUM.SelectedForProcessing);
+            }
+        }
 
-        private List<AddressVerificationTrx> createVerificationListFor(Mailer mailer, MailLocalOrForiegnENUM mailLocalOrForiegnEnum, MailServiceENUM mailServiceEnum)
+        private long getNextBatchNo()
+        {
+            //long max = AddressVerificationHdrBiz.FindAll().Max(x => x.BatchNo) ?? AddressVerificationHdrBiz.FindAll().Max(x => x.BatchNo);
+            //long nextNo = max + 1;
+            //return nextNo;
+
+            var lst = AddressVerificationHdrBiz.FindAll().Select(x => x.BatchNo).ToList();
+
+            if (lst.IsNullOrEmpty())
+                return 1;
+
+            long max = lst.Max();
+
+            return max;
+        }
+
+        private int NoOfDaysAllowed(MailServiceENUM mailServiceEnum, MailLocalOrForiegnENUM mailLocalOrForiegnEnum)
+        {
+            string err = "";
+            switch (mailLocalOrForiegnEnum)
+            {
+                case MailLocalOrForiegnENUM.InPakistan:
+                    switch (mailServiceEnum)
+                    {
+
+                        case MailServiceENUM.Post:
+                            return VerificationConfig.Number_Of_Days_Allowed_For_Local_Post;
+
+                        case MailServiceENUM.Courier:
+                            return VerificationConfig.Number_Of_Days_Allowed_For_Local_Courier;
+
+                        case MailServiceENUM.Unknown:
+                        default:
+                            err = string.Format("No such choice for No. of days allowed: Service: {0}, Local/Foreign: {1}",
+                                mailServiceEnum.ToString().ToTitleSentance(),
+                                mailLocalOrForiegnEnum.ToString().ToTitleSentance());
+                            throw new Exception(err);
+
+                    };
+
+
+                case MailLocalOrForiegnENUM.OutOfPakistan:
+                    switch (mailServiceEnum)
+                    {
+                        case MailServiceENUM.Post:
+                            return VerificationConfig.Number_Of_Days_Allowed_For_Foreign_Post;
+
+                        case MailServiceENUM.Courier:
+                            return VerificationConfig.Number_Of_Days_Allowed_For_Foreign_Courier;
+
+                        case MailServiceENUM.Unknown:
+                        default:
+                            err = string.Format("No such choice for No. of days allowed: Service: {0}, Local/Foreign: {1}",
+                                mailServiceEnum.ToString().ToTitleSentance(),
+                                mailLocalOrForiegnEnum.ToString().ToTitleSentance());
+                            throw new Exception(err);
+                    };
+
+
+                case MailLocalOrForiegnENUM.Unknown:
+                default:
+                    err = string.Format("No such choice for No. of days allowed: Service: {0}, Local/Foreign: {1}",
+                        mailServiceEnum.ToString().ToTitleSentance(),
+                        mailLocalOrForiegnEnum.ToString().ToTitleSentance());
+                    throw new Exception(err);
+            }
+        }
+
+
+        private List<AddressVerificationTrx> createVerificationListFor(Mailer mailer, MailLocalOrForiegnENUM mailLocalOrForiegnEnum, MailServiceENUM mailServiceEnum, VerificaionStatusENUM VerificaionStatusEnum)
         {
             checkIfMailerIsAllowedAnyMoreMailingsIfNotThrowException_Helper(mailer);
 
@@ -89,7 +187,9 @@ namespace UowLibrary.MailerNS
                 int qtyAllowedToUser = getNumbrOfLettersAllowedToUserIfZeroThrowException_Helper(mailer, mailServiceEnum);
 
                 //this gets the list
-                List<AddressVerificationTrx> list = getVerificationTrxFor_SQL(mailServiceEnum, mailLocalOrForiegnEnum).ToList();
+                List<AddressVerificationTrx> list = getVerificationTrxFor_SQL(mailServiceEnum, mailLocalOrForiegnEnum)
+                    .Where(x => x.Verification.VerificaionStatusEnum == VerificaionStatusEnum)
+                    .ToList();
                 list.IsNullOrEmptyThrowException("Sorry. There are no open verification requests for Pakistan.");
 
 
@@ -123,7 +223,7 @@ namespace UowLibrary.MailerNS
                 if (qty > qtyAllowedToUser)
                     break;
 
-                item.VerificaionStatusEnum = EnumLibrary.EnumNS.VerificaionStatusENUM.SelectedForProcessing;
+                item.Verification.SetTo(VerificaionStatusENUM.SelectedForProcessing);
                 addyVerifLst.Add(item);
 
             }

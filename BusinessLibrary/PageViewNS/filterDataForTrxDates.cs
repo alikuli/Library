@@ -35,50 +35,50 @@ namespace UowLibrary.PageViewNS
 
 
                 case GroupByConstants.YEAR_MONTH:
-                    list = list.Where(x => x.MetaData.Created.Date_NotNull.Year == dateOfTrx.Year)
+                    list = list.Where(x => x.MetaData.Created.Date_NotNull_Min.Year == dateOfTrx.Year)
                                             .ToList();
                     break;
 
 
                 case GroupByConstants.YEAR_MONTH_DAY:
-                    list = list.Where(x => x.MetaData.Created.Date_NotNull.Year == dateOfTrx.Year &&
-                                            x.MetaData.Created.Date_NotNull.Month == dateOfTrx.Month)
+                    list = list.Where(x => x.MetaData.Created.Date_NotNull_Min.Year == dateOfTrx.Year &&
+                                            x.MetaData.Created.Date_NotNull_Min.Month == dateOfTrx.Month)
                                             .ToList();
                     break;
 
 
                 case GroupByConstants.YEAR_MONTH_DAY_HOUR:
-                    list = list.Where(x => x.MetaData.Created.Date_NotNull.Year == dateOfTrx.Year &&
-                                            x.MetaData.Created.Date_NotNull.Month == dateOfTrx.Month &&
-                                            x.MetaData.Created.Date_NotNull.Day == dateOfTrx.Day )
+                    list = list.Where(x => x.MetaData.Created.Date_NotNull_Min.Year == dateOfTrx.Year &&
+                                            x.MetaData.Created.Date_NotNull_Min.Month == dateOfTrx.Month &&
+                                            x.MetaData.Created.Date_NotNull_Min.Day == dateOfTrx.Day )
                                             .ToList();
                     break;
 
 
                 case GroupByConstants.YEAR_MONTH_DAY_HOUR_MINUTE:
-                    list = list.Where(x => x.MetaData.Created.Date_NotNull.Year == dateOfTrx.Year &&
-                                            x.MetaData.Created.Date_NotNull.Month == dateOfTrx.Month &&
-                                            x.MetaData.Created.Date_NotNull.Day == dateOfTrx.Day &&
-                                            x.MetaData.Created.Date_NotNull.Hour == dateOfTrx.Hour)
+                    list = list.Where(x => x.MetaData.Created.Date_NotNull_Min.Year == dateOfTrx.Year &&
+                                            x.MetaData.Created.Date_NotNull_Min.Month == dateOfTrx.Month &&
+                                            x.MetaData.Created.Date_NotNull_Min.Day == dateOfTrx.Day &&
+                                            x.MetaData.Created.Date_NotNull_Min.Hour == dateOfTrx.Hour)
                                             .ToList();
                     break;
 
 
                 case GroupByConstants.YEAR_MONTH_DAY_HOUR_MINUTE_SECOND:
-                    list = list.Where(x => x.MetaData.Created.Date_NotNull.Year == dateOfTrx.Year &&
-                                            x.MetaData.Created.Date_NotNull.Month == dateOfTrx.Month &&
-                                            x.MetaData.Created.Date_NotNull.Day == dateOfTrx.Day &&
-                                            x.MetaData.Created.Date_NotNull.Hour == dateOfTrx.Hour &&
-                                            x.MetaData.Created.Date_NotNull.Minute == dateOfTrx.Minute)
+                    list = list.Where(x => x.MetaData.Created.Date_NotNull_Min.Year == dateOfTrx.Year &&
+                                            x.MetaData.Created.Date_NotNull_Min.Month == dateOfTrx.Month &&
+                                            x.MetaData.Created.Date_NotNull_Min.Day == dateOfTrx.Day &&
+                                            x.MetaData.Created.Date_NotNull_Min.Hour == dateOfTrx.Hour &&
+                                            x.MetaData.Created.Date_NotNull_Min.Minute == dateOfTrx.Minute)
                                             .ToList();
                     break;
                 case GroupByConstants.DETAIL:
-                    list = list.Where(x => x.MetaData.Created.Date_NotNull.Year == dateOfTrx.Year &&
-                                            x.MetaData.Created.Date_NotNull.Month == dateOfTrx.Month &&
-                                            x.MetaData.Created.Date_NotNull.Day == dateOfTrx.Day &&
-                                            x.MetaData.Created.Date_NotNull.Hour == dateOfTrx.Hour &&
-                                            x.MetaData.Created.Date_NotNull.Minute == dateOfTrx.Minute &&
-                                            x.MetaData.Created.Date_NotNull.Second == dateOfTrx.Second)
+                    list = list.Where(x => x.MetaData.Created.Date_NotNull_Min.Year == dateOfTrx.Year &&
+                                            x.MetaData.Created.Date_NotNull_Min.Month == dateOfTrx.Month &&
+                                            x.MetaData.Created.Date_NotNull_Min.Day == dateOfTrx.Day &&
+                                            x.MetaData.Created.Date_NotNull_Min.Hour == dateOfTrx.Hour &&
+                                            x.MetaData.Created.Date_NotNull_Min.Minute == dateOfTrx.Minute &&
+                                            x.MetaData.Created.Date_NotNull_Min.Second == dateOfTrx.Second)
                                             .ToList();
                     break;
                 

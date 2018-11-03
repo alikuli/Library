@@ -27,10 +27,10 @@ namespace UowLibrary.AddressNS
 
             avr.AddressId = addressId;
             avr.CountryId = address.CountryId;
-            avr.CourierInternationalPayment = VerificationConfig.Cost_Courier_International.ToString();
-            avr.CourierLocalPayment = VerificationConfig.Cost_Courier_Local.ToString();
-            avr.PostalInternationalPayment = VerificationConfig.Cost_Postal_International.ToString();
-            avr.PostalLocalPayment = VerificationConfig.Cost_Postal_Local.ToString();
+            avr.CourierInternationalPayment = VerificationConfig.Sale_Courier_International.ToString();
+            avr.CourierLocalPayment = VerificationConfig.Sale_Courier_Local.ToString();
+            avr.PostalInternationalPayment = VerificationConfig.Sale_Postal_International.ToString();
+            avr.PostalLocalPayment = VerificationConfig.Sale_Postal_Local.ToString();
 
 
             return avr;

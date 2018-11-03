@@ -36,12 +36,24 @@ namespace ConstantsLibrary
         public const string FAILED_ICON = "Failed";
     }
 
+    public static class VerificationSale
+    {
+        public const string SALE_COURIER_INTERNATIONAL = "Sale_Courier_International";
+        public const string SALE_POSTAL_INTERNATIONAL = "Sale_Postal_International";
+        public const string SALE_COURIER_LOCAL = "Sale_Courier_Local";
+        public const string SALE_POSTAL_LOCAL = "Sale_Postal_Local";
+    }
+
+    /// <summary>
+    /// This is how much the expected cost is
+    /// </summary>
+
     public static class VerificationCosts
     {
-        public const string COST_COURIER_INTERNATIONAL = "Cost_Courier_International";
-        public const string COST_POSTAL_INTERNATIONAL = "Cost_Postal_International";
-        public const string COST_COURIER_LOCAL = "Cost_Courier_Local";
-        public const string COST_POSTAL_LOCAL = "Cost_Postal_Local";
+        public const string BUDGETED_COST_COURIER_INTERNATIONAL = "Budgeted_Cost_Courier_International";
+        public const string BUDGETED_COST_POSTAL_INTERNATIONAL = "Budgeted_Cost_Postal_International";
+        public const string BUDGETED_COST_COURIER_LOCAL = "Budgeted_Cost_Courier_Local";
+        public const string BUDGETED_COST_POSTAL_LOCAL = "Budgeted_Cost_Postal_Local";
     }
 
     public static class VerificationLetters

@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.AddressNS.AddessWithIdNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
 using System;
@@ -154,13 +155,13 @@ namespace UowLibrary
 
         private static VerificaionStatusENUM doVerificationWork(ICommonWithId entity)
         {
-            IHasVerification iHasVerification = entity as IHasVerification;
+            IamVerified iAmVerified = entity as IamVerified;
             VerificaionStatusENUM addressVerificaionEnum = VerificaionStatusENUM.Unknown;
 
             //this is where the verification icon is given
-            if (!iHasVerification.IsNull())
+            if (!iAmVerified.IsNull())
             {
-                addressVerificaionEnum = iHasVerification.Verification.VerificaionStatusEnum;
+                addressVerificaionEnum = iAmVerified.Verification.VerificaionStatusEnum;
             }
             return addressVerificaionEnum;
         }

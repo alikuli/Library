@@ -80,45 +80,45 @@ namespace MarketPlace.Web6.Controllers
                 throw new Exception(ErrorsGlobal.ToString());
             }
         }
-        public ActionResult GetGroupedCountView(string key, string dataType, DateTime beginDate, DateTime endDate, string dataOwner, string groupDataBy)
-        {
-            ////http://localhost:14038/DashBoard/GetGroupedCount#collapsemenus20182
-            //var dateParameter = new DateParameter();
-            //dateParameter.BeginDate = beginDate;
-            //dateParameter.EndDate = endDate;
+        //public ActionResult GetGroupedCountView(string key, string dataType, DateTime beginDate, DateTime endDate, string dataOwner, string groupDataBy)
+        //{
+        //    ////http://localhost:14038/DashBoard/GetGroupedCount#collapsemenus20182
+        //    //var dateParameter = new DateParameter();
+        //    //dateParameter.BeginDate = beginDate;
+        //    //dateParameter.EndDate = endDate;
 
-            //var dbm = PageViewBiz.GetAllData(dateParameter, dataType, key, dataOwner, groupDataBy);
+        //    //var dbm = PageViewBiz.GetAllData(dateParameter, dataType, key, dataOwner, groupDataBy);
 
-            ////if(Request.IsAjaxRequest())
-            ////{
-            ////    return PartialView("_dataDashBoardGroupItem", dbm);
+        //    ////if(Request.IsAjaxRequest())
+        //    ////{
+        //    ////    return PartialView("_dataDashBoardGroupItem", dbm);
 
-            ////}
-            //return View("GetGroupedCount", dbm);
-            throw new NotImplementedException();
+        //    ////}
+        //    //return View("GetGroupedCount", dbm);
+        //    throw new NotImplementedException();
 
-        }
-
-
-
-        public ActionResult GetAjaxData(string key, string dataType, DateTime beginDate, DateTime endDate, string dataOwner, string groupDataBy)
-        {
-            //var dateParameter = new DateParameter();
-            //dateParameter.BeginDate = beginDate;
-            //dateParameter.EndDate = endDate;
-            ////how do we know if this is controller?
-            ////we need to send key + name.
-            ////all the data for eg controller can be found using key, but, after that it is
-            ////the name
-            //var pvd = PageViewBiz.GetAllData(dateParameter, dataType, key, dataOwner, groupDataBy);
+        //}
 
 
-            //return PartialView("_dataDashBoardGroupItem", pvd);
 
-            throw new NotImplementedException();
+        //public ActionResult GetAjaxData(string key, string dataType, DateTime beginDate, DateTime endDate, string dataOwner, string groupDataBy)
+        //{
+        //    //var dateParameter = new DateParameter();
+        //    //dateParameter.BeginDate = beginDate;
+        //    //dateParameter.EndDate = endDate;
+        //    ////how do we know if this is controller?
+        //    ////we need to send key + name.
+        //    ////all the data for eg controller can be found using key, but, after that it is
+        //    ////the name
+        //    //var pvd = PageViewBiz.GetAllData(dateParameter, dataType, key, dataOwner, groupDataBy);
 
 
-        }
+        //    //return PartialView("_dataDashBoardGroupItem", pvd);
+
+        //    throw new NotImplementedException();
+
+
+        //}
 
         #endregion
 

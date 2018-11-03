@@ -1,6 +1,8 @@
 ﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS;
+using ModelsClassLibrary.ModelsNS.MailerNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS.MailerNS;
 using System;
@@ -50,7 +52,8 @@ namespace MarketPlace.Web6.Controllers
 
                 id.IsNullOrWhiteSpaceThrowArgumentException("id");
                 string downloadFileName = "Verification_Letter_" + DateTime.Now.Ticks.ToString() + ".pdf";
-                FileContentResult fs =  File(MailerBiz.PrintVerificationLetters(id), "application/pdf", downloadFileName);
+                FileContentResult fs = File(MailerBiz.PrintVerificationLetters(id), "application/pdf", downloadFileName);
+                MailerBiz.UpdateStatusToPrinted(id);
                 return fs;
 
             }
@@ -61,7 +64,46 @@ namespace MarketPlace.Web6.Controllers
             }
         }
 
+        /// <summary>
+        /// This enters the costs into the header
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult EnterCosts(string addressVerificationHdrId)
+        {
+            try
+            {
+                MailingCostsVM mailingCostsVM = MailerBiz.CreateMailingCostsVm(addressVerificationHdrId);
+                return View(mailingCostsVM);
+            }
+            catch (Exception e)
+            {
 
+                ErrorsGlobal.Add("Unable to continue.", MethodBase.GetCurrentMethod(), e);
+                ErrorsGlobal.MemorySave();
+            }
+            return RedirectToAction("CreateMailingList");
+        }
+
+
+        [HttpPost]
+        public ActionResult EnterCosts(MailingCostsVM mailingCostsVM)
+        {
+            try
+            {
+
+                mailingCostsVM.IsNullThrowExceptionArgument("mailingCostsVM");
+                MailerBiz.UpdateAndSaveMailingCost(mailingCostsVM);
+
+            }
+            catch (Exception e)
+            {
+
+                ErrorsGlobal.Add("Unable to continue.", MethodBase.GetCurrentMethod(), e);
+                ErrorsGlobal.MemorySave();
+            }
+            return RedirectToAction("CreateMailingList");
+        }
         /// <summary>
         /// This creates the dashboard
         /// </summary>
@@ -84,11 +126,13 @@ namespace MarketPlace.Web6.Controllers
 
 
         [HttpPost]
-        public ActionResult CreateMailingList(MailerVMForAssigningVerifList mv)
+        public ActionResult PakistanPost()
         {
             try
             {
-                MailerBiz.CreatMailingList(mv);
+                MailLocalOrForiegnENUM mailLocalOrForiegnEnum = MailLocalOrForiegnENUM.InPakistan;
+                MailServiceENUM mailServiceEnum = MailServiceENUM.Post;
+                MailerBiz.CreatMailingList(mailLocalOrForiegnEnum, mailServiceEnum);
                 return View("YourMailingListHasBeenCreated");
 
             }
@@ -99,6 +143,89 @@ namespace MarketPlace.Web6.Controllers
             }
         }
 
+
+        [HttpPost]
+        public ActionResult PakistanCourier()
+        {
+            try
+            {
+                MailLocalOrForiegnENUM mailLocalOrForiegnEnum = MailLocalOrForiegnENUM.InPakistan;
+                MailServiceENUM mailServiceEnum = MailServiceENUM.Courier;
+                MailerBiz.CreatMailingList(mailLocalOrForiegnEnum, mailServiceEnum);
+                return View("YourMailingListHasBeenCreated");
+
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Unable to continue.", MethodBase.GetCurrentMethod(), e);
+                return RedirectToAction("Index", "Menus");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ForeignPost()
+        {
+            try
+            {
+                MailLocalOrForiegnENUM mailLocalOrForiegnEnum = MailLocalOrForiegnENUM.OutOfPakistan;
+                MailServiceENUM mailServiceEnum = MailServiceENUM.Post;
+                MailerBiz.CreatMailingList(mailLocalOrForiegnEnum, mailServiceEnum);
+                return View("YourMailingListHasBeenCreated");
+
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Unable to continue.", MethodBase.GetCurrentMethod(), e);
+                return RedirectToAction("Index", "Menus");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ForeignCourier()
+        {
+            try
+            {
+                MailLocalOrForiegnENUM mailLocalOrForiegnEnum = MailLocalOrForiegnENUM.OutOfPakistan;
+                MailServiceENUM mailServiceEnum = MailServiceENUM.Courier;
+                MailerBiz.CreatMailingList(mailLocalOrForiegnEnum, mailServiceEnum);
+                return View("YourMailingListHasBeenCreated");
+
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Unable to continue.", MethodBase.GetCurrentMethod(), e);
+                return RedirectToAction("Index", "Menus");
+            }
+        }
+        //public ActionResult CreateMailingList(MailLocalOrForiegnENUM mailLocalOrForiegnEnum, MailServiceENUM mailServiceEnum)
+        //{
+        //    try
+        //    {
+        //        MailerBiz.CreatMailingList(mailLocalOrForiegnEnum, mailServiceEnum);
+        //        return View("YourMailingListHasBeenCreated");
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ErrorsGlobal.Add("Unable to continue.", MethodBase.GetCurrentMethod(), e);
+        //        return RedirectToAction("Index", "Menus");
+        //    }
+        //}
+        //[HttpPost]
+        //public ActionResult CreateMailingList(MailerVMForAssigningVerifList mv)
+        //{
+        //    try
+        //    {
+        //        MailerBiz.CreatMailingList(mv);
+        //        return View("YourMailingListHasBeenCreated");
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ErrorsGlobal.Add("Unable to continue.", MethodBase.GetCurrentMethod(), e);
+        //        return RedirectToAction("Index", "Menus");
+        //    }
+        //}
 
 
         public ActionResult CreateAMailer()
@@ -120,7 +247,7 @@ namespace MarketPlace.Web6.Controllers
             try
             {
                 MailerBiz.CreateAndSaveMailer(vm);
-                return RedirectToAction("Index","Menus");
+                return RedirectToAction("Index", "Menus");
             }
             catch (Exception e)
             {

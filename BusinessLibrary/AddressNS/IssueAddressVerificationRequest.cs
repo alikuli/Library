@@ -94,21 +94,24 @@ namespace UowLibrary.AddressNS
             
             //this is where we give the verification number
             long verificationNumber = GenerateRandomVerificationNumber;
-            address.Verification.VerificationNumber = verificationNumber;
-            addyVerfTrx.VerificationNumber = verificationNumber;
+            addyVerfTrx.Verification.VerificationNumber = verificationNumber;
 
 
-            createAddressVerificationTrx(address, addyVerfTrx);
-            
 
+            if (address.AddressVerificationTrxs.IsNull())
+                address.AddressVerificationTrxs = new List<AddressVerificationTrx>();
 
+            address.AddressVerificationTrxs.Add(addyVerfTrx);
+            address.Verification.VerificaionStatusEnum = VerificaionStatusENUM.Requested;
+
+            AddressVerificationTrxBiz.CreateEntity(addyVerfTrx);
             UpdateAndSave(address);
 
         }
 
         AddressVerificationTrx fixAddressVerificationTrx(AddressVerificationRequest avr, AddressWithId address)
         {
-            address.Verification.UpdateDateFor(EnumLibrary.EnumNS.VerificaionStatusENUM.Requested);
+            address.Verification.SetTo(EnumLibrary.EnumNS.VerificaionStatusENUM.Requested);
 
             //create a Verification Request
             AddressVerificationTrx addyVerfTrx = AddressVerificationTrxBiz.Factory() as AddressVerificationTrx;
@@ -120,7 +123,7 @@ namespace UowLibrary.AddressNS
             //Accept payment here?
             addyVerfTrx.DateVerifcationPaymentAccepted = DateTime.UtcNow;
             
-            addyVerfTrx.VerificaionStatusEnum = VerificaionStatusENUM.Requested;
+            addyVerfTrx.Verification.SetTo(VerificaionStatusENUM.Requested);
             addyVerfTrx.Name = string.Format("{0}-{1}", UserName, address.Name);
 
             return addyVerfTrx;
@@ -152,14 +155,6 @@ namespace UowLibrary.AddressNS
 
         void createAddressVerificationTrx(AddressWithId address, AddressVerificationTrx addyVerfTrx)
         {
-            if (address.AddressVerificationTrxs.IsNull())
-            {
-                address.AddressVerificationTrxs = new List<AddressVerificationTrx>();
-            }
-            address.AddressVerificationTrxs.Add(addyVerfTrx);
-            address.Verification.VerificaionStatusEnum = VerificaionStatusENUM.Requested;
-
-            AddressVerificationTrxBiz.CreateEntity(addyVerfTrx);
         }
 
 

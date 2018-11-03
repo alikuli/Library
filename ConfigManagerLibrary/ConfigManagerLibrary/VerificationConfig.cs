@@ -183,59 +183,58 @@ namespace ConfigManagerLibrary
 
 
 
-        public static double Cost_Courier_International
+        public static double Sale_Courier_International
         {
             get
             {
 
-                string str = ConfigurationManager.AppSettings[VerificationCosts.COST_COURIER_INTERNATIONAL];
+                string str = ConfigurationManager.AppSettings[VerificationSale.SALE_COURIER_INTERNATIONAL];
                 if (str.IsDouble())
                     return str.ToDouble();
                 else
-                    throw new Exception("COST_COURIER_INTERNATIONAL not set properly in web.config.");
+                    throw new Exception("SALE_COURIER_INTERNATIONAL not set properly in web.config.");
+
+
+
+            }
+        }
+        public static double Sale_Postal_International
+        {
+            get
+            {
+
+                string str = ConfigurationManager.AppSettings[VerificationSale.SALE_POSTAL_INTERNATIONAL];
+                if (str.IsDouble())
+                    return str.ToDouble();
+                else
+                    throw new Exception("SALE_POSTAL_INTERNATIONAL not set properly in web.config.");
 
 
 
             }
         }
 
-        public static double Cost_Postal_International
+        public static double Sale_Courier_Local
         {
             get
             {
 
-                string str = ConfigurationManager.AppSettings[VerificationCosts.COST_POSTAL_INTERNATIONAL];
+                string str = ConfigurationManager.AppSettings[VerificationSale.SALE_COURIER_LOCAL];
                 if (str.IsDouble())
                     return str.ToDouble();
                 else
-                    throw new Exception("COST_POSTAL_INTERNATIONAL not set properly in web.config.");
+                    throw new Exception("SALE_COURIER_LOCAL not set properly in web.config.");
 
 
 
             }
         }
-
-        public static double Cost_Courier_Local
+        public static double Sale_Postal_Local
         {
             get
             {
 
-                string str = ConfigurationManager.AppSettings[VerificationCosts.COST_COURIER_LOCAL];
-                if (str.IsDouble())
-                    return str.ToDouble();
-                else
-                    throw new Exception("COST_COURIER_LOCAL not set properly in web.config.");
-
-
-
-            }
-        }
-        public static double Cost_Postal_Local
-        {
-            get
-            {
-
-                string str = ConfigurationManager.AppSettings[VerificationCosts.COST_POSTAL_LOCAL];
+                string str = ConfigurationManager.AppSettings[VerificationSale.SALE_POSTAL_LOCAL];
                 if (str.IsDouble())
                     return str.ToDouble();
                 else
@@ -246,6 +245,75 @@ namespace ConfigManagerLibrary
             }
         }
 
+
+
+//--------------------------------------------------
+
+        /// <summary>
+        /// These are the budgeted cost
+        /// </summary>
+        public static double Expected_Cost_Courier_International
+        {
+            get
+            {
+
+                string str = ConfigurationManager.AppSettings[VerificationCosts.BUDGETED_COST_COURIER_INTERNATIONAL];
+                if (str.IsDouble())
+                    return str.ToDouble();
+                else
+                    throw new Exception("Expected_Cost_Courier_International not set properly in web.config.");
+
+
+
+            }
+        }
+
+        public static double Expected_Cost_Postal_International
+        {
+            get
+            {
+
+                string str = ConfigurationManager.AppSettings[VerificationCosts.BUDGETED_COST_POSTAL_INTERNATIONAL];
+                if (str.IsDouble())
+                    return str.ToDouble();
+                else
+                    throw new Exception("Expected_Cost_Postal_International not set properly in web.config.");
+
+
+
+            }
+        }
+
+        public static double Expected_Cost_Courier_Local
+        {
+            get
+            {
+
+                string str = ConfigurationManager.AppSettings[VerificationCosts.BUDGETED_COST_COURIER_LOCAL];
+                if (str.IsDouble())
+                    return str.ToDouble();
+                else
+                    throw new Exception("Expected_Cost_Courier_Local not set properly in web.config.");
+
+
+
+            }
+        }
+        public static double Expected_Cost_Postal_Local
+        {
+            get
+            {
+
+                string str = ConfigurationManager.AppSettings[VerificationCosts.BUDGETED_COST_POSTAL_LOCAL];
+                if (str.IsDouble())
+                    return str.ToDouble();
+                else
+                    throw new Exception("Expected_Cost_Postal_Local not set properly in web.config.");
+
+
+
+            }
+        }
 
         public static string Letter_Title
         {

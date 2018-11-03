@@ -27,7 +27,9 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
 
         [NotMapped]
-        public DateTime Date_NotNull { get { return Date ?? DateTime.MinValue; } }
+        public DateTime Date_NotNull_Min { get { return Date ?? DateTime.MinValue; } }
+        [NotMapped]
+        public DateTime Date_NotNull_Max { get { return Date ?? DateTime.MaxValue; } }
 
 
         [Display(Name = "By")]

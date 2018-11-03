@@ -141,6 +141,8 @@ namespace UowLibrary.MailerNS
             return pdf;
         }
 
+
+
         private static void initializeTheLetterCommonText(string letter_Instructions,
                                                             string letter_welcomePara,
                                                             string letter_body,
@@ -172,12 +174,11 @@ namespace UowLibrary.MailerNS
             List<AddressVerificationModel> letterList = new List<AddressVerificationModel>();
             foreach (var trx in addressVerificationHdr.AddressVerificationTrxs)
             {
-
-                string inProcessDate = addressVerificationHdr.BeginDate.Date_NotNull.ToShortDateString();
+                string inProcessDate = addressVerificationHdr.BeginDate.Date_NotNull_Min.ToShortDateString();
                 string addressMailTo = trx.Address.ToPostal();
                 string letterNumber = trx.LetterNo.ToString();
                 string requestDate = trx.DateVerifcationPaymentAccepted_NotNull.ToShortDateString();
-                string verificationNumber = trx.VerificationNumber.ToString();
+                string verificationNumber = trx.Verification.VerificationNumber.ToString();
 
                 AddressVerificationModel letter = new AddressVerificationModel();
                 letter.Load(verificationNumber, addressMailTo, requestDate, inProcessDate, letterNumber);
@@ -187,5 +188,84 @@ namespace UowLibrary.MailerNS
             return letterList;
         }
 
+
+        public void UpdateStatusToPrinted(string addressVerificationHdr_Id)
+        {
+            addressVerificationHdr_Id.IsNullOrWhiteSpaceThrowArgumentException("addressVerificationHdr_Id");
+            AddressVerificationHdr addyVerfHdr = AddressVerificationHdrBiz.Find(addressVerificationHdr_Id);
+            addyVerfHdr.IsNullThrowException("Address Veification Header not found. Status of transaction not changed.");
+            addyVerfHdr.Verification.SetTo(VerificaionStatusENUM.Printed);
+
+            //updateAllTheAddresses(addyVerfHdr);
+            AddressVerificationHdrBiz.UpdateAndSave(addyVerfHdr);
+        }
+
+        //private void updateAllTheAddresses(AddressVerificationHdr addyVerfHdr)
+        //{
+        //    addyVerfHdr.AddressVerificationTrxs.IsNullOrEmptyThrowException("No verification transactions. Programming error");
+
+        //    foreach (AddressVerificationTrx trx in addyVerfHdr.AddressVerificationTrxs)
+        //    {
+        //        trx.Address.IsNullThrowException("Address is null. Progamming error.");
+        //        AddressWithId address = trx.Address;
+        //        address.Verification.SetTo(VerificaionStatusENUM.Printed);
+        //        AddressBiz.Update(address);
+        //    }
+        //}
+
+
+
+
+        private static double GetBugetedCost(MailLocalOrForiegnENUM mailLocalOrForiegnEnum, MailServiceENUM mailServiceEnum)
+        {
+            string error = "";
+            double verificationCost = 0;
+
+            switch (mailServiceEnum)
+            {
+                case MailServiceENUM.Post:
+                    switch (mailLocalOrForiegnEnum)
+                    {
+                        case MailLocalOrForiegnENUM.InPakistan:
+                            //is in Pakistan
+                            verificationCost = VerificationConfig.Expected_Cost_Postal_Local;
+                            break;
+
+                        case MailLocalOrForiegnENUM.OutOfPakistan:
+                            //is foreign
+                            verificationCost = VerificationConfig.Expected_Cost_Postal_International;
+                            break;
+
+                        default:
+                            error = string.Format("No such option: {0}", mailLocalOrForiegnEnum);
+                            throw new Exception(error);
+                    }
+                    break;
+
+                case MailServiceENUM.Courier:
+                    switch (mailLocalOrForiegnEnum)
+                    {
+                        case MailLocalOrForiegnENUM.InPakistan:
+                            //is in Pakistan
+                            verificationCost = VerificationConfig.Expected_Cost_Courier_Local;
+                            break;
+
+                        case MailLocalOrForiegnENUM.OutOfPakistan:
+                            //is foreign
+                            verificationCost = VerificationConfig.Expected_Cost_Courier_International;
+                            break;
+                        default:
+                            error = string.Format("No such option: {0}", mailLocalOrForiegnEnum);
+                            throw new Exception(error);
+                    }
+                    break;
+
+                default:
+                    error = string.Format("No such option: {0}", mailServiceEnum);
+                    throw new Exception(error);
+            }
+
+            return verificationCost;
+        }
     }
 }

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using UowLibrary.AddressNS;
 using UowLibrary.ParametersNS;
 using UserModels;
 
@@ -16,8 +17,8 @@ namespace UowLibrary
 {
     public partial class UserBiz : BusinessLayer<ApplicationUser>
     {
-        private CountryBiz _countryBiz;
-
+        //private CountryBiz _countryBiz;
+        AddressBiz _addressBiz;
         private IAuthenticationManager _iAuthenticationManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IRoleStore<IdentityRole, string> _store;
@@ -26,12 +27,13 @@ namespace UowLibrary
             ApplicationUserManager userManager,
             ApplicationSignInManager signInManager,
             IAuthenticationManager iAuthenticationManager,
-            CountryBiz countryBiz,
+            AddressBiz addressBiz,
             IRepositry<ApplicationUser> entityDal,
             BizParameters bizParameters)
             : base(entityDal, bizParameters)
         {
-            _countryBiz = countryBiz;
+            //_countryBiz = countryBiz;
+            _addressBiz = addressBiz;
             UserManager = userManager;
             SignInManager = signInManager;
             _iAuthenticationManager = iAuthenticationManager;
@@ -40,6 +42,10 @@ namespace UowLibrary
             _roleManager = new RoleManager<IdentityRole>(_store);
 
         }
+
+
+        public AddressBiz AddressBiz { get { return _addressBiz; } }
+
 
         public ApplicationSignInManager SignInManager { get; set; }
         public ApplicationUserManager UserManager { get; set; }
@@ -72,8 +78,8 @@ namespace UowLibrary
             get
             {
 
-                _countryBiz.IsNullThrowException();
-                return _countryBiz;
+                _addressBiz.CountryBiz.IsNullThrowException();
+                return _addressBiz.CountryBiz;
             }
         }
 

@@ -19,7 +19,7 @@ namespace UowLibrary.AddressNS
             //Now we want to check if mailer has anything open for this address in proccess or other wise
             //only ones we do not care about are the ones that have failed.
 
-            var dataToCheckForDuplicates = allForAddress.Where(x => x.VerificaionStatusEnum != VerificaionStatusENUM.Failed);
+            var dataToCheckForDuplicates = allForAddress.Where(x => x.Verification.VerificaionStatusEnum != VerificaionStatusENUM.Failed);
             return dataToCheckForDuplicates;
         }
     }

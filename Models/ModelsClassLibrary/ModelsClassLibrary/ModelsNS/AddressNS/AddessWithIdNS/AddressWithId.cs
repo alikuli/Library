@@ -2,6 +2,7 @@
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.AddressNS;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.AddressNS.AddessWithIdNS;
 using ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS;
 using ModelsClassLibrary.ModelsNS.GeoLocationNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using UserModels;
+using System.Linq;
 
 namespace ModelsClassLibrary.ModelsNS.AddressNS
 {
@@ -19,7 +21,7 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS
     /// The Dal layer checks only against the User's addresses to make sure the address is unique.
     /// That is because GetDomainDataForDuplicateNameSearch is overridden
     /// </summary>
-    public class AddressWithId : CommonWithId, IAddressWithId, IHasVerification
+    public class AddressWithId : CommonWithId, IAddressWithId, IamVerified
     {
         public AddressWithId()
         {
@@ -30,7 +32,7 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS
 
 
             GeoPosition = new GeoLocationComplex();
-            Verification = new Verification();
+            //Verification = new Verification();
         }
 
 
@@ -127,8 +129,23 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS
 
 
 
-        public Verification Verification { get; set; }
+        public  Verification Verification
+        {
+            get
+            {
+                AddressVerificationTrx latestTrx = AddressVerificationTrxs.OrderBy(x => x.MetaData.Created.Date_NotNull_Min).FirstOrDefault();
 
+                if (latestTrx.IsNull())
+                {
+                    Verification verificationDummy = new Verification();
+                    verificationDummy.VerificaionStatusEnum = VerificaionStatusENUM.NotVerified;
+                    return verificationDummy;
+                }
+
+                return latestTrx.Verification;
+
+            }
+        }
 
         public virtual ICollection<AddressVerificationTrx> AddressVerificationTrxs { get; set; }
 
@@ -226,7 +243,7 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS
             AddressType = addy.AddressType;
             Attention = addy.Attention;
 
-            Verification = addy.Verification;
+            //Verification = addy.Verification;
 
 
             //AddressWithId a = ic as AddressWithId;

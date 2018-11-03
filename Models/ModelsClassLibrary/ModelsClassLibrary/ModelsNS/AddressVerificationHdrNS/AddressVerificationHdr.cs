@@ -18,17 +18,24 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS
         {
             BeginDate = new DateAndByComplex();
             EndDate = new DateAndByComplex();
+            Verification = new Verification();
         }
-        public long BatchNo {get;set;}
+        public long BatchNo { get; set; }
+
         public override string FullName()
         {
-            string fullName = string.Format("{0} -Status: {1} ({4}),  Success Window: {2} to: {3} ",
+            int ttl = Total_Verifications_Qty;
+
+
+            string fullName = string.Format("{0} -Status: {1} ({4}: {2} to: {3}) [Qty = {5} {6}] Verified Pct = {7:0.00}%",
                 Name,
-                SuccessEnum.ToString().ToTitleCase(),
-                BeginDate.Date_NotNull.ToShortDateString(),
-                EndDate.Date_NotNull.ToShortDateString(),
-                IsWithinDate ? "Open" : "Closed"
-                );
+                Verification.VerificaionStatusEnum.ToString().ToTitleSentance(),
+                BeginDate.Date_NotNull_Min.ToShortDateString(),
+                EndDate.Date_NotNull_Min.ToShortDateString(),
+                IsWithinDate ? "Open" : "Closed",
+                ttl,
+                ttl == 1 ? "Letter" : "Letters",
+                Successful_Verifications_Pct);
             return fullName;
         }
         public override ClassesWithRightsENUM ClassNameForRights()
@@ -45,7 +52,7 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS
             BeginDate = hdr.BeginDate;
             EndDate = hdr.EndDate;
             MailerId = hdr.MailerId;
-
+            BatchNo = hdr.BatchNo;
 
         }
 
@@ -58,13 +65,18 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS
         public DateAndByComplex EndDate { get; set; }
 
 
+        public double CostOfmailing { get; set; }
+        public double BudgetedCost { get; set; }
+
+        public int TotalQtyLettersMailed { get; set; }
+
         public bool IsWithinDate
         {
             get
             {
                 DateParameter dateParm = new DateParameter();
-                dateParm.BeginDate = BeginDate.Date_NotNull;
-                dateParm.EndDate = EndDate.Date_NotNull;
+                dateParm.BeginDate = BeginDate.Date_NotNull_Min;
+                dateParm.EndDate = EndDate.Date_NotNull_Min;
                 return dateParm.IsDateWithinBeginAndEndDatesInclusive(DateTime.UtcNow);
             }
         }
@@ -219,12 +231,52 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS
 
             }
         }
-        public MailLocalOrForiegnENUM MailLocalOrForiegnEnum  { get; set; }
-        public MailServiceENUM MailServiceEnum  { get; set; }
+
+
+        public int Successful_Verifications_Qty
+        {
+            get
+            {
+                if (AddressVerificationTrxs.IsNullOrEmpty())
+                    return 0;
+
+                int ttlVerified = AddressVerificationTrxs.Where(x => x.Verification.VerificaionStatusEnum == VerificaionStatusENUM.Verified).Count();
+                return ttlVerified;
+            }
+        }
+
+        public double Successful_Verifications_Pct
+        {
+            get
+            {
+                if (Total_Verifications_Qty == 0)
+                    return 0;
+
+                if (Successful_Verifications_Qty == 0)
+                    return 0;
+                double pctRate = Successful_Verifications_Qty / Total_Verifications_Qty * 100;
+
+                return pctRate;
+            }
+        }
+        public int Total_Verifications_Qty
+        {
+            get
+            {
+                if (AddressVerificationTrxs.IsNullOrEmpty())
+                    return 0;
+                return AddressVerificationTrxs.Count;
+            }
+        }
+
+        public MailLocalOrForiegnENUM MailLocalOrForiegnEnum { get; set; }
+        public MailServiceENUM MailServiceEnum { get; set; }
+
+        public Verification Verification { get; set; }
 
 
         #region Totals
-        
+
         public int TotalVerifications
         {
             get
@@ -241,7 +293,7 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS
             {
                 if (AddressVerificationTrxs.IsNull())
                     return 0;
-                return AddressVerificationTrxs.Where(x => x.VerificaionStatusEnum == VerificaionStatusENUM.Verified).Count();
+                return AddressVerificationTrxs.Where(x => x.Verification.VerificaionStatusEnum == VerificaionStatusENUM.Verified).Count();
 
             }
         }
@@ -270,7 +322,7 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS
             {
                 if (AddressVerificationTrxs.IsNull())
                     return 0;
-                return AddressVerificationTrxs.Where(x => x.VerificaionStatusEnum == VerificaionStatusENUM.Failed).Count();
+                return AddressVerificationTrxs.Where(x => x.Verification.VerificaionStatusEnum == VerificaionStatusENUM.Failed).Count();
 
             }
         }
@@ -286,9 +338,9 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS
                     return 0;
 
                 return AddressVerificationTrxs.Where(x =>
-                    x.VerificaionStatusEnum == VerificaionStatusENUM.Mailed ||
-                    x.VerificaionStatusEnum == VerificaionStatusENUM.Printed ||
-                    x.VerificaionStatusEnum == VerificaionStatusENUM.SelectedForProcessing).Count();
+                    x.Verification.VerificaionStatusEnum == VerificaionStatusENUM.Mailed ||
+                    x.Verification.VerificaionStatusEnum == VerificaionStatusENUM.Printed ||
+                    x.Verification.VerificaionStatusEnum == VerificaionStatusENUM.SelectedForProcessing).Count();
 
             }
         }
@@ -317,7 +369,7 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS
                 if (AddressVerificationTrxs.IsNull())
                     return 0;
                 return AddressVerificationTrxs.Where(x =>
-                    x.VerificaionStatusEnum == VerificaionStatusENUM.Unknown).Count();
+                    x.Verification.VerificaionStatusEnum == VerificaionStatusENUM.Unknown).Count();
 
             }
         }

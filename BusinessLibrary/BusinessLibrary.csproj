@@ -179,14 +179,15 @@
     <Compile Include="MailerBizNS\BusinessRulesFor.cs" />
     <Compile Include="MailerBizNS\CreateMailerVMForAssigningVerifList.cs" />
     <Compile Include="MailerBizNS\Event_ModifyIndexItem.cs" />
+    <Compile Include="MailerBizNS\UpdateAndSaveMailingCost.cs" />
     <Compile Include="MailerBizNS\Fix.cs" />
     <Compile Include="MailerBizNS\numberOfOpenMailingsAllowedToMailer.cs" />
     <Compile Include="MailerBizNS\Factory_CreateMailerVm.cs" />
     <Compile Include="MailerBizNS\CreateMailer.cs" />
-    <Compile Include="MailerBizNS\PdfVerificationLetterData.cs" />
+    <Compile Include="MailerBizNS\GetmailingCostFor.cs" />
     <Compile Include="MailerBizNS\TotalOpenMailingsForMailer.cs" />
     <Compile Include="MailerBizNS\IsMailerAllowedMoreMailings.cs" />
-    <Compile Include="MailerBizNS\CreateVerificationMailingList.cs" />
+    <Compile Include="MailerBizNS\CreatMailingList.cs" />
     <Compile Include="MailerBizNS\SelectList.cs" />
     <Compile Include="MailerBizNS\MailerBiz.cs" />
     <Compile Include="MenuNS\MenuPath1FeatureNS\MenuPath1FeatureBiz.cs" />

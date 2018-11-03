@@ -24,7 +24,7 @@ namespace UowLibrary.AddressNS
         public IQueryable<AddressVerificationTrx> GetTrxFor(VerificaionStatusENUM verificaionStatusEnum)
         {
             var trx = FindAll()
-                .Where(x => x.VerificaionStatusEnum == verificaionStatusEnum);
+                .Where(x => x.Verification.VerificaionStatusEnum == verificaionStatusEnum);
             return trx;
         }
 

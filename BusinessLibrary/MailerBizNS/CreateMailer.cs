@@ -26,7 +26,7 @@ namespace UowLibrary.MailerNS
 
             if (mailerExists)
             {
-                ErrorsGlobal.Add("Mailer already exists for user!",MethodBase.GetCurrentMethod(),null);
+                ErrorsGlobal.Add("Mailer already exists for user!", MethodBase.GetCurrentMethod(), null);
                 string error = ErrorsGlobal.ToString();
                 throw new Exception(error);
             }
@@ -51,110 +51,6 @@ namespace UowLibrary.MailerNS
             ErrorsGlobal.AddMessage(string.Format("Mailer created for {0}", user.UserName));
 
         }
-
-
-
-
-        //List<AddressVerificationTrx> _verfTrxRequestList;
-        //List<AddressVerificationTrx> VerfTrxRequestList
-        //{
-        //    get
-        //    {
-        //        return _verfTrxRequestList ?? (_verfTrxRequestList = AddressVerificationTrxBiz.FindAll().Where(x => x.VerificaionStatusEnum == VerificaionStatusENUM.Requested).ToList());
-        //    }
-        //}
-
-        //private long Total_Foreign_Courier_Available()
-        //{
-
-        //    //get all the Request Trx
-        //    return getVerificationListCountFor(MailServiceENUM.Courier, MailLocalOrForiegnENUM.OutOfPakistan);
-        //}
-
-        //private long getVerificationListCountFor(MailServiceENUM mailServiceEnum, MailLocalOrForiegnENUM mailLocalOrForiegnEnum)
-        //{
-        //    if (VerfTrxRequestList.IsNullOrEmpty())
-        //        return 0;
-
-        //    long lst = VerfTrxRequestList.Where(
-        //        x => x.MailServiceEnum == mailServiceEnum &&
-        //            x.MailLocalOrForiegnEnum == mailLocalOrForiegnEnum)
-        //            .Count();
-
-        //    return lst;
-        //}
-
-        //private long Foreign_Postal_Verifications_Available()
-        //{
-        //    return getVerificationListCountFor(MailServiceENUM.Post, MailLocalOrForiegnENUM.OutOfPakistan);
-        //}
-
-        //private long Pakistan_Courier_Verifications_Available()
-        //{
-        //    return getVerificationListCountFor(MailServiceENUM.Courier, MailLocalOrForiegnENUM.InPakistan);
-        //}
-
-        //private long Pakistan_Postal_Verifications_Available()
-        //{
-        //    return getVerificationListCountFor(MailServiceENUM.Post, MailLocalOrForiegnENUM.InPakistan);
-
-        //}
-
-
-        //List<AddressVerificationHdr> FindAllVerifHeadersForMailer(string mailerId)
-        //{
-        //    Mailer mailer = Find(mailerId);
-
-
-        //    if(mailer.IsNull())
-        //        return null;
-
-        //    if(mailer.AddressVerificationHdrs.IsNullOrEmpty())
-        //        return null;
-
-        //    return mailer.AddressVerificationHdrs.ToList();
-        //}
-
-
-        //private string GetMailerIdFor(string userId)
-        //{
-        //    if (userId.IsNullOrWhiteSpace())
-        //        return "";
-
-        //    Mailer mailer = FindAll().FirstOrDefault(x => x.UserId == userId);
-        //    if (mailer.IsNull())
-        //        return "";
-        //    return mailer.Id;
-        //}
-
-        //private int Total_Open_Mailings_For_Mailer(string mailerId)
-        //{
-        //    List<AddressVerificationHdr> allVerfHdrs = FindAllVerifHeadersForMailer(mailerId);
-
-        //    if (allVerfHdrs.IsNullOrEmpty())
-        //        return 0;
-
-        //    int numberInProccess= allVerfHdrs.Where(x => x.SuccessEnum == SuccessENUM.Inproccess).Count();
-        //    return numberInProccess;
-        //}
-
-        //public MailerVMForAssigningVerifList CreateMailerVMForAssigningVerifList()
-        //{
-        //    UserId.IsNullOrWhiteSpaceThrowException("You are not logged in.");
-
-        //    MailerVMForAssigningVerifList mv = CreateAssignMailingListModel(UserId);
-
-        //    mv.Foreign_Courier_Verifications_Available = Total_Foreign_Courier_Available().ToString();
-        //    mv.Foreign_Postal_Verifications_Available = Foreign_Postal_Verifications_Available().ToString();
-        //    mv.Pakistan_Courier_Verifications_Available = Pakistan_Courier_Verifications_Available().ToString();
-        //    mv.Pakistan_Postal_Verifications_Available = Pakistan_Postal_Verifications_Available().ToString();
-
-        //    mv.MailerId = GetMailerIdFor(UserId);
-        //    mv.MailLocalOrForiegnEnum = MailLocalOrForiegnENUM.Unknown;
-        //    mv.MailServiceEnum = MailServiceENUM.Unknown;
-        //    mv.Total_Open_Mailings_For_Mailer = Total_Open_Mailings_For_Mailer(mv.MailerId).ToString();
-        //    return mv;
-        //}
 
     }
 }

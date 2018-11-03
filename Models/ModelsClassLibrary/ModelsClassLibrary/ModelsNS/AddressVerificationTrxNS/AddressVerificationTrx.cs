@@ -17,7 +17,8 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS
     {
         public AddressVerificationTrx()
         {
-            VerificaionStatusEnum = VerificaionStatusENUM.Unknown;
+            Verification = new Verification();
+            Verification.VerificaionStatusEnum = VerificaionStatusENUM.NotVerified;
             //SuccessEnum = SuccessENUM.Unknown;
 
         }
@@ -46,8 +47,8 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS
 
 
 
-        [Display(Name = "Verification Status")]
-        public VerificaionStatusENUM VerificaionStatusEnum { get; set; }
+        //[Display(Name = "Verification Status")]
+        //public VerificaionStatusENUM VerificaionStatusEnum { get; set; }
 
         public SelectList VerificaionStatusEnumSelectList { get { return EnumExtention.ToSelectListSorted<VerificaionStatusENUM>(VerificaionStatusENUM.Unknown); } }
 
@@ -66,13 +67,24 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS
         public DateTime? DateVerifcationPaymentAccepted { get; set; }
         public DateTime DateVerifcationPaymentAccepted_NotNull { get { return DateVerifcationPaymentAccepted ?? DateTime.MinValue; } }
 
+
+        //[Display(Name = "Date Verification Printed (UTC)")]
+        //[Column(TypeName = "DateTime2")]
+        //[DataType(DataType.DateTime)]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
+        //public DateTime? DateVerifcationPrinted { get; set; }
+        //public DateTime DateVerifcationPrinted_NotNull { get { return DateVerifcationPrinted ?? DateTime.MinValue; } }
+
+        [Display(Name = "Verification Status")]
+        public Verification Verification { get; set; }
+
         public bool IsComplete
         {
             get
             {
                 return (
-                    VerificaionStatusEnum == VerificaionStatusENUM.Failed ||
-                    VerificaionStatusEnum == VerificaionStatusENUM.Verified);
+                    Verification.VerificaionStatusEnum == VerificaionStatusENUM.Failed ||
+                    Verification.VerificaionStatusEnum == VerificaionStatusENUM.Verified);
             }
         }
 
@@ -101,8 +113,8 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS
 
 
 
-        [Display(Name = "Verification No")]
-        public long VerificationNumber { get; set; }
+        //[Display(Name = "Verification No")]
+        //public long VerificationNumber { get; set; }
 
 
         [Display(Name = "Header")]
@@ -117,12 +129,13 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS
 
             MailServiceEnum = addtrx.MailServiceEnum;
             MailLocalOrForiegnEnum = addtrx.MailLocalOrForiegnEnum;
-            VerificaionStatusEnum = addtrx.VerificaionStatusEnum;
+            Verification = addtrx.Verification;
             //SuccessEnum = addtrx.SuccessEnum;
             AddressId = addtrx.AddressId;
             AddressVerificationHdrId = addtrx.AddressVerificationHdrId;
             DateVerifcationPaymentAccepted = addtrx.DateVerifcationPaymentAccepted;
-            VerificationNumber = addtrx.VerificationNumber;
+            //VerificationNumber = addtrx.VerificationNumber;
+            LetterNo = addtrx.LetterNo;
 
         }
     }

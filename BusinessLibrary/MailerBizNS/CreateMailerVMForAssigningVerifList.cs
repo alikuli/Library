@@ -14,11 +14,11 @@ namespace UowLibrary.MailerNS
         /// <summary>
         /// This is loaded during CreateMailerVMForAssigningVerifList
         /// </summary>
-        ICollection<AddressVerificationHdr> Inprocess_AddressVerificationHdrsList (string mailerId)
-        {
-            //all the ones in proccess can be printed.
-            return GetAllHeaders_InProccess(mailerId);
-        }
+        //ICollection<AddressVerificationHdr> Inprocess_AddressVerificationHdrsList(string mailerId)
+        //{
+        //    //all the ones in proccess can be printed.
+        //    return GetAllHeadersFor(mailerId, SuccessENUM.InProccess);
+        //}
 
         /// <summary>
         /// This is used as the first screen to assign mailings. It provides all the info to the
@@ -34,10 +34,10 @@ namespace UowLibrary.MailerNS
 
             MailerVMForAssigningVerifList mv = factory_MailerVMForAssigningVerifList();
 
-            mv.Pakistan_Postal_Verifications_Available = pakistan_Postal_Verifications_Available().ToString();
-            mv.Foreign_Courier_Verifications_Available = total_Foreign_Courier_Available().ToString();
-            mv.Foreign_Postal_Verifications_Available = foreign_Postal_Verifications_Available().ToString();
-            mv.Pakistan_Courier_Verifications_Available = pakistan_Courier_Verifications_Available().ToString();
+            mv.Pakistan_Postal_Verifications_Available = pakistan_Postal_Verifications_Available();
+            mv.Foreign_Courier_Verifications_Available = total_Foreign_Courier_Available();
+            mv.Foreign_Postal_Verifications_Available = foreign_Postal_Verifications_Available();
+            mv.Pakistan_Courier_Verifications_Available = pakistan_Courier_Verifications_Available();
 
             mv.MailerId = mailerId;
 
@@ -45,20 +45,21 @@ namespace UowLibrary.MailerNS
             mv.MailLocalOrForiegnEnum = MailLocalOrForiegnENUM.Unknown;
             mv.MailServiceEnum = MailServiceENUM.Unknown;
 
-            int openMailingsForMailer =total_Open_Mailings_For_Mailer(mv.MailerId);
+            int openMailingsForMailer = total_Open_Mailings_For_Mailer(mv.MailerId);
             mv.Total_Open_Mailings_For_Mailer = openMailingsForMailer.ToString();
 
             if (openMailingsForMailer > 0)
             {
-                mv.AddressVerificationHdrList = inProcess_VerifHdrs_ReadyForPrinting(mv.MailerId);
+                mv.AddressVerificationHdrList_InProcessOrPrinted = verifHdrs_ReadyForPrintingOrCosts(mv.MailerId);
             }
 
             return mv;
         }
 
-        private ICollection<AddressVerificationHdr> inProcess_VerifHdrs_ReadyForPrinting(string mailerId)
+
+        private ICollection<AddressVerificationHdr> verifHdrs_ReadyForPrintingOrCosts(string mailerId)
         {
-            List<AddressVerificationHdr> Inprocess_AddressVerificationHdrsList = GetAllHeaders_InProccess(mailerId);
+            List<AddressVerificationHdr> Inprocess_AddressVerificationHdrsList = GetAllHeadersFor(mailerId, SuccessENUM.InProccess);
 
             if (Inprocess_AddressVerificationHdrsList.IsNullOrEmpty())
                 return null;
@@ -71,10 +72,7 @@ namespace UowLibrary.MailerNS
                 if (hdr.AddressVerificationTrxs.IsNullOrEmpty())
                     continue;
 
-                bool selected = hdr.AddressVerificationTrxs.Where(x => x.VerificaionStatusEnum == VerificaionStatusENUM.SelectedForProcessing).Any();
-
-                if(selected)
-                    selectedList.Add(hdr);
+                selectedList.Add(hdr);
             }
             return selectedList;
         }
@@ -108,6 +106,7 @@ namespace UowLibrary.MailerNS
                 return "";
 
             Mailer mailer = FindAll().FirstOrDefault(x => x.UserId == userId);
+
             if (mailer.IsNull())
                 return "";
             return mailer.Id;
@@ -220,7 +219,7 @@ namespace UowLibrary.MailerNS
 
 
 
-        long total_Foreign_Courier_Available()
+        int total_Foreign_Courier_Available()
         {
 
             //get all the Request Trx
@@ -228,17 +227,17 @@ namespace UowLibrary.MailerNS
         }
 
 
-        long foreign_Postal_Verifications_Available()
+        int foreign_Postal_Verifications_Available()
         {
             return getVerificationListCountFor(MailServiceENUM.Post, MailLocalOrForiegnENUM.OutOfPakistan);
         }
 
-        long pakistan_Courier_Verifications_Available()
+        int pakistan_Courier_Verifications_Available()
         {
             return getVerificationListCountFor(MailServiceENUM.Courier, MailLocalOrForiegnENUM.InPakistan);
         }
 
-        long pakistan_Postal_Verifications_Available()
+        int pakistan_Postal_Verifications_Available()
         {
             return getVerificationListCountFor(MailServiceENUM.Post, MailLocalOrForiegnENUM.InPakistan);
 
@@ -248,8 +247,7 @@ namespace UowLibrary.MailerNS
 
         int total_Open_Mailings_For_Mailer(string mailerId)
         {
-            //List<AddressVerificationHdr> allVerfHdrs = findAllVerifHeadersForMailer(mailerId);
-            List<AddressVerificationHdr> allVerfHdrs = GetAllHeaders_InProccess(mailerId);
+            List<AddressVerificationHdr> allVerfHdrs = GetAllHeadersFor(mailerId, SuccessENUM.InProccess);
 
             if (allVerfHdrs.IsNullOrEmpty())
                 return 0;
@@ -258,23 +256,26 @@ namespace UowLibrary.MailerNS
             return numberInProccess;
         }
 
-        
-        List<AddressVerificationHdr> GetAllHeaders_InProccess(string mailerId)
+
+        List<AddressVerificationHdr> GetAllHeadersFor(string mailerId, SuccessENUM successEnum)
         {
             List<AddressVerificationHdr> _allVerfHdrs = findAllVerifHeadersForMailer(mailerId);
 
             if (_allVerfHdrs.IsNullOrEmpty())
                 return null;
 
-            _allVerfHdrs = _allVerfHdrs
-                .Where(x => x.SuccessEnum == SuccessENUM.InProccess)
-                .ToList();
+            List<AddressVerificationHdr> selectedList = new List<AddressVerificationHdr>();
+            foreach (var item in _allVerfHdrs)
+            {
+                if (item.SuccessEnum == successEnum)
+                    selectedList.Add(item);
+            }
 
-            return _allVerfHdrs;
+            return selectedList;
         }
 
 
-        long getVerificationListCountFor(MailServiceENUM mailServiceEnum, MailLocalOrForiegnENUM mailLocalOrForiegnEnum)
+        int getVerificationListCountFor(MailServiceENUM mailServiceEnum, MailLocalOrForiegnENUM mailLocalOrForiegnEnum)
         {
 
 
@@ -285,8 +286,11 @@ namespace UowLibrary.MailerNS
             return lst.Count();
         }
 
-        List<AddressVerificationTrx> _verfTrxRequestList = null;
-        
+
+
+
+        List<AddressVerificationTrx> _verfTrxRequestList;
+
         List<AddressVerificationTrx> verfTrxRequestListExceptSelfUser
         {
             get
@@ -296,7 +300,7 @@ namespace UowLibrary.MailerNS
                 //first initialize the userid
                 _verfTrxRequestList = AddressVerificationTrxBiz
                     .FindAll()
-                    .Where(x => x.VerificaionStatusEnum == VerificaionStatusENUM.Requested)
+                    .Where(x => x.Verification.VerificaionStatusEnum == VerificaionStatusENUM.Requested)
                     .ToList();
 
 
@@ -306,7 +310,7 @@ namespace UowLibrary.MailerNS
                     //update the UserId so we can filter out the current user
                     foreach (var item in _verfTrxRequestList)
                     {
-                        item.UserIdOfOwner = item.Address.UserId;   
+                        item.UserIdOfOwner = item.Address.UserId;
                     }
 
                     //now we can use it in linq

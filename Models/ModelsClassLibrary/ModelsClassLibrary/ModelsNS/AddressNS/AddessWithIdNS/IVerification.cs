@@ -10,7 +10,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         DateAndByComplex PrintedDate { get; set; }
         DateAndByComplex ProccessExpirationDate { get; set; }
         DateAndByComplex RequestDate { get; set; }
-        void UpdateDateFor(VerificaionStatusENUM addressVerificaionEnum);
+        void SetTo(VerificaionStatusENUM addressVerificaionEnum);
         void UpdateProccessExpirationDate(int noOfDays);
         long VerificationNumber { get; set; }
         DateAndByComplex VerifiedDate { get; set; }

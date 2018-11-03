@@ -7,43 +7,42 @@ namespace UowLibrary.MailerNS
 {
     public partial class MailerBiz : BusinessLayer<Mailer>
     {
-        readonly AddressVerificationHdrBiz _addressVerifHdrBiz;
+        
         readonly UserBiz _userBiz;
-        //readonly CountryBiz _countryBiz;
-        public MailerBiz(IRepositry<Mailer> entityDal, BizParameters bizParameters, AddressVerificationHdrBiz addressVerifHdrBiz, /*CountryBiz countryBiz, */ UserBiz userBiz )
+        
+        public MailerBiz(IRepositry<Mailer> entityDal, BizParameters bizParameters,/*CountryBiz countryBiz, */ UserBiz userBiz)
             : base(entityDal, bizParameters)
         {
-            _addressVerifHdrBiz = addressVerifHdrBiz;
+
             _userBiz = userBiz;
-            //_countryBiz = countryBiz;
         }
 
-
-        AddressVerificationHdrBiz AddressVerificationHdrBiz
+        public AddressBiz AddressBiz { get { return _userBiz.AddressBiz; } }
+        public AddressVerificationHdrBiz AddressVerificationHdrBiz
         {
             get
             {
-                return _addressVerifHdrBiz;
+                return _userBiz.AddressBiz.AddressVerificationHdrBiz;
             }
         }
 
-        AddressVerificationTrxBiz AddressVerificationTrxBiz
+        public AddressVerificationTrxBiz AddressVerificationTrxBiz
         {
             get
             {
-                return _addressVerifHdrBiz.AddressVerificationTrxBiz;
+                return _userBiz.AddressBiz.AddressVerificationHdrBiz.AddressVerificationTrxBiz;
             }
         }
 
 
-        UserBiz UserBiz
+        public UserBiz UserBiz
         {
             get
             {
                 return _userBiz;
             }
         }
-        CountryBiz CountryBiz
+        public CountryBiz CountryBiz
         {
             get
             {
@@ -51,7 +50,7 @@ namespace UowLibrary.MailerNS
             }
         }
 
-        string PakistanId
+        public string PakistanId
         {
             get
             {

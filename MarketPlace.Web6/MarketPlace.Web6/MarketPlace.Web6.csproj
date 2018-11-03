@@ -432,6 +432,9 @@
     <Content Include="Views\Addresses\DisplayAddressVerifcationForConfirmation.cshtml" />
     <Content Include="Views\Mailers\MailerdashBoard.cshtml" />
     <Content Include="Views\Mailers\YourMailingListHasBeenCreated.cshtml" />
+    <Content Include="Views\Mailers\_verificationList.cshtml" />
+    <Content Include="Views\Mailers\EnterCosts.cshtml" />
+    <Content Include="Views\Addresses\EnterVerificationNumber.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css" />
