@@ -85,6 +85,9 @@ namespace ModelsClassLibrary.ViewModels
             return FullName;
         }
 
+        
+        //if this is true, then the item has been marked default
+        public bool IsDefault { get; set; }
 
         public IMenuManager MenuManager { get; set; }
 

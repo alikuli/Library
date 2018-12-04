@@ -1,0 +1,16 @@
+﻿@model ModelsClassLibrary.ModelsNS.PlacesNS.PhoneNS.Phone
+
+<div class="well p-3 m-3">
+
+    @Html.Partial(@"_Name_And_DetailInfo")
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.CountryId,
+                 (@Model.SelectListCountry as IEnumerable<SelectListItem>),
+                  "--- Country for Phone  ---",
+                  new { @class = "form-control" })
+    </div>
+
+
+</div>

@@ -62,20 +62,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LettersEngineNS\FooterLetterNS\Body.cs" />
-    <Compile Include="LettersEngineNS\FooterLetterNS\Infrastructure.cs" />
-    <Compile Include="LettersEngineNS\FooterLetterNS\Logo.cs" />
-    <Compile Include="LettersEngineNS\LetterEngineNS\LetterEngine- Heading.cs" />
-    <Compile Include="LettersEngineNS\LetterEngineNS\LetterEngine- Styles.cs" />
-    <Compile Include="LettersEngineNS\LetterEngineNS\LetterEngine.cs" />
-    <Compile Include="LettersEngineNS\LetterEngineNS\ToAddress_DefineColumns.cs" />
-    <Compile Include="LettersEngineNS\LetterNS\Body.cs" />
-    <Compile Include="LettersEngineNS\LetterNS\SendToAddress.cs" />
-    <Compile Include="LettersEngineNS\LetterNS\Header.cs" />
-    <Compile Include="LettersEngineNS\SummaryNS\Infrastructure.cs" />
-    <Compile Include="LettersEngineNS\SummaryNS\Logo.cs" />
-    <Compile Include="LettersEngineNS\SummaryNS\Body.cs" />
-    <Compile Include="LettersEngineNS\LetterNS\Infrastructure.cs" />
+    <Compile Include="VerificationLettersEngineNS\FooterLetterNS\Body.cs" />
+    <Compile Include="VerificationLettersEngineNS\FooterLetterNS\Infrastructure.cs" />
+    <Compile Include="VerificationLettersEngineNS\FooterLetterNS\Logo.cs" />
+    <Compile Include="VerificationLettersEngineNS\LetterEngineNS\LetterEngine- Heading.cs" />
+    <Compile Include="VerificationLettersEngineNS\LetterEngineNS\LetterEngine- Styles.cs" />
+    <Compile Include="VerificationLettersEngineNS\LetterEngineNS\LetterEngine.cs" />
+    <Compile Include="VerificationLettersEngineNS\LetterEngineNS\ToAddress_DefineColumns.cs" />
+    <Compile Include="VerificationLettersEngineNS\LetterNS\Body.cs" />
+    <Compile Include="VerificationLettersEngineNS\LetterNS\SendToAddress.cs" />
+    <Compile Include="VerificationLettersEngineNS\LetterNS\Header.cs" />
+    <Compile Include="VerificationLettersEngineNS\SummaryNS\Infrastructure.cs" />
+    <Compile Include="VerificationLettersEngineNS\SummaryNS\Logo.cs" />
+    <Compile Include="VerificationLettersEngineNS\SummaryNS\Body.cs" />
+    <Compile Include="VerificationLettersEngineNS\LetterNS\Infrastructure.cs" />
     <Compile Include="FactoryNS\IndexFactory-use this to invoke it.cs">
       <SubType>Code</SubType>
     </Compile>

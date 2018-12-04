@@ -1,0 +1,44 @@
+﻿@model ModelsClassLibrary.ModelsNS.PlayersNS.Customer
+
+
+<div class="well p-3 m-3">
+
+    @Html.Partial(@"_Name_And_DetailInfo")
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustomerCategoryId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.CustomerCategoryId,
+                         (@Model.SelectListCustomerCategory as IEnumerable<SelectListItem>),
+                  "--- Select Customer Category---",
+                  new { @class = "form-control" })
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DefaultBillAddressId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.DefaultBillAddressId,
+                 (@Model.SelectListAddressBillTo as IEnumerable<SelectListItem>),
+                  "--- Default Bill To Address ---",
+                  new { @class = "form-control" })
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DefaultShipAddressId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.DefaultShipAddressId,
+                 (@Model.SelectListAddressShipTo as IEnumerable<SelectListItem>),
+                  "--- Default Ship To Address ---",
+                  new { @class = "form-control" })
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DefaultInformToAddressId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.DefaultInformToAddressId,
+                 (@Model.SelectListAddressInformTo as IEnumerable<SelectListItem>),
+                  "--- Default Inform To Address ---",
+                  new { @class = "form-control" })
+    </div>
+</div>

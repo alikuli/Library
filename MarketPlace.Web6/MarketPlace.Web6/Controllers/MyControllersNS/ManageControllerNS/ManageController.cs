@@ -139,7 +139,7 @@ namespace MarketPlace.Web6.Controllers
             try
             {
 
-                await ManageControllerUow.AddPhoneNumberAsync(model);
+                //await ManageControllerUow.AddPhoneNumberAsync(model);
                 return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.FixedPhoneNumber });
 
             }

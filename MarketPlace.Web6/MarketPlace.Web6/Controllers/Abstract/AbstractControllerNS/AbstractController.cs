@@ -2,22 +2,11 @@
 using AliKuli.UtilitiesNS;
 using BreadCrumbsLibraryNS.Programs;
 using ErrorHandlerLibrary;
-using ErrorHandlerLibrary.ExceptionsNS;
-using InterfacesLibrary.SharedNS;
-using InterfacesLibrary.SharedNS.FeaturesNS;
 using Microsoft.AspNet.Identity;
-using ModelsClassLibrary.ModelsNS.SharedNS;
-using System;
-using System.Linq;
-using System.Reflection;
 using System.Web.Mvc;
-using UowLibrary;
 using UowLibrary.Interface;
-using UowLibrary.ParametersNS;
 using UowLibrary.PageViewNS;
-using UowLibrary.PlayersNS;
-using UowLibrary.UploadFileNS;
-using UserModels;
+using UowLibrary.ParametersNS;
 using WebLibrary.Programs;
 
 namespace MarketPlace.Web4.Controllers
@@ -54,9 +43,9 @@ namespace MarketPlace.Web4.Controllers
 
         public ConfigManagerHelper ConfigManagerHelper
         {
-            get 
+            get
             {
-                return _configManagerHelper; 
+                return _configManagerHelper;
             }
         }
         /// <summary>
@@ -89,7 +78,8 @@ namespace MarketPlace.Web4.Controllers
             }
         }
 
-        protected BreadCrumbManager BreadCrumbManager{
+        protected BreadCrumbManager BreadCrumbManager
+        {
             get
             {
                 _bcm.IsNullThrowException();

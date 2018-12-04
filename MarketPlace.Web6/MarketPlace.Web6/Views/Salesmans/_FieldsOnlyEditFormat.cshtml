@@ -1,0 +1,44 @@
+﻿@model ModelsClassLibrary.ModelsNS.PlayersNS.Salesman
+
+
+<div class="well p-3 m-3">
+
+    @Html.Partial(@"_Name_And_DetailInfo")
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SalesmanCategoryId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.SalesmanCategoryId,
+                         (@Model.SelectListSalesmanCategory as IEnumerable<SelectListItem>),
+                  "--- Select Salesman Category---",
+                  new { @class = "form-control" })
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DefaultBillAddressId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.DefaultBillAddressId,
+                 (@Model.SelectListBillAddress as IEnumerable<SelectListItem>),
+                  "--- Default Bill Address ---",
+                  new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DefaultShipAddressId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.DefaultShipAddressId,
+                          (@Model.SelectListShipAddress as IEnumerable<SelectListItem>),
+                  "--- Default Ship Address ---",
+                  new { @class = "form-control" })
+    </div>
+
+
+
+    @*<div class="form-group">
+        @Html.LabelFor(model => model.Perso, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.UserId,
+                 (@Model.SelectListUser as IEnumerable<SelectListItem>),
+                  "--- User ---",
+                  new { @class = "form-control" })
+    </div>*@
+
+</div>

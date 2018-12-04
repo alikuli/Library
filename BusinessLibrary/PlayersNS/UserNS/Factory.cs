@@ -47,43 +47,43 @@ namespace UowLibrary
             //Check the incoming phone number and fix it.
             //string phone
 
-            //Load the country
-            if (r.Phone.IsNullOrWhiteSpace())
-            {
-                ErrorsGlobal.Add("No Phone", MethodBase.GetCurrentMethod());
-                throw new Exception(ErrorsGlobal.ToString());
-            }
+            ////Load the country
+            //if (r.Phone.IsNullOrWhiteSpace())
+            //{
+            //    ErrorsGlobal.Add("No Phone", MethodBase.GetCurrentMethod());
+            //    throw new Exception(ErrorsGlobal.ToString());
+            //}
 
 
-            string _countryAbbrev = "";
+            //string _countryAbbrev = "";
 
-            if (countryAbbrev.IsNullOrWhiteSpace())
-            {
-                if (r.CountryID.IsNullOrEmpty())
-                {
-                    ErrorsGlobal.Add("No Country Received", MethodBase.GetCurrentMethod());
-                    throw new Exception(ErrorsGlobal.ToString());
-                }
-                Country country = CountryBiz.Find(r.CountryID);
-                if (country.IsNull())
-                {
-                    ErrorsGlobal.Add("Country not found", MethodBase.GetCurrentMethod());
-                    throw new Exception(ErrorsGlobal.ToString());
-                }
+            //if (countryAbbrev.IsNullOrWhiteSpace())
+            //{
+            //    if (r.CountryID.IsNullOrEmpty())
+            //    {
+            //        ErrorsGlobal.Add("No Country Received", MethodBase.GetCurrentMethod());
+            //        throw new Exception(ErrorsGlobal.ToString());
+            //    }
+            //    Country country = CountryBiz.Find(r.CountryID);
+            //    if (country.IsNull())
+            //    {
+            //        ErrorsGlobal.Add("Country not found", MethodBase.GetCurrentMethod());
+            //        throw new Exception(ErrorsGlobal.ToString());
+            //    }
 
-                _countryAbbrev = country.Abbreviation;
+            //    _countryAbbrev = country.Abbreviation;
 
-            }
-            else
-            {
-                _countryAbbrev = countryAbbrev;
-            }
+            //}
+            //else
+            //{
+            //    _countryAbbrev = countryAbbrev;
+            //}
             #endregion
 
             //fix phone number
-            string fixedPhoneNumber = PhoneNumberFixer(
-                r.Phone,
-                _countryAbbrev);
+            //string fixedPhoneNumber = PhoneNumberFixer(
+            //    r.Phone,
+            //    _countryAbbrev);
 
             //PersonComplex p = new PersonComplex
             //{
@@ -115,11 +115,11 @@ namespace UowLibrary
             ApplicationUser u = new ApplicationUser
             {
                 UserName = r.UserName,  //This will be the Login
-                PhoneNumber = fixedPhoneNumber,
-                PhoneNumberAsEntered = r.Phone,
-                Email = r.Email,
-                PersonComplex = r.Person,
-                AddressComplex = r.Address
+                //PhoneNumber = fixedPhoneNumber,
+                //PhoneNumberAsEntered = r.Phone,
+                //Email = r.Email,
+                //PersonComplex = r.Person,
+                //AddressComplex = r.Address
 
             };
 
@@ -139,8 +139,8 @@ namespace UowLibrary
             RegisterViewModel rvm = new RegisterViewModel();
             rvm.Password = password;
             rvm.UserName = userName;
-            rvm.Phone = phoneNumber;
-            rvm.Email = email;
+            //rvm.Phone = phoneNumber;
+            //rvm.Email = email;
 
             if (countryAbbrev.IsNullOrWhiteSpace())
             {

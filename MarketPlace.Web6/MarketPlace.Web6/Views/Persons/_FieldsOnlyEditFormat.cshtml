@@ -1,0 +1,93 @@
+﻿@model ModelsClassLibrary.ModelsNS.PlayersNS.Person
+
+
+
+
+
+<div id="accordion">
+
+    <div class="card">
+        <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="#basicInfo">
+                Basic Info
+            </a>
+        </div>
+    </div>
+    <div class="card">
+        <div id="basicInfo" class="collapse show" data-parent="#accordion">
+            <div class="card-body">
+                <div class="well p-3 m-3">
+
+                    @Html.Partial(@"_Name_And_DetailInfo")
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PersonCategoryId, htmlAttributes: new { @class = "" })
+                        @Html.DropDownListFor(x => x.PersonCategoryId,
+                         (@Model.SelectListPersonCategory as IEnumerable<SelectListItem>),
+                  "--- Select Person Category---",
+                  new { @class = "form-control" })
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DefaultBillAddressId, htmlAttributes: new { @class = "" })
+                         @Html.DropDownListFor(x => x.DefaultBillAddressId,
+                 (@Model.SelectListBillAddress as IEnumerable<SelectListItem>),
+                  "--- Default Bill Address ---",
+                  new { @class = "form-control" })
+                    </div>
+
+
+                <div class="mb-2">Belongs To:</div>
+                    @if (!Model.Users.IsNullOrEmpty())
+                    {
+                        <ul>
+                            @foreach (UserModels.ApplicationUser userForEach in Model.Users)
+                            {
+                                <li>@userForEach.Name</li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="card">
+        <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="#personalInfor">
+                Personal Info
+            </a>
+        </div>
+        <div id="personalInfor" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+                <div class="form-group">
+                    @Html.EditorFor(model => model.PersonComplex, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="card">
+        <div class="card-header">
+            <a class="collapsed card-link" data-toggle="collapse" href="#snailMail">
+                Address (Snail Mail)
+
+            </a>
+        </div>
+        <div id="snailMail" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+                <div class="form-group ml-4">
+                    @Html.LabelFor(model => model.DefaultBillAddressId, htmlAttributes: new { @class = "" })
+                    @Html.DropDownListFor(x => x.DefaultBillAddressId,
+                 (@Model.SelectListBillAddress as IEnumerable<SelectListItem>),
+                  "--- default address---",
+                  new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>*@
+</div>

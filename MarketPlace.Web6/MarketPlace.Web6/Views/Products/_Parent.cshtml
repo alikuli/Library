@@ -1,15 +1,16 @@
 ﻿@model ModelsClassLibrary.ModelsNS.ProductNS.Product
 
 
-<div class="container">
+@*<div class="well p-3 m-3">
+
     <div class="form-group">
-        @Html.LabelFor(model => model.ParentId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(x => x.ParentId,
+        @Html.LabelFor(model => model.ParentId, htmlAttributes: new { @class = "control-label" })
+        @Html.DropDownListFor(x => x.ParentId,
                                       (@ViewBag.ParentSelectList as IEnumerable<SelectListItem>),
                                       "--- Select Parent ---",
-                                      new { @class = "form-control" } )
-        </div>
+                                      new { @class = "form-control" })
     </div>
 
-</div>
+
+</div>*@
+

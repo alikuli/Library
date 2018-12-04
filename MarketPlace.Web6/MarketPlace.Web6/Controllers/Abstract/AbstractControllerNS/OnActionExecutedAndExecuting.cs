@@ -14,6 +14,31 @@ namespace MarketPlace.Web4.Controllers
 
 
 
+
+
+        [AllowAnonymous]
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+
+            //get any errors that are in the memory and save them in the list
+            ErrorsGlobal.MemoryRetrieve();
+
+            LoadValidationErrorsIntoErrorsGlobal();
+
+
+            LoadErrorsForDisplay();
+
+            //If we load messages, we casue the ModelState.IsValid to become false. 
+            //use some other way to transport messages.
+
+            LoadMessagesIntoAlerts();
+
+
+        }
+
+
+
         [AllowAnonymous]
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
@@ -22,32 +47,11 @@ namespace MarketPlace.Web4.Controllers
             ErrorsGlobal.MemorySave();
 
             base.OnActionExecuted(filterContext);
-            
-            if(!ErrorsGlobal.HasErrors)
+
+            if (!ErrorsGlobal.HasErrors)
                 PageViewBiz.SavePageView(filterContext, Request);
 
         }
-
-
-        [AllowAnonymous]
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            //get any errors that are in the memory and save them in the list
-            ErrorsGlobal.MemoryRetrieve();
-            LoadValidationErrorsIntoErrorsGlobal();
-            LoadErrorsForDisplay();
-
-            //If we load messages, we casue the ModelState.IsValid to become false. 
-            //use some other way to transport messages.
-
-            LoadMessagesIntoAlerts();
-
-            base.OnActionExecuting(filterContext);
-
-        }
-
-
-
 
     }
 }

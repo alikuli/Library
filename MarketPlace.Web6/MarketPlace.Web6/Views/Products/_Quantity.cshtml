@@ -1,13 +1,11 @@
 ﻿@model ModelsClassLibrary.ModelsNS.ProductNS.Product
 
-<div class="container">
+<div class="well p-3 m-3">
 
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Qty, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter name" } })
-            @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
-        </div>
+        @Html.LabelFor(model => model.Qty, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter name" } })
+        @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
     </div>
 </div>

@@ -1,5 +1,5 @@
 ﻿using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.ProductChildNS;
+using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ProductAbstractNS;
 using ModelsClassLibrary.SharedNS;
 using System.Collections.Generic;
@@ -9,14 +9,15 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS.ProductNS
     {
         List<CheckBoxItem> CheckedBoxesList { get; set; }
         ICollection<MenuPathMain> MenuPathMains { get; set; }
-        ICollection<ProductChild> ProductChildren { get; set; }
-        ICollection<ProductIdentifier> ProductIdentifiers { get; set; }
-        string NameFieldsData { get; set; }
-        string NameFieldsSeperator { get; }
+        List<ProductFeature> ProductFeatures { get; set; }
+        //ICollection<ProductChild> ProductChildren { get; set; }
+        //ICollection<ProductIdentifier> ProductIdentifiers { get; set; }
+        //string NameFieldsData { get; set; }
+        //string NameFieldsSeperator { get; }
 
-        bool IsAutomobile { get; }
+        //bool IsAutomobile { get; }
 
-        Product SetupAndMakeProduct(IProduct iproduct);
+        //Product SetupAndMakeProduct(IProduct iproduct);
 
         //ClassesWithRightsENUM ClassNameForRights();
         //string MenuPath1Id { get; set; }

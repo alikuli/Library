@@ -21,26 +21,29 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
 
         #region UomSale
+
+
         [Display(Name = "UOM Sale")]
         public string UomSaleId { get; set; }
 
         public virtual UomQty UomSale { get; set; }
 
         #endregion
-        #region UomStock
+        //#region UomStock
 
 
-        //=========================================================================================================
+        ////=========================================================================================================
 
-        ///// <summary>
-        ///// This is the UOM we stock in. Note, we dont need the sale UOM because we can convert this to any type. Note, the quantity stored here will be calculated 
-        ///// on the fly and stored
-        ///// </summary>
+        /// <summary>
+        /// This is the UOM we stock in. Note, we dont need the sale UOM because we can convert this to any type. 
+        /// Note, the quantity stored here will be calculated 
+        /// on the fly and stored
+        /// </summary>
         [NotMapped]
         [Display(Name = "Quantities")]
         public Quantity Qty { get; set; }
 
-        #endregion
+        //#endregion
 
 
 

@@ -217,28 +217,26 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AddUserViewModel.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
-    <Compile Include="Controllers\MyControllersNS\AddressNS\Event_CreateViewAndSetupSelectList.cs" />
-    <Compile Include="Controllers\MyControllersNS\AddressNS\AddressesController.cs" />
-    <Compile Include="Controllers\MyControllersNS\AddressVerificationHdrNS\AddressVerificationHdrsController.cs" />
-    <Compile Include="Controllers\MyControllersNS\AddressVerificationTrxNS\AddressVerificationTrxsController.cs" />
+    <Compile Include="Controllers\MyControllersNS\ContactNS\AddressNS\Event_CreateViewAndSetupSelectList.cs" />
+    <Compile Include="Controllers\MyControllersNS\ContactNS\AddressNS\AddressesController.cs" />
+    <Compile Include="Controllers\MyControllersNS\ContactNS\AddressVerificationHdrNS\AddressVerificationHdrsController.cs" />
+    <Compile Include="Controllers\MyControllersNS\ContactNS\AddressVerificationTrxNS\AddressVerificationTrxsController.cs" />
+    <Compile Include="Controllers\MyControllersNS\ContactNS\EmailNS\EmailAddressesController.cs" />
+    <Compile Include="Controllers\MyControllersNS\ContactNS\EmailNS\Event_CreateViewAndSetupSelectList.cs" />
+    <Compile Include="Controllers\MyControllersNS\ContactNS\PhoneNS\PhonesController.cs" />
     <Compile Include="Controllers\MyControllersNS\DashBoardNS\DashBoardController.cs" />
-    <Compile Include="Controllers\MyControllersNS\FeaturesNS\Event_CreateViewAndSetupSelectList.cs" />
-    <Compile Include="Controllers\MyControllersNS\FeaturesNS\FeaturesController.cs" />
+    <Compile Include="Controllers\MyControllersNS\FeatureNS\MenuFeatureNS\MenuFeaturesController.cs" />
+    <Compile Include="Controllers\MyControllersNS\FeatureNS\ProductChildFeatureNS\ProductChildFeaturesController.cs" />
+    <Compile Include="Controllers\MyControllersNS\FeatureNS\ProductFeatureNS\ProductFeaturesController.cs" />
     <Compile Include="Controllers\MyControllersNS\GlobalCommentsNS\GlobalCommentsController.cs" />
     <Compile Include="Controllers\MyControllersNS\CounterNS\CountersController.cs" />
     <Compile Include="Controllers\MyControllersNS\FileDocsNS\FileDocsController.cs" />
     <Compile Include="Controllers\MyControllersNS\LikeUnlikeNS\LikeUnlikesController.cs" />
-    <Compile Include="Controllers\MyControllersNS\MailerNS\Event_CreateViewAndSetupSelectList.cs" />
-    <Compile Include="Controllers\MyControllersNS\MailerNS\MailersController.cs" />
+    <Compile Include="Controllers\MyControllersNS\PlayersNS\MailerCategoriesController.cs" />
+    <Compile Include="Controllers\MyControllersNS\PlayersNS\MailerNS\Event_CreateViewAndSetupSelectList.cs" />
+    <Compile Include="Controllers\MyControllersNS\PlayersNS\MailerNS\MailersController.cs" />
     <Compile Include="Controllers\MyControllersNS\ManageControllerNS\OActionExectuting.cs" />
-    <Compile Include="Controllers\MyControllersNS\MenuNS\MenuPath1FeaturesController.cs" />
     <Compile Include="Controllers\MyControllersNS\MenuNS\MenuPath1sController.cs" />
-    <Compile Include="Controllers\MyControllersNS\MenuNS\MenuPath2FeaturesController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\MyControllersNS\MenuNS\MenuPath3FeaturesController.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Controllers\MyControllersNS\MenuNS\MenusControllerNS\Event_CreateViewAndSetupSelectList.cs" />
     <Compile Include="Controllers\MyControllersNS\MenuNS\MenusControllerNS\MenusController - Index.cs" />
     <Compile Include="Controllers\MyControllersNS\MenuNS\MenusControllerNS\MenusController -Edit.cs" />
@@ -246,7 +244,19 @@
     <Compile Include="Controllers\MyControllersNS\MenuNS\MenusControllerNS\MenusController -Create.cs" />
     <Compile Include="Controllers\MyControllersNS\PageViewNS\PageViewsController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlacesNS\StatesController.cs" />
+    <Compile Include="Controllers\MyControllersNS\PlayersNS\DeliverymansController.cs" />
+    <Compile Include="Controllers\MyControllersNS\PlayersNS\PersonCategoriesController.cs" />
+    <Compile Include="Controllers\MyControllersNS\PlayersNS\PersonsController.cs" />
+    <Compile Include="Controllers\MyControllersNS\PlayersNS\CashiersController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\MyControllersNS\PlayersNS\SalesmanCategoriesController.cs" />
+    <Compile Include="Controllers\MyControllersNS\PlayersNS\DeliverymanCategoriesController.cs" />
+    <Compile Include="Controllers\MyControllersNS\PlayersNS\CustomersController.cs" />
+    <Compile Include="Controllers\MyControllersNS\PlayersNS\CashierCategoriesController.cs" />
+    <Compile Include="Controllers\MyControllersNS\PlayersNS\OwnersController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlayersNS\RightsController.cs" />
+    <Compile Include="Controllers\MyControllersNS\PlayersNS\SalesmansController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlayersNS\UsersController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlayersNS\OwnerCategoriesController.cs" />
     <Compile Include="Controllers\MyControllersNS\ProductNS\ProductChildsController.cs" />
@@ -270,13 +280,10 @@
     <Compile Include="Controllers\MyControllersNS\ManageControllerNS\ManageController.cs" />
     <Compile Include="Controllers\MyControllersNS\UploadedFiles\UploadedFilesController.cs" />
     <Compile Include="Controllers\PrintController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CountModel.cs" />
-    <Compile Include="Models\FeaturesListModel.cs" />
-    <Compile Include="Models\FeaturesModel.cs" />
     <Compile Include="ProgramsNS\RenderViewToString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -288,6 +295,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\debug-bootstrap.css" />
+    <Content Include="Content\Icons\Default Green.png" />
+    <Content Include="Content\Icons\Default.png" />
+    <Content Include="Content\Icons\Default2.png" />
     <Content Include="Content\Icons\ShoppingCart.png" />
     <Content Include="Content\Icons\VerificationIcons\InProccess.png" />
     <Content Include="Content\Icons\VerificationIcons\Mailed.png" />
@@ -406,10 +416,7 @@
     <Content Include="Views\DashBoard\GetBeginEndDates.cshtml" />
     <Content Include="Views\DashBoard\_dataDashboardSingle.cshtml" />
     <Content Include="Views\MenuPath1s\_ListFeatures.cshtml" />
-    <Content Include="Views\MenuPath1Features\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\MenuPath1s\_FieldsOnlyEditFormat.cshtml" />
-    <Content Include="Views\MenuPath1Features\CreateMenuPath1Feature.cshtml" />
-    <Content Include="Views\MenuPath1Features\EditMenuPath1Feature.cshtml" />
     <Content Include="Views\MenuPath2Features\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\MenuPath2Features\CreateMenuPath1Feature.cshtml" />
     <Content Include="Views\MenuPath2Features\EditMenuPath1Feature.cshtml" />
@@ -435,6 +442,27 @@
     <Content Include="Views\Mailers\_verificationList.cshtml" />
     <Content Include="Views\Mailers\EnterCosts.cshtml" />
     <Content Include="Views\Addresses\EnterVerificationNumber.cshtml" />
+    <Content Include="Views\MenuFeatures\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\MenuFeatures\_menu1List.cshtml" />
+    <Content Include="Views\MenuFeatures\_menu2List.cshtml" />
+    <Content Include="Views\MenuFeatures\_menu3List.cshtml" />
+    <Content Include="Views\Products\_ProductFeatures.cshtml" />
+    <Content Include="Views\Customers\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\OwnerCategories\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\Owners\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\UserActive.cshtml" />
+    <Content Include="Views\Deliverymans\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\DeliverymansCategories\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\Cashiers\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\Salesmans\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\CashierCategories\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\SalesmanCategories\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\Persons\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\PersonCategories\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\MailerCategories\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\EmailAddresses\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\Phones\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\EmailAddresses\EnterVerificationNumber.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css" />
@@ -554,8 +582,6 @@
     <Content Include="Views\ProductChilds\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\Products\_ProductChildren.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CheckedBoxesList.cshtml" />
-    <Content Include="Views\ProductAutomobileVMs\_AutomobileVM.cshtml" />
-    <Content Include="Views\ProductAutomobileVMs\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\Shared\ViewControls\BreadCrumbs\_newBreadCrumbs.cshtml" />
     <Content Include="Views\Shared\ViewControls\BreadCrumbs\_home.cshtml" />
     <Content Include="Views\Shared\ViewControls\BreadCrumbs\_bc3.cshtml" />
@@ -581,7 +607,8 @@
     <Folder Include="Content\Uploads\UserSelfie\" />
     <Folder Include="fonts\" />
     <Folder Include="Views\Languages\" />
-    <Folder Include="Views\OwnerCategories\" />
+    <Folder Include="Views\ProductChildFeatures\" />
+    <Folder Include="Views\ProductFeatures\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

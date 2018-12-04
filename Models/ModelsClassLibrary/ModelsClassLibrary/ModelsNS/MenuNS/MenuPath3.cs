@@ -3,10 +3,10 @@ using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
+//using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 using ModelsClassLibrary.ModelsNS.MenuNS;
-using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Collections.Generic;
 using System.IO;
@@ -32,8 +32,9 @@ namespace ModelsClassLibrary.MenuNS
         public virtual ICollection<MenuPathMain> MenuPathMains { get; set; }
         public virtual ICollection<GlobalComment> GlobalComments { get; set; }
         public virtual ICollection<LikeUnlike> LikeUnlikes { get; set; }
-        public virtual ICollection<Feature> Features { get; set; }
-        public virtual ICollection<MenuPath3Feature> MenuPath3Features { get; set; }
+        //public virtual ICollection<Feature> Features { get; set; }
+        //public virtual ICollection<MenuPath3Feature> MenuPath3Features { get; set; }
+        public virtual ICollection<MenuFeature> MenuFeatures { get; set; }
 
         string IHasUploads.MiscFilesLocation()
         {

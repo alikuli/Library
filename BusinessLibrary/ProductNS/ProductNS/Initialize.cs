@@ -186,41 +186,41 @@ namespace UowLibrary.ProductNS
                         continue;
 
                     p = new Product();
-
-                    p.UomVolume = UomVolumeBiz.FindByName(prodInitHelper.UomVolumeName);
-                    p.UomVolume.IsNullThrowException();
-                    
-                    p.UomDimensions = UomLengthBiz.FindByName(prodInitHelper.UomLengthName);
-                    p.UomDimensions.IsNullThrowException();
-
-                    p.UomWeightActual = UomWeightBiz.FindByName(prodInitHelper.UomShipWeightName);
-
-
-                    p.UomWeightListed = UomWeightBiz.FindByName(prodInitHelper.UomWeightListedName);
-                    p.UomWeightListed.IsNullThrowException();
-
-                    p.UomPurchase = UomQuantityBiz.FindByName(prodInitHelper.UomPurchaseName);
-                    p.UomPurchase.IsNullThrowException();
-
-                    p.UomSale = UomQuantityBiz.FindByName(prodInitHelper.UomSaleName);
-                    p.UomSale.IsNullThrowException();
-
                     p.Name = prodInitHelper.Name;
-                    p.Dimensions.Height = prodInitHelper.Height;
-                    p.Dimensions.Width = prodInitHelper.Width;
-                    p.Dimensions.Length = prodInitHelper.Length;
-                    p.UomDimensionsId = p.UomDimensions.Id;
-                    p.UomVolumeId = p.UomVolume.Id;
-                    p.UomDimensionsId = p.UomDimensions.Id;
-                    p.WeightActual = prodInitHelper.ShipWeight;
-                    p.UomWeightActualId = p.UomWeightActual.Id;
 
-                    p.UomWeightListedId = p.UomWeightListed.Id;
-                    p.UomPurchaseId = p.UomPurchase.Id;
-                    p.UomSaleId = p.UomSale.Id;
+                    //p.UomVolume = UomVolumeBiz.FindByName(prodInitHelper.UomVolumeName);
+                    //p.UomVolume.IsNullThrowException();
 
-                    p.WeightListed = prodInitHelper.WeightListed;
-                    p.Volume = prodInitHelper.ShipVolume;
+                    //p.UomDimensions = UomLengthBiz.FindByName(prodInitHelper.UomLengthName);
+                    //p.UomDimensions.IsNullThrowException();
+
+                    //p.UomWeightActual = UomWeightBiz.FindByName(prodInitHelper.UomShipWeightName);
+
+
+                    //p.UomWeightListed = UomWeightBiz.FindByName(prodInitHelper.UomWeightListedName);
+                    //p.UomWeightListed.IsNullThrowException();
+
+                    //p.UomPurchase = UomQuantityBiz.FindByName(prodInitHelper.UomPurchaseName);
+                    //p.UomPurchase.IsNullThrowException();
+
+                    //p.UomSale = UomQuantityBiz.FindByName(prodInitHelper.UomSaleName);
+                    //p.UomSale.IsNullThrowException();
+
+                    //p.Dimensions.Height = prodInitHelper.Height;
+                    //p.Dimensions.Width = prodInitHelper.Width;
+                    //p.Dimensions.Length = prodInitHelper.Length;
+                    //p.UomDimensionsId = p.UomDimensions.Id;
+                    //p.UomVolumeId = p.UomVolume.Id;
+                    //p.UomDimensionsId = p.UomDimensions.Id;
+                    //p.WeightActual = prodInitHelper.ShipWeight;
+                    //p.UomWeightActualId = p.UomWeightActual.Id;
+
+                    //p.UomWeightListedId = p.UomWeightListed.Id;
+                    //p.UomPurchaseId = p.UomPurchase.Id;
+                    //p.UomSaleId = p.UomSale.Id;
+
+                    //p.WeightListed = prodInitHelper.WeightListed;
+                    //p.Volume = prodInitHelper.ShipVolume;
 
                     if (ErrorsGlobal.HasErrors)
                     {

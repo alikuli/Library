@@ -5,6 +5,7 @@ namespace ErrorHandlerLibrary
 {
     public interface IErrorSet
     {
+        bool DoNotClearMessages { get; set; }
         void Add(string customMsg, global::System.Reflection.MethodBase methodBase, Exception e = null);
         void Add(string customMsg, string methodName);
         void AddError_EmptyString(global::System.Reflection.MethodBase methodBase, string stringName);
@@ -24,7 +25,7 @@ namespace ErrorHandlerLibrary
         string LibraryName { get; set; }
         //List<string> ListOfErrors { get; }
         string GetExceptionMessageString(string customMsg, MethodBase methodBase, Exception e);
-        global::ErrorHandlerLibrary.ExceptionsNS.ErrorSet MemoryRetrieve();
+        void MemoryRetrieve();
         bool MemorySave();
         global::System.Collections.Generic.ICollection<global::ErrorHandlerLibrary.IErrorSingle> Messages { get; set; }
         void SetLibAndClass(string libraryname, string className);

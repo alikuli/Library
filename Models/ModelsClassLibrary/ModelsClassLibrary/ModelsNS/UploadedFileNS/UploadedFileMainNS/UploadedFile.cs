@@ -166,7 +166,10 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
         #endregion
 
 
-
+        public override bool DisableNameInView()
+        {
+            return false;
+        }
 
         public string OrignalCompleteName
         {

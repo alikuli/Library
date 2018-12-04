@@ -23,13 +23,13 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
             Check_MlpPrice();
             Check_Sell_Price();
             Check_Is_Not_Child_Of_Self();
-            //Check_UomStock();
             Check_Uom_Weight_On_Product();
             Check_Uom_Volume();
             Check_Ship_Weight();
             Check_Uom_ShipWeight();
-            //Check_At_Least_One_ItemNos();
 
+            //Check_At_Least_One_ItemNos();
+            //Check_UomStock();
             //Check_MSRP();
             //Check_Parent();
             //Check_Product_Category();
@@ -162,11 +162,11 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
             //    throw new Exception(string.Format("The Uom of Ship volume On Product '{0}' has no is missing. 1.ProductAbstract.Check_Uom_Volume", FullName()));
 
             //}
-            if (UomVolumeId.IsNullOrEmpty())
-            {
-                throw new Exception(string.Format("The Uom of Ship volume On Product '{0}' has no is missing. 2.ProductAbstract.Check_Uom_Volume", FullName()));
+            //if (UomVolumeId.IsNullOrEmpty())
+            //{
+            //    throw new Exception(string.Format("The Uom of Ship volume On Product '{0}' has no is missing. 2.ProductAbstract.Check_Uom_Volume", FullName()));
 
-            }
+            //}
         }
 
         private void Check_Uom_Weight_On_Product()
@@ -245,13 +245,13 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         private void Check_Is_Not_Child_Of_Self()
         {
-            if (IsChild)
-            {
-                if (ParentId == Id)
-                {
-                    throw new Exception(string.Format("This product '{0}' is a child of itself! Not allowed. ProductAbstract.Check_Is_Not_Child_Of_Self", FullName()));
-                }
-            }
+            //if (IsChild)
+            //{
+            //    if (ParentId == Id)
+            //    {
+            //        throw new Exception(string.Format("This product '{0}' is a child of itself! Not allowed. ProductAbstract.Check_Is_Not_Child_Of_Self", FullName()));
+            //    }
+            //}
         }
 
         private void Check_Sell_Price()

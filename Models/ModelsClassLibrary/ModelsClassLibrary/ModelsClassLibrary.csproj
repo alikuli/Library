@@ -197,23 +197,26 @@
     <Compile Include="InterfacesNS\SharedNS\CommonNS\ICommonNoId.cs" />
     <Compile Include="InterfacesNS\SharedNS\IEntity.cs" />
     <Compile Include="InterfacesNS\SharedNS\FeaturesNS\IHasUser.cs" />
-    <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\AddressVerificationNumberVm.cs" />
-    <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\IamVerified.cs" />
-    <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\IHasVerification.cs" />
-    <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\IVerification.cs" />
-    <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\Verification.cs" />
-    <Compile Include="ModelsNS\AddressNS\AddressNS\Address.cs" />
-    <Compile Include="ModelsNS\AddressNS\AddressNS\AddressComplex.cs">
+    <Compile Include="ModelsNS\ContactNS\AddressNS\AddressMainNS\AddressVerificationNumberVm.cs" />
+    <Compile Include="ModelsNS\ContactNS\AddressNS\AddressMainNS\IAmVerified.cs" />
+    <Compile Include="ModelsNS\ContactNS\AddressNS\AddressMainNS\IHasVerification.cs" />
+    <Compile Include="ModelsNS\ContactNS\AddressNS\AddressMainNS\IVerification.cs" />
+    <Compile Include="ModelsNS\ContactNS\AddressNS\AddressMainNS\Verification.cs" />
+    <Compile Include="ModelsNS\ContactNS\AddressNS\AddressNS\Address.cs" />
+    <Compile Include="ModelsNS\ContactNS\AddressNS\AddressNS\AddressComplex.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ModelsNS\AddressNS\AddressNS\AddressStringWithNames.cs" />
-    <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\AddressTypeComplex.cs" />
-    <Compile Include="ModelsNS\AddressNS\AddessWithIdNS\AddressWithId.cs" />
-    <Compile Include="ModelsNS\AddressNS\AddressVerificationNS\AddressVerificationModel.cs" />
-    <Compile Include="ModelsNS\AddressNS\AddressVerificationNS\AddressVerificationModel_Header.cs" />
-    <Compile Include="ModelsNS\AddressNS\AddressVerificationRequest.cs" />
+    <Compile Include="ModelsNS\ContactNS\AddressNS\AddressNS\AddressStringWithNames.cs" />
+    <Compile Include="ModelsNS\ContactNS\AddressNS\AddressMainNS\AddressTypeComplex.cs" />
+    <Compile Include="ModelsNS\ContactNS\AddressNS\AddressMainNS\AddressMain.cs" />
+    <Compile Include="ModelsNS\ContactNS\AddressNS\AddressVerificationNS\AddressVerificationModel.cs" />
+    <Compile Include="ModelsNS\ContactNS\AddressNS\AddressVerificationNS\AddressVerificationModel_Header.cs" />
+    <Compile Include="ModelsNS\ContactNS\AddressNS\AddressVerificationRequest.cs" />
+    <Compile Include="ModelsNS\ContactNS\AddressNS\UserPersonAddressModel.cs" />
     <Compile Include="ModelsNS\AddressVerificationHdrNS\AddressVerificationHdr.cs" />
-    <Compile Include="ModelsNS\AddressNS\PhoneNumberNS\PhoneNumber.cs" />
+    <Compile Include="ModelsNS\ContactNS\EmailAddressNS\Email.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ModelsNS\AddressVerificationTrxNS\AddressVerificationTrx.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\AndSpec.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\CompositeSpec.cs" />
@@ -231,20 +234,50 @@
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerHasAvailableUnitsSpec.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerIsActiveSpec.cs" />
     <Compile Include="ModelsNS\BusinessRuleSpecificationsNS\Specs\SellerNS\SellerIsBlackListedSpec.cs" />
+    <Compile Include="ModelsNS\ContactNS\FlattenedModelForPerson.cs" />
+    <Compile Include="ModelsNS\ContactNS\PhoneNS\Phone.cs" />
     <Compile Include="ModelsNS\DashBoardNS\DashBoardSingle.cs" />
-    <Compile Include="ModelsNS\FeaturesNS\MenuPath1Feature.cs" />
-    <Compile Include="ModelsNS\FeaturesNS\MenuPath2Feature.cs">
+    <Compile Include="ModelsNS\FeaturesNS\ProductFeaturesAbstract.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\DeliverymanNS\Deliveryman.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\MailerNS\CreateMailerVM.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\MailerNS\MailerCategory.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\MailerNS\MailingCostsVM.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\MailerNS\VerificationsCounter.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\MailerNS\MailCounter.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\MailerNS\Mailer.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\MailerNS\MailerVMForAssigningVerifList.cs" />
+    <Compile Include="ModelsNS\FeaturesNS\FeatureAbstract.cs" />
+    <Compile Include="ModelsNS\FeaturesNS\MenuFeatureNS\MenuFeature.cs" />
+    <Compile Include="ModelsNS\FeaturesNS\ProductChildFeatureNS\ProductChildFeature.cs" />
+    <Compile Include="ModelsNS\FeaturesNS\ProductFeatureNS\ProductFeature.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\CashierNS\Cashier.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ModelsNS\FeaturesNS\MenuPath3Feature.cs">
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\CashierNS\CashierCategory.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ModelsNS\MailerNS\CreateMailerVM.cs" />
-    <Compile Include="ModelsNS\MailerNS\MailingCostsVM.cs" />
-    <Compile Include="ModelsNS\MailerNS\VerificationsCounter.cs" />
-    <Compile Include="ModelsNS\MailerNS\MailCounter.cs" />
-    <Compile Include="ModelsNS\MailerNS\Mailer.cs" />
-    <Compile Include="ModelsNS\MailerNS\MailerVMForAssigningVerifList.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\CustomerNS\Customer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\CustomerNS\CustomerCategory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\DeliverymanNS\DeliverymanCategory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\PersonComplex.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelsNS\PeopleNS\PersonNS\PersonCategory.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\PersonUserFlatFile.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\SalesmanNS\Salesman.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\SalesmanNS\SalesmanCategory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelsNS\PeopleNS\PersonNS\Person.cs" />
+    <Compile Include="ModelsNS\ContactNS\PhoneEmailAbstract.cs" />
+    <Compile Include="ModelsNS\ProductNS\CheckBoxItemNS\CheckBoxListTree.cs" />
+    <Compile Include="ModelsNS\ProductNS\ProductNS\fullname.cs" />
     <Compile Include="ModelsNS\SharedNS\CountModel.cs" />
     <Compile Include="ModelsNS\PageViewNS\PageView.cs" />
     <Compile Include="ModelsNS\GlobalCommentsNS\GlobalComment.cs" />
@@ -270,7 +303,6 @@
     <Compile Include="ModelsNS\IndexNS\MenuIndexItem.cs" />
     <Compile Include="ModelsNS\IndexNS\MenuModel.cs" />
     <Compile Include="ModelsNS\IndexNS\Show.cs" />
-    <Compile Include="ModelsNS\FeaturesNS\Feature.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\IndexMenuVariables.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\IconProperties.cs" />
     <Compile Include="ModelsNS\ProductNS\ViewModelsNS\IProductAutomobileAdditionalFields.cs" />
@@ -310,21 +342,16 @@
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\MenuStatesNS\IndexMenuProductChild.cs" />
     <Compile Include="ModelsNS\MigraDocNS\PdfHeaderInfo.cs" />
     <Compile Include="ModelsNS\MigraDocNS\OptionsPdfDoc.cs" />
-    <Compile Include="ModelsNS\PeopleNS\AbstractsNS\IPlayer.cs" />
-    <Compile Include="ModelsNS\PeopleNS\AbstractsNS\PlayerAbstract.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\PlayerAbstractsNS\IPlayer.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\PlayerAbstractsNS\PlayerAbstract.cs" />
     <Compile Include="ModelsNS\PeopleNS\EntryScreenNS\CnicAndPhone_Screen1.cs" />
     <Compile Include="ModelsNS\PeopleNS\EntryScreenNS\PersonWithAddress_Screen2.cs" />
-    <Compile Include="ModelsNS\PeopleNS\PlayersNS\CustomerNS\Customer.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\OwnerNS\Owner.cs" />
-    <Compile Include="ModelsNS\PeopleNS\PlayersNS\Person.cs" />
-    <Compile Include="ModelsNS\PeopleNS\PlayersNS\PersonComplex.cs" />
-    <Compile Include="ModelsNS\PeopleNS\PlayersNS\CustomerNS\CustomerCategory.cs" />
     <Compile Include="ModelsNS\PeopleNS\Language.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\OwnerNS\OwnerCategory.cs" />
-    <Compile Include="ModelsNS\PeopleNS\Person.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\ApplicationUserNS\ApplicationUser - Navigations.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\ApplicationUserNS\ApplicationUser - Index.cs" />
-    <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\UpdatePropertiesDuringModify.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\ApplicationUserNS\UpdatePropertiesDuringModify.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\ApplicationUserNS\ApplicationUser.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\UserState.cs" />
     <Compile Include="ModelsNS\PlacesNS\CountryNS\UpdatePropertiesDuringModify.cs" />
@@ -344,7 +371,6 @@
     <Compile Include="ModelsNS\ProductNS\ProductAbstractNS\Dates.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductAbstractNS\Navigation, Prod Cat and Parent.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductAbstractNS\Prices and Costs.cs" />
-    <Compile Include="ModelsNS\ProductNS\ProductAbstractNS\Item numbers and Serial No.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductAbstractNS\Pictures.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuPathMainNS\MenuPathMain.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuPathMainNS\UpdatePropertiesDuringModify.cs" />
@@ -380,6 +406,7 @@
     <Compile Include="ModelsNS\CounterNS\Counter.cs" />
     <Compile Include="ModelsNS\CounterNS\CounterTypeENUM.cs" />
     <Compile Include="ModelsNS\SharedNS\DateParameter.cs" />
+    <Compile Include="ModelsNS\SharedNS\IdModel.cs" />
     <Compile Include="ModelsNS\SharedNS\Parameters\AnnonymousStringType.cs" />
     <Compile Include="ModelsNS\SharedNS\Parameters\GlobalCommentParameter.cs" />
     <Compile Include="ModelsNS\SharedNS\Parameters\ControllerCreateEditParameter - Copy.cs" />
@@ -457,8 +484,14 @@
     <None Include="InterfacesNS\AddressNS\AddressInterfaceDiagram.cd" />
     <None Include="InterfacesNS\DocumentsNS\DocumentDiagram.cd" />
     <None Include="InterfacesNS\PlacesNS\PlacesDiagram.cd" />
-    <None Include="ModelsNS\AddressNS\AddressNS\Address.cd" />
+    <None Include="ModelsNS\ContactNS\AddressNS\AddressMain.cd" />
+    <None Include="ModelsNS\ContactNS\AddressNS\AddressNS\Address.cd" />
+    <None Include="ModelsNS\ContactNS\Contacts.cd" />
+    <None Include="ModelsNS\PeopleNS\PlayersNS\People.cd" />
+    <None Include="ModelsNS\PeopleNS\PlayersNS\UserNS\ApplicationUserNS\ApplicationUser.cd" />
     <None Include="ModelsNS\PlacesNS\PlacesDiagram.cd" />
+    <None Include="ModelsNS\FeaturesNS\Features.cd" />
+    <None Include="ModelsNS\ProductNS\Product.cd" />
     <None Include="ModelsNS\SharedNS\Common\CommonDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>

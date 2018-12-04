@@ -40,12 +40,27 @@ namespace AliKuli.Extentions
             if (str.IsNullOrWhiteSpace())
             {
                 if (errMsg.IsNullOrWhiteSpace())
-                    throw new Exception(string.Format("String: '{0}' is null or only white space", str));
-                else
-                    throw new Exception(errMsg);
+                {
 
+                    throw new Exception(string.Format("String is null or only white space", str));
+                }
+                else
+                {
+                    string[] strArray = { " " };
+                    string [] words = errMsg.Split(strArray, StringSplitOptions.RemoveEmptyEntries);
+                    if(words.Count() > 1)
+                    {
+                        throw new Exception(errMsg);
+
+                    }
+                    else
+                    {
+                        throw new Exception(string.Format("String: '{0}' is null or only white space", errMsg));
+
+                    }
+                }
             }
-            return string.IsNullOrWhiteSpace(str);
+            return string.IsNullOrWhiteSpace(errMsg);
         }
 
         public static bool IsNullOrWhiteSpaceThrowArgumentException(this string str, string errMsg = "")
@@ -55,7 +70,20 @@ namespace AliKuli.Extentions
                 if (errMsg.IsNullOrWhiteSpace())
                     throw new ArgumentException(string.Format("String: '{0}' is null or only white space", str));
                 else
-                    throw new ArgumentException(errMsg);
+                {
+                    string[] strArray = { " " };
+                    string [] words = errMsg.Split(strArray, StringSplitOptions.RemoveEmptyEntries);
+                    if(words.Count() > 1)
+                    {
+                        throw new ArgumentException(errMsg);
+
+                    }
+                    else
+                    {
+                        throw new ArgumentException(string.Format("String: '{0}' is null or only white space", errMsg));
+
+                    }
+                }
 
             }
             return string.IsNullOrWhiteSpace(str);

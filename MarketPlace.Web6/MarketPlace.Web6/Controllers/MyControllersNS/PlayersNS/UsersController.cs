@@ -1,10 +1,11 @@
-﻿using MarketPlace.Web6.Controllers.Abstract;
+﻿using AliKuli.Extentions;
+using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Reflection;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.ParametersNS;
-using UowLibrary.StateNS;
+using UowLibrary.PlayersNS.PersonNS;
 using UserModels;
 
 namespace MarketPlace.Web6.Controllers
@@ -13,24 +14,42 @@ namespace MarketPlace.Web6.Controllers
     public class UsersController : EntityAbstractController<ApplicationUser>
     {
         UserBiz _userBiz;
-        StateBiz _stateBiz;
-        public UsersController(StateBiz stateBiz, UserBiz biz, AbstractControllerParameters param)
-            : base(biz, param)
+        PersonBiz _personBiz;
+        //StateBiz _stateBiz;
+        public UsersController(PersonBiz personBiz, AbstractControllerParameters param)
+            : base(personBiz.UserBiz, param)
         {
-            _stateBiz = stateBiz;
-            _userBiz = biz;
+            _personBiz = personBiz;
+
+            //  _stateBiz = stateBiz;
+            _userBiz = personBiz.UserBiz;
 
         }
 
-
-        public override System.Web.Mvc.ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public PersonBiz PersonBiz
         {
-            ViewBag.CountrySelectList = _stateBiz.CountrySelectList;
+            get
+            {
+                _personBiz.IsNullThrowException();
+                _personBiz.UserId = UserId;
+                _personBiz.UserName = UserName;
 
+                return _personBiz;
+            }
+        }
+
+        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        {
+            //ViewBag.CountrySelectList = _stateBiz.CountrySelectList;
+            //addresses are added from addresses. If there is no address, it will be added during purchaing.
+            ApplicationUser userIn = parm.Entity as ApplicationUser;
+            userIn.IsNullThrowException("Unable to unbox user");
+            userIn.SelectListPeople = _personBiz.SelectList();
             return base.Event_CreateViewAndSetupSelectList(parm);
         }
 
-        public override System.Web.Mvc.ActionResult InitializeDb()
+        [AllowAnonymous]
+        public override ActionResult InitializeDb()
         {
             try
             {
@@ -50,5 +69,7 @@ namespace MarketPlace.Web6.Controllers
         {
             return View();
         }
+
+
     }
 }

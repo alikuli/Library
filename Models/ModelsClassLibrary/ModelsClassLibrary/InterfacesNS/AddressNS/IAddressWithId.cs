@@ -6,11 +6,11 @@ using UserModels;
 
 namespace InterfacesLibrary.AddressNS
 {
-    public interface IAddressWithId : ICommonWithId
+    public interface IAddressMain : ICommonWithId
     {
         AddressTypeComplex AddressType { get; set; }
-        ApplicationUser User { get; set; }
-        string UserId { get; set; }
+        //ApplicationUser User { get; set; }
+        //string PersonId { get; set; }
         //AddressComplex AddressComplex { get; set; }
 
 

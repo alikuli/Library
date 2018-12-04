@@ -32,6 +32,10 @@ namespace MarketPlace.Web6.Controllers
         {
             loadSelectLists(parm);
             _productBiz.LoadMenuPathCheckedBoxes(parm);
+            IProduct iproduct = parm.Entity as IProduct;
+            iproduct.IsNullThrowException("Unable to unbox");
+
+            _productBiz.FixProductFeatures(iproduct);
             return base.Event_CreateViewAndSetupSelectList(parm);
 
         }

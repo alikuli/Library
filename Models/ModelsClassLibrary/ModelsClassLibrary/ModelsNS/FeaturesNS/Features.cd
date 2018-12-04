@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ModelsClassLibrary.ModelsNS.FeaturesNS.FeatureAbstract">
+    <Position X="5.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAABAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>ModelsNS\FeaturesNS\FeatureAbstract.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeature">
+    <Position X="2.25" Y="4" Width="1.5" />
+    <AssociationLine Name="MenuPath1s" Type="ModelsClassLibrary.MenuNS.MenuPath1" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3" Y="4.908" />
+        <Point X="3" Y="5.885" />
+        <Point X="1" Y="5.885" />
+        <Point X="1" Y="7.25" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.008" Y="0.506" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="MenuPath2s" Type="ModelsClassLibrary.MenuNS.MenuPath2" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3" Y="4.908" />
+        <Point X="3" Y="5.845" />
+        <Point X="3" Y="5.845" />
+        <Point X="3" Y="7.25" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.008" Y="0.516" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="MenuPath3s" Type="ModelsClassLibrary.MenuNS.MenuPath3" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3" Y="4.908" />
+        <Point X="3" Y="5.885" />
+        <Point X="4.75" Y="5.885" />
+        <Point X="4.75" Y="7.25" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.143" Y="0.506" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>ModelsNS\FeaturesNS\MenuFeatureNS\MenuFeature.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="MenuPath1s" />
+      <Property Name="MenuPath2s" />
+      <Property Name="MenuPath3s" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.FeaturesNS.ProductFeature">
+    <Position X="5.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>ModelsNS\FeaturesNS\ProductFeaturesNS\ProductFeature.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.FeaturesNS.ProductChildFeature">
+    <Position X="7.25" Y="4" Width="1.5" />
+    <AssociationLine Name="ProductChildren" Type="ModelsClassLibrary.ModelsNS.ProductChildNS.ProductChild">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.039" Y="0.725" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModelsNS\FeaturesNS\ProductChildFeaturesNS\ProductChildFeature.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ProductChildren" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ModelsClassLibrary.MenuNS.MenuPath1" Collapsed="true">
+    <Position X="0.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAABEAAAAAAAQAAgAAAAAAEAgAAAAALAAAA=</HashCode>
+      <FileName>ModelsNS\MenuNS\MenuPath1.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.94" />
+  </Class>
+  <Class Name="ModelsClassLibrary.MenuNS.MenuPath2" Collapsed="true">
+    <Position X="2.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAABEAAAAAAAQAAAAAAAAAEAAAAAAIJAAAA=</HashCode>
+      <FileName>ModelsNS\MenuNS\MenuPath2.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="1.3" />
+  </Class>
+  <Class Name="ModelsClassLibrary.MenuNS.MenuPath3" Collapsed="true">
+    <Position X="4" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAABEAAAAAAAQAAAAAAAAAEAAAAAAIJAAAA=</HashCode>
+      <FileName>ModelsNS\MenuNS\MenuPath3.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="1.065" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.ProductNS.Product" Collapsed="true">
+    <Position X="5.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgACAAAAACAAAAAAABAAAEAAAAAEAAEAAAiBEAIAAAA=</HashCode>
+      <FileName>ModelsNS\ProductNS\ProductNS\Product.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="1.127" />
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.ProductChildNS.ProductChild" Collapsed="true">
+    <Position X="7.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAIHAgAAAAABEAAAQBAAAAgAAAEAAAAAAAAAAAJBAAA=</HashCode>
+      <FileName>ModelsNS\ProductNS\ProductChildNS\Dates.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="1.3" />
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

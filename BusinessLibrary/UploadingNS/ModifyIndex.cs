@@ -3,8 +3,6 @@ using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.ViewModels;
-using System;
-using System.Reflection;
 
 namespace UowLibrary.UploadFileNS
 {
@@ -30,13 +28,14 @@ namespace UowLibrary.UploadFileNS
             base.Event_ModifyIndexItem(indexListVM, indexItem, icommonWithid);
 
             UploadedFile uploadedFile = icommonWithid as UploadedFile;
+            uploadedFile.IsNullThrowException("Unable to convert to Upload");
 
-            if (uploadedFile.IsNull())
-            {
-                ErrorsGlobal.Add("Unable to convert to product Category Main", MethodBase.GetCurrentMethod());
-                throw new Exception(ErrorsGlobal.ToString());
-            }
 
+            indexItem.Name = string.Format("{0}", uploadedFile.MetaData.Created.Date_NotNull_Min.ToLongDateString());
+
+            //this is the tool tip.
+            if (indexItem.Description.IsNullOrWhiteSpace())
+                indexItem.Description = string.Format("This is a file uploaded by you on {0}.", uploadedFile.MetaData.Created.Date_NotNull_Min.ToLongDateString());
 
             indexItem.ImageAddressStr = uploadedFile.RelativePathWithFileName();
         }

@@ -1,9 +1,8 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
+using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.ModelsNS.UploadedFileNS;
-using System.ComponentModel.DataAnnotations;
 using UserModels;
 
 namespace ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS
@@ -14,14 +13,19 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS
 
         public override ClassesWithRightsENUM ClassNameForRights()
         {
-                return EnumLibrary.EnumNS.ClassesWithRightsENUM.FileDoc;
+            return EnumLibrary.EnumNS.ClassesWithRightsENUM.FileDoc;
         }
-        
+
         #region User
         //File owner.
         public virtual ApplicationUser User { get; set; }
 
         public string UserId { get; set; }
+
+
+
+        public virtual Person Person { get; set; }
+        public string PersonId { get; set; }
 
         #endregion
 
@@ -60,6 +64,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS
 
 
 
-        
+
     }
 }

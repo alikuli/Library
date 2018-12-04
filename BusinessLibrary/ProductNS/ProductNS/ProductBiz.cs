@@ -6,6 +6,7 @@ using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.RightsNS;
+using UowLibrary.FeatureNS.MenuFeatureNS;
 using UowLibrary.MenuNS;
 using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS;
@@ -35,6 +36,9 @@ namespace UowLibrary.ProductNS
         {
             get { return _userBiz; }
         }
+        public MenuFeatureBiz MenuFeatureBiz { get { return _myWorkClasses.MenuFeatureBiz; } }
+        public ProductFeatureBiz ProductFeatureBiz { get { return _myWorkClasses.ProductFeatureBiz; } }
+
         public UomVolumeBiz UomVolumeBiz { get { return _myWorkClasses.UomVolumeBiz; } }
         public UomLengthBiz UomLengthBiz { get { return _myWorkClasses.UomLengthBiz; } }
         public UomQuantityBiz UomQuantityBiz { get { return _myWorkClasses.UomQuantityBiz; } }

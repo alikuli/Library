@@ -15,18 +15,6 @@ namespace MarketPlace.Web4.Controllers
 
         private void LoadErrorsForDisplay()
         {
-            //bool UowHasErrors = ErrorsGlobal.HasErrors;
-
-            //if (UowHasErrors)
-            //{
-            //    foreach (var item in ErrorsGlobal.ToList())
-            //        ModelState.AddModelError("", item);
-
-            //    ErrorsGlobal.Errors.Clear();
-            //}
-
-            //Note. These errors are displayed from
-            //\Views\Shared\_messages.cshtml
 
             if (ErrorsGlobal.HasErrors)
             {
@@ -36,7 +24,11 @@ namespace MarketPlace.Web4.Controllers
                     errorsList.Add(item);
                     //ModelState.AddModelError("", item);
                 }
-                ErrorsGlobal.Errors.Clear();
+                if (!ErrorsGlobal.DoNotClearMessages)
+                    ErrorsGlobal.Errors.Clear();
+                else
+                    ErrorsGlobal.DoNotClearMessages = false;
+
                 ViewBag.ListOfErrors = errorsList;
 
             }

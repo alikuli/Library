@@ -19,22 +19,25 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
 
 
-        [Display(Name = "Created End (UTC)")]
+        [Display(Name = "Date (UTC)")]
         [Column(TypeName = "DateTime2")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime? Date { get; set; }
 
 
+        [Display(Name = "Date (UTC)")]
         [NotMapped]
         public DateTime Date_NotNull_Min { get { return Date ?? DateTime.MinValue; } }
+
+
+        [Display(Name = "Date (UTC)")]
         [NotMapped]
         public DateTime Date_NotNull_Max { get { return Date ?? DateTime.MaxValue; } }
 
 
         [Display(Name = "By")]
         [MaxLength(50)]
-
         public string By { get; set; }
 
 

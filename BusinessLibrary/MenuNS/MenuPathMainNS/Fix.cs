@@ -3,6 +3,7 @@ using ModelsClassLibrary.MenuNS;
 using System.Linq;
 using AliKuli.Extentions;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.ModelsNS.FeaturesNS;
 
 
 namespace UowLibrary.ProductNS
@@ -49,6 +50,8 @@ namespace UowLibrary.ProductNS
         {
             entity.Name = entity.MakeName(entity.MenuPath1.Name, entity.MenuPath2.Name, entity.MenuPath3.Name);
         }
+
+
 
     }
 }

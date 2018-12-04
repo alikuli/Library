@@ -1,6 +1,6 @@
 ﻿using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
-using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
+using ModelsClassLibrary.ModelsNS.PlayersNS;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
@@ -98,22 +98,22 @@ namespace ModelsNS.Models
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
-        [Required]
-        [Phone]
-        [Display(Name = "Phone")]
-        public string Phone { get; set; }
+        ////[Required]
+        //[Phone]
+        //[Display(Name = "Phone")]
+        //public string Phone { get; set; }
 
 
-        //[Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        ////[Required]
+        //[EmailAddress]
+        //[Display(Name = "Email")]
+        //public string Email { get; set; }
 
-        [Display(Name = "Country Id Card #")]
-        public string CountryIdCardNumber { get; set; }
+        //[Display(Name = "Country Id Card #")]
+        //public string CountryIdCardNumber { get; set; }
 
-        public string CountryID { get; set; }
-        //public virtual Country Country { get; set; }
+        //public string CountryID { get; set; }
+        ////public virtual Country Country { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

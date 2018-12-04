@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary.AddressNS;
 using UowLibrary.ParametersNS;
+using UowLibrary.PlayersNS.PersonNS;
 using UserModels;
 
 namespace UowLibrary
@@ -18,22 +19,23 @@ namespace UowLibrary
     public partial class UserBiz : BusinessLayer<ApplicationUser>
     {
         //private CountryBiz _countryBiz;
-        AddressBiz _addressBiz;
+        //AddressBiz _addressBiz;
         private IAuthenticationManager _iAuthenticationManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IRoleStore<IdentityRole, string> _store;
+        //private readonly PersonBiz _personBiz;
 
         public UserBiz(
             ApplicationUserManager userManager,
             ApplicationSignInManager signInManager,
             IAuthenticationManager iAuthenticationManager,
-            AddressBiz addressBiz,
+            //AddressBiz addressBiz,
             IRepositry<ApplicationUser> entityDal,
             BizParameters bizParameters)
             : base(entityDal, bizParameters)
         {
             //_countryBiz = countryBiz;
-            _addressBiz = addressBiz;
+            //_addressBiz = addressBiz;
             UserManager = userManager;
             SignInManager = signInManager;
             _iAuthenticationManager = iAuthenticationManager;
@@ -41,10 +43,13 @@ namespace UowLibrary
             _store = new RoleStore<IdentityRole>();
             _roleManager = new RoleManager<IdentityRole>(_store);
 
+            //_personBiz = personBiz;
+
         }
 
 
-        public AddressBiz AddressBiz { get { return _addressBiz; } }
+        //public PersonBiz PersonBiz { get { return _personBiz; } }
+        //public AddressBiz AddressBiz { get { return PersonBiz.AddressBiz; } }
 
 
         public ApplicationSignInManager SignInManager { get; set; }
@@ -73,15 +78,15 @@ namespace UowLibrary
 
         //    }
         //}
-        public CountryBiz CountryBiz
-        {
-            get
-            {
+        //public CountryBiz CountryBiz
+        //{
+        //    get
+        //    {
 
-                _addressBiz.CountryBiz.IsNullThrowException();
-                return _addressBiz.CountryBiz;
-            }
-        }
+        //        AddressBiz.CountryBiz.IsNullThrowException();
+        //        return AddressBiz.CountryBiz;
+        //    }
+        //}
 
         public async Task<string> GenerateChangePhoneNumberTokenAsync(string userId, string phoneNumber)
         {

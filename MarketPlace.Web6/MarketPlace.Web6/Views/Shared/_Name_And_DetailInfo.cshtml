@@ -13,17 +13,23 @@
     }    
     
 }
+    @if(@Model.HideNameInView())
+    {
+            @Html.HiddenFor(x =>x.Name)
+    }
+    else
+    { 
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name)
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = elementAttributes })
+        </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Name)
-    @Html.EditorFor(model => model.Name, new { htmlAttributes = elementAttributes })
-</div>
+    }
+    <div class="form-group">
+        @Html.LabelFor(model => model.DetailInfoToDisplayOnWebsite, "Detail To Display on Webstite", null)
+        @Html.TextAreaFor(model => model.DetailInfoToDisplayOnWebsite, 5, 50, new { @class = "form-control", @placeholder = "Enter details to display on web page" })
+        @Html.ValidationMessageFor(model => model.DetailInfoToDisplayOnWebsite, "", new { @class = "text-danger" })
+    </div>
 
-
-<div class="form-group">
-    @Html.LabelFor(model => model.DetailInfoToDisplayOnWebsite, "Detail To Display on Webstite", null)
-    @Html.TextAreaFor(model => model.DetailInfoToDisplayOnWebsite, 5, 50, new { @class = "form-control", @placeholder = "Enter details to display on web page" })
-    @Html.ValidationMessageFor(model => model.DetailInfoToDisplayOnWebsite, "", new { @class = "text-danger" })
-</div>
 
 

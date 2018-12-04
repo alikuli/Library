@@ -1,0 +1,38 @@
+﻿@model ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeature
+@{
+    Layout = null;
+}
+
+<table class="table table-hover table-striped m-3 table-bordered" >
+    <tr>
+        <th>Name</th>
+        <th></th>
+    </tr>
+    @if (!@Model.MenuPath2s.IsNullOrEmpty())
+    {
+        int count = 0;
+        foreach (var item in @Model.MenuPath2s.OrderBy(x => x.Name))
+        {
+            count++;
+            <tr>
+                <td>
+                    @count)  @item.FullName()
+                    
+                </td>
+                <td>
+                    @*@Html.ActionLink(" ", "DeleteMenuPath2", "MenuFeatures", new { featureId = Model.Id, menuPathId = item.Id }, new { @class = "far fa-trash-alt text-danger" })*@
+                    @Ajax.ActionLink(" ", "DeleteMenuPath2", "MenuFeatures", new { menuFeatureId = Model.Id, menuPath2Id = item.Id }, new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "targetMenu2",
+
+                                },
+                                new { @class = "far fa-trash-alt text-danger" })
+
+
+                </td>
+            </tr>
+        }
+    }
+</table>

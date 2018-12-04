@@ -1,7 +1,5 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
-using InterfacesLibrary.SharedNS;
-using MarketPlace.Web4.Controllers;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Reflection;
@@ -14,7 +12,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
     /// This needs to know which Uow to call. It has to be hard pr
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public partial class EntityAbstractController<TEntity> : AbstractController where TEntity : class, ICommonWithId
+    public partial class EntityAbstractController<TEntity>
     {
 
         // GET: Countries/Edit/5
@@ -64,6 +62,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public virtual async Task<ActionResult> Edit(TEntity entity, string returnUrl, System.Web.HttpPostedFileBase[] httpMiscUploadedFiles = null, System.Web.HttpPostedFileBase[] httpSelfieUploads = null, System.Web.HttpPostedFileBase[] httpIdCardFrontUploads = null, System.Web.HttpPostedFileBase[] httpIdCardBackUploads = null, System.Web.HttpPostedFileBase[] httpPassportFrontUploads = null, System.Web.HttpPostedFileBase[] httpPassportVisaUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseFrontUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseBackUploads = null, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch = "", MenuENUM menuEnum = MenuENUM.EditDefault, bool isMenu = false, FormCollection fc = null)
         {
             //var req = Request;
@@ -120,10 +119,11 @@ namespace MarketPlace.Web6.Controllers.Abstract
             {
                 ErrorsGlobal.Add(string.Format("Not saved!"), MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
-                return Redirect(BreadCrumbManager.Url_CurrMinusTwo);
+                return RedirectToAction("Index", "Home");
                 //return Redirect(BreadCrumbManager.Url_CurrMinusOne);
             }
         }
+
 
 
     }

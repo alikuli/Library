@@ -1,7 +1,10 @@
 ﻿@model ModelsClassLibrary.ViewModels.IndexListVM
 <div class="container">
 
-    @{int count = 0;}
+    @{int count = 0;
+      string controllerName = this.ViewContext.RouteData.Values["controller"].ToString(); 
+      
+      }
 
     @foreach (ModelsClassLibrary.ViewModels.IndexItemVM item in Model.DataSortedAndFiltered.ToList())
     {
@@ -11,21 +14,31 @@
         
         string urlGetAddressForVerification = "#";
 
+        string urlForMakeDefault = Url.Action("MakeDefault", "Addresses", new { addressId = item.Id });
+
         //The icon is only clickable if notverified, unknown, or verification failed.
         if (item.VerificationStatus == VerificaionStatusENUM.NotVerified 
             || item.VerificationStatus == VerificaionStatusENUM.Unknown 
             || item.VerificationStatus == VerificaionStatusENUM.Failed)
         {
-            urlGetAddressForVerification = Url.Action("GetAddressForVerification", "Addresses", new { id = item.Id });
+            urlGetAddressForVerification = Url.Action("GetAddressForVerification", controllerName, new { addressId = item.Id });
             
         }
         else
         {
             if(item.VerificationStatus == VerificaionStatusENUM.Mailed)
             {
-                urlGetAddressForVerification = Url.Action("EnterVerificationNumber", "Addresses", new { addressId = item.Id });
+                
+                urlGetAddressForVerification = Url.Action("EnterVerificationNumber", controllerName, new { addressId = item.Id });
+            }
+            if (item.VerificationStatus == VerificaionStatusENUM.Verified)
+            {
+
+                
             }
         }
+        
+        
         if (count % 2 == 0)
         {
             alertRow += " background-ltgrey ";
@@ -35,13 +48,12 @@
             @*This is the description and image*@
             <div class="col-lg-8">
                 @{
-        count++;
-        if (item.PrintLineNumber.IsNullOrWhiteSpace())
-        {
-            item.PrintLineNumber = count.ToString();
-        }
-
-                }
+                    count++;
+                    if (item.PrintLineNumber.IsNullOrWhiteSpace())
+                    {
+                        item.PrintLineNumber = count.ToString();
+                    }
+                 }
 
                 @if (Model.Show.VerificationIcon)
                 {
@@ -57,34 +69,16 @@
                     </span>
 
                 }
+                
 
-                @*@if (Model.Show.ImageInList)
-                {
-                    var imagePath = "";
-                    if (@item.IsImageThere)
-                    {
-                        imagePath = Url.Content(item.ImageAddressStr);
 
-                        <div class="col-lg-4">
-                            <div class="container">
-                                @{
-                                }
-                                @*<span data-toggle="tooltip" title="I LIKE it! Press to register and tell us why." data-placement="top">
-                                    <img src="@imagePath" class="img-rounded" alt="Cinque Terre" width="102" height="73" onclick="onClick();" onmouseover="    mouseOver();">
-
-                                </span>
-
-                            </div>
-                        </div>
-                    }
-                }*@
 
 
                 @if (Model.Show.Edit)
                 {
                     if (item.AllowEdit)
                     {
-                        <span class="@alertFont">
+                        <span class="@alertFont" data-toggle="tooltip" title="@item.FullName" data-placement="top">
                             @item.PrintLineNumber. @Html.ActionLink(item.ShortName, "Edit", new { id = item.Id }, new { @id = item.Id, @title = item.FullName, @class = @alertFont })
                         </span>
                     }
@@ -101,8 +95,7 @@
 
 
 
-
-            </div>
+</div>
 
 
 
@@ -160,7 +153,7 @@
 
                 @if (Model.Show.MoveBottom)
                 {
-                    <span class="@alertFont">
+                    <span class="@alertFont ">
                         @Ajax.ActionLink("Bottom", "MoveBottom", new { selectedId = item.Id, sortBy = Model.SortOrderEnum, searchFor = Model.SearchFor },
                                 new AjaxOptions
                                 {
@@ -175,20 +168,48 @@
 
                 }
 
-                <span>
-                    @Html.ActionLink("View", "Details", new { id = item.Id }, new { @class = "@alertFont btn-info" })
-                </span>
+                @*<span>
+                    @Html.ActionLink("View", "Details", new { id = item.Id }, new { @class = "@alertFont btn-info" }) |
+                </span>*@
 
                 @if (Model.Show.Edit)
                 {
                     if (item.AllowEdit)
                     {
-                        <span class="@alertFont">
-                            | @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "@alertFont btn-danger" })
+                        <span class="@alertFont" data-toggle="tooltip" title="Delete" data-placement="top">
+                            @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "@alertFont btn-danger far fa-trash-alt" })
+
                         </span>
 
                     }
                 }
+                
+                @if (Model.Show.MakeDefaultIcon)
+                {
+                    <span >
+                            
+                        @if (item.IsDefault)
+                        {
+                            <img src="~/Content/Icons/Default2.png" data-toggle="tooltip" title="Default Address" data-placement="top" />
+                        }
+                        else
+                        {
+                            @*@Ajax.ActionLink("Make Default ", "UpdateAndSaveDefaultAddress", "Users", new { addressId = item.Id, selectedId = item.Id, sortBy = Model.SortOrderEnum, searchFor = Model.SearchFor },
+                                new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "indexmiddlepart",
+
+
+                                }, new { @class = "@alertFont btn-warning" })*@
+
+                             @Html.ActionLink("Make Default ", "UpdateAndSaveDefaultAddress", controllerName, new { addressId = item.Id, selectedId = item.Id, sortBy = Model.SortOrderEnum, searchFor = Model.SearchFor }, new { @class = "@alertFont btn-warning" })
+
+                        }
+                    </span>
+                }
+
             </div>
         </div>
 

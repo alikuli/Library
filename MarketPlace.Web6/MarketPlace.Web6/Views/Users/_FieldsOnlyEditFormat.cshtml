@@ -1,210 +1,137 @@
 ﻿@model UserModels.ApplicationUser
 
 <div class="form-horizontal">
-    <div class="panel-group" id="accordion">
+    <div id="accordion">
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                        Required Info
-                    </a>
-                </h4>
-            </div>
-            <div id="collapse1" class="panel-collapse collapse in">
+        @*<div id="collapse1" class="panel-collapse collapse in">
                 <div class="panel-body">
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.UserName, "User Name", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        @Html.LabelFor(model => model.UserName, "User Name", htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter unique user name" } })
+                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                    </div>
+
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PersonId, htmlAttributes: new { @class = "" })
+                        @Html.DropDownListFor(x => x.PersonId,
+                                     (@Model.SelectListPeople as IEnumerable<SelectListItem>),
+                            "--- Select Person for User---",
+                            new { @class = "form-control" })
+                    </div>
+
+                    @*<div class="form-group">
+                            @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "" })
+                            @Html.DropDownListFor(x => x.CountryId,
+                                (@ViewBag.CountrySelectList as IEnumerable<SelectListItem>),
+                                "--- Select Country for Rule---",
+                                new { @class = "form-control" })
+                        </div>
+                </div>
+            </div>*@
+
+
+        <div class="card">
+            <div class="card-header">
+                <a class="collapsed card-link" data-toggle="collapse" href="#collapse1">
+                    Required Info
+                </a>
+            </div>
+            <div id="collapse1" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="well p-3 m-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.UserName, "User Name", htmlAttributes: new { @class = "control-label" })
                             @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter unique user name" } })
                             @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(x => x.CountryId,
-            (@ViewBag.CountrySelectList as IEnumerable<SelectListItem>),
-                                    "--- Select Country for Rule---",
-                                    new { @class = "form-control" })
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PersonId, htmlAttributes: new { @class = "" })
+                            @Html.DropDownListFor(x => x.PersonId,
+                                     (@Model.SelectListPeople as IEnumerable<SelectListItem>),
+                            "--- Select Person for User---",
+                            new { @class = "form-control" })
                         </div>
+
+
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse222">
-                        Phone
-                    </a>
-                </h4>
-            </div>
-            <div id="collapse222" class="panel-collapse collapse">
-                <div class="panel-body">
 
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PhoneNumber,"Phone #", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter phone number" } })
-                            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                    <div class="well m-3">
+
+
+                        <div class="custom-control custom-checkbox">
+                            @Html.CheckBoxFor(model => model.BlackListed.Value, new { htmlAttributes = new { @class = "custom-control-input" } })
+                            @Html.LabelFor(x => x.BlackListed.Value, "BlackListed", htmlAttributes: new { @class = "" })
                         </div>
-                    </div>
 
+                        <div class="p-4">
+                            <strong>Activated</strong>
+                            @Html.EditorFor(x => x.BlackListed.ActivateDate)
+                            <strong>Deactivated</strong>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PhoneNumberConfirmed, "Phone Confirmed", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.CheckBoxFor(model => model.PhoneNumberConfirmed, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.PhoneNumberConfirmed, "", new { @class = "text-danger" })
+                            @Html.EditorFor(x => x.BlackListed.DeactivateDate)
                         </div>
+
                     </div>
-
-
-
-
 
                 </div>
             </div>
         </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse22">
-                        Email
-                    </a>
-                </h4>
+        <div class="card">
+            <div class="card-header">
+                <a class="collapsed card-link" data-toggle="collapse" href="#activeSuspend">
+                    Active / Suspend / Black List
+                </a>
             </div>
-            <div id="collapse22" class="panel-collapse collapse">
-                <div class="panel-body">
-
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter email address" } })
-                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            <div id="activeSuspend" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="well m-3 p-3">
+                        <div class="custom-control custom-checkbox">
+                            @Html.CheckBoxFor(model => model.Suspended.Value, new { htmlAttributes = new { @class = "custom-control-input" } })
+                            @Html.LabelFor(x => x.Suspended.Value, "Suspended", htmlAttributes: new { @class = "" })
                         </div>
+
+
+                        <div class="p-4">
+                            <strong>Activated</strong>
+                            @Html.EditorFor(x => x.Suspended.ActivateDate)
+
+                            <strong>Deactivated</strong>
+                            @Html.EditorFor(x => x.Suspended.DeactivateDate)
+
+
+                        </div>
+
                     </div>
 
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.EmailConfirmed, "Email Confirmed", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.CheckBoxFor(model => model.EmailConfirmed, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.EmailConfirmed, "", new { @class = "text-danger" })
+                    <div class="well m-3 p-3">
+
+
+                        <div class="custom-control custom-checkbox">
+                            @Html.CheckBoxFor(model => model.BlackListed.Value, new { htmlAttributes = new { @class = "custom-control-input" } })
+                            @Html.LabelFor(x => x.BlackListed.Value, "BlackListed", htmlAttributes: new { @class = "" })
                         </div>
+
+                        <div class="p-4">
+                            <strong>Activated</strong>
+                            @Html.EditorFor(x => x.BlackListed.ActivateDate)
+                            <strong>Deactivated</strong>
+
+                            @Html.EditorFor(x => x.BlackListed.DeactivateDate)
+                        </div>
+
                     </div>
-
-
-
-
 
                 </div>
             </div>
         </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                        Personal Info
-                    </a>
-                </h4>
-            </div>
-            <div id="collapse3" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PersonComplex, "Personal Info", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.PersonComplex, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-                        Address (Snail Mail)
-                    </a>
-                </h4>
-            </div>
-            <div id="collapse4" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.AddressComplex, "Address", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.AddressComplex, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                        Active / Suspend / Black List
-                    </a>
-                </h4>
-            </div>
-            <div id="collapse2" class="panel-collapse collapse">
-                <div class="panel-body">
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="CheckBoxFor-md-10">
-                            @Html.CheckBoxFor(model => model.IsActive, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.IsBlackListed, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.CheckBoxFor(model => model.IsBlackListed.Value, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.IsSuspended, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.CheckBoxFor(model => model.IsSuspended.Value, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse44">
-                        Misc
-                    </a>
-                </h4>
-            </div>
-            <div id="collapse44" class="panel-collapse collapse">
-                <div class="panel-body">
-                    @Html.Partial(@"_Name_And_DetailInfo")
-                </div>
-            </div>
-        </div>
-
-        @Html.Partial(@"ViewControls/Uploads/_ShowUploads")
-
+    </div>
 </div>
-

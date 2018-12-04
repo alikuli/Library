@@ -53,5 +53,7 @@ namespace ModelsClassLibrary.ViewModels
         public bool ImageInList { get; set; }
 
         public bool VerificationIcon { get; set; }
+
+        public bool MakeDefaultIcon { get; set; }
     }
 }

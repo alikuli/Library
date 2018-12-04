@@ -47,7 +47,11 @@ namespace MarketPlace.Web6.Controllers.Abstract
         {
             get
             {
-                return (BusinessLayer<TEntity>)_icrudBiz;
+                BusinessLayer<TEntity> entity = _icrudBiz as BusinessLayer<TEntity>;
+                entity.IsNullThrowException();
+                entity.UserId = UserId;
+                entity.UserName = UserName;
+                return entity;
             }
         }
 

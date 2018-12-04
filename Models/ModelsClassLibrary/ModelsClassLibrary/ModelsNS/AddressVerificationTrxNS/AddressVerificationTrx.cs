@@ -47,17 +47,12 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS
 
 
 
-        //[Display(Name = "Verification Status")]
-        //public VerificaionStatusENUM VerificaionStatusEnum { get; set; }
 
         public SelectList VerificaionStatusEnumSelectList { get { return EnumExtention.ToSelectListSorted<VerificaionStatusENUM>(VerificaionStatusENUM.Unknown); } }
 
 
 
 
-        //public string VerificationOrderedByUserId { get; set; }
-        //public ApplicationUser VerificationOrderedByUser { get; set; }
-        //public SuccessENUM SuccessEnum { get; set; }
 
 
         [Display(Name = "Date Verification Accepted (UTC)")]
@@ -68,13 +63,11 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS
         public DateTime DateVerifcationPaymentAccepted_NotNull { get { return DateVerifcationPaymentAccepted ?? DateTime.MinValue; } }
 
 
-        //[Display(Name = "Date Verification Printed (UTC)")]
-        //[Column(TypeName = "DateTime2")]
-        //[DataType(DataType.DateTime)]
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
-        //public DateTime? DateVerifcationPrinted { get; set; }
-        //public DateTime DateVerifcationPrinted_NotNull { get { return DateVerifcationPrinted ?? DateTime.MinValue; } }
 
+
+        /// <summary>
+        /// This is where we know if the address is verified. The last verificationTrx is used.
+        /// </summary>
         [Display(Name = "Verification Status")]
         public Verification Verification { get; set; }
 
@@ -91,17 +84,17 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS
 
         [Display(Name = "Address")]
         public string AddressId { get; set; }
-        public virtual AddressWithId Address { get; set; }
+        public virtual AddressMain Address { get; set; }
 
 
 
 
 
-        /// <summary>
-        /// I had to create this to use in a linq expression
-        /// </summary>
-        [NotMapped]
-        public string UserIdOfOwner { get; set; }
+        ///// <summary>
+        ///// I had to create this to use in a linq expression
+        ///// </summary>
+        //[NotMapped]
+        //public string PersonIdOfUser { get; set; }
 
 
 

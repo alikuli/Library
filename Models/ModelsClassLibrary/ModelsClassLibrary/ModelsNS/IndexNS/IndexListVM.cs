@@ -266,6 +266,7 @@ namespace ModelsClassLibrary.ViewModels
         /// </summary>
         public bool IsImageTiled { get; set; }
 
+
         #region Methods/Properties for Selected Id
 
         public string SelectedId { get; set; }
@@ -790,6 +791,7 @@ namespace ModelsClassLibrary.ViewModels
 
         public string UserName { get; set; }
         public string UserId { get; set; }
+
 
         //public ApplicationUser User { get; set; }
 

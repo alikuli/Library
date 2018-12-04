@@ -2,18 +2,19 @@
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ModelsClassLibrary.ModelsNS.AddressNS;
-using ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
+using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
+using System.Web.Mvc;
 
 namespace UserModels
 {
@@ -21,13 +22,30 @@ namespace UserModels
     public partial class ApplicationUser : IdentityUser, ICommonWithId, IUserHasUploads
     {
 
-        [Display(Name = "Country")]
-        public string CountryId { get; set; }
-        public virtual Country Country { get; set; }
 
-        public string MailerId { get; set; }
+        //public virtual ICollection<Person> People { get; set; }
 
-        public virtual Mailer Mailer { get; set; }
+        [Display(Name = "Person")]
+        [MaxLength(128)]
+        public string PersonId { get; set; }
+        public virtual Person Person { get; set; }
+
+        [NotMapped]
+        public SelectList SelectListPeople { get; set; }
+
+        //[Display(Name = "Country")]
+        //[MaxLength(128)]
+        //public string CountryId { get; set; }
+        //public virtual Country Country { get; set; }
+
+
+        //https://stackoverflow.com/questions/44550386/one-to-one-relationship-with-different-primary-key-in-ef-6-1-code-first
+        //this is not supported in EF
+        //[MaxLength(128)]
+        //public string MailerId { get; set; }
+
+        //public virtual ICollection<Mailer> Mailers { get; set; }
+
 
 
         //public ICollection<AddressVerificationTrx> AddressVerificationTrxs { get; set; }
@@ -41,6 +59,7 @@ namespace UserModels
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "User");
         }
 
+
         public virtual ICollection<UploadedFile> SelfieUploads { get; set; }
 
         public string SelfieLocationConst(string userName)
@@ -48,6 +67,8 @@ namespace UserModels
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "Selfie");
 
         }
+
+
 
         public virtual ICollection<UploadedFile> IdCardFrontUploads { get; set; }
 
@@ -57,12 +78,16 @@ namespace UserModels
 
         }
 
+
+
         public virtual ICollection<UploadedFile> IdCardBackUploads { get; set; }
 
         public string IdCardBackLocationConst(string userName)
         {
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "IdCardBack");
         }
+
+
 
         public virtual ICollection<UploadedFile> PassportFrontUploads { get; set; }
 
@@ -107,7 +132,7 @@ namespace UserModels
         /// <summary>
         /// Every user can have many addresses.
         /// </summary>
-        public virtual ICollection<AddressWithId> Addresses { get; set; }
+        public virtual ICollection<AddressMain> Addresses { get; set; }
 
 
         public virtual ICollection<ProductChild> ProductChildren { get; set; }

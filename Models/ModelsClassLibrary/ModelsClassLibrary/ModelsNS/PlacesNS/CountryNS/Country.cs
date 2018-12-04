@@ -18,7 +18,7 @@ namespace ModelsClassLibrary.ModelsNS.PlacesNS
         public virtual ICollection<State> States { get; set; }
 
 
-        public ICollection<ApplicationUser> User { get; set; }
+        //public ICollection<ApplicationUser> User { get; set; }
 
         public override string ClassNamePlural
         {

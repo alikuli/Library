@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using InterfacesLibrary.SharedNS;
 using UserModels;
+using AliKuli.Extentions;
 
 namespace ModelsClassLibrary.ModelsNS.PlacesNS
 {
@@ -13,6 +14,8 @@ namespace ModelsClassLibrary.ModelsNS.PlacesNS
             base.UpdatePropertiesDuringModify(icommonWithId);
             
             Country c = (Country)icommonWithId;
+            c.IsNullThrowException("Unable to unbox country");
+
             Abbreviation = c.Abbreviation;
 
         }

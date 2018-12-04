@@ -30,7 +30,19 @@ namespace MarketPlace.Web6.Controllers
         }
 
 
-
+        public ActionResult MoveFilesFromUserToPerson()
+        {
+            try
+            {
+                _fileDocBiz.MoveFilesFromUserToPerson();
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Files not moved!", MethodBase.GetCurrentMethod(), e);
+                throw;
+            }
+        }
         public FileDocBiz FileDocBiz
         {
             get

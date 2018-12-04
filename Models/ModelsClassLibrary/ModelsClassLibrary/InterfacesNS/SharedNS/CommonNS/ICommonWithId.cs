@@ -34,6 +34,7 @@ namespace InterfacesLibrary.SharedNS
         string ClassNamePlural { get; }
         string DefaultDisplayImage { get; }
 
+        //bool IsAllowDelete { get; set; }
         bool IsAllowDuplicates { get; }
         //bool IsCreating { get; set; }
 

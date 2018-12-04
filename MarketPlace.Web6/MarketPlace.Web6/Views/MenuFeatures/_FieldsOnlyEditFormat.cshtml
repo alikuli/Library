@@ -1,0 +1,173 @@
+﻿@model ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeature
+@{
+    ICollection<ModelsClassLibrary.MenuNS.MenuPath1> menupath1s = Model.MenuPath1s;
+}
+    <div class="form-horizontal">
+        @Html.Partial(@"_Name_And_DetailInfo")
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FeatureTypeEnum, htmlAttributes: new { @class = "control-label col-md-2 " })
+            @Html.DropDownListFor(x => x.FeatureTypeEnum,
+                (@Model.SelectListFeatureTypeEnum as IEnumerable<SelectListItem>),
+                "--- Value Type ---",
+                new { @class = "form-control" })
+        </div>
+@if(!Model.IsCreate)
+{
+    
+
+        <h2>Menu 1</h2>
+
+        <div class="form-inline">
+
+            <div class="form-group">
+                @Html.DropDownListFor(x => x.MenuPath1Id,
+                (@ViewBag.SelectListMenuPath1 as IEnumerable<SelectListItem>),
+                "--- Menu 1 ---",
+                new { @class = "form-control" })
+                
+                <input 
+                       type="button" 
+                       id="addMenuPath1Button" 
+                       value="Add" 
+                       class="btn btn-primary m-2 far fa-plus-square" 
+                       onclick="saveMenuPath1('@Model.Id', document.getElementById('MenuPath1Id'));" />
+            </div>
+        </div>
+
+        <div id="targetMenu1">
+            @Html.Partial("_menu1List", @Model)
+        </div>
+
+
+
+        <h2>Menu 2</h2>
+
+
+        <div class="form-inline">
+
+            <div class="form-group">
+                @Html.DropDownListFor(x => x.MenuPath2Id,
+                (@ViewBag.SelectListMenuPath2 as IEnumerable<SelectListItem>),
+                "--- Menu 2 ---",
+                new { @class = "form-control" })
+
+                <input type="button"
+                       id="addMenuPath2Button"
+                       value="Add"
+                       class="btn btn-primary m-2 far fa-plus-square"
+                       onclick="saveMenuPath2('@Model.Id', document.getElementById('MenuPath2Id'));" />
+            </div>
+        </div>
+
+        <div id="targetMenu2">
+            @Html.Partial("_menu2List", @Model)
+        </div>
+
+
+
+        <h2>Menu 3</h2>
+
+        <div class="form-inline">
+
+            <div class="form-group">
+                @Html.DropDownListFor(x => x.MenuPath3Id,
+                (@ViewBag.SelectListMenuPath3 as IEnumerable<SelectListItem>),
+                "--- Menu 3 ---",
+                new { @class = "form-control" })
+
+                <input type="button"
+                       id="addMenuPath3Button"
+                       value="Add"
+                       class="btn btn-primary m-2 far fa-plus-square"
+                       onclick="saveMenuPath3('@Model.Id', document.getElementById('MenuPath3Id'));" />
+            </div>
+        </div>
+
+        <div id="targetMenu3">
+            @Html.Partial("_menu3List", @Model)
+        </div>
+
+}
+     </div>
+
+<script>
+    //this is the test
+    function saveMenuPath1(menuFeatureId, menuPath1Id) {
+        var theValue = menuPath1Id.options[menuPath1Id.selectedIndex].value;
+        var completeUrl = "/MenuFeatures/AddMenuPath1?menuFeatureId=" + menuFeatureId + "&" + "menuPath1Id=" + theValue;
+
+        $.ajax(
+            {
+                url: completeUrl,
+                type: 'POST',
+                success: function (response) {
+                    var theDiv = $("#targetMenu1");
+                    var theString = response.viewString;
+                    theDiv.html(theString);
+                    
+                    //alert("Success URL = " + completeUrl);
+                },
+                error: function (response) {
+                    alert('Error URL = ' + completeUrl);
+                }
+
+            });
+        return true;
+    };
+
+
+
+    function saveMenuPath2(menuFeatureId, menuPath2Id) {
+        var theValue = menuPath2Id.options[menuPath2Id.selectedIndex].value;
+        var completeUrl = "/MenuFeatures/AddMenuPath2?menuFeatureId=" + menuFeatureId + "&" + "menuPath2Id=" + theValue;
+
+        $.ajax(
+            {
+                url: completeUrl,
+                type: 'POST',
+                success: function (response) {
+                    var theDiv = $("#targetMenu2");
+                    var theString = response.viewString;
+                    theDiv.html(theString);
+
+                    //alert("Success URL = " + completeUrl);
+                },
+                error: function (response) {
+                    alert('Error URL = ' + completeUrl);
+                }
+
+            });
+        return true;
+    };
+
+
+
+    function saveMenuPath3(menuFeatureId, menuPath3Id) {
+        var theValue = menuPath3Id.options[menuPath3Id.selectedIndex].value;
+        var completeUrl = "/MenuFeatures/AddMenuPath3?menuFeatureId=" + menuFeatureId + "&" + "menuPath3Id=" + theValue;
+
+        $.ajax(
+            {
+                url: completeUrl,
+                type: 'POST',
+                success: function (response) {
+                    var theDiv = $("#targetMenu3");
+                    var theString = response.viewString;
+                    theDiv.html(theString);
+
+                    //alert("Success URL = " + completeUrl);
+                },
+                error: function (response) {
+                    alert('Error URL = ' + completeUrl);
+                }
+
+            });
+        return true;
+    };
+
+</script>
+
+
+@section scripts{
+}

@@ -7,12 +7,14 @@ using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using UowLibrary;
 using UowLibrary.AddressNS;
 using UowLibrary.CounterNS;
-using UowLibrary.FeaturesNS;
+using UowLibrary.EmailAddressNS;
+//using UowLibrary.FeaturesNS;
 using UowLibrary.FileDocNS;
 using UowLibrary.GlobalCommentsNS;
 using UowLibrary.Interface;
@@ -21,6 +23,20 @@ using UowLibrary.MailerNS;
 using UowLibrary.MenuNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.ParametersNS;
+//using UowLibrary.PhoneNS;
+using UowLibrary.PlayersNS.CashierCategoryNS;
+using UowLibrary.PlayersNS.CashierNS;
+using UowLibrary.PlayersNS.CustomerCategoryNS;
+using UowLibrary.PlayersNS.CustomerNS;
+using UowLibrary.PlayersNS.DeliverymanCategoryNS;
+using UowLibrary.PlayersNS.DeliverymanNS;
+using UowLibrary.PlayersNS.MailerCategoryNS;
+using UowLibrary.PlayersNS.OwnerCategoryNS;
+using UowLibrary.PlayersNS.OwnerNS;
+using UowLibrary.PlayersNS.PersonCategoryNS;
+using UowLibrary.PlayersNS.PersonNS;
+using UowLibrary.PlayersNS.SalesmanCategoryNS;
+using UowLibrary.PlayersNS.SalesmanNS;
 using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
 using UowLibrary.StateNS;
@@ -66,7 +82,6 @@ namespace DependancyResolver
 
             Bind<StateBiz>().ToSelf();
             Bind<UserBiz>().ToSelf();
-            //Bind<RightBiz>().ToSelf();
 
             Bind<UomLengthBiz>().ToSelf();
             Bind<UomQuantityBiz>().ToSelf();
@@ -75,18 +90,50 @@ namespace DependancyResolver
 
             Bind<UploadedFileBiz>().ToSelf();
 
-            //Bind<UserBiz>().ToSelf();
             Bind<GlobalCommentBiz>().ToSelf();
             Bind<LikeUnlikeBiz>().ToSelf();
             Bind<AbstractControllerParameters>().ToSelf();
             Bind<BizParameters>().ToSelf();
-            Bind<FeatureBiz>().ToSelf();
             Bind<PageViewBiz>().ToSelf();
-            Bind<MenuPath1FeatureBiz>().ToSelf();
-            Bind<MenuPath2FeatureBiz>().ToSelf();
-            Bind<MenuPath3FeatureBiz>().ToSelf();
-            Bind<AddressBiz>().ToSelf();
+
+            Bind<MenuFeature>().ToSelf();
+            Bind<ProductFeature>().ToSelf();
+            Bind<ProductChildFeature>().ToSelf();
+
+            Bind<AddressBiz>().ToSelf()
+                ;
             Bind<MailerBiz>().ToSelf();
+            Bind<MailerCategoryBiz>().ToSelf();
+
+            Bind<CustomerCategoryBiz>().ToSelf();
+            Bind<CustomerBiz>().ToSelf();
+
+            Bind<OwnerCategoryBiz>().ToSelf();
+            Bind<OwnerBiz>().ToSelf();
+
+            Bind<CashierCategoryBiz>().ToSelf();
+            Bind<CashierBiz>().ToSelf();
+
+            Bind<SalesmanBiz>().ToSelf();
+            Bind<SalesmanCategoryBiz>().ToSelf();
+
+            Bind<PersonCategoryBiz>().ToSelf();
+            Bind<PersonBiz>().ToSelf();
+
+
+            Bind<DeliverymanBiz>().ToSelf();
+            Bind<DeliverymanCategoryBiz>().ToSelf();
+
+            Bind<EmailAddressBiz>().ToSelf();
+            Bind<UowLibrary.PhoneNS.PhoneBiz>().ToSelf();
+
+
+            //Bind<UserBiz>().ToSelf();
+            //Bind<FeatureBiz>().ToSelf();
+            //Bind<MenuPath1FeatureBiz>().ToSelf();
+            //Bind<MenuPath2FeatureBiz>().ToSelf();
+            //Bind<RightBiz>().ToSelf();
+            //Bind<MenuPath3FeatureBiz>().ToSelf();
         }
 
         public void LoadDALs()

@@ -14,19 +14,19 @@
 
 
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "" })
             @Html.DropDownListFor(x => x.UserId,
                  (@ViewBag.UserSelectList as IEnumerable<SelectListItem>),
                   "--- Select User---",
                   new { @class = "form-control" })
-        </div>
+        </div>*@
 
 
         <div class="form-group">
             @Html.LabelFor(model => model.TrustLevelEnum, htmlAttributes: new { @class = "" })
             @Html.DropDownListFor(x => x.TrustLevelEnum,
-                          (@ViewBag.TrustLevelsSelectList as IEnumerable<SelectListItem>),
+                          (@Model.SelectListTrustLevel as IEnumerable<SelectListItem>),
                   "--- Select Trust Level---",
                   new { @class = "form-control" })
         </div>

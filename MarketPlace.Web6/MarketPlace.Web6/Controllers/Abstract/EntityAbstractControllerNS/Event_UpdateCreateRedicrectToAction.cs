@@ -1,14 +1,6 @@
-﻿using AliKuli.Extentions;
-using EnumLibrary.EnumNS;
-using InterfacesLibrary.SharedNS;
-using MarketPlace.Web4.Controllers;
-using ModelsClassLibrary.ModelsNS.SharedNS;
+﻿using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
-using System.Net;
-using System.Reflection;
-using System.Threading.Tasks;
 using System.Web.Mvc;
-using UserModels;
 
 namespace MarketPlace.Web6.Controllers.Abstract
 {
@@ -16,7 +8,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
     /// This needs to know which Uow to call. It has to be hard pr
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public partial class EntityAbstractController<TEntity> : AbstractController where TEntity : class, ICommonWithId
+    public partial class EntityAbstractController<TEntity>
     {
 
         /// <summary>
@@ -26,7 +18,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         /// <returns></returns>
         public virtual RedirectToRouteResult Event_UpdateCreateRedicrectToAction(ControllerCreateEditParameter parm)
         {
-//            return RedirectToAction("Index", new { id = parm.Entity.Id, selectedId = parm.Entity.Id,  menuEnum = parm.Menu.MenuEnum });
+            //            return RedirectToAction("Index", new { id = parm.Entity.Id, selectedId = parm.Entity.Id,  menuEnum = parm.Menu.MenuEnum });
             throw new NotImplementedException();
 
         }

@@ -1,6 +1,7 @@
-﻿using EnumLibrary.EnumNS;
+﻿using AliKuli.Extentions;
+using BreadCrumbsLibraryNS.Programs;
+using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
-using MarketPlace.Web4.Controllers;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Reflection;
@@ -13,7 +14,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
     /// This needs to know which Uow to call. It has to be hard pr
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public partial class EntityAbstractController<TEntity> : AbstractController where TEntity : class, ICommonWithId
+    public partial class EntityAbstractController<TEntity>
     {
 
 
@@ -23,10 +24,11 @@ namespace MarketPlace.Web6.Controllers.Abstract
         public virtual ActionResult Create(string isandForSearch, MenuENUM menuEnum = MenuENUM.CreateDefault, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, bool isMenu = false, string parentId = "")
         {
 
-            TEntity dudEntity = Biz.EntityFactoryForHttpGet() as TEntity;
+            TEntity dudEntity = null;
 
             try
             {
+                dudEntity = Biz.FactoryForHttpGet() as TEntity;
 
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
 
@@ -56,7 +58,13 @@ namespace MarketPlace.Web6.Controllers.Abstract
             catch (Exception e)
             {
 
-                ErrorsGlobal.Add(string.Format("'{0}' Something went wrong during creation.", ((ICommonWithId)dudEntity).Name), MethodBase.GetCurrentMethod(), e);
+                string nameOFDudEntity = "";
+                if (!dudEntity.IsNull())
+                {
+                    nameOFDudEntity = dudEntity.Name;
+                }
+
+                ErrorsGlobal.Add(string.Format("'{0}' Something went wrong during creation.", nameOFDudEntity), MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
 
                 return RedirectToAction("Index", new { id = "", searchFor = searchFor, isandForSearch = isandForSearch, selectedId = selectedId, returnUrl = returnUrl, productId = productId, menuPathMainId = menuPathMainId, productChildId = productChildId, menuLevelEnum = menuEnum, sortBy = sortBy, print = print });
@@ -106,7 +114,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 //{
                 //    return Event_UpdateCreateRedicrectToAction(parm);
                 //}
-                return Redirect(BreadCrumbManager.Url_CurrMinusOne);
+                return RedirectFromCreateHttpPostTo(BreadCrumbManager, parm);
 
             }
             catch (Exception e)
@@ -115,6 +123,14 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 ErrorsGlobal.MemorySave();
                 return RedirectToAction("Index", new { id = entity.Id, searchFor = searchFor, isandForSearch = isandForSearch, selectedId = entity.Id, returnUrl = returnUrl, menuLevelEnum = menuEnum, sortBy = sortBy, print = print });
             }
+        }
+
+
+        public virtual ActionResult RedirectFromCreateHttpPostTo(BreadCrumbManager bc, ControllerCreateEditParameter parm)
+        {
+            if (!bc.Url_CurrMinusOne.IsNullOrWhiteSpace())
+                return Redirect(bc.Url_CurrMinusOne);
+            return RedirectToAction("Index");
         }
 
     }

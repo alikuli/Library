@@ -29,7 +29,7 @@ namespace MarketPlace.Web6.Controllers
         {
             model.Features = new List<FeaturesModel>
             {
-                new FeaturesModel{FeatureName = "No of Seats", FeatureValue = "4"},
+                new FeaturesModel{Name = "No of Seats", FeatureValue = "4"},
                 new FeaturesModel{FeatureName = "Automatic", FeatureValue = "No"},
                 new FeaturesModel{FeatureName = "Engine", FeatureValue = "2500CC"}
             };

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="UowLibrary.AddressNS.AddressBiz">
+    <Position X="3.5" Y="6.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAACIACAAkAAGiE8AoAAGAgAAAIIkAAACIGQAAAIAA=</HashCode>
+      <FileName>ContactsNS\AddressNS\AddressBiz.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UowLibrary.EmailAddressNS.ContactAbstractBiz&lt;TEntity&gt;">
+    <Position X="2.75" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACDAAAAAAAAAgkAYgAEAAAAAAAAAAAA=</HashCode>
+      <FileName>ContactsNS\ContactAbstractBiz.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UowLibrary.EmailAddressNS.EmailAddressBiz">
+    <Position X="0.5" Y="6.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAACAAAAAIAAEAAAAAoAAAAAAAAAACAIAA=</HashCode>
+      <FileName>ContactsNS\EmailNS\EmailAddressBiz.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UowLibrary.PhoneNS.PhoneBiz">
+    <Position X="7" Y="6.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAIAAEAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ContactsNS\PhoneNS\PhoneBiz.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

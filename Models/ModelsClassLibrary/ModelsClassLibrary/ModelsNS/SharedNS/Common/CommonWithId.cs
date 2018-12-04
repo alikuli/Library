@@ -22,7 +22,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         /// </summary>
         [NotMapped]
         public virtual bool IsAllowDuplicates { get { return false; } }
-        
+
         public CommonWithId()
         {
             MetaData = new MetaDataComplex();
@@ -32,17 +32,18 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         }
 
-        /// <summary>
-        /// Marked true if creating
-        /// </summary>
-        [NotMapped]
-        public bool IsCreating { get; set; }
+        ///// <summary>
+        ///// Marked true if creating
+        ///// </summary>
+        //[NotMapped]
+        //public bool IsCreating { get; set; }
 
-        /// <summary>
-        /// Marked true if deleting
-        /// </summary>
-        [NotMapped]
-        public bool IsDeleting { get; set; }
+        ///// <summary>
+        ///// Marked true if deleting
+        ///// </summary>
+        //[NotMapped]
+        //public bool IsDeleting { get; set; }
+
 
         /// <summary>
         /// This controls the Menus.
@@ -75,7 +76,9 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         //public DbBoolsStorageComplex DbBoolsStorageRules { get; set; }
 
         #region Properties
+
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public virtual string Id { get; set; }
 
 
@@ -153,7 +156,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         {
             //if (Name.IsNullOrWhiteSpace())
             //    throw new ErrorHandlerLibrary.ExceptionsNS.RequiredDataMissingException("Name is empty. CommonWithId.");
-            Name.IsNullOrWhiteSpaceThrowException();
+            Name.IsNullOrWhiteSpaceThrowException("Name");
         }
 
 
@@ -316,6 +319,9 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         [NotMapped]
         public string DefaultDisplayImage { get { return AliKuli.ConstantsNS.MyConstants.DEFAULT_IMAGE_LOCATION; } }
+
+
+
     }
 
 }

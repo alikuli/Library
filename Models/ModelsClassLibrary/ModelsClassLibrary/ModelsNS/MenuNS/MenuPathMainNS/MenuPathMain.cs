@@ -27,7 +27,7 @@ namespace ModelsClassLibrary.MenuNS
 
 
         }
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(); //used to collect erors
 
         public override ClassesWithRightsENUM ClassNameForRights()
         {

@@ -5,7 +5,7 @@ using ModelsClassLibrary.ViewModels;
 
 namespace UowLibrary
 {
-    public partial class UomLengthBiz : BusinessLayer<UomLength>
+    public partial class UomLengthBiz 
     {
 
         public override void Event_ModifyIndexList(IndexListVM indexListVM, ControllerIndexParams parameters)

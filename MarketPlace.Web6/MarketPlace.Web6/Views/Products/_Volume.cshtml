@@ -2,20 +2,16 @@
 
 
 
-<div class="container">
+<div class="well p-3 m-3">
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Volume, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.EditorFor(model => model.Volume, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Volume of Item" } })
-            @Html.ValidationMessageFor(model => model.Volume, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-md-3">
-            @Html.DropDownListFor(x => x.UomVolumeId,
+    <div class="form-group form-inline">
+        @Html.LabelFor(model => model.Volume, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Volume, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Volume of Item" } })
+        @Html.ValidationMessageFor(model => model.Volume, "", new { @class = "text-danger" })
+        @Html.DropDownListFor(x => x.UomVolumeId,
                                      (@ViewBag.UomVolumeSelectList as IEnumerable<SelectListItem>),
                                       "--- Select UoM Vol---",
                                       new { @class = "form-control" })
-        </div>
     </div>
 
 </div>

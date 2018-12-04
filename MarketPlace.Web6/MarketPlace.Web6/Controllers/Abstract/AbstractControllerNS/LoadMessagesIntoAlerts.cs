@@ -26,7 +26,11 @@ namespace MarketPlace.Web4.Controllers
                         messages.Add(item);
 
                     @ViewBag.ListOfMessages = messages;
-                    ErrorsGlobal.Messages.Clear();
+                    if (!ErrorsGlobal.DoNotClearMessages)
+                        ErrorsGlobal.Messages.Clear();
+                    else
+                        ErrorsGlobal.DoNotClearMessages = false;
+
                 }
             }
 

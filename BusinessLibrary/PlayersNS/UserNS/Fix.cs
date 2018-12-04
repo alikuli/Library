@@ -1,29 +1,6 @@
 ﻿using AliKuli.Extentions;
-using AliKuli.UtilitiesNS;
-using ApplicationDbContextNS;
-using DalLibrary.DalNS;
-using DalLibrary.Interfaces;
-using EnumLibrary.EnumNS;
-using ErrorHandlerLibrary.ExceptionsNS;
-using MarketPlace.Web6.App_Start;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.RightsNS;
-using ModelsNS.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using UowLibrary.PlayersNS;
 using UserModels;
-using UserModelsLibrary.ModelsNS;
-using WebLibrary.Programs;
 
 namespace UowLibrary
 {
@@ -33,8 +10,34 @@ namespace UowLibrary
         public override void Fix(ControllerCreateEditParameter parm)
         {
             ApplicationUser appUser = parm.Entity as ApplicationUser;
-            parm.Entity.Name = appUser.UserName;
+            appUser.IsNullThrowException("Unable to unbox user");
+
+            appUser.Name = appUser.UserName;
             base.Fix(parm);
+
+            //if (appUser.CountryId.IsNullOrWhiteSpace())
+            //    appUser.CountryId = null;
+
+            if (appUser.PersonId.IsNullOrWhiteSpace())
+                appUser.PersonId = null;
+
+            bool newBlackListed = !appUser.BlackListOldValue && appUser.BlackListed.Value;
+            bool newUnBlackListed = appUser.BlackListOldValue && !appUser.BlackListed.Value;
+
+            bool newSuspended = !appUser.SuspendedOldValue && appUser.Suspended.Value;
+            bool newUnSuspended = appUser.SuspendedOldValue && !appUser.Suspended.Value;
+
+            if (newBlackListed)
+                appUser.BlackListed.Activate(UserName);
+
+            if (newUnBlackListed)
+                appUser.BlackListed.Deactivate(UserName);
+
+            if (newSuspended)
+                appUser.Suspended.Activate(UserName);
+
+            if (newUnSuspended)
+                appUser.Suspended.Deactivate(UserName);
         }
 
 

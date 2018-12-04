@@ -303,8 +303,18 @@ namespace AliKuli.UtilitiesNS.RandomNumberGeneratorNS
         }
 
 
-
-
+        /// <summary>
+        /// Generates a single random number;
+        /// </summary>
+        /// <param name="minNumber"></param>
+        /// <returns></returns>
+        public string GetRandomNumber(Int64 minNumber = 0)
+        {
+            List<string> randomNumber = GetStringListOfRandomNumbers(1, minNumber);
+            string number = randomNumber[0];
+            number.IsNullOrWhiteSpaceThrowArgumentException("No random Number generated");
+            return number;
+        }
 
         public List<string> GetStringListOfRandomNumbers(long quantity, Int64 minNumber = 0)
         {

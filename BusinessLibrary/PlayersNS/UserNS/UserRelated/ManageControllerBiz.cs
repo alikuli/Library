@@ -173,41 +173,41 @@ namespace UowLibrary
 
 
         #region Add Phone Number
-        public async Task<bool> AddPhoneNumberAsync(AddPhoneNumberViewModel model)
-        {
-            try
-            {
-                ApplicationUser user = await UserBiz.UserManager.FindByIdAsync(UserId);
-                if (user.IsNull())
-                {
-                    ErrorsGlobal.Add("No User found.", MethodBase.GetCurrentMethod());
-                    return await Task.Run(() => false);
+        //public async Task<bool> AddPhoneNumberAsync(AddPhoneNumberViewModel model)
+        //{
+        //    try
+        //    {
+        //        ApplicationUser user = await UserBiz.UserManager.FindByIdAsync(UserId);
+        //        if (user.IsNull())
+        //        {
+        //            ErrorsGlobal.Add("No User found.", MethodBase.GetCurrentMethod());
+        //            return await Task.Run(() => false);
 
-                }
-                string fixedPhoneNumber = UserBiz.PhoneNumberFixer(model.Number, user.CountryAbbreviation);
-                model.FixedPhoneNumber = fixedPhoneNumber;
-                // Generate the token and send it
-                var code = await UserBiz.UserManager.GenerateChangePhoneNumberTokenAsync(UserId, model.FixedPhoneNumber);
-                if (UserBiz.UserManager.SmsService != null)
-                {
-                    var message = new IdentityMessage
-                    {
-                        Destination = model.Number,
-                        Body = "Your security code is: " + code
-                    };
-                    await UserBiz.UserManager.SmsService.SendAsync(message);
-                }
-                return await Task.Run(() => true);
-            }
-            catch (Exception e)
-            {
+        //        }
+        //        string fixedPhoneNumber = UserBiz.PhoneNumberFixer(model.Number, user.CountryAbbreviation);
+        //        model.FixedPhoneNumber = fixedPhoneNumber;
+        //        // Generate the token and send it
+        //        var code = await UserBiz.UserManager.GenerateChangePhoneNumberTokenAsync(UserId, model.FixedPhoneNumber);
+        //        if (UserBiz.UserManager.SmsService != null)
+        //        {
+        //            var message = new IdentityMessage
+        //            {
+        //                Destination = model.Number,
+        //                Body = "Your security code is: " + code
+        //            };
+        //            await UserBiz.UserManager.SmsService.SendAsync(message);
+        //        }
+        //        return await Task.Run(() => true);
+        //    }
+        //    catch (Exception e)
+        //    {
 
-                ErrorsGlobal.Add("Something went wrong while adding phone number async.", MethodBase.GetCurrentMethod(), e);
+        //        ErrorsGlobal.Add("Something went wrong while adding phone number async.", MethodBase.GetCurrentMethod(), e);
 
-            }
+        //    }
 
-            return await Task.Run(() => false);
-        }
+        //    return await Task.Run(() => false);
+        //}
 
         #endregion
 

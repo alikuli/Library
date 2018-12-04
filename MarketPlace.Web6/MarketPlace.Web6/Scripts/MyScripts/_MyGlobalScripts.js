@@ -32,6 +32,7 @@ function PreviewImage(uploader, theImage)
         return false;
     }
 }
+         
 
 function mouseOver() {
     console.log("Mouse Over sensed");

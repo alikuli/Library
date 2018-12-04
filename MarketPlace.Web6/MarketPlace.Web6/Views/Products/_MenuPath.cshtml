@@ -1,30 +1,136 @@
 ﻿@model ModelsClassLibrary.ModelsNS.ProductNS.Product
 
 
+@{int count = 0;}
 
-<div class="container">
-    @for (int i = 0; i < Model.CheckedBoxesList.Count(); i++)
-    {
-        @*counter++;
-        string fullName = idName + "[" + counter + "]";
-        <div class="col-md-6">
+@*<div class="well p-3 m-3">
+        @for (int i = 0; i < Model.CheckedBoxesList.Count(); i++)
+        {
             <div class="checkbox">
-                <input id="@fullName" name="@fullName" type="checkbox" value="true" />
-                <input name="@fullName" type="hidden" value="false" />
-                @Html.DisplayFor(x => item.Label)
+                <label>
+                    @Html.HiddenFor(model => model.CheckedBoxesList[i].Id)
+                    @Html.CheckBoxFor(model => model.CheckedBoxesList[i].IsTrue)
+                    @Html.DisplayFor(model => model.CheckedBoxesList[i].Label)
+                    @Html.HiddenFor(model => model.CheckedBoxesList[i].IsTrue)
+                </label>
             </div>
-        </div>*@
-<div class="checkbox">
-    <label>
-        @Html.HiddenFor(model => model.CheckedBoxesList[i].Id)
-        @Html.CheckBoxFor(model => model.CheckedBoxesList[i].IsTrue)
-        @Html.DisplayFor(model => model.CheckedBoxesList[i].Label)
-        @Html.HiddenFor(model => model.CheckedBoxesList[i].IsTrue)
-    </label>
-</div>
+        }
+    </div>*@
+
+
+<div class="well p-3 m-3">
+
+
+
+    @foreach (var mp1List in Model.Mp1List)
+    {
+        string mp1ListName = "mp1ListName" + count;
+        string mp1ListId = "#" + mp1ListName;
+        string mp1Class = "btn btn-outline-primary m-1";
+
+        if (mp1List.IsActve)
+        {
+            mp1Class = "btn btn-primary m-1";
+        }
+        
+        <div class="container">
+            
+            <button type="button" class="@mp1Class" data-toggle="collapse" data-target="@mp1ListId">@mp1List.Name</button>
+            <div id="@mp1ListName" class="collapse">
+
+                @foreach (var mp2List in mp1List.Mp2List)
+                {
+                    string mp2ListName = "mp2ListName" + count;
+                    string mp2ListId = "#" + mp2ListName;
+                    string mp2Class = "btn btn-outline-secondary m-1";
+                    
+                    if(mp2List.IsActve)
+                    {
+                        mp2Class = "btn btn-secondary m-1";
+                    }
+                    
+                        <div class="container">
+                            <button type="button" class="@mp2Class" data-toggle="collapse" data-target="@mp2ListId">@mp2List.Name</button>
+                            <div id="@mp2ListName" class="collapse">
+                                @foreach (var chkbox in mp2List.CheckedBoxesList)
+                                {
+                                    string id1 = string.Format("CheckedBoxesList_{0}__Id", count);
+                                    string name1 = string.Format("CheckedBoxesList[{0}].Id", count);
+
+                                    string id2 = string.Format("CheckedBoxesList_{0}__IsTrue", count);
+                                    string name2 = string.Format("CheckedBoxesList[{0}].IsTrue", count);
+
+
+
+                                <div class="checkbox">
+                                    <label>
+
+                                        <input id="@id1"
+                                               name="@name1"
+                                               type="hidden"
+                                               value="@chkbox.Id" />
+
+                                        @if (chkbox.IsTrue)
+                                        {
+                                            <input data-val="true"
+                                                   checked="checked"
+                                                   data-val-required="The IsTrue field is required."
+                                                   id="@id2"
+                                                   name="@name2"
+                                                   type="checkbox"
+                                                   value="true" />
+
+                                        }
+                                        else
+                                        {
+                                            <input data-val="true"
+                                                   data-val-required="The IsTrue field is required."
+                                                   id="@id2"
+                                                   name="@name2"
+                                                   type="checkbox"
+                                                   value="true" />
+
+                                        }
+
+
+                                        <input name="@name2"
+                                               type="hidden"
+                                               value="false" />
+
+                                        @chkbox.Label
+
+                                        @if (chkbox.IsTrue)
+                                        {
+                                            <input id="@id2"
+                                                   name="@name2"
+                                                   type="hidden"
+                                                   value="true" />
+
+                                        }
+                                        else
+                                        {
+                                            <input id="@id2"
+                                                   name="@name2"
+                                                   type="hidden"
+                                                   value="False" />
+
+                                        }
+                                    </label>
+                                </div>
+
+                                <span>@{count++;}</span>
+
+
+                                }                            </div>
+                        </div>
+
+
+
+
+
+                }
+            </div>
+        </div>
+
     }
 </div>
-
-
-
-

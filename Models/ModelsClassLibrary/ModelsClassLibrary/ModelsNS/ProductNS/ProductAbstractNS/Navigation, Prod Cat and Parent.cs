@@ -19,15 +19,15 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
 
 
-        [Display(Name = "Parent")]
+        //[Display(Name = "Parent")]
 
-        public string ParentId { get; set; }
+        //public string ParentId { get; set; }
 
-        [Display(Name = "Parent")]
-        public virtual Product Parent { get; set; }
+        //[Display(Name = "Parent")]
+        //public virtual Product Parent { get; set; }
 
 
-        public virtual ICollection<Product> ParentChildren { get; set; }
+        //public virtual ICollection<Product> ParentChildren { get; set; }
 
         public virtual ICollection<LikeUnlike> LikeUnlikes { get; set; }
 

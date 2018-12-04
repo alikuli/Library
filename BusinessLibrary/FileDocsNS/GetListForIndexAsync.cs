@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using UserModels;
 
 
 namespace UowLibrary.FileDocNS
@@ -67,41 +68,25 @@ namespace UowLibrary.FileDocNS
         {
             // errIfNotLoggedIn();
 
+            UserId.IsNullOrWhiteSpaceThrowException("You are not logged in.");
             var lst = (await base.GetListForIndexAsync(parms)).Cast<FileDoc>().ToList();
 
             if (lst.IsNullOrEmpty())
                 return null;
 
+            ApplicationUser user = UserBiz.Find(UserId);
+            user.IsNullThrowException("User not found.");
+            user.PersonId.IsNullOrWhiteSpaceThrowException("No person is attached to this user.");
+            string personId = user.PersonId;
 
-            var lstIcommonwithId = (lst.Where(x => x.UserId == UserId)).Cast<ICommonWithId>().ToList();
+            //this has been changed to getting files from Person as opposed to User.
+            var lstIcommonwithId = (lst.Where(x => x.PersonId== personId)).Cast<ICommonWithId>().ToList();
+
+            //var lstIcommonwithId = (lst.Where(x => x.UserId == UserId)).Cast<ICommonWithId>().ToList();
 
             return lstIcommonwithId;
         }
 
-        //private void errIfNotLoggedIn()
-        //{
-        //    if (UserId.IsNullOrWhiteSpace())
-        //    {
-        //        ErrorsGlobal.Add("You must log in to continue", "");
-        //    }
-        //}
 
-        //public override void Event_ModifyIndexItem(IndexListVM indexListVM, IndexItemVM indexItem, ICommonWithId icommonWithid)
-        //{
-        //    base.Event_ModifyIndexItem(indexListVM, indexItem, icommonWithid);
-        //    FileDoc filedoc = icommonWithid as FileDoc;
-
-        //    if (filedoc.IsNull())
-        //    {
-        //        ErrorsGlobal.Add("Unable to convert to File Doc", MethodBase.GetCurrentMethod());
-        //        throw new Exception(ErrorsGlobal.ToString());
-        //    }
-        //    indexItem.Name = filedoc.FullNameWithFileNumber();
-
-        //    indexItem.PrintLineNumber = filedoc.FileNumber.ToString();
-        //    if (!filedoc.OldFileNumber.IsNullOrWhiteSpace())
-        //        indexItem.PrintLineNumber = filedoc.OldFileNumber.ToString();
-
-        //}
     }
 }

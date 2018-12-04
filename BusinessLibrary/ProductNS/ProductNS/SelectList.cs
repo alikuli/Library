@@ -58,18 +58,18 @@ namespace UowLibrary.ProductNS
             return UomLengthBiz.SelectList();
         }
 
-        public SelectList SelectList_AutomobileGearTypeEnum()
-        {
-            AutomobileGearTypeENUM automobileGearTypeEnum = AutomobileGearTypeENUM.Unknown;
-            return EnumExtention.ToSelectListSorted<AutomobileGearTypeENUM>(automobileGearTypeEnum);
-        }
+        //public SelectList SelectList_AutomobileGearTypeEnum()
+        //{
+        //    AutomobileGearTypeENUM automobileGearTypeEnum = AutomobileGearTypeENUM.Unknown;
+        //    return EnumExtention.ToSelectListSorted<AutomobileGearTypeENUM>(automobileGearTypeEnum);
+        //}
 
 
-        public SelectList SelectList_FuelTypeEnum()
-        {
-            FuelTypeENUM fuelEnum = FuelTypeENUM.Unknown;
-            return EnumExtention.ToSelectListSorted<FuelTypeENUM>(fuelEnum);
-        }
+        //public SelectList SelectList_FuelTypeEnum()
+        //{
+        //    FuelTypeENUM fuelEnum = FuelTypeENUM.Unknown;
+        //    return EnumExtention.ToSelectListSorted<FuelTypeENUM>(fuelEnum);
+        //}
 
         private SelectList SelectList_Children(Product p)
         {

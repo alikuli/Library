@@ -11,10 +11,10 @@ namespace AliKuli.UtilitiesNS
     {
 
         public VerificationConfig Verification { get; set; }
-        private ErrorHandlerConfigManagerHelper _err;
+        //private ErrorHandlerConfigManagerHelper _err;
         public ConfigManagerHelper()
         {
-            _err = new ErrorHandlerConfigManagerHelper(IsVerbose);
+            //_err = new ErrorHandlerConfigManagerHelper(IsVerbose);
         }
 
         public virtual string ConnectionString
@@ -63,6 +63,14 @@ namespace AliKuli.UtilitiesNS
             }
         }
 
+
+        public string SmtpFromEmailAddress
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[MyConstants.SMTP_FROM_EMAIL_ADDRESS];
+            }
+        }
         string _adminRole;
         public virtual string AdminRole
         {
@@ -382,10 +390,9 @@ namespace AliKuli.UtilitiesNS
 
             get
             {
-                return CheckForNullStringAndThrowError_Helper(
-                    MethodBase.GetCurrentMethod(),
-                    (_smtpUser = _smtpServer ??
-                    (_smtpServer = ConfigurationManager.AppSettings[MyConstants.SMTP_SERVER])));
+                _smtpServer = ConfigurationManager.AppSettings[MyConstants.SMTP_SERVER];
+                _smtpServer.IsNullOrWhiteSpaceThrowException("_smtpServer");
+                return _smtpServer;
             }
         }
 
@@ -400,10 +407,9 @@ namespace AliKuli.UtilitiesNS
 
             get
             {
-                return CheckForNullStringAndThrowError_Helper(
-                    MethodBase.GetCurrentMethod(),
-                    (_smtpUser = _smtpUser ??
-                    ConfigurationManager.AppSettings[MyConstants.SMTP_USER]));
+                _smtpUser = ConfigurationManager.AppSettings[MyConstants.SMTP_USER];
+                _smtpUser.IsNullOrWhiteSpaceThrowArgumentException("_smtpUser");
+                return _smtpUser;
 
             }
         }
@@ -419,11 +425,9 @@ namespace AliKuli.UtilitiesNS
 
             get
             {
-
-                return CheckForNullStringAndThrowError_Helper(
-                    MethodBase.GetCurrentMethod(),
-                    (_smsTestingDirectory = _smsTestingDirectory ??
-                    ConfigurationManager.AppSettings[MyConstants.SMS_TESTING_DIRECTORY]));
+                _smsTestingDirectory = ConfigurationManager.AppSettings[MyConstants.SMS_TESTING_DIRECTORY];
+                _smsTestingDirectory.IsNullOrWhiteSpaceThrowException("_smsTestingDirectory");
+                return _smsTestingDirectory;
             }
         }
 
@@ -437,14 +441,14 @@ namespace AliKuli.UtilitiesNS
 
             get
             {
-                _isSmtpSelectedService = _isSmtpSelectedService ?? ConfigurationManager.AppSettings[MyConstants.IS_SMTP_SELECTED_SERVICE];
+                _isSmtpSelectedService = ConfigurationManager.AppSettings[MyConstants.IS_SMTP_SELECTED_SERVICE];
+                _isSmtpSelectedService.IsNullOrWhiteSpaceThrowException("_isSmtpSelectedService");
+                if (_isSmtpSelectedService.IsValidBoolean())
+                    return _isSmtpSelectedService;
+                
+                throw new Exception(string.Format("_isSmtpSelectedService not valid bool = '{0}'",_isSmtpSelectedService));
 
 
-                if (!CheckForNullStringAndThrowError_Helper(MethodBase.GetCurrentMethod(), _isSmtpSelectedService)
-                    .IsValidBoolean())
-                    ThrowException_InvalidBool(MethodBase.GetCurrentMethod(), _isSmtpSelectedService);
-
-                return _isSmtpSelectedService;
 
             }
         }
@@ -572,8 +576,8 @@ namespace AliKuli.UtilitiesNS
             if (variableValue.IsNullOrWhiteSpace())
             {
                 InitializeError();
-                _err.AddError("Empty string", MethodBase.GetCurrentMethod().Name);
-                throw new Exception(_err.ToString());
+                //_err.AddError("Empty string", MethodBase.GetCurrentMethod().Name);
+                throw new Exception("Empty string");
             }
 
             return variableValue;
@@ -584,8 +588,8 @@ namespace AliKuli.UtilitiesNS
 
             //_err.Add(string.Format("The bool {0} has an invalid value in the Web.Config file. It can only have a value of true or false. It's current value is: '{1}'.", variableName, variableValue), variableName);
             InitializeError();
-            _err.AddError("Invalid Bool", MethodBase.GetCurrentMethod().Name);
-            throw new Exception(_err.ToString());
+            //_err.AddError("Invalid Bool", MethodBase.GetCurrentMethod().Name);
+            throw new Exception("Invalid bool");
 
         }
         private void ThrowException_InvalidInteger(MethodBase methodBase, string variableValue, string offendingName)
@@ -593,8 +597,8 @@ namespace AliKuli.UtilitiesNS
 
             //_err.Add(string.Format("The {0} has an invalid integer value in the Web.Config file. It can only have a numeric value. It's current value is: '{1}'.", variableName, variableValue), variableName);
             InitializeError();
-            _err.AddError("Invalid number", MethodBase.GetCurrentMethod().Name);
-            throw new Exception(_err.ToString());
+            //_err.AddError("Invalid number", MethodBase.GetCurrentMethod().Name);
+            throw new Exception("Invalid number");
 
         }
 
@@ -603,9 +607,9 @@ namespace AliKuli.UtilitiesNS
 
             //_err.Add(string.Format("The {0} has an invalid URL value in the Web.Config file.  It's current value is: '{1}'.", variableName, variableValue), variableName);
             InitializeError();
-            _err.AddError("Invalid url", MethodBase.GetCurrentMethod().Name);
+            //_err.AddError("Invalid url", MethodBase.GetCurrentMethod().Name);
 
-            throw new Exception(_err.ToString());
+            throw new Exception("Invalid url");
 
         }
 
@@ -614,8 +618,8 @@ namespace AliKuli.UtilitiesNS
 
             //_err.Add(string.Format("The {0} has an invalid Email Address value in the Web.Config file.  It's current value is: '{1}'.", variableName, variableValue), variableName);
             InitializeError();
-            _err.AddError("Invalid email", MethodBase.GetCurrentMethod().Name);
-            throw new Exception(_err.ToString());
+            //_err.AddError("Invalid email", MethodBase.GetCurrentMethod().Name);
+            throw new Exception("Invalid email");
 
         }
         #endregion

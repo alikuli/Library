@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace UowLibrary
 {
-    public partial class UomLengthBiz : BusinessLayer<UomLength>
+    public partial class UomLengthBiz 
     {
 
 

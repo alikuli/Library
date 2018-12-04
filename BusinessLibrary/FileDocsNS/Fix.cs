@@ -35,12 +35,11 @@ namespace UowLibrary.FileDocNS
         {
             UserId.IsNullOrWhiteSpaceThrowException(); 
             entity.User =  UserBiz.Find(UserId);
+            entity.User.IsNullThrowException("User not found");
+            entity.User.PersonId.IsNullOrWhiteSpaceThrowException("No attached person to user");
 
-            if(entity.User.IsNull())
-            {
-                ErrorsGlobal.Add("User not found!", MethodBase.GetCurrentMethod());
-                throw new Exception(ErrorsGlobal.ToString());
-            }
+            entity.PersonId = entity.User.PersonId;
+
         }
 
 

@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using InterfacesLibrary.GeoLocationNS;
+﻿using EnumLibrary.EnumNS;
 using InterfacesLibrary.PeopleNS.PlayersNS;
 using InterfacesLibrary.SharedNS;
-using ModelsClassLibrary.ModelsNS.GeoLocationNS;
-using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
-using ModelsClassLibrary.ModelsNS.PlayersNS;
-using EnumLibrary.EnumNS;
+using ModelsClassLibrary.ModelsNS.AddressNS;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
+using UserModels;
+using AliKuli.Extentions;
 
 
 namespace ModelsClassLibrary.ModelsNS.PlayersNS
@@ -15,57 +14,74 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
     /// <summary>
     /// Note. The CustomerVendorAbstract is connected to the User. Therefore, this customer is tied up with the login ID.
     /// </summary>
-    public class Customer : PlayerAbstract, ICustomer
+    public class Customer : PlayerAbstract, ICustomer, IPlayer
     {
         public override ClassesWithRightsENUM ClassNameForRights()
         {
-                return EnumLibrary.EnumNS.ClassesWithRightsENUM.Customer;
+            return EnumLibrary.EnumNS.ClassesWithRightsENUM.Customer;
         }
-        #region CustomerCategory
+
+
 
         [Display(Name = "Category")]
-        public Guid CustomerCategoryId { get; set; }
+        [MaxLength(128)]
+        public string CustomerCategoryId { get; set; }
 
         public virtual ICategory CustomerCategory { get; set; }
 
-        #endregion
+        
 
 
-        #region Navigation
-
-        //public virtual ICollection<IGeoLocation> ListOfGeoLocationsToWork { get; set; }
-        //public virtual ICollection<IDiscount> CustomerDiscounts { get; set; }
-
-        #endregion
-
-        #region SelfErrorCheck
-        public override void SelfErrorCheck()
-        {
-            base.SelfErrorCheck();
-            Check_CustomerCategory();
+        //[Display(Name = "Bill To")]
+        //public virtual string DefaultBillAddressId { get;set; }
+        //public virtual AddressWithId DefaultBillAddress { get; set; }
 
 
-        }
 
-        private void Check_CustomerCategory()
-        {
-            if (CustomerCategory == null)
-                throw new Exception("Customer Category is null. Customer.Check_CustomerCategory");
-            if (CustomerCategory == null)
-                throw new Exception("Customer CategoryId is null. Customer.Check_CustomerCategory");
-        }
+        
+        [Display(Name="Inform To")]
+        [MaxLength(128)]
+        public virtual string DefaultInformToAddressId { get; set; }
+        public virtual AddressMain DefaultInformToAddress { get; set; }
 
-        #endregion
+        
+        
+        [NotMapped]
+        public SelectList SelectListCustomerCategory { get; set; }
+
+
+        [NotMapped]
+        public SelectList SelectListAddressBillTo { get; set; }
+
+
+        [NotMapped]
+        public SelectList SelectListAddressShipTo { get; set; }
+
+
+        [NotMapped]
+        public SelectList SelectListAddressInformTo { get; set; }
+
+
 
         public override void UpdatePropertiesDuringModify(ICommonWithId ic)
         {
+            Customer customer = ic as Customer;
+            customer.IsNullThrowException("Unable to unbox customer");
+
+            CustomerCategoryId = customer.CustomerCategoryId;
+            DefaultBillAddressId = customer.DefaultBillAddressId;
+            DefaultShipAddressId = customer.DefaultShipAddressId;
+            DefaultInformToAddressId = customer.DefaultInformToAddressId;
+
             base.UpdatePropertiesDuringModify(ic);
         }
-        private void LoadFrom(ICustomer c)
-        {
-            CustomerCategory = (CustomerCategory) c.CustomerCategory;
-            CustomerCategoryId = ((Customer) c).CustomerCategoryId;
-        }
+
+
+        //private void LoadFrom(ICustomer c)
+        //{
+        //    CustomerCategory = (CustomerCategory) c.CustomerCategory;
+        //    CustomerCategoryId = ((Customer) c).CustomerCategoryId;
+        //}
 
 
 
@@ -73,6 +89,25 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
         //public new void LoadFrom(ICustomer c)
         //{
         //    throw new NotImplementedException();
+        //}
+        //public virtual ICollection<IGeoLocation> ListOfGeoLocationsToWork { get; set; }
+        //public virtual ICollection<IDiscount> CustomerDiscounts { get; set; }
+
+
+        //public override void SelfErrorCheck()
+        //{
+        //    base.SelfErrorCheck();
+        //    Check_CustomerCategory();
+
+
+        //}
+
+        //private void Check_CustomerCategory()
+        //{
+        //    if (CustomerCategory == null)
+        //        throw new Exception("Customer Category is null. Customer.Check_CustomerCategory");
+        //    if (CustomerCategory == null)
+        //        throw new Exception("Customer CategoryId is null. Customer.Check_CustomerCategory");
         //}
     }
 }

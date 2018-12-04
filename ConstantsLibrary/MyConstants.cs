@@ -42,8 +42,9 @@ namespace AliKuli.ConstantsNS
         public const string SMTP_DOMAIN = "Smtp_Domain";
         public const string SMTP_PASSWORD = "Smtp_Password";
         public const string SMTP_PORT = "Smtp_Port";
-        public const string SMTP_SERVER = "Smtp_Server";
+        public const string SMTP_SERVER = "SmtpServer";
         public const string SMTP_USER = "Smtp_User";
+        public const string SMTP_FROM_EMAIL_ADDRESS = "fromEmailAddress";
 
         public const string DEFAULT_SCRATCHCARD_BATCH_SIZE = "DefaultScractchCardBatchSize";
         public const string DEFAULT_PAGE_SIZE = "DefaultPageSize";

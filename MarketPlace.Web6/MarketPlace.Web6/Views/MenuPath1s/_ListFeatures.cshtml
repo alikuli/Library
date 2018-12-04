@@ -3,10 +3,10 @@
 @{
     int count = 0;
     string controller = this.ViewContext.RouteData.Values["controller"].ToString();
-    IEnumerable<ModelsClassLibrary.ModelsNS.FeaturesNS.MenuPath1Feature> features = null;
-    if(!Model.MenuPath1Features.IsNull())
+    IEnumerable<ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeature> features = null;
+    if(!Model.MenuFeatures.IsNull())
     { 
-        features = Model.MenuPath1Features.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).AsEnumerable();
+        features = Model.MenuFeatures.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).AsEnumerable();
     }
     
 }

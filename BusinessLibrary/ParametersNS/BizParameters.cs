@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using AliKuli.Extentions;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AliKuli.UtilitiesNS;
+using BreadCrumbsLibraryNS.Programs;
+using ErrorHandlerLibrary;
+using UowLibrary.PageViewNS;
 using UowLibrary.UploadFileNS;
 using WebLibrary.Programs;
-using ErrorHandlerLibrary;
-using AliKuli.UtilitiesNS;
-using BreadCrumbsLibraryNS.Programs;
-using UowLibrary.PageViewNS;
 
 namespace UowLibrary.ParametersNS
 {
@@ -19,20 +13,20 @@ namespace UowLibrary.ParametersNS
         UploadedFileBiz _uploadedFileBiz;
 
         public BizParameters(
-            UploadedFileBiz uploadedFileBiz, 
-            IMemoryMain memoryMain, 
-            IErrorSet errorSet, 
-            ConfigManagerHelper configManager, 
-            BreadCrumbManager breadCrumbManager, 
+            UploadedFileBiz uploadedFileBiz,
+            IMemoryMain memoryMain,
+            IErrorSet errorSet,
+            ConfigManagerHelper configManager,
+            BreadCrumbManager breadCrumbManager,
             PageViewBiz pageViewBiz)
-                    :base(
-                        memoryMain,
-                        errorSet,
-                        configManager,
-                        breadCrumbManager,
-                        pageViewBiz)
+            : base(
+                memoryMain,
+                errorSet,
+                configManager,
+                breadCrumbManager,
+                pageViewBiz)
         {
-            _uploadedFileBiz =  uploadedFileBiz;
+            _uploadedFileBiz = uploadedFileBiz;
 
         }
 
@@ -43,6 +37,9 @@ namespace UowLibrary.ParametersNS
                 return _uploadedFileBiz;
             }
         }
+
+
+
 
 
 

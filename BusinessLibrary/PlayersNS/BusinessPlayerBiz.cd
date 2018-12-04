@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="UowLibrary.PlayersNS.PlayerAbstractCategoryNS.BusinessLayerPlayer&lt;TEntity&gt;">
+    <Position X="10.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAKCAAQQAADAIAQAAEAAgEAQoAAAAAAAIAAAAAA=</HashCode>
+      <FileName>PlayersNS\BusinessLayerPlayerNS\BusinessLayerPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UowLibrary.BusinessLayer&lt;TEntity&gt;">
+    <Position X="3.25" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>n1xkWA4wKmlAMPPmpCIRKFEECvFpoUBGxAFcIAgOAIA=</HashCode>
+      <FileName>0 BusinessLayer\0 BusinessLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="UowLibrary.Abstract.AbstractBiz">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>WAAAASAAIQAEQAAAACAAAAiAAAABAIhIAQIIAAAJQAA=</HashCode>
+      <FileName>Abstract\AbstractBiz.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="UowLibrary.PlayersNS.CustomerNS.CustomerBiz">
+    <Position X="13.5" Y="5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAEAIAAAAEAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>PlayersNS\BusinessLayerPlayerNS\CustomerNS\CustomerBiz.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UowLibrary.PlayersNS.CashierNS.CashierBiz">
+    <Position X="10.75" Y="5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAADAAAYAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PlayersNS\BusinessLayerPlayerNS\CashierNS\CashierBiz.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UowLibrary.PlayersNS.OwnerNS.OwnerBiz">
+    <Position X="8" Y="5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAIAAAAAAAIgAAAAABAAAAAAAAA=</HashCode>
+      <FileName>PlayersNS\BusinessLayerPlayerNS\OwnerNS\Fix.cs</FileName>
+      <NewMemberFileName>PlayersNS\BusinessLayerPlayerNS\OwnerNS\Factory.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UowLibrary.PlayersNS.DeliverymanNS.DeliverymanBiz">
+    <Position X="16.25" Y="5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAACAAAIAAAAAAAAAAAACAEAAAAAAAAA=</HashCode>
+      <FileName>PlayersNS\BusinessLayerPlayerNS\DeliverymanNS\DeliverymanBiz.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UowLibrary.PlayersNS.SalesmanNS.SalesmanBiz">
+    <Position X="19.25" Y="5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAACAAAIAAAAAAAAAAAAAAAAAAIAAgAA=</HashCode>
+      <FileName>PlayersNS\BusinessLayerPlayerNS\SalesmanNS\Fix.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UowLibrary.MailerNS.MailerBiz">
+    <Position X="22" Y="5" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>IgAxRAEMIAYAMQCIIYJIEAgAQAIgABAhwAggICUAIAI=</HashCode>
+      <FileName>PlayersNS\BusinessLayerPlayerNS\MailerBizNS\BusinessRulesFor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UowLibrary.PlayersNS.PersonNS.PersonBiz">
+    <Position X="7.75" Y="8.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAQwAAACAKCIAAEAAAEAYAAQAgAAAAAAACAA=</HashCode>
+      <FileName>PlayersNS\PersonNS\AddEntityRecordIntoUpload.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

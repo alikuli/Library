@@ -41,20 +41,20 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         }
 
-        #region Names Field
-        /// <summary>
-        /// This is where the ProductVM other data.
-        /// </summary>
-        public string NameFieldsData { get; set; }
+        //#region Names Field
+        ///// <summary>
+        ///// This is where the ProductVM other data.
+        ///// </summary>
+        //public string NameFieldsData { get; set; }
 
-        public string NameFieldsSeperator
-        {
-            get
-            {
-                return "%$%#";
-            }
-        }
+        //public string NameFieldsSeperator
+        //{
+        //    get
+        //    {
+        //        return "%$%#";
+        //    }
+        //}
 
-        #endregion
+        //#endregion
     }
 }

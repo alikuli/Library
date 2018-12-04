@@ -43,6 +43,8 @@ namespace MarketPlace.Web6.Controllers
             try
             {
                 //UserBiz.InitializeSystem();
+                ErrorsGlobal.ClearAllErrors();
+                ErrorsGlobal.Messages.Clear();
                 return View();
             }
             catch (Exception e)

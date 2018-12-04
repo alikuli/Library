@@ -21,7 +21,7 @@ namespace MarketPlace.Web6.Controllers
     public partial class FeaturesController : EntityAbstractController<Feature>
     {
 
-        private FeatureBiz _biz;
+        //private FeatureBiz _biz;
         //private UserBiz _userBiz;
         public FeaturesController(FeatureBiz biz, AbstractControllerParameters param)
             : base(biz, param) 

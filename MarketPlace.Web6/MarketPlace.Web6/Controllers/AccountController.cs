@@ -175,7 +175,7 @@ namespace MarketPlace.Web6.Controllers
                 //return RedirectToAction("Index", "Home");
             }
 
-            model = UserBiz.LoadCountrySelectListIn(model);
+            //model = UserBiz.LoadCountrySelectListIn(model);
 
             // If we got this far, something failed, redisplay form
             ErrorsGlobal.Add("Registration failed", MethodBase.GetCurrentMethod());

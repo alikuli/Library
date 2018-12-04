@@ -1,4 +1,4 @@
-﻿@model ModelsClassLibrary.ModelsNS.AddressNS.AddressWithId
+﻿@model ModelsClassLibrary.ModelsNS.AddressNS.AddressMain
 
 
 
@@ -73,6 +73,14 @@
             @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control", placeholder = "A comment that you may have" } })
         </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.Verification.VerificaionStatusEnum, htmlAttributes: new { @class = "" })
+            @Html.DropDownListFor(x => x.Verification.VerificaionStatusEnum,
+                                 (Model.VerificaionStatusEnumSelectList as IEnumerable<SelectListItem>),
+                  "--- Select Verification Status ---",
+                  new { @class = "form-control" })
+        </div>
+
 
         <div class="card">
             <div class="card Header bg-info text-white">
@@ -80,18 +88,18 @@
             </div>
             <div class="card-body">
                 <div class="form-check">
-                    @Html.EditorFor(model => model.AddressType.InformTo, new { htmlAttributes = new { @class = "form-check-input" } })
-                    @Html.LabelFor(model => model.AddressType.InformTo, htmlAttributes: new { @class = "form-check-label" })
+                    @Html.EditorFor(model => model.AddressType.IsInformAddress, new { htmlAttributes = new { @class = "form-check-input" } })
+                    @Html.LabelFor(model => model.AddressType.IsInformAddress, htmlAttributes: new { @class = "form-check-label" })
                 </div>
 
                 <div class="form-check">
-                    @Html.EditorFor(model => model.AddressType.BillTo, new { htmlAttributes = new { @class = "form-check-input" } })
-                    @Html.LabelFor(model => model.AddressType.BillTo, htmlAttributes: new { @class = "form-check-label" })
+                    @Html.EditorFor(model => model.AddressType.IsBillAddress, new { htmlAttributes = new { @class = "form-check-input" } })
+                    @Html.LabelFor(model => model.AddressType.IsBillAddress, htmlAttributes: new { @class = "form-check-label" })
                 </div>
 
                 <div class="form-check">
-                    @Html.EditorFor(model => model.AddressType.ShipTo, new { htmlAttributes = new { @class = "form-check-input" } })
-                    @Html.LabelFor(model => model.AddressType.ShipTo, htmlAttributes: new { @class = "form-check-label" })
+                    @Html.EditorFor(model => model.AddressType.IsShipAddress, new { htmlAttributes = new { @class = "form-check-input" } })
+                    @Html.LabelFor(model => model.AddressType.IsShipAddress, htmlAttributes: new { @class = "form-check-label" })
                 </div>
             </div>
         </div>
@@ -132,10 +140,16 @@
         <a href="#PrintedDateWell" data-toggle="collapse">@Html.LabelFor(model => model.Verification.PrintedDate, htmlAttributes: new { @class = "" })</a>
         <div class="form-group">
             <div class="well p-3 collapse" id="PrintedDateWell">
-                @Html.EditorFor(model => model.Verification.AcceptDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                @Html.EditorFor(model => model.Verification.PrintedDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
             </div>
         </div>
 
+        <a href="#MailedDateWell" data-toggle="collapse">@Html.LabelFor(model => model.Verification.MailedDate, htmlAttributes: new { @class = "" })</a>
+        <div class="form-group">
+            <div class="well p-3 collapse" id="MailedDateWell">
+                @Html.EditorFor(model => model.Verification.MailedDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+            </div>
+        </div>
 
 
         <a href="#FailedDateWell" data-toggle="collapse">@Html.LabelFor(model => model.Verification.FailedDate, htmlAttributes: new { @class = "" })</a>

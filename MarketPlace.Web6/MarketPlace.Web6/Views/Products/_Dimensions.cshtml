@@ -1,38 +1,26 @@
 ﻿@model ModelsClassLibrary.ModelsNS.ProductNS.Product
 
-<div class="well">
 
-    <div class="container">
-        @*@{
-                var htmlAttributes = ViewData;
-                htmlAttributes["class"] = htmlAttributes["class"] + "form-control col-md-2";
-                htmlAttributes["disabled"] = "true";
-            }*@
+    <div class="well p-3 m-3">
 
 
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Dimensions, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Dimensions, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UomDimensions, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UomDimensionsId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(x => x.UomDimensionsId,
-                                       (@ViewBag.UomLengthSelectList as IEnumerable<SelectListItem>),
-                                             "--- Select UOM ---",
-                                    new { @class = "form-control" })
-            </div>
-        </div>
-
+    <div class="form-group">
+        @Html.LabelFor(model => model.Dimensions, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Dimensions, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.UomDimensions, "", new { @class = "text-danger" })
     </div>
 
+    <div class="form-group">
+        @Html.LabelFor(model => model.UomDimensionsId, htmlAttributes: new { @class = "control-label" })
+        @Html.DropDownListFor(x => x.UomDimensionsId,
+                                    (@ViewBag.UomLengthSelectList as IEnumerable<SelectListItem>),
+                                            "--- Select UOM ---",
+                                new { @class = "form-control" })
+    </div>
 
 </div>
+
+
 
 
 

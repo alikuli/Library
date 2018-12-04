@@ -1,21 +1,35 @@
-﻿using AliKuli.Extentions;
+﻿using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
-using ModelsClassLibrary.ModelsNS.ProductNS.FeaturesNS;
+using ModelsClassLibrary.ModelsNS.ProductNS.CheckBoxItemNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS;
-using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 using ModelsClassLibrary.SharedNS;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using AliKuli.Extentions;
+using System.Linq;
 
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
     public partial class Product : ProductAbstract, IProduct
     {
 
+        #region check boxes
+        /// <summary>
+        /// The check boxes are used for adding the menu path.
+        /// Mp1List list helps to print the check baxes as collapseable buttons.
+        /// </summary>
+
         [NotMapped]
         public virtual List<CheckBoxItem> CheckedBoxesList { get; set; }
+
+        [NotMapped]
+        public virtual List<CheckBoxListTree> Mp1List { get; set; }
+
+        #endregion
+
 
         public virtual ICollection<MenuPathMain> MenuPathMains { get; set; }
 
@@ -23,33 +37,30 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         public virtual ICollection<GlobalComment> GlobalComments { get; set; }
 
-        //public virtual ICollection<Feature> Features { get; set; }
-
+        public virtual List<ProductFeature> ProductFeatures { get; set; }
+        
+        //[NotMapped]
+        //public List<ProductFeature> ProductFeaturesList
+        //{
+        //    get
+        //    {
+        //        if (ProductFeatures.IsNull())
+        //            return null;
+        //        return ProductFeatures.ToList();
+        //    }
+        //}
         /// <summary>
         /// A product can have ONE or Many ProductIdentifiers. It must have at least one.
-        /// For automobiles, this will be automatically created using the brand, year model etc.
         /// </summary>
         public virtual ICollection<ProductIdentifier> ProductIdentifiers { get; set; }
 
-        ///// <summary>
-        ///// This decides the menus
-        ///// </summary>
-        //[Display(Name = "Category")]
-        //public virtual ICollection<MenuPathMain> MenuPathMains { get; set; }
 
-        public override EnumLibrary.EnumNS.ClassesWithRightsENUM ClassNameForRights()
+
+        public override ClassesWithRightsENUM ClassNameForRights()
         {
             return EnumLibrary.EnumNS.ClassesWithRightsENUM.Product;
         }
 
-
-        public bool IsAutomobile
-        {
-            get
-            {
-                return !(this as ProductAutomobileVM).IsNull();
-            }
-        }
 
     }
 }

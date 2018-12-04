@@ -258,7 +258,7 @@ namespace ErrorHandlerLibrary.ExceptionsNS
         /// </summary>
         /// <param name="httpCtx"></param>
         /// <returns></returns>
-        public ErrorSet MemoryRetrieve()
+        public void MemoryRetrieve()
         {
 
             object retrievedObject = _memory.SessionMemory.GetFrom(LOCATION) as object;
@@ -268,7 +268,7 @@ namespace ErrorHandlerLibrary.ExceptionsNS
                 ErrorSet errorSetFromMemory = retrievedObject as ErrorSet;
 
                 if (errorSetFromMemory.IsNull())
-                    return null;
+                    return;
 
                 //Get back to state.
                 this.Errors = errorSetFromMemory.Errors;
@@ -276,10 +276,8 @@ namespace ErrorHandlerLibrary.ExceptionsNS
                 this.ClassName = errorSetFromMemory.ClassName;
                 this.LibraryName = errorSetFromMemory.LibraryName;
                 this.UserName = errorSetFromMemory.UserName;
-
-                return errorSetFromMemory;
+                this.DoNotClearMessages = errorSetFromMemory.DoNotClearMessages;
             }
-            return null;
 
 
         }
@@ -354,5 +352,22 @@ namespace ErrorHandlerLibrary.ExceptionsNS
         }
 
         #endregion
+
+        /// <summary>
+        /// Sometimes when we redirect from Http to Http, we cannot clear the messages because we lost them. After
+        /// it is used once, it clears itself.
+        /// </summary>
+        bool _doNotClearMessages;
+        public bool DoNotClearMessages 
+        {
+            get
+            {
+                return _doNotClearMessages;
+            }
+            set
+            {
+                _doNotClearMessages = value;
+            }
+        }
     }
 }

@@ -1,35 +1,18 @@
-﻿using AliKuli.Extentions;
-using AliKuli.UtilitiesNS;
-using ApplicationDbContextNS;
-using DalLibrary.DalNS;
-using DalLibrary.Interfaces;
-using EnumLibrary.EnumNS;
-using ErrorHandlerLibrary.ExceptionsNS;
-using MarketPlace.Web6.App_Start;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using ModelsClassLibrary.ModelsNS.PlacesNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.RightsNS;
 using ModelsNS.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using UowLibrary.PlayersNS;
 using UserModels;
-using UserModelsLibrary.ModelsNS;
-using WebLibrary.Programs;
 
 namespace UowLibrary
 {
     public partial class UserBiz : BusinessLayer<ApplicationUser>
     {
-        
+
 
         #region AccountControllerBiz
 
@@ -40,16 +23,16 @@ namespace UowLibrary
         public RegisterViewModel CreateRegisterViewModel()
         {
             RegisterViewModel r = new RegisterViewModel();
-            r.CountrySelectList = CountryBiz.SelectList();
+            //r.CountrySelectList = CountryBiz.SelectList();
             return r;
         }
 
 
-        public RegisterViewModel LoadCountrySelectListIn(RegisterViewModel rvm)
-        {
-            rvm.CountrySelectList = CountryBiz.SelectList();
-            return rvm;
-        }
+        //public RegisterViewModel LoadCountrySelectListIn(RegisterViewModel rvm)
+        //{
+        //    rvm.CountrySelectList = CountryBiz.SelectList();
+        //    return rvm;
+        //}
 
         /// <summary>
         /// This registers the user.
@@ -60,17 +43,17 @@ namespace UowLibrary
         public async Task RegisterAsync(RegisterViewModel model)
         {
 
-            Country country = CountryBiz.Find(model.CountryID);
+            //Country country = CountryBiz.Find(model.CountryID);
 
-            if (country.IsNull())
-            {
-                ErrorsGlobal.Add("No Country found!", MethodBase.GetCurrentMethod());
-                throw new Exception(ErrorsGlobal.ToString());
-            }
+            //if (country.IsNull())
+            //{
+            //    ErrorsGlobal.Add("No Country found!", MethodBase.GetCurrentMethod());
+            //    throw new Exception(ErrorsGlobal.ToString());
+            //}
 
 
 
-            string fixedPhoneNumber = fixPhoneNumber(model, country);
+            //string fixedPhoneNumber = fixPhoneNumber(model, country);
 
             //use the supplied userName or the fixed phone number if nothing supplied.
             //at the moment we are using the complete phone number as the user name.
@@ -79,17 +62,17 @@ namespace UowLibrary
             //with the phone number.
 
             string userName = model.UserName;
-            if (model.UserName.IsNullOrWhiteSpace())
-            {
-                userName = fixedPhoneNumber;
-            }
+            //if (model.UserName.IsNullOrWhiteSpace())
+            //{
+            //    userName = fixedPhoneNumber;
+            //}
 
 
             var user = new ApplicationUser
             {
                 UserName = userName,
-                PhoneNumber = fixedPhoneNumber,
-                PhoneNumberAsEntered = model.Phone
+                //PhoneNumber = fixedPhoneNumber,
+                //PhoneNumberAsEntered = model.Phone
             };
 
 
@@ -97,8 +80,20 @@ namespace UowLibrary
 
             if (result.Succeeded)
             {
+
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                string code = await GenerateChangePhoneNumberTokenAsync(user.Id, fixedPhoneNumber);
+
+                //Create a Person account as well to match the User. The business rule should do the needful.
+                //we need to do it here because User needs to be logged in.
+
+                UserName = user.UserName;
+                UserId = user.Id;
+                //PersonBiz.UserId = user.Id;
+                //PersonBiz.UserName = user.UserName;
+
+                UpdateAndSave(user);
+
+                //string code = await GenerateChangePhoneNumberTokenAsync(user.Id, fixedPhoneNumber);
 
                 // For more information on how to enable account confirmation and pas sword reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
@@ -109,29 +104,29 @@ namespace UowLibrary
 
         }
 
-        private string fixPhoneNumber(RegisterViewModel model, Country country)
-        {
-            //fix phone number
-            string fixedPhoneNumber = "";
-            try
-            {
-                fixedPhoneNumber = PhoneNumberFixer(model.Phone, country.Abbreviation);
+        //private string fixPhoneNumber(RegisterViewModel model, Country country)
+        //{
+        //    //fix phone number
+        //    string fixedPhoneNumber = "";
+        //    try
+        //    {
+        //        fixedPhoneNumber = PhoneNumberFixer(model.Phone, country.Abbreviation);
 
-            }
-            catch (Exception e)
-            {
+        //    }
+        //    catch (Exception e)
+        //    {
 
-                ErrorsGlobal.Add("Unable to fix phone number!", MethodBase.GetCurrentMethod(), e);
-                throw new Exception(ErrorsGlobal.ToString());
-            }
+        //        ErrorsGlobal.Add("Unable to fix phone number!", MethodBase.GetCurrentMethod(), e);
+        //        throw new Exception(ErrorsGlobal.ToString());
+        //    }
 
-            if (fixedPhoneNumber.IsNull())
-            {
-                ErrorsGlobal.Add("Phone number is null!", MethodBase.GetCurrentMethod());
-                throw new Exception(ErrorsGlobal.ToString());
-            }
-            return fixedPhoneNumber;
-        }
+        //    if (fixedPhoneNumber.IsNull())
+        //    {
+        //        ErrorsGlobal.Add("Phone number is null!", MethodBase.GetCurrentMethod());
+        //        throw new Exception(ErrorsGlobal.ToString());
+        //    }
+        //    return fixedPhoneNumber;
+        //}
 
 
         #endregion
@@ -292,7 +287,7 @@ namespace UowLibrary
         //-------------------------------------- AccountControllerBiz End
         #endregion
 
-        
+
 
 
     }

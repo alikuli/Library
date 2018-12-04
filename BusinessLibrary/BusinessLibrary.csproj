@@ -144,80 +144,58 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="0 BusinessLayer\EntityFramework Tools.cs" />
-    <Compile Include="0 BusinessLayer\CreateControllerCreateEditParameter.cs" />
-    <Compile Include="0 BusinessLayer\FixChildEntityForCreate.cs" />
-    <Compile Include="0 BusinessLayer\GetVerificationIcon.cs" />
-    <Compile Include="0 BusinessLayer\HasUploadsProperties.cs" />
-    <Compile Include="0 BusinessLayer\Get.cs" />
-    <Compile Include="0 BusinessLayer\File Tools.cs" />
-    <Compile Include="0 BusinessLayer\Initialize Admin.cs" />
-    <Compile Include="0 BusinessLayer\Factory.cs" />
-    <Compile Include="0 BusinessLayer\Initialization -LockEdit.cs" />
-    <Compile Include="0 BusinessLayer\Event_ModifyIndexItem.cs" />
-    <Compile Include="AddressNS\IssueAddressVerificationRequest.cs" />
-    <Compile Include="AddressNS\GetAddressVerificationRequestConfirmation.cs" />
-    <Compile Include="AddressNS\GetAddressVerificationRequest.cs" />
-    <Compile Include="AddressNS\GetDataToCheckDuplicateName.cs" />
-    <Compile Include="AddressNS\SetAllAddressesToNotVerified.cs" />
-    <Compile Include="AddressVerificationHdrNS\AddressVerificationHdrBiz.cs" />
-    <Compile Include="AddressNS\Event_ModifyIndexList.cs" />
-    <Compile Include="AddressNS\Fix.cs" />
-    <Compile Include="AddressNS\GetListForIndex.cs" />
-    <Compile Include="AddressNS\GetListForIndexAsync.cs" />
-    <Compile Include="AddressNS\SelectList.cs" />
-    <Compile Include="AddressNS\AddressBiz.cs" />
-    <Compile Include="AddressVerificationHdrNS\Event_ModifyIndexItem.cs" />
-    <Compile Include="AddressVerificationTrxNS\Event_ModifyIndexItem.cs" />
-    <Compile Include="AddressVerificationTrxNS\GetDataToCheckDuplicateName.cs" />
-    <Compile Include="AddressVerificationTrxNS\GetVerificationRequestTrx.cs" />
-    <Compile Include="AddressVerificationTrxNS\AddressVerificationTrxBiz.cs" />
-    <Compile Include="FeatureNS\Index.cs" />
+    <Compile Include="ContactsNS\AddressNS\Event_ModifyIndexItem.cs" />
+    <Compile Include="ContactsNS\AddressNS\Factory.cs" />
+    <Compile Include="ContactsNS\AddressNS\UpdateAndSaveDefaultAddress.cs" />
+    <Compile Include="ContactsNS\AddressNS\IssueAddressVerificationRequest.cs" />
+    <Compile Include="ContactsNS\AddressNS\GetAddressVerificationRequestConfirmation.cs" />
+    <Compile Include="ContactsNS\AddressNS\GetAddressVerificationRequest.cs" />
+    <Compile Include="ContactsNS\AddressNS\GetDataToCheckDuplicateName.cs" />
+    <Compile Include="ContactsNS\AddressNS\SetAllAddressesToNotVerified.cs" />
+    <Compile Include="ContactsNS\AddressVerificationHdrNS\AddressVerificationHdrBiz.cs" />
+    <Compile Include="ContactsNS\AddressNS\Event_ModifyIndexList.cs" />
+    <Compile Include="ContactsNS\AddressNS\Fix.cs" />
+    <Compile Include="ContactsNS\AddressNS\GetListForIndex.cs" />
+    <Compile Include="ContactsNS\AddressNS\GetListForIndexAsync.cs" />
+    <Compile Include="ContactsNS\AddressNS\SelectList.cs" />
+    <Compile Include="ContactsNS\AddressNS\AddressBiz.cs" />
+    <Compile Include="ContactsNS\AddressVerificationHdrNS\Event_ModifyIndexItem.cs" />
+    <Compile Include="ContactsNS\AddressVerificationTrxNS\Event_ModifyIndexItem.cs" />
+    <Compile Include="ContactsNS\AddressVerificationTrxNS\GetDataToCheckDuplicateName.cs" />
+    <Compile Include="ContactsNS\AddressVerificationTrxNS\GetVerificationRequestTrx.cs" />
+    <Compile Include="ContactsNS\AddressVerificationTrxNS\AddressVerificationTrxBiz.cs" />
+    <Compile Include="ContactsNS\ContactAbstractBiz.cs" />
+    <Compile Include="ContactsNS\EmailNS\EmailAddressBiz.cs" />
+    <Compile Include="ContactsNS\EmailNS\Event_ModifyIndexList.cs" />
+    <Compile Include="ContactsNS\EmailNS\SelectList.cs" />
+    <Compile Include="ContactsNS\PhoneNS\Event_ModifyIndexList.cs" />
+    <Compile Include="ContactsNS\PhoneNS\PhoneBiz.cs" />
+    <Compile Include="FeatureNS\MenuFeatureNS\Fix.cs" />
+    <Compile Include="FeatureNS\MenuFeatureNS\Factory.cs" />
+    <Compile Include="FeatureNS\MenuFeatureNS\Event_ModifyIndexList.cs" />
+    <Compile Include="FeatureNS\MenuFeatureNS\MenuFeatureBiz.cs" />
+    <Compile Include="FeatureNS\ProductChildFeatureNS\ProductChildFeaturesBiz.cs" />
+    <Compile Include="FeatureNS\ProductFeatureNS\ProductFeatureBiz.cs" />
     <Compile Include="FileDocsNS\Event_ModifyIndexList.cs" />
     <Compile Include="FileDocsNS\Event_ModifyIndexItem.cs" />
+    <Compile Include="FileDocsNS\MoverFilesFromUserToPerson.cs" />
     <Compile Include="FileDocsNS\GetListForIndexAsync.cs" />
-    <Compile Include="MailerBizNS\BusinessRulesFor.cs" />
-    <Compile Include="MailerBizNS\CreateMailerVMForAssigningVerifList.cs" />
-    <Compile Include="MailerBizNS\Event_ModifyIndexItem.cs" />
-    <Compile Include="MailerBizNS\UpdateAndSaveMailingCost.cs" />
-    <Compile Include="MailerBizNS\Fix.cs" />
-    <Compile Include="MailerBizNS\numberOfOpenMailingsAllowedToMailer.cs" />
-    <Compile Include="MailerBizNS\Factory_CreateMailerVm.cs" />
-    <Compile Include="MailerBizNS\CreateMailer.cs" />
-    <Compile Include="MailerBizNS\GetmailingCostFor.cs" />
-    <Compile Include="MailerBizNS\TotalOpenMailingsForMailer.cs" />
-    <Compile Include="MailerBizNS\IsMailerAllowedMoreMailings.cs" />
-    <Compile Include="MailerBizNS\CreatMailingList.cs" />
-    <Compile Include="MailerBizNS\SelectList.cs" />
-    <Compile Include="MailerBizNS\MailerBiz.cs" />
-    <Compile Include="MenuNS\MenuPath1FeatureNS\MenuPath1FeatureBiz.cs" />
-    <Compile Include="MenuNS\MenuPath1FeatureNS\FixChildEntityForCreate.cs" />
-    <Compile Include="MenuNS\MenuPath1FeatureNS\Index.cs" />
-    <Compile Include="MenuNS\MenuPath1FeatureNS\SelectList.cs" />
-    <Compile Include="MenuPath2FeatureNS\FixChildEntityForCreate.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MenuPath2FeatureNS\Index.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MenuPath2FeatureNS\MenuPath2FeatureBiz.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MenuPath2FeatureNS\SelectList.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MenuPath3FeatureNS\FixChildEntityForCreate.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MenuPath3FeatureNS\Index.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MenuPath3FeatureNS\MenuPath3FeatureBiz.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MenuPath3FeatureNS\SelectList.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\MailerBizNS\BusinessRulesFor.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\MailerBizNS\CreateMailerVMForAssigningVerifList.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\MailerBizNS\UpdateAndSaveMailingCost.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\MailerBizNS\Fix.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\MailerBizNS\numberOfOpenMailingsAllowedToMailer.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\MailerBizNS\Factory_CreateMailerVm.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\MailerBizNS\CreateMailer.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\MailerBizNS\GetmailingCostFor.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\MailerBizNS\TotalOpenMailingsForMailer.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\MailerBizNS\IsMailerAllowedMoreMailings.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\MailerBizNS\CreatMailingList.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\MailerBizNS\SelectList.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\MailerBizNS\MailerBiz.cs" />
+    <Compile Include="MenuNS\MenuPathMainNS\AddDeleteMenu3ItemTo.cs" />
+    <Compile Include="MenuNS\MenuPathMainNS\AddDeleteMenu2ItemTo.cs" />
+    <Compile Include="MenuNS\MenuPathMainNS\AddDeleteMenu1ItemTo.cs" />
     <Compile Include="PageViewNS\Cache.cs" />
     <Compile Include="PageViewNS\filterForBeginEndDate.cs" />
     <Compile Include="PageViewNS\GetDataFor.cs" />
@@ -233,14 +211,6 @@
     <Compile Include="Abstract\Memory.cs" />
     <Compile Include="Abstract\Errors.cs" />
     <Compile Include="Abstract\AbstractBiz.cs" />
-    <Compile Include="0 BusinessLayer\Bussiness Rules.cs" />
-    <Compile Include="0 BusinessLayer\Event_ModifyIndexList.cs" />
-    <Compile Include="0 BusinessLayer\Uploads.cs" />
-    <Compile Include="0 BusinessLayer\Error Check.cs" />
-    <Compile Include="0 BusinessLayer\Fix.cs" />
-    <Compile Include="0 BusinessLayer\SelectList.cs" />
-    <Compile Include="0 BusinessLayer\CRUD.cs" />
-    <Compile Include="0 BusinessLayer\Index.cs" />
     <Compile Include="AKATest.cs" />
     <Compile Include="BizClasses.cs" />
     <Compile Include="CounterNS\Index.cs" />
@@ -249,8 +219,6 @@
     <Compile Include="CounterNS\SelectList.cs" />
     <Compile Include="DiscountNS\SelectList.cs" />
     <Compile Include="DiscountNS\Index.cs" />
-    <Compile Include="FeatureNS\SelectList.cs" />
-    <Compile Include="FeatureNS\FeatureBiz.cs" />
     <Compile Include="FileDocsNS\Factory.cs" />
     <Compile Include="FileDocsNS\Upload.cs" />
     <Compile Include="FileDocsNS\Find.cs" />
@@ -268,7 +236,7 @@
     <Compile Include="GlobalCommentsNS\SelectList.cs" />
     <Compile Include="LanguagesNS\SelectList.cs" />
     <Compile Include="LanguagesNS\Fix.cs" />
-    <Compile Include="LanguagesNS\Index.cs" />
+    <Compile Include="LanguagesNS\Event_ModifyIndexList.cs" />
     <Compile Include="LikeUnLikeNS\Count.cs" />
     <Compile Include="LikeUnLikeNS\Add.cs" />
     <Compile Include="LikeUnLikeNS\LikeUnlikeBiz.cs" />
@@ -303,10 +271,60 @@
     <Compile Include="PlacesNS\StateNS\StateBiz.cs" />
     <Compile Include="PlacesNS\CountryNS\Initialization.cs" />
     <Compile Include="PlacesNS\CountryNS\CountryBiz.cs" />
-    <Compile Include="0 BusinessLayer\Initialization.cs" />
     <Compile Include="0 BusinessLayer\0 BusinessLayer.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\CashierNS\CashierBiz.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\CashierNS\Fix.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\CashierNS\SelectList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\CustomerNS\Fix.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\BusinessLayerPlayer.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\DeliverymanNS\DeliverymanBiz.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\DeliverymanNS\Fix.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\DeliverymanNS\SelectList.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\OwnerNS\Fix.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\SalesmanNS\SalesmanBiz.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\SalesmanNS\Fix.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\SalesmanNS\SelectList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PlayersNS\MailerCategoryNS\MailerCategory.cs" />
+    <Compile Include="PlayersNS\MailerCategoryNS\Index.cs" />
+    <Compile Include="PlayersNS\MailerCategoryNS\Initialization.cs" />
+    <Compile Include="PlayersNS\MailerCategoryNS\SelectList.cs" />
+    <Compile Include="PlayersNS\PersonNS\UpdateAndSaveDefaultAddress.cs" />
+    <Compile Include="PlayersNS\PersonNS\Factory.cs" />
+    <Compile Include="PlayersNS\PersonNS\AddEntityRecordIntoUpload.cs" />
+    <Compile Include="PlayersNS\PersonNS\Fix.cs" />
+    <Compile Include="PlayersNS\PersonNS\FlattenPersonUser.cs" />
+    <Compile Include="PlayersNS\PersonNS\Index.cs" />
+    <Compile Include="PlayersNS\PersonNS\PersonBiz.cs" />
+    <Compile Include="PlayersNS\PersonNS\SelectList.cs" />
+    <Compile Include="PlayersNS\PersonNS\GetListForIndex.cs" />
+    <Compile Include="PlayersNS\PersonCategoryNS\PersonCategoryBiz.cs" />
+    <Compile Include="PlayersNS\PersonCategoryNS\Index.cs" />
+    <Compile Include="PlayersNS\PersonCategoryNS\Initialization.cs" />
+    <Compile Include="PlayersNS\PersonCategoryNS\SelectList.cs" />
+    <Compile Include="PlayersNS\SalesmanCategoryNS\SalesmanCategoryBiz.cs" />
+    <Compile Include="PlayersNS\SalesmanCategoryNS\Index.cs" />
+    <Compile Include="PlayersNS\SalesmanCategoryNS\Initialization.cs" />
+    <Compile Include="PlayersNS\SalesmanCategoryNS\SelectList.cs" />
+    <Compile Include="PlayersNS\DeliverymanCategoryNS\DeliverymanCategoryBiz.cs" />
+    <Compile Include="PlayersNS\DeliverymanCategoryNS\Index.cs" />
+    <Compile Include="PlayersNS\DeliverymanCategoryNS\Initialization.cs" />
+    <Compile Include="PlayersNS\DeliverymanCategoryNS\SelectList.cs" />
     <Compile Include="PlayersNS\CustomerCategoryNS\Index.cs" />
     <Compile Include="PlayersNS\CustomerCategoryNS\SelectList.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\CustomerNS\SelectList.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\CustomerNS\CustomerBiz.cs" />
+    <Compile Include="PlayersNS\CashierCategoryNS\Index.cs" />
+    <Compile Include="PlayersNS\CashierCategoryNS\Initialization.cs" />
+    <Compile Include="PlayersNS\CashierCategoryNS\CahierCategoryBiz.cs" />
+    <Compile Include="PlayersNS\CashierCategoryNS\SelectList.cs" />
     <Compile Include="PlayersNS\OwnerCategoryNS\Index.cs" />
     <Compile Include="PlayersNS\OwnerCategoryNS\SelectList.cs" />
     <Compile Include="PlayersNS\OwnerCategoryNS\Initialization.cs" />
@@ -322,6 +340,11 @@
     <Compile Include="PaymentsNS\Terms\Initialization.cs" />
     <Compile Include="PaymentsNS\Terms\PaymentTermBiz.cs" />
     <Compile Include="PaymentsNS\Methods\PaymentMethodBiz.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\OwnerNS\OwnerBiz.cs" />
+    <Compile Include="PlayersNS\BusinessLayerPlayerNS\OwnerNS\SelectList.cs" />
+    <Compile Include="PlayersNS\UserNS\BusinessRules.cs" />
+    <Compile Include="PlayersNS\UserNS\UpdateDefaultAddress.cs" />
+    <Compile Include="PlayersNS\UserNS\GetUsersPersonFor.cs" />
     <Compile Include="PlayersNS\UserNS\Uploads.cs" />
     <Compile Include="PlayersNS\UserNS\PhoneNumber.cs" />
     <Compile Include="PlayersNS\UserNS\Factory.cs" />
@@ -348,8 +371,11 @@
     <Compile Include="ProductNS\ProductChildNS\ProductChildBiz.cs" />
     <Compile Include="ProductNS\ProductChildNS\SelectList.cs" />
     <Compile Include="ProductNS\ProductChildNS\Uploads.cs" />
+    <Compile Include="ProductNS\ProductNS\checkParentageIsNotCircular.cs" />
     <Compile Include="ProductNS\ProductNS\DeleteRelatedRecords.cs" />
     <Compile Include="ProductNS\ProductNS\Event_ModifyIndexList.cs" />
+    <Compile Include="ProductNS\ProductNS\CreateProductFeatureFrom.cs" />
+    <Compile Include="ProductNS\ProductNS\fixProductFeatures.cs" />
     <Compile Include="ProductNS\ProductNS\MenuPathCheckedBoxes.cs" />
     <Compile Include="ProductNS\ProductNS\Factory.cs" />
     <Compile Include="ProductNS\ProductNS\Uploads.cs" />
@@ -489,14 +515,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="0 BusinessLayer\packages.config" />
-    <None Include="0 BusinessLayer\Uow.cd" />
     <None Include="BusinessLibrary.cd" />
+    <None Include="ContactsNS\ContactsBiz.cd" />
     <None Include="packages.config" />
+    <None Include="PlayersNS\BusinessPlayerBiz.cd" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PlayersNS\CustomerNS\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

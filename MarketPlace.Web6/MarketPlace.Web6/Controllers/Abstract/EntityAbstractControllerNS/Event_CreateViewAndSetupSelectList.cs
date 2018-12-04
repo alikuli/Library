@@ -1,13 +1,6 @@
 ﻿using AliKuli.Extentions;
-using EnumLibrary.EnumNS;
-using InterfacesLibrary.SharedNS;
-using MarketPlace.Web4.Controllers;
-using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.ProductChildNS;
-using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Web.Mvc;
-using UowLibrary.MenuNS.MenuStateNS;
 
 namespace MarketPlace.Web6.Controllers.Abstract
 {
@@ -15,7 +8,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
     /// This needs to know which Uow to call. It has to be hard pr
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public partial class EntityAbstractController<TEntity> : AbstractController where TEntity : class, ICommonWithId
+    public partial class EntityAbstractController<TEntity>
     {
 
 
@@ -31,7 +24,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         public virtual ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
         {
             if (parm.Entity.IsNull())
-                return View(Biz.EntityFactoryForHttpGet());
+                return View(Biz.FactoryForHttpGet());
 
             TEntity entity = (TEntity)parm.Entity;
 
@@ -41,7 +34,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
 
 
-        
+
 
     }
 }

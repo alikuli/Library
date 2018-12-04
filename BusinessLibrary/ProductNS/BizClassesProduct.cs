@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ModelsClassLibrary.ModelsNS.FeaturesNS;
+using UowLibrary.FeatureNS.MenuFeatureNS;
 using UowLibrary.ProductChildNS;
 
 namespace UowLibrary.ProductNS
@@ -16,15 +13,18 @@ namespace UowLibrary.ProductNS
         readonly MenuPathMainBiz _menuPathMainBiz;
         readonly ProductIdentifierBiz _productIdentifierBiz;
         readonly ProductChildBiz _productChildBiz;
-
+        readonly ProductFeatureBiz _productFeatureBiz;
+        readonly MenuFeatureBiz _menuFeatureBiz;
         public MyWorkClassesProduct(
-            UomVolumeBiz uomVolumeBiz, 
-            UomLengthBiz uomLengthBiz, 
-            UomQuantityBiz uomQuantityBiz, 
-            UomWeightBiz uomWeightBiz, 
-            MenuPathMainBiz menuPathMainBiz, 
-            ProductIdentifierBiz productIdentifierBiz, 
-            ProductChildBiz productChildBiz)
+            UomVolumeBiz uomVolumeBiz,
+            UomLengthBiz uomLengthBiz,
+            UomQuantityBiz uomQuantityBiz,
+            UomWeightBiz uomWeightBiz,
+            MenuPathMainBiz menuPathMainBiz,
+            ProductIdentifierBiz productIdentifierBiz,
+            ProductChildBiz productChildBiz,
+            ProductFeatureBiz productFeatureBiz,
+            MenuFeatureBiz menuFeatureBiz)
         {
             _uomVolumeBiz = uomVolumeBiz;
             _uomLengthBiz = uomLengthBiz;
@@ -32,12 +32,13 @@ namespace UowLibrary.ProductNS
             _uomWeightBiz = uomWeightBiz;
             _menuPathMainBiz = menuPathMainBiz;
             _productIdentifierBiz = productIdentifierBiz;
-            _productChildBiz =  productChildBiz;
-
-
-
+            _productChildBiz = productChildBiz;
+            _productFeatureBiz = productFeatureBiz;
+            _menuFeatureBiz = menuFeatureBiz;
         }
 
+        public MenuFeatureBiz MenuFeatureBiz { get { return _menuFeatureBiz; } }
+        public ProductFeatureBiz ProductFeatureBiz { get { return _productFeatureBiz; } }
         public UomVolumeBiz UomVolumeBiz { get { return _uomVolumeBiz; } }
         public UomLengthBiz UomLengthBiz { get { return _uomLengthBiz; } }
         public UomQuantityBiz UomQuantityBiz { get { return _uomQuantityBiz; } }

@@ -1,4 +1,5 @@
-﻿using ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS;
+﻿using ModelsClassLibrary.ModelsNS.FeaturesNS;
+using ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ProductAbstractNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 
@@ -24,11 +25,6 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         }
 
-        
-
-        //string MiscFilesLocation()
-        //{
-        //    return AliKuli.ConstantsNS.MyConstants.SAVE_LOCATION_PRODUCT_MAIN_CATEGORY;
-        //}
+       
     }
 }

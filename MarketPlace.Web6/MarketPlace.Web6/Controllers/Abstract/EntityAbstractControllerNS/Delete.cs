@@ -1,7 +1,5 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
-using InterfacesLibrary.SharedNS;
-using MarketPlace.Web4.Controllers;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Net;
@@ -15,7 +13,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
     /// This needs to know which Uow to call. It has to be hard pr
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public partial class EntityAbstractController<TEntity> : AbstractController where TEntity : class, ICommonWithId
+    public partial class EntityAbstractController<TEntity>
     {
 
         // GET: Countries/Delete/5

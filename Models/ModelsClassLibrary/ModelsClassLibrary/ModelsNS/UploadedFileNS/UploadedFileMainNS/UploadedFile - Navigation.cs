@@ -1,5 +1,6 @@
 ﻿using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
+using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
@@ -100,5 +101,8 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
         //public virtual Product ProductBigPic { get; set; }
         #endregion
 
+        [Display(Name = "Person")]
+        public virtual string PersonId { get; set; }
+        public virtual Person Person { get; set; }
     }
 }

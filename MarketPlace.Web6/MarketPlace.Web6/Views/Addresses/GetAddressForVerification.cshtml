@@ -3,7 +3,6 @@
 
     @using (Html.BeginForm("DisplayAddressVerifcationForConfirmation", "Addresses",FormMethod.Get))
     {
-
         <h2 class="mb-3">Please check and make sure the address is correct. </h2>
 
 
@@ -20,7 +19,7 @@
         </div>
         
 
-    <table class="table table-bordered table-responsive table-hover">
+    @*<table class="table table-bordered table-responsive table-hover">
         <caption>List of Verification Prices</caption>
         <thead>
 
@@ -32,9 +31,10 @@
         </thead>
 
         <tr>
-            <th scope="row">Local</th>
             <td>
                 @Html.DisplayFor(x => x.PostalLocalPayment)
+
+
             </td>
             <td>
                 @Html.DisplayFor(x => x.CourierLocalPayment)
@@ -42,64 +42,72 @@
         </tr>
 
         <tr>
-            <th scope="row">International</th>
             <td>
-                @Html.DisplayFor(x => x.PostalInternationalPayment)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(x => x.CourierInternationalPayment)
             </td>
         </tr>
-    </table>
+    </table>*@
+
+    <div class="text-dark text">Select Mail Service</div>
+
+    <div class="form-check mb-3">
+        @Html.CheckBoxFor(model => model.IsSure1, htmlAttributes: new { @class = "form-check-input checkbox_class" })
+        @Html.LabelFor(model => model.IsSure1, htmlAttributes: new { @class = "form-check-label" })
+
+    </div>
+
+    <div class="">
+        @Html.ActionLink(@Model.PostalBtnCaption, "DisplayAddressVerifcationForConfirmation", new { addressId = Model.AddressId, mailServiceEnum = MailServiceENUM.Post, mailLocalOrForiegnENUM = Model.MailLocalOrForeignEnum }, new { @class = "btn btn-default mb-3 acceptButton", disabled = "disabled" })
+
+        @Html.ActionLink(@Model.CourierBtnCaption, "DisplayAddressVerifcationForConfirmation", new { addressId = Model.AddressId, mailServiceEnum = MailServiceENUM.Courier, mailLocalOrForiegnENUM = Model.MailLocalOrForeignEnum }, new { @class = "btn btn-info mb-3 acceptButton", disabled = "disabled" })
+
+        @Html.ActionLink("Cancel", "DisplayAddressVerifcationForConfirmationCancel", null, new { @class = "btn btn-danger" })
+    </div>
+    @*<div class="">
+                <input type="submit" value="Verify Address" class="btn btn-success" id="acceptButton" disabled="disabled" />
+        </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.AddressId, htmlAttributes: new { @class = "" })
+            @Html.DisplayFor(x => x.AddressId)
+
+        </div>
+
+
+
+        @Html.HiddenFor(x => x.AddressId)
+
+
+    <div class="form-group">
             @Html.LabelFor(model => model.MailServiceEnum, htmlAttributes: new { @class = "" })
             @Html.DropDownListFor(x => x.MailServiceEnum,
                     (Model.MailServiceEnumSelectList as IEnumerable<SelectListItem>),
                     "--- Select Mail Type ---",
                     new { @class = "form-control" })
-        </div>
+        </div>*@
 
-
-        @Html.HiddenFor(x => x.AddressId)
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.AddressId, htmlAttributes: new { @class = "" })
-        @Html.DisplayFor(x => x.AddressId)
-
-    </div>*@
-
-
-
-
-        <div class="form-check mb-3">
-            @Html.CheckBoxFor(model => model.IsSure1, htmlAttributes: new { @class = "form-check-input checkbox_class" })
-            @Html.LabelFor(model => model.IsSure1, htmlAttributes: new { @class = "form-check-label" })
-
-        </div>
-
-
-        <div class="">
-            @Html.ActionLink("Cancel", "DisplayAddressVerifcationForConfirmationCancel", null, new { @class = "btn btn-danger" })
-            <input type="submit" value="Verify Address" class="btn btn-success" id="acceptButton" disabled="disabled" />
-        </div>
 
     }
 
 
+
+
 @section scripts{
 
-    <script>
-        $(document).on('click', '.form-check-input', function () {
-            if ($('.checkbox_class:checked').length > 0) {
-                console.log("remove attr");
-                $('#acceptButton').removeAttr("disabled");
-            }
-            else {
-                console.log("add attr");
-                $('#acceptButton').attr("disabled", "disabled");
-            }
-        });
-    </script>
+        <script>
+            $(document).on('click', '.form-check-input', function () {
+                if ($('.checkbox_class:checked').length > 0) {
+                    console.log("remove attr");
+                    $('.acceptButton').removeAttr("disabled");
+                }
+                else {
+                    console.log("add attr");
+                    $('.acceptButton').attr("disabled", "disabled");
+                }
+            });
+        </script>
 
 
-}
+    }

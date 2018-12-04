@@ -58,7 +58,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        @*<div class="form-group">
                             <div class="row">
                                 @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
@@ -66,9 +66,9 @@
                                     @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
 
-                        <div class="form-group">
+                        @*<div class="form-group">
                             <div class="row">
 
                                 @Html.LabelFor(model => model.CountryID,"Country (for Phone #)", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -80,7 +80,7 @@
                                     @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
 
                         <div class="form-group">
                             <div class="row">
@@ -110,27 +110,27 @@
                             
                         </a>
                     </div>
-                    <div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
-                        <div class="form-group">
-                            <div class="row">
-                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter email" } })
-                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
+                    @*<div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
+    <div class="form-group">
+        <div class="row">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter email" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
 
-                                @Html.LabelFor(model => model.CountryIdCardNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.CountryIdCardNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter country ID card #" } })
-                                    @Html.ValidationMessageFor(model => model.CountryIdCardNumber, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            @Html.LabelFor(model => model.CountryIdCardNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CountryIdCardNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter country ID card #" } })
+                @Html.ValidationMessageFor(model => model.CountryIdCardNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+                    </div>*@
                     <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
                         <a class="card-title">
                                     
