@@ -231,3 +231,6 @@ textarea {
 }
 
 
+.tiledimagemiddlepart{
+    object-fit: scale-down;
+}

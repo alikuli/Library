@@ -18,12 +18,13 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
                 throw new Exception("Product Child is Null. Programming error.");
             }
 
-            UserId = pc.UserId;
+            //UserId = pc.UserId;
             ProductId = pc.ProductId;
             Sell = pc.Sell;
             Buy = pc.Buy;
             ExpiryDate = pc.ExpiryDate;
             SerialNumber = pc.SerialNumber;
+            OwnerId = pc.OwnerId;
 
         }
 

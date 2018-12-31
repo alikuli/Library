@@ -7,13 +7,17 @@ using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySell;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using UowLibrary;
 using UowLibrary.AddressNS;
+using UowLibrary.CashTtxNS;
 using UowLibrary.CounterNS;
 using UowLibrary.EmailAddressNS;
+using UowLibrary.FeatureNS.MenuFeatureNS;
+//using UowLibrary.FeaturesNS;
 //using UowLibrary.FeaturesNS;
 using UowLibrary.FileDocNS;
 using UowLibrary.GlobalCommentsNS;
@@ -23,6 +27,9 @@ using UowLibrary.MailerNS;
 using UowLibrary.MenuNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.ParametersNS;
+using UowLibrary.PhoneNS;
+using UowLibrary.PlayersNS.BankCategoryNS;
+using UowLibrary.PlayersNS.BankNS;
 //using UowLibrary.PhoneNS;
 using UowLibrary.PlayersNS.CashierCategoryNS;
 using UowLibrary.PlayersNS.CashierNS;
@@ -40,6 +47,7 @@ using UowLibrary.PlayersNS.SalesmanNS;
 using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
 using UowLibrary.StateNS;
+using UowLibrary.SuperLayerNS.AccountsNS;
 using UowLibrary.UploadFileNS;
 using UserModels;
 using WebLibrary.Programs;
@@ -114,6 +122,9 @@ namespace DependancyResolver
             Bind<CashierCategoryBiz>().ToSelf();
             Bind<CashierBiz>().ToSelf();
 
+            Bind<BankCategoryBiz>().ToSelf();
+            Bind<BankBiz>().ToSelf();
+
             Bind<SalesmanBiz>().ToSelf();
             Bind<SalesmanCategoryBiz>().ToSelf();
 
@@ -125,9 +136,13 @@ namespace DependancyResolver
             Bind<DeliverymanCategoryBiz>().ToSelf();
 
             Bind<EmailAddressBiz>().ToSelf();
-            Bind<UowLibrary.PhoneNS.PhoneBiz>().ToSelf();
+            Bind<PhoneBiz>().ToSelf();
 
-
+            Bind<CashTrxBiz>().ToSelf();
+            Bind<BuySellDoc>().ToSelf();
+            Bind<AccountsBiz>().ToSelf();
+            //Bind<MenuPath1FeatureBiz>().ToSelf();
+            Bind<MenuFeatureBiz>().ToSelf();
             //Bind<UserBiz>().ToSelf();
             //Bind<FeatureBiz>().ToSelf();
             //Bind<MenuPath1FeatureBiz>().ToSelf();

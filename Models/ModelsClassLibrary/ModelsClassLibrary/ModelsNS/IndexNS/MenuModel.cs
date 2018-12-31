@@ -191,52 +191,52 @@ namespace ModelsClassLibrary.ViewModels
         /// This is what the controller will be called for all ProductVMs, basicaly the class name with a "s" attached, showing a plural.
         /// However, strict pluralization is not followed. Always a "s" is added.
         /// </summary>
-        public string ControlerNameForProductVms
-        {
-            get
-            {
+        //public string ControlerNameForProductVms
+        //{
+        //    get
+        //    {
 
-                switch (MenuPath1.MenuPath1Enum)
-                {
-                    case MenuPath1ENUM.NotDefined:
-                        break;
-                    case MenuPath1ENUM.Automobiles:
-                        return typeof(ProductAutomobileVM).Name + "s";
+        //        switch (MenuPath1.MenuPath1Enum)
+        //        {
+        //            case MenuPath1ENUM.NotDefined:
+        //                break;
+        //            case MenuPath1ENUM.Automobiles:
+        //                return typeof(ProductAutomobileVM).Name + "s";
 
-                    case MenuPath1ENUM.MensClothing:
-                        break;
-                    case MenuPath1ENUM.WomensClothing:
-                        break;
-                    case MenuPath1ENUM.Electronics:
-                        break;
-                    case MenuPath1ENUM.Foods:
-                        break;
-                    case MenuPath1ENUM.HomeServants:
-                        break;
-                    case MenuPath1ENUM.FactoryWorkers:
-                        break;
-                    case MenuPath1ENUM.OfficeWorkers:
-                        break;
-                    case MenuPath1ENUM.Machines:
-                        break;
-                    case MenuPath1ENUM.Stationary:
-                        break;
-                    case MenuPath1ENUM.FruitProccessors:
-                        break;
-                    case MenuPath1ENUM.Steel:
-                        break;
-                    case MenuPath1ENUM.Cement:
-                        break;
-                    case MenuPath1ENUM.Electricity:
-                        break;
-                    default:
-                        break;
-                }
+        //            case MenuPath1ENUM.MensClothing:
+        //                break;
+        //            case MenuPath1ENUM.WomensClothing:
+        //                break;
+        //            case MenuPath1ENUM.Electronics:
+        //                break;
+        //            case MenuPath1ENUM.Foods:
+        //                break;
+        //            case MenuPath1ENUM.HomeServants:
+        //                break;
+        //            case MenuPath1ENUM.FactoryWorkers:
+        //                break;
+        //            case MenuPath1ENUM.OfficeWorkers:
+        //                break;
+        //            case MenuPath1ENUM.Machines:
+        //                break;
+        //            case MenuPath1ENUM.Stationary:
+        //                break;
+        //            case MenuPath1ENUM.FruitProccessors:
+        //                break;
+        //            case MenuPath1ENUM.Steel:
+        //                break;
+        //            case MenuPath1ENUM.Cement:
+        //                break;
+        //            case MenuPath1ENUM.Electricity:
+        //                break;
+        //            default:
+        //                break;
+        //        }
 
-                return MenuPathMain.MenuPath1Id;
+        //        return MenuPathMain.MenuPath1Id;
 
-            }
+        //    }
 
-        }
+        //}
     }
 }

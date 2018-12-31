@@ -1,7 +1,6 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
-using ModelsClassLibrary.ModelsNS;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
 //using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
@@ -11,11 +10,13 @@ using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
+using System.Web.Mvc;
 
 namespace ModelsClassLibrary.MenuNS
 {
-    public class MenuPath1 : MenuPathAbstract, IHasUploads
+    public class MenuPath1 : MenuPathAbstract, IHasUploads, IMenuPath
     {
         public MenuPath1()
         {
@@ -32,13 +33,14 @@ namespace ModelsClassLibrary.MenuNS
         //public virtual ICollection<MenuPath1Feature> MenuPath1Features { get; set; }
         public virtual ICollection<MenuFeature> MenuFeatures { get; set; }
 
+        [NotMapped]
+        public SelectList SelectListMenuFeatures { get; set; }
 
 
         string IHasUploads.MiscFilesLocation()
         {
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, ClassNameRaw);
         }
-
         public string MiscFilesLocation_Initialization()
         {
             return AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY;
@@ -46,7 +48,6 @@ namespace ModelsClassLibrary.MenuNS
 
         [Display(Name = "Menu Path 1")]
         public MenuPath1ENUM MenuPath1Enum { get; set; }
-
         public string CreateNameFromEnum(MenuPath1ENUM e)
         {
             return Enum.GetName(typeof(MenuPath1ENUM), e).ToTitleSentance();

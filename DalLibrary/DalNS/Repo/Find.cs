@@ -196,7 +196,8 @@ namespace DalLibrary.DalNS
         public virtual TEntity FindForLight(string id, bool deleted = false)
         {
             if (id.IsNullOrEmpty())
-                throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
+                return null;
+                //throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
 
             var item = FindAll().FirstOrDefault(x => x.Id == id);
 

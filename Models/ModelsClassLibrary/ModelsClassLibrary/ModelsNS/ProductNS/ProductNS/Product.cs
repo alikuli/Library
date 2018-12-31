@@ -8,8 +8,7 @@ using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS;
 using ModelsClassLibrary.SharedNS;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using AliKuli.Extentions;
-using System.Linq;
+using System.Web.Mvc;
 
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
@@ -25,6 +24,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         [NotMapped]
         public virtual List<CheckBoxItem> CheckedBoxesList { get; set; }
 
+
         [NotMapped]
         public virtual List<CheckBoxListTree> Mp1List { get; set; }
 
@@ -38,17 +38,20 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         public virtual ICollection<GlobalComment> GlobalComments { get; set; }
 
         public virtual List<ProductFeature> ProductFeatures { get; set; }
-        
-        //[NotMapped]
-        //public List<ProductFeature> ProductFeaturesList
-        //{
-        //    get
-        //    {
-        //        if (ProductFeatures.IsNull())
-        //            return null;
-        //        return ProductFeatures.ToList();
-        //    }
-        //}
+
+        [NotMapped]
+        public SelectList SelectListUomPurchase { get; set; }
+        [NotMapped]
+        public SelectList SelectListUomVolume { get; set; }
+        [NotMapped]
+        public SelectList SelectListUomShipWeight { get; set; }
+        [NotMapped]
+        public SelectList SelectListUomWeight { get; set; }
+        [NotMapped]
+        public SelectList SelectListUomLength { get; set; }
+
+        [NotMapped]
+        public SelectList SelectListUomDimensionsLength { get; set; }
         /// <summary>
         /// A product can have ONE or Many ProductIdentifiers. It must have at least one.
         /// </summary>

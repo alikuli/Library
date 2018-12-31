@@ -80,8 +80,6 @@ namespace ModelsClassLibrary.ViewModels
 
             //this points to the logo
             Logo = new Logo(logoaddress);
-            //User = user;
-            //UserIsAdmin = userIsAdmin;
 
             UserId = userId;
             UserName = userName;
@@ -90,16 +88,14 @@ namespace ModelsClassLibrary.ViewModels
             _listOfStopWords = StringTools.GetStopWords();
             _searchWords = getSearchWords();
 
-            //MenuManager = new MenuManager(id, null, null, null, MenuLevelENUM.unknown, returnUrl, false, "", "", "", sortOrderEnum,actionNameEnum);
-            //MenuManager.ReturnUrl = returnUrl;
         }
 
-        public void Load(ControllerIndexParams p)
-        {
-            string webCompany = "";
-            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, webCompany, p.LogoAddress, p.UserId, p.UserName, p.IsAndForSearch, p.BreadCrumbManager, p.ActionNameEnum, p.LikeUnlikeCounter, p.IsMenu);
+        //public void Load(ControllerIndexParams p)
+        //{
+        //    string webCompany = "";
+        //    initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, webCompany, p.LogoAddress, p.UserId, p.UserName, p.IsAndForSearch, p.BreadCrumbManager, p.ActionNameEnum, p.LikeUnlikeCounter, p.IsMenu);
 
-        }
+        //}
 
         /// <summary>
         /// Note. This Id is dangerous. 

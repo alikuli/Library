@@ -13,7 +13,7 @@ namespace MarketPlace.Web6.Controllers
 
         public override async Task<ActionResult> Index(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, MenuENUM menuEnum = MenuENUM.IndexMenuPath1, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = true, string menuPathMainId ="")
         {
-
+            returnUrl = Request.Url.PathAndQuery;
             return await base.Index(id, searchFor, isandForSearch, selectedId, returnUrl, menuEnum, sortBy, print, true,menuPathMainId);
         }
 

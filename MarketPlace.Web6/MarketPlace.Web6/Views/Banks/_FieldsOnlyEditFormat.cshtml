@@ -1,0 +1,51 @@
+﻿@model ModelsClassLibrary.ModelsNS.PlayersNS.Bank
+
+
+<div class="well p-3 m-3">
+
+    @Html.Partial(@"_Name_And_DetailInfo")
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BankCategoryId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.BankCategoryId,
+                         (@Model.SelectListBankCategory as IEnumerable<SelectListItem>),
+                  "--- Select Bank Category---",
+                  new { @class = "form-control" })
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DefaultBillAddressId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.DefaultBillAddressId,
+                 (@Model.SelectListBillAddress as IEnumerable<SelectListItem>),
+                  "--- Default Bill Address ---",
+                  new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DefaultShipAddressId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.DefaultShipAddressId,
+                          (@Model.SelectListShipAddress as IEnumerable<SelectListItem>),
+                  "--- Default Payment Address ---",
+                  new { @class = "form-control" })
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PersonId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.PersonId,
+                 (@Model.SelectListPeople as IEnumerable<SelectListItem>),
+                  "--- Person ---",
+                  new { @class = "form-control" })
+    </div>
+
+    @*<div class="form-group">
+        @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.UserId,
+                 (@Model.SelectListUser as IEnumerable<SelectListItem>),
+                  "--- User ---",
+                  new { @class = "form-control" })
+    </div>*@
+
+</div>

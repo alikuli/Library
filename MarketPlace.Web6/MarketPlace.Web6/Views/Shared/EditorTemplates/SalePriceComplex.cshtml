@@ -1,0 +1,59 @@
+﻿@model ModelsClassLibrary.ModelsNS.ProductNS.SalePriceComplex
+
+@{
+    string toolTipSellPrice = "This is the price demanded for sale.";
+    string tooltipAverageSalesPrice = "This is what the average sale price such products were sold at.";
+    string tooltipMsrp = "This is the manufacturers recommended sell price. This may be used to compare your price with by the buyers.";
+    string tooltipMlpPrice = "This is the lowest price the manufacturer will sell this product for.";
+    string tooltipHighestSellPrice = "This is the highest price for sale recorded in the system.";
+    string tooltipHighestSellPriceDate = "This is the date of the highest price.";
+    string tooltipHLowestSellPrice = "This is the lowest price recorded in the system.";
+    string tooltipHLowestSellPriceDate = "This is the date the lowest price was recorded in the system.";     
+}
+
+<div class="form-group">
+    @Html.LabelFor(model => model.SellPrice, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @toolTipSellPrice, data_placement = "top" })
+    @Html.EditorFor(model => model.SellPrice, new { htmlAttributes = new { @class = "form-control"} })
+    @Html.ValidationMessageFor(model => model.SellPrice, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.AverageSalePrice, htmlAttributes: new { @class = "" })
+    @Html.EditorFor(model => model.AverageSalePrice, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", data_toggle = "tooltip", title = @tooltipAverageSalesPrice, data_placement = "top" } })
+    @Html.ValidationMessageFor(model => model.AverageSalePrice, "", new { @class = "text-danger" })
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.MSRP, htmlAttributes: new { @class = "" })
+    @Html.EditorFor(model => model.MSRP, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", data_toggle = "tooltip", title = @tooltipMsrp, data_placement = "top" } })
+    @Html.ValidationMessageFor(model => model.MSRP, "", new { @class = "text-danger" })
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(model => model.MlpPrice, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @tooltipMlpPrice, data_placement = "top" })
+    @Html.EditorFor(model => model.MlpPrice, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+    @Html.ValidationMessageFor(model => model.MlpPrice, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.HighestSalePrice, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @tooltipHighestSellPrice, data_placement = "top" })
+    @Html.EditorFor(model => model.HighestSalePrice, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+    @Html.ValidationMessageFor(model => model.HighestSalePrice, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.HighestSalePriceDate, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @tooltipHighestSellPriceDate, data_placement = "top" })
+    @Html.EditorFor(model => model.HighestSalePriceDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.LowestSalePrice, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @tooltipHLowestSellPrice, data_placement = "top" })
+    @Html.EditorFor(model => model.LowestSalePrice, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+    @Html.ValidationMessageFor(model => model.LowestSalePrice, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.LowestSalePriceDate, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @tooltipHLowestSellPriceDate, data_placement = "top" })
+    @Html.EditorFor(model => model.LowestSalePriceDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+</div>
+

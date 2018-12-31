@@ -3,7 +3,9 @@ using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.VerificatonNS;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Hosting;
 
 namespace ModelsClassLibrary.ViewModels
 {
@@ -15,19 +17,24 @@ namespace ModelsClassLibrary.ViewModels
         {
 
         }
-        public IndexItemVM(string id, string name, string input1SortStr, string input2SortStr, string input3SortStr, bool isEditLocked, string description, VerificaionStatusENUM verificationStatus)
+        public IndexItemVM(string id, string name, string input1SortStr, string input2SortStr, string input3SortStr, bool isEditLocked, string description, VerificaionStatusENUM verificationStatus, decimal price)
         {
             Input3SortString = input3SortStr;
             Input2SortString = input2SortStr;
             Id = id;
             Name = name;
             Input1SortString = input1SortStr;
-            IsEditLocked = isEditLocked;
+
+            AllowDelete = !isEditLocked;
+            AllowEdit = !isEditLocked;
+
             Description = description;
             PrintLineNumber = "";
             MenuManager = null;
             VerificationStatus = verificationStatus;
             VerificationIconResult = new VerificationIconResult();
+
+            Price = price;
         }
 
 
@@ -85,32 +92,99 @@ namespace ModelsClassLibrary.ViewModels
             return FullName;
         }
 
-        
+
         //if this is true, then the item has been marked default
         public bool IsDefault { get; set; }
 
         public IMenuManager MenuManager { get; set; }
 
         #region Bools
-        public bool IsImageThere
-        {
-            get
-            {
-                return !ImageAddressStr.IsNullOrWhiteSpace();
-            }
-        }
+        //public bool IsImageThere
+        //{
+        //    get
+        //    {
+        //        return !ImageAddressStr.IsNullOrWhiteSpace();
+        //    }
+        //}
 
-        public bool IsEditLocked { get; set; }
+        //public bool IsEditLocked { get; set; }
 
-        public bool AllowDelete { get { return !IsEditLocked; } }
-        public bool AllowEdit { get { return !IsEditLocked; } }
+        public bool AllowDelete { get; set; }
+        public bool AllowEdit { get; set; }
 
         public string PrintLineNumber { get; set; }
 
 
+        /// <summary>
+        /// This sets up the max height and width so there is no jumping up and down of the picture
+        /// </summary>
+        /// <param name="lst"></param>
+        public static void GetMaxWidthHeightForCarousel(List<string> lst)
+        {
+            if (lst.IsNullOrEmpty())
+                return;
+
+            foreach (var item in lst)
+            {
+                string hostPath = HostingEnvironment.MapPath(item);
+                System.Drawing.Image img = System.Drawing.Image.FromFile(hostPath);
+                int width = img.Width;
+                int height = img.Height;
+                if (height > width)
+                    continue;
 
 
+            }
 
+
+        }
+
+        const int MAX_PICTURE_HEIGHT_WIDTH = 350;
+        public static void PictureCalculateDimensions(string pictureAddress)
+        {
+            pictureAddress.IsNullOrWhiteSpaceThrowException("PictureAddress");
+            string hostPath = HostingEnvironment.MapPath(pictureAddress);
+            System.Drawing.Image img = System.Drawing.Image.FromFile(hostPath);
+            int width = img.Width;
+            int height = img.Height;
+
+            if (MaxPictureWidth == 0)
+                MaxPictureWidth = MAX_PICTURE_HEIGHT_WIDTH;
+
+            if (MaxPictureHeight == 0)
+                MaxPictureHeight = MAX_PICTURE_HEIGHT_WIDTH;
+
+            PictureWidth = "0";
+            PictureHeight = "0";
+
+            if (height > width)
+            {
+                PictureHeight = MaxPictureWidth.ToString();
+            }
+            else
+            {
+                PictureWidth = MaxPictureWidth.ToString();
+            }
+        }
+
+        private static int MaxPictureWidth { get; set; }
+        private static int MaxPictureHeight { get; set; }
+
+        public static string PictureWidth { get; set; }
+        public static string PictureHeight { get; set; }
+
+
+        public decimal Price { get; set; }
+        public static decimal PriceStatic { get; set; }
+        public static string PriceDisplay
+        {
+            get
+            {
+                if (PriceStatic == 0)
+                    return "";
+                return PriceStatic.ToString().ToRuppeeFormat();
+            }
+        }
         #endregion
 
 

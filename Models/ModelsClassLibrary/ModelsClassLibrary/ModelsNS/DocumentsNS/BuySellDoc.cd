@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ModelsClassLibrary.ModelsNS.DocumentsNS.BuySell.BuySellDoc">
+    <Position X="8.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModelsNS\DocumentsNS\BuySell\BuySellDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.DocumentsNS.AbstractNS.DocumentAbstract">
+    <Position X="5" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEQEACIAAAAAEAAAEAAAAAAAAQCEBAAUACEAAAQAAA=</HashCode>
+      <FileName>ModelsNS\DocumentsNS\AbstractNS\DocumentAbstract.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelsClassLibrary.ModelsNS.SharedNS.CommonWithId">
+    <Position X="2" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CAICAAIUMACIAIAAAJAAAAQEAAKwAEgAAAIQIIJFACA=</HashCode>
+      <FileName>ModelsNS\SharedNS\Common\CommonWithId.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

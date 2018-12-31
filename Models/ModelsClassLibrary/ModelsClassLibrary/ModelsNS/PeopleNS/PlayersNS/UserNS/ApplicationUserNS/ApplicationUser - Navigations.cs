@@ -125,7 +125,7 @@ namespace UserModels
 
 
 
-        public virtual ICollection<FileDoc> FileDocs { get; set; }
+        //public virtual ICollection<FileDoc> FileDocs { get; set; }
 
 
 

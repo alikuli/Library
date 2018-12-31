@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
@@ -20,12 +21,12 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
         /// <summary>
         /// This is the User who owns this product. This needs to be set at the time of creating because we may want to upload all this stuff in their own directory
         /// </summary>
-        [Display(Name = "Owner")]
-        public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        //[Display(Name = "Owner")]
+        //public string UserId { get; set; }
+        //public ApplicationUser User { get; set; }
 
 
-
+        public virtual ICollection<ProductChildFeature> ProductChildFeatures { get; set; }
         /// <summary>
         /// This is the owning product.
         /// </summary>

@@ -33,12 +33,12 @@
 
 
 
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.Perso, htmlAttributes: new { @class = "" })
-        @Html.DropDownListFor(x => x.UserId,
-                 (@Model.SelectListUser as IEnumerable<SelectListItem>),
-                  "--- User ---",
+    <div class="form-group">
+        @Html.LabelFor(model => model.PersonId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.PersonId,
+                 (@Model.SelectListPeople as IEnumerable<SelectListItem>),
+                  "--- Person ---",
                   new { @class = "form-control" })
-    </div>*@
+    </div>
 
 </div>

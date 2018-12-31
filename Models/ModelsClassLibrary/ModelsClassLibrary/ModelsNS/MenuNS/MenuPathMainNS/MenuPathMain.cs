@@ -17,7 +17,7 @@ namespace ModelsClassLibrary.MenuNS
 
         public MenuPathMain()
         {
-            //DONT do this!! IT fucks with LOADING!!
+            //DONT do this!! IT messes with LOADING!!
             //MenuPath1 = new MenuPath1();
             //MenuPath2 = new MenuPath2();
             //MenuPath3 = new MenuPath3();

@@ -4,7 +4,7 @@
 <div class="well p-3 m-3">
 
     @Html.Partial(@"_Name_And_DetailInfo")
-
+    
 
     <div class="form-group">
         @Html.LabelFor(model => model.CashierCategoryId, htmlAttributes: new { @class = "" })
@@ -33,12 +33,12 @@
 
 
 
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "" })
-        @Html.DropDownListFor(x => x.UserId,
-                 (@Model.SelectListUser as IEnumerable<SelectListItem>),
-                  "--- User ---",
+    <div class="form-group">
+        @Html.LabelFor(model => model.PersonId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.PersonId,
+                 (@Model.SelectListPeople as IEnumerable<SelectListItem>),
+                  "--- Person ---",
                   new { @class = "form-control" })
-    </div>*@
+    </div>
 
 </div>

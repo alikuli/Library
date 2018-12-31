@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="UowLibrary.CashTtxNS.CashTrxBiz">
+    <Position X="4.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAADAICIAAEAAAEAYAAEIAAIAAAAAAAA=</HashCode>
+      <FileName>CashNS\CashTrxNS\CashTrxBiz.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UowLibrary.BusinessLayer&lt;TEntity&gt;">
+    <Position X="0.5" Y="0.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>n1xkWA40KmlIMPPmpCIRKFEECvFpoQBWxEFcIAgOAIA=</HashCode>
+      <FileName>0 BusinessLayer\0 BusinessLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

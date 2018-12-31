@@ -1,11 +1,13 @@
 ﻿using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
-using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
+using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
 
 namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 {
@@ -18,7 +20,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
     ///     product, but by adding a serial numbr, it would then become different, within the product. Each serial numbered product
     ///     would then have its own price.
     /// </summary>
-    public partial class ProductChild : CommonWithId, IHasUploads, IHasUser, IHaveMenuManager
+    public partial class ProductChild : CommonWithId, IHasUploads, IHaveMenuManager
     {
         public ProductChild()
         {
@@ -34,10 +36,16 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
         /// same type as long as they give them different serial numbers.
         /// </summary>
         public string SerialNumber { get; set; }
-        public override EnumLibrary.EnumNS.ClassesWithRightsENUM ClassNameForRights()
+
+
+
+        public override ClassesWithRightsENUM ClassNameForRights()
         {
-            return EnumLibrary.EnumNS.ClassesWithRightsENUM.ProductChild; ;
+            return ClassesWithRightsENUM.ProductChild; ;
         }
+
+
+
         public override string ClassNamePlural
         {
             get
@@ -46,7 +54,24 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
             }
         }
 
+        [Display(Name = "Owner")]
+        public string OwnerId { get; set; }
+        public virtual Owner Owner { get; set; }
 
+        [Display(Name = "Identification Number")]
+        public string IdentificationNumber { get; set; }
+
+
+        [NotMapped]
+        public SelectList SelectListProducts { get; set; }
+
+        [NotMapped]
+        public SelectList SelectListOwners { get; set; }
+
+        public override bool HideNameInView()
+        {
+            return true;
+        }
     }
 
 

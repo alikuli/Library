@@ -8,10 +8,10 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS
         {
             base.UpdatePropertiesDuringModify(icommonWithId);
 
-            FileDoc f = (FileDoc)icommonWithId;
+            FileDoc fileDoc = icommonWithId as FileDoc;
 
-            FileNumber = f.FileNumber;
-            UserId = f.UserId;
+            FileNumber = fileDoc.FileNumber;
+            PersonId = fileDoc.PersonId;
 
 
         }

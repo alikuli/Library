@@ -1,10 +1,8 @@
 ﻿using AliKuli.Extentions;
-using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Web.Mvc;
-using UowLibrary;
 using UowLibrary.AddressNS;
 using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS.PersonNS;
@@ -17,9 +15,9 @@ namespace MarketPlace.Web6.Controllers
     {
 
         PersonBiz _personBiz;
-        //UserBiz _userBiz;
         AddressBiz _addressBiz;
-        public PersonsController(AbstractControllerParameters param,  AddressBiz addressBiz)
+        //UserBiz _userBiz;
+        public PersonsController(AbstractControllerParameters param, AddressBiz addressBiz)
             : base(addressBiz.PersonBiz, param)
         {
             _personBiz = addressBiz.PersonBiz;

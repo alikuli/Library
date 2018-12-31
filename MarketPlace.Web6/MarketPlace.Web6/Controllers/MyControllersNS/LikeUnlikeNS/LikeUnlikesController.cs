@@ -156,7 +156,8 @@ namespace MarketPlace.Web6.Controllers
                     message = e.Message,
 
                 },
-                JsonRequestBehavior.DenyGet);
+                JsonRequestBehavior.AllowGet);
+                //JsonRequestBehavior.DenyGet);
             }
         }
 

@@ -1,0 +1,46 @@
+﻿@model ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS.CostsComplex
+
+@{
+    string tooltipCost = "This is what the product cost you.";
+    string tooltipAverageCost = "This is the average price the product has cost in the system. If you do not supply a product cost, this won't work.";
+    string tooltipHighestCost = "This is the highest product cost in the system. If you do not supply a product cost, this won't work.";
+    string tooltipHighestCostDate = "This is the date of the highest cost. If you do not supply a product cost, this won't work.";
+    string tooltipLowestCost = "This is the lowest cost in the system. If you do not supply a product cost, this won't work.";
+    string tooltipLowestCostDate = "This is the date the lowest cost was used in the system. If you do not supply a product cost, this won't work.";
+}
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Cost, htmlAttributes: new { @class = "" })
+    @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control", data_toggle = "tooltip", title = @tooltipCost, data_placement = "top" } })
+    @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(model => model.AverageCost, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @tooltipAverageCost, data_placement = "top" })
+    @Html.EditorFor(model => model.AverageCost, new { htmlAttributes = new { @class = "form-control", disabled = "disabled"} })
+    @Html.ValidationMessageFor(model => model.AverageCost, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.HighestCost, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @tooltipHighestCost, data_placement = "top" })
+    @Html.EditorFor(model => model.HighestCost, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+    @Html.ValidationMessageFor(model => model.HighestCost, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.HighestCostDate, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @tooltipHighestCostDate, data_placement = "top" })
+    @Html.EditorFor(model => model.HighestCostDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled"} })
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.LowestCost, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @tooltipLowestCost, data_placement = "top" })
+    @Html.EditorFor(model => model.LowestCost, new { htmlAttributes = new { @class = "form-control", disabled = "disabled"} })
+    @Html.ValidationMessageFor(model => model.LowestCost, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.LowestCostDate, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @tooltipLowestCostDate, data_placement = "top" })
+    @Html.EditorFor(model => model.LowestCostDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled"} })
+</div>
+

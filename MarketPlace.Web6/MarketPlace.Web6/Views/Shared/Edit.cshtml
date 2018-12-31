@@ -18,7 +18,7 @@
     searchString = Model.MenuManager.SearchString;
     menuEnum = Model.MenuManager.MenuState.MenuEnum;
 
-    string returnUrl = Request.Url.PathAndQuery;
+    string returnUrl = Model.MenuManager.ReturnUrl.IsNullOrWhiteSpace() ? Request.Url.PathAndQuery : Model.MenuManager.ReturnUrl;
     string editScreenName = string.Format("{0} - {1}", "Edit", Model.FullName());
     Model.MenuManager.BreadCrumbManager.Push(editScreenName, returnUrl);
     string urlMinusOne = Model.MenuManager.BreadCrumbManager.Url_CurrMinusOne;
@@ -63,5 +63,5 @@
 }
 
 <div>
-        <a href="@urlMinusOne">Back to List</a>
+        <a href="@returnUrl">Back to List</a>
 </div>

@@ -1,19 +1,8 @@
-﻿using EnumLibrary.EnumNS;
-using ErrorHandlerLibrary.ExceptionsNS;
-using MarketPlace.Web6.Controllers.Abstract;
+﻿using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
-using System;
-using System.Reflection;
-using UowLibrary.FileDocNS;
-using AliKuli.Extentions;
-using UowLibrary;
-using ModelsClassLibrary.ModelsNS.SharedNS;
-using BreadCrumbsLibraryNS.Programs;
-using UowLibrary.ParametersNS;
-using UowLibrary.PlayersNS;
-using ErrorHandlerLibrary;
-using UowLibrary.PageViewNS;
 using System.Web.Mvc;
+using UowLibrary.FileDocNS;
+using UowLibrary.ParametersNS;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -22,27 +11,27 @@ namespace MarketPlace.Web6.Controllers
     {
         FileDocBiz _fileDocBiz;
 
-        public FileDocsController(FileDocBiz biz,  AbstractControllerParameters param)
-            : base(biz, param) 
+        public FileDocsController(FileDocBiz biz, AbstractControllerParameters param)
+            : base(biz, param)
         {
             _fileDocBiz = biz;
-            
+
         }
 
 
-        public ActionResult MoveFilesFromUserToPerson()
-        {
-            try
-            {
-                _fileDocBiz.MoveFilesFromUserToPerson();
-                return RedirectToAction("Index");
-            }
-            catch (Exception e)
-            {
-                ErrorsGlobal.Add("Files not moved!", MethodBase.GetCurrentMethod(), e);
-                throw;
-            }
-        }
+        //public ActionResult MoveFilesFromUserToPerson()
+        //{
+        //    try
+        //    {
+        //        _fileDocBiz.MoveFilesFromUserToPerson();
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ErrorsGlobal.Add("Files not moved!", MethodBase.GetCurrentMethod(), e);
+        //        throw;
+        //    }
+        //}
         public FileDocBiz FileDocBiz
         {
             get

@@ -19,7 +19,7 @@
 
         </div>
 
-        <div class="container">
+        <div class="container-fluid">
             <h2>Modal Example</h2>
             <!-- Trigger the modal with a button -->
             <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
@@ -51,6 +51,7 @@
         <div class="col-lg-4 text-center">
             <p class="text-success h3 text-center">View</p>
             <p> @Html.ActionLink("Menu Features", "Index", "MenuFeatures", null, new { @class = "btn btn-success" })</p>
+            <p> @Html.ActionLink("Product Features", "Index", "ProductFeatures", null, new { @class = "btn btn-success" })</p>
             <p> @Html.ActionLink("Menus", "Index", "Menus", null, new { @class = "btn btn-success" })</p>
             <p> @Html.ActionLink("Address Verification Hdrs", "Index", "AddressVerificationHdrs", null, new { @class = "btn btn-success" })</p>
             <p> @Html.ActionLink("Address Verification Trxs", "Index", "AddressVerificationTrxs", null, new { @class = "btn btn-success" })</p>
@@ -108,6 +109,7 @@
         <div class="col-lg-4 text-center">
             <p class="text-warning h3 text-center">Initializers</p>
             <p> @Html.ActionLink("Menu Features", "InitializeDb", "MenuFeatures", null, new { @class = "btn btn-warning" })</p>
+            <p> @Html.ActionLink("Product  Features", "InitializeDb", "MenuFeatures", null, new { @class = "btn btn-warning  disabled" })</p>
             <p> @Html.ActionLink("Invoice Pdf", "PrintInvoice", "Languages", null, new { @class = "btn btn-warning " })</p>
             <p>@Html.ActionLink("AddressVerificationHdrs", "InitializeDb", "AddressVerificationHdrs", null, new { @class = "btn btn-warning disabled" })</p>
             <p>@Html.ActionLink("AddressVerificationTrxs", "InitializeDb", "AddressVerificationTrxs", null, new { @class = "btn btn-warning disabled" })</p>
@@ -160,6 +162,7 @@
         <div class="col-lg-4 h3 text-center">
             <p class="text-danger  h3 text-center">Delete ALL</p>
             <p>@Html.ActionLink("Menu Features", "DeleteAll", "MenuFeatures", null, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("Product Features", "DeleteAll", "ProductFeatures", null, new { @class = "btn btn-danger" })</p>
             <p>@Html.ActionLink("Reset Address Verification Complete", "ResetAddressVerificationComplete", "Addresses", null, new { @class = "btn btn-danger" })</p>
             <p>@Html.ActionLink("AddressVerificationHdrs", "DeleteAll", "AddressVerificationHdrs", null, new { @class = "btn btn-danger" })</p>
             <p>@Html.ActionLink("AddressVerificationTrxs", "DeleteAll", "AddressVerificationTrxs", null, new { @class = "btn btn-danger" })</p>

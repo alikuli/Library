@@ -67,12 +67,14 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
             //UserId = p.UserId;
         }
 
-
-
-
-
         [NotMapped]
-        public SelectList SelectListUser { get; set; }
+        public SelectList SelectListPeople { get; set; }
+
+
+
+
+        //[NotMapped]
+        //public SelectList SelectListUser { get; set; }
 
 
         [NotMapped]

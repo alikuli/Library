@@ -1,31 +1,85 @@
 ﻿@using Microsoft.AspNet.Identity
+
+@{
+    //ViewBag.Refundable = "Rs99.00";
+    //ViewBag.NonRefundable = "Rs100.00";
+
+    string refundable = ViewBag.Refundable as string;
+    string nonRefundable = ViewBag.NonRefundable as string;
+    string totalFunds = ViewBag.TotalFunds as string;
+    string refundableToolTip = "Refundable";
+    string notRefundableToolTip = "Non-Refundable";
+    if (refundable.IsNullOrWhiteSpace())
+    {
+        refundable = "No Data";
+    }
+    else
+    {
+        refundableToolTip = string.Format("Refundable - You CAN convert {0} to cash", refundable);
+    }
+    if (nonRefundable.IsNullOrWhiteSpace())
+    {
+        nonRefundable = "No Data";
+    }
+    else
+    {
+        notRefundableToolTip = string.Format("Non-Refundable - You CAN NOT convert {0} to cash", nonRefundable);
+
+    }
+}
+
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
 
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage",@class="nav-link", id = "helloLink" })
-            </li>
-            <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    <ul class="navbar-nav">
+        @*<li class="nav-link " data-toggle="tooltip" title="@refundableToolTip" data-placement="bottom">
+            Refundable: @refundable
+        </li>
+
+        <li class="mr-3 nav-link" data-toggle="tooltip" title="@notRefundableToolTip" data-placement="bottom">
+            NON-Refundable: @nonRefundable
+        </li>*@
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Total: @totalFunds 
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#" data-toggle="tooltip" title="@refundableToolTip" data-placement="left">Refundable: @refundable</a>
+                <a class="dropdown-item" href="#" data-toggle="tooltip" title="@notRefundableToolTip" data-placement="left">NON-Refundable: @nonRefundable</a>
+                @*<div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="@Url.Action("Index", "Phones", null)">Phones</a>
+                <a class="dropdown-item" href="@Url.Action("Index", "EmailAddresses", null)">Email Addresses</a>*@
+            </div>
+
+        </li>
 
 
-        </ul>
-    
+        <li>
+            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link", id = "helloLink" })
+        </li>
+        <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+
+
+    </ul>
+
     }
 }
 else
 {
-    
-    <ul class="nav navbar-nav navbar-right">
+
+    <ul class="navbar-nav">
         @{
-            
-            string returnUrl = Request.QueryString["ReturnUrl"] ;
+
+    string returnUrl = Request.QueryString["ReturnUrl"];
         }
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: new { returnUrl = returnUrl }, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+
     </ul>
 }
 

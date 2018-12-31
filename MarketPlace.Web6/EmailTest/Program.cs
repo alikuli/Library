@@ -8,7 +8,6 @@ namespace EmailTest
     {
         static void Main(string[] args)
         {
-            Emails emails = new Emails();
 
             string smtpServer;
             int portInt;
@@ -46,8 +45,10 @@ namespace EmailTest
             //}
 
 
+            Emails emails = new Emails(smtpServer, portInt, userName, password,true);
+
             Console.WriteLine("Sending email...");
-            emails.SendEmailMsg(smtpServer, portInt, userName, password, from, subject, body, sendToList, null);
+            emails.SendEmailMsg(from, subject, body, sendToList, null);
             Console.WriteLine("Email sent!");
             Console.ReadLine();
 

@@ -7,17 +7,45 @@ namespace AliKuli.Tools
 {
     public class Emails
     {
-        public void SendEmailMsg(string smtpServer, int port, string userName, string password, string from, string subject, string body, List<string> sendToList, List<string> bccList)
+        public Emails(string smtpServer, int port, string userName, string password, bool isEnableSsl = true)
         {
-            SmtpClient client = new SmtpClient(smtpServer, port);
+            SmtpServer = smtpServer;
+            Port = port;
+            UserName = userName;
+            Password = password;
+            IsEnableSsl = isEnableSsl;
+            Client = CreateClient();
+        }
+        
+        string SmtpServer{get;set;}
+        int Port {get;set;} 
+        string UserName{get;set;} 
+        string Password {get;set;}
+        bool IsEnableSsl { get; set; }
+        
+        SmtpClient Client { get; set; }
+
+        
+
+        public void SendEmailMsg(string from, string subject, string body, List<string> sendToList, List<string> bccList)
+        {
+            
+            MailMessage mailMessage = CreateMailMessage(from, subject, body, sendToList, bccList);
+            Client.Send(mailMessage);
+
+        }
+
+        private SmtpClient CreateClient()
+        {
+            SmtpClient client = new SmtpClient(SmtpServer, Port);
             client.UseDefaultCredentials = false;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.EnableSsl = true;
 
-            client.Credentials = new NetworkCredential(userName, password);
-            MailMessage mailMessage = CreateMailMessage(from, subject, body, sendToList, bccList);
-            client.Send(mailMessage);
+            if (IsEnableSsl)
+                client.EnableSsl = true;
 
+            client.Credentials = new NetworkCredential(UserName, Password);
+            return client;
         }
 
 
@@ -57,6 +85,5 @@ namespace AliKuli.Tools
             return mailMessage;
         }
 
-        SmtpClient Client { get; set; }
     }
 }

@@ -1,166 +1,160 @@
 ﻿@model ModelsClassLibrary.ModelsNS.ProductNS.Product
-@{int count = 0;}
+@{
+    int count = 0;
+    string childReturnUrl = Request.Url.PathAndQuery;
+ }
 
 
 <div class="well p-3 m-3">
     <div class="form-group">
-        <div class="control-label">
-            <strong>Product Features</strong>
-        </div>
+        @*<div class="control-label">
+            @Html.ActionLink("Add Another Feature", "Create", "ProductFeatures", new { productId = Model.Id }, new { @class = "btn btn-success" })
+        </div>*@
         @if (!@Model.ProductFeatures.IsNull())
         {
-            <table class="table table-borderless">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.ProductFeatures.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).ToList())
-                    {
-                        string id = string.Format("ProductFeatures_{0}__FeatureDescription", count);
-                        string name = string.Format("ProductFeatures[{0}].FeatureDescription", count);
-                        string value = item.FeatureDescription;
-                        string hiddenValue = item.Name;
-                        string hiddenId = string.Format("ProductFeatures_{0}__Name",count);
-                        string hiddenName = string.Format("ProductFeatures[{0}].Name",count);
-                        
-                        count++;
 
+            if (Model.MenuManager.IsCreate)
+            {
+                <div class="alert-info p-3">
+                    To Add a new feature, select Add Product Feature from the Product Menu.
+                </div>
+                <table class="table table-borderless">
+                    <thead>
                         <tr>
-                            <td>
-                                @item.Name
-                                <input 
-                                       id="@hiddenId" 
-                                       name="@hiddenName" 
-                                       type="hidden" 
-                                       value="@hiddenValue" />
-                            </td>
-
-                            <td>
-                                <input class="text-box single-line"
-                                       id="@id"
-                                       name="@name"
-                                       type="text" 
-                                       value="@value" />
-
-                                <span class="field-validation-valid text-danger"
-                                      data-valmsg-for="@name"
-                                      data-valmsg-replace="true"></span>
-
-
-
-
-                            </td>
+                            <th>Feature</th>
+                            <th>Value</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ProductFeatures.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).ToList())
+                        {
+                            string hiddenValue = item.Name;
+                            string hiddenId = string.Format("ProductFeatures_{0}__Name", count);
+                            string hiddenName = string.Format("ProductFeatures[{0}].Name", count);
 
-                    }
-                    @*@for (int i = 0; i < Model.ProductFeatures.Count(); i++)
-                    {
-                        
+                            string commentId = string.Format("ProductFeatures_{0}__Comment", count);
+                            string commentName = string.Format("ProductFeatures[{0}].Comment", count);
+                            string comentValue = item.Comment;
+
+
+                            string productIdId = string.Format("ProductFeatures_{0}__ProductId", count);
+                            string productName = string.Format("ProductFeatures[{0}].ProductId", count);
+                            string productValue = item.ProductId;
+
+                            string menuFeatureId = string.Format("ProductFeatures_{0}__MenuFeatureId", count);
+                            string menuFeatureName = string.Format("ProductFeatures[{0}].MenuFeatureId", count);
+                            string menuFeatureValue = item.MenuFeatureId;
+
+                            count++;
+
+                            <tr>
+                                <td>
+                                    @item.Name
+                                    <input id="@hiddenId"
+                                           name="@hiddenName"
+                                           type="hidden"
+                                           value="@hiddenValue" />
+                                    <input id="@productIdId"
+                                           name="@productName"
+                                           type="hidden"
+                                           value="@productValue" />
+
+
+                                    <input id="@menuFeatureId"
+                                           name="@menuFeatureName"
+                                           type="hidden"
+                                           value="@menuFeatureValue" />
+
+
+                                </td>
+
+                                <td>
+                                    <input class="text-box single-line"
+                                           id="@commentId"
+                                           name="@commentName"
+                                           type="text"
+                                           value="@comentValue" />
+
+                                    <span class="field-validation-valid text-danger"
+                                          data-valmsg-for="@commentName"
+                                          data-valmsg-replace="true"></span>
+
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                @Html.ActionLink(" Create", "Create", "ProductFeatures", new { productId = Model.Id, returnUrl = childReturnUrl }, new { @class = "fas fa-plus-square text-success" })
+                <table class="table table-borderless table-info ">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(model => model.ProductFeatures[i].Name)
-                                @Html.HiddenFor(model => model.ProductFeatures[i].Name)
-
-                            </td>
-                            <td>
-                                @Html.EditorFor(model => model.ProductFeatures[i].FeatureDescription, new { @class = "form-control", @placeholder = "Enter Value" })
-                                @Html.ValidationMessageFor(model => model.ProductFeatures[i].FeatureDescription, "", new { @class = "text-danger" })
-
-
-                            </td>
+                            <th>Feature</th>
+                            <th>Value</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ProductFeatures.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).ToList())
+                        {
+                            string editToolTip = string.Format("Edit: {0}", item.Name);
+                            string deleteToolTip = string.Format("Delete: {0}. You can also make it's value empty which will make it seem that it is deleted. ", item.Name);
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        @Html.EditorFor(model => item.Name, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </div>
 
-                    }*@
-                </tbody>
-            </table>
+                                </td>
+
+                                <td>
+                                    <div class="form-group">
+                                        @Html.EditorFor(model => item.Comment, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <span data-toggle="tooltip" title="@editToolTip" data-placement="top">
+                                        @Html.ActionLink(" ", "Edit", "ProductFeatures", new
+                                   { @*menuPathid = Model.Id, menuFeatreId = item.Id,*@ id = item.Id,
+                                                                                        returnUrl = childReturnUrl
+                                   }, new { @class = "fas fa-edit text-success" })
+                                    </span>
+
+                                    @if (item.MetaData.IsDeleteLocked)
+                                    {
+                                        deleteToolTip = string.Format("You cannot delete [{0}]. If you dont want to use it, just make sure it's value empty.",item.Name);
+                                        <span data-toggle="tooltip" title="@deleteToolTip" data-placement="top">
+                                            @Html.ActionLink(" ", "Delete", "ProductFeatures", new
+                                                   { @*menuPathid = Model.Id, menuFeatreId = item.Id,*@
+                                                       id = item.Id,
+                                                       returnUrl = childReturnUrl
+                                                   },
+                                          new { @class = "fas fa-trash-alt text-warning", disabled = "disabled" })
+                                        </span>
+
+                                    }
+                                    else
+                                    {
+                                        <span data-toggle="tooltip" title="@deleteToolTip" data-placement="top">
+                                            @Html.ActionLink(" ", "Delete", "ProductFeatures", new
+                                                   { @*menuPathid = Model.Id, menuFeatreId = item.Id,*@
+                                                       id = item.Id,
+                                                       returnUrl = childReturnUrl
+                                                   },
+                                        new { @class = "fas fa-trash-alt text-danger" })
+                                        </span>
+
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
         }
     </div>
 </div>
 
-@*@for (int i = 0; i < Model.ProductFeatures.Count(); i++)
-{
-    string id = string.Format("ProductFeatures_{0}__Name", count);
-    string name = string.Format("ProductFeatures[{0}].Name", count);
-    string value = string.Format("{0}", count);
-    count++;
-
-    <tr>
-        <td>
-            @Html.DisplayFor(model => model.ProductFeatures[i].Name)
-            @Html.HiddenFor(model => model.ProductFeatures[i].Name)
-
-        </td>
-        <td>
-
-            @Html.EditorFor(model => model.ProductFeatures[i].FeatureDescription, new { @class = "form-control", @placeholder = "Enter Value" })
-            @Html.ValidationMessageFor(model => model.ProductFeatures[i].FeatureDescription, "", new { @class = "text-danger" })
-
-
-        </td>
-    </tr>
-
-}*@
-
-
-@*<tr>
-    <td>
-        Brakes
-        <input id="item_Name" name="item.Name" type="hidden" value="Brakes" />
-
-    </td>
-    <td>
-        <input class="text-box single-line"
-               id="ProductFeatures_0__FeatureDescription"
-               name="ProductFeatures[0].FeatureDescription"
-               type="text"
-               value="powered" />
-
-        <span class="field-validation-valid text-danger"
-              data-valmsg-for="ProductFeatures[0].FeatureDescription"
-              data-valmsg-replace="true"></span>
-
-
-
-
-
-    </td>
-</tr>*@
-
-
-@*<tr>
-    <td>
-        Engine Size
-        <input 
-               id="ProductFeatures_0__Name" 
-               name="ProductFeatures[0].Name" 
-               type="hidden" 
-               value="Engine Size" />
-
-    </td>
-    <td>
-        <input class="text-box single-line" id="ProductFeatures_0__FeatureDescription" name="ProductFeatures[0].FeatureDescription" type="text" value="4000" />
-        <span class="field-validation-valid text-danger" data-valmsg-for="ProductFeatures[0].FeatureDescription" data-valmsg-replace="true"></span>
-
-
-    </td>
-</tr>*@
-
-
-
-@*<tr>
-    <td>
-        Engine Size
-        <input id="ProductFeatures_0__Name" name="ProductFeatures[0].Name" type="hidden" value="Engine Size" />
-
-    </td>
-    <td>
-
-        <input class="text-box single-line" id="ProductFeatures_0__FeatureDescription" name="ProductFeatures[0].FeatureDescription" type="text" value="3000 cc" />
-        <span class="field-validation-valid text-danger" data-valmsg-for="ProductFeatures[0].FeatureDescription" data-valmsg-replace="true"></span>
-
-
-    </td>
-</tr>*@

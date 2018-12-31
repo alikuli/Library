@@ -1,18 +1,7 @@
-﻿using BreadCrumbsLibraryNS.Programs;
-using EnumLibrary.EnumNS;
-using ErrorHandlerLibrary;
-using ErrorHandlerLibrary.ExceptionsNS;
-using MarketPlace.Web6.Controllers.Abstract;
+﻿using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using System;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using UowLibrary;
 using UowLibrary.ParametersNS;
-using UowLibrary.PageViewNS;
-using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -22,25 +11,13 @@ namespace MarketPlace.Web6.Controllers
 
         MenuPathMainBiz _menupathmainBiz;
 
-        #region Construction and initializers
 
         public MenuPathMainsController(MenuPathMainBiz biz, AbstractControllerParameters param)
-            : base(biz, param) 
+            : base(biz, param)
         {
             _menupathmainBiz = biz;
         }
 
-        #endregion
-
-
-
-        //public async Task<ActionResult> DeleteUploadedFile(string menupathId, string uploadedFileId)
-        //{
-        //    //delete from the productCategory1
-        //    await _menupathmainBiz.DeleteUploadedFile(uploadedFileId);
-        //    return RedirectToAction("Edit", new { id = menupathId });
-        //    //return RedirectToAction("DeleteConfirmed", "UploadedFiles", new { id = uploadedFileId });
-        //}
         public override System.Web.Mvc.ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
         {
             ViewBag.MenuPath1SelectList = _menupathmainBiz.MenuPath1_SelectList();

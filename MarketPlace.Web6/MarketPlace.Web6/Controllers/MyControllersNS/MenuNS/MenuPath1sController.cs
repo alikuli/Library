@@ -1,16 +1,16 @@
 ﻿using AliKuli.Extentions;
-using BreadCrumbsLibraryNS.Programs;
-using EnumLibrary.EnumNS;
-using ErrorHandlerLibrary;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeatureNS;
+using ModelsClassLibrary.ModelsNS.MenuNS;
+using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using UowLibrary.FeatureNS.MenuFeatureNS;
 //using UowLibrary.FeaturesNS;
 using UowLibrary.MenuNS;
 using UowLibrary.ParametersNS;
-using UowLibrary.PageViewNS;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -18,20 +18,33 @@ namespace MarketPlace.Web6.Controllers
     {
 
         MenuPath1Biz _menupath1Biz;
-        //FeatureBiz _featureBiz;
-        //MenuPath1FeatureBiz _menuPath1FeatureBiz;
-        public MenuPath1sController(MenuPath1Biz biz,  AbstractControllerParameters param)
-            : base(biz, param) 
+        MenuFeatureBiz _menuFeatureBiz;
+
+        public MenuPath1sController(MenuPath1Biz biz, AbstractControllerParameters param, MenuFeatureBiz menuFeatureBiz)
+            : base(biz, param)
         {
             _menupath1Biz = biz;
-            //featureBiz.IsNullThrowException();
-            //_featureBiz = featureBiz;
-            //_menuPath1FeatureBiz = menuPath1FeatureBiz;
+            _menuFeatureBiz = menuFeatureBiz;
         }
 
 
+        MenuPath1Biz MenuPath1Biz
+        {
+            get
+            {
+                return _menupath1Biz;
+            }
+        }
 
-
+        MenuFeatureBiz MenuFeatureBiz
+        {
+            get
+            {
+                _menuFeatureBiz.UserId = UserId;
+                _menuFeatureBiz.UserName = UserName;
+                return _menuFeatureBiz;
+            }
+        }
         public async Task<ActionResult> DeleteUploadedFile(string menupathId, string uploadedFileId)
         {
             //delete from the productCategory1
@@ -39,54 +52,118 @@ namespace MarketPlace.Web6.Controllers
             return RedirectToAction("Edit", new { id = menupathId });
         }
 
+        public ActionResult AddFeature(string id, string parentName, string returnUrl)
+        {
+            id.IsNullOrWhiteSpaceThrowArgumentException("Id");
+            parentName.IsNullOrWhiteSpaceThrowArgumentException("parentName");
+            returnUrl.IsNullOrWhiteSpaceThrowArgumentException("returnUrl");
+
+            MenuFeatureModel menuFeatureModel = new MenuFeatureModel();
+            menuFeatureModel.ParentId = id;
+            menuFeatureModel.ParentName = parentName;
+            menuFeatureModel.SelectListFeature = MenuFeatureBiz.SelectList();
+            menuFeatureModel.ReturnUrl = returnUrl;
+            return View(menuFeatureModel);
+        }
+
+        [HttpPost]
+        public ActionResult AddFeature(MenuFeatureModel menuFeatureModel)
+        {
+            try
+            {
+                MenuPath1Biz.AddFeature(menuFeatureModel);
+            }
+            catch (System.Exception e)
+            {
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), e);
+            }
+            if (menuFeatureModel.ReturnUrl.IsNullOrWhiteSpace())
+                return View("Index");
+            
+            return Redirect(menuFeatureModel.ReturnUrl);
+        }
+
+        public ActionResult DeleteFeature(string menuPathid, string menuFeatureId, string returnUrl)
+        {
+            try
+            {
+                menuFeatureId.IsNullOrWhiteSpaceThrowArgumentException("menuFeatreId");
+                returnUrl.IsNullOrWhiteSpaceThrowArgumentException("returnUrl");
+                menuPathid.IsNullOrWhiteSpaceThrowArgumentException("menuPath1id");
+
+                MenuFeatureDeleteModel menuFeatureDeleteModel = new MenuFeatureDeleteModel(menuPathid, menuFeatureId, returnUrl);
+
+                menuFeatureDeleteModel.MenuFeature = MenuFeatureBiz.Find(menuFeatureId);
+                menuFeatureDeleteModel.MenuPath = MenuPath1Biz.Find(menuPathid) as IMenuPath;
+
+                menuFeatureDeleteModel.SelfCheck();
+
+                return View(menuFeatureDeleteModel);
+
+            }
+            catch (System.Exception e)
+            {
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), e);
+                if (returnUrl.IsNullOrWhiteSpace())
+                    return View("Index");
+
+                return Redirect(returnUrl);
+
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult DeleteFeature(MenuFeatureDeleteModel menuFeatureDeleteModel)
+        {
+            try
+            {
+                menuFeatureDeleteModel.IsNullThrowException("menuFeatureDeleteModel");
+                MenuPath1Biz.DeleteFeature(menuFeatureDeleteModel);
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), e);
+            }
+
+            if (menuFeatureDeleteModel.ReturnUrl.IsNullOrWhiteSpace())
+                return View("Index");
+
+            return Redirect(menuFeatureDeleteModel.ReturnUrl);
+        }
 
 
+        public ActionResult CreateNewFeature(string menuPathid, string returnUrl)
+        {
+            menuPathid.IsNullOrWhiteSpaceThrowArgumentException("menuPathid");
+            returnUrl.IsNullOrWhiteSpaceThrowArgumentException("returnUrl");
 
+            CreateNewFeatureModel createNewFeatureModel = new CreateNewFeatureModel();
+            createNewFeatureModel.MenuPathId = menuPathid;
+            createNewFeatureModel.ReturnUrl = returnUrl;
 
+            return View(createNewFeatureModel);
 
+        }
+        [HttpPost]
+        public ActionResult CreateNewFeature(CreateNewFeatureModel createNewFeatureModel)
+        {
 
+            try
+            {
+                createNewFeatureModel.IsNullThrowException("createNewFeatureModel");
+                MenuPath1Biz.CreateNewFeature(createNewFeatureModel);
 
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), e);
+            }
+            if (createNewFeatureModel.ReturnUrl.IsNullOrWhiteSpace())
+                return View("Index");
 
+            return Redirect(createNewFeatureModel.ReturnUrl);
 
-
-        //public ActionResult AddNewField(string id)
-        //{
-        //    //Feature feature = _featureBiz.Factory() as Feature;
-        //    //feature.MenuPath1Id = id;
-
-
-        //    FeatureTypeENUM TypeEnum = FeatureTypeENUM.Unknown;
-        //    ViewBag.SelectListFeaturesTypeEnum = EnumExtention.ToSelectListSorted<FeatureTypeENUM>(TypeEnum);
-
-
-        //    return View(feature);
-
-
-        //}
-
-        //[HttpPost]
-        //public ActionResult AddNewField(Feature feature)
-        //{
-        //    //first get the Menupath
-        //    //add the feature to it
-        //    //save it.
-
-        //    try
-        //    {
-        //        _menupath1Biz.AddFeature(feature.MenuPath1Id, feature);
-        //        return RedirectToAction("Edit", new { id = feature.MenuPath1Id });
-        //    }
-
-        //    catch (System.Exception e)
-        //    {
-
-        //        ErrorsGlobal.Add("Error while adding new field", MethodBase.GetCurrentMethod(), e);
-        //        return RedirectToAction("Edit", new { id = feature.MenuPath1Id });
-        //    }
-
-
-        //}
-
-
+        }
     }
 }

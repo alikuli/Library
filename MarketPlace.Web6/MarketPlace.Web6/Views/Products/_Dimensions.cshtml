@@ -13,7 +13,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.UomDimensionsId, htmlAttributes: new { @class = "control-label" })
         @Html.DropDownListFor(x => x.UomDimensionsId,
-                                    (@ViewBag.UomLengthSelectList as IEnumerable<SelectListItem>),
+                                             (@Model.SelectListUomDimensionsLength as IEnumerable<SelectListItem>),
                                             "--- Select UOM ---",
                                 new { @class = "form-control" })
     </div>

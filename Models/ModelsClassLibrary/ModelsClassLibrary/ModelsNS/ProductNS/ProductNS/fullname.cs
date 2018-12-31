@@ -33,13 +33,13 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
             foreach (ProductFeature feature in productFeaturesOrdered)
             {
-                if (feature.FeatureDescription.IsNullOrWhiteSpace())
+                if (feature.DetailInfoToDisplayOnWebsite.IsNullOrWhiteSpace())
                     continue;
 
                 if (feature.Name.IsNullOrWhiteSpace())
                     continue;
 
-                string fStr = string.Format("{0}: {1} ", feature.Name.ToUpper(), feature.FeatureDescription);
+                string fStr = string.Format("{0}: {1} ", feature.Name.ToUpper(), feature.DetailInfoToDisplayOnWebsite);
                 sb.Append(fStr);
             }
 

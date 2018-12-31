@@ -23,6 +23,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
             IsActive = false;
             IsEditLocked = false;
+            IsDeleteLocked = false;
             IsDeleted = false;
             //IsEncrypted = false;
 
@@ -34,6 +35,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         [Display(Name = "Auto Created?")]
 
         public bool IsEditLocked { get; set; }
+        public bool IsDeleteLocked { get; set; }
 
         [Display(Name = "Active?")]
         public bool IsActive { get; set; }

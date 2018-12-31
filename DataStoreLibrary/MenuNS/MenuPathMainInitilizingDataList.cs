@@ -31,7 +31,7 @@ namespace DatastoreNS
         {
             string c1;
             string c2;
-            string c3 = "";
+            string c3;
 
             #region Bus
 
@@ -683,7 +683,7 @@ namespace DatastoreNS
         {
             string c1;
             string c2;
-            string c3 = "";
+            string c3;
 
 
             #region Electronics
@@ -716,7 +716,7 @@ namespace DatastoreNS
         {
             string c1;
             string c2;
-            string c3 = "";
+            string c3;
 
 
             #region clothes
@@ -898,36 +898,36 @@ namespace DatastoreNS
         {
             string c1;
             string c2;
-            string c3 = "";
+            string c3;
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Motorcycle);
-            //c3 = Cat3Name(MenuPath3ENUM.Yamaha);
+            c3 = Cat3Name(MenuPath3ENUM.Yamaha);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Motorcycle);
-            //c3 = Cat3Name(MenuPath3ENUM.Kawasaki);
+            c3 = Cat3Name(MenuPath3ENUM.Kawasaki);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Motorcycle);
-            //c3 = Cat3Name(MenuPath3ENUM.BMW);
+            c3 = Cat3Name(MenuPath3ENUM.BMW);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Motorcycle);
-            //c3 = Cat3Name(MenuPath3ENUM.Qingqi);
+            c3 = Cat3Name(MenuPath3ENUM.Qingqi);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 
             c1 = Cat1Name(MenuPath1ENUM.Automobiles);
             c2 = Cat2Name(MenuPath2ENUM.Motorcycle);
-            //c3 = Cat3Name(MenuPath3ENUM.HondaMotorcycle);
+            c3 = Cat3Name(MenuPath3ENUM.HondaMotorcycle);
             lst.Add(new MenuPathMainHelper(c1, c2, c3));
 
 

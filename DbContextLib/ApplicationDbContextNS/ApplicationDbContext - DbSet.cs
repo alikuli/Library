@@ -3,16 +3,18 @@ using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.DeliveryMethodNS;
 using ModelsClassLibrary.ModelsNS.DiscountNS;
+using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySell;
+using ModelsClassLibrary.ModelsNS.DocumentsNS.CashsNS.CashTrxNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FileDocsNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.PaymentsNS;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
+//using ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeatureNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.Logs.VisitorsLogNS;
 using ModelsClassLibrary.ModelsNS.PageViewNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
-using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS.MailerNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS.EmailAddressNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS.PhoneNS;
@@ -33,8 +35,14 @@ namespace ApplicationDbContextNS
 
         #region IDbSet
         public virtual IDbSet<AddressMain> Addresses { get; set; }
+
         //public IDbSet<AddressCategory> AddressCategories { get; set; }
         //public virtual IDbSet<City> Cities { get; set; }
+        public virtual IDbSet<Bank> Banks { get; set; }
+        public virtual IDbSet<BankCategory> BankCategories { get; set; }
+        public virtual IDbSet<BuySellDoc> BuySellDocs { get; set; }
+        public virtual IDbSet<CashTrx> CashTrxs { get; set; }
+
         public virtual IDbSet<GlobalComment> GlobalComments { get; set; }
         public virtual IDbSet<Country> Countries { get; set; }
         public virtual IDbSet<Counter> Counters { get; set; }
@@ -42,6 +50,7 @@ namespace ApplicationDbContextNS
         public IDbSet<CashierCategory> CashierCategories { get; set; }
         public IDbSet<Customer> Customers { get; set; }
         public virtual IDbSet<CustomerCategory> CustomerCategories { get; set; }
+
         //public IDbSet<DeliveryMethod> DeliveryMethods { get; set; }
         //public IDbSet<Discount> Discounts { get; set; }
 
@@ -71,7 +80,22 @@ namespace ApplicationDbContextNS
         /// These are the Mailers that mail out address verifications
         /// </summary>
         public virtual IDbSet<Mailer> Mailers { get; set; }
+        //public virtual IDbSet<MenuPath1Feature> MenuPath1Features { get; set; }
+
+
         public virtual IDbSet<MailerCategory> MailerCategories { get; set; }
+        public IDbSet<MenuPath1> MenuPath1s { get; set; }
+
+        public IDbSet<MenuPath2> MenuPath2s { get; set; }
+
+        public IDbSet<MenuPath3> MenuPath3s { get; set; }
+
+        //public IDbSet<MenuPath1Feature> MenuPath1Features { get; set; }
+        //public IDbSet<MenuPath2Feature> MenuPath2Features { get; set; }
+        //public IDbSet<MenuPath3Feature> MenuPath3Features { get; set; }
+
+        public IDbSet<MenuFeature> MenuFeatures { get; set; }
+
         public virtual IDbSet<PaymentMethod> PaymentMethods { get; set; }
         public IDbSet<Phone> Phones { get; set; }
         //public IDbSet<Payment> Payments { get; set; }
@@ -89,17 +113,6 @@ namespace ApplicationDbContextNS
 
 
 
-        public IDbSet<MenuPath1> MenuPath1s { get; set; }
-
-        public IDbSet<MenuPath2> MenuPath2s { get; set; }
-
-        public IDbSet<MenuPath3> MenuPath3s { get; set; }
-
-        //public IDbSet<MenuPath1Feature> MenuPath1Features { get; set; }
-        //public IDbSet<MenuPath2Feature> MenuPath2Features { get; set; }
-        //public IDbSet<MenuPath3Feature> MenuPath3Features { get; set; }
-
-        public IDbSet<MenuFeature> MenuFeatures { get; set; }
         public IDbSet<ProductFeature> ProductFeatures { get; set; }
         public IDbSet<ProductChildFeature> ProductChildFeatures { get; set; }
         public IDbSet<MenuPathMain> ProductCategoryMains { get; set; }

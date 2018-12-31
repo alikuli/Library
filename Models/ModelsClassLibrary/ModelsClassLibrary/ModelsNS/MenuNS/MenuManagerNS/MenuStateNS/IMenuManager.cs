@@ -4,6 +4,7 @@ using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
+using System.Collections.Generic;
 using UowLibrary.MenuNS.MenuStateNS;
 namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS
 {
@@ -11,6 +12,8 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS
     {
         //string ControllerCurrentName { get; set; }
         string CurrentUrl { get; set; }
+        string ReturnUrl { get; set; }
+
         //MenuENUM MenuEnum { get; set; }
         MenuENUM MenuEnumCreateButton { get; set; }
         MenuENUM MenuEnumEditButtom { get; set; }
@@ -29,5 +32,9 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS
 
         IndexMenuVariables IndexMenuVariables { get; set; }
         string WebClicksCount { get; set; }
+        UserMoneyAccount UserMoneyAccount { get; set; }
+        bool IsCreate { get; set; }
+
+        List<string> PictureAddresses { get; set; }
     }
 }

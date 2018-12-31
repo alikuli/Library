@@ -1,4 +1,5 @@
-﻿using EnumLibrary.EnumNS;
+﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
@@ -70,7 +71,13 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 
         public override string ProductId
         {
-            get { throw new System.NotImplementedException(); }
+            get
+            {
+                if (Product.IsNull())
+                    return "";
+
+                return Product.Id;
+            }
         }
 
         public override string ProductChildId

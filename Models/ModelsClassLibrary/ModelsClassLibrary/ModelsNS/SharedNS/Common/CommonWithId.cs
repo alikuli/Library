@@ -134,10 +134,16 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
             MetaData.Modified.DateStart = icommonWithId.MetaData.Modified.DateStart;
 
+            MetaData.IsActive = icommonWithId.MetaData.IsActive;
+            MetaData.IsDeleted = icommonWithId.MetaData.IsDeleted;
+            MetaData.IsDeleteLocked = icommonWithId.MetaData.IsDeleteLocked;
+            MetaData.IsEditLocked = icommonWithId.MetaData.IsEditLocked;
+
             DetailInfoToDisplayOnWebsite = icommonWithId.DetailInfoToDisplayOnWebsite;
             Name = icommonWithId.Name;
             ReturnUrl = icommonWithId.ReturnUrl;
             Comment = icommonWithId.Comment;
+
 
         }
 

@@ -7,12 +7,12 @@
 
 
     <div class="form-group  form-inline">
-        @Html.LabelFor(model => model.WeightListed, htmlAttributes: new { @class = "control-label" })
+        @Html.LabelFor(model => model.WeightListed, htmlAttributes: new { @class = "control-label pr-3" })
         @Html.EditorFor(model => model.WeightListed, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Listed Weight" } })
         @Html.ValidationMessageFor(model => model.WeightListed, "", new { @class = "text-danger" })
         @Html.DropDownListFor(x => x.UomWeightListedId,
-                                       (@ViewBag.UomWeightSelectList as IEnumerable<SelectListItem>),
-                                        "--- Select UoM Weight ---",
+                                                (@Model.SelectListUomShipWeight as IEnumerable<SelectListItem>),
+                                        "--- Select UoM Weight>Listed ---",
                                         new { @class = "form-control" })
     </div>
 

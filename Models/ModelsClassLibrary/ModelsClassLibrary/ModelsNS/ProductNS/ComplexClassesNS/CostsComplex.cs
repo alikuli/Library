@@ -20,18 +20,23 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS
         public bool IsCalculated { get; set; }
 
 
+        [Display(Name = "Avg Cost")]
         [NotMapped]
         public decimal AverageCost { get; set; }
 
+        [Display(Name = "Highest Cost")]
         [NotMapped]
         public decimal HighestCost { get; set; }
 
+        [Display(Name = "Date of Highest Cost")]
         [NotMapped]
         public DateTime HighestCostDate { get; set; }
 
+        [Display(Name = "Lowest Cost")]
         [NotMapped]
         public decimal LowestCost { get; set; }
 
+        [Display(Name = "Lowest Cost Date")]
         [NotMapped]
         public DateTime LowestCostDate { get; set; }
 

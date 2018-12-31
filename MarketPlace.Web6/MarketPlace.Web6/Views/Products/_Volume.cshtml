@@ -5,11 +5,11 @@
 <div class="well p-3 m-3">
 
     <div class="form-group form-inline">
-        @Html.LabelFor(model => model.Volume, htmlAttributes: new { @class = "control-label" })
+        @Html.LabelFor(model => model.Volume, htmlAttributes: new { @class = "control-label pr-3" })
         @Html.EditorFor(model => model.Volume, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Volume of Item" } })
         @Html.ValidationMessageFor(model => model.Volume, "", new { @class = "text-danger" })
         @Html.DropDownListFor(x => x.UomVolumeId,
-                                     (@ViewBag.UomVolumeSelectList as IEnumerable<SelectListItem>),
+                                              (@Model.SelectListUomVolume as IEnumerable<SelectListItem>),
                                       "--- Select UoM Vol---",
                                       new { @class = "form-control" })
     </div>

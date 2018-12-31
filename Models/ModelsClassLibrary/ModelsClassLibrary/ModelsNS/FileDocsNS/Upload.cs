@@ -17,8 +17,8 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS
         /// </summary>
         string IHasUploads.MiscFilesLocation()
         {
-            var userTest = User;
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "FileDoc", User.UserName);
+            
+            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "FileDoc", Person.Name);
         }
 
 

@@ -3,12 +3,11 @@ using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using UserModels;
 
 namespace ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS
 {
     //We will only use 
-    public partial class FileDoc : CommonWithId, IHasUploads, IHasUser
+    public partial class FileDoc : CommonWithId, IHasUploads
     {
 
         public override ClassesWithRightsENUM ClassNameForRights()
@@ -18,9 +17,9 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS
 
         #region User
         //File owner.
-        public virtual ApplicationUser User { get; set; }
+        //public virtual ApplicationUser User { get; set; }
 
-        public string UserId { get; set; }
+        //public string UserId { get; set; }
 
 
 

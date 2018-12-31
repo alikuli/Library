@@ -31,7 +31,7 @@ namespace MarketPlace.Web6.Controllers
             salesman.SelectListBillAddress = _salesmanBiz.SelectListBillAddressesFor(UserId);
             salesman.SelectListShipAddress = _salesmanBiz.SelectListShipAddressesFor(UserId);
 
-            salesman.SelectListUser = _salesmanBiz.SelectListUser;
+            salesman.SelectListPeople = _salesmanBiz.PersonBiz.SelectList(); ;
 
             return base.Event_CreateViewAndSetupSelectList(parm);
         }

@@ -78,19 +78,21 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
                 }
             }
         }
-        public string ProductChildId
-        {
-            get
-            {
-                switch (MenuEnum)
-                {
-                    case EnumLibrary.EnumNS.MenuENUM.IndexMenuProductChild:
-                        return Id;
-                    default:
-                        return "";
-                }
-            }
-        }
+
+
+        //public string ProductChildId
+        //{
+        //    get
+        //    {
+        //        switch (MenuEnum)
+        //        {
+        //            case EnumLibrary.EnumNS.MenuENUM.IndexMenuProductChild:
+        //                return Id;
+        //            default:
+        //                return "";
+        //        }
+        //    }
+        //}
         //public string MenuPath1Id { get; set; }
         //public string MenuPath2Id { get; set; }
         //public string MenuPath3Id { get; set; }

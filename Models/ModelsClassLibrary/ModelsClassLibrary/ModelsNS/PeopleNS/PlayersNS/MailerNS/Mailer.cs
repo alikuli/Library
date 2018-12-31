@@ -5,13 +5,11 @@ using InterfacesLibrary.Interfaces.PeopleNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
-using UserModels;
 namespace ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS
 {
     public class Mailer : PlayerAbstract, IPlayer
@@ -246,6 +244,7 @@ namespace ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS
 
         [NotMapped]
         public SelectList SelectListTrustLevel { get; set; }
+
         //public string UserId { get; set; }
         //public ApplicationUser User { get; set; }
 
@@ -259,7 +258,7 @@ namespace ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS
             Name.IsNullOrWhiteSpaceThrowException("Name is empty");
             //UserId.IsNullOrWhiteSpaceThrowException("User Id is empty");
             //User.IsNullThrowException("User is empty");
-            if(TrustLevelEnum == TrustLevelENUM.Unknown)
+            if (TrustLevelEnum == TrustLevelENUM.Unknown)
                 throw new Exception("Trust Level is Unknown");
         }
 

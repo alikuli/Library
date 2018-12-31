@@ -3,7 +3,6 @@ using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
-//using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 using ModelsClassLibrary.ModelsNS.MenuNS;
@@ -14,7 +13,7 @@ using System.IO;
 namespace ModelsClassLibrary.MenuNS
 {
 
-    public class MenuPath2 : MenuPathAbstract, IHasUploads
+    public class MenuPath2 : MenuPathAbstract, IHasUploads, IMenuPath
     {
         public override ClassesWithRightsENUM ClassNameForRights()
         {

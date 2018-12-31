@@ -2,7 +2,7 @@
 
 @{
     var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
-    string returnUrl = Request.Url.PathAndQuery; 
+    
     if(!Model.MenuManager.IsNull())
     { 
         Model.MenuManager.MenuState.ControllerCurrentName = this.ViewContext.RouteData.Values["controller"].ToString();
@@ -10,19 +10,31 @@
     string selectId = Model.MenuManager.SelectedId;
     string searchString = Model.MenuManager.SearchString;
     string createScreenName = string.Format("{0} {1}", "Create", Model.ClassName.ToTitleCase());
-    Model.MenuManager.BreadCrumbManager.Push(createScreenName, returnUrl);
+
+    string currentUrl = Request.Url.PathAndQuery;
+    Model.MenuManager.CurrentUrl = currentUrl;
+    Model.MenuManager.BreadCrumbManager.Push(createScreenName, currentUrl);
+    string returnUrl = currentUrl;
+    
+    if (!Model.MenuManager.ReturnUrl.IsNullOrWhiteSpace())
+    { 
+        returnUrl = Model.MenuManager.ReturnUrl;
+    }
     
 }
         @*@Html.Partial(@"ViewControls/index/_breadCrumbs")*@
 
 @Html.Partial(@"ViewControls/Create/_CreateHeading")
 
-@using (Html.BeginForm("Create", @controllerName, new { selectId = selectId, searchString = searchString }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", @controllerName, new { selectId = selectId, searchString = searchString, returnUrl =returnUrl}, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+    
+    
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.Partial("_messages")
 
+    
     @Html.HiddenFor(model => model.Id)
     @Html.Partial(@"_FieldsOnlyEditFormat")
     @Html.Partial(@"ViewControls/Uploads/_ShowUploads")

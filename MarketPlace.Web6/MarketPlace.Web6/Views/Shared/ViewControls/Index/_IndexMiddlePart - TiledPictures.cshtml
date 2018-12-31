@@ -13,13 +13,17 @@
         ModelsClassLibrary.ViewModels.IndexItemVM currIndexItemVM = null;
         var vv = Model.MenuManager.IndexMenuVariables;
         vv.Count = 0;
-        vv.Returnurl = Request.Url.PathAndQuery; ;
+        //vv.Returnurl = Request.Url.PathAndQuery; ;
+        string returnUrl = Request.Url.PathAndQuery; 
         vv.CurrController = Model.MenuManager.MenuState.ControllerCurrentName;
         vv.EditController = Model.MenuManager.MenuState.CreateAndEditLink_ControllerName;
         vv.IsProductChild = Model.MenuManager.MenuState.IsProductChild;
         vv.UserId = Model.UserId ?? "";
         vv.CommentUrl = "";
         vv.ShortNameOfProduct = "";
+        string carouselName = "carousel";
+        string carouselId = "";
+        int carouselCount = 0;
     }
 
 
@@ -46,7 +50,7 @@
                     vv.UnLikeIcon.CountIcon = @IndexListVMArray[i].MenuManager.LikeUnlikesCounter.UnlikeCount;
                 }
             }
-            vv.ImagePath = "";
+            //vv.ImagePath = "";
             vv.MainMenuPath = "";
             vv.MenuPath1Id = "";
             vv.MenuPath2Id = "";
@@ -62,6 +66,7 @@
             vv.UnLikeIcon.UrlCount = "";
             vv.ShoppingCartUrl = "";
             vv.HandPointingUrl = "";
+            string itemHeading = IndexListVMArray[i].ShortName;
             }
 
 
@@ -82,40 +87,28 @@
                     alert += " background-ltgrey ";
                 }
             <!-- #endregion -->
-            <!-- #region if (IndexListVMArray[i].IsImageThere) -->
-            @if (IndexListVMArray[i].IsImageThere)
-                {
-                    vv.ImagePath = Url.Content(IndexListVMArray[i].ImageAddressStr);
-
-                }
 
 
-            <!-- #endregion -->
+
+
             <!-- #region if (Model.MenuManager.MenuState.IsMenu) -->
             @if (Model.MenuManager.MenuState.IsMenu)
-                {
-
-                    switch (Model.MenuManager.MenuState.MenuEnum)
-                    {
-
-                        case MenuENUM.IndexMenuProductChild:
-                            vv.MainMenuPath = Url.Action("ProductOwner", vv.CurrController, new { id = vv.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu, });
-                            break;
+            {
+                vv.MainMenuPath = Url.Action("index", vv.CurrController, new { id = vv.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu, });
 
 
-                        default:
-                            vv.MainMenuPath = Url.Action("index", vv.CurrController, new { id = vv.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu, });
-                            break;
-                    }
-
-                }
-                else
-                {
-                    vv.MainMenuPath = Url.Action("Edit", vv.EditController, new { id = vv.IdForEdit });
-                }
+            }
+            else
+            {
+                vv.MainMenuPath = Url.Action("Edit", vv.EditController, new { id = vv.IdForEdit , returnUrl = returnUrl});
+            }
 
 
             <!-- #endregion -->
+
+
+
+
             <!-- #region Switch -->
             @switch (IndexListVMArray[i].MenuManager.MenuState.MenuEnum)
                 {
@@ -137,7 +130,6 @@
                         //item is menuPathMain
                         vv.MenuPathMainId = vv.IdForEdit;
                         vv.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
-                        vv.MenuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
                         vv.MenuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
                         break;
 
@@ -146,8 +138,6 @@
                         //item is menuPathMain
                         vv.MenuPathMainId = vv.IdForEdit;
                         vv.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
-                        vv.MenuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
-                        vv.MenuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
                         vv.MenuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
                         break;
 
@@ -155,19 +145,13 @@
                     case MenuENUM.IndexMenuProduct:
                         //item is product
                         vv.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductId;
-                        vv.MenuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
-                        vv.MenuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
-                        vv.MenuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
                         vv.ProductId = IndexListVMArray[i].MenuManager.MenuState.ProductId;
                         break;
 
 
                     case MenuENUM.IndexMenuProductChild:
                         //item is productChild
-                        vv.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductId;
-                        vv.MenuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
-                        vv.MenuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
-                        vv.MenuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+                        vv.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductChildId;
                         vv.ProductChildId = IndexListVMArray[i].MenuManager.MenuState.ProductChildId;
                         break;
 
@@ -177,21 +161,26 @@
                 }
 
             <!-- #endregion -->
+
+
+
+
             <!-- #region if (Model.IsMenu) Like/Unlike/Finger Up Icons URLS -->
-            @if (Model.IsMenu)
-                {
+            @*@if (Model.IsMenu)*@
+            @if (Model.MenuManager.MenuState.IsMenu)
+            {
                 vv.LikeIcon.Url = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = true });
 
                 vv.LikeIcon.UrlCount = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = true });
 
                 vv.UnLikeIcon.Url = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = false });
-                
+
                 vv.UnLikeIcon.UrlCount = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId });
 
 
                 vv.CommentUrl = Url.Action("AddComment", "GlobalComments", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId });
 
-                }
+            }
 
 
             <!-- #endregion -->
@@ -200,21 +189,186 @@
 
 
 
+
         </div>
 
         <div class="container col-lg-3 col-md-4 col-xs-6 m-0">
+
+
+
+
+
             <div class="border border-dark rounded text-center backgroundYellowOnHover " style="margin: 2px;">
 
-                <a href="@vv.MainMenuPath" data-toggle="tooltip" title="@IndexListVMArray[i].Description" data-placement="top" class="d-block h-100 text-center mb-0">
-                    <h4>@vv.ShortNameOfProduct</h4>
-                    <span>
-                        <img class="img-fluid img-thumbnail" src="@vv.ImagePath" alt="@IndexListVMArray[i].ShortName">
-                    </span>
-                </a>
+                <h4>@itemHeading</h4>
+
+
+                    @{
+        
+                        int pictureCount = 0;
+                        List<string> picturesList = IndexListVMArray[i].MenuManager.PictureAddresses.ToList();
+                        string carouselItemClass = "carousel-item active";
+                        string caouselIndicatorLiClass = "active";
+                        carouselId = carouselName + carouselCount;
+                        
+                        ModelsClassLibrary.ViewModels.IndexItemVM.GetMaxWidthHeightForCarousel(picturesList);
+                        
+                      }
+
+                <div class="">
+                    <div id="@carouselId" class="carousel slide m-5" data-ride="carousel">
+                        <ul class="carousel-indicators">
+                            @for (int indicator = 0; indicator < picturesList.Count; indicator++)
+                        {
+                            if (indicator != 0)
+                            {
+                                caouselIndicatorLiClass = "";
+                            }
+                                <li data-target="#@carouselId" data-slide-to="@indicator" class="@caouselIndicatorLiClass"></li>
+
+                        }
+                        </ul>
+
+
+                        <div class="carousel-inner">
+
+                            @foreach (var item in picturesList)
+                        {
+                                string imageSrc = Url.Content(item);
+                                string imageAlt = IndexListVMArray[i].ShortName;
+                            
+                                ModelsClassLibrary.ViewModels.IndexItemVM.PriceStatic = IndexListVMArray[i].Price;
+                                string imageHeading = ModelsClassLibrary.ViewModels.IndexItemVM.PriceDisplay;
+                                
+                                string imageDescription = "";
+
+                                ModelsClassLibrary.ViewModels.IndexItemVM.PictureCalculateDimensions(item);
+                                string imageWidth = ModelsClassLibrary.ViewModels.IndexItemVM.PictureWidth;
+                                string imageHeight = ModelsClassLibrary.ViewModels.IndexItemVM.PictureHeight;
+
+                                if (pictureCount != 0)
+                                {
+                                    carouselItemClass = "carousel-item";
+                                }
+
+                                    <div class="@carouselItemClass">
+                                        <a href="@vv.MainMenuPath" data-toggle="tooltip" title="@IndexListVMArray[i].Description" data-placement="top" class="d-block h-100 text-center mb-0">
+                                            @*<img src="@imageSrc" alt="@imageAlt" width="@imageWidth">*@
+                                            @if (imageWidth == "0")
+                                            {
+                                                <img src="@imageSrc" alt="@imageAlt" height="@imageHeight" class="tiledimagemiddlepart">
+
+                                            }
+                                            else
+                                            {
+                                                <img src="@imageSrc" alt="@imageAlt" width="@imageWidth" class="tiledimagemiddlepart">
+
+                                            }
+                                            <div class="carousel-caption">
+                                                @if (!imageHeading.IsNullOrWhiteSpace())
+                                                { 
+                                                    <h3>@imageHeading</h3>
+                                                }
+                                                @if (!imageDescription.IsNullOrWhiteSpace())
+                                                {
+                                                    <p>@imageDescription</p>
+
+                                                }
+                                            </div>
+                                        </a>
+                                    </div>
+                                pictureCount++;
+
+                            }
+
+
+                        </div>
+                        <a class="carousel-control-prev" href="#@carouselId" data-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#@carouselId" data-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </a>
+
+                    </div>
+                </div>    
+
+                @{
+        carouselCount++;
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    @*</span> 
+                </a> *@
+
+
+
+
+            
                 @if (Model.IsMenu)
                 {
 
-            <!-- #region User Icons -->
+                    <!-- #region User Icons -->
                     <div class="m-0">
 
                         @*These are all anchorButtons Class*@

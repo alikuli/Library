@@ -14,7 +14,7 @@ namespace MarketPlace.Web6.Controllers
             Mailer mailer = parm.Entity as Mailer;
             mailer.IsNullThrowException("Unable to unbox mailer");
             mailer.SelectListTrustLevel = MailerBiz.SelectListTrustLevel;
-
+            mailer.SelectListPeople = MailerBiz.PersonBiz.SelectList();
             return base.Event_CreateViewAndSetupSelectList(parm);
         }
 

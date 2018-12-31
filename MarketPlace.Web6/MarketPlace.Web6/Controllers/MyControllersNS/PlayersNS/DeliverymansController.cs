@@ -30,7 +30,7 @@ namespace MarketPlace.Web6.Controllers
             Deliveryman deliveryman = parm.Entity as Deliveryman;
             deliveryman.IsNullThrowException("Unable to unbox deliveryman");
 
-            deliveryman.SelectListUser = _deliverymanBiz.SelectListUser;
+            deliveryman.SelectListPeople = _deliverymanBiz.PersonBiz.SelectList();
             deliveryman.SelectListDeliverymanCategory = _deliverymanBiz.SelectListDeliverymanCategory;
             deliveryman.SelectListAddressBillTo = _deliverymanBiz.AddressBiz.SelectListBillAddress();
 

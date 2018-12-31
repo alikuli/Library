@@ -36,7 +36,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
                 {
                     ProductFeature pfFound = ProductFeatures.FirstOrDefault(x => x.Name.Trim().ToLower() == pf.Name.Trim().ToLower());
                     pfFound.IsNullThrowException("Programming error");
-                    pfFound.FeatureDescription = pf.FeatureDescription;
+                    pfFound.Comment = pf.Comment;
                 }
             }
             //ProductFeatures = null;

@@ -1,10 +1,15 @@
 ﻿using AliKuli.Extentions;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
+using System.Collections.Generic;
 
 namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
 {
     public class IndexMenuVariables
     {
+        public IndexMenuVariables()
+        {
+            
+        }
         public IndexMenuVariables(string userId)
         {
 
@@ -15,7 +20,7 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
         public int Count { get; set; }
         public string Returnurl { get; set; }
         public string IdForEdit { get; set; }
-        public string ImagePath { get; set; }
+        //public string ImagePath { get; set; }
 
 
 
@@ -26,10 +31,9 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
 
 
         IconProperties _likeIcon;
-        public IconProperties LikeIcon 
+        public IconProperties LikeIcon
         {
-            get 
-
+            get
             {
                 if (_likeIcon.IsNull())
                 {
@@ -40,7 +44,7 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
                 {
                     _likeIcon.InitEachTime(Count);
                 }
-                return _likeIcon; 
+                return _likeIcon;
             }
         }
 

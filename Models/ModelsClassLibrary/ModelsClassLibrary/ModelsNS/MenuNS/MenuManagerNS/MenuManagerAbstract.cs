@@ -52,7 +52,6 @@ namespace UowLibrary.MenuNS.MenuStateNS
         {
             get
             {
-                _product.IsNullThrowException();
                 return _product;
             }
         }
@@ -60,7 +59,6 @@ namespace UowLibrary.MenuNS.MenuStateNS
         {
             get
             {
-                _productChild.IsNullThrowException();
                 return _productChild;
             }
         }
@@ -68,9 +66,9 @@ namespace UowLibrary.MenuNS.MenuStateNS
         public abstract MenuENUM BackLink_MenuEnum { get; }
         public abstract bool ShowCreateButton { get; }
         public abstract bool ShowEditButton { get; }
-        
-        
-        
+
+
+
         //public abstract string MenuPath1Id { get; }
         //public abstract string MenuPath2Id { get; }
         //public abstract string MenuPath3Id { get; }
@@ -115,7 +113,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
             }
         }
 
-        
+
         public virtual string ProductId
         {
             get
@@ -186,46 +184,46 @@ namespace UowLibrary.MenuNS.MenuStateNS
                 }
             }
         }
-        public string GetProductVM()
-        {
-            switch (MenuPathMain.MenuPath1.MenuPath1Enum)
-            {
+        //public string GetProductVM()
+        //{
+        //    switch (MenuPathMain.MenuPath1.MenuPath1Enum)
+        //    {
 
-                case MenuPath1ENUM.Automobiles:
-                    return new ProductAutomobileVM().GetType().Name + "s";
-                case MenuPath1ENUM.NotDefined:
-                    break;
-                case MenuPath1ENUM.MensClothing:
-                    break;
-                case MenuPath1ENUM.WomensClothing:
-                    break;
-                case MenuPath1ENUM.Electronics:
-                    break;
-                case MenuPath1ENUM.Foods:
-                    break;
-                case MenuPath1ENUM.HomeServants:
-                    break;
-                case MenuPath1ENUM.FactoryWorkers:
-                    break;
-                case MenuPath1ENUM.OfficeWorkers:
-                    break;
-                case MenuPath1ENUM.Machines:
-                    break;
-                case MenuPath1ENUM.Stationary:
-                    break;
-                case MenuPath1ENUM.FruitProccessors:
-                    break;
-                case MenuPath1ENUM.Steel:
-                    break;
-                case MenuPath1ENUM.Cement:
-                    break;
-                case MenuPath1ENUM.Electricity:
-                    break;
-                default:
-                    break;
-            }
-            return "Products";
-        }
+        //        case MenuPath1ENUM.Automobiles:
+        //            return new ProductAutomobileVM().GetType().Name + "s";
+        //        case MenuPath1ENUM.NotDefined:
+        //            break;
+        //        case MenuPath1ENUM.MensClothing:
+        //            break;
+        //        case MenuPath1ENUM.WomensClothing:
+        //            break;
+        //        case MenuPath1ENUM.Electronics:
+        //            break;
+        //        case MenuPath1ENUM.Foods:
+        //            break;
+        //        case MenuPath1ENUM.HomeServants:
+        //            break;
+        //        case MenuPath1ENUM.FactoryWorkers:
+        //            break;
+        //        case MenuPath1ENUM.OfficeWorkers:
+        //            break;
+        //        case MenuPath1ENUM.Machines:
+        //            break;
+        //        case MenuPath1ENUM.Stationary:
+        //            break;
+        //        case MenuPath1ENUM.FruitProccessors:
+        //            break;
+        //        case MenuPath1ENUM.Steel:
+        //            break;
+        //        case MenuPath1ENUM.Cement:
+        //            break;
+        //        case MenuPath1ENUM.Electricity:
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //    return "Products";
+        //}
         string _menuDisplayName = "";
         public virtual string MenuDisplayName
         {
@@ -237,7 +235,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
                         return "Menu Display Name";
                     else
                         return ControllerCurrentName.ToTitleSentance();
-                }  
+                }
                 return _menuDisplayName;
             }
 

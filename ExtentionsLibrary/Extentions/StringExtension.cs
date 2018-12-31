@@ -35,6 +35,23 @@ namespace AliKuli.Extentions
         {
             return string.IsNullOrWhiteSpace(str);
         }
+
+        public static string ToRuppeeFormat(this string str)
+        {
+            if (str.IsNullOrWhiteSpace())
+                return str;
+
+
+            decimal num;
+            bool success = decimal.TryParse(str, out num);
+
+            if (!success)
+                return str;
+
+            string formated = string.Format("Rs{0:n2}", num);
+
+            return formated;
+        }
         public static bool IsNullOrWhiteSpaceThrowException(this string str, string errMsg = "")
         {
             if (str.IsNullOrWhiteSpace())
@@ -47,8 +64,8 @@ namespace AliKuli.Extentions
                 else
                 {
                     string[] strArray = { " " };
-                    string [] words = errMsg.Split(strArray, StringSplitOptions.RemoveEmptyEntries);
-                    if(words.Count() > 1)
+                    string[] words = errMsg.Split(strArray, StringSplitOptions.RemoveEmptyEntries);
+                    if (words.Count() > 1)
                     {
                         throw new Exception(errMsg);
 
@@ -72,8 +89,8 @@ namespace AliKuli.Extentions
                 else
                 {
                     string[] strArray = { " " };
-                    string [] words = errMsg.Split(strArray, StringSplitOptions.RemoveEmptyEntries);
-                    if(words.Count() > 1)
+                    string[] words = errMsg.Split(strArray, StringSplitOptions.RemoveEmptyEntries);
+                    if (words.Count() > 1)
                     {
                         throw new ArgumentException(errMsg);
 

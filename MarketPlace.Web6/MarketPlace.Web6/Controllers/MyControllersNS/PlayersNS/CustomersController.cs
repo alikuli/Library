@@ -41,7 +41,7 @@ namespace MarketPlace.Web6.Controllers
             Customer customer = parm.Entity as Customer;
             customer.IsNullThrowException("Unable to unbox customer");
 
-            customer.SelectListUser = _customerBiz.SelectListUser;
+            customer.SelectListPeople = _customerBiz.PersonBiz.SelectList();
             customer.SelectListCustomerCategory = _customerBiz.SelectListCustomerCategory;
 
             customer.SelectListAddressBillTo = AddressBiz.SelectListBillAddress();

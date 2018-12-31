@@ -310,11 +310,11 @@ namespace ApplicationDbContextNS
             //    .HasForeignKey(x => x.UserId)
             //    .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany<FileDoc>(x => x.FileDocs)
-                .WithOptional(x => x.User)
-                .HasForeignKey(x => x.UserId)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<ApplicationUser>()
+            //    .HasMany<FileDoc>(x => x.FileDocs)
+            //    .WithOptional(x => x.User)
+            //    .HasForeignKey(x => x.UserId)
+            //    .WillCascadeOnDelete(false);
 
 
             //modelBuilder.Entity<ApplicationUser>().ToTable("Users");

@@ -1,0 +1,22 @@
+﻿@model ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeatureNS.MenuFeatureDeleteModel
+
+@{
+    ViewBag.Title = "Delete Feature";
+
+}
+
+
+<h3 class="well m-5 p-5">Are you sure you want to delete the feature "<strong class="text-danger">@Model.MenuFeature.Name</strong>" from "<strong class="text-danger">@Model.MenuPath.Name</strong>"?</h3>
+<div>
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(x => x.MenuFeatureId)
+        @Html.HiddenFor(x => x.MenuPathId)
+        @Html.HiddenFor(x => x.ReturnUrl)
+        <div class="form-actions no-color ">
+            <input type="submit" value="Delete" class="btn btn-danger ml-5" /> |
+            <a href="@Url.Content(Model.ReturnUrl)">Back To List</a>
+        </div>
+    }
+</div>

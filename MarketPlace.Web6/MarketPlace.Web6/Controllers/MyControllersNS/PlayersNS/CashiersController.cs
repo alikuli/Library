@@ -32,7 +32,7 @@ namespace MarketPlace.Web6.Controllers
             cashier.SelectListBillAddress = _cashierBiz.SelectListBillAddressesFor(UserId);
             cashier.SelectListShipAddress = _cashierBiz.SelectListShipAddressesFor(UserId);
 
-            cashier.SelectListUser = _cashierBiz.SelectListUser;
+            cashier.SelectListPeople = _cashierBiz.PersonBiz.SelectList();
 
             return base.Event_CreateViewAndSetupSelectList(parm);
         }

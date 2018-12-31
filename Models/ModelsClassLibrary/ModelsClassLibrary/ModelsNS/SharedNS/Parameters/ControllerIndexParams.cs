@@ -1,10 +1,8 @@
-﻿using AliKuli.Extentions;
-using BreadCrumbsLibraryNS.Programs;
+﻿using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using System.ComponentModel.DataAnnotations.Schema;
-using UserModels;
 
 namespace ModelsClassLibrary.ModelsNS.SharedNS
 {
@@ -38,7 +36,9 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             bool isMenu,
             BreadCrumbManager breadCrumbManager,
             ActionNameENUM actionNameEnum,
-            LikeUnlikeParameter likesCounter)
+            LikeUnlikeParameter likesCounter,
+            string productId,
+            string returnUrl)
         {
             Id = id;
             SearchFor = searchFor;
@@ -55,15 +55,28 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             ActionNameEnum = actionNameEnum;
             DudEntity = dudEntity;
             BreadCrumbManager = breadCrumbManager;
-            LikeUnlikeCounter = likesCounter; 
+            LikeUnlikeCounter = likesCounter;
             IsMenu = isMenu;
             MenuPathMainId = menuPathMainId;
+            ProductId = productId;
+            ReturnUrl = returnUrl;
         }
 
         /// <summary>
         /// If this is true then Menu features will work in the View: _IndexMiddlePart - TiledPictures
         /// </summary>
         public bool IsMenu { get; set; }
+
+        /// <summary>
+        /// This is used in the view of Product and ProductChild
+        /// It causes the features to display as editable during create
+        /// and not during Edit or any other operation.
+        /// It is switched on in CreateHttp of EntityAbstractController
+        /// </summary>
+        public bool IsCreate { get; set; }
+
+        public string ProductId { get; set; }
+        public string ReturnUrl { get; set; }
         public string MenuPathMainId { get; set; }
         public BreadCrumbManager BreadCrumbManager { get; set; }
         public ActionNameENUM ActionNameEnum { get; set; }

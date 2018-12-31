@@ -1,19 +1,9 @@
 ﻿using AliKuli.Extentions;
-using BreadCrumbsLibraryNS.Programs;
-using ErrorHandlerLibrary;
-using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web6.Controllers.Abstract;
-using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
-using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS;
-using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Web.Mvc;
-using UowLibrary;
-using UowLibrary.MenuNS;
 using UowLibrary.ParametersNS;
-using UowLibrary.PageViewNS;
-using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -30,12 +20,25 @@ namespace MarketPlace.Web6.Controllers
 
         public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
         {
-            loadSelectLists(parm);
-            _productBiz.LoadMenuPathCheckedBoxes(parm);
-            IProduct iproduct = parm.Entity as IProduct;
-            iproduct.IsNullThrowException("Unable to unbox");
+            Product product = parm.Entity as Product;
+            product.IsNullThrowException("Unable to unbox");
 
-            _productBiz.FixProductFeatures(iproduct);
+            _productBiz.LoadMenuPathCheckedBoxes(parm);
+            _productBiz.FixProductFeatures(product);
+
+            //product.ParentSelectList = _productBiz.SelectList_ForParent(parm.Entity);
+            product.SelectListUomPurchase = _productBiz.SelectList_UomPurchaseQty();
+            product.SelectListUomVolume = _productBiz.SelectList_UomVolume();
+            product.SelectListUomShipWeight = _productBiz.SelectList_UomWeight();
+            product.SelectListUomWeight = _productBiz.SelectList_UomWeight();
+            product.SelectListUomLength = _productBiz.SelectList_UomLength();
+            product.SelectListUomDimensionsLength = _productBiz.SelectList_UomLength();
+
+            if (!parm.ReturnUrl.IsNullOrWhiteSpace())
+            {
+                product.MenuManager.ReturnUrl = parm.ReturnUrl;
+            }
+
             return base.Event_CreateViewAndSetupSelectList(parm);
 
         }
@@ -43,17 +46,6 @@ namespace MarketPlace.Web6.Controllers
 
 
 
-        private void loadSelectLists(ControllerIndexParams parm)
-        {
-            ViewBag.ParentSelectList = _productBiz.SelectList_ForParent(parm.Entity);
-            ViewBag.UomPurchaseSelectList = _productBiz.SelectList_UomPurchaseQty();
-            ViewBag.UomVolumeSelectList = _productBiz.SelectList_UomVolume();
-            ViewBag.UomShipWtSelectList = _productBiz.SelectList_UomWeight();
-            ViewBag.UomWeightSelectList = _productBiz.SelectList_UomWeight();
-            ViewBag.UomLengthSelectList = _productBiz.SelectList_UomLength();
-            //ViewBag.GearTypeSelectList = _productBiz.SelectList_AutomobileGearTypeEnum();
-            //ViewBag.FuelTypeSelectList = _productBiz.SelectList_FuelTypeEnum();
-        }
 
     }
 }

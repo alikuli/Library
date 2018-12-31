@@ -197,6 +197,7 @@
     <Compile Include="InterfacesNS\SharedNS\CommonNS\ICommonNoId.cs" />
     <Compile Include="InterfacesNS\SharedNS\IEntity.cs" />
     <Compile Include="InterfacesNS\SharedNS\FeaturesNS\IHasUser.cs" />
+    <Compile Include="ModelsNS\CashNS\CashTrxNS\CashPaymentModel.cs" />
     <Compile Include="ModelsNS\ContactNS\AddressNS\AddressMainNS\AddressVerificationNumberVm.cs" />
     <Compile Include="ModelsNS\ContactNS\AddressNS\AddressMainNS\IAmVerified.cs" />
     <Compile Include="ModelsNS\ContactNS\AddressNS\AddressMainNS\IHasVerification.cs" />
@@ -237,7 +238,18 @@
     <Compile Include="ModelsNS\ContactNS\FlattenedModelForPerson.cs" />
     <Compile Include="ModelsNS\ContactNS\PhoneNS\Phone.cs" />
     <Compile Include="ModelsNS\DashBoardNS\DashBoardSingle.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\AbstractNS\DocumentAbstract.cs" />
+    <Compile Include="ModelsNS\CashNS\Abstract\CashTrxAbstract.cs" />
+    <Compile Include="ModelsNS\CashNS\CashTrxNS\CashTrx.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\BuySell\BuySellDoc.cs" />
+    <Compile Include="ModelsNS\FeaturesNS\MenuFeatureNS\CreateNewFeatureModel.cs" />
+    <Compile Include="ModelsNS\FeaturesNS\MenuFeatureNS\MenuFeatureDeleteModel.cs" />
+    <Compile Include="ModelsNS\FeaturesNS\MenuFeatureNS\MenuFeatureModel.cs" />
     <Compile Include="ModelsNS\FeaturesNS\ProductFeaturesAbstract.cs" />
+    <Compile Include="ModelsNS\MenuNS\IMenuPath1.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\UserMoneyAccount.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\BankNS\Bank.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\BankNS\BankerCategory.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\DeliverymanNS\Deliveryman.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\MailerNS\CreateMailerVM.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\MailerNS\MailerCategory.cs" />
@@ -291,10 +303,10 @@
     <Compile Include="ModelsNS\DiscountNS\DiscountPrecedenceInitParameter.cs" />
     <Compile Include="ModelsNS\DiscountNS\DiscountPrecedenceVM.cs" />
     <Compile Include="ModelsNS\DiscountNS\IDiscountPrecedence.cs" />
-    <Compile Include="ModelsNS\DocumentsNS\PaymentsNS\IPaymentType.cs" />
-    <Compile Include="ModelsNS\DocumentsNS\PaymentsNS\PaymentMethod.cs" />
-    <Compile Include="ModelsNS\DocumentsNS\PaymentsNS\PaymentTerm.cs" />
-    <Compile Include="ModelsNS\DocumentsNS\PaymentsNS\PaymentType.cs" />
+    <Compile Include="ModelsNS\CashNS\IPaymentType.cs" />
+    <Compile Include="ModelsNS\CashNS\PaymentMethod.cs" />
+    <Compile Include="ModelsNS\CashNS\PaymentTerm.cs" />
+    <Compile Include="ModelsNS\CashNS\PaymentType.cs" />
     <Compile Include="ModelsNS\GeoLocationNS\GeoLocation.cs" />
     <Compile Include="ModelsNS\GeoLocationNS\GeoLocationAbstract.cs" />
     <Compile Include="ModelsNS\GlobalValuesNS\GlobalSetupValues.cs" />
@@ -356,7 +368,6 @@
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\UserState.cs" />
     <Compile Include="ModelsNS\PlacesNS\CountryNS\UpdatePropertiesDuringModify.cs" />
     <Compile Include="ModelsNS\PlacesNS\StateNS\StateInitializationData.cs" />
-    <Compile Include="ModelsNS\ProductNS\ProductChildNS\Menu.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductChildNS\UpdatePropertiesDuringModify.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductChildNS\Navigation - IHasUploads.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductChildNS\Dates.cs" />
@@ -387,7 +398,6 @@
     <Compile Include="ModelsNS\ProductNS\ViewModelsNS\ProductAutomobileNS\FuelTypeENUM.cs" />
     <Compile Include="ModelsNS\ProductNS\ViewModelsNS\IProductVM.cs" />
     <Compile Include="ModelsNS\ProductNS\ViewModelsNS\ProductAutomobileNS\IProductAutomobileVM.cs" />
-    <Compile Include="ModelsNS\ProductNS\ViewModelsNS\ProductAutomobileNS\ProductAutomobileVM.cs" />
     <Compile Include="ModelsNS\ProductNS\UomNS\IUom.cs" />
     <Compile Include="ModelsNS\SharedNS\Common\CommonWithIdDudClass.cs" />
     <Compile Include="ModelsNS\SharedNS\Common\IFieldsToLoadFromView.cs" />
@@ -487,6 +497,8 @@
     <None Include="ModelsNS\ContactNS\AddressNS\AddressMain.cd" />
     <None Include="ModelsNS\ContactNS\AddressNS\AddressNS\Address.cd" />
     <None Include="ModelsNS\ContactNS\Contacts.cd" />
+    <None Include="ModelsNS\DocumentsNS\BuySellDoc.cd" />
+    <None Include="ModelsNS\FeaturesNS\ProductFeatureNS\ProductFeature.cd" />
     <None Include="ModelsNS\PeopleNS\PlayersNS\People.cd" />
     <None Include="ModelsNS\PeopleNS\PlayersNS\UserNS\ApplicationUserNS\ApplicationUser.cd" />
     <None Include="ModelsNS\PlacesNS\PlacesDiagram.cd" />
@@ -503,8 +515,6 @@
     <Folder Include="InterfacesNS\InventoryNS\" />
     <Folder Include="InterfacesNS\Inventory\" />
     <Folder Include="InterfacesNS\Operational\" />
-    <Folder Include="ModelsNS\DocumentsNS\Abstract\" />
-    <Folder Include="ModelsNS\DocumentsNS\PaymentsNS\Abstract\" />
     <Folder Include="ModelsNS\GuaranteeNS\" />
     <Folder Include="ModelsNS\PeopleNS\EnumsNS\" />
     <Folder Include="ModelsNS\PlacesNS\Salepoint\" />

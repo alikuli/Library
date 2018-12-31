@@ -2,13 +2,13 @@
 @Html.HiddenFor(x => x.MenuManager.MenuState.MenuEnum)
 
 @{
-    
+
     ViewBag.Title = @Model.Heading.Main;
     Model.MenuManager.MenuState.ControllerCurrentName = this.ViewContext.RouteData.Values["controller"].ToString();
 
     string controllerNameForCreate = Model.MenuManager.MenuState.CreateAndEditLink_ControllerName;
     string controllerNameForEdit = Model.MenuManager.MenuState.CreateAndEditLink_ControllerName;
-    
+
     string searchFor = Model.SearchFor;
     string menuPathmainId = Model.MenuManager.MenuState.MenuPathMainId;
     string selectedId = Model.SelectedId;
@@ -19,8 +19,14 @@
     string createButtonText = Model.MenuManager.MenuState.CreateLink_Name;
 
     string returnUrl = Request.Url.PathAndQuery;
-    Model.MenuManager.BreadCrumbManager.Push(Model.MenuManager.MenuState.MenuDisplayName, returnUrl);
+    
+    if(!Model.MenuManager.ReturnUrl.IsNullOrWhiteSpace())
+         returnUrl = Model.MenuManager.ReturnUrl;
 
+    Model.MenuManager.BreadCrumbManager.Push(Model.MenuManager.MenuState.MenuDisplayName, returnUrl);
+    string productId = Model.MenuManager.MenuState.ProductId;
+    
+    
 }
 
 
@@ -28,24 +34,25 @@
 
 
 
-    <p>
+    @*<p>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    </p>
+    </p>*@
     
-@**********************************************************
-This is where the error messages are displayed
-**********************************************************@
-    @Html.Partial("_messages")
 
     @*This is the heading*@
 
 
 <h2>@ViewBag.Title Index</h2>
 
+        @**********************************************************
+        This is where the error messages are displayed
+        **********************************************************@
+    @Html.Partial("_messages")
+
 
 <div class="row">
     <div class="col-xs-6 col-lg-6">
-        @Html.Partial(@"ViewControls/BreadCrumbs/_newBreadCrumbs",@Model.MenuManager.BreadCrumbManager)
+        @Html.Partial(@"ViewControls/BreadCrumbs/_newBreadCrumbs", @Model.MenuManager.BreadCrumbManager)
     </div>
 
     <div class="col-xs-6 col-lg-6">
@@ -114,7 +121,7 @@ This is where the error messages are displayed
                                 {
 
                                     <div>
-                                        @Html.ActionLink(createButtonText, "Create", @controllerNameForCreate, new { menuEnum = menuEnum, menuPathMainId = menuPathmainId, sortBy = sortOrderEnum, searchFor = searchFor, selectedId = selectedId }, new { @class = "text-danger btn btn-success btn-sm" })
+                                        @Html.ActionLink(createButtonText, "Create", @controllerNameForCreate, new { menuEnum = menuEnum, menuPathMainId = menuPathmainId, sortBy = sortOrderEnum, searchFor = searchFor, selectedId = selectedId, returnUrl = returnUrl, productId = productId}, new { @class = "text-danger btn btn-success btn-sm" })
                                     </div>
                                 }
 

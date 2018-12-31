@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="UowLibrary.BusinessLayer&lt;TEntity&gt;">
+    <Position X="4.75" Y="1.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>n1xkWA40KmlIMPPmpCIRKFEECvFpoQBWxEFcIAgOAIA=</HashCode>
+      <FileName>0 BusinessLayer\0 BusinessLayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

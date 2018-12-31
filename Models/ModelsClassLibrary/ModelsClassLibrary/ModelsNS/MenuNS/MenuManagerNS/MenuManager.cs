@@ -2,12 +2,13 @@
 using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
+using System.Collections.Generic;
 using UowLibrary.MenuNS.MenuStateNS.MenuStatesNS;
-using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 
 namespace UowLibrary.MenuNS.MenuStateNS
 {
@@ -26,6 +27,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
             BreadCrumbManager = breadCrumbManager;
             LoadMenuState();
             UserId = userId;
+            UserMoneyAccount = new UserMoneyAccount();
         }
 
         /// <summary>
@@ -134,17 +136,18 @@ namespace UowLibrary.MenuNS.MenuStateNS
 
         public BreadCrumbManager BreadCrumbManager { get; set; }
         public string CurrentUrl { get; set; }
+        public string ReturnUrl { get; set; }
         public string SelectedId { get; set; }
         public string SearchString { get; set; }
         public SortOrderENUM SortOrderEnum { get; set; }
         public LikeUnlikeParameter LikeUnlikesCounter { get; set; }
 
         IndexMenuVariables _indexMenuVariables;
-        public IndexMenuVariables IndexMenuVariables 
-        { 
-            get 
-            { 
-                return _indexMenuVariables?? new IndexMenuVariables(UserId); 
+        public IndexMenuVariables IndexMenuVariables
+        {
+            get
+            {
+                return _indexMenuVariables ?? new IndexMenuVariables(UserId);
             }
             set
             {
@@ -152,9 +155,17 @@ namespace UowLibrary.MenuNS.MenuStateNS
             }
         }
         public string WebClicksCount { get; set; }
+        public UserMoneyAccount UserMoneyAccount { get; set; }
+
+        //This is used in the view of Product and ProductChild
+        //It causes the features to display as editable during create
+        // and not during Edit or any other operation.
+        public bool IsCreate { get; set; }
 
 
-
-
+        /// <summary>
+        /// This holds all the addresses of the pictures for the item
+        /// </summary>
+        public List<string> PictureAddresses { get; set; }
     }
 }

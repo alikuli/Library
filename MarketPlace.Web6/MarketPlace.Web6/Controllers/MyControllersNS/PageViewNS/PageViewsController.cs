@@ -1,13 +1,10 @@
-﻿using BreadCrumbsLibraryNS.Programs;
-using ErrorHandlerLibrary;
-using MarketPlace.Web6.Controllers.Abstract;
+﻿using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.PageViewNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using System;
 using System.Linq;
 using System.Web.Mvc;
-using UowLibrary.ParametersNS;
 using UowLibrary.PageViewNS;
+using UowLibrary.ParametersNS;
 namespace MarketPlace.Web6.Controllers
 {
     [Authorize(Roles = "Administrator")]
@@ -15,10 +12,9 @@ namespace MarketPlace.Web6.Controllers
     {
 
         PageViewBiz _PageViewsBiz;
-        #region Constructo and initializers
 
         public PageViewsController(AbstractControllerParameters param)
-            : base(param.PageViewBiz, param) 
+            : base(param.PageViewBiz, param)
         {
             _PageViewsBiz = param.PageViewBiz;
         }
@@ -56,7 +52,6 @@ namespace MarketPlace.Web6.Controllers
 
         //}
 
-        #endregion
 
 
     }
