@@ -2,11 +2,7 @@
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ModelsClassLibrary.ModelsNS.AddressNS;
-using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
-using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
-using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
-using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
@@ -132,16 +128,16 @@ namespace UserModels
         /// <summary>
         /// Every user can have many addresses.
         /// </summary>
-        public virtual ICollection<AddressMain> Addresses { get; set; }
+        //public virtual ICollection<AddressMain> Addresses { get; set; }
 
 
-        public virtual ICollection<ProductChild> ProductChildren { get; set; }
+        //public virtual ICollection<ProductChild> ProductChildren { get; set; }
 
 
-        public virtual ICollection<GlobalComment> GlobalComments { get; set; }
+        //public virtual ICollection<GlobalComment> GlobalComments { get; set; }
 
 
-        public virtual ICollection<LikeUnlike> LikeUnlikes { get; set; }
+        //public virtual ICollection<LikeUnlike> LikeUnlikes { get; set; }
 
         public bool DisableNameInView()
         {

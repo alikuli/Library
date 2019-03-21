@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UowLibrary.MenuNS.MenuStateNS;
+using UserModels;
 namespace ModelsClassLibrary.ViewModels
 {
     /// <summary>
@@ -25,10 +26,13 @@ namespace ModelsClassLibrary.ViewModels
         string[] _listOfStopWords;
         string[] _searchWords;
 
+        public IndexListVM()
+        {
 
+        }
         public IndexListVM(ControllerIndexParams p)
         {
-            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.UserId, p.UserName, p.IsAndForSearch, p.BreadCrumbManager, p.ActionNameEnum, p.LikeUnlikeCounter, p.IsMenu);
+            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.UserId, p.UserName, p.IsAndForSearch, p.BreadCrumbManager, p.ActionNameEnum, p.LikeUnlikeCounter, p.IsMenu, p.ReturnUrl);
 
         }
 
@@ -45,8 +49,9 @@ namespace ModelsClassLibrary.ViewModels
             bool isAndForSearch,
             BreadCrumbManager breadCrumbManager,
             ActionNameENUM actionNameEnum,
-            LikeUnlikeParameter likeUnlikesCounter,
-            bool isMenu)
+            LikeUnlikeParameters likeUnlikesCounter,
+            bool isMenu,
+            string returnUrl)
         {
             IsMenu = isMenu;
             SortOrderEnum = sortOrderEnum;
@@ -62,7 +67,7 @@ namespace ModelsClassLibrary.ViewModels
 
             //Menu = new MenuModel();
             //Menu.ReturnUrl = returnUrl;
-            MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, breadCrumbManager, likeUnlikesCounter, UserId);
+            MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, breadCrumbManager, likeUnlikesCounter, UserId, returnUrl);
             Show = new Show();
             SelectedId = selectedId;
             WebCompanyName = webCompanyName;
@@ -83,13 +88,14 @@ namespace ModelsClassLibrary.ViewModels
 
             UserId = userId;
             UserName = userName;
-
+            string stopWordsPath = AliKuli.ConstantsNS.MyConstants.STOP_WORDS_PATH;
             //setup.
-            _listOfStopWords = StringTools.GetStopWords();
+            _listOfStopWords = StringTools.GetStopWords(stopWordsPath);
             _searchWords = getSearchWords();
 
         }
 
+        public ApplicationUser User { get; set; }
         //public void Load(ControllerIndexParams p)
         //{
         //    string webCompany = "";
@@ -105,6 +111,7 @@ namespace ModelsClassLibrary.ViewModels
         /// When MenuLevel is 5 -This is a productChildId 
         /// Always access this through the Menu
         /// </summary>
+        /// 
         protected string Id { get; set; }
 
         public bool IsMenu { get; set; }

@@ -6,10 +6,12 @@ using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using System.Collections.Generic;
 using UowLibrary.MenuNS.MenuStateNS;
+using UserModels;
 namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS
 {
     public interface IMenuManager
     {
+        string UserPersonId { get; set; }
         //string ControllerCurrentName { get; set; }
         string CurrentUrl { get; set; }
         string ReturnUrl { get; set; }
@@ -28,7 +30,7 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS
         string SelectedId { get; set; }
         SortOrderENUM SortOrderEnum { get; set; }
         BreadCrumbManager BreadCrumbManager { get; set; }
-        LikeUnlikeParameter LikeUnlikesCounter { get; set; }
+        LikeUnlikeParameters LikeUnlikesCounter { get; set; }
 
         IndexMenuVariables IndexMenuVariables { get; set; }
         string WebClicksCount { get; set; }

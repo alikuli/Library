@@ -47,11 +47,14 @@ namespace UowLibrary.ProductNS
             {
                 if (product.MenuPathMains.IsNull())
                     product.MenuPathMains = new List<MenuPathMain>();
+
                 MenuPathMain mpm = MenuPathMainBiz.Find(parm.MenuPathMainId);
                 mpm.IsNullThrowException("Menu Path main not found");
                 product.MenuPathMains.Add(mpm);
             }
         }
+
+
 
         private List<CheckBoxItem> CreateCheckBoxes(Product product)
         {
@@ -80,6 +83,8 @@ namespace UowLibrary.ProductNS
             checkedboxes = createAllCheckBoxes(allMenuPaths);
             return checkedboxes;
         }
+
+
         private void GetDataFromMenuPathCheckBoxes(IProduct iproduct)
         {
             iproduct.IsNullThrowExceptionArgument("product is null");
@@ -222,7 +227,18 @@ namespace UowLibrary.ProductNS
             {
                 foreach (var menupath in allMenuPaths)
                 {
-                    CheckBoxItem chk = new CheckBoxItem(menupath.Id, menupath.Name, menupath.MenuPath1.Name, menupath.MenuPath2.Name, menupath.MenuPath3.Name, true);
+                    string name1 = "", name2 = "", name3 = "";
+
+                    if (!menupath.MenuPath1.IsNull())
+                        name1 = menupath.MenuPath1.Name;
+
+                    if (!menupath.MenuPath2.IsNull())
+                        name2 = menupath.MenuPath2.Name;
+
+                    if (!menupath.MenuPath3.IsNull())
+                        name3 = menupath.MenuPath3.Name;
+
+                    CheckBoxItem chk = new CheckBoxItem(menupath.Id, menupath.Name, name1, name2, name3, true);
                     checkedboxes.Add(chk);
                 }
             }

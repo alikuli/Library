@@ -16,6 +16,7 @@ using MigraDocLibrary.InvoiceNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.AddressNS.AddessWithIdNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
+using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
@@ -275,18 +276,33 @@ namespace UowLibrary
         /// <param name="entity"></param>
         public virtual void CreateEntity(TEntity entity)
         {
+            fixEntityAndBussinessRulesAndErrorCheck_Helper(entity);
             create(entity);
-            //ControllerCreateEditParameter parm = new ControllerCreateEditParameter();
-            //parm.Entity = entity;
-            //createEngineSimple(parm);
         }
 
 
+        private void fixEntityAndBussinessRulesAndErrorCheck_Helper(TEntity entity)
+        {
+            ControllerCreateEditParameter parm = new ControllerCreateEditParameter();
+            parm.Entity = entity as ICommonWithId;
+            fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
+        }
         private void fixEntityAndBussinessRulesAndErrorCheck_Helper(ControllerCreateEditParameter parm)
         {
             Fix(parm);
             BusinessRulesFor(parm);
             ErrorCheck(parm);
+            Monetize(parm);
+        }
+
+        /// <summary>
+        /// This is where all monetization will take place.
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
+        public virtual bool Monetize(ControllerCreateEditParameter parm)
+        {
+            return true;
         }
 
         public virtual void ErrorCheck(ControllerCreateEditParameter parm)
@@ -819,6 +835,7 @@ namespace UowLibrary
 
 
             }
+
             //LikeUnlikeParameter likeUnlikeCounter = _likeUnlikeBiz.Count(indexItem.Id, null null, null, null, theUserId);
             //indexItem.MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, _breadCrumbManager, likeUnlikeCounter);
 
@@ -831,10 +848,10 @@ namespace UowLibrary
 
             //}
 
-            if (icommonWithId.MenuManager.IsNull())
-            {
-                icommonWithId.MenuManager = new MenuManager();
-            }
+            //if (icommonWithId.MenuManager.IsNull())
+            //{
+            //    icommonWithId.MenuManager = new MenuManager()
+            //}
 
         }
 
@@ -883,7 +900,7 @@ namespace UowLibrary
 
             //Note. The LikeCounter in the MenuManger for the List is always null. The likes are counted in
             //the items.
-            indexListVM.MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, BreadCrumbManager, null, UserId);
+            indexListVM.MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, BreadCrumbManager, null, UserId, parameters.ReturnUrl);
 
 
 
@@ -908,13 +925,13 @@ namespace UowLibrary
         public virtual ICommonWithId Factory()
         {
             ICommonWithId entity = Dal.Factory();
-            entity.MetaData.Created.SetToTodaysDateStart(UserName);
-            entity.MetaData.Created.SetToTodaysDate(UserName);
+            entity.MetaData.Created.SetToTodaysDateStart(UserName, UserId);
+            entity.MetaData.Created.SetToTodaysDate(UserName, UserId);
 
             Product p = entity as Product;
             MenuPathMain mpm = entity as MenuPathMain;
-
-            entity.MenuManager = new MenuManager(mpm, p, null, MenuENUM.CreateDefault, BreadCrumbManager, new LikeUnlikeParameter(0, 0, "Initialization in Factory"), UserId);
+            string returnUrl = "";
+            entity.MenuManager = new MenuManager(mpm, p, null, MenuENUM.CreateDefault, BreadCrumbManager, new LikeUnlikeParameters(0, 0, "Initialization in Factory"), UserId, returnUrl);
 
             return entity;
         }
@@ -1019,7 +1036,7 @@ namespace UowLibrary
         public string GetMappedPath(string relativePath)
         {
             //return HttpContext.Current.Server.MapPath(relativePath);
-            return FileTools.GetPath(relativePath);
+            return FileTools.GetAbsolutePath(relativePath);
         }
 
         public VerificationIconResult GetVerificationIconResult(VerificaionStatusENUM verificationStatus)
@@ -1071,6 +1088,10 @@ namespace UowLibrary
             }
         }
 
+        /// <summary>
+        /// Sometimes we need to do different things when we are creating
+        /// </summary>
+        public bool IsCreate { get; set; }
         public bool IsHasUploads
         {
             get
@@ -1182,6 +1203,10 @@ namespace UowLibrary
         /// The List is 
         ///     sorted as per the ControllerIndexParams.SortBy.
         ///     filtered as per the ControllerIndexParams.SearchFor. 
+        /// Note. There are 3 different MenuManagers here.
+        ///     1. IndexList.MenuManager: Used globally in the view.
+        ///     2. IndexItem.MenuManger: Used in the index
+        ///     3. entity.MenuManager: This is used in the next secreen of Edit.
         /// </summary>
         /// <param name="lstEntities"></param>
         /// <returns></returns>
@@ -1192,7 +1217,8 @@ namespace UowLibrary
 
             //This names the sort links. They come directly from the entity
             parameters.DudEntity = Dal.Factory();
-
+            //if (parameters.Entity.IsNull())
+            //    parameters.Entity = parameters.DudEntity;
             IndexListVM indexListVM = new IndexListVM(parameters);
 
 
@@ -1232,6 +1258,15 @@ namespace UowLibrary
                     //indexItem.MenuManager = indexListVM.MenuManager as IMenuManager;
 
                     indexItem.VerificationIconResult = GetVerificationIconResult(indexItem.VerificationStatus);
+
+                    //add menuManager if not a menu
+                    //if(!parameters.IsMenu)
+                    //    indexItem.MenuManager = getMenuManager(parameters);
+                    //this is a different entity from the one in parameters
+                    if (entity.MenuManager.IsNull())
+                        InitializeMenuManagerForEntity(parameters, entity);
+                    
+                    entity.MenuManager.ReturnUrl = parameters.ReturnUrl;
                     //image address is added in here.
                     Event_ModifyIndexItem(indexListVM, indexItem, entity);
 
@@ -1257,6 +1292,111 @@ namespace UowLibrary
 
             return indexListVM;
         }
+
+
+        public void InitializeMenuManagerForEntity(ControllerIndexParams parm)
+        {
+
+
+            TEntity entity = (TEntity)parm.Entity;
+            InitializeMenuManagerForEntity(parm, entity);
+
+        }
+
+        //private static void fixReturnUrl(ControllerIndexParams parm, TEntity entity)
+        //{
+
+        //}
+
+        public virtual void InitializeMenuManagerForEntity(ControllerIndexParams parm, ICommonWithId entity)
+        {
+            if (entity.MenuManager.IsNull())
+            {
+                switch (parm.Menu.MenuEnum)
+                {
+                    case MenuENUM.IndexMenuPath1:
+                    case MenuENUM.IndexMenuPath2:
+                    case MenuENUM.IndexMenuPath3:
+                        //Item is MenuPathMain
+                        entity.MenuManager = new MenuManager(entity as MenuPathMain, null, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl);
+                        break;
+
+                    case MenuENUM.IndexMenuProduct:
+                        //item is product
+                        entity.MenuManager = new MenuManager(null, entity as Product, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl);
+                        break;
+
+                    case MenuENUM.IndexMenuProductChild:
+                        //item is productChild
+                        entity.MenuManager = new MenuManager(null, null, entity as ProductChild, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl);
+                        break;
+
+                    case MenuENUM.IndexMenuProductChildLandingPage:
+                        //item is productChild
+                        entity.MenuManager = new MenuManager(null, null, entity as ProductChild, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl);
+                        break;
+                    default:
+                        entity.MenuManager = new MenuManager(null, null, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl);
+                        break;
+                }
+
+
+            }
+            entity.MenuManager.ReturnUrl = parm.ReturnUrl;
+        }
+
+        public void InitializeMenuManager(ControllerCreateEditParameter parmIn)
+        {
+            ControllerIndexParams parm = parmIn.ConvertToControllerIndexParams();
+            InitializeMenuManagerForEntity(parm);
+        }
+
+        /// <summary>
+        /// We need to do this for those classes which use he index which has pictures but is not
+        /// a menu. Example MenuPath1, MenuPath2, MenuPath3, Product, ProductChild
+        /// </summary>
+        /// <param name="menuENUM"></param>
+        /// <returns></returns>
+        //        private IMenuManager getMenuManager(ControllerIndexParams param)
+        //        {
+
+        //            switch (param.Menu.MenuEnum)
+        //            {
+        //                case MenuENUM.IndexDefault:
+        //                    //this is a MenuPath1
+        ////                    return new MenuManager(param.me)
+        //                    break;
+        //                case MenuENUM.IndexMenuPath1:
+        //                    break;
+        //                case MenuENUM.IndexMenuPath2:
+        //                    break;
+        //                case MenuENUM.IndexMenuPath3:
+        //                    break;
+        //                case MenuENUM.IndexMenuProduct:
+        //                    break;
+        //                case MenuENUM.IndexMenuProductChild:
+        //                    break;
+        //                case MenuENUM.IndexMenuProductChildLandingPage:
+        //                    break;
+        //                case MenuENUM.Unknown:
+        //                case MenuENUM.EditDefault:
+        //                case MenuENUM.EditMenuPath1:
+        //                case MenuENUM.EditMenuPath2:
+        //                case MenuENUM.EditMenuPath3:
+        //                case MenuENUM.EditMenuPathMain:
+        //                case MenuENUM.EditMenuProduct:
+        //                case MenuENUM.EditMenuProductChild:
+        //                case MenuENUM.CreateDefault:
+        //                case MenuENUM.CreateMenuPath1:
+        //                case MenuENUM.CreateMenuPath2:
+        //                case MenuENUM.CreateMenuPath3:
+        //                case MenuENUM.CreateMenuPathMenuPathMain:
+        //                case MenuENUM.CreateMenuProduct:
+        //                case MenuENUM.CreateMenuProductChild:
+        //                default:
+        //                    throw new NotImplementedException("Switch statement Not implemented");
+        //            }
+        //        }
 
         private static VerificaionStatusENUM doVerificationWork(ICommonWithId entity)
         {
@@ -1585,6 +1725,8 @@ namespace UowLibrary
 
 
 
+
+
         /// <summary>
         /// This loads the Language Data into the select list
         /// </summary>
@@ -1646,7 +1788,7 @@ namespace UowLibrary
 
         /// <summary>
         /// The file UploadObject has all the machinery to handle the upload and save of the file. It then also creates
-        /// the UploadFile Class, puts all the files in a list and we can then us it to save it into the db. To
+        /// the UploadFile Class, puts all the files in a list and we can then use it to save it into the db. To
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
 
@@ -1657,7 +1799,7 @@ namespace UowLibrary
             {
                 foreach (UploadedFile file in lstUploadedFile)
                 {
-                    file.MetaData.Created.SetToTodaysDate(UserName);
+                    file.MetaData.Created.SetToTodaysDate(UserName, UserId);
 
 
                     //initializes navigation if it is null
@@ -1667,6 +1809,7 @@ namespace UowLibrary
                     navigation.Add(file);
 
                     //You need to add a refrence here to save the file in the UploadedFile as well.
+                    //the code will ofcourse be in the calling class.
                     AddEntityRecordIntoUpload(file, entity as TEntity, iuserHasUploadsTypeEnum);
                     UploadedFileBiz.CreateSimple(CreateControllerCreateEditParameter(file as ICommonWithId));
 
@@ -1779,10 +1922,18 @@ namespace UowLibrary
             }
 
             entityHasUploads.MiscFiles.Remove(uploadedFile);
-            var f = new System.IO.FileInfo(uploadedFile.AbsolutePathWithFileName());
+            //var f = new System.IO.FileInfo(uploadedFile.AbsolutePathWithFileName());
+            //f.Delete();
+
+            DeletePhysicalFile(uploadedFile.AbsolutePathWithFileName());
+
+        }
+
+        //This removes the file from the actual system
+        public void DeletePhysicalFile(string absolutePathWithFileName)
+        {
+            var f = new System.IO.FileInfo(absolutePathWithFileName);
             f.Delete();
-
-
 
         }
 
@@ -2100,10 +2251,9 @@ namespace UowLibrary
         }
 
 
-        public void getPictureList(IndexItemVM indexItem, IHasUploads ihasUploads)
+        public virtual List<string> GetPictureList(IHasUploads ihasUploads)
         {
-            if (indexItem.MenuManager.PictureAddresses.IsNull())
-                indexItem.MenuManager.PictureAddresses = new List<string>();
+            List<string> addresses = new List<string>();
 
             if (ihasUploads.MiscFiles.Any(x => !x.MetaData.IsDeleted))
             {
@@ -2114,26 +2264,31 @@ namespace UowLibrary
                     string pictureAddy = getImageAddressOf(uploadFile);
                     if (!pictureAddy.IsNullOrWhiteSpace())
                     {
-                        indexItem.MenuManager.PictureAddresses.IsNullThrowException();
-                        indexItem.MenuManager.PictureAddresses.Add(pictureAddy);
+                        addresses.Add(pictureAddy);
 
                     }
                 }
             }
-            else
+
+            if (addresses.IsNullOrEmpty())
             {
-                GetDefaultPicture(indexItem);
+                return GetDefaultPicture();
             }
+
+            return addresses;
         }
 
         //this gets the default picture
-        public virtual void GetDefaultPicture(IndexItemVM indexItem)
+        public List<string> GetDefaultPicture()
         {
 
             UploadedFile upf = new UploadedFile();
             string defaultPictureAddress = upf.RelativePathWithFileName();
             //just load the black screen here
-            indexItem.MenuManager.PictureAddresses.Add(defaultPictureAddress);
+            //menuManager.PictureAddresses.Add(defaultPictureAddress);
+            List<string> lst = new List<string>();
+            lst.Add(defaultPictureAddress);
+            return lst;
         }
 
         protected string getImageAddressOf(UploadedFile _uf)

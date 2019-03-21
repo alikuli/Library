@@ -44,9 +44,9 @@ namespace MarketPlace.Web6.Controllers
             customer.SelectListPeople = _customerBiz.PersonBiz.SelectList();
             customer.SelectListCustomerCategory = _customerBiz.SelectListCustomerCategory;
 
-            customer.SelectListAddressBillTo = AddressBiz.SelectListBillAddress();
-            customer.SelectListAddressInformTo = AddressBiz.SelectListInformAddress();
-            customer.SelectListAddressShipTo = AddressBiz.SelectListShipAddress();
+            customer.SelectListAddressBillTo = AddressBiz.SelectListBillAddressCurrentUser();
+            customer.SelectListAddressInformTo = AddressBiz.SelectListInformAddressCurrentUser();
+            customer.SelectListAddressShipTo = AddressBiz.SelectListShipAddressCurrentuser();
             return base.Event_CreateViewAndSetupSelectList(parm);
         }
     }

@@ -39,6 +39,28 @@ namespace UowLibrary.MenuNS
             menuFeatureModel.SelfCheck();
             saveFeature(menuFeatureModel);
         }
+        private void saveFeature(MenuFeatureModel menuFeatureModel)
+        {
+            menuFeatureModel.SelfCheck();
+            MenuPath1 menuPath1 = Find(menuFeatureModel.ParentId);
+            menuPath1.IsNullThrowException("menuPath1");
+
+            MenuFeature menuFeature = MenuFeatureBiz.Find(menuFeatureModel.FeatureId);
+            menuFeature.IsNullThrowException("menuFeature");
+
+            if (menuFeature.MenuPath1s.IsNull())
+                menuFeature.MenuPath1s = new List<MenuPath1>();
+
+            if (menuPath1.MenuFeatures.IsNull())
+                menuPath1.MenuFeatures = new List<MenuFeature>();
+
+            menuFeature.MenuPath1s.Add(menuPath1);
+            menuPath1.MenuFeatures.Add(menuFeature);
+            SaveChanges();
+
+            addFeatureToEveryProductWithMenuPath1(menuPath1, menuFeature);
+
+        }
 
         public void DeleteFeature(MenuFeatureDeleteModel menuFeatureDeleteModel)
         {
@@ -71,39 +93,12 @@ namespace UowLibrary.MenuNS
             }
             //create the new feature.
 
-            MenuPath1 menupath1 = Find(model.MenuPathId);
+            MenuPath1 menupath1 = Find(model.ParentId);
             menupath1.IsNullThrowException("menupath1");
 
             //taking a short cut.
-            MenuFeatureModel menuFeatureModel = new MenuFeatureModel(model.MenuPathId, "", menuFeature.Id, model.ReturnUrl);
+            MenuFeatureModel menuFeatureModel = new MenuFeatureModel(model.ParentId, "", menuFeature.Id, model.ReturnUrl);
             AddFeature(menuFeatureModel);
-
-
-        }
-        private void saveFeature(MenuFeatureModel menuFeatureModel)
-        {
-            menuFeatureModel.SelfCheck();
-            MenuPath1 menuPath1 = Find(menuFeatureModel.ParentId);
-            menuPath1.IsNullThrowException("menuPath1");
-
-            MenuFeature menuFeature = MenuFeatureBiz.Find(menuFeatureModel.FeatureId);
-            menuFeature.IsNullThrowException("menuFeature");
-
-            if (menuFeature.MenuPath1s.IsNull())
-                menuFeature.MenuPath1s = new List<MenuPath1>();
-
-            if (menuPath1.MenuFeatures.IsNull())
-                menuPath1.MenuFeatures = new List<MenuFeature>();
-
-            menuFeature.MenuPath1s.Add(menuPath1);
-            menuPath1.MenuFeatures.Add(menuFeature);
-            SaveChanges();
-
-            addFeatureToEveryProductWithMenuPath1(menuPath1, menuFeature);
-
-
-
-
 
 
         }

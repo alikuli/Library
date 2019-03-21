@@ -1,34 +1,38 @@
 ﻿@model ModelsClassLibrary.ModelsNS.FeaturesNS.ProductFeature
 
 
-<div class="well p-3">
 
-    @Html.HiddenFor(x => x.Name)
-    @Html.HiddenFor(x => x.ProductId)
+    <div class="form-horizontal form-inline ">
 
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.ProductId, htmlAttributes: new { @class = "" })
-        @Html.DropDownListFor(x => x.ProductId,
-                             (@Model.SelectListProducts as IEnumerable<SelectListItem>),
-                              "--- Select Product ---",
-                              new { @class = "form-control" })
-    </div>*@
+        <div class="">
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.MenuFeatureId, htmlAttributes: new { @class = "" })
-        @Html.DropDownListFor(x => x.MenuFeatureId,
-                             (@Model.SelectListMenuFeatures as IEnumerable<SelectListItem>),
+            @Html.HiddenFor(x => x.Name)
+            @Html.HiddenFor(x => x.ProductId)
+
+            <h2>
+                For @Model.Product.FullName()
+            </h2>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MenuFeatureId, htmlAttributes: new { @class = "mr-5" })
+                @Html.DropDownListFor(x => x.MenuFeatureId,
+                             (@Model.SelectListFeature as IEnumerable<SelectListItem>),
                               "--- Select Feature ---",
                               new { @class = "form-control" })
+
+                @Html.ActionLink("Create Feature not in list", "CreateNewFeature", "ProductFeatures", new { returnUrl = @Request.Url.PathAndQuery, productId = Model.ProductId, parentName = Model.FullName() }, new { @class = "btn btn-success ml-5" })
+
+            </div>
+
+            <div class="form-group mt-3">
+                @Html.LabelFor(model => model.Comment, "Describe Feature", htmlAttributes: new { @class = "mr-4" })
+                @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Comment,"Describe Feature", htmlAttributes: new { @class = "" })
-        @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
-    </div>
-</div>
-
-
-
-

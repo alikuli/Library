@@ -40,6 +40,9 @@ namespace UowLibrary.MenuNS
                 case MenuENUM.IndexMenuProductChild:
                     lst = await indexProductChild_DataListAsync(parms);
                     break;
+                //case MenuENUM.IndexMenuProductChildLandingPage:
+                //    lst = await indexProductChildLandingPage_DataListAsync(parms);
+                //    break;
                 case MenuENUM.EditMenuPath1:
                 case MenuENUM.EditMenuPath2:
                 case MenuENUM.EditMenuPath3:
@@ -222,7 +225,7 @@ namespace UowLibrary.MenuNS
             mpm.IsNullThrowException("Menu Path does note exist. Something is wrong.");
 
             //Get all the products listed by it
-            List<Product> listOfProducts = mpm.Products.ToList();
+            List<Product> listOfProducts = mpm.Products.Where(x=> x.MetaData.IsDeleted == false && x.IsUnApproved == false).ToList();
             if (listOfProducts.IsNullOrEmpty())
                 return null;
 
@@ -256,7 +259,7 @@ namespace UowLibrary.MenuNS
             if (parentProduct.ProductChildren.IsNullOrEmpty())
                 return null;
 
-            List<ProductChild> children = parentProduct.ProductChildren.ToList();
+            List<ProductChild> children = parentProduct.ProductChildren.Where(x => x.MetaData.IsDeleted == false).ToList();
             children.IsNullOrEmptyThrowException("Something went wrong, No Product Children found.");
             List<ICommonWithId> childrenAsIcommonLst = children.Cast<ICommonWithId>().ToList();
 

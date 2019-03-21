@@ -16,8 +16,17 @@ namespace MarketPlace.Web6.Controllers.Abstract
     {
 
         // GET: Countries/Edit/5
-        public virtual async Task<ActionResult> Edit(string id, string selectedId = "", string searchFor = "", string isandForSearch = "", MenuENUM menuEnum = MenuENUM.EditDefault, string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "")
+        //https://stackoverflow.com/questions/12948156/asp-net-mvc-how-to-disable-automatic-caching-option
+        //[OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)] // will be applied to all actions in MyController, unless those actions override with their own decoration
+        //[NoCache]
+        //[OutputCache(Duration = 0, Location = System.Web.UI.OutputCacheLocation.None, NoStore = true)]
+
+        public virtual async Task<ActionResult> Edit(string id, string selectedId = "", string searchFor = "", string isandForSearch = "", MenuENUM menuEnum = MenuENUM.EditDefault, string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "", string productId = "")
         {
+            Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+            Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+            Response.AppendHeader("Expires", "0"); // Proxies.
+
             TEntity entity = _icrudBiz.Factory() as TEntity;
             try
             {
@@ -25,7 +34,9 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                 entity = await Biz.FindAsync(id) as TEntity;
                 entity.IsNullThrowException("Entity not found.");
-                string productIdDud = "";
+                //Biz.Detach(entity);
+                //entity = await Biz.FindAsync(id) as TEntity;
+                //entity.IsNullThrowException("Entity not found.");
 
                 ControllerIndexParams parms = MakeControlParameters(
                     id,
@@ -42,11 +53,11 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     menuEnum,
                     sortBy,
                     print,
-                    ActionNameENUM.Edit, 
-                    productIdDud, 
+                    ActionNameENUM.Edit,
+                    productId,
                     returnUrl);
 
-                InitializeMenuManager(parms);
+                Biz.InitializeMenuManagerForEntity(parms);
                 return Event_CreateViewAndSetupSelectList(parms);
 
             }
@@ -65,12 +76,19 @@ namespace MarketPlace.Web6.Controllers.Abstract
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //https://stackoverflow.com/questions/12948156/asp-net-mvc-how-to-disable-automatic-caching-option
+        //[OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)] // will be applied to all actions in MyController, unless those actions override with their own decoration
+        //[NoCache]
+        //[OutputCache(Duration = 0, Location = System.Web.UI.OutputCacheLocation.None, NoStore = true)]
 
         public virtual async Task<ActionResult> Edit(TEntity entity, string returnUrl, System.Web.HttpPostedFileBase[] httpMiscUploadedFiles = null, System.Web.HttpPostedFileBase[] httpSelfieUploads = null, System.Web.HttpPostedFileBase[] httpIdCardFrontUploads = null, System.Web.HttpPostedFileBase[] httpIdCardBackUploads = null, System.Web.HttpPostedFileBase[] httpPassportFrontUploads = null, System.Web.HttpPostedFileBase[] httpPassportVisaUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseFrontUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseBackUploads = null, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch = "", MenuENUM menuEnum = MenuENUM.EditDefault, bool isMenu = false, FormCollection fc = null)
         {
             //var req = Request;
             //string fileNameOnly = Path.GetFileNameWithoutExtension(files[0].FileName);
             //string extention = Path.GetExtension(files[0].FileName);
+            Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+            Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+            Response.AppendHeader("Expires", "0"); // Proxies.
 
             string dbEntiyId = "";
             try
@@ -110,16 +128,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 Event_BeforeSaveInCreateAndEdit(parm);
 
                 await Biz.UpdateAndSaveAsync(parm);
-                //The returnUrl is coming null because we have not implemented BreadCrumbs.
-                //After we implement BreadCrumbs, it will go to the correct Controller, Now with
-                //this not working when I save MenuPath1, it goes to the MenuPath1 Controller whereas it
-                //should be going to the MenuPathMain Controller
-                //if (returnUrl.IsNullOrWhiteSpace())
-                //    return RedirectToAction("Index", new { searchFor = searchFor, isandForSearch = isandForSearch, selectedId = dbEntity.Id, returnUrl = returnUrl, menuEnum = menuEnum, sortBy = sortBy, print = print });
-                //if (BreadCrumbManager.Url_Curr != BreadCrumbManager.Url_CurrMinusOne)
-                //    return Redirect(BreadCrumbManager.Url_CurrMinusOne);
-
-                InitializeMenuManager(parm);
+                Biz.InitializeMenuManager(parm);
 
                 if (returnUrl.IsNullOrWhiteSpace())
                     return RedirectToAction("Index", new { selectedId = selectedId, menuEnum = menuEnum });
@@ -131,7 +140,6 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 ErrorsGlobal.Add(string.Format("Not saved!"), MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
                 return RedirectToAction("Index", "Home");
-                //return Redirect(BreadCrumbManager.Url_CurrMinusOne);
             }
         }
 

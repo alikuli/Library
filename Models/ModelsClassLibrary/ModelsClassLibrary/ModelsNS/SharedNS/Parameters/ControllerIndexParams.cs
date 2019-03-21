@@ -3,6 +3,8 @@ using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using System.ComponentModel.DataAnnotations.Schema;
+using UserModels;
+using AliKuli.Extentions;
 
 namespace ModelsClassLibrary.ModelsNS.SharedNS
 {
@@ -36,7 +38,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             bool isMenu,
             BreadCrumbManager breadCrumbManager,
             ActionNameENUM actionNameEnum,
-            LikeUnlikeParameter likesCounter,
+            LikeUnlikeParameters likesCounter,
             string productId,
             string returnUrl)
         {
@@ -50,7 +52,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             LogoAddress = logoAddress;
             UserName = userName;
             UserId = userId;
-            //User = user;
             _isUserAdmin = isUserAdmin;
             ActionNameEnum = actionNameEnum;
             DudEntity = dudEntity;
@@ -75,6 +76,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         /// </summary>
         public bool IsCreate { get; set; }
 
+        public ApplicationUser User { get; set; }
         public string ProductId { get; set; }
         public string ReturnUrl { get; set; }
         public string MenuPathMainId { get; set; }
@@ -94,13 +96,12 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public string LogoAddress { get; set; }
         public string UserName { get; set; }
         public string UserId { get; set; }
-
         //public ApplicationUser User { get; set; }
 
         public bool UserIsAdmin { get { return _isUserAdmin; } }
         //public string ReturnUrl { get; set; }
         public MenuParameters Menu { get; set; }
-        public LikeUnlikeParameter LikeUnlikeCounter { get; set; }
+        public LikeUnlikeParameters LikeUnlikeCounter { get; set; }
 
 
     }

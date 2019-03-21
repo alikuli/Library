@@ -7,12 +7,13 @@ using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySell;
+using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using UowLibrary;
 using UowLibrary.AddressNS;
+using UowLibrary.BuySellDocNS;
 using UowLibrary.CashTtxNS;
 using UowLibrary.CounterNS;
 using UowLibrary.EmailAddressNS;
@@ -38,10 +39,13 @@ using UowLibrary.PlayersNS.CustomerNS;
 using UowLibrary.PlayersNS.DeliverymanCategoryNS;
 using UowLibrary.PlayersNS.DeliverymanNS;
 using UowLibrary.PlayersNS.MailerCategoryNS;
+using UowLibrary.PlayersNS.MessageNS;
 using UowLibrary.PlayersNS.OwnerCategoryNS;
 using UowLibrary.PlayersNS.OwnerNS;
 using UowLibrary.PlayersNS.PersonCategoryNS;
 using UowLibrary.PlayersNS.PersonNS;
+using UowLibrary.PlayersNS.ProductApproverCategoryNS;
+using UowLibrary.PlayersNS.ProductApproverNS;
 using UowLibrary.PlayersNS.SalesmanCategoryNS;
 using UowLibrary.PlayersNS.SalesmanNS;
 using UowLibrary.ProductChildNS;
@@ -140,7 +144,7 @@ namespace DependancyResolver
 
             Bind<CashTrxBiz>().ToSelf();
             Bind<BuySellDoc>().ToSelf();
-            Bind<AccountsBiz>().ToSelf();
+            Bind<AccountsBizSuper>().ToSelf();
             //Bind<MenuPath1FeatureBiz>().ToSelf();
             Bind<MenuFeatureBiz>().ToSelf();
             //Bind<UserBiz>().ToSelf();
@@ -149,6 +153,11 @@ namespace DependancyResolver
             //Bind<MenuPath2FeatureBiz>().ToSelf();
             //Bind<RightBiz>().ToSelf();
             //Bind<MenuPath3FeatureBiz>().ToSelf();
+
+            Bind<ProductApproverBiz>().ToSelf();
+            Bind<ProductApproverCategoryBiz>().ToSelf();
+            Bind<MessageBiz>().ToSelf();
+            Bind<SaleOrderBiz>().ToSelf();
         }
 
         public void LoadDALs()

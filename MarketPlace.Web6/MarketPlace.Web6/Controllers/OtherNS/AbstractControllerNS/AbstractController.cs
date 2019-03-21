@@ -22,7 +22,7 @@ namespace MarketPlace.Web4.Controllers
     public abstract partial class AbstractController : Controller
     {
 
-        private string _userId;
+        //private string _userId;
         readonly PageViewBiz _pageViewBiz;
         BreadCrumbManager _bcm;
         IErrorSet _err;
@@ -109,14 +109,24 @@ namespace MarketPlace.Web4.Controllers
         //    }
         //}
 
+        //protected IIdentity UserIdentity
+        //{
+        //    get
+        //    {
 
+        //        if (!User.IsNull())
+        //            return User.Identity;
+
+        //        return null;
+        //    }
+        //}
         protected string UserId
         {
             get
             {
 
                 if (!User.IsNull())
-                    return (_userId = User.Identity.GetUserId());
+                    return User.Identity.GetUserId();
 
                 return "";
             }
@@ -144,8 +154,38 @@ namespace MarketPlace.Web4.Controllers
 
 
         [Inject]
-        public AccountsBiz AccountsBiz { get; set; }
+        public AccountsBizSuper _accountsBizSuper { get; set; }
+
+        public AccountsBizSuper AccountsBizSuper
+        {
+            get
+            {
+                _accountsBizSuper.UserId = UserId;
+                _accountsBizSuper.UserName = UserName;
+                return _accountsBizSuper;
+            }
+        }
+
+        public bool IsAdmin
+        {
+            get
+            {
+                if (UserId.IsNullOrEmpty())
+                    return false;
+                return AccountsBizSuper.UserBiz.IsAdmin(UserId);
+            }
+        }
 
 
+        public bool IsBank
+        {
+            get
+            {
+                if (UserId.IsNullOrEmpty())
+                    return false;
+                return AccountsBizSuper.BankBiz.IsBankerFor(UserId);
+            }
+
+        }
     }
 }

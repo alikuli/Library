@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using InterfacesLibrary.SharedNS;
-using ModelsClassLibrary.ModelsNS.DocumentsNS.CashsNS.CashTrxNS;
+using ModelsClassLibrary.CashTrxNS;
+using ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
@@ -54,6 +55,9 @@ namespace UowLibrary.CashTtxNS
         public override async Task<IList<ICommonWithId>> GetListForIndexAsync(ControllerIndexParams parms)
         {
 
+
+            if (UserBiz.IsAdmin(UserId))
+                return await base.GetListForIndexAsync(parms);
 
             //first get a list of all the people
             List<Person> peopleList = await PersonBiz.FindAllAsync();

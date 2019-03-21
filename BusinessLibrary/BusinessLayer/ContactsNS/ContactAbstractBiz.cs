@@ -1,14 +1,11 @@
 ﻿using AliKuli.Extentions;
 using DalLibrary.Interfaces;
-using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
-using ModelsClassLibrary.ModelsNS.ContactNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
 //using ModelsClassLibrary.ModelsNS.PlacesNS.EmailAddressNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,8 +15,8 @@ using UowLibrary.PlayersNS.PersonNS;
 
 namespace UowLibrary.EmailAddressNS
 {
-    public abstract partial class ContactAbstractBiz<TEntity> : 
-        BusinessLayer<TEntity> where TEntity : 
+    public abstract partial class ContactAbstractBiz<TEntity> :
+        BusinessLayer<TEntity> where TEntity :
         PhoneEmailAddressAbstract, ICommonWithId
     {
         PersonBiz _personBiz;
@@ -109,7 +106,7 @@ namespace UowLibrary.EmailAddressNS
 
             //foreach (var item in lstTEntity)
             //{
-                
+
             //    if (item.People.IsNullOrEmpty())
             //        continue;
             //    foreach (var pp in item.People)
@@ -184,7 +181,7 @@ namespace UowLibrary.EmailAddressNS
         public override IQueryable<TEntity> GetDataToCheckDuplicateName(TEntity entity)
         {
 
-            var dataSet = FindAll().Where(x => x.People.Any(y => y.Id == entity.Id));
+            var dataSet = FindAll().Where(x => x.PersonId == entity.Id);
             return dataSet;
 
 
@@ -205,13 +202,27 @@ namespace UowLibrary.EmailAddressNS
         public string GetPersonIdForCurrentUser()
         {
             UserId.IsNullOrWhiteSpaceThrowException("User not logged in.");
-            Person person = UserBiz.GetPersonFor(UserId);
+            return GetPersonIdFor(UserId);
+        }
+
+        //public string GetPersonIdForCurrentUser()
+        //{
+        //    UserId.IsNullOrWhiteSpaceThrowException("User not logged in.");
+        //    Person person = UserBiz.GetPersonFor(UserId);
+        //    person.IsNullThrowException("No person attached to this user");
+        //    string personId = person.Id;
+        //    return personId;
+        //}
+
+
+        public string GetPersonIdFor(string userId)
+        {
+            userId.IsNullOrWhiteSpaceThrowException("No user.");
+            Person person = UserBiz.GetPersonFor(userId);
             person.IsNullThrowException("No person attached to this user");
             string personId = person.Id;
             return personId;
         }
-
-        
 
     }
 }

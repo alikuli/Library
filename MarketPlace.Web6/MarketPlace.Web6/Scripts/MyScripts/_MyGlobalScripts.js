@@ -4,7 +4,7 @@
     OnLoadModelSelectFirstInput();
     OnHoverClassImgThumbnailBackgroundYellow();
     initializeToolTipsBootStrap4();
-    onClick();
+    //onClick();
 
 });
 
@@ -38,9 +38,9 @@ function mouseOver() {
     console.log("Mouse Over sensed");
 }
 
-function onClick() {
-    console.log("Clicked!");
-}
+//function onClick() {
+//    console.log("Clicked!");
+//}
 
 function AttachToolTipsBootStrap3() {
     $("[rel='tooltip']").tooltip();

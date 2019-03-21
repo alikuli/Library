@@ -23,7 +23,7 @@ namespace InterfacesLibrary.SharedNS
         string NameInput2 { get; }
         string NameInput3 { get; }
         void SelfErrorCheck();
-        string ReturnUrl { get; set; }
+        //string ReturnUrl { get; set; }
         void UpdatePropertiesDuringModify(ICommonWithId icommonWithId);
         ClassesWithRightsENUM ClassNameForRights();
         int ClassNameForRightsVal();

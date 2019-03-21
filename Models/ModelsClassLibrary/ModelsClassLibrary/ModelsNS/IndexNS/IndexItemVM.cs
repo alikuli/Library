@@ -2,6 +2,7 @@
 using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.ModelsNS.VerificatonNS;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -114,6 +115,7 @@ namespace ModelsClassLibrary.ViewModels
 
         public string PrintLineNumber { get; set; }
 
+        const int MAX_PICTURE_HEIGHT_WIDTH = 350;
 
         /// <summary>
         /// This sets up the max height and width so there is no jumping up and down of the picture
@@ -123,13 +125,33 @@ namespace ModelsClassLibrary.ViewModels
         {
             if (lst.IsNullOrEmpty())
                 return;
-
             foreach (var item in lst)
             {
+
                 string hostPath = HostingEnvironment.MapPath(item);
-                System.Drawing.Image img = System.Drawing.Image.FromFile(hostPath);
+                System.Drawing.Image img;
+                try
+                {
+                    img = System.Drawing.Image.FromFile(hostPath);
+                }
+                catch (System.Exception)
+                {
+                    UploadedFile uplf = new UploadedFile();
+                    hostPath = uplf.DefaultDisplayImage;
+                    img = System.Drawing.Image.FromFile(HostingEnvironment.MapPath(hostPath));
+
+                }
                 int width = img.Width;
                 int height = img.Height;
+
+                if (height > MAX_PICTURE_HEIGHT_WIDTH)
+                {
+                    maxHeightFound = MAX_PICTURE_HEIGHT_WIDTH;
+                    break;
+                }
+                if (maxHeightFound < height)
+                    maxHeightFound = height;
+
                 if (height > width)
                     continue;
 
@@ -138,33 +160,42 @@ namespace ModelsClassLibrary.ViewModels
 
 
         }
+        /// <summary>
+        /// This gets set in GetMaxWidthHeightForCarousel and used in PictureCalculateDimensions
+        /// </summary>
+        static int maxHeightFound = 0;
+        static int MaxHeightFound
+        {
+            get { return maxHeightFound; }
+        }
 
-        const int MAX_PICTURE_HEIGHT_WIDTH = 350;
         public static void PictureCalculateDimensions(string pictureAddress)
         {
-            pictureAddress.IsNullOrWhiteSpaceThrowException("PictureAddress");
-            string hostPath = HostingEnvironment.MapPath(pictureAddress);
-            System.Drawing.Image img = System.Drawing.Image.FromFile(hostPath);
-            int width = img.Width;
-            int height = img.Height;
-
-            if (MaxPictureWidth == 0)
-                MaxPictureWidth = MAX_PICTURE_HEIGHT_WIDTH;
-
-            if (MaxPictureHeight == 0)
-                MaxPictureHeight = MAX_PICTURE_HEIGHT_WIDTH;
-
+            PictureHeight = MaxHeightFound.ToString();
             PictureWidth = "0";
-            PictureHeight = "0";
+            //pictureAddress.IsNullOrWhiteSpaceThrowException("PictureAddress");
+            //string hostPath = HostingEnvironment.MapPath(pictureAddress);
+            //System.Drawing.Image img = System.Drawing.Image.FromFile(hostPath);
+            //int width = img.Width;
+            //int height = img.Height;
 
-            if (height > width)
-            {
-                PictureHeight = MaxPictureWidth.ToString();
-            }
-            else
-            {
-                PictureWidth = MaxPictureWidth.ToString();
-            }
+            //if (MaxPictureWidth == 0)
+            //    MaxPictureWidth = MAX_PICTURE_HEIGHT_WIDTH;
+
+            //if (MaxPictureHeight == 0)
+            //    MaxPictureHeight = MAX_PICTURE_HEIGHT_WIDTH;
+
+            //PictureWidth = "0";
+            //PictureHeight = "0";
+
+            //if (height > width)
+            //{
+            //    PictureHeight = MaxPictureWidth.ToString();
+            //}
+            //else
+            //{
+            //    PictureWidth = MaxPictureWidth.ToString();
+            //}
         }
 
         private static int MaxPictureWidth { get; set; }

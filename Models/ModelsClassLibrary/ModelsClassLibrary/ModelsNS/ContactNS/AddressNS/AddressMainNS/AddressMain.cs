@@ -40,6 +40,8 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS
         }
 
 
+        
+
         [MaxLength(200, ErrorMessage = "Max length allowed in {0} is {1} charecters")]
         [Display(Name = "House#")]
         public string HouseNo { get; set; }

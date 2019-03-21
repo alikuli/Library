@@ -9,7 +9,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
     /// <summary>
     /// Any class thatcontains MetaData will do Encryption.
     /// </summary>
-    
+
     public abstract class MetaData : IMetaData
     {
 
@@ -19,9 +19,9 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             Modified = new DateAndByComplex();
             Deleted = new DateAndByComplex();
             UnDeleted = new DateAndByComplex();
-            Created.SetToTodaysDateStart("");
+            Created.SetToTodaysDateStart("","");
 
-            IsActive = false;
+            IsInactive = false;
             IsEditLocked = false;
             IsDeleteLocked = false;
             IsDeleted = false;
@@ -37,8 +37,8 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public bool IsEditLocked { get; set; }
         public bool IsDeleteLocked { get; set; }
 
-        [Display(Name = "Active?")]
-        public bool IsActive { get; set; }
+        [Display(Name = "Inactive?")]
+        public bool IsInactive { get; set; }
 
         #endregion
 

@@ -114,7 +114,7 @@ namespace UowLibrary.ProductNS
             {
                 foreach (UploadedFile file in uploadedFileLst)
                 {
-                    file.MetaData.Created.SetToTodaysDate(UserName);
+                    file.MetaData.Created.SetToTodaysDate(UserName, UserId);
 
 
                     //initializes navigation if it is null
@@ -189,7 +189,7 @@ namespace UowLibrary.ProductNS
 
                     p = new Product();
                     p.Name = prodInitHelper.Name;
-
+                    p.IsUnApproved = false;
                     //p.UomVolume = UomVolumeBiz.FindByName(prodInitHelper.UomVolumeName);
                     //p.UomVolume.IsNullThrowException();
 
@@ -243,7 +243,8 @@ namespace UowLibrary.ProductNS
                                 x.MenuPath2.Name.ToLower() == mph.MenuPath2Name.ToLower() &&
                                 x.MenuPath3.Name.ToLower() == mph.MenuPath3Name.ToLower());
 
-                        mpm.IsNullThrowException();
+                        if (mpm.IsNull())
+                            continue;
 
                         if (p.MenuPathMains.IsNull())
                             p.MenuPathMains = new List<MenuPathMain>();

@@ -330,7 +330,7 @@ namespace UowLibrary.MailerNS
 
                     _verfTrxRequestList =
                         _verfTrxRequestList
-                    .Where(x => x.Address.People.Any(y => y.Id != personId))
+                    .Where(x => x.Address.PersonId != personId)
                     .ToList();
                 }
 

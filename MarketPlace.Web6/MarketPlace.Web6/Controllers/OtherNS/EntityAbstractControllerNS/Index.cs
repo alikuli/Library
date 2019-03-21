@@ -35,7 +35,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         /// <param name="sortBy"></param>
         /// <param name="print"></param>
         /// <returns></returns>
-        public virtual async Task<ActionResult> Index(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, MenuENUM menuEnum = MenuENUM.IndexDefault, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "")
+        public virtual async Task<ActionResult> Index(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, MenuENUM menuEnum = MenuENUM.IndexDefault, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "", string viewName = "Index")
         {
             try
             {
@@ -57,8 +57,10 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     searchFor,
                     isandForSearch,
                     selectedId,
+                    //dudEntity as ICommonWithId,// new addition
+                    //dudEntity as ICommonWithId,
                     null,
-                    dudEntity as ICommonWithId,
+                    null,
                     BreadCrumbManager,
                     UserId,
                     UserName,
@@ -70,7 +72,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     productIdDud,
                     returnUrl);
 
-                IndexListVM indexListVM = await indexEngine(parms);
+                IndexListVM indexListVM = await IndexEngine(parms);
+                indexListVM.MenuManager.ReturnUrl = returnUrl;
 
                 if (print)
                 {
@@ -81,7 +84,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                 if (!Request.IsAjaxRequest())
                 {
-                    return View(indexListVM);
+                    return View(viewName, indexListVM);
                 }
 
                 //this is an Ajax Request.
@@ -94,7 +97,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 ErrorsGlobal.MemorySave();
                 //you must redirect this to some index that is surely available
                 //i.e. even unauthourized people can get to it.
-                return RedirectToAction("Index", "Menus");
+                return RedirectToAction("Index", "Home");
 
 
             }
@@ -103,17 +106,30 @@ namespace MarketPlace.Web6.Controllers.Abstract
         }
 
 
-        protected async Task<IndexListVM> indexEngine(ControllerIndexParams parameters)
+        public async virtual Task<IndexListVM> IndexEngine(ControllerIndexParams parameters)
         {
-            IndexListVM indexListVM = await Biz.IndexAsync(parameters);
+            //IndexListVM indexListVM = await Biz.IndexAsync(parameters);
 
-            if (indexListVM.IsNull())
+            //if (indexListVM.IsNull())
+            //{
+            //    ErrorsGlobal.Add("No data received to make Index list", MethodBase.GetCurrentMethod());
+            //    ErrorsGlobal.MemorySave();
+            //}
+            IndexListVM indexListVM = new IndexListVM();
+            try
             {
-                ErrorsGlobal.Add("No data received to make Index list", MethodBase.GetCurrentMethod());
+                indexListVM = await Biz.IndexAsync(parameters);
+
+            }
+            catch (Exception e)
+            {
+
+                ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
             }
 
             return indexListVM;
+
         }
 
 
@@ -122,7 +138,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
             try
             {
-                var indexListVM = await indexEngine(parameters);
+                var indexListVM = await IndexEngine(parameters);
                 return indexListVM;
             }
             catch (Exception e)

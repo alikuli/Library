@@ -185,7 +185,7 @@ namespace ModelsClassLibrary.ViewModels
         }
 
         //this is the return URL will be employed when in Menus
-        public string ReturnUrl { get; set; }
+        //public string ReturnUrl { get; set; }
 
         /// <summary>
         /// This is what the controller will be called for all ProductVMs, basicaly the class name with a "s" attached, showing a plural.

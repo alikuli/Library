@@ -46,7 +46,7 @@ namespace MarketPlace.Web6.Controllers
         {
             try
             {
-                LikeUnlikeParameter param = _likeUnlikeBiz.AddLikeAndReturnCount(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, userId, isLike, comment);
+                LikeUnlikeParameters param = _likeUnlikeBiz.AddLikeAndReturnCount(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, userId, isLike, comment);
                 if (isLike)
                 {
                     //this Buton is like
@@ -100,31 +100,31 @@ namespace MarketPlace.Web6.Controllers
                 JsonResult likeJsonResult = new JsonResult();
                 //bool hasThisUserHasLiked = false;
                 //bool hasThisUserHasUnliked = false;
-                LikeUnlikeParameter param = _likeUnlikeBiz.Count(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, userId, false);
+                LikeUnlikeParameters param = _likeUnlikeBiz.Count(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, userId, false);
 
 
                 //UNLIKE
-                if (!param.UsersWhoDidNotLikedThis.IsNullOrEmpty())
+                if (!param.PeopleWhoDidNotLikedThis.IsNullOrEmpty())
                 {
-                    foreach (ParticipatingUsers pu in param.UsersWhoDidNotLikedThis)
+                    foreach (ParticipatingPeople pu in param.PeopleWhoDidNotLikedThis)
                     {
                         pu.UserAddressFixed = Url.Action("Edit", "Users", new { id = pu.Id });
                         if (pu.ImageLocation.IsNullOrEmpty())
                             pu.ImageLocation = Server.MapPath(AliKuli.ConstantsNS.MyConstants.DEFAULT_IMAGE_LOCATION);
                     }
-                    unlikeJsonResult = Json(param.UsersWhoDidNotLikedThis.ToArray());
+                    unlikeJsonResult = Json(param.PeopleWhoDidNotLikedThis.ToArray());
                 }
 
                 //LIKE
-                if (!param.UsersWhoLikedThis.IsNullOrEmpty())
+                if (!param.PeopleWhoLikedThis.IsNullOrEmpty())
                 {
-                    foreach (ParticipatingUsers pu in param.UsersWhoLikedThis)
+                    foreach (ParticipatingPeople pu in param.PeopleWhoLikedThis)
                     {
                         pu.UserAddressFixed = Url.Action("Edit", "Users", new { id = pu.Id });
                         if (pu.ImageLocation.IsNullOrEmpty())
                             pu.ImageLocation = Server.MapPath(AliKuli.ConstantsNS.MyConstants.DEFAULT_IMAGE_LOCATION);
                     }
-                    likeJsonResult = Json(param.UsersWhoLikedThis.ToArray());
+                    likeJsonResult = Json(param.PeopleWhoLikedThis.ToArray());
                 }
 
 

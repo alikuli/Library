@@ -33,6 +33,13 @@ namespace UowLibrary.MenuNS
                 webClicksCount,
                 recordStr);
 
+            if(!UserId.IsNullOrEmpty())
+            {
+                Person userPerson = UserBiz.GetPersonFor(UserId);
+                userPerson.IsNullThrowException("userPerson");
+                indexListVM.MenuManager.UserPersonId = userPerson.Id;
+            }
+
             if (!parameters.ReturnUrl.IsNullOrWhiteSpace())
             {
                 indexListVM.MenuManager.ReturnUrl = parameters.ReturnUrl;
@@ -69,6 +76,17 @@ namespace UowLibrary.MenuNS
                     p.IsNullThrowException();
                     break;
 
+                case EnumLibrary.EnumNS.MenuENUM.IndexMenuProductChildLandingPage:
+
+                    parm.Menu.ProductChildId.IsNullOrWhiteSpaceThrowException();
+                    string productChildId = parm.Menu.ProductChildId;
+                    pc = ProductChildBiz.Find(productChildId);
+                    pc.IsNullThrowException();
+
+                    //add the features
+                    pc.AllFeatures = ProductChildBiz.GetAllFeatures(pc);
+                    break;
+
                 case EnumLibrary.EnumNS.MenuENUM.IndexMenuPath1:
                 case EnumLibrary.EnumNS.MenuENUM.EditMenuPath1:
                 case EnumLibrary.EnumNS.MenuENUM.EditMenuPath2:
@@ -86,21 +104,22 @@ namespace UowLibrary.MenuNS
                     break;
             }
 
-            MenuManager mm = new MenuManager(mpm, p, pc, parm.Menu.MenuEnum, parm.BreadCrumbManager, parm.LikeUnlikeCounter, UserId);
+            MenuManager mm = new MenuManager(mpm, p, pc, parm.Menu.MenuEnum, parm.BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl);
             mm.BreadCrumbManager = parm.BreadCrumbManager;
             //mm.IndexMenuVariables.IsAdmin = UserBiz.IsAdmin(UserId);
 
 
-            if(!UserId.IsNullOrWhiteSpace())
+            if (!UserId.IsNullOrWhiteSpace())
             {
                 Person person = CashTrxBiz.PersonBiz.GetPersonForUserId(UserId);
-                if (!person.IsNull())
+                if (person.IsNull())
                 {
-                    mm.UserMoneyAccount = CashTrxBiz.UserMoneyAccountForPerson(person.Id);
+                    mm.UserMoneyAccount = new UserMoneyAccount();
                 }
                 else
                 {
-                    mm.UserMoneyAccount = new UserMoneyAccount();
+                    bool isBank = BankBiz.IsBankerFor(UserId);
+                    mm.UserMoneyAccount = CashTrxBiz.MoneyAccountForPerson(person.Id, isBank);
                 }
             }
 

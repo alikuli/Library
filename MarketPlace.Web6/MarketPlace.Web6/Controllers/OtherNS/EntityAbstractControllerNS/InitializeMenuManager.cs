@@ -17,49 +17,53 @@ namespace MarketPlace.Web6.Controllers.Abstract
     /// <typeparam name="TEntity"></typeparam>
     public partial class EntityAbstractController<TEntity> : AbstractController where TEntity : class, ICommonWithId
     {
-        protected void InitializeMenuManager(ControllerIndexParams parm)
-        {
+        //protected void InitializeMenuManager(ControllerIndexParams parm)
+        //{
 
 
-            TEntity entity = (TEntity)parm.Entity;
+        //    TEntity entity = (TEntity)parm.Entity;
 
-            //The item being used, must always be MenuPathMain. Sometimes, MenuPath1, MenuPath2 and MenuPath3 will come, bit it has to
-            //be fixed.
+        //    //The item being used, must always be MenuPathMain. Sometimes, MenuPath1, MenuPath2 and MenuPath3 will come, bit it has to
+        //    //be fixed.
 
-            if (entity.MenuManager.IsNull())
-            {
-                switch (parm.Menu.MenuEnum)
-                {
-                    case MenuENUM.IndexMenuPath1:
-                    case MenuENUM.IndexMenuPath2:
-                    case MenuENUM.IndexMenuPath3:
-                        //Item is MenuPathMain
-                        entity.MenuManager = new MenuManager(parm.Entity as MenuPathMain, null, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId);
-                        break;
+        //    if (entity.MenuManager.IsNull())
+        //    {
+        //        switch (parm.Menu.MenuEnum)
+        //        {
+        //            case MenuENUM.IndexMenuPath1:
+        //            case MenuENUM.IndexMenuPath2:
+        //            case MenuENUM.IndexMenuPath3:
+        //                //Item is MenuPathMain
+        //                entity.MenuManager = new MenuManager(parm.Entity as MenuPathMain, null, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId);
+        //                break;
 
-                    case MenuENUM.IndexMenuProduct:
-                        //item is product
-                        entity.MenuManager = new MenuManager(null, parm.Entity as Product, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId);
-                        break;
+        //            case MenuENUM.IndexMenuProduct:
+        //                //item is product
+        //                entity.MenuManager = new MenuManager(null, parm.Entity as Product, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId);
+        //                break;
 
-                    case MenuENUM.IndexMenuProductChild:
-                        //item is productChild
-                        entity.MenuManager = new MenuManager(null, null, parm.Entity as ProductChild, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId);
-                        break;
+        //            case MenuENUM.IndexMenuProductChild:
+        //                //item is productChild
+        //                entity.MenuManager = new MenuManager(null, null, parm.Entity as ProductChild, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId);
+        //                break;
 
-                    default:
-                        entity.MenuManager = new MenuManager(null, null, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId);
-                        break;
-                }
+        //            case MenuENUM.IndexMenuProductChildLandingPage:
+        //                //item is productChild
+        //                entity.MenuManager = new MenuManager(null, null, parm.Entity as ProductChild, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId);
+        //                break;
+        //            default:
+        //                entity.MenuManager = new MenuManager(null, null, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId);
+        //                break;
+        //        }
 
 
-            }
-            if (parm.ReturnUrl.IsNullOrEmpty())
-                entity.MenuManager.ReturnUrl = Request.Url.PathAndQuery;
-            else
-                entity.MenuManager.ReturnUrl = parm.ReturnUrl;
+        //    }
+        //    if (parm.ReturnUrl.IsNullOrEmpty())
+        //        entity.MenuManager.ReturnUrl = Request.Url.PathAndQuery;
+        //    else
+        //        entity.MenuManager.ReturnUrl = parm.ReturnUrl;
 
-        }
+        //}
 
         private MenuPathMain getSuitableMenuPathMain(TEntity entity)
         {
@@ -76,11 +80,11 @@ namespace MarketPlace.Web6.Controllers.Abstract
             //}
         }
 
-        protected void InitializeMenuManager(ControllerCreateEditParameter parmIn)
-        {
-            ControllerIndexParams parm = parmIn.ConvertToControllerIndexParams();
-            InitializeMenuManager(parm);
-        }
+        //protected void InitializeMenuManager(ControllerCreateEditParameter parmIn)
+        //{
+        //    ControllerIndexParams parm = parmIn.ConvertToControllerIndexParams();
+        //    InitializeMenuManager(parm);
+        //}
 
     }
 }

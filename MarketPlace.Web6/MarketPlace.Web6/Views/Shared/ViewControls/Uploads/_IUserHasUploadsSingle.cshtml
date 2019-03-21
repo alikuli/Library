@@ -14,32 +14,43 @@
 
     <div class="form-group">
         <div class="control-label col-md-2"><strong>@ViewBag.panelHeading</strong></div>
+    </div>
 
-        @*This is the upload button*@
-        <img src="@Url.Content(Model.DefaultDisplayImage)" alt="Image for Upload" class="rounded mx-auto d-block" id="theImage" width="200" height="200" style="margin: 10px;" /><br />
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" name="@ViewBag.httpUpload" onchange="PreviewImage(this, document.getElementById('theImage'))">
-            <label class="custom-file-label" for="customFile">Choose file</label>
+
+
+
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label">
+            Attachment(s)
+            (Attach multiple files.)
+        </label>
+        <div class="col-sm-9">
+            <span class="btn btn-default btn-file">
+                <input id="input2" name="@ViewBag.httpUpload" type="file" class="file" multiple data-show-upload="true" data-show-caption="true" data-theme="fas">
+            </span>
         </div>
     </div>
+
+
 
     if (userUpload != null)
     {
 
         string returnUrl = Url.Action("Edit", new { productCatId = modelHasUploadsSingle.Id });
-        
-        
+
+
 
         foreach (ModelsClassLibrary.ModelsNS.UploadedFileNS.UploadedFile uploadedFile in userUpload.Where(x => x.MetaData.IsDeleted == false))
         {
             string imagePath = Url.Content(uploadedFile.RelativePathWithFileName());
-            string deletePath = Url.Action("delete", "UploadedFiles", new { id = uploadedFile.Id, returnUrl = returnUrl });
+            string actionPath = Url.Action("Edit", "UploadedFiles", new { id = uploadedFile.Id, returnUrl = returnUrl });
 
 
             <span class="col-md-12 thumbnail img-responsive img-rounded">
 
-                <a href="@deletePath" title="@uploadedFile.OrignalCompleteName @uploadedFile.FullName()">
-                    <img src="@imagePath" alt="Image" class="img-responsive img-thumbnail" height="50" width="50" style="  border:1px solid blue;" ondblclick="">
+                <a href="@actionPath" title="@uploadedFile.OrignalCompleteName @uploadedFile.FullName()">
+                    <img src="@imagePath" alt="Image" class="img-responsive img-thumbnail" height="50" width="50" style="  border:1px solid blue;" >
                 </a>
             </span>
         }

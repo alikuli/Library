@@ -1,6 +1,8 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
+using InterfacesLibrary.SharedNS.FeaturesNS;
 using MarketPlace.Web6.Controllers.Abstract;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
@@ -10,10 +12,12 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS.OwnerNS;
+using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
 
 namespace MarketPlace.Web6.Controllers
 {
+    [Authorize]
     public class ProductChildsController : EntityAbstractController<ProductChild>
     {
 
@@ -44,6 +48,14 @@ namespace MarketPlace.Web6.Controllers
                 _productBiz.UserId = UserId;
                 _productBiz.UserName = UserName;
                 return _productBiz;
+            }
+        }
+
+        ProductChildBiz ProductChildBiz
+        {
+            get
+            {
+                return ProductBiz.ProductChildBiz;
             }
         }
         public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
@@ -109,6 +121,86 @@ namespace MarketPlace.Web6.Controllers
             pc.Product = await ProductBiz.FindAsync(pc.ProductId);
             pc.Product.IsNullThrowException("Product not found!");
         }
+
+        [AllowAnonymous]
+        public ActionResult ProductChildLandingPage(string productChildId, string searchFor, string returnUrl)
+        {
+            try
+            {
+                ProductChild productChild = ProductChildBiz.LoadProductChildForLandingPage(productChildId, searchFor, returnUrl);
+                return View(productChild);
+
+            }
+            catch (Exception e)
+            {
+
+                ErrorsGlobal.Add(string.Format("Not Saved!"), MethodBase.GetCurrentMethod(), e);
+                ErrorsGlobal.MemorySave();
+                return RedirectToAction("Index", new { id = productChildId, searchFor = searchFor, isandForSearch = "", selectedId = "", returnUrl = returnUrl, menuLevelEnum = MenuENUM.IndexMenuProductChild, sortBy = "", print = false });
+            }
+        }
+
+        //private ProductChild loadProductChildForLandingPage(string productChildId, string searchFor, string returnUrl)
+        //{
+        //    //ProductChild productChild = _icrudBiz.Factory() as ProductChild;
+        //    //productChildId.IsNullThrowExceptionArgument("Id not received. Bad Request");
+
+        //    ProductChild productChild = ProductChildBiz.Find(productChildId);
+        //    productChild.IsNullThrowException("Product Child not found.");
+
+        //    string productIdDud = "";
+        //    bool isMenuDud = false;
+        //    string isandForSearchDud = "";
+        //    string selectIdDud = "";
+        //    string menuPathMainIdDud = "";
+        //    bool printDud = false;
+
+        //    //string sortByDud = "";
+
+
+        //    ControllerIndexParams parms = MakeControlParameters(
+        //        productChildId,
+        //        menuPathMainIdDud,
+        //        searchFor,
+        //        isandForSearchDud,
+        //        selectIdDud,
+        //        productChild,
+        //        productChild,
+        //        BreadCrumbManager,
+        //        UserId,
+        //        UserName,
+        //        isMenuDud,
+        //        MenuENUM.IndexMenuProductChildLandingPage,
+        //        SortOrderENUM.Item1_Asc,
+        //        printDud,
+        //        ActionNameENUM.Edit,
+        //        productIdDud,
+        //        returnUrl);
+
+        //    Biz.InitializeMenuManager(parms);
+
+        //    IHasUploads hasUploadsEntity = parms.Entity as IHasUploads;
+        //    IMenuManager menuManager = parms.Entity.MenuManager;
+
+        //    //ProductChildBiz.ProductChildForDefaultPicture = productChild;
+        //    menuManager.PictureAddresses = ProductChildBiz.GetPictureList(hasUploadsEntity);
+
+        //    productChild.AllFeatures = ProductChildBiz.GetAllFeatures(productChild);
+        //    if (UserId.IsNullOrEmpty())
+        //    {
+        //        //Log an annonymous user as a visitor
+        //    }
+        //    else
+        //    {
+        //        //Log user as visitor to this product child
+        //        ProductChildBiz.LogPersonsVisit(UserId, productChild);
+        //    }
+        //    return productChild;
+        //}
+
+
+
+
 
     }
 

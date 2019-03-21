@@ -1,0 +1,37 @@
+﻿@model ModelsClassLibrary.ModelsNS.SharedNS.Parameters.YesParameter
+
+@{
+    ViewBag.Title = "MarkAllProductsApprovedUtility";
+}
+
+<h2>Mark All Products Approved Utility</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.DisplayFor(model => model.Question)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsYes, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="form-check-inline">
+                @Html.EditorFor(model => model.IsYes)
+                @Html.ValidationMessageFor(model => model.IsYes, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

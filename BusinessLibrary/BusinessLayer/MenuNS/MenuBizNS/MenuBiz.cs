@@ -4,6 +4,7 @@ using ModelsClassLibrary.MenuNS;
 using UowLibrary.CashTtxNS;
 using UowLibrary.LikeUnlikeNS;
 using UowLibrary.ParametersNS;
+using UowLibrary.PlayersNS.BankNS;
 using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
 
@@ -17,8 +18,9 @@ namespace UowLibrary.MenuNS
         //private LikeUnlikeBiz _likeUnlikeBiz;
         private CashTrxBiz _cashTrxBiz;
         //AddressBiz _addressBiz;
+        BankBiz _bankBix;
 
-        public MenuBiz(MenuPathMainBiz menuPathMainBiz, ProductBiz productBiz, IRepositry<MenuPathMain> entityDal, BizParameters bizParameters, CashTrxBiz cashTrxBiz)
+        public MenuBiz(MenuPathMainBiz menuPathMainBiz, ProductBiz productBiz, IRepositry<MenuPathMain> entityDal, BizParameters bizParameters, CashTrxBiz cashTrxBiz, BankBiz bankBiz)
             : base(entityDal, bizParameters)
         {
 
@@ -27,6 +29,7 @@ namespace UowLibrary.MenuNS
             _productChildBiz = productBiz.ProductChildBiz;
             //_likeUnlikeBiz = likeUnlikeBiz;
             _cashTrxBiz = cashTrxBiz;
+            _bankBix = bankBiz;
             //_addressBiz = addressBiz;
 
         }
@@ -42,6 +45,15 @@ namespace UowLibrary.MenuNS
         //    }
         //}
 
+        BankBiz BankBiz
+        {
+            get
+            {
+                _bankBix.UserId = UserId;
+                _bankBix.UserName = UserName;
+                return _bankBix;
+            }
+        }
         public CashTrxBiz CashTrxBiz
         {
             get
@@ -50,6 +62,14 @@ namespace UowLibrary.MenuNS
                 _cashTrxBiz.UserId = UserId;
                 _cashTrxBiz.UserName = UserName;
                 return _cashTrxBiz;
+            }
+        }
+
+        public UserBiz UserBiz
+        {
+            get
+            {
+                return CashTrxBiz.PersonBiz.UserBiz;
             }
         }
         public override string SelectListCacheKey

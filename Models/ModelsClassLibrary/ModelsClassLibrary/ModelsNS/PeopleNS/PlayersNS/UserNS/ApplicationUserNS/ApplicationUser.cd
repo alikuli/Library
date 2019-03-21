@@ -3,29 +3,24 @@
   <Class Name="UserModels.ApplicationUser">
     <Position X="5" Y="0.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>CJLCLgJWOAKBMIAAEZGAA2QIEkKwAUgAAAIQIAJFIAA=</HashCode>
+      <HashCode>CILCLgJWOAKBIIAEEJEAA2QIEkKwAUgAACIQYAJFIAA=</HashCode>
       <FileName>ModelsNS\PeopleNS\PlayersNS\UserNS\ApplicationUserNS\ApplicationUser - Index.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="PersonComplex" />
-      <Property Name="MenuManager" />
-      <Property Name="Country" />
-      <Property Name="Mailer" />
       <Property Name="GlobalComments" />
+      <Property Name="MenuManager" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
-      <Property Name="Addresses" />
-      <Property Name="ProductChildren" />
-      <Property Name="FileDocs" />
-      <Property Name="SelfieUploads" />
-      <Property Name="IdCardBackUploads" />
-      <Property Name="IdCardFrontUploads" />
-      <Property Name="LiscenseBackUploads" />
-      <Property Name="LiscenseFrontUploads" />
       <Property Name="MiscFiles" />
+      <Property Name="SelfieUploads" />
+      <Property Name="IdCardFrontUploads" />
+      <Property Name="IdCardBackUploads" />
       <Property Name="PassportFrontUploads" />
       <Property Name="PassportVisaUploads" />
-      <Property Name="LikeUnlikes" />
+      <Property Name="LiscenseFrontUploads" />
+      <Property Name="LiscenseBackUploads" />
+      <Property Name="Addresses" />
+      <Property Name="ProductChildren" />
     </ShowAsCollectionAssociation>
     <Lollipop Position="0.2" />
   </Class>
@@ -46,44 +41,23 @@
   <Class Name="ModelsClassLibrary.ModelsNS.ProductChildNS.ProductChild">
     <Position X="9" Y="0.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>EAIHAgAAAAABEAAAQBAAAAgAAAEAAAAAAAAAAAJBAAA=</HashCode>
+      <HashCode>MAIGAoCYAAABEAAAQBAAAAAAAIEABAAAAAAAAQJBgAI=</HashCode>
       <FileName>ModelsNS\ProductNS\ProductChildNS\Dates.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS.PersonComplex">
-    <Position X="2.5" Y="6.75" Width="1.5" />
-    <InheritanceLine Type="ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS.Person" FixedFromPoint="true">
-      <Path>
-        <Point X="3.25" Y="8.5" />
-        <Point X="3.25" Y="7.658" />
-      </Path>
-    </InheritanceLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ModelsNS\PeopleNS\PlayersNS\PersonComplex.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS.Person">
-    <Position X="1.75" Y="8.5" Width="3" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAABBAYAIAACAAEQAAACAAgAAAAAIIAAAE=</HashCode>
-      <FileName>ModelsNS\PeopleNS\PlayersNS\Person.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="ModelsClassLibrary.ModelsNS.AddressNS.AddressWithId">
+  <Class Name="ModelsClassLibrary.ModelsNS.AddressNS.AddressMain">
     <Position X="8.75" Y="9.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>ICABAIAAICAAAgAkIBEAGAgIEBIQAgAAAAAAIAcEAAE=</HashCode>
-      <FileName>ModelsNS\AddressNS\AddessWithIdNS\AddressWithId.cs</FileName>
+      <HashCode>MCAAAIAAICAAAgAkIBEAGAAIABIQAgAAAAAAIAcEAAE=</HashCode>
+      <FileName>ModelsNS\ContactNS\AddressNS\AddressMainNS\AddressMain.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ModelsClassLibrary.ModelsNS.PlacesNS.Country" Collapsed="true">
     <Position X="12" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAABAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAABAAA=</HashCode>
       <FileName>ModelsNS\PlacesNS\CountryNS\Country.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -91,7 +65,7 @@
   <Class Name="ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS.FileDoc" Collapsed="true">
     <Position X="12" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAABAAAAAAIBAAAAABAAQAgAAAAQQAAAAAAAAAJAgAA=</HashCode>
+      <HashCode>CIAAAAAAAAIBAAAEABAAQAAAAAAQQAAAAAAAAAJAgAA=</HashCode>
       <FileName>ModelsNS\FileDocsNS\FileDoc.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -99,28 +73,29 @@
   <Class Name="ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS.Mailer" Collapsed="true">
     <Position X="12.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABAAAAAAAAAAAAAJAAAAiAAAAAAQAAAAAAAAIAAAA=</HashCode>
-      <FileName>ModelsNS\MailerNS\Mailer.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAJAAAACAAAAAAQAAAAgAAAIAAAA=</HashCode>
+      <FileName>ModelsNS\PeopleNS\PlayersNS\MailerNS\Mailer.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="ModelsClassLibrary.ModelsNS.UploadedFileNS.UploadedFile" Collapsed="true">
     <Position X="9.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>kkICiEKFECAgABiQQBFKAAoAAEACEUAgIUAAAAoAAMA=</HashCode>
+      <HashCode>ksICiEKFECAgABiUQBFKAAoAAEACEUAgIUAAAAoAAMA=</HashCode>
       <FileName>ModelsNS\UploadedFileNS\UploadedFileMainNS\UploadedFile - Image Adjustment.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ModelsClassLibrary.ModelsNS.LikeUnlikeNS.LikeUnlike" Collapsed="true">
     <Position X="10.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EEADAAIAAAAAARAAAAAIAAgAAAAAAAAAAABAAAIAAAA=</HashCode>
+      <HashCode>EMADAAIAAAAAARAEABAIAAAAAAAAAAAAAABAAAIAAAA=</HashCode>
       <FileName>ModelsNS\LikeUnlikeNS\LikeUnlike.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS.IMenuManager" Collapsed="true">
     <Position X="9.25" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAIAACgAIAAAAEAAACBCACAAEACAIAAA=</HashCode>
+      <HashCode>AAACAAQAAAAIAIAACgAIAAAAEAAACBCACAIEACAIAAE=</HashCode>
       <FileName>ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\IMenuManager.cs</FileName>
     </TypeIdentifier>
   </Interface>

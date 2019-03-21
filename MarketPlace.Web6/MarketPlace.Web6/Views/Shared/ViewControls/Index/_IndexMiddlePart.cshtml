@@ -2,7 +2,9 @@
 <div class="container">
 
     @{int count = 0;
-      string controllerName = this.ViewContext.RouteData.Values["controller"].ToString(); 
+      string controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+      string returnUrl = Request.Url.PathAndQuery;
+      
       
       }
 
@@ -79,7 +81,7 @@
                     if (item.AllowEdit)
                     {
                         <span class="@alertFont" data-toggle="tooltip" title="@item.FullName" data-placement="top">
-                            @item.PrintLineNumber. @Html.ActionLink(item.ShortName, "Edit", new { id = item.Id }, new { @id = item.Id, @title = item.FullName, @class = @alertFont })
+                            @item.PrintLineNumber. @Html.ActionLink(item.ShortName, "Edit", new { id = item.Id, returnUrl = returnUrl }, new { @id = item.Id, @title = item.FullName, @class = @alertFont })
                         </span>
                     }
                     else
@@ -187,19 +189,10 @@
                             
                         @if (item.IsDefault)
                         {
-                            <img src="~/Content/Icons/Default2.png" data-toggle="tooltip" title="Default Address" data-placement="top" />
+                            <img src="@Url.Content( @ConfigManagerLibrary.Icon.StarIcon)" data-toggle="tooltip" title="Default Address" data-placement="top" />
                         }
                         else
                         {
-                            @*@Ajax.ActionLink("Make Default ", "UpdateAndSaveDefaultAddress", "Users", new { addressId = item.Id, selectedId = item.Id, sortBy = Model.SortOrderEnum, searchFor = Model.SearchFor },
-                                new AjaxOptions
-                                {
-                                    HttpMethod = "POST",
-                                    InsertionMode = InsertionMode.Replace,
-                                    UpdateTargetId = "indexmiddlepart",
-
-
-                                }, new { @class = "@alertFont btn-warning" })*@
 
                              @Html.ActionLink("Make Default ", "UpdateAndSaveDefaultAddress", controllerName, new { addressId = item.Id, selectedId = item.Id, sortBy = Model.SortOrderEnum, searchFor = Model.SearchFor }, new { @class = "@alertFont btn-warning" })
 

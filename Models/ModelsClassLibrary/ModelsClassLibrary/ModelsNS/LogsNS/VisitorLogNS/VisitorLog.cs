@@ -16,22 +16,22 @@ namespace ModelsClassLibrary.ModelsNS.Logs.VisitorsLogNS
         {
         }
 
-        public void LoadVisitorLog(string controllerName, string actionName, string postOrGet, string user, string browser, string ip, string machineName, string urlReferrer)
-        {
-            //MetaData.Created.SetToTodaysDateStart(User);
+        //public void LoadVisitorLog(string controllerName, string actionName, string postOrGet, string user, string browser, string ip, string machineName, string urlReferrer)
+        //{
+        //    //MetaData.Created.SetToTodaysDateStart(User);
 
-            ControllerName = controllerName;
-            ActionName = actionName;
-            PostOrGet = postOrGet.ToString();
-            User = user;
-            Browser = browser;
-            Ip = ip;
-            MachineName = machineName;
-            UrlReferrer = urlReferrer;
-            Name = this.ToString();
+        //    ControllerName = controllerName;
+        //    ActionName = actionName;
+        //    PostOrGet = postOrGet.ToString();
+        //    User = user;
+        //    Browser = browser;
+        //    Ip = ip;
+        //    MachineName = machineName;
+        //    UrlReferrer = urlReferrer;
+        //    Name = this.ToString();
 
-            MetaData.Created.SetToTodaysDate(User);
-        }
+        //    MetaData.Created.SetToTodaysDate(User,UserId);
+        //}
         
         #endregion
         #region Properties

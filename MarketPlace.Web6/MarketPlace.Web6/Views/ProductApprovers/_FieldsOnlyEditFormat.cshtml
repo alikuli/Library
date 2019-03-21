@@ -1,0 +1,28 @@
+﻿@model ModelsClassLibrary.ModelsNS.PlayersNS.ProductApprover
+
+
+<div class="well p-3 m-3">
+
+    @Html.Partial(@"_Name_And_DetailInfo")
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProductApproverCategoryId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.ProductApproverCategoryId,
+                         (@Model.SelectListProductApproverCategory as IEnumerable<SelectListItem>),
+                  "--- Select Product Approver Category---",
+                  new { @class = "form-control" })
+    </div>
+
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PersonId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.PersonId,
+                 (@Model.SelectListPeople as IEnumerable<SelectListItem>),
+                  "--- Person ---",
+                  new { @class = "form-control" })
+    </div>
+
+</div>

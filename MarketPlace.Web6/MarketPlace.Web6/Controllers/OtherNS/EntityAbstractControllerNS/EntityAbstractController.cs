@@ -49,11 +49,11 @@ namespace MarketPlace.Web6.Controllers.Abstract
         {
             get
             {
-                BusinessLayer<TEntity> entity = _icrudBiz as BusinessLayer<TEntity>;
-                entity.IsNullThrowException();
-                entity.UserId = UserId;
-                entity.UserName = UserName;
-                return entity;
+                BusinessLayer<TEntity> businessLayer = _icrudBiz as BusinessLayer<TEntity>;
+                businessLayer.IsNullThrowException();
+                businessLayer.UserId = UserId;
+                businessLayer.UserName = UserName;
+                return businessLayer;
             }
         }
 

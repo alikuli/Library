@@ -1,10 +1,13 @@
-﻿using EnumLibrary.EnumNS;
+﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.SharedNS;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
@@ -29,15 +32,20 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 
         }
 
+        [NotMapped]
+        public List<CheckBoxItem> CheckedBoxes { get; set; }
 
+        public void AddToCheckedBoxes()
+        {
+            CheckBoxItem ckbx = new CheckBoxItem(this);
+            CheckedBoxes.Add(ckbx);
+        }
         /// <summary>
         /// This will be unique for product/customer. If it does not exist, then it will be considered a general product.
         /// If serial number exists, then it is a specific product. A single seller would be able to add mulitple products like this of the
         /// same type as long as they give them different serial numbers.
         /// </summary>
         public string SerialNumber { get; set; }
-
-
 
         public override ClassesWithRightsENUM ClassNameForRights()
         {
@@ -62,16 +70,58 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
         public string IdentificationNumber { get; set; }
 
 
+
         [NotMapped]
         public SelectList SelectListProducts { get; set; }
 
+
         [NotMapped]
         public SelectList SelectListOwners { get; set; }
+
+        /// <summary>
+        /// This is used during messaging. If product is selected, then it shows in the message as a link through
+        /// </summary>
+        [NotMapped]
+        public bool Selected { get; set; }
 
         public override bool HideNameInView()
         {
             return true;
         }
+
+        /// <summary>
+        /// These are all the people who have visited.
+        /// </summary>
+        //public virtual ICollection<Person> VisitorPeople { get; set; }
+
+        public override string FullName()
+        {
+            if (IdentificationNumber.IsNullOrWhiteSpace())
+            {
+                if (SerialNumber.IsNullOrWhiteSpace())
+                {
+                    return base.FullName();
+
+                }
+                else
+                {
+                    return string.Format("{0} [Serial#: {1}]", Name, SerialNumber);
+                }
+            }
+            {
+                if (SerialNumber.IsNullOrWhiteSpace())
+                {
+                    return string.Format("{0} [Identification#: {1}]", Name, IdentificationNumber);
+
+                }
+                else
+                {
+                    return string.Format("{0} [Serial#: {1}] [Identification#: {2}]", Name, SerialNumber, IdentificationNumber);
+                }
+            }
+        }
+
+
     }
 
 

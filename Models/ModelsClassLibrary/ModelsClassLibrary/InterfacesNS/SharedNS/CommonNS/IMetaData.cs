@@ -19,7 +19,7 @@ namespace InterfacesLibrary.SharedNS
         string GetSelfClassName();
         string GetSelfMethodName();
         //bool IsEncrypted { get; set; }
-        bool IsActive { get; set; }
+        bool IsInactive { get; set; }
         bool IsEditLocked { get; set; }
         bool IsDeleted { get; set; }
         //IsEncryption is coming from IEncryption.

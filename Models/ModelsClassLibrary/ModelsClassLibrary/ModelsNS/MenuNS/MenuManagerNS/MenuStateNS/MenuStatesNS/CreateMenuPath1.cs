@@ -9,7 +9,7 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 {
     public class CreateMenuPath1 : MenuStateAbstract
     {
-        public CreateMenuPath1(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameter likeUnlikesCounter)
+        public CreateMenuPath1(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter)
             : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
 
         public override MenuENUM EditLink_MenuEnum

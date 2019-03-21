@@ -1,4 +1,5 @@
 ﻿using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
@@ -16,14 +17,14 @@ namespace ModelsClassLibrary.ModelsNS.LikeUnlikeNS
 
         }
 
-        public void Initialize(string menuPath1Id, string menuPath2Id, string menuPath3Id, string productId, string productChildId, string userId, bool isLike, string comment)
+        public void Initialize(string menuPath1Id, string menuPath2Id, string menuPath3Id, string productId, string productChildId, string personId, bool isLike, string comment)
         {
             MenuPath1Id = menuPath1Id;
             MenuPath2Id = menuPath2Id;
             MenuPath3Id = menuPath3Id;
             ProductId = productId;
             ProductChildId = productChildId;
-            UserId = userId;
+            PersonId = personId;
             IsLike = isLike;
             Name = KeyGenerator();
             Comment = comment;
@@ -45,8 +46,8 @@ namespace ModelsClassLibrary.ModelsNS.LikeUnlikeNS
         public string ProductChildId { get; set; }
         public virtual ProductChild ProductChild { get; set; }
 
-        public string UserId { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        public string PersonId { get; set; }
+        public virtual Person Person { get; set; }
 
         public bool IsLike { get; set; }
 
@@ -59,13 +60,13 @@ namespace ModelsClassLibrary.ModelsNS.LikeUnlikeNS
         /// <param name="productId"></param>
         /// <param name="productChildId"></param>
         /// <returns></returns>
-        public string KeyGenerator(string menuPath1Id, string menuPath2Id, string menuPath3Id, string productId, string productChildId, string userId, bool isLike)
+        public string KeyGenerator(string menuPath1Id, string menuPath2Id, string menuPath3Id, string productId, string productChildId, string personId, bool isLike)
         {
-            return string.Format("{0}{1}{2}{3}{4}{5}", isLike, userId, menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId);
+            return string.Format("{0}{1}{2}{3}{4}{5}", isLike, personId, menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId);
         }
         public string KeyGenerator()
         {
-            return KeyGenerator(MenuPath1Id, MenuPath2Id, MenuPath3Id, ProductId, ProductChildId, UserId, IsLike);
+            return KeyGenerator(MenuPath1Id, MenuPath2Id, MenuPath3Id, ProductId, ProductChildId, PersonId, IsLike);
         }
 
 
@@ -74,5 +75,21 @@ namespace ModelsClassLibrary.ModelsNS.LikeUnlikeNS
             return EnumLibrary.EnumNS.ClassesWithRightsENUM.LikeUnlike;
         }
 
+        public override void UpdatePropertiesDuringModify(InterfacesLibrary.SharedNS.ICommonWithId icommonWithId)
+        {
+            base.UpdatePropertiesDuringModify(icommonWithId);
+
+            LikeUnlike likeUnlike = icommonWithId as LikeUnlike;
+
+            MenuPath1Id = likeUnlike.MenuPath1Id;
+            MenuPath2Id = likeUnlike.MenuPath2Id;
+            MenuPath3Id = likeUnlike.MenuPath3Id;
+            ProductId = likeUnlike.ProductId;
+            ProductChildId = likeUnlike.ProductChildId;
+            PersonId = likeUnlike.PersonId;
+            IsLike = likeUnlike.IsLike;
+
+
+        }
     }
 }

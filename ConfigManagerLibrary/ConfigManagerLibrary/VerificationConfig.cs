@@ -5,8 +5,32 @@ using System.Configuration;
 
 namespace ConfigManagerLibrary
 {
+
+    public class Icon
+    {
+        public static string StarIcon
+        {
+            get
+            {
+
+                return ConfigurationManager.AppSettings[Icons.STAR_ICON];
+
+
+            }
+        }
+    }
     public class VerificationConfig
     {
+        public static string StarIcon
+        {
+            get
+            {
+
+                return ConfigurationManager.AppSettings[Icons.STAR_ICON];
+
+
+            }
+        }
         public static string RequestIconIcon
         {
             get
@@ -247,7 +271,7 @@ namespace ConfigManagerLibrary
 
 
 
-//--------------------------------------------------
+        //--------------------------------------------------
 
         /// <summary>
         /// These are the budgeted cost

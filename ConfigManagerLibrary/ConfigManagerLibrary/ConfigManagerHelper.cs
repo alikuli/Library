@@ -25,6 +25,14 @@ namespace AliKuli.UtilitiesNS
             }
         }
 
+        public static string BlankPicture
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["BlankPicture"];
+            }
+        }
+
         private void InitializeError()
         {
             //_err.SetLibAndClass(Assembly.GetCallingAssembly().GetName().Name, typeof(ConfigManagerHelper).Name);
@@ -445,8 +453,8 @@ namespace AliKuli.UtilitiesNS
                 _isSmtpSelectedService.IsNullOrWhiteSpaceThrowException("_isSmtpSelectedService");
                 if (_isSmtpSelectedService.IsValidBoolean())
                     return _isSmtpSelectedService;
-                
-                throw new Exception(string.Format("_isSmtpSelectedService not valid bool = '{0}'",_isSmtpSelectedService));
+
+                throw new Exception(string.Format("_isSmtpSelectedService not valid bool = '{0}'", _isSmtpSelectedService));
 
 
 

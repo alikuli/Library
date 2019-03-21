@@ -21,9 +21,10 @@ namespace AliKuli.Tools
 
             return s;
         }
-        public static string[] GetStopWords()
+        // @"\Content\SetupData\stop-word-list.csv"
+        public static string[] GetStopWords(string fromPath)
         {
-            string[] stopWords = FileTools.ParseCsvCommaDelimited(FileTools.GetPath(@"\Content\SetupData\stop-word-list.csv"));
+            string[] stopWords = FileTools.ParseCsvCommaDelimited(FileTools.GetAbsolutePath(fromPath));
 
             //now make them all lower case...
             stopWords.IsNullOrEmptyThrowException("Stop words not found.");

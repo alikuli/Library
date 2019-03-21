@@ -22,15 +22,15 @@ namespace ModelsClassLibrary.ModelsNS.PeopleNS.UserNameSpace
         [Display(Name = "Deactivate Date")]
         public DateAndByComplex DeactivateDate { get; set; }
 
-        public void Activate(string userId)
+        public void Activate(string userId, string userName)
         {
             Value = true;
-            ActivateDate.SetToTodaysDate(userId);
+            ActivateDate.SetToTodaysDate(userId, userName);
         }
-        public void Deactivate(string userId)
+        public void Deactivate(string userId, string userName)
         {
             Value = false;
-            DeactivateDate.SetToTodaysDate(userId);
+            DeactivateDate.SetToTodaysDate(userId, userName);
         }
     }
 }

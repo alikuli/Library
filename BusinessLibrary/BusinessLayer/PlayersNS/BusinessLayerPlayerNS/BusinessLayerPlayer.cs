@@ -78,15 +78,109 @@ namespace UowLibrary.PlayersNS.PlayerAbstractCategoryNS
 
         public SelectList SelectListBillAddressesFor(string userId)
         {
-            return AddressBiz.SelectListBillAddress();
+            return AddressBiz.SelectListBillAddressCurrentUser();
         }
 
 
         public SelectList SelectListShipAddressesFor(string userId)
         {
-            return AddressBiz.SelectListShipAddress();
+            return AddressBiz.SelectListShipAddressCurrentuser();
         }
 
+        public SelectList SelectListWithout(string userId)
+        {
+            userId.IsNullOrWhiteSpaceThrowArgumentException("You are not logged in.");
+
+            Person person = PersonBiz.GetPersonForUserId(userId);
+            person.IsNullThrowException("No person found for user.");
+
+
+            var allItems = FindAll().Where(x => x.PersonId != person.Id);
+            return SelectList_Engine(allItems);
+
+        }
+
+
+
+        public SelectList SelectListWithout(PlayerAbstract entity)
+        {
+            entity.IsNullThrowExceptionArgument("entity");
+            Person person = null;
+            if (person.IsNull())
+            {
+                if (entity.PersonId.IsNullOrWhiteSpaceThrowArgumentException("No person"))
+                {
+                    //error thrown
+                }
+                else
+                {
+                    person = PersonBiz.GetPersonForUserId(entity.PersonId);
+
+                }
+            }
+            else
+            {
+                person = entity.Person;
+            }
+
+            person.IsNullThrowException("No person found for user.");
+
+
+            var allItems = FindAll().Where(x => x.PersonId != person.Id);
+            return SelectList_Engine(allItems);
+
+        }
+
+        public SelectList SelectListWithout(Person person)
+        {
+            person.IsNullThrowExceptionArgument("entity");
+            var allItems = FindAll().Where(x => x.PersonId != person.Id);
+            return SelectList_Engine(allItems);
+
+        }
+
+
+        public SelectList SelectListOnlyWith(PlayerAbstract entity)
+        {
+            entity.IsNullThrowExceptionArgument("entity");
+            Person person = null;
+            if (entity.Person.IsNull())
+            {
+                if (entity.PersonId.IsNullOrWhiteSpaceThrowArgumentException("No person"))
+                {
+                    //error thrown
+                }
+                else
+                {
+                    person = PersonBiz.GetPersonForUserId(entity.PersonId);
+
+                }
+            }
+            else
+            {
+                person = entity.Person;
+            }
+
+            person.IsNullThrowException("No person found for user.");
+
+
+            var allItems = FindAll().Where(x => x.PersonId == person.Id);
+            return SelectList_Engine(allItems);
+
+        }
+
+        public SelectList SelectListOnlyWith(string userId)
+        {
+            userId.IsNullOrWhiteSpaceThrowArgumentException("You are not logged in.");
+
+            Person person = PersonBiz.GetPersonForUserId(userId);
+            person.IsNullThrowException("No person found for user.");
+
+
+            var allItems = FindAll().Where(x => x.PersonId == person.Id);
+            return SelectList_Engine(allItems);
+
+        }
 
         public override void Fix(ControllerCreateEditParameter parm)
         {
@@ -190,16 +284,54 @@ namespace UowLibrary.PlayersNS.PlayerAbstractCategoryNS
 
         }
 
+
+        public TEntity GetEntityFor(string userId)
+        {
+            Person person = GetPersonForUserId(userId);
+            //get the current entity for this pseron
+            TEntity entity = FindAll().FirstOrDefault(x => x.PersonId == person.Id);
+            entity.IsNullThrowExceptionArgument("Not found entity");
+            return entity;
+        }
         public string GetPersonIdForCurrentUser()
         {
-            UserId.IsNullOrWhiteSpaceThrowException("User not logged in.");
-            Person person = UserBiz.GetPersonFor(UserId);
-            person.IsNullThrowException("No person attached to this user");
+            Person person = GetPersonForCurrentUser();
             string personId = person.Id;
             return personId;
         }
 
+        public Person GetPersonForCurrentUser()
+        {
+            UserId.IsNullOrWhiteSpaceThrowException("User not logged in.");
+            Person person = GetPersonForUserId(UserId);
+            person.IsNullThrowException("No person attached to this user");
+            return person;
+        }
 
+        public Person GetPersonForUserId(string userId)
+        {
+            userId.IsNullOrWhiteSpaceThrowException("User not logged in.");
+            Person person = UserBiz.GetPersonFor(userId);
+            person.IsNullThrowException("No person attached to this user");
+            return person;
+        }
+
+        public void CreatePlayerForCurrentUser()
+        {
+            Person person = GetPersonForCurrentUser();
+            person.IsNullThrowException("No person found for user.");
+            ICommonWithId entity = Factory();
+            PlayerAbstract playerAbstract = entity as PlayerAbstract;
+            playerAbstract.IsNullThrowException("This is not a player!");
+
+            playerAbstract.PersonId = person.Id;
+            playerAbstract.Person = person;
+
+            CreateEntity(playerAbstract as TEntity);
+
+
+
+        }
 
 
 

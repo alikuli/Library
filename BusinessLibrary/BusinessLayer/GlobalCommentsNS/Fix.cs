@@ -32,7 +32,7 @@ namespace UowLibrary.GlobalCommentsNS
             {
                 ApplicationUser user = _userBiz.Find(gc.UserId);
                 user.IsNullThrowException();
-                user.GlobalComments.Add(gc);
+                //user.GlobalComments.Add(gc);
                 gc.Name = UserName;
             }
 

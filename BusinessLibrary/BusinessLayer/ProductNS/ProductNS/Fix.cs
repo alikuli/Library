@@ -55,6 +55,10 @@ namespace UowLibrary.ProductNS
             if (product.UomWeightListedId.IsNullOrWhiteSpace())
                 product.UomWeightListedId = null;
 
+            if (product.OwnerId.IsNullOrWhiteSpace())
+                product.OwnerId = null;
+
+
 
             //fixTheMenuFeautreKeys(product);
         }

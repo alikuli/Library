@@ -10,7 +10,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.ReturnUrl)
-    @Html.HiddenFor(x => x.MenuPathId)
+    @Html.HiddenFor(x => x.ParentId)
 
     <div class="form-horizontal">
 

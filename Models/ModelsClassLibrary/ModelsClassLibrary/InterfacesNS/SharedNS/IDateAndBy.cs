@@ -8,8 +8,8 @@ namespace InterfacesLibrary.SharedNS
         DateTime? Date { get; set; }
         string By { get; set; }
 
-        void SetToTodaysDate(string byUser);
-        void SetToTodaysDateStart(string byUser);
+        void SetToTodaysDate(string byUser, string byUserId);
+        void SetToTodaysDateStart(string byUser, string byUserId);
         void SetDateTo(string byUser, int noOfDays);
 
     }

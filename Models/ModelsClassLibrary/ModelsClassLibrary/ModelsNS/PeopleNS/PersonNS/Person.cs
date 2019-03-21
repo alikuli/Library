@@ -5,12 +5,13 @@ using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
+using ModelsClassLibrary.ModelsNS.MessageNS;
+using ModelsClassLibrary.ModelsNS.PeopleMessageNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS.EmailAddressNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS.PhoneNS;
 //using ModelsClassLibrary.ModelsNS.PlacesNS.PhoneNS;
-using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Collections.Generic;
@@ -44,6 +45,10 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
         }
 
 
+        /// <summary>
+        /// This collects all the product children visited by the person.
+        /// </summary>
+        //public virtual ICollection<ProductChild> VisitedProductChildren { get; set; }
 
         /// <summary>
         /// Every user can have many addresses.
@@ -53,7 +58,6 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
         public virtual ICollection<AddressMain> Addresses { get; set; }
         public virtual ICollection<EmailAddress> EmailAddresses { get; set; }
         public virtual ICollection<Phone> Phones { get; set; }
-
 
 
 
@@ -79,6 +83,11 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
         [Display(Name = "Category")]
         public virtual PersonCategory PersonCategory { get; set; }
 
+
+        /// <summary>
+        /// Note. Thes default address create a field in the other files which is hidden, If I try to show it, then
+        /// I have a problem with EF which does not like 1 to 1 relationships
+        /// </summary>
 
         public string DefaultBillAddressId { get; set; }
         public AddressMain DefaultBillAddress { get; set; }
@@ -172,14 +181,14 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "LiscenseBack");
         }
 
+        public virtual ICollection<Message> FromPerson { get; set; }
+
+        public virtual ICollection<PeopleMessage> MessagesToPeople { get; set; }
 
 
 
 
-
-
-
-        public virtual ICollection<ProductChild> ProductChildren { get; set; }
+        //public virtual ICollection<ProductChild> ProductChildren { get; set; }
 
 
         public virtual ICollection<GlobalComment> GlobalComments { get; set; }

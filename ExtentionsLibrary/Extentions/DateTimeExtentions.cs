@@ -53,6 +53,14 @@ namespace AliKuli.Extentions
             return (timeSpan.TotalDays / 365.2425);
         }
 
+        public static DateTime ThreeMonthsAgoFirstOfMonth(this DateTime currDate)
+        {
+            DateTime threeMonthsAgo = currDate.AddMonths(-3);
+            threeMonthsAgo = new DateTime(threeMonthsAgo.Year, threeMonthsAgo.Month, 1);
+            return threeMonthsAgo;
+
+        }
+
 
     }
 }

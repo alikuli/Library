@@ -10,7 +10,6 @@ namespace DalLibrary.DalNS
     {
 
 
-        #region SelectList
         public virtual SelectList SelectList()
         {
 
@@ -44,7 +43,6 @@ namespace DalLibrary.DalNS
             return selectList;
         }
 
-        #endregion
 
 
 

@@ -1,9 +1,12 @@
 ﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using ModelsClassLibrary.ViewModels;
-
+using UowLibrary.MenuNS.MenuStateNS;
+using System.Linq;
 
 namespace UowLibrary.MenuNS
 {
@@ -25,11 +28,16 @@ namespace UowLibrary.MenuNS
         public override void Event_ModifyIndexItem(IndexListVM indexListVM, IndexItemVM indexItem, ICommonWithId icommonWithId)
         {
             base.Event_ModifyIndexItem(indexListVM, indexItem, icommonWithId);
-            indexItem.MenuManager.IsNullThrowException();
-            MenuPath1 menuPath1 = icommonWithId as MenuPath1;
-            menuPath1.IsNullThrowException("cannot unbox Menupath1");
+            MenuPath1 mp1 = icommonWithId as MenuPath1;
+            mp1.IsNullThrowException("Unable to unbox");
+            //send in a MenuPathMain that is a part of this MenuPath1
+            MenuPathMain mpm = mp1.MenuPathMains.FirstOrDefault();
+            //mpm.IsNullThrowException("mpm");
 
-            getPictureList(indexItem, menuPath1);
+            indexItem.MenuManager = new MenuManager(mpm, null, null, MenuENUM.EditMenuPath1, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl);
+
+
+            indexItem.MenuManager.PictureAddresses = GetPictureList(mp1);
 
 
         }

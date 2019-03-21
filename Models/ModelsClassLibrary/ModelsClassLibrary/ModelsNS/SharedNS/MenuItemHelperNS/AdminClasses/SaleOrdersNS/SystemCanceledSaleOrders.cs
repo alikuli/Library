@@ -1,0 +1,43 @@
+﻿using System.Configuration;
+
+namespace ModelsClassLibrary.ModelsNS.SharedNS
+{
+    public class SystemCanceledSaleOrders : IMenuItemHelper
+    {
+        public SystemCanceledSaleOrders()
+        {
+
+        }
+        public SystemCanceledSaleOrders(decimal money, double quantity)
+        {
+            Money = money;
+            Quantity = quantity;
+        }
+
+        decimal Money { get; set; }
+        double Quantity { get; set; }
+        public string MenuItem
+        {
+            get
+            {
+                string content = ConfigurationManager.AppSettings["menu.system_CanceledSaleOrders_MenuItem"];
+                string str = string.Format(content, Money, Quantity);
+                return str;
+
+            }
+        }
+
+        public string ToolTip
+        {
+            get
+            {
+                string content = ConfigurationManager.AppSettings["menu.system_CanceledSaleOrders_ToolTip"];
+                string str = string.Format(content, Money, Quantity);
+                return str;
+            }
+        }
+
+
+
+    }
+}

@@ -59,31 +59,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             UserName = userName;
             UserId = userId;
             MenuParameters = new MenuParameters(menuEnum, Entity.Id);
-            //Menu = new MenuParameters(menuEnum, menuPathMainId, productId, productChildId, returnUrl);
-            //todo what should we do if userName is empty?
-
-            //if (IsIHasUploads)
-            //{
-            //    //we need to load the user in entities that require user right here...
-            //    //because user is required to find where to store the file.
-
-            //MiscUploadedFiles.FileLocationConst = Entity_IHasUploads.MiscFilesLocation();
-            //}
-
-            ////this is where the file gets it's location. The location comes from the constants
-            //if (IsIUserHasUploads)
-            //{
-            //    SelfieUpload.FileLocationConst = Entity_IUserHasUploads.SelfieLocationConst(UserName);
-
-            //    IdCardFront.FileLocationConst = Entity_IUserHasUploads.IdCardFrontLocationConst(UserName);
-            //    IdCardBack.FileLocationConst = Entity_IUserHasUploads.IdCardBackLocationConst(UserName);
-
-            //    PassportFront.FileLocationConst = Entity_IUserHasUploads.PassportFrontLocationConst(UserName);
-            //    PassportVisa.FileLocationConst = Entity_IUserHasUploads.PassportVisaLocationConst(UserName);
-
-            //    LiscenseFront.FileLocationConst = Entity_IUserHasUploads.LiscenseFrontLocationConst(UserName);
-            //    LiscenseBack.FileLocationConst = Entity_IUserHasUploads.LiscenseBackLocationConst(UserName);
-            //}
 
         }
 
@@ -99,7 +74,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             cip.Menu = MenuParameters;
             return cip;
         }
-        //public MenuParameters Menu { get; set; }
 
         #region Uploads
 

@@ -24,7 +24,10 @@ namespace UowLibrary.AddressNS
                 if (lstAsFileDoc.IsNullOrEmpty())
                     return null;
 
-                var lst = lstAsFileDoc.Where(x => x.People.Any(y => y.Id == personId)).ToList();
+                //This is incorrect. This is a many to 1 relationship where the address will have a
+                //single person and the person will have many addresses
+                //var lst = lstAsFileDoc.Where(x => x.People.Any(y => y.Id == personId)).ToList();
+                var lst = lstAsFileDoc.Where(x => x.PersonId == personId).ToList();
 
                 if (lst.IsNullOrEmpty())
                     return null;

@@ -1,5 +1,6 @@
 ﻿using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
@@ -11,8 +12,9 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
     public class IndexMenuProductChild : MenuStateAbstract
     {
 
-        public IndexMenuProductChild(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameter likeUnlikesCounter)
+        public IndexMenuProductChild(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter)
             : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
+
 
         public override MenuENUM EditLink_MenuEnum
         {
@@ -51,7 +53,7 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
             get { return true; }
         }
 
-        
+
 
         public override string CreateAndEditLink_ControllerName
         {
@@ -76,5 +78,8 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
                 return string.Format("{0}", Product.FullName());
             }
         }
+
+        public Person CustomerPerson { get; set; }
+        public Person OwnerPerson { get; set; }
     }
 }

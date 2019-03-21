@@ -24,7 +24,7 @@ namespace DalLibrary.DalNS
         private void Fix(TEntity entity)
         {
             Fix_Name(entity);
-            entity = Fix_Dates(entity);
+            //entity = Fix_Dates(entity);
         }
 
         /// <summary>
@@ -34,14 +34,14 @@ namespace DalLibrary.DalNS
         private TEntity Fix_Dates(TEntity entity)
         {
             if (IsCreating)
-                entity.MetaData.Created.SetToTodaysDate("");
+                entity.MetaData.Created.SetToTodaysDate("","");
 
             if (IsUpdating)
-                entity.MetaData.Modified.SetToTodaysDate("");
+                entity.MetaData.Modified.SetToTodaysDate("","");
 
 
             if (IsDeleting)
-                entity.MetaData.Deleted.SetToTodaysDate("");
+                entity.MetaData.Deleted.SetToTodaysDate("","");
 
             return entity;
         }

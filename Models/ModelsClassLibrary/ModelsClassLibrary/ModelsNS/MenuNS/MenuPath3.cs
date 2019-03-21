@@ -6,6 +6,7 @@ using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 using ModelsClassLibrary.ModelsNS.MenuNS;
+using ModelsClassLibrary.ModelsNS.MessageNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Collections.Generic;
 using System.IO;
@@ -31,6 +32,7 @@ namespace ModelsClassLibrary.MenuNS
         public virtual ICollection<MenuPathMain> MenuPathMains { get; set; }
         public virtual ICollection<GlobalComment> GlobalComments { get; set; }
         public virtual ICollection<LikeUnlike> LikeUnlikes { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
         public virtual ICollection<MenuFeature> MenuFeatures { get; set; }
 
         string IHasUploads.MiscFilesLocation()

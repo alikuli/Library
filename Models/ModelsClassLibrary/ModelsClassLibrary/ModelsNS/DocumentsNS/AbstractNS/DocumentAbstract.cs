@@ -10,11 +10,64 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.AbstractNS
 {
     public abstract partial class DocumentAbstract : CommonWithId
     {
+
+        public DocumentAbstract()
+        {
+
+        }
+
+        public DocumentAbstract(
+            string ownerId,
+            string customerId,
+            string addressInformToId,
+            string addressShipToId,
+            string poNumber,
+            DateTime poDate,
+            SelectList selectListOwner,
+            SelectList selectListCustomer,
+            SelectList selectListAddressInformTo,
+            SelectList selectListAddressShipTo)
+        {
+            InitializeAbstract(
+                ownerId,
+                customerId,
+                addressInformToId,
+                addressShipToId,
+                poNumber,
+                poDate,
+                selectListOwner,
+                selectListCustomer,
+                selectListAddressInformTo,
+                selectListAddressShipTo);
+        }
+
+
+        protected virtual void InitializeAbstract(
+            string ownerId,
+            string customerId,
+            string addressInformToId,
+            string addressShipToId,
+            string poNumber,
+            DateTime poDate,
+            SelectList selectListOwner,
+            SelectList selectListCustomer,
+            SelectList selectListAddressInformTo,
+            SelectList selectListAddressShipTo)
+        {
+            OwnerId = ownerId;
+            CustomerId = customerId;
+            AddressInformToId = addressInformToId;
+            AddressShipToId = addressShipToId;
+            PoNumber = poNumber;
+            PoDate = poDate;
+            SelectListOwner = selectListOwner;
+            SelectListCustomer = selectListCustomer;
+            SelectListAddressInformTo = selectListAddressInformTo;
+            SelectListAddressShipTo = selectListAddressShipTo;
+        }
+
         [Display(Name = "Document Number")]
         public long DocumentNumber { get; set; }
-
-
-
 
         [Display(Name = "Owner")]
         public string OwnerId { get; set; }
@@ -54,6 +107,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.AbstractNS
 
         [NotMapped]
         public SelectList SelectListAddressShipTo { get; set; }
+
 
         [Display(Name = "PO #")]
         public string PoNumber { get; set; }

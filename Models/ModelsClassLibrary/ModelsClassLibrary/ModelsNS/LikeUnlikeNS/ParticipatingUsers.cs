@@ -5,9 +5,9 @@ using System.Text;
 namespace ModelsClassLibrary.ModelsNS.SharedNS
 {
     [NotMapped]
-    public class ParticipatingUsers
+    public class ParticipatingPeople
     {
-        public ParticipatingUsers()
+        public ParticipatingPeople()
         {
 
         }
@@ -17,7 +17,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="imageLocation"></param>
-        public ParticipatingUsers(string id, string name, string imageLocation, string userComment, DateTime createDate)
+        public ParticipatingPeople(string id, string name, string imageLocation, string userComment, DateTime createDate)
         {
             Id = id;
             Name = name;
@@ -28,6 +28,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public string Id { get; set; }
         public string Name { get; set; }
         public string ImageLocation { get; set; }
+        public string ImageClickThroughLink { get; set; }
         public string UserAddressFixed { get; set; }
         public string UserComment { get; set; }
         public DateTime CreateDate { get; set; }

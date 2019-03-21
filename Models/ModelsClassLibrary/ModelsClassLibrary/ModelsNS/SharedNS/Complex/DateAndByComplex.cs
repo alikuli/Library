@@ -39,20 +39,22 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         [Display(Name = "By")]
         [MaxLength(50)]
         public string By { get; set; }
-
+        public string ByUserId { get; set; }
 
 
         #region Methods
 
-        public void SetToTodaysDate(string byUser)
+        public void SetToTodaysDate(string byUser, string byUserId)
         {
             Date = DateTime.UtcNow;
             By = byUser;
+            ByUserId = byUserId;
         }
-        public void SetToTodaysDateStart(string byUser)
+        public void SetToTodaysDateStart(string byUser, string byUserId)
         {
             DateStart = DateTime.UtcNow;
             By = byUser;
+            ByUserId = byUserId;
 
         }
 
@@ -75,6 +77,15 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         }
 
+
+        public virtual void Clear()
+        {
+            DateStart = null;
+            Date = null;
+            By = "";
+            ByUserId = "";
+
+        }
 
         public virtual List<string> FieldsToLoadFromView()
         {

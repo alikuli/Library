@@ -1,20 +1,13 @@
 ﻿using AliKuli.Extentions;
-using AliKuli.UtilitiesNS;
-using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
-using ErrorHandlerLibrary;
-using ErrorHandlerLibrary.ExceptionsNS;
 using MarketPlace.Web4.Controllers;
 using Microsoft.AspNet.Identity;
-using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.ParametersNS;
-using UowLibrary.PageViewNS;
-using UowLibrary.PlayersNS;
 using UserModelsLibrary.ModelsNS;
 
 namespace MarketPlace.Web6.Controllers
@@ -24,7 +17,7 @@ namespace MarketPlace.Web6.Controllers
     {
         readonly ManageControllerBiz _manageControllerUOW;
         public ManageController(ManageControllerBiz biz, AbstractControllerParameters param)
-            : base(param) 
+            : base(param)
         {
             _manageControllerUOW = biz;
         }

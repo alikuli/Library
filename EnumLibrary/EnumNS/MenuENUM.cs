@@ -3,13 +3,14 @@ namespace EnumLibrary.EnumNS
 {
     public enum MenuENUM
     {
-//        unknown,
+        Unknown,
         IndexDefault,
         IndexMenuPath1,
         IndexMenuPath2,
         IndexMenuPath3,
         IndexMenuProduct,
         IndexMenuProductChild,
+        IndexMenuProductChildLandingPage,
         EditDefault,
         EditMenuPath1,
         EditMenuPath2,

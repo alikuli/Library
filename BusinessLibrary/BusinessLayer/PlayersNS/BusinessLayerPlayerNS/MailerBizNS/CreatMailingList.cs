@@ -75,14 +75,14 @@ namespace UowLibrary.MailerNS
             dateTickStr = dateTickStr.Substring(dateTickStr.Length - 5); //gets last 5 digits
 
             header.Name = string.Format("{1} -{0} ", dateTickStr, UserName);
-            header.AddBeginAndEndDateController(mailLocalOrForiegnEnum, mailServiceEnum, UserName);
+            header.AddBeginAndEndDateController(mailLocalOrForiegnEnum, mailServiceEnum, UserName, UserId);
 
             header.MailLocalOrForiegnEnum = mailLocalOrForiegnEnum;
             header.MailServiceEnum = mailServiceEnum;
             header.BatchNo = getNextBatchNo();
-            header.BeginDate.SetToTodaysDate(UserId);
+            header.BeginDate.SetToTodaysDate(UserName, UserId);
 
-            header.EndDate.SetToTodaysDate(UserId);
+            header.EndDate.SetToTodaysDate(UserName, UserId);
             int timeAllowed = NoOfDaysAllowed(mailServiceEnum, mailLocalOrForiegnEnum);
             header.EndDate.Date = header.EndDate.Date.Value.AddDays(timeAllowed);
             header.Verification.SetTo(VerificaionStatusENUM.SelectedForProcessing);
@@ -215,7 +215,7 @@ namespace UowLibrary.MailerNS
         private List<AddressVerificationTrx> createListOfVerificationAddresses(int qtyAllowedToUser, List<AddressVerificationTrx> list)
         {
             //get the current user's Id.
-            string personId  = GetPersonIdForCurrentUser();
+            string personId = GetPersonIdForCurrentUser();
 
             int qty = 0;
             List<AddressVerificationTrx> addyVerifLst = new List<AddressVerificationTrx>();
@@ -223,7 +223,7 @@ namespace UowLibrary.MailerNS
             {
                 //dont accept the addressverification requests
                 //of the mailer... someone else will do those.
-                if (item.Address.People.Any(x => x.Id == personId))
+                if (item.Address.PersonId== personId)
                     continue;
 
                 qty++;

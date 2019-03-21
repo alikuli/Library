@@ -18,16 +18,14 @@ namespace ModelsClassLibrary.ModelsNS.PlacesNS
             VerificationStatusEnum = VerificaionStatusENUM.NotVerified;
         }
 
-        ///// <summary>
-        ///// This is where the verification number is stored.
-        ///// </summary>
-        ///// 
-        //[Required]
+        /// <summary>
+        /// one person can have many contacts
+        /// </summary>
         public string PersonId { get; set; }
         public Person Person { get; set; }
 
 
-        public virtual ICollection<Person> People { get; set; }
+        //public virtual ICollection<Person> People { get; set; }
 
         [Display(Name = "Verification Number")]
         public string VerificationNumber { get; set; }

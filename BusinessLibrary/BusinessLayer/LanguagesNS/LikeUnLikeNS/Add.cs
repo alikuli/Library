@@ -3,6 +3,7 @@ using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS;
 using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
+using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
@@ -13,12 +14,16 @@ namespace UowLibrary.LikeUnlikeNS
 {
     public partial class LikeUnlikeBiz : BusinessLayer<LikeUnlike>
     {
-        public LikeUnlikeParameter AddLikeAndReturnCount(string menuPath1Id, string menuPath2Id, string menuPath3Id, string productId, string productChildId, string userId, bool isLike, string comment)
+        public LikeUnlikeParameters AddLikeAndReturnCount(string menuPath1Id, string menuPath2Id, string menuPath3Id, string productId, string productChildId, string userId, bool isLike, string comment)
         {
             userId.IsNullOrWhiteSpaceThrowException("No user is logged in!");
+            Person person = UserBiz.GetPersonFor(userId);
+            person.IsNullThrowException("Person");
+            string personId = person.Id;
+            personId.IsNullOrWhiteSpaceThrowException("personId");
 
             LikeUnlike likeUnlike = Factory() as LikeUnlike;
-            likeUnlike.Initialize(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, userId, isLike, comment);
+            likeUnlike.Initialize(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, personId, isLike, comment);
 
             if (!menuPath1Id.IsNullOrWhiteSpace())
             {
@@ -66,15 +71,14 @@ namespace UowLibrary.LikeUnlikeNS
                 productChildId = null;
             }
 
-            if (!userId.IsNullOrWhiteSpace())
+            if (!personId.IsNullOrWhiteSpace())
             {
-                likeUnlike.UserId = userId;
-                ApplicationUser user = _userBiz.Find(userId);
-                user.IsNullThrowException();
-                user.LikeUnlikes.Add(likeUnlike);
+                likeUnlike.PersonId = personId;
+                person.IsNullThrowException();
+                person.LikeUnlikes.Add(likeUnlike);
             }
             //if it is a like delete the similar dislike. If it is a dislike delete the similar like
-            bool relatedOppoisteDeleted = deleteTheRelatedLikeUnlike(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, userId, isLike);
+            bool relatedOppoisteDeleted = deleteTheRelatedLikeUnlike(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, personId, isLike);
             CreateAndSave(CreateControllerCreateEditParameter(likeUnlike as ICommonWithId));
 
             return Count(
@@ -83,15 +87,15 @@ namespace UowLibrary.LikeUnlikeNS
                 menuPath3Id,
                 productId,
                 productChildId,
-                userId, 
+                userId,
                 relatedOppoisteDeleted);
 
         }
 
-        private bool deleteTheRelatedLikeUnlike(string menuPath1Id, string menuPath2Id, string menuPath3Id, string productId, string productChildId, string userId, bool isLike)
+        private bool deleteTheRelatedLikeUnlike(string menuPath1Id, string menuPath2Id, string menuPath3Id, string productId, string productChildId, string personId, bool isLike)
         {
             LikeUnlike dummy = Factory() as LikeUnlike;
-            dummy.Initialize(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, userId, !isLike, "dummy content");
+            dummy.Initialize(menuPath1Id, menuPath2Id, menuPath3Id, productId, productChildId, personId, !isLike, "dummy content");
 
             string nameId = dummy.KeyGenerator();
             LikeUnlike lu = FindAll().FirstOrDefault(x => x.Name == nameId);

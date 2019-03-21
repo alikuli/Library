@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "IWannaTrade";
+}
+
+
+
+@using (Html.BeginForm())
+{
+    <div class="m-5 p3">
+        <button type="submit" class="btn btn-success btn-lg">I Want To Trade!</button>
+        <span>
+            @Html.ActionLink("Cancel", "Index", "Menus", null, new { @class = "btn btn-danger btn-lg" })
+        </span>
+
+    </div>
+}

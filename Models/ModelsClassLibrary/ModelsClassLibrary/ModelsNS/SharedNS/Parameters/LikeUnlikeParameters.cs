@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UserModels;
 namespace ModelsClassLibrary.ModelsNS.SharedNS.Parameters
 {
-    public class LikeUnlikeParameter
+    public class LikeUnlikeParameters
     {
-        public LikeUnlikeParameter(int likeCount, int unlikeCount, string kindOfLike)
+        public LikeUnlikeParameters(int likeCount, int unlikeCount, string kindOfLike)
         {
             LikeCount = likeCount;
             UnlikeCount = unlikeCount;
@@ -31,7 +31,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.Parameters
         ///The opposite of this has been deleted. Eg. If we have liked, then there was an unlike which was deleted.
         public bool OppositeDeleted { get; set; }
         public string KindOfLike { get; set; }
-        public List<ParticipatingUsers> UsersWhoLikedThis { get; set; }
-        public List<ParticipatingUsers> UsersWhoDidNotLikedThis { get; set; }
+        public List<ParticipatingPeople> PeopleWhoLikedThis { get; set; }
+        public List<ParticipatingPeople> PeopleWhoDidNotLikedThis { get; set; }
     }
 }

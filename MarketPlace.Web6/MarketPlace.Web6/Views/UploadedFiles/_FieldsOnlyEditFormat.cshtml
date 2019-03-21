@@ -1,7 +1,5 @@
 ﻿@model ModelsClassLibrary.ModelsNS.UploadedFileNS.UploadedFile
 
-@*this is where you will return if ReturnUrl has any value*@
-@Html.HiddenFor(model => model.ReturnUrl)
 
 @{
     string theUrl = Model.RelativePathWithFileName();
@@ -9,43 +7,95 @@
 }
     <div class="form-horizontal">
 
+        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.Name)
+        @Html.HiddenFor(x => x.RelativeWebsitePath)
+
         <div class="form-group">
             <div class="control-label col-md-2">
                 Image
             </div>
-            <div class="col-md-10">
-                <img src="@urlString" alt="The Image" height="200" width="200" style="margin: 10px;" />
+            <div class="container" style="height: 200px;">
+                <img src="@urlString" alt="The Image" style="margin: 10px;" id="image" />
+                <canvas id="canvas"></canvas>
             </div>
         </div>
+        
+        <div class="btn btn-group mt-1 btn-light flex-wrap justify-content-center my-btn-Group mx-auto" role="group">
 
-@Html.Partial(@"_Name_And_DetailInfo")
+            <span data-toggle="tooltip" title="Rotate Image 90 degrees to left." data-placement="bottom">
+                <a href="#" class="m-1 p-0 btn" id="rotate90Left"><img src="~/ContentMine/Icons/RotateLeft.png" /></a>
+            </span>
+
+            <span data-toggle="tooltip" title="Rotate Image 90 degrees to Right."  data-placement="bottom">
+                <a href="#" class="m-1 p-0 btn" id="rotate90Right"><img src="~/ContentMine/Icons/RotateRight.png" class="m-0" /></a>
+            </span>
+            @{
+
+                string actionName = "SavePicture";
+                string controlerName = "UploadedFiles";
+                string pathToFileSave = Url.Action(actionName, controlerName);
+            }
+
+            <span data-toggle="tooltip" title="Save this image" data-placement="bottom">
+                <a href="#" class="m-1 btn fas fa-save btn-info" id="saveImage" data-urltofile="@pathToFileSave"> </a>
+            </span>
 
 
 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.OriginalNameWithoutExtention, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OriginalNameWithoutExtention, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OriginalNameWithoutExtention, "", new { @class = "text-danger" })
-            </div>
+
+            <span data-toggle="tooltip" title="Download" data-placement="bottom">
+                <a id="download" class="m-1 btn btn-sm btn-warning" download="mqdefault.jpg" >
+                    <img src="~/ContentMine/Icons/DownLoad.png" class="m-0 p-0" />
+                </a>
+
+            </span>
+
+
+
+
+
+@*
+            <span data-toggle="tooltip" title="Snow flake." data-placement="bottom">
+        <a href="#" class="m-1 btn fas fa-snowflake btn-success"> </a>
+    </span>*@
+
+
+            @{
+
+                string actionNameDel = "Delete";
+                string controlerNameDel = "UploadedFiles";
+                string deleteImage = Url.Action(actionNameDel, controlerNameDel, new { id= Model.Id});
+            }
+            <span data-toggle="tooltip" title="Delete this image" data-placement="bottom">
+                <a href="@deleteImage" class="m-1 btn fas fa-trash-alt btn-danger"> </a>
+            </span>
+            <span data-toggle="tooltip" title="Life ring." data-placement="bottom">
+                <a href="#" class="m-1 btn fas fa-life-ring btn-light"> </a>
+            </span>
+            <span data-toggle="tooltip" title="Buy. I want it now!." data-placement="bottom">
+                <a href="#" class="btn btn-success ">Buy</a>
+            </span>
+            <span data-toggle="tooltip" title="I want it but I want to offer another price. I know there is a chance that my offer may be declined." data-placement="bottom">
+                <a href="#" class="btn btn-warning ml-1 mr-1">Offer</a>
+            </span>
+            <span data-toggle="tooltip" title="I would like to send the owner a message regarding this product." data-placement="bottom">
+                <a href="" class="btn btn-info ">Message</a>
+            </span>
+            <p>
+                <strong>Rotate Image: </strong>
+                <a href="javascript:;" id="resetImage">Reset Image</a>
+                <a href="javascript:;" id="rotate90">90&deg;</a>
+                <a href="javascript:;" id="rotate180">180&deg;</a>
+                <a href="javascript:;" id="rotate270">270&deg;</a>
+            </p>
+
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Extention, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Extention, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Extention, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.RelativeWebsitePath, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RelativeWebsitePath, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RelativeWebsitePath, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
      </div>
+
 

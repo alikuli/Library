@@ -115,8 +115,8 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         /// This needs to be shown as a huidden field in all the views. So, that has been done, currently in Delete and Edit.
         /// It will have to done on a need to basis in the _FieldsOnlyEditFormat.cshtml files.
         /// </summary>
-        [NotMapped]
-        public string ReturnUrl { get; set; }
+        //[NotMapped]
+        //public string ReturnUrl { get; set; }
 
         public MetaDataComplex MetaData { get; set; }
 
@@ -134,14 +134,14 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
             MetaData.Modified.DateStart = icommonWithId.MetaData.Modified.DateStart;
 
-            MetaData.IsActive = icommonWithId.MetaData.IsActive;
+            MetaData.IsInactive = icommonWithId.MetaData.IsInactive;
             MetaData.IsDeleted = icommonWithId.MetaData.IsDeleted;
             MetaData.IsDeleteLocked = icommonWithId.MetaData.IsDeleteLocked;
             MetaData.IsEditLocked = icommonWithId.MetaData.IsEditLocked;
 
             DetailInfoToDisplayOnWebsite = icommonWithId.DetailInfoToDisplayOnWebsite;
             Name = icommonWithId.Name;
-            ReturnUrl = icommonWithId.ReturnUrl;
+            //ReturnUrl = icommonWithId.ReturnUrl;
             Comment = icommonWithId.Comment;
 
 

@@ -1,0 +1,43 @@
+﻿using System.Configuration;
+
+namespace ModelsClassLibrary.ModelsNS.SharedNS
+{
+    public class SystemCanceledPurchaseOrders : IMenuItemHelper
+    {
+        public SystemCanceledPurchaseOrders()
+        {
+
+        }
+        public SystemCanceledPurchaseOrders(decimal money, double quantity)
+        {
+            Money = money;
+            Quantity = quantity;
+        }
+
+        decimal Money { get; set; }
+        double Quantity { get; set; }
+        public string MenuItem
+        {
+            get
+            {
+                string content = ConfigurationManager.AppSettings["menu.system_CanceledPurchaseOrders_MenuItem"];
+                string str = string.Format(content, Money, Quantity);
+                return str;
+
+            }
+        }
+
+        public string ToolTip
+        {
+            get
+            {
+                string content = ConfigurationManager.AppSettings["menu.system_CanceledPurchaseOrders_ToolTip"];
+                string str = string.Format(content, Money, Quantity);
+                return str;
+            }
+        }
+
+
+
+    }
+}

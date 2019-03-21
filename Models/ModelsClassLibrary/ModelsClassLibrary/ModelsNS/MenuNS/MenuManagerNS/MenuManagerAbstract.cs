@@ -6,6 +6,7 @@ using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
+using UserModels;
 
 namespace UowLibrary.MenuNS.MenuStateNS
 {
@@ -19,7 +20,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
         //MenuPath2 _menuPath2;
         //MenuPath3 _menuPath3;
 
-        public MenuStateAbstract(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameter likeUnlikesCounter)
+        public MenuStateAbstract(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter)
         {
             _menuPathMain = menuPathMain;
             _product = product;
@@ -29,6 +30,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
         }
 
         //public abstract string EditLink_Id { get; }
+
         public MenuENUM MenuEnum { get { return _menuEnum; } }
         public abstract MenuENUM EditLink_MenuEnum { get; }
         public abstract string CreateLink_Name { get; }
@@ -253,6 +255,6 @@ namespace UowLibrary.MenuNS.MenuStateNS
             }
         }
 
-        public virtual LikeUnlikeParameter LikeUnlikesCounter { get; set; }
+        public virtual LikeUnlikeParameters LikeUnlikesCounter { get; set; }
     }
 }

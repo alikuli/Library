@@ -1,5 +1,5 @@
-﻿using InterfacesLibrary.SharedNS;
-using AliKuli.Extentions;
+﻿using AliKuli.Extentions;
+using InterfacesLibrary.SharedNS;
 using System;
 
 namespace ModelsClassLibrary.ModelsNS.ProductChildNS
@@ -13,7 +13,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 
             ProductChild pc = icommonWithId as ProductChild;
 
-            if(pc.IsNull())
+            if (pc.IsNull())
             {
                 throw new Exception("Product Child is Null. Programming error.");
             }
@@ -23,8 +23,9 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
             Sell = pc.Sell;
             Buy = pc.Buy;
             ExpiryDate = pc.ExpiryDate;
-            SerialNumber = pc.SerialNumber;
             OwnerId = pc.OwnerId;
+            SerialNumber = pc.SerialNumber;
+            IdentificationNumber = pc.IdentificationNumber;
 
         }
 

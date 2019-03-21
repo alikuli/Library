@@ -37,14 +37,14 @@ namespace UowLibrary.MailerNS
                 MailerBiz.GetBugetedCost(addressVerificationHdr.MailLocalOrForiegnEnum, addressVerificationHdr.MailServiceEnum);
 
             addressVerificationHdr.Verification.VerificaionStatusEnum = VerificaionStatusENUM.Mailed;
-            addressVerificationHdr.Verification.MailedDate.SetToTodaysDate(UserId);
+            addressVerificationHdr.Verification.MailedDate.SetToTodaysDate(UserName, UserId);
 
             //update all the children to mailed.
             addressVerificationHdr.AddressVerificationTrxs.IsNullOrEmptyThrowException("There are no letters");
             foreach (AddressVerificationTrx letter in addressVerificationHdr.AddressVerificationTrxs)
             {
                 letter.Verification.VerificaionStatusEnum = VerificaionStatusENUM.Mailed;
-                letter.Verification.MailedDate.SetToTodaysDate(UserId);
+                letter.Verification.MailedDate.SetToTodaysDate(UserName, UserId);
                 AddressVerificationTrxBiz.Update(letter);
             }
 

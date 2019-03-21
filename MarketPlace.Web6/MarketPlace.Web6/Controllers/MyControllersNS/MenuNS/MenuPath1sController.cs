@@ -11,7 +11,6 @@ using UowLibrary.FeatureNS.MenuFeatureNS;
 //using UowLibrary.FeaturesNS;
 using UowLibrary.MenuNS;
 using UowLibrary.ParametersNS;
-
 namespace MarketPlace.Web6.Controllers
 {
     public class MenuPath1sController : EntityAbstractController<MenuPath1>
@@ -52,6 +51,11 @@ namespace MarketPlace.Web6.Controllers
             return RedirectToAction("Edit", new { id = menupathId });
         }
 
+
+
+
+
+
         public ActionResult AddFeature(string id, string parentName, string returnUrl)
         {
             id.IsNullOrWhiteSpaceThrowArgumentException("Id");
@@ -79,7 +83,7 @@ namespace MarketPlace.Web6.Controllers
             }
             if (menuFeatureModel.ReturnUrl.IsNullOrWhiteSpace())
                 return View("Index");
-            
+
             return Redirect(menuFeatureModel.ReturnUrl);
         }
 
@@ -139,7 +143,7 @@ namespace MarketPlace.Web6.Controllers
             returnUrl.IsNullOrWhiteSpaceThrowArgumentException("returnUrl");
 
             CreateNewFeatureModel createNewFeatureModel = new CreateNewFeatureModel();
-            createNewFeatureModel.MenuPathId = menuPathid;
+            createNewFeatureModel.ParentId = menuPathid;
             createNewFeatureModel.ReturnUrl = returnUrl;
 
             return View(createNewFeatureModel);
@@ -165,5 +169,18 @@ namespace MarketPlace.Web6.Controllers
             return Redirect(createNewFeatureModel.ReturnUrl);
 
         }
+
+        //public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        //{
+        //    if(!parm.Entity.IsNull())
+        //    {
+        //        MenuPath1 mp1 = parm.Entity as MenuPath1;
+        //        mp1.IsNullThrowException("mp1");
+        //        var temp = mp1.MiscFiles.ToList();
+        //        Biz.Detach(mp1);
+        //    }
+
+        //    return base.Event_CreateViewAndSetupSelectList(parm);
+        //}
     }
 }

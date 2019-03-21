@@ -1,0 +1,137 @@
+﻿@model ModelsClassLibrary.ModelsNS.ProductChildNS.ProductChild
+
+@{
+
+    string childReturnUrl = Request.Url.PathAndQuery;
+    int count = 0;
+    // VV string toolTipIdentificationNumber = "This is a unique identification number that can be given to the product. This is useful if you want to post several same products with different identification number, eg cars and their number plates.";
+    string liClass = "active";
+    string carouselItemClass = "carousel-item active";
+}
+
+
+
+
+
+<div class="container-fluid mx-auto text-center">
+    <div class="row mt-1">
+        <div class="col-lg-6 ">
+            <div class="border border-info rounded" style="background-color:azure">
+                <h1 class="background-ltgrey">@Model.FullName()</h1>
+                <h2>@Model.DetailInfoToDisplayOnWebsite</h2>
+                <h3>Not implemented</h3>
+                <div id="productCarousel" class="carousel slide " data-ride="carousel">
+
+
+                    <!-- Indicators -->
+                    <ul class="carousel-indicators">
+                        @foreach (var item in Model.MenuManager.PictureAddresses)
+                        {
+                        <li data-target="#productCarousel" data-slide-to="@count" class="@liClass"></li>
+                            count++;
+                            liClass = "";
+                        }
+                    </ul>
+
+                    <!-- The slideshow -->
+                    <div class="carousel-inner">
+                        @foreach (var item in Model.MenuManager.PictureAddresses)
+                        {
+                        <div class="@carouselItemClass container" style="height:300px;">
+                            <img src="@Url.Content(@item)" alt="" class="img-fluid" style="height:100%;">
+                        </div>
+                            carouselItemClass = "carousel-item";
+                        }
+                    </div>
+
+                    <!-- Left and right controls -->
+                    <a class="carousel-control-prev" href="#productCarousel" data-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#productCarousel" data-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </a>
+
+                </div>
+                <div class="btn btn-group mt-1 mb-2 btn-dark flex-wrap justify-content-center my-btn-Group mx-auto" role="group">
+                    <span data-toggle="tooltip" title="I LIKE it! Press to register and tell us why." data-placement="bottom">
+                        <a href="#" class="m-1 btn far fa-heart btn-danger"> </a>
+                    </span>
+                    <span data-toggle="tooltip" title="Thumbs up." data-placement="bottom">
+                        <a href="#" class="m-1 btn fas fa-thumbs-up btn-info"> </a>
+                    </span>
+                    <span data-toggle="tooltip" title="Snow flake." data-placement="bottom">
+                        <a href="#" class="m-1 btn fas fa-snowflake btn-success"> </a>
+                    </span>
+                    <span data-toggle="tooltip" title="satellite." data-placement="bottom">
+                        <a href="#" class="m-1 btn fas fa-satellite btn-warning"> </a>
+                    </span>
+                    <span data-toggle="tooltip" title="Life ring." data-placement="bottom">
+                        <a href="#" class="m-1 btn fas fa-life-ring btn-light"> </a>
+                    </span>
+                    <div class="w-100"></div>
+                    <span data-toggle="tooltip" title="Buy. I want it now!." data-placement="bottom">
+                        <a href="#" class="btn btn-success ">Buy</a>
+                    </span>
+                    <span data-toggle="tooltip" title="I want it but I want to offer another price. I know there is a chance that my offer may be declined." data-placement="bottom">
+                        <a href="#" class="btn btn-warning ml-1 mr-1">Offer</a>
+                    </span>
+                    <span data-toggle="tooltip" title="I would like to send the owner a message regarding this product." data-placement="bottom">
+                        <a href="#" class="btn btn-info ">Message</a>
+                    </span>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 border border-info rounded" @*style="background-color:aliceblue;"*@>
+            <div class="">
+                <h2 class="">Features</h2>
+                <ul class="text-left">
+                    @foreach (var item in Model.ProductChildFeatures.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).ToList())
+                    {
+                        if (@item.Comment.IsNullOrWhiteSpace())
+                        {
+                            continue;
+                        }
+                        <li>
+                            <strong>@item.Name:</strong>
+                            @item.Comment
+                        </li>
+                    }
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col-lg-6 order-sm-2 order-lg-0 ">
+            <div class=" border border-info rounded">
+                <h2 class="text-center">Owner Information</h2>
+                <ul>
+                    <li>Stoic. I have done business with this owner. He is an honest guy!</li>
+                    <li>RPLANE. I have done business with this owner. He is an honest guy!</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-6 my-col border border-info rounded">
+            <div class=" ">
+                <h2 class="text-center">Owner Information</h2>
+                <ul>
+                    <li>Stoic. I have done business with this owner. He is an honest guy!</li>
+                    <li>RPLANE. I have done business with this owner. He is an honest guy!</li>
+                    <li>Stoic. I have done business with this owner. He is an honest guy!</li>
+                    <li>RPLANE. I have done business with this owner. He is an honest guy!</li>
+                    <li>Stoic. I have done business with this owner. He is an honest guy!</li>
+                    <li>RPLANE. I have done business with this owner. He is an honest guy!</li>
+                    <li>Stoic. I have done business with this owner. He is an honest guy!</li>
+                    <li>RPLANE. I have done business with this owner. He is an honest guy!</li>
+                    <li>Stoic. I have done business with this owner. He is an honest guy!</li>
+                    <li>RPLANE. I have done business with this owner. He is an honest guy!</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

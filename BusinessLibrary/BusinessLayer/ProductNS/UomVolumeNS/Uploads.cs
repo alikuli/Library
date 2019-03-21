@@ -34,7 +34,7 @@ namespace UowLibrary
                 foreach (var file in uploadObj.FileList)
                 {
 
-                    file.MetaData.Created.SetToTodaysDate("");
+                    file.MetaData.Created.SetToTodaysDate(UserName, UserId);
 
                     file.MenuPath1 = entity as MenuPath1;
                     file.MenuPath1Id = entity.Id;

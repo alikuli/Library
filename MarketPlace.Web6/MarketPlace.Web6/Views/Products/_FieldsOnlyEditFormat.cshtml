@@ -3,26 +3,35 @@
 
 
 
-    @Html.Partial(@"_Name_And_DetailInfo")
-    @Html.Partial(@"~/Views/Products/_WeightActual.cshtml")
-    @Html.Partial(@"~/Views/Products/_WeightListed.cshtml")
-    @Html.Partial(@"~/Views/Products/_Volume.cshtml")
-    @Html.Partial(@"~/Views/Products/_ProductIdentifiers.cshtml")
-    @Html.Partial(@"~/Views/Products/_ProductFeatures.cshtml")
-    @Html.Partial(@"~/Views/Products/_ProductChildren.cshtml")
-    @Html.Partial(@"~/Views/Products/_Purchase.cshtml")
-    @*@Html.Partial(@"~/Views/Products/_Parent.cshtml")*@
-    <hr />
-        @Html.Partial(@"~/Views/Products/_MenuPath.cshtml")
-    <hr />
+@Html.Partial(@"_Name_And_DetailInfo")
+@Html.Partial(@"~/Views/Products/_WeightActual.cshtml")
+@Html.Partial(@"~/Views/Products/_WeightListed.cshtml")
+@Html.Partial(@"~/Views/Products/_Volume.cshtml")
+@Html.Partial(@"~/Views/Products/_ProductIdentifiers.cshtml")
+@Html.Partial(@"~/Views/Products/_ProductFeatures.cshtml")
+@Html.Partial(@"~/Views/Products/_ProductChildren.cshtml")
+@Html.Partial(@"~/Views/Products/_Purchase.cshtml")
+<hr />
+@Html.Partial(@"~/Views/Products/_MenuPath.cshtml")
+<hr />
 
-    @Html.Partial(@"~/Views/Products/_Quantity.cshtml")
-    <hr />
+@Html.Partial(@"~/Views/Products/_Quantity.cshtml")
+<hr />
 
 
 @Html.Partial(@"~/Views/Products/_Dimensions.cshtml")
 
-
+@if (@Model.ShowApproveButton)
+{ 
+    <div class="well p-3">
+        <div class="form-check-inline">
+            <div class="form-check-input">
+                @Html.CheckBoxFor(x => x.IsUnApproved)
+            </div>
+            <div class="">NOT Approved (Hide Product)</div>
+        </div>
+    </div>
+}
 
 
 

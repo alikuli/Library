@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.ToolsNS;
+using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -63,7 +64,7 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
         public UploadedFile(string originalNameNoExtention, string newNameNoExtention, string extention, string saveToRelativePath)
         {
             OriginalNameWithoutExtention = originalNameNoExtention;
-            Name =  Path.ChangeExtension(newNameNoExtention, extention);
+            Name = Path.ChangeExtension(newNameNoExtention, extention);
             Extention = extention;
             RelativeWebsitePath = saveToRelativePath;
         }
@@ -85,13 +86,12 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
         //    //string newNameWithExtention = AliKuli.ToolsNS.FileTools.CreateNewNameForFile(Path.GetExtension(fileNameWithPathAndExtention));
 
         //}
-        public override EnumLibrary.EnumNS.ClassesWithRightsENUM ClassNameForRights()
+
+
+        public override ClassesWithRightsENUM ClassNameForRights()
         {
-            return EnumLibrary.EnumNS.ClassesWithRightsENUM.UploadFile;
+            return ClassesWithRightsENUM.UploadFile;
         }
-
-
-
         /// <summary>
         /// This stores the Original name without the extention
         /// </summary>
@@ -125,11 +125,12 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
         public string RelativePathWithFileName()
         {
             if (RelativeWebsitePath.IsNullOrEmpty())
-                return Path.Combine(@"~/Content/MyImages/", "BlankImage.jpg");
+                return AliKuli.UtilitiesNS.ConfigManagerHelper.BlankPicture;
+            //    return Path.Combine(@"~/Content/MyImages/", "BlankImage.jpg");
 
             if (Name.IsNullOrEmpty())
-                return Path.Combine(@"~/Content/MyImages/", "BlankImage.jpg");
-
+                return AliKuli.UtilitiesNS.ConfigManagerHelper.BlankPicture;
+            //return Path.Combine(@"~/Content/MyImages/", "BlankImage.jpg");
             return Path.Combine(RelativeWebsitePath, Name);
         }
 

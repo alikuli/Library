@@ -3,7 +3,6 @@ using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.ViewModels;
 using UowLibrary.MenuNS.MenuStateNS;
 
@@ -81,6 +80,8 @@ namespace UowLibrary.ProductNS
 
             indexListVM.Show.EditDeleteAndCreate = true;
             indexListVM.IsImageTiled = true;
+            if (IsShowUnApproved)
+                indexListVM.Heading.Main = "Products for Approval";
             //MenuManager mm = makeMenuManager(parameters);
             //indexListVM.MenuManager = mm;
             //indexListVM.Heading.Column = makeName(indexListVM);
@@ -163,10 +164,10 @@ namespace UowLibrary.ProductNS
             Product product = icommonWithId as Product;
             product.IsNullThrowException("Unable to unbox product.");
 
-            product.MenuManager = new MenuManager(null, product, null, MenuENUM.IndexDefault, BreadCrumbManager, null, UserId);
-            indexItem.MenuManager = new MenuManager(null, product, null, MenuENUM.IndexMenuPath1, BreadCrumbManager, null, UserId);
+            product.MenuManager = new MenuManager(null, product, null, MenuENUM.IndexDefault, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl);
+            indexItem.MenuManager = new MenuManager(null, product, null, MenuENUM.IndexMenuPath1, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl);
 
-            getPictureList(indexItem, product);
+            indexItem.MenuManager.PictureAddresses =   GetPictureList(product);
 
         }
 

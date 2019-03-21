@@ -5,11 +5,11 @@
  }
 
 
-<div class="well p-3 m-3">
+<div class="well p-3  w-100">
     <div class="form-group">
         @*<div class="control-label">
-            @Html.ActionLink("Add Another Feature", "Create", "ProductFeatures", new { productId = Model.Id }, new { @class = "btn btn-success" })
-        </div>*@
+                @Html.ActionLink("Add Another Feature", "Create", "ProductFeatures", new { productId = Model.Id }, new { @class = "btn btn-success" })
+            </div>*@
         @if (!@Model.ProductFeatures.IsNull())
         {
 
@@ -64,7 +64,7 @@
                                            name="@menuFeatureName"
                                            type="hidden"
                                            value="@menuFeatureValue" />
-
+                                    
 
                                 </td>
 
@@ -118,21 +118,21 @@
                                 <td>
                                     <span data-toggle="tooltip" title="@editToolTip" data-placement="top">
                                         @Html.ActionLink(" ", "Edit", "ProductFeatures", new
-                                   { @*menuPathid = Model.Id, menuFeatreId = item.Id,*@ id = item.Id,
-                                                                                        returnUrl = childReturnUrl
+                                   { @*menuPathid = Model.Id, menuFeatreId = item.Id,*@ id = item.Id, productId = @Model.Id,
+                                    returnUrl = childReturnUrl
                                    }, new { @class = "fas fa-edit text-success" })
                                     </span>
 
                                     @if (item.MetaData.IsDeleteLocked)
                                     {
-                                        deleteToolTip = string.Format("You cannot delete [{0}]. If you dont want to use it, just make sure it's value empty.",item.Name);
+                                        deleteToolTip = string.Format("You cannot delete [{0}]. If you dont want to use it, just make sure it's value empty.", item.Name);
                                         <span data-toggle="tooltip" title="@deleteToolTip" data-placement="top">
                                             @Html.ActionLink(" ", "Delete", "ProductFeatures", new
                                                    { @*menuPathid = Model.Id, menuFeatreId = item.Id,*@
                                                        id = item.Id,
                                                        returnUrl = childReturnUrl
                                                    },
-                                          new { @class = "fas fa-trash-alt text-warning", disabled = "disabled" })
+                                           new { @class = "fas fa-trash-alt text-warning", disabled = "disabled" })
                                         </span>
 
                                     }
@@ -144,7 +144,7 @@
                                                        id = item.Id,
                                                        returnUrl = childReturnUrl
                                                    },
-                                        new { @class = "fas fa-trash-alt text-danger" })
+                                         new { @class = "fas fa-trash-alt text-danger" })
                                         </span>
 
                                     }
@@ -157,4 +157,6 @@
         }
     </div>
 </div>
+
+
 

@@ -30,8 +30,8 @@ namespace UowLibrary.ProductChildNS
             ProductChild productChild = icommonWithId as ProductChild;
             productChild.IsNullThrowException("unable to unbox productChild");
 
-            indexItem.MenuManager = new MenuManager(null, null,productChild, MenuENUM.IndexMenuPath1, BreadCrumbManager, null, UserId);
-            getPictureList(indexItem, productChild);
+            indexItem.MenuManager = new MenuManager(null, null,productChild, MenuENUM.IndexMenuPath1, BreadCrumbManager,null,UserId, indexListVM.MenuManager.ReturnUrl);
+            indexItem.MenuManager.PictureAddresses = GetPictureList(productChild);
             indexItem.Price = productChild.Sell.SellPrice;
 
         }

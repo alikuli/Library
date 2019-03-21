@@ -8,9 +8,10 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
 
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css/FileinputCSS")
     @Scripts.Render("~/bundles/modernizr")
 
-    
+
     <link rel="stylesheet"
           href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
@@ -19,21 +20,10 @@
     @RenderSection("styles", required: false)
 
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryuobtrsive")
-    @Scripts.Render("~/bundles/popper")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/respond")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/JqueryIntelisense")
-    @Scripts.Render("~/bundles/FormAjaxPlugIn")
-    @Scripts.Render("~/bundles/Knockout")
-    <script src="~/Scripts/notifyNS/notify.min.js"></script>
-    <script src="~/Scripts/MyScripts/_MyGlobalScripts.js"></script>
+
 
 </head>
-<body class="p-3">
+<body class="p-3 container">
 
 
 
@@ -41,7 +31,7 @@
 
 
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark justify-content-end">
-        <a class="navbar-brand" href="@Url.Action("Index", "Menus",null)">Brand</a>
+        <a class="navbar-brand" href="@Url.Action("Index", "Menus",null)">Menu</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -58,25 +48,32 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="@Url.Action("Index", "Products", null)">Products</a>
+                        <a class="dropdown-item" href="@Url.Action("UnapprovedProducts", "Products", null)">Products pending Approval</a>
                         <a class="dropdown-item" href="@Url.Action("DeleteAll", "Products", null)">Products -Delete All</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Index", "ProductApprovers", null)">Products Approvers</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "ProductApproverCategories", null)">Products Approver Categories</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="@Url.Action("Index", "ProductChilds", null)">Products Child</a>
                         <a class="dropdown-item" href="@Url.Action("DeleteAll", "ProductChilds", null)">Products Child-Delete All</a>
+                        <div class="dropdown-divider">Utilities</div>
+                        <a class="dropdown-item" href="@Url.Action("MarkAllProductsApprovedUtility", "Products", null)">Mark all Products Approved</a>
                         
+
                         <div class="dropdown-divider"></div>
-                        
+
                         <a class="dropdown-item" href="@Url.Action("Index", "MenuFeatures", null)">Menu Feature</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "ProductFeatures", null)">Product Feature</a>
-                    
-                            <div class="dropdown-divider"></div>
+
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="@Url.Action("Index", "MenuPath1s", null)">Menu Path 1</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "MenuPath2s", null)">Menu Path 2</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "MenuPath3s", null)">Menu Path 3</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Index", "Messages", null)">Messages</a>
                     </div>
 
                 </li>
-
-
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="@Url.Action("Index", "Addresses", null)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -99,9 +96,11 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="@Url.Action("Index", "CashTrxs", null)">Cash Trx</a>
+                        <a class="dropdown-item" href="@Url.Action("DebitCredit_Refundable", "CashTrxs", null)">Show Refundable Trx</a>
+                        <a class="dropdown-item" href="@Url.Action("DebitCredit_NonRefundable", "CashTrxs", null)">Show NON Refundable Trx</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="@Url.Action("MakeNonRefundablePayment", "CashTrxs", null)">Make NON Refundable Payment</a>
-                        <a class="dropdown-item" href="@Url.Action("MakeRefundablePayment", "CashTrxs", null)">Make Refundable Payment</a>
+                        <a class="dropdown-item" href="@Url.Action("MakeRefundablePayment", "CashTrxs", null)">Pay Refundable Payment</a>
+                        <a class="dropdown-item" href="@Url.Action("MakeNonRefundablePayment", "CashTrxs", null)">Pay NON Refundable Cash</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="@Url.Action("Index", "BuySellDocs", null)">Sell</a>
                     </div>
@@ -141,6 +140,7 @@
                         Players
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="@Url.Action("IWannaTrade", "Persons", null)">I Want To Trade!</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "Persons", null)">Person</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "Mailers", null)">Mailer</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "Customers", null)">Customer</a>
@@ -149,6 +149,7 @@
                         <a class="dropdown-item" href="@Url.Action("Index", "Cashiers", null)">Cashier</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "Salesmans", null)">Salesman</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "Banks", null)">Bank</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "ProductApprovers", null)">Product Approver</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="@Url.Action("Index", "PersonCategories", null)">Person Category</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "MailerCategories", null)">Mailer Category</a>
@@ -158,6 +159,7 @@
                         <a class="dropdown-item" href="@Url.Action("Index", "CashierCategories", null)">Cashier Category</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "SalesmanCategories", null)">Salesman Category</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "BankCategories", null)">Bank Category</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "ProductApproverCategories", null)">Product Approver Categories</a>
                     </div>
 
                 </li>
@@ -165,29 +167,36 @@
             <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
                 @Html.Partial("_LoginPartial")
             </div>
-            </div>
-</nav>
+        </div>
+    </nav>
 
 
+    @RenderBody()
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>
 
 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryuobtrsive")
+    @Scripts.Render("~/bundles/popper")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/respond")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/JqueryIntelisense")
+    @Scripts.Render("~/bundles/FormAjaxPlugIn")
+    @Scripts.Render("~/bundles/Fileinput")
+
+    @Scripts.Render("~/Scripts/notifyNS/notify")
+    @Scripts.Render("~/Scripts/MyScripts/MyGlobalScript")
+
+    @*<script src="~/Scripts/notifyNS/notify.min.js"></script>
+    <script src="~/Scripts/MyScripts/_MyGlobalScripts.js"></script>*@
 
 
-
-
-
-
-
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-
-
-        @*@Scripts.Render("~/bundles/JquerySlim")*@
-        @RenderSection("scripts", required: false)
-        @*<script src="~/Scripts/MyScripts/_MyGlobalScripts1.js"></script>*@
+    @RenderSection("scripts", required: false)
+    @*<script src="~/Scripts/MyScripts/_MyGlobalScripts1.js"></script>*@
 
 
 

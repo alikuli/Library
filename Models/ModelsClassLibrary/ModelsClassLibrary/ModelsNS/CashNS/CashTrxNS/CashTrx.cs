@@ -2,8 +2,9 @@
 using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.CashNS;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashsNS.CashTrxNS
+namespace ModelsClassLibrary.CashTrxNS
 {
     public class CashTrx : CashTrxAbstract
     {
@@ -41,11 +42,26 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashsNS.CashTrxNS
         {
             string personToName = PersonTo.IsNull() ? "-" : PersonTo.Name;
             string personFromName = PersonFrom.IsNull() ? "-" : PersonFrom.Name;
-            string nonRefundable = CashTypeEnum == CashTypeENUM.NonRefundable ? "[" + CashTypeEnum.ToString().ToTitleSentance() + "]" : "";
-            string fullName = string.Format("[#{1:000000#}] {0} From: {3} To: {4} Rs{2:#,0.00} {5}", MetaData.Created.Date_NotNull_Max, DocNumber, Amount, personFromName, personToName, nonRefundable.ToUpper());
-            return fullName;
+            string nonRefundable = "[" + CashTypeEnum.ToString().ToTitleSentance() + "]";
+            //string nonRefundable = CashTypeEnum == CashTypeENUM.NonRefundable ? "[" + CashTypeEnum.ToString().ToTitleSentance() + "]" : "";
+
+            string commentFixed = "";
+            if (!Comment.IsNullOrWhiteSpace())
+                commentFixed = string.Format("({0})", Comment);
+
+            string fullName = string.Format("[#{1:000000#}] {0} From: {3} To: {4} Rs{2:#,0.00} {5} {6}",
+                MetaData.Created.Date_NotNull_Max,
+                DocNumber,
+                Amount,
+                personFromName,
+                personToName,
+                nonRefundable.ToUpper(),
+                commentFixed);
+            return fullName.Trim();
         }
 
+        [NotMapped]
+        public string CommentExtended { get; set; }
 
     }
 }

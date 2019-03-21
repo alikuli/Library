@@ -86,7 +86,7 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS
         public virtual Mailer Mailer { get; set; }
 
 
-        public void AddBeginAndEndDateController(MailLocalOrForiegnENUM MailLocalOrForiegnEnum, MailServiceENUM MailServiceEnum, string userName)
+        public void AddBeginAndEndDateController(MailLocalOrForiegnENUM MailLocalOrForiegnEnum, MailServiceENUM MailServiceEnum, string userName, string userId)
         {
             switch (MailLocalOrForiegnEnum)
             {
@@ -94,11 +94,11 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS
                     switch (MailServiceEnum)
                     {
                         case MailServiceENUM.Post:
-                            AddBeginEndDate_Pakistan_Post(userName);
+                            AddBeginEndDate_Pakistan_Post(userName, userId);
                             break;
 
                         case MailServiceENUM.Courier:
-                            AddBeginEndDate_Pakistan_Courier(userName);
+                            AddBeginEndDate_Pakistan_Courier(userName, userId);
                             break;
 
 
@@ -111,12 +111,12 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS
                     switch (MailServiceEnum)
                     {
                         case MailServiceENUM.Post:
-                            AddBeginEndDate_Foreign_Post(userName);
+                            AddBeginEndDate_Foreign_Post(userName, userId);
                             break;
 
 
                         case MailServiceENUM.Courier:
-                            AddBeginEndDate_Foreign_Courier(userName);
+                            AddBeginEndDate_Foreign_Courier(userName, userId);
                             break;
 
                         default:
@@ -130,31 +130,31 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS
             }
 
         }
-        private void AddBeginEndDate_Pakistan_Post(string userName)
+        private void AddBeginEndDate_Pakistan_Post(string userName, string userId)
         {
             int noOfDaysAllowed = VerificationConfig.Number_Of_Days_Allowed_For_Local_Post;
-            BeginDate.SetToTodaysDate(userName);
+            BeginDate.SetToTodaysDate(userName, userId);
             EndDate.SetDateTo(userName, noOfDaysAllowed);
         }
-        private void AddBeginEndDate_Pakistan_Courier(string userName)
+        private void AddBeginEndDate_Pakistan_Courier(string userName, string userId)
         {
             int noOfDaysAllowed = VerificationConfig.Number_Of_Days_Allowed_For_Local_Courier;
-            BeginDate.SetToTodaysDate(userName);
+            BeginDate.SetToTodaysDate(userName, userId);
             EndDate.SetDateTo(userName, noOfDaysAllowed);
 
         }
 
-        private void AddBeginEndDate_Foreign_Post(string userName)
+        private void AddBeginEndDate_Foreign_Post(string userName, string userId)
         {
             int noOfDaysAllowed = VerificationConfig.Number_Of_Days_Allowed_For_Foreign_Post;
-            BeginDate.SetToTodaysDate(userName);
+            BeginDate.SetToTodaysDate(userName, userId);
             EndDate.SetDateTo(userName, noOfDaysAllowed);
 
         }
-        private void AddBeginEndDate_Foreign_Courier(string userName)
+        private void AddBeginEndDate_Foreign_Courier(string userName, string userId)
         {
             int noOfDaysAllowed = VerificationConfig.Number_Of_Days_Allowed_For_Foreign_Courier;
-            BeginDate.SetToTodaysDate(userName);
+            BeginDate.SetToTodaysDate(userName, userId);
             EndDate.SetDateTo(userName, noOfDaysAllowed);
 
         }

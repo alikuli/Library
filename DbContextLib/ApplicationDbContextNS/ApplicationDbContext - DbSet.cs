@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using ModelsClassLibrary.CashTrxNS;
 using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.DeliveryMethodNS;
 using ModelsClassLibrary.ModelsNS.DiscountNS;
-using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySell;
-using ModelsClassLibrary.ModelsNS.DocumentsNS.CashsNS.CashTrxNS;
+using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
+using ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FileDocsNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.PaymentsNS;
@@ -12,7 +14,9 @@ using ModelsClassLibrary.ModelsNS.FeaturesNS;
 //using ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeatureNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.Logs.VisitorsLogNS;
+using ModelsClassLibrary.ModelsNS.MessageNS;
 using ModelsClassLibrary.ModelsNS.PageViewNS;
+using ModelsClassLibrary.ModelsNS.PeopleMessageNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
@@ -83,6 +87,8 @@ namespace ApplicationDbContextNS
         //public virtual IDbSet<MenuPath1Feature> MenuPath1Features { get; set; }
 
 
+        public virtual IDbSet<Message> Messages { get; set; }
+
         public virtual IDbSet<MailerCategory> MailerCategories { get; set; }
         public IDbSet<MenuPath1> MenuPath1s { get; set; }
 
@@ -106,8 +112,12 @@ namespace ApplicationDbContextNS
         public virtual IDbSet<PaymentTerm> PaymentTerms { get; set; }
         public virtual IDbSet<PageView> PageViews { get; set; }
         public virtual IDbSet<Person> Persons { get; set; }
+        public virtual IDbSet<PeopleMessage> PeopleMessages { get; set; }
+
         public virtual IDbSet<PersonCategory> PersonsCategories { get; set; }
 
+        public virtual IDbSet<ProductApprover> ProductApprovers { get; set; }
+        public virtual IDbSet<ProductApproverCategory> ProductApproverCategories { get; set; }
         public virtual IDbSet<Salesman> Salesmen { get; set; }
         public virtual IDbSet<SalesmanCategory> SalesmanCategories { get; set; }
 
@@ -124,6 +134,7 @@ namespace ApplicationDbContextNS
         //public IDbSet<ProductIdentifierType> ProductIdentifierTypes { get; set; }
 
         public IDbSet<ProductIdentifier> ProductIdentifiers { get; set; }
+        //public IDbSet<ProductSetupProblem> ProductSetupProblems { get; set; }
         public IDbSet<Right> Rights { get; set; }
         public IDbSet<OwnerCategory> OwnerCategories { get; set; }
 

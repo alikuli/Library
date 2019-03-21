@@ -141,7 +141,7 @@ namespace MarketPlace.Web6.Controllers
             returnUrl.IsNullOrWhiteSpaceThrowArgumentException("returnUrl");
 
             CreateNewFeatureModel createNewFeatureModel = new CreateNewFeatureModel();
-            createNewFeatureModel.MenuPathId = menuPathid;
+            createNewFeatureModel.ParentId = menuPathid;
             createNewFeatureModel.ReturnUrl = returnUrl;
 
             return View(createNewFeatureModel);

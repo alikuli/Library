@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ModelsClassLibrary.ModelsNS.UploadedFileNS.UploadedFile">
+    <Position X="5.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ksICiEKFECAgABiUQBFKAAoAAEACEUAgIUAAAAoAAMA=</HashCode>
+      <FileName>ModelsNS\UploadedFileNS\UploadedFileMainNS\UploadedFile - Image Adjustment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

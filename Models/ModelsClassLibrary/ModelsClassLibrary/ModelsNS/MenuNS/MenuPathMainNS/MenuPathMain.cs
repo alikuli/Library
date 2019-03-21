@@ -44,6 +44,7 @@ namespace ModelsClassLibrary.MenuNS
 
         #endregion
         #region booleans
+
         public bool IsMenuPath3Null()
         {
             bool cat3Null = MenuPath3Id.IsNullOrWhiteSpace() && MenuPath3.IsNull();

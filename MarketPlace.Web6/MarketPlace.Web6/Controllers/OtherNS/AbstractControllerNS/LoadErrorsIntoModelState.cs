@@ -22,7 +22,6 @@ namespace MarketPlace.Web4.Controllers
                 foreach (var item in ErrorsGlobal.ToListErrs())
                 {
                     errorsList.Add(item);
-                    //ModelState.AddModelError("", item);
                 }
                 if (!ErrorsGlobal.DoNotClearMessages)
                     ErrorsGlobal.Errors.Clear();

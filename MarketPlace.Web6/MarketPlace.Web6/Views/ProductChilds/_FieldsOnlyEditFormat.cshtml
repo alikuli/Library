@@ -1,11 +1,11 @@
 ﻿@model ModelsClassLibrary.ModelsNS.ProductChildNS.ProductChild
 
 @{
-    
+
     string childReturnUrl = Request.Url.PathAndQuery;
     int count = 0;
     string toolTipIdentificationNumber = "This is a unique identification number that can be given to the product. This is useful if you want to post several same products with different identification number, eg cars and their number plates.";
-    
+
 }
 
 <div class="well p-3">
@@ -15,23 +15,23 @@
     @Html.HiddenFor(x => x.ProductId)
 
     @*<div class="form-group">
-        @Html.LabelFor(model => model.OwnerId, htmlAttributes: new { @class = "" })
-        @Html.DropDownListFor(x => x.OwnerId,
-                                       (@Model.SelectListOwners as IEnumerable<SelectListItem>),
-                                                      "--- Select Owner ---",
-                                    new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.ProductId, htmlAttributes: new { @class = "" })
-        @Html.DropDownListFor(x => x.ProductId,
-                                                (@Model.SelectListProducts as IEnumerable<SelectListItem>),
-                                                      "--- Select Parent ---",
-                                    new { @class = "form-control" })
-    </div>*@
+            @Html.LabelFor(model => model.OwnerId, htmlAttributes: new { @class = "" })
+            @Html.DropDownListFor(x => x.OwnerId,
+                                           (@Model.SelectListOwners as IEnumerable<SelectListItem>),
+                                                          "--- Select Owner ---",
+                                        new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductId, htmlAttributes: new { @class = "" })
+            @Html.DropDownListFor(x => x.ProductId,
+                                                    (@Model.SelectListProducts as IEnumerable<SelectListItem>),
+                                                          "--- Select Parent ---",
+                                        new { @class = "form-control" })
+        </div>*@
 
     <div class="form-group">
         @Html.LabelFor(model => model.IdentificationNumber, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @toolTipIdentificationNumber, data_placement = "top" })
-        @Html.EditorFor(model => model.IdentificationNumber, new { htmlAttributes = new { @class = "form-control"} })
+        @Html.EditorFor(model => model.IdentificationNumber, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.IdentificationNumber, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -45,142 +45,145 @@
 </div>
 
 
-    <div class="well p-3 mt-3">
-        <div class="form-group">
-            @*<div class="control-label">
-                    @Html.ActionLink("Add Another Feature", "Create", "ProductFeatures", new { productId = Model.Id }, new { @class = "btn btn-success" })
-                </div>*@
-            @if (!@Model.ProductChildFeatures.IsNull())
+<div class="well p-3 mt-3">
+    <div class="form-group">
+        @*<div class="control-label">
+                @Html.ActionLink("Add Another Feature", "Create", "ProductFeatures", new { productId = Model.Id }, new { @class = "btn btn-success" })
+            </div>*@
+        @if (!@Model.ProductChildFeatures.IsNull())
         {
 
             if (Model.MenuManager.IsCreate)
             {
-        <div class="alert-info p-3">
-            To Add a new feature, select Add Product Feature from the Product Menu.
-        </div>
-    <table class="table table-hover table-info table-light table-bordered">
-        <thead>
-            <tr>
-                <th>Feature</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody>
+                <div class="alert-info p-3">
+                    To Add a new feature, select Add Product Feature from the Product Menu.
+                </div>
+                <table class="table table-hover table-info table-light table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-            @foreach (var item in Model.ProductChildFeatures.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).ToList())
-            {
-                string nameValue = item.Name;
-                string nameId = string.Format("ProductChildFeatures_{0}__Name", count);
-                string nameOfFeature = string.Format("ProductChildFeatures[{0}].Name", count);
+                        @foreach (var item in Model.ProductChildFeatures.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).ToList())
+                        {
+                            string nameValue = item.Name;
+                            string nameId = string.Format("ProductChildFeatures_{0}__Name", count);
+                            string nameOfFeature = string.Format("ProductChildFeatures[{0}].Name", count);
 
-                string commentId = string.Format("ProductChildFeatures_{0}__Comment", count);
-                string commentName = string.Format("ProductChildFeatures[{0}].Comment", count);
-                string comentValue = item.Comment;
-
-
-                string productChildIdId = string.Format("ProductChildFeatures_{0}__ProductChildId", count);
-                string productChildName = string.Format("ProductChildFeatures[{0}].ProductChildId", count);
-                string productChildValue = item.ProductChildId;
+                            string commentId = string.Format("ProductChildFeatures_{0}__Comment", count);
+                            string commentName = string.Format("ProductChildFeatures[{0}].Comment", count);
+                            string comentValue = item.Comment;
 
 
-                count++;
-
-                <tr>
-                    <td>
-                        <input id="@nameId"
-                               name="@nameOfFeature"
-                               type="text"
-                               value="@nameValue" />
-
-                        <input id="@productChildIdId"
-                               name="@productChildName"
-                               type="hidden"
-                               value="@productChildValue" />
+                            string productChildIdId = string.Format("ProductChildFeatures_{0}__ProductChildId", count);
+                            string productChildName = string.Format("ProductChildFeatures[{0}].ProductChildId", count);
+                            string productChildValue = item.ProductChildId;
 
 
+                            count++;
+
+                            <tr>
+                                <td>
+                                    <input id="@nameId"
+                                           name="@nameOfFeature"
+                                           type="text"
+                                           value="@nameValue" />
+
+                                    <input id="@productChildIdId"
+                                           name="@productChildName"
+                                           type="hidden"
+                                           value="@productChildValue" />
 
 
-                    </td>
 
-                    <td>
-                        <input class="text-box single-line"
-                               id="@commentId"
-                               name="@commentName"
-                               type="text"
-                               value="@comentValue" />
 
-                        <span class="field-validation-valid text-danger"
-                              data-valmsg-for="@commentName"
-                              data-valmsg-replace="true"></span>
+                                </td>
 
-                    </td>
-                </tr>
+                                <td>
+                                    <input class="text-box single-line"
+                                           id="@commentId"
+                                           name="@commentName"
+                                           type="text"
+                                           value="@comentValue" />
 
-            }
-        </tbody>
-    </table>
+                                    <span class="field-validation-valid text-danger"
+                                          data-valmsg-for="@commentName"
+                                          data-valmsg-replace="true"></span>
+
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
             }
             else
             {
-        @Html.ActionLink(" Create", "Create", "ProductChildFeatures", new { productChildId = Model.Id, returnUrl = childReturnUrl }, new { @class = "fas fa-plus-square text-success" })
-        <table class="table table-hover table-info table-light table-bordered">
-        <thead>
-            <tr>
-                <th>Feature</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ProductChildFeatures.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).ToList())
-            {
-                string editToolTip = string.Format("Edit: '{0}'", item.Name);
-                string featureToolTip = string.Format("Feature: '{0} This is the name of the feature you want to describe. It is searchable by your customers whenever they want to buy. Create as many features as you like. They can help you sell.", item.Name);
-                string valueToolTip = string.Format("This describes '{0}.'Keep the desciption short and simple. If you leave it blank, this feature will not show for '{0}'", item.Name);
-                string deleteToolTip = string.Format("Delete: '{0}'. Idea! Make it's value empty. It will seem that it is deleted. ", item.Name);
-                <tr>
-                    <td>
-                        <div class="form-group" data-toggle="tooltip" title="@featureToolTip" data-placement="top">
-                            @Html.EditorFor(model => item.Name, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-                        </div>
+                <span data-toggle="tooltip" title="If you want to hide a product feature, enter a new feature with the same name here, but then leave the description blank." data-placement="top">
 
-                    </td>
+                    @Html.ActionLink(" Create", "Create", "ProductChildFeatures", new { productChildId = Model.Id, returnUrl = childReturnUrl }, new { @class = "fas fa-plus-square text-success" })
+                </span>
+                <table class="table table-hover table-info table-light table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ProductChildFeatures.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).ToList())
+                        {
+                            string editToolTip = string.Format("Edit: '{0}'", item.Name);
+                            string featureToolTip = string.Format("Feature: '{0} This is the name of the feature you want to describe. It is searchable by your customers whenever they want to buy. Create as many features as you like. They can help you sell.", item.Name);
+                            string valueToolTip = string.Format("This describes '{0}.'Keep the desciption short and simple. If you leave it blank, this feature will not show for '{0}'", item.Name);
+                            string deleteToolTip = string.Format("Delete: '{0}'. Idea! Make it's value empty. It will seem that it is deleted. ", item.Name);
+                            <tr>
+                                <td>
+                                    <div class="form-group" data-toggle="tooltip" title="@featureToolTip" data-placement="top">
+                                        @Html.EditorFor(model => item.Name, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </div>
 
-
-                    <td>
-                        <div class="form-group" data-toggle="tooltip" title="@valueToolTip" data-placement="top">
-                            @Html.EditorFor(model => item.Comment, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-                        </div>
-
-                    </td>
+                                </td>
 
 
-                    <td>
-                        <span data-toggle="tooltip" title="@editToolTip" data-placement="top">
-                            @Html.ActionLink(" ", "Edit", "ProductChildFeatures", new
+                                <td>
+                                    <div class="form-group" data-toggle="tooltip" title="@valueToolTip" data-placement="top">
+                                        @Html.EditorFor(model => item.Comment, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    <span data-toggle="tooltip" title="@editToolTip" data-placement="top">
+                                        @Html.ActionLink(" ", "Edit", "ProductChildFeatures", new
                                    {
                                     @*menuPathid = Model.Id, menuFeatreId = item.Id,*@
                                        id = item.Id,
                                        returnUrl = childReturnUrl
                                    }, new { @class = "fas fa-edit text-success" })
-                        </span>
+                                    </span>
 
 
-                        <span data-toggle="tooltip" title="@deleteToolTip" data-placement="top">
-                            @Html.ActionLink(" ", "Delete", "ProductChildFeatures", new
+                                    <span data-toggle="tooltip" title="@deleteToolTip" data-placement="top">
+                                        @Html.ActionLink(" ", "Delete", "ProductChildFeatures", new
                                                 {
                                                     @*menuPathid = Model.Id, menuFeatreId = item.Id,*@
                                                     id = item.Id,
                                                     returnUrl = childReturnUrl
                                                 },
-              new { @class = "fas fa-trash-alt text-danger" })
-                        </span>
+                                                new { @class = "fas fa-trash-alt text-danger" })
+                                    </span>
 
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             }
         }
-        </div>
     </div>
+</div>

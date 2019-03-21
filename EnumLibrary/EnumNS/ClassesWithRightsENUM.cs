@@ -39,6 +39,7 @@ namespace EnumLibrary.EnumNS
         MenuPath2,
         MenuPath3,
         MenuPathMain,
+        Message,
         Owner,
         OwnerCategory,
         Person,    //PersonMain
@@ -48,6 +49,7 @@ namespace EnumLibrary.EnumNS
         PaymentType,
         Phone,
         Product,
+        ProductApprover,
         ProductFeature,
         ProductIdentifier,
         PageView,

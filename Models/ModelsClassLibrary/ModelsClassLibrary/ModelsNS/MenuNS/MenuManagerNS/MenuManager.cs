@@ -17,7 +17,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
         public MenuManager()
         {
         }
-        public MenuManager(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, BreadCrumbManager breadCrumbManager, LikeUnlikeParameter likesCounter, string userId)
+        public MenuManager(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, BreadCrumbManager breadCrumbManager, LikeUnlikeParameters likesCounter, string userId, string returnUrl)
             : this()
         {
             MenuPathMain = menuPathMain;
@@ -28,8 +28,10 @@ namespace UowLibrary.MenuNS.MenuStateNS
             LoadMenuState();
             UserId = userId;
             UserMoneyAccount = new UserMoneyAccount();
+            ReturnUrl = returnUrl;
         }
 
+        public string UserPersonId { get; set; }
         /// <summary>
         /// This is used in the Icons IndexMenuVariables
         /// </summary>
@@ -120,7 +122,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
         }
 
 
-        private MenuENUM MenuEnum { get; set; }
+        public MenuENUM MenuEnum { get; set; }
         public MenuENUM MenuEnumCreateButton { get; set; }
         public MenuENUM MenuEnumEditButtom { get; set; }
 
@@ -140,14 +142,28 @@ namespace UowLibrary.MenuNS.MenuStateNS
         public string SelectedId { get; set; }
         public string SearchString { get; set; }
         public SortOrderENUM SortOrderEnum { get; set; }
-        public LikeUnlikeParameter LikeUnlikesCounter { get; set; }
+        public LikeUnlikeParameters LikeUnlikesCounter { get; set; }
 
         IndexMenuVariables _indexMenuVariables;
         public IndexMenuVariables IndexMenuVariables
         {
             get
             {
-                return _indexMenuVariables ?? new IndexMenuVariables(UserId);
+                if (_indexMenuVariables.IsNull())
+                    _indexMenuVariables = new IndexMenuVariables(UserId);
+
+
+                _indexMenuVariables.UserPersonId = UserPersonId;
+                
+                if(!ProductChild.IsNull())
+                {
+                    ProductChild.Owner.IsNullThrowException("ProductChild.Owner");
+                    ProductChild.Owner.Person.IsNullThrowException("ProductChild.Owner.Person");
+                    _indexMenuVariables.ProductChildPersonId = ProductChild.Owner.Person.Id;
+
+                }
+
+                return _indexMenuVariables;
             }
             set
             {
@@ -167,5 +183,6 @@ namespace UowLibrary.MenuNS.MenuStateNS
         /// This holds all the addresses of the pictures for the item
         /// </summary>
         public List<string> PictureAddresses { get; set; }
+
     }
 }

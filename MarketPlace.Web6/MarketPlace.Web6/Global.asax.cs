@@ -7,7 +7,6 @@ using System.Web.Management;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using UowLibrary;
 
 namespace MarketPlace.Web6
 {
@@ -133,10 +132,10 @@ namespace MarketPlace.Web6
                     IControllerFactory factory = ControllerBuilder.Current.GetControllerFactory();
                     IController controller = factory.CreateController(requestContext, controllerName);
                     ControllerContext controllerContext = new ControllerContext(requestContext, (ControllerBase)controller);
-
+                    string errorMessage = requestContext.HttpContext.Error.Message ?? "No Error message";
                     JsonResult jsonResult = new JsonResult
                     {
-                        Data = new { success = false, serverError = "500" },
+                        Data = new { success = false, serverError = "500", message = errorMessage },
                         JsonRequestBehavior = JsonRequestBehavior.AllowGet
                     };
                     jsonResult.ExecuteResult(controllerContext);

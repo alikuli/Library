@@ -1,6 +1,10 @@
 ﻿
 namespace ConstantsLibrary
 {
+    public static class Icons
+    {
+        public const string STAR_ICON = "StarIcon";
+    }
     public static class VerificationIcons
     {
         public const string VERIFIED_ICON = "Verified";
@@ -34,6 +38,7 @@ namespace ConstantsLibrary
         public const string PRINTED_ICON = "Printed";
         public const string REQUESTED_ICON = "Requested";
         public const string FAILED_ICON = "Failed";
+        public const string STAR_ICON = "StarIcon";
     }
 
     public static class VerificationSale

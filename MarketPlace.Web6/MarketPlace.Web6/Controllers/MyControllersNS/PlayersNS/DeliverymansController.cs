@@ -32,7 +32,7 @@ namespace MarketPlace.Web6.Controllers
 
             deliveryman.SelectListPeople = _deliverymanBiz.PersonBiz.SelectList();
             deliveryman.SelectListDeliverymanCategory = _deliverymanBiz.SelectListDeliverymanCategory;
-            deliveryman.SelectListAddressBillTo = _deliverymanBiz.AddressBiz.SelectListBillAddress();
+            deliveryman.SelectListAddressBillTo = _deliverymanBiz.AddressBiz.SelectListBillAddressCurrentUser();
 
             return base.Event_CreateViewAndSetupSelectList(parm);
         }

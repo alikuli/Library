@@ -9,7 +9,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
     public class Verification : IVerification
     {
         public Verification()
-            : this("")
+            : this("","")
         {
             RequestDate = new DateAndByComplex();
             AcceptDate = new DateAndByComplex();
@@ -19,9 +19,10 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             MailedDate = new DateAndByComplex();
             ProccessExpirationDate = new DateAndByComplex();
         }
-        public Verification(string userName)
+        public Verification(string userName, string userId)
         {
             UserName = userName;
+            UserId = userId;
         }
 
         [Display(Name = "Verification Number")]
@@ -29,6 +30,10 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         [Display(Name = "User Name")]
         private string UserName { get; set; }
+
+        [Display(Name = "User Id")]
+        private string UserId { get; set; }
+
 
         [Display(Name = "Status")]
         public VerificaionStatusENUM VerificaionStatusEnum { get; set; }
@@ -69,27 +74,27 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
 
                 case VerificaionStatusENUM.Failed:
-                    FailedDate.SetToTodaysDate(UserName);
+                    FailedDate.SetToTodaysDate(UserName, UserId);
                     break;
 
                 case VerificaionStatusENUM.Printed:
-                    PrintedDate.SetToTodaysDate(UserName);
+                    PrintedDate.SetToTodaysDate(UserName, UserId);
                     break;
 
                 case VerificaionStatusENUM.Mailed:
-                    MailedDate.SetToTodaysDate(UserName);
+                    MailedDate.SetToTodaysDate(UserName, UserId);
                     break;
 
                 case VerificaionStatusENUM.Requested:
-                    RequestDate.SetToTodaysDate(UserName);
+                    RequestDate.SetToTodaysDate(UserName, UserId);
                     break;
 
                 case VerificaionStatusENUM.SelectedForProcessing:
-                    AcceptDate.SetToTodaysDate(UserName);
+                    AcceptDate.SetToTodaysDate(UserName, UserId);
                     break;
 
                 case VerificaionStatusENUM.Verified:
-                    VerifiedDate.SetToTodaysDate(UserName);
+                    VerifiedDate.SetToTodaysDate(UserName, UserId);
                     break;
 
                 case VerificaionStatusENUM.NotVerified:
@@ -101,7 +106,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         public void UpdateProccessExpirationDate(int noOfDays)
         {
-            ProccessExpirationDate.SetToTodaysDate(UserName);
+            ProccessExpirationDate.SetToTodaysDate(UserName, UserId);
         }
 
         [Display(Name = "Proccess Expiration")]

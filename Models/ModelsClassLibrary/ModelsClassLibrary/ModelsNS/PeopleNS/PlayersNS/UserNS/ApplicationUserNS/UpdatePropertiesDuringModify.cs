@@ -18,7 +18,7 @@ namespace UserModels
 
             DetailInfoToDisplayOnWebsite = u.DetailInfoToDisplayOnWebsite;
             Name = icommonWithId.Name;
-            ReturnUrl = u.ReturnUrl;
+            //ReturnUrl = u.ReturnUrl;
             Comment = u.Comment;
             PersonId = u.PersonId;
             //CountryId = u.CountryId;

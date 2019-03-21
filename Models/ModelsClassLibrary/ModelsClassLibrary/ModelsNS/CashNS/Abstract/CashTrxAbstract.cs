@@ -13,17 +13,24 @@ namespace ModelsClassLibrary.ModelsNS.CashNS
     {
         public CashTrxAbstract()
         {
+            CashTypeEnum = CashTypeENUM.Unknown;
         }
 
         [Display(Name = "Doc #")]
         public long DocNumber { get; set; }
+
+
         [Display(Name = "From")]
         public string PersonFromId { get; set; }
+
+
         [Display(Name = "From")]
         public virtual Person PersonFrom { get; set; }
 
         [Display(Name = "To")]
         public string PersonToId { get; set; }
+
+
         [Display(Name = "To")]
         public virtual Person PersonTo { get; set; }
 
@@ -35,7 +42,7 @@ namespace ModelsClassLibrary.ModelsNS.CashNS
         {
             base.SelfErrorCheck();
 
-            PersonFromId.IsNullOrWhiteSpaceThrowException("PersonId");
+            //PersonFromId.IsNullOrWhiteSpaceThrowException("PersonId");
             PersonToId.IsNullOrWhiteSpaceThrowException("You need to select who you are paying");
             PersonTo.IsNullThrowException("Person To is Null");
         }

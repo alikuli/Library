@@ -28,7 +28,7 @@ namespace ModelsClassLibrary.ModelsNS.FeaturesNS
 
 
         [NotMapped]
-        public SelectList SelectListMenuFeatures { get; set; }
+        public SelectList SelectListFeature { get; set; }
 
 
 

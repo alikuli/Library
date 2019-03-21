@@ -251,13 +251,24 @@ namespace AliKuli.ToolsNS
         /// <summary>
         /// Checks to see if file exists, if so, then deletes
         /// </summary>
-        /// <param name="filepath"></param>
-        public static void Delete(string filepath)
+        /// <param name="absolutePathWithFileName"></param>
+        public static void Delete(string absolutePathWithFileName)
         {
-            if (IsExistFile(filepath))
-                File.Delete(filepath);
+            //if (IsExistFile(absolutePathWithFileName))
+            //    File.Delete(absolutePathWithFileName);
+            if (IsExistFile(absolutePathWithFileName))
+            {
+                var f = new System.IO.FileInfo(absolutePathWithFileName);
+                f.Delete();
+            }
         }
 
+        //public void DeletePhysicalFile(string absolutePathWithFileName)
+        //{
+        //    var f = new System.IO.FileInfo(absolutePathWithFileName);
+        //    f.Delete();
+
+        //}
 
         /// <summary>
         /// This parses a simple comma delimited list
@@ -276,7 +287,7 @@ namespace AliKuli.ToolsNS
 
         }
 
-        public static string GetPath(string filename)
+        public static string GetAbsolutePath(string filename)
         {
             filename.IsNullOrWhiteSpaceThrowException("Filename is empty");
             string filepath = System.Web.Hosting.HostingEnvironment.MapPath(filename);

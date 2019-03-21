@@ -8,7 +8,12 @@
     string selectId = "";
     string searchString = "";
     MenuENUM menuEnum = MenuENUM.EditDefault;
-    
+    string showEditControlsStringValue = ViewBag.ShowEditControls as string;
+    bool showEditControls = true;
+    if(!showEditControlsStringValue.IsNullOrWhiteSpace())
+    {
+        showEditControls = false;
+    }
     Model.MenuManager.MenuState.ControllerCurrentName = controllerName;
     controllerName = Model.MenuManager.MenuState.CreateAndEditLink_ControllerName;
     menuPathMainId = Model.MenuManager.MenuState.MenuPathMainId;
@@ -44,20 +49,26 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.Partial("_messages")
 
-    
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-8">
+            <div class="col">
                 @Html.Partial(@"_FieldsOnlyEditFormat")
             </div>
 
-            <div class="col-4">
+            <div class="col ">
                 @Html.Partial(@"ViewControls/Uploads/_ShowUploads")
             </div>
         </div>
 
+    </div>
+
     <div class="form-group p-3">
-        @Html.Partial(@"ViewControls/Edit/_EditControls")
-        @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger"})
+        @if (showEditControls)
+        {
+            //In order to hide these you must give a value to ViewBag.ShowEditControls in Event_CreateViewAndSetupSelectList. See example in UploadedFiles
+            @Html.Partial(@"ViewControls/Edit/_EditControls")
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" })
+        }
     </div>
 
 }
@@ -65,3 +76,10 @@
 <div>
         <a href="@returnUrl">Back to List</a>
 </div>
+
+@section scripts
+    {
+    <script src="~/Scripts/MyScripts/_imageRoatationScript2.js"></script>
+
+
+}

@@ -51,7 +51,7 @@ namespace UowLibrary.EmailAddressNS
             verificationNumber.IsNullOrWhiteSpaceThrowArgumentException("Random number not generated");
 
             emailAddress.VerificationNumber = verificationNumber.ToString();
-            emailAddress.VerificationDateComplex.SetToTodaysDate(UserName);
+            emailAddress.VerificationDateComplex.SetToTodaysDate(UserName, UserId);
             //time allowed for verification is 60 min.
 
 
@@ -109,9 +109,9 @@ namespace UowLibrary.EmailAddressNS
             {
                 //verification code matches... verifiy the email address
                 //emailAddress.IsVerified = true;
-                emailAddress.VerificationDateComplex.SetToTodaysDate(UserName);
+                emailAddress.VerificationDateComplex.SetToTodaysDate(UserName, UserId);
                 emailAddress.VerificationStatusEnum = VerificaionStatusENUM.Verified;
-                emailAddress.VerificationDateComplex.SetToTodaysDate(UserName);
+                emailAddress.VerificationDateComplex.SetToTodaysDate(UserName, UserId);
 
                 UpdateAndSave(emailAddress);
                 ErrorsGlobal.AddMessage(string.Format("Email: '{0} has been VERIFIED'", emailAddress.Name));

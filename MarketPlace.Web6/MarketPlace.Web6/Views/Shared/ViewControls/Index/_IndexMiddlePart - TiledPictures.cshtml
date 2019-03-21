@@ -5,22 +5,23 @@
 }
 
 
-<div class=" text-center text-lg-left akaFix">
+<div class="akaFix">
 
     @{
         Model.MenuManager.MenuState.ControllerCurrentName = this.ViewContext.RouteData.Values["controller"].ToString();
         ModelsClassLibrary.ViewModels.IndexItemVM[] IndexListVMArray = Model.DataSortedAndFilteredArray;
         ModelsClassLibrary.ViewModels.IndexItemVM currIndexItemVM = null;
-        var vv = Model.MenuManager.IndexMenuVariables;
-        vv.Count = 0;
-        //vv.Returnurl = Request.Url.PathAndQuery; ;
-        string returnUrl = Request.Url.PathAndQuery; 
-        vv.CurrController = Model.MenuManager.MenuState.ControllerCurrentName;
-        vv.EditController = Model.MenuManager.MenuState.CreateAndEditLink_ControllerName;
-        vv.IsProductChild = Model.MenuManager.MenuState.IsProductChild;
-        vv.UserId = Model.UserId ?? "";
-        vv.CommentUrl = "";
-        vv.ShortNameOfProduct = "";
+
+        var menuVar = Model.MenuManager.IndexMenuVariables;
+        menuVar.Count = 0;
+        menuVar.CurrController = Model.MenuManager.MenuState.ControllerCurrentName;
+        menuVar.EditController = Model.MenuManager.MenuState.CreateAndEditLink_ControllerName;
+        menuVar.IsProductChild = Model.MenuManager.MenuState.IsProductChild;
+        menuVar.UserId = Model.UserId ?? "";
+        menuVar.CommentUrl = "";
+        menuVar.ShortNameOfProduct = "";
+
+        string returnUrl = Request.Url.OriginalString;
         string carouselName = "carousel";
         string carouselId = "";
         int carouselCount = 0;
@@ -36,81 +37,58 @@
             <!-- #region Initialization -->
             @{
         //count = i;
-            vv.Count = i;
-            currIndexItemVM = IndexListVMArray[i];
-            vv.IdForEdit = IndexListVMArray[i].Id;
-
-            if (!IndexListVMArray[i].MenuManager.IsNull())
-            {
-                if (!IndexListVMArray[i].MenuManager.LikeUnlikesCounter.IsNull())
-                {
-                    vv.UnLikeIcon.HasPressed = IndexListVMArray[i].MenuManager.LikeUnlikesCounter.HasUnLiked;
-                    vv.LikeIcon.HasPressed = IndexListVMArray[i].MenuManager.LikeUnlikesCounter.HasLiked;
-                    vv.LikeIcon.CountIcon = @IndexListVMArray[i].MenuManager.LikeUnlikesCounter.LikeCount;
-                    vv.UnLikeIcon.CountIcon = @IndexListVMArray[i].MenuManager.LikeUnlikesCounter.UnlikeCount;
-                }
-            }
-            //vv.ImagePath = "";
-            vv.MainMenuPath = "";
-            vv.MenuPath1Id = "";
-            vv.MenuPath2Id = "";
-            vv.MenuPath3Id = "";
-            vv.ProductId = "";
-            vv.ProductChildId = "";
-            vv.MenuPathMainId = "";
-            //vv.LikeUrl = "";
-            vv.LikeIcon.Url = "";
-            //vv.LikeCountUrl = "";
-            vv.LikeIcon.UrlCount = "";
-            vv.UnLikeIcon.Url = "";
-            vv.UnLikeIcon.UrlCount = "";
-            vv.ShoppingCartUrl = "";
-            vv.HandPointingUrl = "";
-            string itemHeading = IndexListVMArray[i].ShortName;
+        menuVar.Count = i;
+        currIndexItemVM = IndexListVMArray[i];
+        menuVar.IdForEdit = IndexListVMArray[i].Id;
+        menuVar.MainMenuPath = "";
+        
+        menuVar.MenuPath1Id = "";
+        menuVar.MenuPath2Id = "";
+        menuVar.MenuPath3Id = "";
+        menuVar.ProductId = "";
+        menuVar.ProductChildId = "";
+        menuVar.MenuPathMainId = "";
+        
+        menuVar.LikeIcon.Url = "";
+        menuVar.LikeIcon.UrlCount = "";
+        menuVar.UnLikeIcon.Url = "";
+        menuVar.UnLikeIcon.UrlCount = "";
+        menuVar.ShoppingCartIcon.Url = "";
+        menuVar.HandPointingUrl = "";
+        var itemMenuVar = IndexListVMArray[i].MenuManager;
+   
+        string shoppingCartToolTip = "To buy";
+        string flagToolTip = "Offended? Flag them!";
+        string itemHeading = IndexListVMArray[i].ShortName;
+        
             }
 
 
             <!-- #endregion -->
             <!-- #region alert and short name initialization -->
             @{
-            vv.ShortNameOfProduct = IndexListVMArray[i].ShortName;
+                menuVar.ShortNameOfProduct = IndexListVMArray[i].ShortName;
 
-            //this is for the table type of index
+                //this is for the table type of index
 
-            string alert = (@Model.SelectedIdMatchesThis(vv.IdForEdit) ? "alert-info " : " ");
-            string alertFont = (@Model.SelectedIdMatchesThis(vv.IdForEdit) ? " text-danger " : " ");
+                string alert = (@Model.SelectedIdMatchesThis(menuVar.IdForEdit) ? "alert-info " : " ");
+                string alertFont = (@Model.SelectedIdMatchesThis(menuVar.IdForEdit) ? " text-danger " : " ");
             }
 
 
-            @if (vv.Count % 2 == 0)
-                {
-                    alert += " background-ltgrey ";
-                }
+            @if (menuVar.Count % 2 == 0)
+            {
+                alert += " background-ltgrey ";
+            }
             <!-- #endregion -->
-
-
 
 
             <!-- #region if (Model.MenuManager.MenuState.IsMenu) -->
             @if (Model.MenuManager.MenuState.IsMenu)
             {
-                vv.MainMenuPath = Url.Action("index", vv.CurrController, new { id = vv.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu, });
+                menuVar.MainMenuPath = Url.Action("index", menuVar.CurrController, new { id = menuVar.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu, returnUrl = @Request.Url.PathAndQuery });
 
-
-            }
-            else
-            {
-                vv.MainMenuPath = Url.Action("Edit", vv.EditController, new { id = vv.IdForEdit , returnUrl = returnUrl});
-            }
-
-
-            <!-- #endregion -->
-
-
-
-
-            <!-- #region Switch -->
-            @switch (IndexListVMArray[i].MenuManager.MenuState.MenuEnum)
+                switch (IndexListVMArray[i].MenuManager.MenuState.MenuEnum)
                 {
 
                     case MenuENUM.IndexDefault:
@@ -120,66 +98,74 @@
                     case MenuENUM.IndexMenuPath1:
 
                         //item is menuPathMain
-                        vv.MenuPathMainId = vv.IdForEdit;
-                        vv.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
-                        vv.MenuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                        menuVar.MenuPathMainId = menuVar.IdForEdit;
+                        menuVar.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                        menuVar.MenuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
                         break;
 
 
                     case MenuENUM.IndexMenuPath2:
                         //item is menuPathMain
-                        vv.MenuPathMainId = vv.IdForEdit;
-                        vv.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
-                        vv.MenuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+                        menuVar.MenuPathMainId = menuVar.IdForEdit;
+                        menuVar.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+                        menuVar.MenuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
                         break;
 
 
                     case MenuENUM.IndexMenuPath3:
                         //item is menuPathMain
-                        vv.MenuPathMainId = vv.IdForEdit;
-                        vv.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
-                        vv.MenuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+                        menuVar.MenuPathMainId = menuVar.IdForEdit;
+                        menuVar.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+                        menuVar.MenuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
                         break;
 
 
                     case MenuENUM.IndexMenuProduct:
                         //item is product
-                        vv.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductId;
-                        vv.ProductId = IndexListVMArray[i].MenuManager.MenuState.ProductId;
+                        menuVar.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductId;
+                        menuVar.ProductId = IndexListVMArray[i].MenuManager.MenuState.ProductId;
                         break;
 
 
                     case MenuENUM.IndexMenuProductChild:
                         //item is productChild
-                        vv.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductChildId;
-                        vv.ProductChildId = IndexListVMArray[i].MenuManager.MenuState.ProductChildId;
+                        menuVar.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductChildId;
+                        menuVar.ProductChildId = IndexListVMArray[i].MenuManager.MenuState.ProductChildId;
+
+                        menuVar.MainMenuPath = Url.Action("ProductChildLandingPage", "ProductChilds", new { productChildId = menuVar.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu, returnUrl = returnUrl });
+                        //this causes the shopping cart button to be active only for product child
+                        itemMenuVar.IndexMenuVariables.ShoppingCartIcon.IsProductChild = true;                            
                         break;
 
 
                     default:
                         break;
-                }
+            }
 
+            }
+            else
+            {
+                menuVar.MainMenuPath = Url.Action("Edit", menuVar.EditController, new { id = menuVar.IdForEdit, returnUrl = returnUrl });
+            }
             <!-- #endregion -->
-
-
-
-
             <!-- #region if (Model.IsMenu) Like/Unlike/Finger Up Icons URLS -->
             @*@if (Model.IsMenu)*@
             @if (Model.MenuManager.MenuState.IsMenu)
             {
-                vv.LikeIcon.Url = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = true });
+                menuVar.LikeIcon.Url = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = menuVar.MenuPath1Id, menuPath2Id = menuVar.MenuPath2Id, menuPath3Id = menuVar.MenuPath3Id, productId = menuVar.ProductId, productChildId = menuVar.ProductChildId, userId = menuVar.UserId, isLike = true });
 
-                vv.LikeIcon.UrlCount = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = true });
+                menuVar.LikeIcon.UrlCount = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = menuVar.MenuPath1Id, menuPath2Id = menuVar.MenuPath2Id, menuPath3Id = menuVar.MenuPath3Id, productId = menuVar.ProductId, productChildId = menuVar.ProductChildId, userId = menuVar.UserId, isLike = true });
 
-                vv.UnLikeIcon.Url = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId, isLike = false });
+                menuVar.UnLikeIcon.Url = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = menuVar.MenuPath1Id, menuPath2Id = menuVar.MenuPath2Id, menuPath3Id = menuVar.MenuPath3Id, productId = menuVar.ProductId, productChildId = menuVar.ProductChildId, userId = menuVar.UserId, isLike = false });
 
-                vv.UnLikeIcon.UrlCount = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId });
+                menuVar.UnLikeIcon.UrlCount = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = menuVar.MenuPath1Id, menuPath2Id = menuVar.MenuPath2Id, menuPath3Id = menuVar.MenuPath3Id, productId = menuVar.ProductId, productChildId = menuVar.ProductChildId, userId = menuVar.UserId });
 
 
-                vv.CommentUrl = Url.Action("AddComment", "GlobalComments", new { menuPath1Id = vv.MenuPath1Id, menuPath2Id = vv.MenuPath2Id, menuPath3Id = vv.MenuPath3Id, productId = vv.ProductId, productChildId = vv.ProductChildId, userId = vv.UserId });
+                menuVar.MessageIcon.Url = Url.Action("SaleMessage", "Messages", new { menuPathMainId = menuVar.MenuPathMainId, productId = menuVar.ProductId, productChildId = menuVar.ProductChildId, returnUrl = returnUrl, messageEnum = MessageENUM.Paid, menuEnum = IndexListVMArray[i].MenuManager.MenuState.MenuEnum });
+                
+                menuVar.CommentUrl = Url.Action("AddComment", "GlobalComments", new { menuPath1Id = menuVar.MenuPath1Id, menuPath2Id = menuVar.MenuPath2Id, menuPath3Id = menuVar.MenuPath3Id, productId = menuVar.ProductId, productChildId = menuVar.ProductChildId, userId = menuVar.UserId });
 
+                menuVar.ShoppingCartIcon.Url = Url.Action("BuyAjax", "BuySellDocs", new { productChildId = menuVar.ProductChildId }).ToString();
             }
 
 
@@ -192,57 +178,51 @@
 
         </div>
 
-        <div class="container col-lg-3 col-md-4 col-xs-6 m-0">
+        <div class="col-lg-3 col-md-6  p-0" >
 
-
-
-
-
-            <div class="border border-dark rounded text-center backgroundYellowOnHover " style="margin: 2px;">
+            <div class="border border-dark rounded text-center backgroundYellowOnHover m-1 " >
 
                 <h4>@itemHeading</h4>
 
 
-                    @{
-        
-                        int pictureCount = 0;
-                        List<string> picturesList = IndexListVMArray[i].MenuManager.PictureAddresses.ToList();
-                        string carouselItemClass = "carousel-item active";
-                        string caouselIndicatorLiClass = "active";
-                        carouselId = carouselName + carouselCount;
-                        
-                        ModelsClassLibrary.ViewModels.IndexItemVM.GetMaxWidthHeightForCarousel(picturesList);
-                        
-                      }
+                @{
+                    int pictureCount = 0;
+                    List<string> picturesList = IndexListVMArray[i].MenuManager.PictureAddresses.ToList();
+                    string carouselItemClass = "carousel-item active";
+                    string caouselIndicatorLiClass = "active";
+                    carouselId = carouselName + carouselCount;
+
+                    ModelsClassLibrary.ViewModels.IndexItemVM.GetMaxWidthHeightForCarousel(picturesList);
+                }
 
                 <div class="">
-                    <div id="@carouselId" class="carousel slide m-5" data-ride="carousel">
+                    <div id="@carouselId" class="carousel slide" data-ride="carousel">
                         <ul class="carousel-indicators">
                             @for (int indicator = 0; indicator < picturesList.Count; indicator++)
-                        {
-                            if (indicator != 0)
                             {
-                                caouselIndicatorLiClass = "";
-                            }
+                                if (indicator != 0)
+                                {
+                                    caouselIndicatorLiClass = "";
+                                }
                                 <li data-target="#@carouselId" data-slide-to="@indicator" class="@caouselIndicatorLiClass"></li>
 
-                        }
+                            }
                         </ul>
 
 
-                        <div class="carousel-inner">
+                        <div class="carousel-inner ">
+                            @foreach (var pictureAddy in picturesList)
+                            {
 
-                            @foreach (var item in picturesList)
-                        {
-                                string imageSrc = Url.Content(item);
+                                string imageSrc = Url.Content(pictureAddy);
                                 string imageAlt = IndexListVMArray[i].ShortName;
-                            
+
                                 ModelsClassLibrary.ViewModels.IndexItemVM.PriceStatic = IndexListVMArray[i].Price;
                                 string imageHeading = ModelsClassLibrary.ViewModels.IndexItemVM.PriceDisplay;
-                                
+
                                 string imageDescription = "";
 
-                                ModelsClassLibrary.ViewModels.IndexItemVM.PictureCalculateDimensions(item);
+                                ModelsClassLibrary.ViewModels.IndexItemVM.PictureCalculateDimensions(pictureAddy);
                                 string imageWidth = ModelsClassLibrary.ViewModels.IndexItemVM.PictureWidth;
                                 string imageHeight = ModelsClassLibrary.ViewModels.IndexItemVM.PictureHeight;
 
@@ -251,33 +231,35 @@
                                     carouselItemClass = "carousel-item";
                                 }
 
-                                    <div class="@carouselItemClass">
-                                        <a href="@vv.MainMenuPath" data-toggle="tooltip" title="@IndexListVMArray[i].Description" data-placement="top" class="d-block h-100 text-center mb-0">
-                                            @*<img src="@imageSrc" alt="@imageAlt" width="@imageWidth">*@
+                                <div class="@carouselItemClass">
+                                    <a href="@menuVar.MainMenuPath" data-toggle="tooltip" title="@IndexListVMArray[i].Description" data-placement="top" class="d-block h-100 text-center mb-0">
+                                        @*<img src="@imageSrc" alt="@imageAlt" width="@imageWidth">*@
+                                        <div class="container" style="height: 200px;" >
                                             @if (imageWidth == "0")
                                             {
-                                                <img src="@imageSrc" alt="@imageAlt" height="@imageHeight" class="tiledimagemiddlepart">
+                                                <img src="@imageSrc" alt="@imageAlt" class=" img-fluid" @*style="height:100%;"*@>
 
                                             }
                                             else
                                             {
-                                                <img src="@imageSrc" alt="@imageAlt" width="@imageWidth" class="tiledimagemiddlepart">
+                                                <img src="@imageSrc" alt="@imageAlt" class="img-fluid" @*style="width:100%;"*@>
 
                                             }
-                                            <div class="carousel-caption">
-                                                @if (!imageHeading.IsNullOrWhiteSpace())
-                                                { 
-                                                    <h3>@imageHeading</h3>
-                                                }
-                                                @if (!imageDescription.IsNullOrWhiteSpace())
-                                                {
-                                                    <p>@imageDescription</p>
+                                        </div>
+                                        <div class=" carousel-caption">
+                                            @if (!imageHeading.IsNullOrWhiteSpace())
+                                            {
+                                                <h3>@imageHeading</h3>
+                                            }
+                                            @if (!imageDescription.IsNullOrWhiteSpace())
+                                            {
+                                                <p>@imageDescription</p>
 
-                                                }
-                                            </div>
-                                        </a>
-                                    </div>
-                                pictureCount++;
+                                            }
+                                        </div>
+                                    </a>
+                                </div>
+                                            pictureCount++;
 
                             }
 
@@ -291,7 +273,7 @@
                         </a>
 
                     </div>
-                </div>    
+                </div>
 
                 @{
         carouselCount++;
@@ -299,123 +281,106 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    @*</span> 
-                </a> *@
-
-
-
-
-            
-                @if (Model.IsMenu)
+                @if (Model.IsMenu)                
                 {
-
+                    if (itemMenuVar.IndexMenuVariables.ShoppingCartIcon.IsOwnerOfProductChild)
+                    {
+                        shoppingCartToolTip = "You are the owner. You can't buy this!";
+                    }
                     <!-- #region User Icons -->
-                    <div class="m-0">
+                    <div class="m-1">
+                        
+                        @*This is the shopping cart*@
+                        @if (itemMenuVar.IndexMenuVariables.ShoppingCartIcon.IsProductChild)
+                        { 
+                            <span data-toggle="tooltip" title="@shoppingCartToolTip" data-placement="top">
 
-                        @*These are all anchorButtons Class*@
-                        <a id="@vv.ShoppingCartId"
-                           class="@vv.ClassAnchorButton btn-success aria-label @vv.ClassShoppingCart"
-                           data-url="@vv.ShoppingCartUrl"
-                           onclick="">
-                        </a>
+                                <button id="@menuVar.ShoppingCartIcon.Id"
+                                        class="@menuVar.ShoppingCartIcon.ButtonClass"
+                                        data-nameofproduct="@menuVar.ShortNameOfProduct"
+                                        data-url="@menuVar.ShoppingCartIcon.Url"
+                                        onclick="@menuVar.ShoppingCartIcon.OnClick"
+                                    
+                                        @itemMenuVar.IndexMenuVariables.ShoppingCartIcon.ButtonDisableConditionally>
 
-                        <a id="@vv.HandPointingId"
-                           class="@vv.ClassHandPointingUp"
-                           data-url="@vv.HandPointingUrl">
-                        </a>
+                                    <span id="@menuVar.ShoppingCartIcon.IdCount"
+                                          class="@menuVar.ShoppingCartIcon.BadgeClass">
+
+                                        @menuVar.ShoppingCartIcon.CountIcon
+                                    </span>
+
+                                    <img src="~/ContentMine/Icons/ShoppingCartIcon.png" />
+
+                                </button>
+                            </span>
+                        }
 
 
+
+                        @{
+
+                            if (!IndexListVMArray[i].MenuManager.IsNull())
+                            {
+                                if (!IndexListVMArray[i].MenuManager.LikeUnlikesCounter.IsNull())
+                                {
+                                    menuVar.LikeIcon.HasPressed = IndexListVMArray[i].MenuManager.LikeUnlikesCounter.HasLiked;
+                                    menuVar.LikeIcon.CountIcon = @IndexListVMArray[i].MenuManager.LikeUnlikesCounter.LikeCount;
+                                }
+                            }
+
+                        }
 
                         <span data-toggle="tooltip" title="I LIKE it! Press to register and tell us why." data-placement="top">
-                            <a id="@vv.LikeIcon.Id"
-                               class="@vv.LikeIcon.AnchorButtonClassWithIcon"
-                               data-nameofproduct="@vv.ShortNameOfProduct"
-                               data-url="@vv.LikeIcon.Url"
-                               data-counturl="@vv.LikeIcon.UrlCount"
-                               data-toggle="modal"
-                               data-target="#mymodalnew"
-                               onclick="@vv.LikeIcon.OnClick">
+                            <button id="@menuVar.LikeIcon.Id"
+                                    class="@menuVar.LikeIcon.ButtonClass"
+                                    data-nameofproduct="@menuVar.ShortNameOfProduct"
+                                    data-url="@menuVar.LikeIcon.Url"
+                                    data-counturl="@menuVar.LikeIcon.UrlCount"
+                                    data-toggle="modal"
+                                    data-target="#mymodalnew"
+                                    onclick="@menuVar.LikeIcon.OnClick"
+                                    @menuVar.LikeIcon.ButtonDisableConditionally>
 
-                                <span id="@vv.LikeIcon.IdCount"
-                                      class="@vv.LikeIcon.BadgeClass">
-                                    @vv.LikeIcon.CountIcon
+
+                                <span id="@menuVar.LikeIcon.IdCount"
+                                      class="@menuVar.LikeIcon.BadgeClass">
+                                    @menuVar.LikeIcon.CountIcon
                                 </span>
-
-                            </a>
+                                <img src="~/ContentMine/Icons/smilingFace.png" />
+                            </button>
                         </span>
 
-                        @*<span data-toggle="tooltip" title="I LIKE it! Press to register and tell us why." data-placement="top">
-                            <a id="@vv.LikeId"
-                               class="@vv.LikeClass"
-                               data-nameofproduct="@vv.ShortNameOfProduct"
-                               data-url="@vv.LikeUrl"
-                               data-counturl="@vv.LikeCountUrl"
+
+                        @{
+
+                            if (!IndexListVMArray[i].MenuManager.IsNull())
+                            {
+                                if (!IndexListVMArray[i].MenuManager.LikeUnlikesCounter.IsNull())
+                                {
+                                    menuVar.UnLikeIcon.CountIcon = @IndexListVMArray[i].MenuManager.LikeUnlikesCounter.UnlikeCount;
+                                    menuVar.UnLikeIcon.HasPressed = IndexListVMArray[i].MenuManager.LikeUnlikesCounter.HasUnLiked;
+                                }
+                            }
+
+                        }
+
+
+                        @*<span data-toggle="tooltip" title="I HATE it! Press button and tell us why?" data-placement="top">
+
+                            <a id="@menuVar.UnLikeIcon.Id"
+                               class="@menuVar.UnLikeIcon.AnchorButtonClassWithIcon"
+                               data-nameofproduct="@menuVar.ShortNameOfProduct"
+                               data-url="@menuVar.UnLikeIcon.Url"
+                               data-counturl="@menuVar.UnLikeIcon.UrlCount"
                                data-toggle="modal"
                                data-target="#mymodalnew"
-                               onclick="@vv.LikedOnClick">
+                               onclick="@menuVar.UnLikeIcon.OnClick">
 
-                                <span id="@vv.LikeBadgeCountId"
-                                      class="@vv.LikeBadgeClass">
-                                    @vv.LikeCount
+                                <span id="@menuVar.UnLikeIcon.IdCount"
+                                      class="@menuVar.UnLikeIcon.BadgeClass">
+
+
+                                    @menuVar.UnLikeIcon.CountIcon
                                 </span>
 
                             </a>
@@ -423,82 +388,129 @@
 
                         <span data-toggle="tooltip" title="I HATE it! Press button and tell us why?" data-placement="top">
 
-                            <a id="@vv.UnLikeIcon.Id"
-                               class="@vv.UnLikeIcon.AnchorButtonClassWithIcon"
-                               data-nameofproduct="@vv.ShortNameOfProduct"
-                               data-url="@vv.UnLikeIcon.Url"
-                               data-counturl="@vv.UnLikeIcon.UrlCount"
-                               data-toggle="modal"
-                               data-target="#mymodalnew"
-                               onclick="@vv.UnLikeIcon.OnClick">
+                            <button id="@menuVar.UnLikeIcon.Id"
+                                    class="@menuVar.UnLikeIcon.ButtonClass"
+                                    data-nameofproduct="@menuVar.ShortNameOfProduct"
+                                    data-url="@menuVar.UnLikeIcon.Url"
+                                    data-counturl="@menuVar.UnLikeIcon.UrlCount"
+                                    data-toggle="modal"
+                                    data-target="#mymodalnew"
+                                    onclick="@menuVar.UnLikeIcon.OnClick"
+                                    @menuVar.UnLikeIcon.ButtonDisableConditionally>
 
-                                <span id="@vv.UnLikeIcon.IdCount"
-                                      class="@vv.UnLikeIcon.BadgeClass">
-                                    @vv.UnLikeIcon.CountIcon
+                                <span id="@menuVar.UnLikeIcon.IdCount"
+                                      class="@menuVar.UnLikeIcon.BadgeClass">
+
+
+                                    @menuVar.UnLikeIcon.CountIcon
                                 </span>
 
-                            </a>
+                                <img src="~/ContentMine/Icons/SadFace.png" />
+
+                            </button>
                         </span>
 
 
 
+                        @*<a id="@menuVar.CommentId"
+                           data-toggle="modal"
+                           href="#modalBoxId"
+                           data-url="@menuVar.CommentUrl"
+                           class="anchorButtons btn btn-xs btn-primary aria-label far fa-comment"
+                           onclick="LoadDataUrlInComment(this, document.getElementById('modalBoxId'))"></a>
 
-                        @*<span data-toggle="tooltip" title="I HATE it! Press button and tell us why?" data-placement="top">
+                        @{
 
-                            <a id="@vv.UnlikeId"
-                               class="@vv.UnlikeClass"
-                               data-nameofproduct="@vv.ShortNameOfProduct"
-                               data-url="@vv.UnlikeUrl"
-                               data-counturl="@vv.UnlikeCountUrl"
-                               data-toggle="modal"
-                               data-target="#mymodalnew"
-                               onclick="@vv.UnlikedOnClick">
+                            if (!IndexListVMArray[i].MenuManager.IsNull())
+                            {
+                                if (!IndexListVMArray[i].MenuManager.LikeUnlikesCounter.IsNull())
+                                {
+                                    //ADD THE MESSAGE ICON CODE HERE.
+                                }
+                            }
 
-                                <span id="@vv.UnlikeBadgeCountId"
-                                      class="@vv.UnLikeBadgeClass">
-                                    @vv.UnLikeCount
+                        }*@
+
+
+
+
+
+
+                        @*<span data-toggle="tooltip" title="Send messages." data-placement="top">
+
+                            <a id="@menuVar.MessageIcon.Id"
+                               class="@menuVar.MessageIcon.AnchorButtonClassWithIcon"
+                               data-nameofproduct="@menuVar.ShortNameOfProduct"
+                               data-counturl="@menuVar.MessageIcon.UrlCount"
+                               href="@menuVar.MessageIcon.Url">
+
+                                <span id="@menuVar.MessageIcon.IdCount"
+                                      class="@menuVar.MessageIcon.BadgeClass">
+                                    @menuVar.MessageIcon.CountIcon
                                 </span>
 
                             </a>
                         </span>*@
-                        <a id="@vv.CommentId"
-                           data-toggle="modal"
-                           href="#modalBoxId"
-                           data-url="@vv.CommentUrl"
-                           class="anchorButtons btn btn-xs btn-primary aria-label far fa-comment"
-                           onclick="LoadDataUrlInComment(this, document.getElementById('modalBoxId'));"></a>
+                        <span data-toggle="tooltip" title="Send messages." data-placement="top">
 
-                        <span data-toggle="tooltip" title="Problem with this! Flag it and tell us the problem?" data-placement="top">
-                            <a id="@vv.FlagId"
-                               class="@vv.FlagClass"
-                               data-nameofproduct="@vv.ShortNameOfProduct"
-                               data-url="@vv.FlagUrl"
-                               data-counturl="@vv.FlagCountUrl"
-                               data-toggle="modal"
-                               data-target="#mymodalnew"
-                               onclick="@vv.FlagOnClick">
+                            <button @*class="btn btn-sm btn-warning"*@
+                                    id="@menuVar.MessageIcon.Id"
+                                    class="@menuVar.MessageIcon.ButtonClass"
+                                    @menuVar.MessageIcon.ButtonDisableConditionally
+                                    data-nameofproduct="@menuVar.ShortNameOfProduct"
+                                    data-counturl="@menuVar.MessageIcon.UrlCount"
+                                    onclick="location.href='@menuVar.MessageIcon.Url'">
 
-                                <span id="@vv.FlagBadgeCountId"
-                                      class="@vv.FlagBadgeClass">
-                                    @vv.FlagCount
-                                </span>
-                            </a>
+                                <img src="~/ContentMine/Icons/Envelope.png" />
+                            </button>
                         </span>
 
-                    </div>
+                        @{
+
+                            if (!IndexListVMArray[i].MenuManager.IsNull())
+                            {
+                                if (!IndexListVMArray[i].MenuManager.LikeUnlikesCounter.IsNull())
+                                {
+                                    //ADD THE FLAG BADGE HERE
+                                }
+                            }
+
+                        }
+
+
+                            <span data-toggle="tooltip" title="@flagToolTip" data-placement="top">
+                                <button id="@menuVar.FlagIcon.Id"
+                                        class="@menuVar.FlagIcon.ButtonClass"
+                                        data-nameofproduct="@menuVar.ShortNameOfProduct"
+                                        data-url="@menuVar.FlagIcon.Url"
+                                        onclick="@menuVar.FlagIcon.OnClick"
+                                        @menuVar.FlagIcon.ButtonDisableConditionally>
+
+                                    <span id="@menuVar.FlagIcon.IdCount"
+                                          class="@menuVar.FlagIcon.BadgeClass">
+
+                                        @menuVar.FlagIcon.CountIcon
+                                    </span>
+
+                                    <img src="~/ContentMine/Icons/Flag.png" />
+
+                                </button>
+                            </span>
+
+</div>
             <!-- #endregion -->
 
 
 
             <!-- #region Admin Icons -->
 
-                    if (vv.IsAdmin)
+                    if (menuVar.IsAdmin)
                     {
-                        <div>
-                            <a id="@vv.ShoppingCartCountId"
-                               class="@vv.ClassWrench"
-                               data-nameofproduct="@vv.ShortNameOfProduct"
-                               data-url="@vv.UnLikeIcon.UrlCount"
+                        @*<div>
+                            <a id="@menuVar.ShoppingCartCountId"
+                               class="@menuVar.ClassWrench"
+                               data-nameofproduct="@menuVar.ShortNameOfProduct"
+                               data-url="@menuVar.UnLikeIcon.UrlCount"
                                data-toggle="modal"
                                data-target="#mymodalnew"
                                onclick="">&nbsp;</a>
@@ -506,8 +518,8 @@
 
 
 
-                            <a id="@vv.CommentCountId" class="btn btn-xs aria-label disabled"></a>
-                        </div>
+                            <a id="@menuVar.CommentCountId" class="btn btn-xs aria-label disabled"></a>
+                        </div>*@
                     }
 
             <!-- #endregion -->

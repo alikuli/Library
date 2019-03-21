@@ -65,7 +65,7 @@ namespace MarketPlace.Web6.Controllers
             };
 
 
-            var indexListVM = await indexEngine(parms);
+            var indexListVM = await IndexEngine(parms);
             if (selectedId.IsNullOrWhiteSpace())
             {
                 ErrorsGlobal.AddMessage("No selected Id Received.");
@@ -88,7 +88,7 @@ namespace MarketPlace.Web6.Controllers
             };
 
 
-            var indexListVM = await indexEngine(parms);
+            var indexListVM = await IndexEngine(parms);
             if (selectedId.IsNullOrWhiteSpace())
             {
                 ErrorsGlobal.AddMessage("No selected Id Received.");
@@ -112,7 +112,7 @@ namespace MarketPlace.Web6.Controllers
                 SortBy = SortOrderENUM.Item1_Asc, //different
             };
 
-            var indexListVM = await indexEngine(parms);
+            var indexListVM = await IndexEngine(parms);
             if (selectedId.IsNullOrWhiteSpace())
             {
                 ErrorsGlobal.AddMessage("No selected Id Received.");
@@ -137,7 +137,7 @@ namespace MarketPlace.Web6.Controllers
             };
 
             //SortOrderENUM.Item1_Asc is by rank.
-            var indexListVM = await indexEngine(parms);
+            var indexListVM = await IndexEngine(parms);
             if (selectedId.IsNullOrWhiteSpace())
             {
                 ErrorsGlobal.AddMessage("No selected Id Received.");

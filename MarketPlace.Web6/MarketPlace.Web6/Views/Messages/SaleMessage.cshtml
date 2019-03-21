@@ -1,0 +1,266 @@
+﻿@model ModelsClassLibrary.ModelsNS.MessagesNS.MessageParameter
+
+@{
+    ViewBag.Title = "SaleMessage";
+    string returnUrl = Model.ReturnUrl;
+}
+
+<h2>Sale Message</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="content">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReturnUrl, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReturnUrl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ReturnUrl, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MenuPathMainId, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.MenuPathMainId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MenuPathMainId, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProductId, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ProductId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProductChildId, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ProductChildId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ProductChildId, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NumberOfTotalPeople, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.NumberOfTotalPeople, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NumberOfTotalPeople, "", new { @class = "text-danger" })
+                </div>
+
+                @if(!Model.TotalPeople.IsNullOrEmpty())
+                {
+                    int count = 0;
+                    <ul>
+                        @foreach (var item in Model.TotalPeople.OrderBy(x => x.FullName()))
+	                    {
+                            count++;
+                            <li>@count) @item.FullName()</li>
+	                    }
+                    </ul>
+                }
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NumberOfLikeUnlikePeople, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.NumberOfLikeUnlikePeople, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NumberOfLikeUnlikePeople, "", new { @class = "text-danger" })
+                </div>
+
+                @if (!Model.LikeUnlikePeople.IsNullOrEmpty())
+                {
+                    int count = 0;
+                    <ul>
+                        @foreach (var item in Model.LikeUnlikePeople.OrderBy(x => x.FullName()))
+                        {
+                            count++;
+                            <li>@count) @item.FullName()</li>
+                        }
+                    </ul>
+                }
+
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NumberOfProductPeople, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.NumberOfProductPeople, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NumberOfProductPeople, "", new { @class = "text-danger" })
+                </div>
+
+
+                @if (!Model.ProductPeople.IsNullOrEmpty())
+                {
+                    int count = 0;
+                    <ul>
+                        @foreach (var item in Model.ProductPeople.OrderBy(x => x.FullName()))
+                        {
+                            count++;
+                            <li>@count) @item.FullName()</li>
+                        }
+                    </ul>
+                }
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NumberOfProductChildPeople, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.NumberOfProductChildPeople, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NumberOfProductChildPeople, "", new { @class = "text-danger" })
+                </div>
+
+                @if (!Model.ProductChildPeople.IsNullOrEmpty())
+                {
+                    int count = 0;
+                    <ul>
+                        @foreach (var item in Model.ProductChildPeople.OrderBy(x => x.FullName()))
+                        {
+                            count++;
+                            <li>@count) @item.FullName()</li>
+                        }
+                    </ul>
+                }
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NumberOfProductsBelongingToUserFrom, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.NumberOfProductsBelongingToUserFrom, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NumberOfProductsBelongingToUserFrom, "", new { @class = "text-danger" })
+                </div>
+
+                @if (!Model.ProductsBelongingToUserFrom.IsNullOrEmpty())
+                {
+                    int count = 0;
+                    <ul>
+                        @foreach (var item in Model.ProductsBelongingToUserFrom.OrderBy(x => x.FullName()))
+                        {
+                            count++;
+                            <li>@count) @item.FullName()</li>
+                        }
+                    </ul>
+                }
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NumberOfChildProductsBelongingToUserFrom, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.NumberOfChildProductsBelongingToUserFrom, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NumberOfChildProductsBelongingToUserFrom, "", new { @class = "text-danger" })
+                </div>
+
+                @if (!Model.ChildProductCheckItems.IsNullOrEmpty())
+                {
+                    int count = 0;
+                        @*@foreach (var item in Model.ProductChildrenBelongingToUserFrom.OrderBy(x => x.FullName()))*@
+                    foreach (var item in Model.ChildProductCheckItems.OrderBy(x => x.Label))
+                    {
+                        string id1 = string.Format("ChildProductCheckItems_{0}__Id", count);
+                        string name1 = string.Format("ChildProductCheckItems[{0}].Id", count);
+
+                        string id2 = string.Format("ChildProductCheckItems_{0}__IsTrue", count);
+                        string name2 = string.Format("ChildProductCheckItems[{0}].IsTrue", count);
+                        string link = Url.Action("ProductChildLandingPage", "ProductChilds", new { productChildId = item.Id, menuEnum = MenuENUM.IndexMenuProductChild, returnUrl = @Request.Url.PathAndQuery });
+
+                        count++;
+
+                            <div class="checkbox">
+                                <span>@count) </span>
+                                <label>
+
+                                    <input id="@id1"
+                                           name="@name1"
+                                           type="hidden"
+                                           value="@item.Id" />
+
+                                    @if (item.IsTrue)
+                                    {
+                                        <input data-val="true"
+                                               checked="checked"
+                                               data-val-required="The IsTrue field is required."
+                                               id="@id2"
+                                               name="@name2"
+                                               type="checkbox"
+                                               value="true" />
+
+                                    }
+                                    else
+                                    {
+                                        <input data-val="true"
+                                               data-val-required="The IsTrue field is required."
+                                               id="@id2"
+                                               name="@name2"
+                                               type="checkbox"
+                                               value="true" />
+
+                                    }
+
+
+                                    <input name="@name2"
+                                           type="hidden"
+                                           value="false" />
+
+                                    
+                                    <a href="@link">@item.Label</a>
+
+                                    @if (item.IsTrue)
+                                    {
+                                        <input id="@id2"
+                                               name="@name2"
+                                               type="hidden"
+                                               value="true" />
+
+                                    }
+                                    else
+                                    {
+                                        <input id="@id2"
+                                               name="@name2"
+                                               type="hidden"
+                                               value="False" />
+
+                                    }
+                                </label>
+                            </div>
+
+                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                @*<a href="@link">@item.FullName()</a>*@
+                        }
+                }
+                else
+                {
+                    <h4>You have no products. Create one!</h4>
+                }
+
+            </div>
+        </div>
+     </div>
+        }
+
+        
+        <div>
+            <a href="@Url.Content(@returnUrl)">Go Back</a>
+            
+        </div>

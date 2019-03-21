@@ -1,17 +1,11 @@
-﻿using AliKuli.Extentions;
-using ModelsClassLibrary.ModelsNS.FeaturesNS;
+﻿using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
+using ModelsClassLibrary.ModelsNS.MessageNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
-using ModelsClassLibrary.ModelsNS.ProductNS.ComplexClassesNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.ModelsNS.UploadedFileNS;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using UserModels;
 
 namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 {
@@ -27,16 +21,29 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 
 
         public virtual ICollection<ProductChildFeature> ProductChildFeatures { get; set; }
+        
+
+        /// <summary>
+        /// This contains all the features ie. from MenuPath1, Menupath2, MenuPath3, Product and ofcours, ProductChildFeatures
+        /// </summary>
+        [NotMapped]
+        public virtual List<ProductChildFeature> AllFeatures { get; set; }
         /// <summary>
         /// This is the owning product.
         /// </summary>
         [Display(Name = "Product")]
         public string ProductId { get; set; }
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         public virtual ICollection<GlobalComment> GlobalComments { get; set; }
         public virtual ICollection<LikeUnlike> LikeUnlikes { get; set; }
         //public virtual ICollection<Feature> Features { get; set; }
+
+        /// <summary>
+        /// These are the messages being advertised by the user.
+        /// </summary>
+        //public virtual ICollection<Message> MessagesAdvertisment { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
 
 
     }

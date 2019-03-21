@@ -52,7 +52,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     returnUrl);
 
 
-                InitializeMenuManager(parms);
+                Biz.InitializeMenuManagerForEntity(parms);
                 if (!returnUrl.IsNullOrWhiteSpace())
                 {
                     parms.Entity.MenuManager.ReturnUrl = returnUrl;
@@ -121,7 +121,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     returnUrl);
 
 
-                InitializeMenuManager(parm);
+                Biz.InitializeMenuManager(parm);
 
 
                 //I had to make this because sometimes I cannot use a certain required biz

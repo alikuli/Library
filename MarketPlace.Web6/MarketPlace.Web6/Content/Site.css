@@ -46,6 +46,10 @@ textarea {
   /*padding: 0 90px;*/
 }
 
+.OnHoverbackgroundYellow{
+  background-color: yellow;
+
+}
 
 /* Print styling */
 
@@ -189,7 +193,9 @@ textarea {
     {
         display:flex;
         flex-wrap:wrap;
-        width:100%;
+        
+        
+        
     }
 
 
@@ -233,4 +239,69 @@ textarea {
 
 .tiledimagemiddlepart{
     object-fit: scale-down;
+}
+
+/*carousel color control*/
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background: black no-repeat center center;
+  background-size: 100% 100%;
+}
+
+
+.carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+}
+
+.carousel-control-next-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+
+
+.carousel-indicators .active {
+  background-color: white;
+}
+
+
+.carousel-caption {
+  position: absolute;
+  right: 15%;
+  bottom: 20px;
+  left: 15%;
+  z-index: 10;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #f00;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+/*My Images*/
+.img-message {
+    display: inline-flex;
+    background-repeat: no-repeat;
+    background: url('../ContentMine/Icons/Envelope.png') no-repeat center;
+    color: #000000;
+    background-size: 100%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.envelope {
+    /*background: url('images/Envelope.png') no-repeat;*/
+    background: url('../ContentMine/Icons/Envelope.png') no-repeat center;
+    color: #000000;
+    background-size: 100%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+image-for-button-class{
+     background-size: 100%;
 }

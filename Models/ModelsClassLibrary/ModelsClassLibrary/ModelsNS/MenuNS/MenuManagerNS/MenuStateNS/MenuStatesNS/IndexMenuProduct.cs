@@ -15,7 +15,7 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
     public class IndexMenuProduct : MenuStateAbstract
     {
 
-        public IndexMenuProduct(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameter likeUnlikesCounter)
+        public IndexMenuProduct(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter)
             : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
 
 

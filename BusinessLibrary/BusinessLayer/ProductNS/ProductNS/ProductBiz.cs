@@ -1,13 +1,25 @@
-﻿using DalLibrary.Interfaces;
+﻿using AliKuli.Extentions;
+using DalLibrary.Interfaces;
+using ModelsClassLibrary.ModelsNS.FeaturesNS;
+using ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeatureNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UowLibrary.FeatureNS.MenuFeatureNS;
 using UowLibrary.LikeUnlikeNS;
 using UowLibrary.MenuNS;
 using UowLibrary.ParametersNS;
+using UowLibrary.PlayersNS.OwnerNS;
 using UowLibrary.ProductChildNS;
 
 namespace UowLibrary.ProductNS
 {
+
+    /// <summary>
+    /// You can controll the list of products to the index by marking ShowInactive true or false.
+    /// </summary>
     public partial class ProductBiz : BusinessLayer<Product>
     {
 
@@ -16,13 +28,24 @@ namespace UowLibrary.ProductNS
         UserBiz _userBiz;
         ProductChildBiz _productChildBiz;
         LikeUnlikeBiz _likeUnlikeBiz;
-        public ProductBiz(UserBiz userBiz, IRepositry<Product> entityDal, MyWorkClassesProduct myWorkClassesProduct, ProductChildBiz productChildBiz, BizParameters bizParameters, LikeUnlikeBiz likeUnlikeBiz)
+        OwnerBiz _ownerBiz;
+        public ProductBiz(UserBiz userBiz, IRepositry<Product> entityDal, MyWorkClassesProduct myWorkClassesProduct, ProductChildBiz productChildBiz, BizParameters bizParameters, LikeUnlikeBiz likeUnlikeBiz, OwnerBiz ownerBiz)
             : base(entityDal, bizParameters)
         {
             _myWorkClassesProduct = myWorkClassesProduct;
             _userBiz = userBiz;
             _productChildBiz = productChildBiz;
             _likeUnlikeBiz = likeUnlikeBiz;
+            _ownerBiz = ownerBiz;
+        }
+        public OwnerBiz OwnerBiz
+        {
+            get
+            {
+                _ownerBiz.UserId = UserId;
+                _ownerBiz.UserName = UserName;
+                return _ownerBiz;
+            }
         }
 
 
@@ -37,11 +60,11 @@ namespace UowLibrary.ProductNS
         }
         public UserBiz UserBiz
         {
-            get 
+            get
             {
                 _userBiz.UserId = UserId;
                 _userBiz.UserName = UserName;
-                return _userBiz; 
+                return _userBiz;
             }
         }
 
@@ -54,62 +77,62 @@ namespace UowLibrary.ProductNS
                 return _myWorkClassesProduct;
             }
         }
-        public MenuFeatureBiz MenuFeatureBiz 
-        { 
-            get 
+        public MenuFeatureBiz MenuFeatureBiz
+        {
+            get
             {
-                return MyWorkClassesProduct.MenuFeatureBiz; 
-            } 
+                return MyWorkClassesProduct.MenuFeatureBiz;
+            }
         }
-        public ProductFeatureBiz ProductFeatureBiz 
-        { 
-            get 
+        public ProductFeatureBiz ProductFeatureBiz
+        {
+            get
             {
-                return MyWorkClassesProduct.ProductFeatureBiz; 
-            } 
+                return MyWorkClassesProduct.ProductFeatureBiz;
+            }
         }
 
-        public UomVolumeBiz UomVolumeBiz 
-        { 
-            get 
+        public UomVolumeBiz UomVolumeBiz
+        {
+            get
             {
-                return MyWorkClassesProduct.UomVolumeBiz; 
-            } 
+                return MyWorkClassesProduct.UomVolumeBiz;
+            }
         }
-        public UomLengthBiz UomLengthBiz 
-        { 
-            get 
+        public UomLengthBiz UomLengthBiz
+        {
+            get
             {
-                return MyWorkClassesProduct.UomLengthBiz; 
-            } 
+                return MyWorkClassesProduct.UomLengthBiz;
+            }
         }
-        public UomQuantityBiz UomQuantityBiz 
-        { 
-            get 
+        public UomQuantityBiz UomQuantityBiz
+        {
+            get
             {
-                return MyWorkClassesProduct.UomQuantityBiz; 
-            } 
+                return MyWorkClassesProduct.UomQuantityBiz;
+            }
         }
-        public UomWeightBiz UomWeightBiz 
-        { 
-            get 
+        public UomWeightBiz UomWeightBiz
+        {
+            get
             {
-                return MyWorkClassesProduct.UomWeightBiz; 
-            } 
+                return MyWorkClassesProduct.UomWeightBiz;
+            }
         }
-        public MenuPathMainBiz MenuPathMainBiz 
-        { 
-            get 
+        public MenuPathMainBiz MenuPathMainBiz
+        {
+            get
             {
-                return MyWorkClassesProduct.MenuPathMainBiz; 
-            } 
+                return MyWorkClassesProduct.MenuPathMainBiz;
+            }
         }
-        public ProductIdentifierBiz ProductIdentifierBiz 
-        { 
-            get 
+        public ProductIdentifierBiz ProductIdentifierBiz
+        {
+            get
             {
-                return MyWorkClassesProduct.ProductIdentifierBiz; 
-            } 
+                return MyWorkClassesProduct.ProductIdentifierBiz;
+            }
         }
 
         public ProductChildBiz ProductChildBiz
@@ -144,6 +167,20 @@ namespace UowLibrary.ProductNS
             {
                 return _myWorkClassesProduct.MenuPathMainBiz.MenuPath3Biz;
             }
+        }
+
+        public void ApproveAllProductsAndSaveUtility()
+        {
+            List<Product> productLst = FindAll().ToList();
+            if (productLst.IsNullOrEmpty())
+                return;
+
+            foreach (Product product in productLst)
+            {
+                product.IsUnApproved = false;
+            }
+
+            SaveChanges();
         }
 
 

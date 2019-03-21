@@ -1,6 +1,5 @@
 ﻿using AliKuli.Extentions;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
-using System.Collections.Generic;
 
 namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
 {
@@ -8,7 +7,7 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
     {
         public IndexMenuVariables()
         {
-            
+
         }
         public IndexMenuVariables(string userId)
         {
@@ -22,9 +21,15 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
         public string IdForEdit { get; set; }
         //public string ImagePath { get; set; }
 
-
-
-
+        /// <summary>
+        /// This is the owner person of the product child
+        /// </summary>
+        public string ProductChildPersonId { get; set; }
+        
+        /// <summary>
+        /// this is the user person of the currently logged in user
+        /// </summary>
+        public string UserPersonId { get; set; }
 
         #region Like
 
@@ -37,7 +42,18 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
             {
                 if (_likeIcon.IsNull())
                 {
-                    _likeIcon = new IconProperties(Count, "like", UserId, "EditlikeUnlikeModal(this);", "ShowPplWhoLikeUnlikeThis(this);", " far fa-smile ", " btn-info ", true, true, " badge badge-danger ");
+                    int theCount = Count; //was 0 before I changed it.
+                    string iconPrefix = "like";
+                    string editFunction = "EditlikeUnlikeModal(this);";
+                    string showFunction = "ShowPplWhoLikeUnlikeThis(this);";
+                    string icon = " ";
+                    //string icon = " far fa-smile ";
+                    string buttonColorClass = " btn-info ";
+                    bool isAllowEditIfLoggedIn = true;
+                    bool isAllowedOnlyOnce = true;
+                    string badgeClassShow = " badge badge-danger ";
+
+                    _likeIcon = new IconProperties(theCount, iconPrefix, UserId, editFunction, showFunction, icon, buttonColorClass, isAllowEditIfLoggedIn, isAllowedOnlyOnce, badgeClassShow);
 
                 }
                 else
@@ -53,10 +69,20 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
         {
             get
             {
+                int theCount = Count; //was 0 before I changed it.
+                string iconPrefix = "unlike";
+                string editFunction = "EditlikeUnlikeModal(this);";
+                string showFunction = "ShowPplWhoLikeUnlikeThis(this);";
+                string icon = " ";
+                //string icon = " far fa-frown ";
+                string buttonColorClass = " btn-danger ";
+                bool isAllowEditIfLoggedIn = true;
+                bool isAllowedOnlyOnce = true;
+                string badgeClassShow = " badge badge-warning ";
 
                 if (_unlikeIcon.IsNull())
                 {
-                    _unlikeIcon = new IconProperties(0, "unlike", UserId, "EditlikeUnlikeModal(this);", "ShowPplWhoLikeUnlikeThis(this);", " far fa-frown ", " btn-danger ", true, true, " badge badge-warning ");
+                    _unlikeIcon = new IconProperties(theCount, iconPrefix, UserId, editFunction, showFunction, icon, buttonColorClass, isAllowEditIfLoggedIn, isAllowedOnlyOnce, badgeClassShow);
                 }
                 else
                 {
@@ -65,119 +91,105 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
 
                 return _unlikeIcon;
             }
-            set
-            {
-                _unlikeIcon = value;
-            }
+            //set
+            //{
+            //    _unlikeIcon = value;
+            //}
         }
-
 
         #endregion
 
 
-
-
-
-        #region Flag
-        public string FlagId
+        IconProperties _messageIcon;
+        public IconProperties MessageIcon
         {
             get
             {
-                return "flag" + Count;
-            }
-        }
-        public string FlagUrl { get; set; }
-        public string FlagOnClick
-        {
-            get
-            {
-                if (IsLoggedIn)
-                    if (!HasFlagd)
-                        return "EditlikeFlagModal(this);";
-
-                return "ShowPplWhoLikeFlagThis(this);";
-            }
-        }
-        public string FlagCountUrl { get; set; }
-
-        public string FlagAwesomeFont
-        {
-            get
-            {
-                return " far fa-flag ";
-            }
-        }
-        public string FlagClass
-        {
-            get
-            {
-                string flag = " anchorButtons btn btn-xs btn-danger aria-label " + FlagAwesomeFont;
-                string disabledflag = " disabled " + flag;
-
-                string flagclass = flag;
-                if (UserId.IsNullOrWhiteSpace())
+                if (_messageIcon.IsNull())
                 {
-                    flagclass = disabledflag;
+                    string iconPrefix = "msg";
+                    //string editFunction = "EditMessageModal(this);";
+                    //string showFunction = "ShowMessagesForThis(this);";
+                    string editFunction = "";
+                    string showFunction = "";
+                    string icon = " img-message ";
+                    string buttonColorClass = " btn-warning ";
+                    bool isAllowEditIfLoggedIn = true;
+                    bool isAllowedOnlyOnce = false;
+                    string badgeClassShow = " badge badge-warning ";
+
+                    _messageIcon = new IconProperties(Count, iconPrefix, UserId, editFunction, showFunction, icon, buttonColorClass, isAllowEditIfLoggedIn, isAllowedOnlyOnce, badgeClassShow);
                 }
-
-                return flagclass;
-            }
-
-        }
-        public string FlagCountId
-        {
-            get
-            {
-                return FlagId + "count";
-            }
-        }
-        public bool HasFlagd { get; set; }
-
-        public string FlagBadgeCountId
-        {
-            get
-            {
-                return FlagId + "countspan";
-            }
-        }
-
-        private string FlagBadgeCss
-        {
-            get { return " badge badge-warning "; }
-        }
-        private string FlagBadgeCssHide
-        {
-            get { return " badge badge-warning d-none "; }
-        }
-
-        public int FlagCount { get; set; }
-        public string FlagBadgeClass
-        {
-            get
-            {
-                if (FlagCount > 0)
+                else
                 {
-                    return FlagBadgeCss;
+                    _messageIcon.InitEachTime(Count);
                 }
-
-                return FlagBadgeCssHide;
+                return _messageIcon;
             }
         }
-
-
-
-        #endregion
 
 
         #region Shopping Cart
-        public string ShoppingCartId { get; set; }
-
-        public string ShoppingCartUrl { get; set; }
-        public string ShoppingCartCountId { get; set; }
+        IconPropertiesShoppingCart _shoppingCartIcon;
+        public IconPropertiesShoppingCart ShoppingCartIcon
+        {
+            get
+            {
+                if (_shoppingCartIcon.IsNull())
+                {
+                    string iconPrefix = "shopping";
+                    string editFunction = "BuyAjax(this); ";
+                    string showFunction = "";
+                    string icon = "";
+                    //string icon = " img-message ";
+                    //string icon = " fas fa-envelope-square ";
+                    string buttonColorClass = " btn-success ";
+                    bool isAllowEditIfLoggedIn = true;
+                    bool isAllowedOnlyOnce = false;
+                    string badgeClassShow = " badge badge-warning ";
+                    string ownerPersonId = ProductChildId;
+                    _shoppingCartIcon = new IconPropertiesShoppingCart(Count, iconPrefix, UserId, editFunction, showFunction, icon, buttonColorClass, isAllowEditIfLoggedIn, isAllowedOnlyOnce, badgeClassShow, UserPersonId, ProductChildPersonId);
+                }
+                else
+                {
+                    _shoppingCartIcon.InitEachTime(Count);
+                }
+                return _shoppingCartIcon;
+            }
+        }
 
 
         #endregion
 
+        #region Flag
+        IconProperties _flagIcon;
+        public IconProperties FlagIcon
+        {
+            get
+            {
+                if (_flagIcon.IsNull())
+                {
+                    string iconPrefix = "flag";
+                    string editFunction = "";
+                    string showFunction = "";
+                    string icon = "";
+                    string buttonColorClass = " btn-danger ";
+                    bool isAllowEditIfLoggedIn = true;
+                    bool isAllowedOnlyOnce = false;
+                    string badgeClassShow = " badge badge-warning ";
+
+                    _flagIcon = new IconProperties(Count, iconPrefix, UserId, editFunction, showFunction, icon, buttonColorClass, isAllowEditIfLoggedIn, isAllowedOnlyOnce, badgeClassShow);
+                }
+                else
+                {
+                    _flagIcon.InitEachTime(Count);
+                }
+                return _flagIcon;
+            }
+        }
+
+
+        #endregion
 
         #region Hand Pointing
 
@@ -233,58 +245,58 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
         #endregion
 
 
-        #region Font Awesome Classes
-        public string ClassSmileFace
-        {
-            get
-            {
-                return " far fa-smile ";
-            }
-        }
+        //#region Font Awesome Classes
+        //public string ClassSmileFace
+        //{
+        //    get
+        //    {
+        //        return " far fa-smile ";
+        //    }
+        //}
 
-        public string ClassUnhappyFace
-        {
-            get
-            {
-                return " far fa-frown-open ";
-            }
-        }
+        //public string ClassUnhappyFace
+        //{
+        //    get
+        //    {
+        //        return " far fa-frown-open ";
+        //    }
+        //}
 
-        public string ClassWrench
-        {
-            get
-            {
-                return " anchorButtons btn btn-xs aria-label fas fa-wrench ";
-            }
-        }
+        //public string ClassWrench
+        //{
+        //    get
+        //    {
+        //        return " anchorButtons btn btn-xs aria-label fas fa-wrench ";
+        //    }
+        //}
 
-        public string ClassAnchorButton
-        {
-            get { return " anchorButtons btn btn-xs aria-label "; }
-        }
+        //public string ClassAnchorButton
+        //{
+        //    get { return " anchorButtons btn btn-xs aria-label "; }
+        //}
 
-        public string ClassAnchorButtonDisabled
-        {
-            get { return " anchorButtons btn btn-xs aria-label disabled "; }
-        }
+        //public string ClassAnchorButtonDisabled
+        //{
+        //    get { return " anchorButtons btn btn-xs aria-label disabled "; }
+        //}
 
-        public string ClassHandPointingUp
-        {
-            get
-            {
-                return " far fa-hand-point-up ";
-            }
-        }
+        //public string ClassHandPointingUp
+        //{
+        //    get
+        //    {
+        //        return " far fa-hand-point-up ";
+        //    }
+        //}
 
-        public string ClassShoppingCart
-        {
-            get
-            {
-                return " fa fa-shopping-cart ";
-            }
-        }
+        //public string ClassShoppingCart
+        //{
+        //    get
+        //    {
+        //        return " fa fa-shopping-cart ";
+        //    }
+        //}
 
-        #endregion
+        //#endregion
 
         #region Product
 

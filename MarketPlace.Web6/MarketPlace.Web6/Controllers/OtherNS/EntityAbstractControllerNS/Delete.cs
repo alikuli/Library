@@ -37,7 +37,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 //this is used when you want to return somewhere else other than the Index
                 //It will be passed on to a hidden field is Delete and then passed on
                 //to DeleteConfirmed via the hidden field
-                entity.ReturnUrl = returnUrl;
+                //entity.ReturnUrl = returnUrl;
                 //string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
                 //ApplicationUser user = UserBiz.FindByUserName_UserManager(User.Identity.Name);
                 //bool isUserAdmin = UserBiz.IsUserAdmin(user);
@@ -59,7 +59,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     print,
                     ActionNameENUM.Delete);
 
-                InitializeMenuManager(parms);
+                Biz.InitializeMenuManagerForEntity(parms);
 
                 return Event_CreateViewAndSetupSelectList(parms);
 

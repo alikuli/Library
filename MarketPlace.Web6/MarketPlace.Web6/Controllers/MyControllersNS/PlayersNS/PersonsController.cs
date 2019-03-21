@@ -1,7 +1,9 @@
 ﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using System.Reflection;
 using System.Web.Mvc;
 using UowLibrary.AddressNS;
 using UowLibrary.ParametersNS;
@@ -56,11 +58,55 @@ namespace MarketPlace.Web6.Controllers
             person.PersonComplex.SelectListSonOfOrWifeOf = PersonBiz.SelectListSonOfWifeOf();
             person.PersonComplex.SelectListSex = PersonBiz.SelectListSex();
 
-            person.SelectListBillAddress = AddressBiz.SelectListBillAddress();
+            person.SelectListBillAddress = AddressBiz.SelectListBillAddressCurrentUser();
             person.SelectListUsers = AddressBiz.UserBiz.SelectList();
             person.SelectListCountries = AddressBiz.CountryBiz.SelectList();
 
             return base.Event_CreateViewAndSetupSelectList(parm);
+        }
+
+
+        public ActionResult IWannaTrade()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult IWannaTrade(FormCollection fc)
+        {
+            UserId.IsNullOrWhiteSpaceThrowException("You are not logged in!");
+            //create person record for user
+            string returnUrl = Url.Action("Index", "Menus");
+            try
+            {
+                var person = PersonBiz.Factory();
+                ControllerCreateEditParameter parm = new ControllerCreateEditParameter(
+                    person,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    MenuENUM.CreateDefault,
+                    UserName,
+                    UserId,
+                    returnUrl);
+
+                PersonBiz.CreateAndSave(parm);
+
+
+            }
+            catch (System.Exception e)
+            {
+
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), e);
+                ErrorsGlobal.MemorySave();
+
+            }
+            return Redirect(returnUrl);
         }
 
         //[HttpGet]

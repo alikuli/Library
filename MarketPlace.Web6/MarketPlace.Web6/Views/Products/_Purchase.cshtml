@@ -1,19 +1,17 @@
 ﻿@model ModelsClassLibrary.ModelsNS.ProductNS.Product
 
-<div class="well p-3 m-3">
+<div class="well p-3 w-100">
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.UomPurchaseId, htmlAttributes: new { @class = "control-label" })
-        @Html.DropDownListFor(x => x.UomPurchaseId,
+    @Html.LabelFor(model => model.UomPurchaseId, htmlAttributes: new { @class = "control-label" })
+    @Html.DropDownListFor(x => x.UomPurchaseId,
                                                 (@Model.SelectListUomPurchase as IEnumerable<SelectListItem>),
                                         "--- Select UoM Purchase ---",
                                         new { @class = "form-control" })
-    </div>
-
-
-
-
 </div>
+
+
+
+
 
 

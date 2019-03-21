@@ -2,11 +2,11 @@
 
 
 
-<div class="well p-3 m-3">
+<div class="well p-3 w-100">
 
 
 
-    <div class="form-group  form-inline">
+    <div class="form-group   d-flex">
         @Html.LabelFor(model => model.WeightListed, htmlAttributes: new { @class = "control-label pr-3" })
         @Html.EditorFor(model => model.WeightListed, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Listed Weight" } })
         @Html.ValidationMessageFor(model => model.WeightListed, "", new { @class = "text-danger" })

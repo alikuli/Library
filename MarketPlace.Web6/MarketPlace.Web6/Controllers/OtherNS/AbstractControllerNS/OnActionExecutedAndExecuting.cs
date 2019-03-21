@@ -34,16 +34,23 @@ namespace MarketPlace.Web4.Controllers
             //use some other way to transport messages.
 
             LoadMessagesIntoAlerts();
-            AccountsBiz.UserId = UserId;
-            AccountsBiz.UserName = UserName;
+            AccountsBizSuper.UserId = UserId;
+            AccountsBizSuper.UserName = UserName;
+            //this is shown in the _LoginPartial.cshtml
+            getUserMoneyAccount();
 
-            UserMoneyAccount userMoneyAccount = AccountsBiz.UserMoneyAccount;
+
+        }
+
+        private void getUserMoneyAccount()
+        {
+            UserMoneyAccount userMoneyAccount = AccountsBizSuper.UserMoneyAccount(UserId);
+            userMoneyAccount = AccountsBizSuper.BuySellDocBiz.MoneyAccountForPerson(UserId, AccountsBizSuper.UserBiz.IsAdmin(UserId), userMoneyAccount);
+            userMoneyAccount.IsAdmin = IsAdmin;
+            userMoneyAccount.IsBank = IsBank;
             if (!userMoneyAccount.IsNull())
             {
-                ViewBag.Refundable = userMoneyAccount.AmountRefundableStr;
-                ViewBag.NonRefundable = userMoneyAccount.AmountNonRefundableStr;
-                ViewBag.TotalFunds = userMoneyAccount.AmountTotalStr;
-
+                ViewBag.MoneyAccount = userMoneyAccount;
             }
 
 

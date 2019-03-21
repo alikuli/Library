@@ -1,26 +1,46 @@
 ﻿using AliKuli.Extentions;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
+using UowLibrary.BuySellDocNS;
 using UowLibrary.CashTtxNS;
+using UowLibrary.PlayersNS.BankNS;
 
 namespace UowLibrary.SuperLayerNS.AccountsNS
 {
-    public class AccountsBiz
+    public class AccountsBizSuper
     {
         CashTrxBiz _cashTrxBiz;
-        public AccountsBiz(CashTrxBiz cashTrxBiz)
+        BankBiz _bankBiz;
+        BuySellDocBiz _buySellDocBiz;
+        public AccountsBizSuper(CashTrxBiz cashTrxBiz, BankBiz bankBiz, BuySellDocBiz buySellDocBiz)
         {
             _cashTrxBiz = cashTrxBiz;
+            _bankBiz = bankBiz;
+            _buySellDocBiz = buySellDocBiz;
         }
 
         public string UserId { get; set; }
         public string UserName { get; set; }
 
-        CashTrxBiz CashTrxBiz
+
+        public BankBiz BankBiz
         {
             get
             {
-                UserId.IsNullOrWhiteSpaceThrowException("You are not logged in. User Id not found.");
-                UserName.IsNullOrWhiteSpaceThrowException("You are not logged in. User Name not found");
+                //UserId.IsNullOrWhiteSpaceThrowException("You are not logged in. User Id not found.");
+                //UserName.IsNullOrWhiteSpaceThrowException("You are not logged in. User Name not found");
+
+                _bankBiz.UserId = UserId;
+                _bankBiz.UserName = UserName;
+                return _bankBiz;
+
+            }
+        }
+        public CashTrxBiz CashTrxBiz
+        {
+            get
+            {
+                //UserId.IsNullOrWhiteSpaceThrowException("You are not logged in. User Id not found.");
+                //UserName.IsNullOrWhiteSpaceThrowException("You are not logged in. User Name not found");
 
                 _cashTrxBiz.UserId = UserId;
                 _cashTrxBiz.UserName = UserName;
@@ -29,15 +49,35 @@ namespace UowLibrary.SuperLayerNS.AccountsNS
         }
 
 
-        public UserMoneyAccount UserMoneyAccount
+        public UserMoneyAccount UserMoneyAccount(string userId)
         {
 
+            if (userId.IsNullOrWhiteSpace())
+                return new UserMoneyAccount();
+
+            //bool isBank = BankBiz.IsBankerFor(userId);
+            bool isAdmin = UserBiz.IsAdmin(userId);
+            UserMoneyAccount userMoneyAccount = CashTrxBiz.MoneyAccountForUser(userId, isAdmin);
+            return userMoneyAccount;
+
+        }
+
+        public UserBiz UserBiz
+        {
             get
             {
-                if (UserId.IsNullOrWhiteSpace()) return null;
-                UserMoneyAccount userMoneyAccount = CashTrxBiz.UserMoneyAccountForUser(UserId);
-                return userMoneyAccount;
+                UserBiz _userBiz = CashTrxBiz.UserBiz;
+                return _userBiz;
+            }
+        }
 
+        public BuySellDocBiz BuySellDocBiz
+        {
+            get
+            {
+                _buySellDocBiz.UserId = UserId;
+                _buySellDocBiz.UserName = UserName;
+                return _buySellDocBiz;
             }
         }
     }

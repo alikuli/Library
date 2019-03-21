@@ -70,11 +70,11 @@ namespace UowLibrary.MenuNS
             }
             //create the new feature.
 
-            MenuPath2 menupath2 = Find(model.MenuPathId);
+            MenuPath2 menupath2 = Find(model.ParentId);
             menupath2.IsNullThrowException("menupath2");
 
             //taking a short cut.
-            MenuFeatureModel menuFeatureModel = new MenuFeatureModel(model.MenuPathId, "", menuFeature.Id, model.ReturnUrl);
+            MenuFeatureModel menuFeatureModel = new MenuFeatureModel(model.ParentId, "", menuFeature.Id, model.ReturnUrl);
             AddFeature(menuFeatureModel);
 
 

@@ -7,7 +7,7 @@ namespace ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeatureNS
     [NotMapped]
     public class CreateNewFeatureModel
     {
-        public string MenuPathId { get; set; }
+        public string ParentId { get; set; }
 
         [Display(Name = "Feature Name")]
         public string FeatureName { get; set; }
@@ -17,7 +17,7 @@ namespace ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeatureNS
         {
             FeatureName.IsNullOrWhiteSpaceThrowException("FeatureName");
             ReturnUrl.IsNullOrWhiteSpaceThrowException("ReturnUrl");
-            MenuPathId.IsNullOrWhiteSpaceThrowException("FeatureName");
+            ParentId.IsNullOrWhiteSpaceThrowException("FeatureName");
         }
 
     }

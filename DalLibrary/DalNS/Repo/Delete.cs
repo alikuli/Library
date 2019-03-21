@@ -63,7 +63,7 @@ namespace DalLibrary.DalNS
             //We will never delete anything... we just make Delete True
             entity.MetaData.IsDeleted = true;
             entity.MetaData.Deleted.By = "";
-            entity.MetaData.IsActive = false;
+            //entity.MetaData.IsActive = false;
 
             //Initialize();
             IsDeleting = true; //there will be no error checks

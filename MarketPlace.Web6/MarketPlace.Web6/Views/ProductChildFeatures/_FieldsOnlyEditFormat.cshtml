@@ -4,7 +4,7 @@
 <div class="well p-3">
 
 
-
+    @Html.HiddenFor(x => x.ProductChildId)
     <div class="form-group">
         @Html.LabelFor(model => model.Name, "Enter feature name", htmlAttributes: new { @class = "" })
         @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })

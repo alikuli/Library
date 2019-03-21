@@ -13,6 +13,10 @@ namespace AliKuli.ConstantsNS
         /// </summary>
 
         //public const string ADMIN_COUNTRY_ID_NUMBER_LENGTH = "LengthOfCountryIdNumber";
+        // 
+
+        public const string STOP_WORDS_PATH = @"\ContentMine\SetupData\stop-word-list.csv";
+
         public const string ADMIN_USER_PHONE = "AdminUserPhone";
         public const string ADMIN_NAME = "AdminName";
         public const string ADMIN_PASSWORD = "AdminPassword";
@@ -57,12 +61,12 @@ namespace AliKuli.ConstantsNS
         public const string USERNAME_ENCRPTION_SEED = "2394892Laillahaillallah!2045md48d302";
 
         // *** Saving locations
-        public const string SAVE_ROOT_DIRECTORY = @"~\Content\Uploads";
+        public const string SAVE_ROOT_DIRECTORY = @"~\ContentMine\Uploads";
 
 
-        public const string SAVE_INITIALIZATION_DIRECTORY = @"~\Content\Initialization\";
+        public const string SAVE_INITIALIZATION_DIRECTORY = @"~\ContentMine\Initialization\";
 
-        public const string LOGO_LOCATION = @"~/Content/MyImages/Logo.jpg";
+        public const string LOGO_LOCATION = @"~/ContentMine/MyImages/Logo.jpg";
 
         public const string MINDATE = "01/Jan/2010";
         public const string MAXDATE = "31/Dec/2050";
@@ -104,7 +108,7 @@ namespace AliKuli.ConstantsNS
         public const string SIZE_PIC_BYTES_TO_SAVE = "1000000";
         public const string SIZE_PIC_HEIGHT_IN_PTS_MAX = "1000";
         public const string SIZE_PIC_WIDTH_IN_PTS_MAX = "1000";
-        public const string DEFAULT_IMAGE_LOCATION = @"~\Content\MyImages\BlankImage.jpg";
+        public const string DEFAULT_IMAGE_LOCATION = @"~\ContentMine\MyImages\BlankImage.jpg";
 
     }
 

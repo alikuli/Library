@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 
@@ -30,7 +29,7 @@ namespace DalLibrary.DalNS
         private IQueryable<TEntity> SearchForIQueriable(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
         {
             var zAll = FindAll();
-            var zList = zAll.Where(predicate).Where(x => x.MetaData.IsDeleted == false);
+            var zList = zAll.Where(predicate).Where(x => x.MetaData.IsDeleted == false && x.MetaData.IsInactive == false);
             return zList.AsQueryable();
         }
 
@@ -197,7 +196,7 @@ namespace DalLibrary.DalNS
         {
             if (id.IsNullOrEmpty())
                 return null;
-                //throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
+            //throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
 
             var item = FindAll().FirstOrDefault(x => x.Id == id);
 
@@ -401,7 +400,7 @@ namespace DalLibrary.DalNS
             //var queryListOfItems = SearchFor(x => x.MetaData.IsDeleted == deleted);
             //var queryListOfItems = _db.Set<TEntity>().Where(x => x.MetaData.IsDeleted == deleted);
             var query = from b in _db.Set<TEntity>().AsNoTracking()
-                        where b.MetaData.IsDeleted == deleted
+                        where b.MetaData.IsDeleted == deleted && b.MetaData.IsInactive == false
                         orderby b.Name
                         select b;
 
@@ -486,7 +485,7 @@ namespace DalLibrary.DalNS
             //if (canRetrieve())
             //{
             var query = from b in _db.Set<TEntity>()
-                        where b.MetaData.IsDeleted == deleted
+                        where b.MetaData.IsDeleted == deleted && b.MetaData.IsInactive == false
                         orderby b.Name
                         select b;
 

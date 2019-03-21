@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using ModelsClassLibrary.ModelsNS.ProductChildNS;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModelsClassLibrary.SharedNS
 {
@@ -34,6 +35,16 @@ namespace ModelsClassLibrary.SharedNS
             Mp3Name = mp3Name;
         }
 
+
+
+        public CheckBoxItem(ProductChild productChild)
+        {
+            Id = productChild.Id;
+            Label = productChild.FullName();
+            ProductChild = productChild;
+        }
+
+
         /// <summary>
         /// You must give Id a value programatically.
         /// </summary>
@@ -43,9 +54,27 @@ namespace ModelsClassLibrary.SharedNS
         public bool LabelOnLeft { get; set; }
         public bool IsEnabled { get; set; }
 
+
+
         public string Mp1Name { get; set; }
         public string Mp2Name { get; set; }
         public string Mp3Name { get; set; }
+
+        public string ProductChildId { get; set; }
+        public ProductChild ProductChild { get; set; }
+
+
+        /// <summary>
+        /// This will be used for the carasoul
+        /// </summary>
+        public string CarasolName
+        {
+            get
+            {
+                int startingIndex = Id.Length - 6;
+                return "Carasol" + Id.Substring(startingIndex);
+            }
+        }
 
 
     }

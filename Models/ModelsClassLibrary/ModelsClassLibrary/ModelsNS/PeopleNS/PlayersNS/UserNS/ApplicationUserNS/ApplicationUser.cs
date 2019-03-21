@@ -114,7 +114,7 @@ namespace UserModels
             //throw new NotImplementedException();
         }
 
-        public string ReturnUrl { get; set; }
+        //public string ReturnUrl { get; set; }
 
 
         [NotMapped]

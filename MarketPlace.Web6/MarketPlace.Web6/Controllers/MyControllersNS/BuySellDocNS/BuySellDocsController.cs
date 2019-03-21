@@ -1,15 +1,13 @@
 ﻿using AliKuli.Extentions;
 using MarketPlace.Web6.Controllers.Abstract;
-using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySell;
+using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Reflection;
 using System.Web.Mvc;
 using UowLibrary.AddressNS;
 using UowLibrary.BuySellDocNS;
-using UowLibrary.CashTtxNS;
 using UowLibrary.ParametersNS;
-using UowLibrary.PlayersNS.BankNS;
 using UowLibrary.PlayersNS.CustomerNS;
 using UowLibrary.PlayersNS.OwnerNS;
 using UowLibrary.PlayersNS.PersonNS;
@@ -30,17 +28,6 @@ namespace MarketPlace.Web6.Controllers
             _addressBiz = addressBiz;
         }
 
-        //BankBiz BankBiz
-        //{
-        //    get
-        //    {
-        //        _bankBiz.IsNullThrowException();
-        //        _bankBiz.UserId = UserId;
-        //        _bankBiz.UserName = UserName;
-
-        //        return _bankBiz;
-        //    }
-        //}
 
         CustomerBiz CustomerBiz
         {
@@ -86,20 +73,55 @@ namespace MarketPlace.Web6.Controllers
 
         public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
         {
-
+            UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
             BuySellDoc buySellDoc = parm.Entity as BuySellDoc;
             buySellDoc.IsNullThrowException("Unable to unbox buySellDoc");
 
-            buySellDoc.SelectListOwner = OwnerBiz.SelectList();
-            buySellDoc.SelectListCustomer = CustomerBiz.SelectList();
+            buySellDoc.SelectListOwner = OwnerBiz.SelectListOnlyWith(UserId);
+            buySellDoc.SelectListCustomer = CustomerBiz.SelectListWithout(UserId);
             buySellDoc.SelectListAddressInformTo = AddressBiz.SelectList();
             buySellDoc.SelectListAddressShipTo = AddressBiz.SelectList();
 
             return base.Event_CreateViewAndSetupSelectList(parm);
         }
 
+        public ActionResult Buy(string productChildId)
+        {
+            throw new NotImplementedException();
+        }
+        
+        [HttpPost]
+        public ActionResult BuyAjax(string productChildId)
+        {
+            string message = "Success!";
+            try
+            {
+                //save the item , 
+                string poNumber = "";
+                DateTime poDate = DateTime.MinValue;
+                UserId.IsNullOrWhiteSpaceThrowException("You are not logged in.");
+                productChildId.IsNullOrWhiteSpaceThrowArgumentException("Product not recieved.");
+                message = BuySellDocBiz.AddToSale(UserId, productChildId, poNumber, poDate);
+                return Json(new
+                {
+                    success = true,
+                    message = message,
+                },
+                JsonRequestBehavior.DenyGet);
 
-
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), e);
+                message = string.Format( "Not saved. Error: {0}", ErrorsGlobal.ToString());
+                return Json(new
+                {
+                    success = false,
+                    message = message,
+                },
+                JsonRequestBehavior.DenyGet);
+            }
+        }
 
     }
 }

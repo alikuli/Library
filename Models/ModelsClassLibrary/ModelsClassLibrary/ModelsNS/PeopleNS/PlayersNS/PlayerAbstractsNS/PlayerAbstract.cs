@@ -26,7 +26,7 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
         [Display(Name = "Person")]
         [MaxLength(128)]
         public string PersonId { get; set; }
-        public Person Person { get; set; }
+        public virtual Person Person { get; set; }
 
 
         [Display(Name = "Default Bill Address")]

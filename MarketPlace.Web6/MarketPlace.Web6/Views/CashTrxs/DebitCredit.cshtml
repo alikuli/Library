@@ -1,0 +1,191 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS.CashTrxDbCrModel
+
+@{
+    ViewBag.Title = "DebitCredit";
+    decimal runningBalance = Model.BroughtForward;
+    string colorForRefundable = " alert-warning";
+    string colorForNonRefundable = "alert-success";
+}
+
+<h2>
+    @switch (Model.CashTypeEnum)
+    {
+        case CashTypeENUM.NonRefundable:
+            <span class="text-success">@Model.CashTypeEnum.ToString() Cash</span>
+            break;
+        case CashTypeENUM.Refundable:
+        <span class="text-info">@Model.CashTypeEnum.ToString() Cash</span>
+            break;
+        default:
+        <span>ALL Cash</span>
+            break;
+
+    }
+    
+    
+    
+</h2>
+
+@if (!Model.CashTrxs.IsNullOrEmpty())
+{
+    <table class=" table table-responsive table-striped table-light table-hover table-bordered" >
+        <thead>
+            <tr class="alert-info p-1">
+                <th scope="row"> Final Balanced : Rs @string.Format("{0:N2}", Model.FinalBalance)</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th class="@colorForNonRefundable">[NR] = Not Refundable</th>
+                <th class="@colorForRefundable">[R] =  Refundable</th>
+            </tr>
+        </thead>
+<tr >
+            <th>
+                Date
+            </th>
+            <th>
+                Number
+            </th>
+            <th>
+                From/To
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CashTrxs[0].ReceiptAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CashTrxs[0].PaymentAmount)
+            </th>
+            <th>
+                Running Balance
+            </th>
+            <th>
+                Comment
+            </th>
+        </tr>
+
+         @*Running balance*@
+        <tr>
+            <td>
+                Up to @Model.FromDate
+            </td>
+            <td>
+                Various
+            </td>
+            <td>
+                
+                Brought forward
+
+            </td>
+            <td>
+                @if (runningBalance > 0)
+                {
+                    <span>
+                        @string.Format("{0:N2}", runningBalance)
+                    </span>
+                }
+            </td>
+            <td>
+                @if (runningBalance  < 0)
+                {
+                    <span>
+                        @string.Format("{0:N2}", runningBalance)
+                    </span>
+                }
+            </td>
+            <td>
+                @string.Format("{0:N2}", runningBalance)
+            </td>
+            <td>
+                Running Balance.
+
+
+            </td>
+        </tr>
+        @foreach (ModelsClassLibrary.CashTrxNS.CashTrxVM item in Model.CashTrxs.ToList())
+        {
+            runningBalance = runningBalance + item.ReceiptAmount - item.PaymentAmount;
+            string classForLineItem = "";
+            switch (item.CashTypeEnum)
+            {
+                case CashTypeENUM.NonRefundable:
+                    classForLineItem = colorForNonRefundable;
+                    break;
+                case CashTypeENUM.Refundable:
+                    classForLineItem = colorForRefundable;
+                    break;
+                default:
+                    break;
+
+            }
+
+            <tr class="@classForLineItem ">
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.FromTo)
+
+
+                </td>
+                
+                
+                <td>
+                    @if (item.ReceiptAmount != 0)
+                    {
+                        <span>
+                            @string.Format("{0:N2}", item.ReceiptAmount)
+                        </span>
+                    }
+                </td>
+
+
+                <td>
+                    @if (item.PaymentAmount != 0)
+                    {
+                        <span>
+                            @string.Format("{0:N2}", item.PaymentAmount)
+                        </span>
+                    }
+                </td>
+                
+                
+                <td>
+                    @string.Format("{0:N2}", runningBalance)
+                </td>
+            
+                    
+                <td>
+                    @Html.DisplayFor(modelItem => item.FixedComment)
+
+
+                </td>
+            
+            </tr>
+        }
+        <tfoot>
+            <tr class="alert-info p-1">
+                <th scope="row"> Final Balanced : Rs @string.Format("{0:N2}", runningBalance)</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th class="@colorForNonRefundable">[NR] = Not Refundable</th>
+                <th class="@colorForRefundable">[R] =  Refundable</th>
+
+            </tr>
+        </tfoot>
+    </table>
+}
+else
+{
+    <h2 class="alert-danger">No data!</h2>
+}

@@ -1,62 +1,96 @@
-﻿@model MarketPlace.Web6.Models.FeaturesListModel
-@using PerpetuumSoft.Knockout
+﻿@using PerpetuumSoft.Knockout
 
 
 @{
 
-    var ko = Html.CreateKnockoutContext();
+    ViewBag.Title = "Rotate Test";
 }
 
 
-    <p>You have @ko.Html.Span(x => x.Features.Count) Feature(s)</p>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div>
+    <img src="~/ContentMine/MyImages/Logo.jpg" />
+    <img src="your_image_url.jpg" alt="" id="image" />
+    <canvas id="canvas"></canvas>
+</div>
+<p>
+    <strong>Rotate Image: </strong>
+    <a href="javascript:;" id="resetImage">Reset Image</a>
+    <a href="javascript:;" id="rotate90">90&deg;</a>
+    <a href="javascript:;" id="rotate180">180&deg;</a>
+    <a href="javascript:;" id="rotate270">270&deg;</a>
+</p>
 
-
-    <form id="myform">
-        <table>
-            <thead>
-                <tr>
-                    <th>Feature</th>
-                    <th>Value</th>
-                </tr>
-            </thead>
-            <tbody>
-            @using (var item = @ko.Foreach(x => x.Features))
-            {
-                <tr>
-                    <td> @item.Html.TextBox(x => x.FeatureName, new { @class = "required" }).UniqueName().</td>
-                    <td>@item.Html.TextBox(x => x.FeatureValue, new { @class = "required" }).UniqueName()</td>
-                    <td>@ko.Html.Span("", new { @class = " far fa-trash-alt btn btn-sm btn-danger" }).Click("Delete", "Test", new { index = item.GetIndex()}).ValueUpdate(KnockoutValueUpdateKind.Change)</td>
-                </tr>
-            }
-            </tbody>
-        </table>
-        @ko.Html.Button("Add", "Add", "Test")
-        <button type="submit" @ko.Bind.Enable(x => x.Features.Count > 0)>Save</button>
-
-    </form>
-
-@using (@ko.If(x => x.SaveTime.Length > 0))
-{
-    <p>Saved on: @ko.Html.Span(x => x.SaveTime)</p>
-}
+<a id="download" download="mqdefault.jpg">Download as image</a>
 
 
 
 
 @section scripts{
-
     <script>
-        $("#myform").ajaxForm();
 
-        $("#myform").validate({
-            submitHandler: function () {
-                @ko.ServerAction("Save", "Test");
+        var img = null, canvas = null;
+
+        $(document).ready(function () {
+            //  Initialize image and canvas
+            img = document.getElementById('image');
+            canvas = document.getElementById('canvas');
+
+            if (!canvas || !canvas.getContext) {
+                canvas.parentNode.removeChild(canvas);
+            } else {
+                img.style.position = 'absolute';
+                img.style.visibility = 'hidden';
             }
-        })
+            rotateImage(0);
+
+            //  Handle clicks for control links
+            $('#resetImage').click(function () { rotateImage(0); });
+            $('#rotate90').click(function () { rotateImage(90); });
+            $('#rotate180').click(function () { rotateImage(180); });
+            $('#rotate270').click(function () { rotateImage(270); });
+        });
+
+        function rotateImage(degree) {
+            if (document.getElementById('canvas')) {
+                var cContext = canvas.getContext('2d');
+                var cw = img.width, ch = img.height, cx = 0, cy = 0;
+
+                //   Calculate new canvas size and x/y coorditates for image
+                switch (degree) {
+                    case 90:
+                        cw = img.height;
+                        ch = img.width;
+                        cy = img.height * (-1);
+                        break;
+                    case 180:
+                        cx = img.width * (-1);
+                        cy = img.height * (-1);
+                        break;
+                    case 270:
+                        cw = img.height;
+                        ch = img.width;
+                        cx = img.width * (-1);
+                        break;
+                }
+
+                //  Rotate image            
+                canvas.setAttribute('width', cw);
+                canvas.setAttribute('height', ch);
+                cContext.rotate(degree * Math.PI / 180);
+                cContext.drawImage(img, cx, cy);
+                $('#download').attr('href', canvas.toDataURL())
+            } else {
+                //  Use DXImageTransform.Microsoft.BasicImage filter for MSIE
+                switch (degree) {
+                    case 0: image.style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation=0)'; break;
+                    case 90: image.style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation=1)'; break;
+                    case 180: image.style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation=2)'; break;
+                    case 270: image.style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation=3)'; break;
+                }
+            }
+        }
 
     </script>
 
-@ko.Apply(Model)
-
-   
 }
