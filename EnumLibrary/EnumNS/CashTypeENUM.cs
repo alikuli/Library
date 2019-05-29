@@ -6,5 +6,6 @@ namespace EnumLibrary.EnumNS
         Unknown,
         Refundable,
         NonRefundable,
+        Total
     }
 }

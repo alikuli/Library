@@ -21,7 +21,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         //[NoCache]
         //[OutputCache(Duration = 0, Location = System.Web.UI.OutputCacheLocation.None, NoStore = true)]
 
-        public virtual async Task<ActionResult> Edit(string id, string selectedId = "", string searchFor = "", string isandForSearch = "", MenuENUM menuEnum = MenuENUM.EditDefault, string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "", string productId = "")
+        public virtual async Task<ActionResult> Edit(string id, string selectedId = "", string searchFor = "", string isandForSearch = "", MenuENUM menuEnum = MenuENUM.EditDefault, string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "", string productId = "", BuySellDocumentTypeENUM buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Unknown, BuySellDocStateENUM buySellDocStateEnum = BuySellDocStateENUM.Unknown)
         {
             Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
             Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
@@ -49,13 +49,15 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     BreadCrumbManager,
                     UserId,
                     UserName,
+                    productId,
+                    returnUrl,
                     isMenu,
                     menuEnum,
                     sortBy,
                     print,
                     ActionNameENUM.Edit,
-                    productId,
-                    returnUrl);
+                    buySellDocumentTypeEnum,
+                    buySellDocStateEnum);
 
                 Biz.InitializeMenuManagerForEntity(parms);
                 return Event_CreateViewAndSetupSelectList(parms);
@@ -107,6 +109,9 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 //You forget this.
                 dbEntity.UpdatePropertiesDuringModify(entity);
 
+                dbEntity.IsEditing = true;
+                entity.IsEditing = true;
+
                 ControllerCreateEditParameter parm = new ControllerCreateEditParameter(
                     dbEntity,
                     httpMiscUploadedFiles,
@@ -132,7 +137,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                 if (returnUrl.IsNullOrWhiteSpace())
                     return RedirectToAction("Index", new { selectedId = selectedId, menuEnum = menuEnum });
-
+                Event_AfterSaveInEdit(parm);
                 return Redirect(returnUrl);
             }
             catch (Exception e)
@@ -141,6 +146,11 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 ErrorsGlobal.MemorySave();
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        public virtual void Event_AfterSaveInEdit(ControllerCreateEditParameter parm)
+        {
+            //do nothing
         }
 
 

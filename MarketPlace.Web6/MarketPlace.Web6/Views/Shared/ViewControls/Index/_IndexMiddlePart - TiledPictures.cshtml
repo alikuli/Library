@@ -58,8 +58,10 @@
         var itemMenuVar = IndexListVMArray[i].MenuManager;
    
         string shoppingCartToolTip = "To buy";
+        string editIconToolTip = "Click here to edit this item";
         string flagToolTip = "Offended? Flag them!";
         string itemHeading = IndexListVMArray[i].ShortName;
+        string editAction = Url.Action("Edit", menuVar.EditController, new { id = menuVar.IdForEdit, returnUrl = returnUrl });
         
             }
 
@@ -81,6 +83,13 @@
                 alert += " background-ltgrey ";
             }
             <!-- #endregion -->
+            @if (@itemHeading == "Qingqi")
+            {
+                if (true)
+                {
+
+                }
+            }
 
 
             <!-- #region if (Model.MenuManager.MenuState.IsMenu) -->
@@ -134,19 +143,21 @@
 
                         menuVar.MainMenuPath = Url.Action("ProductChildLandingPage", "ProductChilds", new { productChildId = menuVar.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu, returnUrl = returnUrl });
                         //this causes the shopping cart button to be active only for product child
-                        itemMenuVar.IndexMenuVariables.ShoppingCartIcon.IsProductChild = true;                            
+                        itemMenuVar.IndexMenuVariables.ShoppingCartIcon.IsProductChild = true;
                         break;
 
 
                     default:
                         break;
-            }
+                }
 
             }
             else
             {
-                menuVar.MainMenuPath = Url.Action("Edit", menuVar.EditController, new { id = menuVar.IdForEdit, returnUrl = returnUrl });
+                //menuVar.MainMenuPath = Url.Action("Edit", menuVar.EditController, new { id = menuVar.IdForEdit, returnUrl = returnUrl });
+                menuVar.MainMenuPath = editAction;
             }
+
             <!-- #endregion -->
             <!-- #region if (Model.IsMenu) Like/Unlike/Finger Up Icons URLS -->
             @*@if (Model.IsMenu)*@
@@ -276,7 +287,7 @@
                 </div>
 
                 @{
-        carouselCount++;
+                    carouselCount++;
                 }
 
 
@@ -291,28 +302,46 @@
                     <div class="m-1">
                         
                         @*This is the shopping cart*@
+
                         @if (itemMenuVar.IndexMenuVariables.ShoppingCartIcon.IsProductChild)
-                        { 
-                            <span data-toggle="tooltip" title="@shoppingCartToolTip" data-placement="top">
+                        {
+                            if (itemMenuVar.IndexMenuVariables.IconEditProductChild.IsOwnerOfProductChild)
+                            {
+                                <span data-toggle="tooltip" title="@editIconToolTip" data-placement="top">
 
-                                <button id="@menuVar.ShoppingCartIcon.Id"
-                                        class="@menuVar.ShoppingCartIcon.ButtonClass"
-                                        data-nameofproduct="@menuVar.ShortNameOfProduct"
-                                        data-url="@menuVar.ShoppingCartIcon.Url"
-                                        onclick="@menuVar.ShoppingCartIcon.OnClick"
-                                    
-                                        @itemMenuVar.IndexMenuVariables.ShoppingCartIcon.ButtonDisableConditionally>
+                                    <button id="@menuVar.IconEditProductChild.Id"
+                                            class="@menuVar.IconEditProductChild.ButtonClass"
+                                            data-nameofproduct="@menuVar.ShortNameOfProduct"
+                                            data-url="@menuVar.IconEditProductChild.Url"
+                                            onclick="openPath('@editAction')">
+                                        <img src="~/ContentMine/Icons/Edit.png" />
 
-                                    <span id="@menuVar.ShoppingCartIcon.IdCount"
-                                          class="@menuVar.ShoppingCartIcon.BadgeClass">
+                                    </button>
+                                </span>
 
-                                        @menuVar.ShoppingCartIcon.CountIcon
-                                    </span>
+                            }
+                            else
+                            {
+                                <span data-toggle="tooltip" title="@shoppingCartToolTip" data-placement="top">
 
-                                    <img src="~/ContentMine/Icons/ShoppingCartIcon.png" />
+                                    <button id="@menuVar.ShoppingCartIcon.Id"
+                                            class="@menuVar.ShoppingCartIcon.ButtonClass"
+                                            data-nameofproduct="@menuVar.ShortNameOfProduct"
+                                            data-url="@menuVar.ShoppingCartIcon.Url"
+                                            onclick="@menuVar.ShoppingCartIcon.OnClick"
+                                            @itemMenuVar.IndexMenuVariables.ShoppingCartIcon.ButtonDisableConditionally>
 
-                                </button>
-                            </span>
+                                        <span id="@menuVar.ShoppingCartIcon.IdCount"
+                                              class="@menuVar.ShoppingCartIcon.BadgeClass">
+
+                                            @menuVar.ShoppingCartIcon.CountIcon
+                                        </span>
+
+                                        <img src="~/ContentMine/Icons/ShoppingCartIcon.png" />
+
+                                    </button>
+                                </span>
+                            }
                         }
 
 

@@ -3,10 +3,9 @@ using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using ModelsClassLibrary.ViewModels;
-using UowLibrary.MenuNS.MenuStateNS;
 using System.Linq;
+using UowLibrary.MenuNS.MenuStateNS;
 
 namespace UowLibrary.MenuNS
 {
@@ -34,10 +33,11 @@ namespace UowLibrary.MenuNS
             MenuPathMain mpm = mp1.MenuPathMains.FirstOrDefault();
             //mpm.IsNullThrowException("mpm");
 
-            indexItem.MenuManager = new MenuManager(mpm, null, null, MenuENUM.EditMenuPath1, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl);
+            indexItem.MenuManager = new MenuManager(mpm, null, null, MenuENUM.EditMenuPath1, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
 
 
             indexItem.MenuManager.PictureAddresses = GetPictureList(mp1);
+
 
 
         }

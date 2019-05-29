@@ -12,17 +12,17 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
 
 
-        public virtual Product SetupAndMakeProduct(IProduct iproduct)
-        {
-            //saveParameters(menutPath1Id);
-            SaveNameFields();
-            SelfErrorCheck();
+        //public virtual Product SetupAndMakeProduct(IProduct iproduct)
+        //{
+        //    //saveParameters(menutPath1Id);
+        //    SaveNameFields();
+        //    SelfErrorCheck();
 
-            Product product = JsonConvert.DeserializeObject<Product>(JsonConvert.SerializeObject(iproduct));
-            product.IsNullThrowException("Unable to cast to Product.");
+        //    Product product = JsonConvert.DeserializeObject<Product>(JsonConvert.SerializeObject(iproduct));
+        //    product.IsNullThrowException("Unable to cast to Product.");
 
-            return product;
-        }
+        //    return product;
+        //}
 
         //private void saveParameters(string menutPath1Id)
         //{

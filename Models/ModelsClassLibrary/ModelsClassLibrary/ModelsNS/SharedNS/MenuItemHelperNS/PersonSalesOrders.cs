@@ -18,8 +18,13 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
             double personCanceledSaleOrdersInQuantity,
 
             decimal personBackSaleOrdersInMoney,
-            double personBackSaleOrdersInQuantity)
+            double personBackSaleOrdersInQuantity,
+            decimal personQuotationsInMoney,
+            double personQoutationsInQuantity,
+            decimal personCreditsInMoney,
+            double personCreditsInQuantity)
         {
+
             Initialize(
                 personOpenSaleOrdersInMoney,
                 personOpenSaleOrdersInQuantity,
@@ -34,7 +39,13 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
                 personCanceledSaleOrdersInQuantity,
 
                 personBackSaleOrdersInMoney,
-                personBackSaleOrdersInQuantity);
+                personBackSaleOrdersInQuantity,
+
+                personQuotationsInMoney,
+                personQoutationsInQuantity,
+
+                personCreditsInMoney,
+                personCreditsInQuantity);
 
         }
         public void Initialize(
@@ -51,7 +62,13 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
             double personCanceledSaleOrdersInQuantity,
 
             decimal personBackSaleOrdersInMoney,
-            double personBackSaleOrdersInQuantity)
+            double personBackSaleOrdersInQuantity,
+
+            decimal personQuotationsInMoney,
+            double personQoutationsInQuantity,
+
+            decimal personCreditsInMoney,
+            double personCreditsInQuantity)
         {
             _personOpenSalesOrdersInMoney = personOpenSaleOrdersInMoney;
             _personOpenSalesOrdersInQuantity = personOpenSaleOrdersInQuantity;
@@ -67,6 +84,15 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
 
             _personBackSaleOrdersInMoney = personBackSaleOrdersInMoney;
             _personBackSaleOrdersInQuantity = personBackSaleOrdersInQuantity;
+
+
+
+            _personQuotationsInMoney = personQuotationsInMoney;
+            _personQuotationsInQuantity = personQoutationsInQuantity;
+
+            _personCreditsInMoney = personCreditsInMoney;
+            _personCreditsInQuantity = personCreditsInQuantity;
+
         }
 
         static decimal _personOpenSalesOrdersInMoney;
@@ -133,6 +159,45 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
             get
             {
                 PersonBackSaleOrders item = new PersonBackSaleOrders(_personBackSaleOrdersInMoney, _personBackSaleOrdersInQuantity);
+                return item;
+            }
+        }
+
+
+
+        //---------------------------------------------------
+        static decimal _personQuotationsInMoney;
+        static double _personQuotationsInQuantity;
+        public IMenuItemHelper Quotation
+        {
+            get
+            {
+                PersonQuotationSaleOrders item = new PersonQuotationSaleOrders(_personQuotationsInMoney, _personQuotationsInQuantity);
+                return item;
+            }
+        }
+
+        static decimal _personCreditsInMoney;
+        static double _personCreditsInQuantity;
+        public IMenuItemHelper Credit
+        {
+            get
+            {
+                PersonCreditOrders item = new PersonCreditOrders(_personCreditsInMoney, _personCreditsInQuantity);
+                return item;
+            }
+        }
+
+        static decimal _personTotalSalesOrdersInMoney;
+        static double _personTotalSalesOrdersInQuantity;
+
+        public IMenuItemHelper Total
+        {
+            get
+            {
+                _personTotalSalesOrdersInMoney = _personOpenSalesOrdersInMoney + _personBackSaleOrdersInMoney + _personInProccessSaleOrdersInMoney;
+                _personTotalSalesOrdersInQuantity = _personOpenSalesOrdersInQuantity + _personBackSaleOrdersInQuantity + _personInProccessSaleOrdersInQuantity;
+                PersonTotalSaleOrders item = new PersonTotalSaleOrders(_personTotalSalesOrdersInMoney, _personTotalSalesOrdersInQuantity);
                 return item;
             }
         }

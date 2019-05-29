@@ -3,13 +3,15 @@ using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
+using AliKuli.Extentions;
 
 namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 {
     public class IndexMenuPath3 : MenuStateAbstract
     {
-        public IndexMenuPath3(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter)
-            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
+        public IndexMenuPath3(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter, string userId, string userName)
+            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter, userId, userName) { }
+
 
         //public override string EditLink_Id
         //{
@@ -45,7 +47,13 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 
         public override bool ShowCreateButton
         {
-            get { return true; }
+            get 
+            {
+                if (UserId.IsNull())
+                    return false;
+                
+                return true; 
+            }
         }
 
         public override bool ShowEditButton

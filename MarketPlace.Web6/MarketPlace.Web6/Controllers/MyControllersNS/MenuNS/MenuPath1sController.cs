@@ -1,8 +1,10 @@
 ﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeatureNS;
 using ModelsClassLibrary.ModelsNS.MenuNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -50,7 +52,6 @@ namespace MarketPlace.Web6.Controllers
             await _menupath1Biz.DeleteUploadedFile(menupathId, uploadedFileId);
             return RedirectToAction("Edit", new { id = menupathId });
         }
-
 
 
 
@@ -170,17 +171,18 @@ namespace MarketPlace.Web6.Controllers
 
         }
 
-        //public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
-        //{
-        //    if(!parm.Entity.IsNull())
-        //    {
-        //        MenuPath1 mp1 = parm.Entity as MenuPath1;
-        //        mp1.IsNullThrowException("mp1");
-        //        var temp = mp1.MiscFiles.ToList();
-        //        Biz.Detach(mp1);
-        //    }
 
-        //    return base.Event_CreateViewAndSetupSelectList(parm);
-        //}
+        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        {
+            parm.Entity.MenuManager.ReturnUrl = Url.Action("Index", "MenuPath1s", new { menuEnum = MenuENUM.IndexMenuPath1 });
+            return base.Event_CreateViewAndSetupSelectList(parm);
+        }
+
+        public override void Event_BeforeSaveInCreateAndEdit(ControllerCreateEditParameter parm)
+        {
+            base.Event_BeforeSaveInCreateAndEdit(parm);
+            parm.ReturnUrl = Url.Action("Edit", "MenuPath1s", new { id = parm.Entity.Id });
+        }
+
     }
 }

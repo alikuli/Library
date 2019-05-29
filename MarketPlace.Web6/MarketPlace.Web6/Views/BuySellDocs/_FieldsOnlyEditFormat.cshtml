@@ -1,18 +1,27 @@
 ﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
 
-
 <div class="well p-3 m-3">
+    @{
+        string theSellDocStateNumber = Model.BuySellDocStateEnum.ToString();
+    }
 
-    @if(Model.DocumentNumber != 0)
-    { 
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BuySellDocStateEnum, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.BuySellDocStateEnum,
+                           (@Model.BuySellDocStateEnumSelectList as IEnumerable<SelectListItem>),
+                  "--- Select Document Type ---",
+                  new { @class = "form-control" })
+    </div>
+
     <div class="form-group">
         <strong>
             @Html.LabelFor(model => model.DocumentNumber, htmlAttributes: new { @class = "" })
             @Html.DisplayFor(model => model.DocumentNumber)
         </strong>
     </div>
-    }
     
+
     <div class="form-group">
         @Html.LabelFor(model => model.OwnerId, htmlAttributes: new { @class = "" })
         @Html.DropDownListFor(x => x.OwnerId,
@@ -26,7 +35,7 @@
         @Html.DropDownListFor(x => x.CustomerId,
                          (@Model.SelectListCustomer as IEnumerable<SelectListItem>),
                   "--- Select Customer---",
-                  new { @class = "form-control" })
+                  new { @class = "form-control", data_toggle = "tooltip", title = "An address that needs to be informed.", data_placement = "top" })
     </div>
 
 
@@ -35,7 +44,7 @@
         @Html.DropDownListFor(x => x.AddressShipToId,
                           (@Model.SelectListAddressShipTo as IEnumerable<SelectListItem>),
                   "--- Add Ship To Address ---",
-                  new { @class = "form-control" })
+                  new { @class = "form-control", data_toggle = "tooltip", title = "The ship to address.", data_placement = "top" })
     </div>
 
     <div class="form-group">
@@ -43,37 +52,34 @@
         @Html.DropDownListFor(x => x.AddressInformTo,
                  (@Model.SelectListAddressInformTo as IEnumerable<SelectListItem>),
                   "--- Add Inform To Address ---",
-                  new { @class = "form-control" })
+                  new { @class = "form-control", data_toggle="tooltip", title="An address that needs to be informed.", data_placement="top"  })
     </div>
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.LastShipDate, htmlAttributes: new { @class = "" })
-        @Html.EditorFor(model => model.LastShipDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
-        @Html.ValidationMessageFor(model => model.LastShipDate, "", new { @class = "text-danger" })
-    </div>
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.LastShipDate, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.LastShipDate, new { htmlAttributes = new { @class = "form-control",  type="date", data_toggle="tooltip", title="This is the last date this product was shipped.", data_placement="top"  } })
+            @Html.ValidationMessageFor(model => model.LastShipDate, "", new { @class = "text-danger" })
+        </div>
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.PoDate, htmlAttributes: new { @class = "" })
-        @Html.EditorFor(model => model.PoDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
-        @Html.ValidationMessageFor(model => model.PoDate, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PoDate, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.PoDate, new { htmlAttributes = new { @class = "form-control", type="date", data_toggle="tooltip", title="A purchase order number of your choosing.", data_placement="top"  } })
+            @Html.ValidationMessageFor(model => model.PoDate, "", new { @class = "text-danger" })
+        </div>
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.PoNumber, htmlAttributes: new { @class = "" })
-        @Html.EditorFor(model => model.PoNumber, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.PoNumber, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PoNumber, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.PoNumber, new { htmlAttributes = new { @class = "form-control", data_toggle="tooltip", title="A purchase order number of your choosing.", data_placement="top"  } })
+            @Html.ValidationMessageFor(model => model.PoNumber, "", new { @class = "text-danger" })
+        </div>
 
-    @Html.Partial(@"_Name_And_DetailInfo")
+        @Html.Partial(@"_Name_And_DetailInfo")
 
-
-
-
-
-
+        *@
 
 
 </div>
+@Html.Partial(@"_ListItems")

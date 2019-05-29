@@ -10,6 +10,7 @@ namespace EnumLibrary.EnumNS
         Bank,
         BankCategory,
         BuySellDoc,
+        BuySellItem,
         Cashier,
         CashierCategory,
         CashTrx,

@@ -1,0 +1,157 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellItemNS.BuySellItem
+
+@{
+
+    var dicDisabled = new Dictionary<string, object>();
+    dicDisabled.Add("@class", "form-control");
+    dicDisabled.Add("data_toggle", "tooltip");
+    dicDisabled.Add("data_placement", "top");
+    dicDisabled.Add("disabled", "disabled");
+
+
+    var dicSalePrice = new Dictionary<string, object>();
+    dicSalePrice.Add("@class", "form-control");
+    dicSalePrice.Add("data_toggle", "tooltip");
+    dicSalePrice.Add("data_placement", "top");
+
+
+    if (Model.IsDeleting)
+    {
+        dicSalePrice.Add("disabled", "disabled");
+        
+    }
+
+    
+    
+    
+}
+<div class="well p-3 m-3">
+
+
+    @Html.HiddenFor(x => x.BuySellDocId)
+    @Html.HiddenFor(x =>x.Name)
+    @Html.HiddenFor(x => x.IsUserOwned)
+    @Html.HiddenFor(x => x.BuySellDocumentTypeEnum)
+
+    <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = AliKuli.Extentions.HtmlHelpers.GetHtmlAttributes(new { title = "Name" }, dicDisabled) })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Quantity.Ordered, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.Quantity.Ordered, new { htmlAttributes = AliKuli.Extentions.HtmlHelpers.GetHtmlAttributes(new { title = "Quantity Ordered" }, dicSalePrice) })
+        </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SalePrice, htmlAttributes: new { @class = "" })
+        @Html.EditorFor(model => model.SalePrice, new { htmlAttributes = AliKuli.Extentions.HtmlHelpers.GetHtmlAttributes(new { title = "Sale price" }, dicSalePrice) })
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.OriginalPrice, htmlAttributes: new { @class = "" })
+        @Html.EditorFor(model => model.OriginalPrice_Formatted, new { htmlAttributes = AliKuli.Extentions.HtmlHelpers.GetHtmlAttributes(new { title = "Sale price" }, dicDisabled) })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Difference_Formatted, htmlAttributes: new { @class = "" })
+        @Html.EditorFor(model => model.Difference_Formatted, new { htmlAttributes = AliKuli.Extentions.HtmlHelpers.GetHtmlAttributes(new { title = "Sale price" }, dicDisabled) })
+    </div>
+
+    @switch (Model.BuySellDocumentTypeEnum)
+    {
+        case BuySellDocumentTypeENUM.Unknown:
+            break;
+        case BuySellDocumentTypeENUM.Sale:
+            {
+
+                //if (Model.LastOffer_Buyer.Amount != 0)
+                if (true)
+                {
+                    <div class="form-group alert-info p-3 ">
+                        @Html.LabelFor(model => model.LastOffer_Buyer, htmlAttributes: new { @class = "" })
+                        @Html.EditorFor(model => model.LastOffer_Buyer, new { htmlAttributes = AliKuli.Extentions.HtmlHelpers.GetHtmlAttributes(new { title = "Sale price" }, dicDisabled) })
+                    </div>
+                }
+
+                break;
+            }
+        case BuySellDocumentTypeENUM.Purchase:
+            {
+
+                //if (Model.LastOffer_Seller.Amount != 0)
+                if (true)
+                {
+                    <div class="form-group alert-success p-3 ">
+                        @Html.LabelFor(model => model.LastOffer_Seller, htmlAttributes: new { @class = "" })
+                        @Html.EditorFor(model => model.LastOffer_Seller, new { htmlAttributes = AliKuli.Extentions.HtmlHelpers.GetHtmlAttributes(new { title = "Sale price" }, dicDisabled) })
+                    </div>
+                }
+                break;
+            }
+        default:
+            break;
+    }
+
+
+
+    @*@if (Model.IsUserOwned)
+    {
+
+    }
+    else
+    {
+        dicSalePrice.Add("disabled", "disabled");
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SalePrice, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.SalePrice_Formatted, new { htmlAttributes = AliKuli.Extentions.HtmlHelpers.GetHtmlAttributes(new { title = "Sale price" }, dicSalePrice) })
+        </div>
+
+    }
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Quantity.Remaining, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.Quantity.RemainingDecimal_Formatted, new { htmlAttributes = new { @class = "form-control", data_toggle = "tooltip", title = "A purchase order number of your choosing.", data_placement = "top", disabled = "disabled" } })
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RemainingRs, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.RemainingRs_Formatted, new { htmlAttributes = new { @class = "form-control", type = "date", data_toggle = "tooltip", title = "A purchase order number of your choosing.", data_placement = "top", disabled = "disabled" } })
+        </div>*@
+
+</div>
+
+
+
+
+@*<div class="form-group">
+    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "" })
+    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", data_toggle = "tooltip", title = "A purchase order number of your choosing.", data_placement = "top", disabled = "disabled" } })
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Quantity.Ordered, htmlAttributes: new { @class = "" })
+    @Html.EditorFor(model => model.Quantity.Ordered, new { htmlAttributes = new { @class = "form-control", data_toggle = "tooltip", title = "A purchase order number of your choosing.", data_placement = "top", disabled = "disabled" } })
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Quantity.Remaining, htmlAttributes: new { @class = "" })
+    @Html.EditorFor(model => model.Quantity.RemainingDecimal_Formatted, new { htmlAttributes = new { @class = "form-control", data_toggle = "tooltip", title = "A purchase order number of your choosing.", data_placement = "top", disabled = "disabled" } })
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.SalePrice, htmlAttributes: new { @class = "" })
+    @Html.EditorFor(model => model.SalePrice_Formatted, new { htmlAttributes = new { @class = "form-control", data_toggle = "tooltip", title = "A purchase order number of your choosing.", data_placement = "top", disabled = "disabled" } })
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.RemainingRs, htmlAttributes: new { @class = "" })
+    @Html.EditorFor(model => model.RemainingRs_Formatted, new { htmlAttributes = new { @class = "form-control", type = "date", data_toggle = "tooltip", title = "A purchase order number of your choosing.", data_placement = "top", disabled = "disabled" } })
+</div>
+
+</div>*@

@@ -39,8 +39,9 @@ namespace ModelsClassLibrary.MenuNS
         public SelectList SelectListMenuFeatures { get; set; }
 
 
-        string IHasUploads.MiscFilesLocation()
+        string IHasUploads.MiscFilesLocation(string aName)
         {
+
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, ClassNameRaw);
         }
         public string MiscFilesLocation_Initialization()

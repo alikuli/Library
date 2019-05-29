@@ -11,10 +11,6 @@ namespace MarketPlace.Web6.Controllers.Abstract
     public partial class EntityAbstractController<TEntity>
     {
 
-
-
-
-
         /// <summary>
         /// This method makes sure that both SetupSelectList and CreateViewEditAndCreateActions happen together and in the correct
         /// order
@@ -27,7 +23,6 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 return View(Biz.FactoryForHttpGet());
 
             TEntity entity = (TEntity)parm.Entity;
-
 
             return View(entity);
         }

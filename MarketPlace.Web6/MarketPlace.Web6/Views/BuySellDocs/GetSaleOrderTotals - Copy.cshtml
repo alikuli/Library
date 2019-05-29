@@ -1,0 +1,74 @@
+﻿@model ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount
+
+@{
+    ViewBag.Title = "ShowCashMenu";
+    const string SALE_ORDER_STATEMENT = "saleorderstatement";
+
+
+
+    string userTotalSaleOrdersMenuItem = Model.PersonSalesOrders.Total.MenuItem;
+    string userTotalSaleToolTip = Model.PersonSalesOrders.Total.ToolTip;
+    string userTotalSale_Path = Url.Action("ListAllSalesOrders", "BuySellDocs");
+
+    string userOpenOrdersMenuItem = Model.PersonSalesOrders.Open.MenuItem;
+    string userOpenOrdersToolTip = Model.PersonSalesOrders.Open.ToolTip;
+    string userOpenOrders_Path = Url.Action("List_Open_SalesOrders", "BuySellDocs");
+
+
+    string userClosedOrdersMenuItem = Model.PersonSalesOrders.Closed.MenuItem;
+    string userClosedOrdersToolTip = Model.PersonSalesOrders.Closed.ToolTip;
+    string userClosedOrders_Path = Url.Action("List_Closed_SalesOrders", "BuySellDocs");
+
+
+
+    string userInProccessOrdersMenuItem = Model.PersonSalesOrders.InProccesss.MenuItem;
+    string userInProccessOrdersToolTip = Model.PersonSalesOrders.InProccesss.ToolTip;
+    string userInProccessOrders_Path = Url.Action("List_InProccess_SalesOrders", "BuySellDocs");
+
+
+    string userCanceledOrdersMenuItem = Model.PersonSalesOrders.Canceled.MenuItem;
+    string userCanceledOrdersToolTip = Model.PersonSalesOrders.Canceled.ToolTip;
+    string userCanceledOrders_Path = Url.Action("List_Canceled_SalesOrders", "BuySellDocs");
+
+
+    string userBackOrdersMenuItem = Model.PersonSalesOrders.BackOrdered.MenuItem;
+    string userBackOrdersToolTip = Model.PersonSalesOrders.BackOrdered.ToolTip;
+    string userBackOrders_Path = Url.Action("List_BackOrdered_SalesOrders", "BuySellDocs");
+
+
+    string userQuotationsMenuItem = Model.PersonSalesOrders.Quotation.MenuItem;
+    string userQuotationsToolTip = Model.PersonSalesOrders.Quotation.ToolTip;
+    string userQuotations_Path = Url.Action("List_Quotation_SalesOrders", "BuySellDocs");
+
+
+    string userCreditsMenuItem = Model.PersonSalesOrders.Credit.MenuItem;
+    string userCreditsToolTip = Model.PersonSalesOrders.Credit.ToolTip;
+    string userCredits_Path = Url.Action("List_Credit_SalesOrders", "BuySellDocs");
+    ViewBag.StatementType = SALE_ORDER_STATEMENT;
+    
+}
+
+<h2 class="text-info">Sale Orders</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="container p-3 ">
+        <hr />
+
+        <a class="btn btn-lg btn-default w-100" href="@userOpenOrders_Path " data-toggle=" tooltip" title="@userOpenOrdersToolTip" data-placement="left">@userOpenOrdersMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default  w-100"  href="@userInProccessOrders_Path" data-toggle=" tooltip" title="@userInProccessOrdersToolTip" data-placement="left">@userInProccessOrdersMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default w-100" href="@userBackOrders_Path " data-toggle=" tooltip" title="@userBackOrdersToolTip" data-placement="left">@userBackOrdersMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-success w-100 mt-3" href="@userTotalSale_Path " data-toggle=" tooltip" title="@userTotalSaleToolTip" data-placement="left">@userTotalSaleOrdersMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default w-100 mt-3" href="@userCredits_Path " data-toggle=" tooltip" title="@userCreditsToolTip" data-placement="left">@userCreditsMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default w-100" href="@userQuotations_Path " data-toggle=" tooltip" title="@userQuotationsToolTip" data-placement="left">@userQuotationsMenuItem</a>
+        </div>
+    <br />
+}
+

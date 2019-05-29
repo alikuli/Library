@@ -6,7 +6,15 @@
     int count = 0;
     // VV string toolTipIdentificationNumber = "This is a unique identification number that can be given to the product. This is useful if you want to post several same products with different identification number, eg cars and their number plates.";
     string liClass = "active";
+    //string carouselItemClass = "carousel-item";
     string carouselItemClass = "carousel-item active";
+
+    string editAction = Url.Action("Edit", Model.MenuManager.IndexMenuVariables.EditController, new { id = Model.MenuManager.IndexMenuVariables.IdForEdit, returnUrl = Model.MenuManager.ReturnUrl});
+    string editIconToolTip = "You can Edit your product from here";
+    string shoppingCartToolTip = "You can buy this by pressing the button once";
+
+    Model.MenuManager.IndexMenuVariables.MessageIcon.Url = Url.Action("SaleMessage", "Messages", new {productChildId = Model.Id, returnUrl = Model.MenuManager.ReturnUrl, messageEnum = MessageENUM.Paid, menuEnum = Model.MenuManager.MenuState.MenuEnum });
+    
 }
 
 
@@ -36,9 +44,9 @@
 
 
             <div class="border border-info rounded p-2" @*style="background-color:blueviolet"*@>
-                <h1 class="background-ltgrey">@Model.FullName()</h1>
+                <h1 class="background-ltgrey p-1">@Model.FullName()</h1>
                 <h2>@Model.DetailInfoToDisplayOnWebsite</h2>
-                <h3>Not implemented</h3>
+                <h3>@Model.Sell.SellPriceMoneyFormat</h3>
                 <div id="productCarousel" class="carousel slide " data-ride="carousel">
 
 
@@ -53,7 +61,8 @@
                     </ul>
 
                     <!-- The slideshow -->
-                    <div class="carousel-inner">
+                    <!-- added height-->
+                    <div class="carousel-inner" style="height:300px; ">
                         @foreach (string item in Model.MenuManager.PictureAddresses)
                         {
                             string addy = "~/ContentMine/MyImages/BlankImage.jpg";
@@ -62,8 +71,8 @@
                                 addy = item;
                             }
                             
-                        <div class="@carouselItemClass container" style="height:300px;">
-                            <img src="@Url.Content(@addy)" alt="" class="img-fluid" style="height:100%;">
+                        <div class="@carouselItemClass " >
+                            <img src="@Url.Content(@addy)" alt="" class="img-fluid" >
                         </div>
                             carouselItemClass = "carousel-item";
                         }
@@ -85,29 +94,120 @@
                     
                 }
                 <div class="btn btn-group mt-1 btn-dark flex-wrap justify-content-center my-btn-Group mx-auto" role="group">
-                    <span data-toggle="tooltip" title="I LIKE it! Press to register and tell us why." data-placement="bottom">
-                        <a href="#" class="m-1 btn far fa-heart btn-danger"> </a>
+
+
+                    @*Shopping cart*@
+
+
+                        @if (Model.MenuManager.IndexMenuVariables.IconEditProductChild.IsOwnerOfProductChild)
+                        {
+                            <span data-toggle="tooltip" title="@editIconToolTip" data-placement="top">
+
+                                <button id="@Model.MenuManager.IndexMenuVariables.IconEditProductChild.Id"
+                                        class="@Model.MenuManager.IndexMenuVariables.IconEditProductChild.ButtonClass"
+                                        data-nameofproduct="@Model.MenuManager.IndexMenuVariables.ShortNameOfProduct"
+                                        data-url="@Model.MenuManager.IndexMenuVariables.IconEditProductChild.Url"
+                                        onclick="openPath('@editAction')">
+                                    <img src="~/ContentMine/Icons/Edit.png" />
+
+                                </button>
+                            </span>
+
+                        }
+                        else
+                        {
+                            <span data-toggle="tooltip" title="@shoppingCartToolTip" data-placement="top">
+
+                                <button id="@Model.MenuManager.IndexMenuVariables.ShoppingCartIcon.Id"
+                                        class="@Model.MenuManager.IndexMenuVariables.ShoppingCartIcon.ButtonClass"
+                                        data-nameofproduct="@Model.MenuManager.IndexMenuVariables.ShortNameOfProduct"
+                                        data-url="@Model.MenuManager.IndexMenuVariables.ShoppingCartIcon.Url"
+                                        onclick="@Model.MenuManager.IndexMenuVariables.ShoppingCartIcon.OnClick"
+                                        @Model.MenuManager.IndexMenuVariables.ShoppingCartIcon.ButtonDisableConditionally>
+
+                                    <span id="@Model.MenuManager.IndexMenuVariables.ShoppingCartIcon.IdCount"
+                                          class="@Model.MenuManager.IndexMenuVariables.ShoppingCartIcon.BadgeClass">
+                                        @Model.MenuManager.IndexMenuVariables.ShoppingCartIcon.CountIcon
+                                    </span>
+
+                                    <img src="~/ContentMine/Icons/ShoppingCartIcon.png" />
+
+                                </button>
+                            </span>
+                        }
+
+
+
+
+
+
+                    <span data-toggle="tooltip" title="I LIKE it! Press to register and tell us why." data-placement="top">
+                        <button id="@Model.MenuManager.IndexMenuVariables.LikeIcon.Id"
+                                class="@Model.MenuManager.IndexMenuVariables.LikeIcon.ButtonClass"
+                                data-nameofproduct="@Model.MenuManager.IndexMenuVariables.ShortNameOfProduct"
+                                data-url="@Model.MenuManager.IndexMenuVariables.LikeIcon.Url"
+                                data-counturl="@Model.MenuManager.IndexMenuVariables.LikeIcon.UrlCount"
+                                data-toggle="modal"
+                                data-target="#mymodalnew"
+                                onclick="@Model.MenuManager.IndexMenuVariables.LikeIcon.OnClick"
+                                @Model.MenuManager.IndexMenuVariables.LikeIcon.ButtonDisableConditionally>
+
+
+                            <span id="@Model.MenuManager.IndexMenuVariables.LikeIcon.IdCount"
+                                  class="@Model.MenuManager.IndexMenuVariables.LikeIcon.BadgeClass">
+                                @Model.MenuManager.IndexMenuVariables.LikeIcon.CountIcon
+                            </span>
+                            <img src="~/ContentMine/Icons/smilingFace.png" />
+                        </button>
                     </span>
-                    <span data-toggle="tooltip" title="Thumbs up." data-placement="bottom">
-                        <a href="#" class="m-1 btn fas fa-thumbs-up btn-info"> </a>
+
+
+                    <span data-toggle="tooltip" title="I HATE it! Press button and tell us why?" data-placement="top">
+
+                        <button id="@Model.MenuManager.IndexMenuVariables.UnLikeIcon.Id"
+                                class="@Model.MenuManager.IndexMenuVariables.UnLikeIcon.ButtonClass"
+                                data-nameofproduct="@Model.MenuManager.IndexMenuVariables.ShortNameOfProduct"
+                                data-url="@Model.MenuManager.IndexMenuVariables.UnLikeIcon.Url"
+                                data-counturl="@Model.MenuManager.IndexMenuVariables.UnLikeIcon.UrlCount"
+                                data-toggle="modal"
+                                data-target="#mymodalnew"
+                                onclick="@Model.MenuManager.IndexMenuVariables.UnLikeIcon.OnClick"
+                                @Model.MenuManager.IndexMenuVariables.UnLikeIcon.ButtonDisableConditionally>
+
+                            <span id="@Model.MenuManager.IndexMenuVariables.UnLikeIcon.IdCount"
+                                  class="@Model.MenuManager.IndexMenuVariables.UnLikeIcon.BadgeClass">
+                                @Model.MenuManager.IndexMenuVariables.UnLikeIcon.CountIcon
+                            </span>
+
+                            <img src="~/ContentMine/Icons/SadFace.png" />
+
+                        </button>
                     </span>
-                    <span data-toggle="tooltip" title="Snow flake." data-placement="bottom">
-                        <a href="#" class="m-1 btn fas fa-snowflake btn-success"> </a>
+                    <span data-toggle="tooltip" title="Send messages." data-placement="top">
+
+                        <button @*class="btn btn-sm btn-warning"*@
+                                id="@Model.MenuManager.IndexMenuVariables.MessageIcon.Id"
+                                class="@Model.MenuManager.IndexMenuVariables.MessageIcon.ButtonClass"
+                                @Model.MenuManager.IndexMenuVariables.MessageIcon.ButtonDisableConditionally
+                                data-nameofproduct="@Model.MenuManager.IndexMenuVariables.ShortNameOfProduct"
+                                data-counturl="@Model.MenuManager.IndexMenuVariables.MessageIcon.UrlCount"
+                                onclick="location.href='@Model.MenuManager.IndexMenuVariables.MessageIcon.Url'">
+
+                            <img src="~/ContentMine/Icons/Envelope.png" />
+                        </button>
                     </span>
-                    <span data-toggle="tooltip" title="satellite." data-placement="bottom">
-                        <a href="#" class="m-1 btn fas fa-satellite btn-warning"> </a>
-                    </span>
-                    <span data-toggle="tooltip" title="Life ring." data-placement="bottom">
-                        <a href="#" class="m-1 btn fas fa-life-ring btn-light"> </a>
-                    </span>
-                    <span data-toggle="tooltip" title="Buy. I want it now!." data-placement="bottom">
-                        <a href="#" class="btn btn-success ">Buy</a>
-                    </span>
-                    <span data-toggle="tooltip" title="I want it but I want to offer another price. I know there is a chance that my offer may be declined." data-placement="bottom">
-                        <a href="#" class="btn btn-warning ml-1 mr-1">Offer</a>
-                    </span>
-                    <span data-toggle="tooltip" title="I would like to send the owner a message regarding this product." data-placement="bottom">
-                        <a href="@messageUrl" class="btn btn-info ">Message</a>
+                    <span data-toggle="tooltip" title="Make an offer." data-placement="top">
+
+                        <button @*class="btn btn-sm btn-warning"*@
+                                id="@Model.MenuManager.IndexMenuVariables.OfferIcon.Id"
+                                class="@Model.MenuManager.IndexMenuVariables.OfferIcon.ButtonClass"
+                                @Model.MenuManager.IndexMenuVariables.OfferIcon.ButtonDisableConditionally
+                                data-nameofproduct="@Model.MenuManager.IndexMenuVariables.ShortNameOfProduct"
+                                data-counturl="@Model.MenuManager.IndexMenuVariables.OfferIcon.UrlCount"
+                                onclick="location.href='@Model.MenuManager.IndexMenuVariables.OfferIcon.Url'">
+
+                            <img src="~/ContentMine/Icons/Offer.png" />
+                        </button>
                     </span>
 
                 </div>
@@ -178,5 +278,31 @@
     </div>
     <div class="row">
         <a href="@Url.Content(Model.MenuManager.ReturnUrl)">Go Back</a>
+    </div>
+</div>
+
+
+
+@*Modal to show like/Unlike Users*@
+
+
+<div class="modal fade" id="mymodalnew" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalHeading"><span id="myModalHeading.span" class=""></span></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body" id="myModalbodyNewid">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success d-none" id="modalNewCloseBtnId" data-dismiss="modal">Save</button>
+            </div>
+        </div>
     </div>
 </div>

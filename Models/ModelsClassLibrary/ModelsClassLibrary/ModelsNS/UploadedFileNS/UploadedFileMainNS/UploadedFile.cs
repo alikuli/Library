@@ -121,26 +121,29 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
         {
             return Path.Combine(AbsolutePath(), Name);
         }
+        
 
-        public string RelativePathWithFileName()
+        public string GetRelativePathWithFileName()
         {
-            if (RelativeWebsitePath.IsNullOrEmpty())
-                return AliKuli.UtilitiesNS.ConfigManagerHelper.BlankPicture;
-            //    return Path.Combine(@"~/Content/MyImages/", "BlankImage.jpg");
-
-            if (Name.IsNullOrEmpty())
-                return AliKuli.UtilitiesNS.ConfigManagerHelper.BlankPicture;
-            //return Path.Combine(@"~/Content/MyImages/", "BlankImage.jpg");
-            return Path.Combine(RelativeWebsitePath, Name);
+            return GetRelativePathWithFileName(Name, RelativeWebsitePath);
         }
 
+        public string GetRelativePathWithFileName(string name,string relativeWebsitePath)
+        {
+            if (relativeWebsitePath.IsNullOrEmpty())
+                return AliKuli.UtilitiesNS.ConfigManagerHelper.DefaultBlankPicture;
 
-        private string AbsolutePath(string relativePath)
+            if (name.IsNullOrEmpty())
+                return AliKuli.UtilitiesNS.ConfigManagerHelper.DefaultBlankPicture;
+            return Path.Combine(relativeWebsitePath, name);
+        }
+
+        public static string GetAbsolutePath(string relativePath)
         {
             try
             {
                 string absolutePath = HostingEnvironment.MapPath(relativePath);
-                Directory.CreateDirectory(absolutePath);
+                //Directory.CreateDirectory(absolutePath);
 
                 if (absolutePath.IsNullOrWhiteSpace())
                 {
@@ -161,7 +164,7 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
 
         public string AbsolutePath()
         {
-            return AbsolutePath(RelativeWebsitePath);
+            return GetAbsolutePath(RelativeWebsitePath);
         }
 
         #endregion

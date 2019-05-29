@@ -1,2 +1,8 @@
 ﻿@Html.Partial(@"MenuPathNS/_menuPathFieldsOnlyEditFormat")
-@Html.Partial(@"_ListFeatures")
+@{bool isCreate = Model.MenuManager.IsCreate;}
+@if(!isCreate)
+{
+    <div>
+        @Html.Partial(@"_ListFeatures")
+    </div>
+}

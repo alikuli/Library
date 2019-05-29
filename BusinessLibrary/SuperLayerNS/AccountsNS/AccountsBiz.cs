@@ -55,9 +55,14 @@ namespace UowLibrary.SuperLayerNS.AccountsNS
             if (userId.IsNullOrWhiteSpace())
                 return new UserMoneyAccount();
 
-            //bool isBank = BankBiz.IsBankerFor(userId);
             bool isAdmin = UserBiz.IsAdmin(userId);
+            
+            //if there is no
             UserMoneyAccount userMoneyAccount = CashTrxBiz.MoneyAccountForUser(userId, isAdmin);
+
+            if (userId.IsNullOrWhiteSpace())
+                return new UserMoneyAccount();
+
             return userMoneyAccount;
 
         }

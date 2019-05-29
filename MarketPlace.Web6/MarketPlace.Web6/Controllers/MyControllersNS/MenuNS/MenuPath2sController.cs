@@ -3,6 +3,7 @@ using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeatureNS;
 using ModelsClassLibrary.ModelsNS.MenuNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Reflection;
 //using ModelsClassLibrary.ModelsNS.FeaturesNS;
@@ -85,17 +86,17 @@ namespace MarketPlace.Web6.Controllers
             return Redirect(menuFeatureModel.ReturnUrl);
         }
 
-        public ActionResult DeleteFeature(string menuPathid, string menuFeatreId, string returnUrl)
+        public ActionResult DeleteFeature(string menuPathid, string menuFeatureId, string returnUrl)
         {
             try
             {
-                menuFeatreId.IsNullOrWhiteSpaceThrowArgumentException("menuFeatreId");
+                menuFeatureId.IsNullOrWhiteSpaceThrowArgumentException("menuFeatureId");
                 returnUrl.IsNullOrWhiteSpaceThrowArgumentException("returnUrl");
                 menuPathid.IsNullOrWhiteSpaceThrowArgumentException("menuPath2id");
 
-                MenuFeatureDeleteModel menuFeatureDeleteModel = new MenuFeatureDeleteModel(menuPathid, menuFeatreId, returnUrl);
+                MenuFeatureDeleteModel menuFeatureDeleteModel = new MenuFeatureDeleteModel(menuPathid, menuFeatureId, returnUrl);
 
-                menuFeatureDeleteModel.MenuFeature = MenuFeatureBiz.Find(menuFeatreId);
+                menuFeatureDeleteModel.MenuFeature = MenuFeatureBiz.Find(menuFeatureId);
                 menuFeatureDeleteModel.MenuPath = MenuPath2Biz.Find(menuPathid) as IMenuPath;
 
                 menuFeatureDeleteModel.SelfCheck();
@@ -164,6 +165,11 @@ namespace MarketPlace.Web6.Controllers
 
             return Redirect(createNewFeatureModel.ReturnUrl);
 
+        }
+        public override void Event_BeforeSaveInCreateAndEdit(ControllerCreateEditParameter parm)
+        {
+            base.Event_BeforeSaveInCreateAndEdit(parm);
+            parm.ReturnUrl = Url.Action("Edit", "MenuPath2s", new { id = parm.Entity.Id });
         }
 
     }

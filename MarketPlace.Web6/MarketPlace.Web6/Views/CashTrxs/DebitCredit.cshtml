@@ -8,7 +8,7 @@
 }
 
 <h2>
-    @switch (Model.CashTypeEnum)
+    @*@switch (Model.CashTypeEnum)
     {
         case CashTypeENUM.NonRefundable:
             <span class="text-success">@Model.CashTypeEnum.ToString() Cash</span>
@@ -20,14 +20,21 @@
         <span>ALL Cash</span>
             break;
 
-    }
+    }*@
     
+    @Model.Heading    
     
     
 </h2>
-
+<h3>
+    @Model.SubHeading
+</h3>
 @if (!Model.CashTrxs.IsNullOrEmpty())
 {
+    string todayMinusOne = Model.FromDate.AddDays(-1).ToString("yyyy-MMM-dd");
+    string bf_Orders_Path = Url.Action("getCashStatement", "CashTrxs", new { cashTypeEnum = Model.CashTypeEnum, toDateStr = todayMinusOne, isAdmin = Model.IsAdmin });
+    string bf_Orders_ToolTip = string.Format("You can see detail before {0:dd-MMM-yyyy} by clicking here.", Model.FromDate);
+    
     <table class=" table table-responsive table-striped table-light table-hover table-bordered" >
         <thead>
             <tr class="alert-info p-1">
@@ -51,10 +58,11 @@
                 From/To
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CashTrxs[0].ReceiptAmount)
+                @string.Format("{0:N2}", Html.DisplayNameFor(model => model.CashTrxs[0].ReceiptAmount))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CashTrxs[0].PaymentAmount)
+                @string.Format("{0:N2}", Html.DisplayNameFor(model => model.CashTrxs[0].PaymentAmount))
+                
             </th>
             <th>
                 Running Balance
@@ -78,20 +86,10 @@
 
             </td>
             <td>
-                @if (runningBalance > 0)
-                {
-                    <span>
-                        @string.Format("{0:N2}", runningBalance)
-                    </span>
-                }
+                <a href="@bf_Orders_Path" data-toggle="tooltip" title="@bf_Orders_ToolTip" data-placement="left">@string.Format("{0:N2}", @Model.RecievedBF)</a>
             </td>
             <td>
-                @if (runningBalance  < 0)
-                {
-                    <span>
-                        @string.Format("{0:N2}", runningBalance)
-                    </span>
-                }
+                <a href="@bf_Orders_Path" data-toggle="tooltip" title="@bf_Orders_ToolTip" data-placement="left">@string.Format("{0:N2}", @Model.PaidBF)</a>
             </td>
             <td>
                 @string.Format("{0:N2}", runningBalance)
@@ -176,8 +174,8 @@
                 <th scope="row"> Final Balanced : Rs @string.Format("{0:N2}", runningBalance)</th>
                 <th></th>
                 <th></th>
-                <th></th>
-                <th></th>
+                <th><strong>@string.Format("{0:N2}", @Model.TotalRecieved)</strong></th>
+                <th><strong>@string.Format("{0:N2}", @Model.TotalPaid)</strong></th>
                 <th class="@colorForNonRefundable">[NR] = Not Refundable</th>
                 <th class="@colorForRefundable">[R] =  Refundable</th>
 

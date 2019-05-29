@@ -71,6 +71,8 @@ namespace AliKuli.ConstantsNS
         public const string MINDATE = "01/Jan/2010";
         public const string MAXDATE = "31/Dec/2050";
 
+        public const string PURCHASE_ORDER_STATEMENT = "purchaseorderstatement";
+        public const string SALE_ORDER_STATEMENT = "saleorderstatement";
 
 
         //save locations for products
@@ -108,7 +110,7 @@ namespace AliKuli.ConstantsNS
         public const string SIZE_PIC_BYTES_TO_SAVE = "1000000";
         public const string SIZE_PIC_HEIGHT_IN_PTS_MAX = "1000";
         public const string SIZE_PIC_WIDTH_IN_PTS_MAX = "1000";
-        public const string DEFAULT_IMAGE_LOCATION = @"~\ContentMine\MyImages\BlankImage.jpg";
+        //public const string DEFAULT_IMAGE_LOCATION = @"~\ContentMine\MyImages\BlankImage.jpg";
 
     }
 

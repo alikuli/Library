@@ -6,6 +6,7 @@ using UowLibrary.CashTtxNS;
 using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS.CustomerCategoryNS;
 using UowLibrary.PlayersNS.PlayerAbstractCategoryNS;
+using UserModels;
 
 namespace UowLibrary.PlayersNS.CustomerNS
 {
@@ -51,5 +52,23 @@ namespace UowLibrary.PlayersNS.CustomerNS
         //        return CashTrxBiz.PersonBiz;
         //    }
         //}
+
+        public override Customer GetPlayerFor(string userId)
+        {
+            Customer customer = base.GetPlayerFor(userId);
+
+            if(customer.IsNull())
+            {
+                ApplicationUser user = GetUser(userId);
+                user.IsNullThrowException("user");
+
+                //create a new customer for this
+                customer = Factory() as Customer;
+                customer.IsNullThrowException();
+                customer.Name = user.UserName;
+            }
+
+            return customer;
+        }
     }
 }

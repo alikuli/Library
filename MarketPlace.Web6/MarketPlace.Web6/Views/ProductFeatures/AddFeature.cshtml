@@ -1,3 +1,46 @@
-﻿@model ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeatureNS.MenuFeatureModel
+﻿@model ModelsClassLibrary.ModelsNS.FeaturesNS.ProductFeatureNS.ProductFeatureModel
 
-@Html.Partial(@"MenuPathNS/_addFeature")
+
+@{
+    ViewBag.Title = "Add Feature";
+    string controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+
+
+}
+
+<h2>Add Feature to @Model.ParentName</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal form-inline">
+        @Html.HiddenFor(x => x.ParentId)
+        @Html.HiddenFor(x => x.ReturnUrl)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MenuFeatureId, htmlAttributes: new { @class = "mr-5" })
+            @Html.DropDownListFor(x => x.MenuFeatureId,
+                (@Model.SelectListFeature as IEnumerable<SelectListItem>),
+                 "--- Select Feature ---",
+                 new { @class = "form-control" })
+
+            @Html.ActionLink("Create Feature not in list", "CreateNewFeature", controllerName, new { returnUrl = Model.ReturnUrl, menuPathid = Model.ParentId }, new { @class = "btn btn-success ml-5" })
+        </div>
+    </div>
+    <div class="form-horizontal mt-2">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "mr-3" })
+            @Html.EditorFor(model => model.Description)
+
+        </div>
+    </div>
+    <div class="form-group mt-5">
+        <input type="submit" value="Save" class="btn btn-default" />
+        <a href="@Url.Content(Model.ReturnUrl)">Back to list</a>
+
+    </div>
+}
+
+<div>
+</div>

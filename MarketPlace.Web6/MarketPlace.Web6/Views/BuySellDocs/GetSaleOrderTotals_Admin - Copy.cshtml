@@ -1,0 +1,71 @@
+﻿@model ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount
+
+@{
+    ViewBag.Title = "ShowCashMenu";
+
+
+
+    string systemTotalSaleOrdersMenuItem = Model.SystemSalesOrders.Total.MenuItem;
+    string systemTotalSaleToolTip = Model.SystemSalesOrders.Total.ToolTip;
+    string systemTotalSale_Path = Url.Action("ListAllSalesOrders_AdminScreen", "BuySellDocs");
+
+    string systemOpenOrdersMenuItem = Model.SystemSalesOrders.Open.MenuItem;
+    string systemOpenOrdersToolTip = Model.SystemSalesOrders.Open.ToolTip;
+    string systemOpenOrders_Path = Url.Action("List_Open_SalesOrders_AdminScreen", "BuySellDocs");
+
+
+    string systemClosedOrdersMenuItem = Model.SystemSalesOrders.Closed.MenuItem;
+    string systemClosedOrdersToolTip = Model.SystemSalesOrders.Closed.ToolTip;
+    string systemClosedOrders_Path = Url.Action("List_Closed_SalesOrders_AdminScreen", "BuySellDocs");
+
+
+
+    string systemInProccessOrdersMenuItem = Model.SystemSalesOrders.InProccesss.MenuItem;
+    string systemInProccessOrdersToolTip = Model.SystemSalesOrders.InProccesss.ToolTip;
+    string systemInProccessOrders_Path = Url.Action("List_InProccess_SalesOrders_AdminScreen", "BuySellDocs");
+
+
+    string systemCanceledOrdersMenuItem = Model.SystemSalesOrders.Canceled.MenuItem;
+    string systemCanceledOrdersToolTip = Model.SystemSalesOrders.Canceled.ToolTip;
+    string systemCanceledOrders_Path = Url.Action("List_Canceled_SalesOrders_AdminScreen", "BuySellDocs");
+
+
+    string systemBackOrdersMenuItem = Model.SystemSalesOrders.BackOrdered.MenuItem;
+    string systemBackOrdersToolTip = Model.SystemSalesOrders.BackOrdered.ToolTip;
+    string systemBackOrders_Path = Url.Action("List_BackOrdered_SalesOrders_AdminScreen", "BuySellDocs");
+
+
+    string systemQuotationsMenuItem = Model.SystemSalesOrders.Quotation.MenuItem;
+    string systemQuotationsToolTip = Model.SystemSalesOrders.Quotation.ToolTip;
+    string systemQuotations_Path = Url.Action("List_Quotation_SalesOrders_AdminScreen", "BuySellDocs");
+
+
+    string systemCreditsMenuItem = Model.SystemSalesOrders.Credit.MenuItem;
+    string systemCreditsToolTip = Model.SystemSalesOrders.Credit.ToolTip;
+    string systemCredits_Path = Url.Action("List_Credit_SalesOrders_AdminScreen", "BuySellDocs");
+    
+}
+
+<h2 class="text-danger">Sale Orders Administrator Screen</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="container p-3 ">
+        <hr />
+
+        <a class="btn btn-lg btn-default w-100" href="@systemOpenOrders_Path " data-toggle=" tooltip" title="@systemOpenOrdersToolTip" data-placement="left">@systemOpenOrdersMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default  w-100"  href="@systemInProccessOrders_Path" data-toggle=" tooltip" title="@systemInProccessOrdersToolTip" data-placement="left">@systemInProccessOrdersMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default w-100" href="@systemBackOrders_Path " data-toggle=" tooltip" title="@systemBackOrdersToolTip" data-placement="left">@systemBackOrdersMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-info w-100 mt-3" href="@systemTotalSale_Path " data-toggle=" tooltip" title="@systemTotalSaleToolTip" data-placement="left">@systemTotalSaleOrdersMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default w-100 mt-3" href="@systemCredits_Path " data-toggle=" tooltip" title="@systemCreditsToolTip" data-placement="left">@systemCreditsMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default w-100" href="@systemQuotations_Path " data-toggle=" tooltip" title="@systemQuotationsToolTip" data-placement="left">@systemQuotationsMenuItem</a>
+        </div>
+    <br />
+}

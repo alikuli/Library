@@ -83,7 +83,7 @@ namespace UowLibrary.ProductNS
 
             string originalname = item.ProductName.RemoveAllSpaces().ToString();
             string relative_SrcPath = pc.MiscFilesLocation_Initialization();
-            string relative_targetPath = pc.MiscFilesLocation();
+            string relative_targetPath = pc.MiscFilesLocation(UserName);
 
             string filenameNoExtention = getFileNameWithoutExtention(relative_SrcPath, originalname);
 

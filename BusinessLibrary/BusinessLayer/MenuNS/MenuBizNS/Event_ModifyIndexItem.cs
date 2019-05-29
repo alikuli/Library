@@ -3,9 +3,6 @@ using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.FeaturesNS;
-using ModelsClassLibrary.ModelsNS.MenuNS;
-using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
@@ -47,6 +44,7 @@ namespace UowLibrary.MenuNS
 
             LikeUnlikeParameters likeUnlikeCounter;
             UploadedFile uf;
+            List<string> pictureAddresses = new List<string>();
             //List<string> lstOfPictures = new List<string>();
             //string theUserId = indexListVM.UserId ?? "";
             string theUserId = UserId;
@@ -72,13 +70,27 @@ namespace UowLibrary.MenuNS
                     likeUnlikeCounter = LikeUnlikeBiz.Count(mpm.MenuPath1.Id, null, null, null, null, theUserId, false);
                     likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuPath1";
 
-                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath1, BreadCrumbManager, likeUnlikeCounter, UserId, indexListVM.MenuManager.ReturnUrl);
+                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath1, BreadCrumbManager, likeUnlikeCounter, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
 
                     uf = mpm.MenuPath1.MiscFiles.FirstOrDefault(x => !x.MetaData.IsDeleted);
 
                     //we need to change the image address to image of MenuPath1
                     //indexItem.ImageAddressStr = getImage(uf);
-                    indexItem.MenuManager.PictureAddresses = GetPictureList(mpm.MenuPath1);
+                    //indexItem.MenuManager.PictureAddresses = GetPictureList(mpm.MenuPath1);
+
+                    pictureAddresses = GetPictureList(mpm.MenuPath1);
+
+                    //if none are available, put a blank picture 
+                    //if (pictureAddresses.IsNullOrEmpty())
+                    //{
+
+                    //    pictureAddresses = GetDefaultPicture();
+
+                    //}
+
+
+                    //indexItem.MenuManager.PictureAddresses = pictureAddresses;
+
                     //if (indexItem.MenuManager.PictureAddresses.IsNullOrEmpty())
                     //{
                     //    indexItem.MenuManager.PictureAddresses = GetDefaultPicture();
@@ -101,13 +113,25 @@ namespace UowLibrary.MenuNS
                     indexItem.Name = mpm.MenuPath2.FullName();
                     likeUnlikeCounter = LikeUnlikeBiz.Count(null, mpm.MenuPath2.Id, null, null, null, theUserId, false);
                     likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuPath2";
-                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath2, BreadCrumbManager, likeUnlikeCounter, UserId, indexListVM.MenuManager.ReturnUrl);
+                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath2, BreadCrumbManager, likeUnlikeCounter, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
 
-                    indexItem.MenuManager.PictureAddresses = GetPictureList(mpm.MenuPath2);
+                    //indexItem.MenuManager.PictureAddresses = GetPictureList(mpm.MenuPath2);
                     //if (indexItem.MenuManager.PictureAddresses.IsNullOrEmpty())
                     //{
                     //    indexItem.MenuManager.PictureAddresses = GetDefaultPicture();
                     //}
+                    pictureAddresses = GetPictureList(mpm.MenuPath2);
+
+                    //if none are available, put a blank picture 
+                    //if (pictureAddresses.IsNullOrEmpty())
+                    //{
+
+                    //    pictureAddresses = GetDefaultPicture();
+
+                    //}
+
+
+                    //indexItem.MenuManager.PictureAddresses = pictureAddresses;
 
                     break;
 
@@ -132,12 +156,24 @@ namespace UowLibrary.MenuNS
                     likeUnlikeCounter = LikeUnlikeBiz.Count(null, null, mpm.MenuPath3.Id, null, null, theUserId, false);
 
                     likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuPath3";
-                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath3, BreadCrumbManager, likeUnlikeCounter, UserId, indexListVM.MenuManager.ReturnUrl);
-                    indexItem.MenuManager.PictureAddresses = GetPictureList(mpm.MenuPath3);
+                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuPath3, BreadCrumbManager, likeUnlikeCounter, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
+                    //indexItem.MenuManager.PictureAddresses = GetPictureList(mpm.MenuPath3);
                     //if (indexItem.MenuManager.PictureAddresses.IsNullOrEmpty())
                     //{
                     //    indexItem.MenuManager.PictureAddresses = GetDefaultPicture();
                     //}
+                    pictureAddresses = GetPictureList(mpm.MenuPath3);
+
+                    //if none are available, put a blank picture 
+                    //if (pictureAddresses.IsNullOrEmpty())
+                    //{
+
+                    //    pictureAddresses = GetDefaultPicture();
+
+                    //}
+
+
+                    //indexItem.MenuManager.PictureAddresses = pictureAddresses;
 
                     break;
 
@@ -154,8 +190,20 @@ namespace UowLibrary.MenuNS
 
                     likeUnlikeCounter = LikeUnlikeBiz.Count(null, null, null, product.Id, null, theUserId, false);
                     likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuProduct";
-                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuProduct, BreadCrumbManager, likeUnlikeCounter, UserId, indexListVM.MenuManager.ReturnUrl);
-                    indexItem.MenuManager.PictureAddresses = GetPictureList(product);
+                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuProduct, BreadCrumbManager, likeUnlikeCounter, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
+                    //get the pictures list from the product
+                    pictureAddresses = GetPictureList(product);
+
+                    //if none are available, put a blank picture 
+                    if (pictureAddresses.IsNullOrEmpty())
+                    {
+
+                        pictureAddresses = GetDefaultPicture();
+
+                    }
+
+
+                    indexItem.MenuManager.PictureAddresses = pictureAddresses;
                     //if (indexItem.MenuManager.PictureAddresses.IsNullOrEmpty())
                     //{
                     //    indexItem.MenuManager.PictureAddresses = GetDefaultPicture();
@@ -180,9 +228,37 @@ namespace UowLibrary.MenuNS
                     //indexItem.Name = produc.FullName();
                     likeUnlikeCounter = LikeUnlikeBiz.Count(null, null, null, null, productChild.Id, theUserId, false);
                     likeUnlikeCounter.KindOfLike = "Event_ModifyIndexItem.MenuENUM.IndexMenuProductChild";
-                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuProductChild, BreadCrumbManager, likeUnlikeCounter, UserId, indexListVM.MenuManager.ReturnUrl);
+                    indexItem.MenuManager = new MenuManager(mpm, product, productChild, MenuENUM.IndexMenuProductChild, BreadCrumbManager, likeUnlikeCounter, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
 
-                    indexItem.MenuManager.PictureAddresses = GetPictureList(productChild);
+                    Person person = UserBiz.GetPersonFor(UserId);
+                    if (!person.IsNull())
+                    {
+                        string userPersonId = person.Id;
+                        string productChildPersonId = productChild.Owner.PersonId;
+                        indexItem.MenuManager.IndexMenuVariables.updateRequiredProperties(userPersonId, productChildPersonId);
+                    }
+
+                    //get the pictures list from the productChild
+                    pictureAddresses = GetPictureList(productChild);
+
+                    //if none are available get them from the product
+                    if (pictureAddresses.IsNullOrEmpty())
+                    {
+                        productChild.Product.IsNullThrowException();
+                        pictureAddresses = GetPictureList(productChild.Product);
+
+                    }
+
+                    //if none are available, put a blank picture 
+                    //if (pictureAddresses.IsNullOrEmpty())
+                    //{
+
+                    //    pictureAddresses = GetDefaultPicture();
+
+                    //}
+
+
+                    //indexItem.MenuManager.PictureAddresses = pictureAddresses;
                     indexItem.Price = productChild.Sell.SellPrice;
                     break;
 
@@ -225,9 +301,20 @@ namespace UowLibrary.MenuNS
                     break;
             }
 
+            if (pictureAddresses.IsNullOrEmpty())
+            {
+
+                pictureAddresses = GetDefaultPicture();
+
+            }
+
+
+            indexItem.MenuManager.PictureAddresses = pictureAddresses;
+
+
             indexItem.MenuManager.LikeUnlikesCounter = likeUnlikeCounter;
             indexItem.MenuManager.BreadCrumbManager = indexListVM.MenuManager.BreadCrumbManager;
-            
+
             if (!UserId.IsNullOrWhiteSpace())
             {
                 Person person = UserBiz.GetPersonFor(UserId);
@@ -244,33 +331,33 @@ namespace UowLibrary.MenuNS
 
 
 
-        public override List<string> GetPictureList(IHasUploads ihasUploads)
-        {
-            List<string> addresses = new List<string>();
+        //public override List<string> GetPictureList(IHasUploads ihasUploads)
+        //{
+        //    List<string> addresses = new List<string>();
 
-            if (ihasUploads.MiscFiles.Any(x => !x.MetaData.IsDeleted))
-            {
-                var lstUploadedFiles = ihasUploads.MiscFiles.Where(x => !x.MetaData.IsDeleted).ToList();
-                lstUploadedFiles.IsNullOrEmptyThrowException("Something went worng. This list cannot be empty.");
-                foreach (UploadedFile uploadFile in lstUploadedFiles)
-                {
-                    string pictureAddy = getImageAddressOf(uploadFile);
-                    if (!pictureAddy.IsNullOrWhiteSpace())
-                    {
-                        addresses.Add(pictureAddy);
+        //    if (ihasUploads.MiscFiles.Any(x => !x.MetaData.IsDeleted))
+        //    {
+        //        var lstUploadedFiles = ihasUploads.MiscFiles.Where(x => !x.MetaData.IsDeleted).ToList();
+        //        lstUploadedFiles.IsNullOrEmptyThrowException("Something went worng. This list cannot be empty.");
+        //        foreach (UploadedFile uploadFile in lstUploadedFiles)
+        //        {
+        //            string pictureAddy = getImageAddressOf(uploadFile);
+        //            if (!pictureAddy.IsNullOrWhiteSpace())
+        //            {
+        //                addresses.Add(pictureAddy);
 
-                    }
-                }
-            }
+        //            }
+        //        }
+        //    }
 
-            if (addresses.IsNullOrEmpty())
-            {
-                ProductChild pc = ihasUploads as ProductChild;
-                return GetDefaultPicture(pc);
-            }
+        //    //if (addresses.IsNullOrEmpty())
+        //    //{
+        //    //    //ProductChild pc = ihasUploads as ProductChild;
+        //    //    return GetDefaultPicture(ihasUploads);
+        //    //}
 
-            return addresses;
-        }
+        //    return addresses;
+        //}
 
 
 
@@ -278,41 +365,40 @@ namespace UowLibrary.MenuNS
         /// <summary>
         /// This returns the pictures of the ProductChild OR all the pictures of the Product.
         /// </summary>
-        /// <param name="productChildForDefaultPicture"></param>
+        /// <param name="iHasUploads"></param>
         /// <returns></returns>
-        public List<string> GetDefaultPicture(ProductChild productChildForDefaultPicture)
+        public List<string> GetDefaultPicture(IHasUploads iHasUploads)
         {
-            productChildForDefaultPicture.IsNullThrowException("productChildForDefaultPicture");
+            iHasUploads.IsNullThrowException("productChildForDefaultPicture");
             List<string> lst = new List<string>();
-            switch (MenuEnumForDefaultPicture)
+
+            foreach (UploadedFile uploadedFile in iHasUploads.MiscFiles)
             {
-                case MenuENUM.IndexMenuProductChild:
-                    productChildForDefaultPicture.IsNullThrowException("productChildForDefaultPicture");
-                    productChildForDefaultPicture.Product.IsNullThrowException("productChildForDefaultPicture.Product");
-                    Product product = productChildForDefaultPicture.Product;
-
-                    if (product.MiscFiles.IsNullOrEmpty())
-                    {
-                        base.GetDefaultPicture();
-
-                    }
-                    else
-                    {
-                        foreach (UploadedFile uploadedFile in product.MiscFiles)
-                        {
-                            string pictureAddy = getImageAddressOf(uploadedFile);
-                            if (pictureAddy.IsNullOrWhiteSpace())
-                                continue;
-                            lst.Add(pictureAddy);
-                        }
-                    }
-                    break;
-
-                default:
-                    lst = base.GetDefaultPicture();
-                    break;
+                string pictureAddy = getImageAddressOf(uploadedFile);
+                if (pictureAddy.IsNullOrWhiteSpace())
+                    continue;
+                lst.Add(pictureAddy);
             }
+
             return lst;
+
+            //if (iHasUploads.MiscFiles.IsNullOrEmpty())
+            //{
+            //    lst = base.GetDefaultPicture();
+
+            //}
+            //else
+            //{
+            //    foreach (UploadedFile uploadedFile in iHasUploads.MiscFiles)
+            //    {
+            //        string pictureAddy = getImageAddressOf(uploadedFile);
+            //        if (pictureAddy.IsNullOrWhiteSpace())
+            //            continue;
+            //        lst.Add(pictureAddy);
+            //    }
+            //}
+
+
         }
 
 

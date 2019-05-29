@@ -5,14 +5,14 @@ using System.Web;
 
 namespace EnumLibrary.EnumNS
 {
-    public enum SaleTypeEnum
+    public enum SaleOrderTypeENUM
     {
         Unknown,
         Sale,
         Quotation,
         Backorder,
-        Invoiced,
-        Credit
+        Credit,
+        InProccess
         
     }
 }

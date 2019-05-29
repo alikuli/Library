@@ -15,6 +15,11 @@ namespace ModelsClassLibrary.ModelsNS.FeaturesNS
         public string ProductId { get; set; }
         public virtual Product Product { get; set; }
 
+        /// <summary>
+        /// If true, then this comes to the product from the menu and cannot be deleted. Because
+        /// if you delete it, the menu will push it right back!
+        /// </summary>
+        public bool IsMenuFeature { get; set; }
 
 
         [Display(Name = "Menu Feature")]

@@ -15,10 +15,9 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS
         /// <summary>
         /// Do not allow change of userName because users FileDoc images will be loaded in the user name.
         /// </summary>
-        string IHasUploads.MiscFilesLocation()
+        string IHasUploads.MiscFilesLocation(string userName)
         {
-            
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "FileDoc", Person.Name);
+            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "FileDoc", userName);
         }
 
 

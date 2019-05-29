@@ -1,0 +1,66 @@
+﻿@model ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount
+
+@{
+    ViewBag.Title = "ShowCashMenu";
+    
+    
+    
+    ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount ?? new ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount();
+
+    string amountRefundableMenuItem = moneyAccount.PersonCash.Refundable.MenuItem;
+    string amountRefundableToolTip = moneyAccount.PersonCash.Refundable.ToolTip;
+    string amountRefundableMenu_Path = Url.Action("DebitCredit_Refundable", "CashTrxs").ToString(); 
+    //string amountRefundable = moneyAccount.PersonCash.Refundable.a;
+
+    string amountNotRefundableMenuItem = moneyAccount.PersonCash.NonRefundable.MenuItem;
+    string amountNotRefundableToolTip = moneyAccount.PersonCash.NonRefundable.ToolTip;
+    string amountNotRefundableMenu_Path = Url.Action("DebitCredit_NonRefundable", "CashTrxs").ToString();
+    //string amountNotRefundable = moneyAccount.AmountNonRefundableStr;
+
+    string amountRefundableAndNonRefundableMenuItem = moneyAccount.PersonCash.Total.MenuItem;
+    string amountRefundableAndNonRefundableToolTip = moneyAccount.PersonCash.Total.ToolTip;
+    string amountRefundableAndNonRefundable_Path = Url.Action("DebitCredit_TotalRefundableAndNonRefundable", "CashTrxs").ToString(); ;
+    string amountRefundableAndNonRefundable = moneyAccount.PersonCash.Total_AmountOnly.MenuItem;
+
+
+    string systemCashCreated_RefundableMenuItem = moneyAccount.SystemCash.Refundable.MenuItem;
+    string systemCashCreated_RefundableToolTip = moneyAccount.SystemCash.Refundable.ToolTip;
+    string systemCashCreated_Refundable_Path = Url.Action("DebitCredit_Refundable_Admin", "CashTrxs");
+
+
+    string systemCashCreated_NonRefundableMenuItem = moneyAccount.SystemCash.NonRefundable.MenuItem;
+    string systemCashCreated_NonRefundableToolTip = moneyAccount.SystemCash.NonRefundable.ToolTip;
+    string systemCashCreated_NonRefundable_Path = Url.Action("DebitCredit_NonRefundable_Admin", "CashTrxs");
+
+
+    string systemCashCreatedMenuItem = moneyAccount.SystemCash.Total.MenuItem;
+    string systemCashCreatedToolTip = moneyAccount.SystemCash.Total.ToolTip;
+    string systemCashCreated_Path = Url.Action("DebitCredit_NonRefundable_And_Refundable_Admin", "CashTrxs");
+
+    string systemOpenOrdersMenuItem = moneyAccount.SystemSalesOrders.Open.MenuItem;
+    string systemOpenOrdersToolTip = moneyAccount.SystemSalesOrders.Open.ToolTip;
+    string systemOpenOrders_Path = Url.Action("index", "SaleOrders");
+    
+}
+
+<h2 class="text-danger">System Cash Position</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="container p-3 ">
+        <hr />
+
+        <a class="btn btn-lg btn-default w-100" href="@systemCashCreated_Refundable_Path" data-toggle="tooltip" title="@systemCashCreated_RefundableToolTip" data-placement="left">@systemCashCreated_RefundableMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default  w-100 "  href="@systemCashCreated_NonRefundable_Path" data-toggle=" tooltip" title="@systemCashCreated_NonRefundableToolTip" data-placement="left">@systemCashCreated_NonRefundableMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default w-100" href="@systemCashCreated_Path " data-toggle=" tooltip" title="@systemCashCreatedToolTip" data-placement="left">@systemCashCreatedMenuItem</a>
+        </div>
+    <br />
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

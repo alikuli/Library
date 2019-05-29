@@ -8,8 +8,9 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 {
     public class IndexDefault : MenuStateAbstract
     {
-        public IndexDefault(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter)
-            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
+        public IndexDefault(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter, string userId, string userName)
+            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter, userId, userName) { }
+
 
         //public override string EditLink_Id
         //{

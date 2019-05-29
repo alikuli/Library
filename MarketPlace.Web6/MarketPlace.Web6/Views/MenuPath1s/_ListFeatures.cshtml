@@ -4,24 +4,25 @@
     int count = 0;
     string controller = this.ViewContext.RouteData.Values["controller"].ToString();
     string returnUrl = Request.Url.PathAndQuery;
-
+    string fullName = Model.FullName() + " (Level 1)";
     IEnumerable<ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeature> features = null;
-    if(!Model.MenuFeatures.IsNull())
-    { 
+    if (!Model.MenuFeatures.IsNull())
+    {
         features = Model.MenuFeatures.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).AsEnumerable();
-        
+
     }
-    
-    
-    
+
+
+
 }
+
 <p>
-    @Html.ActionLink("Add Feature", "AddFeature", "MenuPath1s", new { id = Model.Id, parentName = Model.FullName(), returnUrl = returnUrl }, new { @class = "btn btn-info" })
+    @Html.ActionLink("Add Feature", "AddFeature", "MenuPath1s", new { id = Model.Id, parentName = fullName, returnUrl = returnUrl }, new { @class = "btn btn-info" })
 </p>
 
 
 
-<table class="table table-striped table-hover table-info" >
+<table class="table table-striped table-hover table-info">
     <tr>
         <th>Sr #</th>
         <th>
@@ -39,15 +40,16 @@
         </tr>
     }
     else
-    { 
+    {
         foreach (var item in features)
         {
+            string delete_feature = Url.Action("DeleteFeature", "MenuPath1s", new { menuPathid = Model.Id, menuFeatureId = item.Id, returnUrl = returnUrl });
             <tr>
                 <td>
                     @{
                         count++;
-                        string deleteToolTip = string.Format("Delete Feature '{0}'",item.Name);
-                     }
+                        string deleteToolTip = string.Format("Delete Feature '{0}'", item.Name);
+                    }
                     @count)
                 </td>
                 <td>
@@ -55,11 +57,20 @@
                 </td>
 
                 <td>
-                    <span data-toggle="tooltip" title="@deleteToolTip" data-placement="top">
-                        @Html.ActionLink(" ", "DeleteFeature", "MenuPath1s", new { menuPathid = Model.Id, menuFeatreId = item.Id, returnUrl = returnUrl }, new { @class = "fas fa-trash-alt text-danger" })
+                    <span >
+
+                        
                     </span>
-</td>
+                    @*<a class="btn btn-sm btn-danger" href="@delete_feature"><img width="20" src="~/ContentMine/Icons/GarbageCan.png" /></a>*@
+                    <button data-toggle="tooltip"
+                            class="btn btn-sm btn-danger"
+                            title="@deleteToolTip"
+                            data-placement="top"
+                            onclick="openPath('@delete_feature')">
+                        <img width="20" src="~/ContentMine/Icons/GarbageCan.png" />
+                    </button>
+                </td>
             </tr>
-}
+        }
     }
 </table>

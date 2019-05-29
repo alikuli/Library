@@ -105,6 +105,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
@@ -144,13 +145,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLayer\BuySellDocNS\BuySellBiz.cs" />
+    <Compile Include="BusinessLayer\BuySellDocNS\BuySellDocBiz.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\ErrorCheck.cs" />
+    <Compile Include="BusinessLayer\BuySellDocNS\AddToSale.cs" />
+    <Compile Include="BusinessLayer\BuySellDocNS\IsSaleOrPurchase.cs" />
+    <Compile Include="BusinessLayer\BuySellDocNS\OpenOrdersForPerson - Copy.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\OpenOrdersForPerson.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\Fix.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\Index.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\Factory.cs" />
+    <Compile Include="BusinessLayer\BuySellDocNS\Delete.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\SelectList.cs" />
+    <Compile Include="BusinessLayer\BuySellItemNS\BuySellItemBiz.cs" />
     <Compile Include="BusinessLayer\CashNS\CashTrxNS\CashPayments.cs" />
     <Compile Include="BusinessLayer\CashNS\CashTrxNS\Fix.cs" />
     <Compile Include="BusinessLayer\CashNS\CashTrxNS\Factory.cs" />
@@ -203,8 +209,10 @@
     <Compile Include="BusinessLayer\PlayersNS\CategoriesNS\ProductApproverCategoryNS\Initialization.cs" />
     <Compile Include="BusinessLayer\PlayersNS\CategoriesNS\ProductApproverCategoryNS\ProductApproverCategoryBiz.cs" />
     <Compile Include="BusinessLayer\PlayersNS\CategoriesNS\ProductApproverCategoryNS\SelectList.cs" />
-    <Compile Include="BusinessLayer\ProductNS\ProductChildFeatureNS\Fix.cs" />
-    <Compile Include="BusinessLayer\ProductNS\ProductChildFeatureNS\ProductChildFeaturesBiz.cs" />
+    <Compile Include="BusinessLayer\ProductNS\ProductChildNS\Pictures.cs" />
+    <Compile Include="BusinessLayer\ProductNS\UomQtyNS\ProductChildFeatureNS\Fix.cs" />
+    <Compile Include="BusinessLayer\ProductNS\UomQtyNS\ProductChildFeatureNS\ProductChildFeaturesBiz.cs" />
+    <Compile Include="BusinessLayer\ProductNS\ProductChildNS\fixProductChildFeatures.cs" />
     <Compile Include="BusinessLayer\ProductNS\ProductFeatureNS\ProductFeatureBiz.cs" />
     <Compile Include="BusinessLayer\FileDocsNS\Event_ModifyIndexList.cs" />
     <Compile Include="BusinessLayer\FileDocsNS\Event_ModifyIndexItem.cs" />
@@ -488,7 +496,6 @@
     <Compile Include="BusinessLayer\MenuNS\MenuPath3NS\Initialization.cs" />
     <Compile Include="BusinessLayer\MenuNS\MenuPath3NS\SelectList.cs" />
     <Compile Include="BusinessLayer\MenuNS\MenuPath3NS\MenuPath3Biz.cs" />
-    <Compile Include="BusinessLayer\SaleOrderNS\SaleOrderBiz.cs" />
     <Compile Include="BusinessLayer\UploadingNS\ModifyIndex.cs" />
     <Compile Include="BusinessLayer\UploadingNS\SelectList.cs" />
     <Compile Include="BusinessLayer\UploadingNS\UploadedFileBiz.cs" />

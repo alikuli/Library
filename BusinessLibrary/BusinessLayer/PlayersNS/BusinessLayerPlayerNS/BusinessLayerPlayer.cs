@@ -4,6 +4,7 @@ using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,15 +13,17 @@ using UowLibrary.AddressNS;
 using UowLibrary.CashTtxNS;
 using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS.PersonNS;
+using UserModels;
 namespace UowLibrary.PlayersNS.PlayerAbstractCategoryNS
 {
 
     ///Player names will be the username. This is ensured in fix.
-    ///Players are tesxted for being black listed here. 
+    ///Players are texted for being black listed here. 
     ///Player blacklist and suspended is presisted in Users
     ///For a player, we need at least ONE address. 
     ///In the case of customers, we will make an exception because we will force the customer to enter address.
     ///During billing/invoicing we need to be very very strict.
+    ///Admin accounts will not be able to participate in buying and selling
     public abstract partial class BusinessLayerPlayer<TEntity> : BusinessLayer<TEntity> where TEntity : PlayerAbstract, ICommonWithId
     {
         AddressBiz _addressBiz;
@@ -70,6 +73,8 @@ namespace UowLibrary.PlayersNS.PlayerAbstractCategoryNS
         public CountryBiz CountryBiz { get { return AddressBiz.CountryBiz; } }
 
         public string PakistanId { get { return CountryBiz.PakistanId; } }
+
+
 
         public SelectList SelectListUser
         {
@@ -285,12 +290,16 @@ namespace UowLibrary.PlayersNS.PlayerAbstractCategoryNS
         }
 
 
-        public TEntity GetEntityFor(string userId)
+        public virtual TEntity GetPlayerFor(string userId)
         {
+            if (userId.IsNullOrWhiteSpace())
+                return null;
+
             Person person = GetPersonForUserId(userId);
+
             //get the current entity for this pseron
             TEntity entity = FindAll().FirstOrDefault(x => x.PersonId == person.Id);
-            entity.IsNullThrowExceptionArgument("Not found entity");
+            //entity.IsNullThrowExceptionArgument("Not found entity");
             return entity;
         }
         public string GetPersonIdForCurrentUser()
@@ -308,30 +317,122 @@ namespace UowLibrary.PlayersNS.PlayerAbstractCategoryNS
             return person;
         }
 
+        public ApplicationUser GetUser(string userId)
+        {
+            ApplicationUser user = UserBiz.Find(userId);
+            return user;
+        }
+
+        /// <summary>
+        /// This automatically creates a person if one does not exist.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public Person GetPersonForUserId(string userId)
         {
             userId.IsNullOrWhiteSpaceThrowException("User not logged in.");
+            //find the person
             Person person = UserBiz.GetPersonFor(userId);
-            person.IsNullThrowException("No person attached to this user");
+
+            //create a person if one does not exist.
+            if (person.IsNull())
+            {
+                //create person
+                
+                ApplicationUser user = GetUser(userId);
+                user.IsNullThrowException();
+
+                person = PersonBiz.Factory() as Person;
+                person.Name = user.Name;
+
+                if (person.Users.IsNull())
+                    person.Users = new List<ApplicationUser>();
+
+                person.Users.Add(user);
+                PersonBiz.CreateAndSave(person);
+            }
+            //person.IsNullThrowException("No person attached to this user");
             return person;
         }
 
-        public void CreatePlayerForCurrentUser()
+
+        public ApplicationUser GetUserForEntityrWhoIsNotAdminFor(string entityId)
         {
-            Person person = GetPersonForCurrentUser();
-            person.IsNullThrowException("No person found for user.");
-            ICommonWithId entity = Factory();
+            //get the entity
+            TEntity entity = Find(entityId);
+
+            entity.IsNullThrowException("Entity not found");
+
             PlayerAbstract playerAbstract = entity as PlayerAbstract;
-            playerAbstract.IsNullThrowException("This is not a player!");
+            playerAbstract.IsNullThrowException("playerAbstract");
 
-            playerAbstract.PersonId = person.Id;
-            playerAbstract.Person = person;
+            string personId = entity.PersonId;
+            personId.IsNullOrWhiteSpaceThrowArgumentException("personId");
+            Person person = PersonBiz.Find(personId);
+            person.IsNullThrowException("No person found");
 
-            CreateEntity(playerAbstract as TEntity);
+            //Now get the user. Here we can get multiple users if person is being impersonated by admin.
+            //we have to deal with that.
 
+            List<ApplicationUser> usersForPerson = UserBiz.FindAll().Where(x => x.PersonId == personId).ToList();
+            usersForPerson.IsNullOrEmptyThrowException("Person not found");
+
+            //if it is the admininistrators own account, there will be only one person and the item will get thru
+            if (usersForPerson.Count() == 1)
+                return usersForPerson[0];
+
+
+            //Getting rid of administrators
+
+            //if more than 1 person has been found then the admin is impersonating this person
+            //at this time.
+            //get rid of all administrators.
+
+            //find all administrators
+            List<ApplicationUser> allAdminList = UserBiz.GetAllAdmin();
+
+            //create a duplicate list of usersForPerson we will use for itteration
+            List<ApplicationUser> duplicate_usersForPerson = new List<ApplicationUser>(); ;
+            foreach (ApplicationUser user in usersForPerson)
+            {
+                duplicate_usersForPerson.Add(user);
+            }
+
+            //now itterate thru duplicate_usersForPerson and remove admins from usersForPerson 
+            foreach (var user in duplicate_usersForPerson)
+            {
+                if (allAdminList.Contains(user))
+                {
+                    usersForPerson.Remove(user);
+                }
+            }
+
+            //all administrators are now gone from usersForPerson
+            usersForPerson.IsNullOrEmptyThrowException("Person not found");
+            if (usersForPerson.Count() > 1)
+            {
+                throw new Exception("There is more than one person for the user. This is a data error.");
+            }
+            return usersForPerson[0];
 
 
         }
+        //public void CreatePlayerForCurrentUser()
+        //{
+        //    Person person = GetPersonForCurrentUser();
+        //    person.IsNullThrowException("No person found for user.");
+        //    ICommonWithId entity = Factory();
+        //    PlayerAbstract playerAbstract = entity as PlayerAbstract;
+        //    playerAbstract.IsNullThrowException("This is not a player!");
+
+        //    playerAbstract.PersonId = person.Id;
+        //    playerAbstract.Person = person;
+
+        //    CreateEntity(playerAbstract as TEntity);
+
+
+
+        //}
 
 
 

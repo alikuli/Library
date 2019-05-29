@@ -35,21 +35,21 @@ namespace UowLibrary.PlayersNS.PersonNS
             if (person.DefaultPhoneId.IsNullOrWhiteSpace())
                 person.DefaultPhoneId = null;
 
-            if (person.Users.IsNullOrEmpty())
-            {
-                person.Name = UserName;
+            //if (person.Users.IsNullOrEmpty())
+            //{
+            //    person.Name = UserName;
 
-                person.Users = new List<ApplicationUser>();
-                ApplicationUser appUser = UserBiz.Find(UserId);
-                appUser.IsNullThrowException("User");
+            //    person.Users = new List<ApplicationUser>();
+            //    ApplicationUser appUser = UserBiz.Find(UserId);
+            //    appUser.IsNullThrowException("User");
 
-                //if (!appUser.PersonId.IsNullOrWhiteSpace())
-                //    throw new Exception("User has a person, but person is not recognizing the user! Programming Error.");
+            //    //if (!appUser.PersonId.IsNullOrWhiteSpace())
+            //    //    throw new Exception("User has a person, but person is not recognizing the user! Programming Error.");
 
-                appUser.PersonId = person.Id;
-                person.Users.Add(appUser);
-                UserBiz.Update(appUser);
-            }
+            //    appUser.PersonId = person.Id;
+            //    person.Users.Add(appUser);
+            //    UserBiz.Update(appUser);
+            //}
 
         }
 

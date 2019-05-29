@@ -1,10 +1,24 @@
 ﻿@model ModelsClassLibrary.ModelsNS.FeaturesNS.ProductFeature
 
+@{
+    string disabled = " ";
+    string buttonClass = "btn btn-success btn-sm m-1";
+    
+    if (Model.IsDeleting)
+    {
+        disabled = " disabled ";
+    }
 
+
+    string createToolTip = "Create a new feature";
+    string createFeaturesNotInListPath = Url.Action("CreateNewFeature", "ProductFeatures", new { returnUrl = Request.Url.PathAndQuery, productId = Model.ProductId, parentName = Model.FullName() });
+    string createNewFeaturePath = Url.Action("CreateNewFeature", "ProductFeatures", new { returnUrl = Request.Url.PathAndQuery, productId = Model.ProductId, parentName = Model.FullName() });
+}
 
     <div class="form-horizontal form-inline ">
 
         <div class="">
+
 
             @Html.HiddenFor(x => x.Name)
             @Html.HiddenFor(x => x.ProductId)
@@ -19,10 +33,22 @@
                 @Html.DropDownListFor(x => x.MenuFeatureId,
                              (@Model.SelectListFeature as IEnumerable<SelectListItem>),
                               "--- Select Feature ---",
-                              new { @class = "form-control" })
+                              new { @class = "form-control", dis = disabled })
 
-                @Html.ActionLink("Create Feature not in list", "CreateNewFeature", "ProductFeatures", new { returnUrl = @Request.Url.PathAndQuery, productId = Model.ProductId, parentName = Model.FullName() }, new { @class = "btn btn-success ml-5" })
+                
+                @if (!Model.IsDeleting)
+                {
+                    <button type="button"
+                            data-toggle="tooltip"
+                            title="@createToolTip"
+                            data-placement="top"
+                            onclick="openPath('@createNewFeaturePath')"
+                            class="@buttonClass"
+                            @disabled>
 
+                        Create Feature not in list
+                    </button>
+                }
             </div>
 
             <div class="form-group mt-3">

@@ -10,7 +10,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ProductAbstractNS
         Dimensions Dimensions { get; set; }
         bool IsDisplayedOnWebsite { get; set; }
         ICollection<UploadedFile> MiscFiles { get; set; }
-        string MiscFilesLocation();
+        string MiscFilesLocation(string aName);
         string MiscFilesLocation_Initialization();
         SalePriceComplex Sell { get; set; }
         //bool IsChild { get; }

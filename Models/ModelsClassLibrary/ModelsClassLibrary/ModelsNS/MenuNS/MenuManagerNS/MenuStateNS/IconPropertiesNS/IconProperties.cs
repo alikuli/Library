@@ -57,7 +57,7 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS
         /// <summary>
         /// This is the icon. eg "fas fa-award"
         /// </summary>
-        private string Icon { get; set; }
+        public string Icon { get; set; }
 
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS
         {
             get
             {
-                string icon = " btn btn-sm aria-label " + ButtonColorClass;
+                string icon = " btn btn-sm aria-label" + ButtonColorClass;
                 return icon;
             }
 

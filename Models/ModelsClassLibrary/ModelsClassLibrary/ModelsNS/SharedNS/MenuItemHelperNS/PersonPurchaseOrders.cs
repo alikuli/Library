@@ -18,7 +18,12 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
             double personCanceledPurchaseOrdersInQuantity,
 
             decimal personBackPurchaseOrdersInMoney,
-            double personBackPurchaseOrdersInQuantity)
+            double personBackPurchaseOrdersInQuantity,
+
+            decimal personQuotationPurchaseOrdersInMoney,
+            double personQuotationPurchaseOrdersInQuantity,
+            decimal personCreditPurchaseOrdersInMoney,
+            double personCreditPurchaseOrdersInQuantity)
         {
             Initialize(
                 personOpenPurchaseOrdersInMoney,
@@ -34,7 +39,13 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
                 personCanceledPurchaseOrdersInQuantity,
 
                 personBackPurchaseOrdersInMoney,
-                personBackPurchaseOrdersInQuantity);
+                personBackPurchaseOrdersInQuantity,
+
+                personQuotationPurchaseOrdersInMoney,
+                personQuotationPurchaseOrdersInQuantity,
+
+                personCreditPurchaseOrdersInMoney,
+                personCreditPurchaseOrdersInQuantity);
 
         }
         public void Initialize(
@@ -51,7 +62,13 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
             double personCanceledPurchaseOrdersInQuantity,
 
             decimal personBackPurchaseOrdersInMoney,
-            double personBackPurchaseOrdersInQuantity)
+            double personBackPurchaseOrdersInQuantity,
+
+            decimal personQuotationPurchaseOrdersInMoney,
+            double personQuotationPurchaseOrdersInQuantity,
+
+            decimal personCreditPurchaseOrdersInMoney,
+            double personCreditPurchaseOrdersInQuantity)
         {
             _personOpenPurchasesOrdersInMoney = personOpenPurchaseOrdersInMoney;
             _personOpenPurchasesOrdersInQuantity = personOpenPurchaseOrdersInQuantity;
@@ -67,7 +84,16 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
 
             _personBackPurchaseOrdersInMoney = personBackPurchaseOrdersInMoney;
             _personBackPurchaseOrdersInQuantity = personBackPurchaseOrdersInQuantity;
+
+            _personQuotationPurchaseOrdersInMoney = personQuotationPurchaseOrdersInMoney;
+            _personQuotationPurchaseOrdersInQuantity = personQuotationPurchaseOrdersInQuantity;
+
+            _personCreditPurchaseOrdersInMoney = personCreditPurchaseOrdersInMoney;
+            _personCreditPurchaseOrdersInQuantity = personCreditPurchaseOrdersInQuantity;
+
+
         }
+
 
         static decimal _personOpenPurchasesOrdersInMoney;
         static double _personOpenPurchasesOrdersInQuantity;
@@ -133,6 +159,43 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
             get
             {
                 PersonBackPurchaseOrders item = new PersonBackPurchaseOrders(_personBackPurchaseOrdersInMoney, _personBackPurchaseOrdersInQuantity);
+                return item;
+            }
+        }
+
+        static decimal _personQuotationPurchaseOrdersInMoney;
+        static double _personQuotationPurchaseOrdersInQuantity;
+        public IMenuItemHelper Quotation
+        {
+            get
+            {
+                PersonQuotationSaleOrders item = new PersonQuotationSaleOrders(_personQuotationPurchaseOrdersInMoney, _personQuotationPurchaseOrdersInQuantity);
+                return item;
+            }
+        }
+
+        static decimal _personCreditPurchaseOrdersInMoney;
+        static double _personCreditPurchaseOrdersInQuantity;
+        public IMenuItemHelper Credit
+        {
+            get
+            {
+                PersonCreditOrders item = new PersonCreditOrders(_personCreditPurchaseOrdersInMoney, _personCreditPurchaseOrdersInQuantity);
+                return item;
+            }
+        }
+
+
+
+        static decimal _personTotalPurchaseOrdersInMoney;
+        static double _personTotalPurchaseOrdersInQuantity;
+        public IMenuItemHelper Total
+        {
+            get
+            {
+                _personTotalPurchaseOrdersInMoney = _personOpenPurchasesOrdersInMoney + _personInProccessPurchaseOrdersInMoney + _personBackPurchaseOrdersInMoney;
+                _personTotalPurchaseOrdersInQuantity = _personOpenPurchasesOrdersInQuantity + _personInProccessPurchaseOrdersInQuantity + _personBackPurchaseOrdersInQuantity;
+                PersonTotalPurchaseOrders item = new PersonTotalPurchaseOrders(_personTotalPurchaseOrdersInMoney, _personTotalPurchaseOrdersInQuantity);
                 return item;
             }
         }

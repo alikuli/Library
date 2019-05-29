@@ -22,7 +22,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
             UomPurchaseId = p.UomPurchaseId;
             CheckedBoxesList = p.CheckedBoxesList;
             Dimensions = p.Dimensions;
-            OwnerId = p.OwnerId;
+            //OwnerId = p.OwnerId;
             //NameFieldsData = p.NameFieldsData;
             //IsSaleable = p.IsSaleable;
             WeightListed = p.WeightListed;

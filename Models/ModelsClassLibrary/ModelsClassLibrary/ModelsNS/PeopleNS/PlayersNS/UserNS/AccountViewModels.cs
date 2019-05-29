@@ -1,4 +1,5 @@
-﻿using EnumLibrary.EnumNS;
+﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using System.Collections.Generic;
@@ -254,10 +255,17 @@ namespace ModelsNS.Models
 
     public class ResetPasswordViewModel
     {
-        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+
+        [Display(Name = "Phone")]
+        public string Phone { get; set; }
+
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -276,12 +284,28 @@ namespace ModelsNS.Models
     public class ForgotPasswordViewModel
     {
         //[Required]
-        //[EmailAddress]
-        //[Display(Name = "Email")]
-        //public string Email { get; set; }
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
-        [Required]
+        //[Required]
         [Display(Name = "Phone")]
         public string Phone { get; set; }
+
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+        [Display(Name = "Country")]
+        public string CountryId { get; set; }
+
+        public SelectList CountrySelectList { get; set; }
+
+        public bool IsPhoneOrCountryIsEmpty
+        {
+            get
+            {
+                return CountryId.IsNullOrWhiteSpace() || Phone.IsNullOrWhiteSpace();
+            }
+        }
     }
 }

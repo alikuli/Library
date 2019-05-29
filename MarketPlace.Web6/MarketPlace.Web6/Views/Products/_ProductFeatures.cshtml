@@ -2,7 +2,7 @@
 @{
     int count = 0;
     string childReturnUrl = Request.Url.PathAndQuery;
- }
+}
 
 
 <div class="well p-3  w-100">
@@ -13,150 +13,92 @@
         @if (!@Model.ProductFeatures.IsNull())
         {
 
-            if (Model.MenuManager.IsCreate)
-            {
-                <div class="alert-info p-3">
-                    To Add a new feature, select Add Product Feature from the Product Menu.
-                </div>
-                <table class="table table-borderless">
-                    <thead>
-                        <tr>
-                            <th>Feature</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.ProductFeatures.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).ToList())
+
+
+            @Html.ActionLink("Add Feature", "AddFeature", "ProductFeatures", new { productId = Model.Id, returnUrl = childReturnUrl, parentName = Model.FullName() }, new { @class = "btn btn-info mb-2" })
+
+            <table class="table table-striped table-hover table-info">
+                @{
+            var features = Model.ProductFeatures.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).ToList();
+                }
+
+
+                <tr>
+                    <th>Sr #</th>
+                    <th>
+                        Feature Name
+                    </th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+
+                @if (features.IsNull())
+                {
+                    <tr>
+                        <td>
+                            <span>No Added Features</span>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in features)
+                    {
+                        string editToolTip = string.Format("Edit: {0}", item.Name);
+                        string deleteToolTip = string.Format("Delete: {0}. You can also make it's value empty which will make it seem that it is deleted. ", item.Name);
+                        count++;
+                        string delete_Product_Features_Path = Url.Action("Delete", "ProductFeatures", new { id = item.Id, returnUrl = childReturnUrl });
+                        //string edit_Product_Features_Path = "";
+                        string edit_Product_Features_Path = Url.Action("Edit", "ProductFeatures", new { id = item.Id, returnUrl = childReturnUrl });
+                        string disableDeleteButton = "";
+                        if (item.IsMenuFeature)
                         {
-                            string hiddenValue = item.Name;
-                            string hiddenId = string.Format("ProductFeatures_{0}__Name", count);
-                            string hiddenName = string.Format("ProductFeatures[{0}].Name", count);
-
-                            string commentId = string.Format("ProductFeatures_{0}__Comment", count);
-                            string commentName = string.Format("ProductFeatures[{0}].Comment", count);
-                            string comentValue = item.Comment;
-
-
-                            string productIdId = string.Format("ProductFeatures_{0}__ProductId", count);
-                            string productName = string.Format("ProductFeatures[{0}].ProductId", count);
-                            string productValue = item.ProductId;
-
-                            string menuFeatureId = string.Format("ProductFeatures_{0}__MenuFeatureId", count);
-                            string menuFeatureName = string.Format("ProductFeatures[{0}].MenuFeatureId", count);
-                            string menuFeatureValue = item.MenuFeatureId;
-
-                            count++;
-
-                            <tr>
-                                <td>
-                                    @item.Name
-                                    <input id="@hiddenId"
-                                           name="@hiddenName"
-                                           type="hidden"
-                                           value="@hiddenValue" />
-                                    <input id="@productIdId"
-                                           name="@productName"
-                                           type="hidden"
-                                           value="@productValue" />
-
-
-                                    <input id="@menuFeatureId"
-                                           name="@menuFeatureName"
-                                           type="hidden"
-                                           value="@menuFeatureValue" />
-                                    
-
-                                </td>
-
-                                <td>
-                                    <input class="text-box single-line"
-                                           id="@commentId"
-                                           name="@commentName"
-                                           type="text"
-                                           value="@comentValue" />
-
-                                    <span class="field-validation-valid text-danger"
-                                          data-valmsg-for="@commentName"
-                                          data-valmsg-replace="true"></span>
-
-                                </td>
-                            </tr>
-
+                            disableDeleteButton = " disabled ";
                         }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                @Html.ActionLink(" Create", "Create", "ProductFeatures", new { productId = Model.Id, returnUrl = childReturnUrl }, new { @class = "fas fa-plus-square text-success" })
-                <table class="table table-borderless table-info ">
-                    <thead>
                         <tr>
-                            <th>Feature</th>
-                            <th>Value</th>
+                            <td>
+                                @count)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    @Html.EditorFor(model => item.Comment, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", height = 1 } })
+                                    @if (item.IsMenuFeature)
+                                    {
+                                        <small class="text-danger">computer generated feature</small>
+                                    }
+                                </div>
+
+                            </td>
+                            <td>
+                                <button data-toggle="tooltip"
+                                        title="@editToolTip"
+                                        data-placement="top"
+                                        onclick="openPath('@edit_Product_Features_Path')"
+                                        class="btn btn-success btn-sm mb-2">
+                                    <img width="20" src="~/ContentMine/Icons/Edit.png" />
+                                </button>
+
+
+
+                                <button type="button"
+                                        data-toggle="tooltip"
+                                        title="@deleteToolTip"
+                                        data-placement="top"
+                                        onclick="openPath('@delete_Product_Features_Path')"
+                                        class="btn btn-danger btn-sm"
+                                        @disableDeleteButton>
+
+                                    <img width="20" src="~/ContentMine/Icons/GarbageCan.png" />
+                                </button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.ProductFeatures.Where(x => x.MetaData.IsDeleted == false).OrderBy(x => x.Name).ToList())
-                        {
-                            string editToolTip = string.Format("Edit: {0}", item.Name);
-                            string deleteToolTip = string.Format("Delete: {0}. You can also make it's value empty which will make it seem that it is deleted. ", item.Name);
-                            <tr>
-                                <td>
-                                    <div class="form-group">
-                                        @Html.EditorFor(model => item.Name, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-                                    </div>
+                    }
+                }
 
-                                </td>
-
-                                <td>
-                                    <div class="form-group">
-                                        @Html.EditorFor(model => item.Comment, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-                                    </div>
-
-                                </td>
-                                <td>
-                                    <span data-toggle="tooltip" title="@editToolTip" data-placement="top">
-                                        @Html.ActionLink(" ", "Edit", "ProductFeatures", new
-                                   { @*menuPathid = Model.Id, menuFeatreId = item.Id,*@ id = item.Id, productId = @Model.Id,
-                                    returnUrl = childReturnUrl
-                                   }, new { @class = "fas fa-edit text-success" })
-                                    </span>
-
-                                    @if (item.MetaData.IsDeleteLocked)
-                                    {
-                                        deleteToolTip = string.Format("You cannot delete [{0}]. If you dont want to use it, just make sure it's value empty.", item.Name);
-                                        <span data-toggle="tooltip" title="@deleteToolTip" data-placement="top">
-                                            @Html.ActionLink(" ", "Delete", "ProductFeatures", new
-                                                   { @*menuPathid = Model.Id, menuFeatreId = item.Id,*@
-                                                       id = item.Id,
-                                                       returnUrl = childReturnUrl
-                                                   },
-                                           new { @class = "fas fa-trash-alt text-warning", disabled = "disabled" })
-                                        </span>
-
-                                    }
-                                    else
-                                    {
-                                        <span data-toggle="tooltip" title="@deleteToolTip" data-placement="top">
-                                            @Html.ActionLink(" ", "Delete", "ProductFeatures", new
-                                                   { @*menuPathid = Model.Id, menuFeatreId = item.Id,*@
-                                                       id = item.Id,
-                                                       returnUrl = childReturnUrl
-                                                   },
-                                         new { @class = "fas fa-trash-alt text-danger" })
-                                        </span>
-
-                                    }
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            }
+            </table>
         }
     </div>
 </div>
-
-
-

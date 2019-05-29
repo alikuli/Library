@@ -176,6 +176,22 @@
     <Compile Include="Migrations\201903120952508_12-03-2019.Designer.cs">
       <DependentUpon>201903120952508_12-03-2019.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904041005567_04-04-2019.cs" />
+    <Compile Include="Migrations\201904041005567_04-04-2019.Designer.cs">
+      <DependentUpon>201904041005567_04-04-2019.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905290326576_29-05-2019.cs" />
+    <Compile Include="Migrations\201905290326576_29-05-2019.Designer.cs">
+      <DependentUpon>201905290326576_29-05-2019.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905290845154_29-05-2019a.cs" />
+    <Compile Include="Migrations\201905290845154_29-05-2019a.Designer.cs">
+      <DependentUpon>201905290845154_29-05-2019a.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905291026059_29-05-2019b.cs" />
+    <Compile Include="Migrations\201905291026059_29-05-2019b.Designer.cs">
+      <DependentUpon>201905291026059_29-05-2019b.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -223,6 +239,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903120952508_12-03-2019.resx">
       <DependentUpon>201903120952508_12-03-2019.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904041005567_04-04-2019.resx">
+      <DependentUpon>201904041005567_04-04-2019.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290326576_29-05-2019.resx">
+      <DependentUpon>201905290326576_29-05-2019.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290845154_29-05-2019a.resx">
+      <DependentUpon>201905290845154_29-05-2019a.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291026059_29-05-2019b.resx">
+      <DependentUpon>201905291026059_29-05-2019b.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

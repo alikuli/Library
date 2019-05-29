@@ -15,11 +15,12 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
     [NotMapped]
     public class CashTrxDbCrModel
     {
+
         public CashTrxDbCrModel()
         {
 
         }
-        public CashTrxDbCrModel(List<CashTrxVM> receivedTrx, List<CashTrxVM> paidTrx, DateTime fromDate, DateTime toDate, string personName, CashTypeENUM cashTypeEnum)
+        public CashTrxDbCrModel(List<CashTrxVM> receivedTrx, List<CashTrxVM> paidTrx, DateTime fromDate, DateTime toDate, string personName, CashTypeENUM cashTypeEnum, bool isAdmin)
         {
             //Person = person;
             ReceivedTrx = receivedTrx;
@@ -28,9 +29,49 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
             ToDate = toDate;
             CashTypeEnum = cashTypeEnum;
             PersonName = personName;
+            IsAdmin = isAdmin;
 
         }
         //public Person Person { get; set; }
+
+        public bool IsAdmin { get; private set; }
+        public string Heading
+        {
+            get
+            {
+                string heading = "Error";
+                switch (CashTypeEnum)
+                {
+                    case CashTypeENUM.Refundable:
+                    case CashTypeENUM.NonRefundable:
+                    case CashTypeENUM.Total:
+                        heading = string.Format("{0} Cash", CashTypeEnum.ToString());
+                        break;
+                    case CashTypeENUM.Unknown:
+                    default:
+                        break;
+                }
+
+                heading += " for " + PersonName;
+
+                if (IsAdmin)
+                    heading += " -Admin Screen";
+                return heading;
+
+            }
+        }
+
+        public string SubHeading
+        {
+            get
+            {
+                string heading = string.Format("Between {0:dd-MMM-yyyy} and {1:dd-MMM-yyyy}", FromDate, ToDate);
+
+
+                return heading;
+
+            }
+        }
         public CashTypeENUM CashTypeEnum { get; set; }
 
         public ApplicationUser User { get; set; }
@@ -48,6 +89,43 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
 
+
+        public decimal PaidBF
+        {
+            get
+            {
+                decimal _paidBf = 0;
+                if (!PaidTrx.IsNullOrEmpty())
+                {
+                    foreach (var trx in PaidTrx)
+                    {
+                        DateTime date = trx.Date;
+                        if (date < FromDate)
+                            _paidBf += trx.PaymentAmount;
+                    }
+                }
+                return _paidBf;
+            }
+        }
+
+        public decimal RecievedBF
+        {
+            get
+            {
+                decimal _receivedBF = 0;
+                if (!ReceivedTrx.IsNullOrEmpty())
+                {
+                    foreach (var trx in ReceivedTrx)
+                    {
+                        DateTime date = trx.Date;
+                        if (date < FromDate)
+                            _receivedBF += trx.ReceiptAmount;
+                    }
+                }
+                return _receivedBF;
+
+            }
+        }
         /// <summary>
         /// This calculates the brought forward.
         /// </summary>
@@ -55,27 +133,8 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
         {
             get
             {
-                decimal _broughtForward = 0;
-                if (!PaidTrx.IsNullOrEmpty())
-                {
-                    foreach (var trx in PaidTrx)
-                    {
-                        DateTime date = trx.Date;
-                        if (date < FromDate)
-                            _broughtForward -= trx.PaymentAmount;
-                    }
-                }
-                if (!ReceivedTrx.IsNullOrEmpty())
-                {
-                    foreach (var trx in ReceivedTrx)
-                    {
-                        DateTime date = trx.Date;
-                        if (date < FromDate)
-                            _broughtForward += trx.ReceiptAmount;
-                    }
-                }
 
-                return _broughtForward;
+                return RecievedBF - PaidBF;
 
             }
         }
@@ -126,6 +185,38 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
             }
         }
 
+        public decimal TotalPaid
+        {
+            get
+            {
+                decimal _ttlPaid = 0;
+                if (!PaidTrx.IsNullOrEmpty())
+                {
+                    foreach (var trx in PaidTrx)
+                    {
+                        _ttlPaid += trx.PaymentAmount;
+                    }
+                }
+                return _ttlPaid;
+            }
+        }
+
+        public decimal TotalRecieved
+        {
+            get
+            {
+                decimal _totalReceived = 0;
+                if (!ReceivedTrx.IsNullOrEmpty())
+                {
+                    foreach (var trx in ReceivedTrx)
+                    {
+                        _totalReceived += trx.ReceiptAmount;
+                    }
+                }
+                return _totalReceived;
+
+            }
+        }
 
 
 

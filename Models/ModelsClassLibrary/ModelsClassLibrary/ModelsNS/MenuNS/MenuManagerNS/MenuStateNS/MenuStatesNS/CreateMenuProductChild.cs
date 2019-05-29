@@ -10,8 +10,9 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
     public class CreateMenuProductChild : MenuStateAbstract
     {
 
-        public CreateMenuProductChild(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter)
-            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
+        public CreateMenuProductChild(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter, string userId, string userName)
+            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter, userId, userName) { }
+
 
         public override MenuENUM EditLink_MenuEnum
         {
@@ -21,6 +22,10 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
         public override string CreateLink_Name
         {
             get { return "Create Cust Product"; }
+        }
+        public override bool ShowCreateButton
+        {
+            get { return true; }
         }
 
 
@@ -38,11 +43,6 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
         public override MenuENUM BackLink_MenuEnum
         {
             get { return MenuENUM.IndexMenuProductChild; }
-        }
-
-        public override bool ShowCreateButton
-        {
-            get { return true; }
         }
 
         public override bool ShowEditButton

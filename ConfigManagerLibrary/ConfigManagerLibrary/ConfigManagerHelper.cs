@@ -25,7 +25,7 @@ namespace AliKuli.UtilitiesNS
             }
         }
 
-        public static string BlankPicture
+        public static string DefaultBlankPicture
         {
             get
             {
@@ -379,6 +379,7 @@ namespace AliKuli.UtilitiesNS
 
             get
             {
+
                 return CheckForNullStringAndThrowError_Helper(
                     MethodBase.GetCurrentMethod(),
                     (_smtpPort = _smtpPort ??

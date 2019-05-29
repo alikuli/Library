@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
+using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Collections.Generic;
@@ -12,6 +13,9 @@ namespace UowLibrary.ProductNS
 
         public override void Fix(ControllerCreateEditParameter parm)
         {
+            //You must be logged in
+            UserId.IsNullOrWhiteSpaceThrowArgumentException("You are not logged in.");
+
             Product product = parm.Entity as Product;
             product.IsNullThrowException("Unable to unbox product");
 
@@ -56,26 +60,30 @@ namespace UowLibrary.ProductNS
                 product.UomWeightListedId = null;
 
             if (product.OwnerId.IsNullOrWhiteSpace())
-                product.OwnerId = null;
+            {
+                //get the owner for the current user.
+                Owner owner = OwnerBiz.GetPlayerFor(UserId);
+                product.OwnerId = owner.Id;
 
+            }
 
 
             //fixTheMenuFeautreKeys(product);
         }
 
-        private void fixTheMenuFeautreKeys(Product product)
-        {
-            if (product.ProductFeatures.IsNullOrEmpty())
-                return;
+        //private void fixTheMenuFeautreKeys(Product product)
+        //{
+        //    if (product.ProductFeatures.IsNullOrEmpty())
+        //        return;
 
-            List<ProductFeature> productFeatures = product.ProductFeatures.ToList();
+        //    List<ProductFeature> productFeatures = product.ProductFeatures.ToList();
 
-            foreach (ProductFeature item in productFeatures)
-            {
-                item.ProductId = product.Id;
-            }
+        //    foreach (ProductFeature item in productFeatures)
+        //    {
+        //        item.ProductId = product.Id;
+        //    }
 
-        }
+        //}
 
 
     }

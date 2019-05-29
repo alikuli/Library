@@ -64,18 +64,18 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             By = byUser;
         }
 
-        public void CopyMeInto(object obj)
-        {
-            DateAndByComplex dabc = obj as DateAndByComplex;
+        //public void CopyMeInto(object obj)
+        //{
+        //    DateAndByComplex dabc = obj as DateAndByComplex;
 
-            if (dabc == null)
-            {
-                throw new Exception("DateAndByComplex is null in CopyMeInto");
-            }
+        //    if (dabc == null)
+        //    {
+        //        throw new Exception("DateAndByComplex is null in CopyMeInto");
+        //    }
 
-            obj = this.MemberwiseClone();
+        //    obj = this.MemberwiseClone();
 
-        }
+        //}
 
 
         public virtual void Clear()

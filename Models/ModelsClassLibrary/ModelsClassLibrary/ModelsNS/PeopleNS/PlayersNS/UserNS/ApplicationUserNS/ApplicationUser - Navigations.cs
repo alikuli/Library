@@ -1,10 +1,8 @@
-﻿using InterfacesLibrary.SharedNS;
+﻿using AliKuli.UtilitiesNS;
+using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using Microsoft.AspNet.Identity.EntityFramework;
-using ModelsClassLibrary.ModelsNS.AddressNS;
-using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
-using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,6 +15,12 @@ namespace UserModels
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public partial class ApplicationUser : IdentityUser, ICommonWithId, IUserHasUploads
     {
+        [NotMapped]
+        public bool IsCreating { get; set; }
+        [NotMapped]
+        public bool IsDeleting { get; set; }
+        [NotMapped]
+        public bool IsEditing { get; set; }
 
 
         //public virtual ICollection<Person> People { get; set; }
@@ -50,7 +54,7 @@ namespace UserModels
 
         public virtual ICollection<UploadedFile> MiscFiles { get; set; }
 
-        public string MiscFilesLocation()
+        public string MiscFilesLocation(string aName)
         {
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "User");
         }
@@ -146,7 +150,13 @@ namespace UserModels
 
 
         [NotMapped]
-        public string DefaultDisplayImage { get { return AliKuli.ConstantsNS.MyConstants.DEFAULT_IMAGE_LOCATION; } }
+        public string DefaultDisplayImage
+        {
+            get
+            {
+                return ConfigManagerHelper.DefaultBlankPicture;
+            }
+        }
 
 
 
@@ -155,5 +165,11 @@ namespace UserModels
             get { return true; }
         }
 
+       /// <summary>
+        /// This is the heading in the Create form. Usually this will be Model.ClassName.ToString().ToTitleSentance()
+        /// </summary>
+        [NotMapped]
+        
+        public string HeadingForCreateForm { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AliKuli.Extentions;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,6 +20,14 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         [Display(Name = "Sell Price")]
         public decimal SellPrice { get; set; }
+
+        [NotMapped]
+        public string SellPriceMoneyFormat { get { return ToMoneyFormat(SellPrice); } }
+
+        public string ToMoneyFormat(decimal money)
+        {
+            return money.ToString().ToRuppeeFormat();
+        }
 
         [NotMapped]
         [Display(Name = "Highest Sell Price")]

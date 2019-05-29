@@ -141,28 +141,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         #endregion
 
-        #region ICopyMe Members
-
-        //public void CopyMeInto(object obj)
-        //{
-        //    MetaData md = obj as MetaData;
-
-        //    if(md == null)
-        //    {
-        //        throw new Exception("MetaData is null in CopyMeInto");
-        //    }
-
-        //    md = this.MemberwiseClone() as MetaData;
-
-        //    //Make deep copies
-        //    this.Created.CopyMeInto(md.Created);
-        //    this.Modified.CopyMeInto(md.Modified);
-        //    this.Deleted.CopyMeInto(md.Deleted);
-        //    this.UnDeleted.CopyMeInto(md.UnDeleted);
-
-
-        //    }
-
-        #endregion
+ 
     }
 }

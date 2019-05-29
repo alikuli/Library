@@ -108,7 +108,7 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
 
         public virtual ICollection<UploadedFile> MiscFiles { get; set; }
 
-        public string MiscFilesLocation()
+        public string MiscFilesLocation(string aName)
         {
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "User");
         }

@@ -32,7 +32,7 @@ namespace ModelsClassLibrary.ViewModels
         }
         public IndexListVM(ControllerIndexParams p)
         {
-            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.UserId, p.UserName, p.IsAndForSearch, p.BreadCrumbManager, p.ActionNameEnum, p.LikeUnlikeCounter, p.IsMenu, p.ReturnUrl);
+            initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.UserId, p.UserName, p.IsAndForSearch, p.BreadCrumbManager, p.ActionNameEnum, p.LikeUnlikeCounter, p.IsMenu, p.ReturnUrl /* , p.UserPersonId, p.ProductChildPersonId */);
 
         }
 
@@ -51,13 +51,18 @@ namespace ModelsClassLibrary.ViewModels
             ActionNameENUM actionNameEnum,
             LikeUnlikeParameters likeUnlikesCounter,
             bool isMenu,
-            string returnUrl)
+            string returnUrl
+            //, 
+            //string userPersonId, 
+            /*string productChildPersonId */)
         {
             IsMenu = isMenu;
             SortOrderEnum = sortOrderEnum;
             Id = id;
             SearchFor = searchFor;
             IsAndForSearch = isAndForSearch;
+            UserId = userId;
+            UserName = userName;
 
             DudEntity = dudEntity;
             Data = new List<IndexItemVM>();
@@ -67,7 +72,13 @@ namespace ModelsClassLibrary.ViewModels
 
             //Menu = new MenuModel();
             //Menu.ReturnUrl = returnUrl;
-            MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, breadCrumbManager, likeUnlikesCounter, UserId, returnUrl);
+
+
+            MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, breadCrumbManager, likeUnlikesCounter, UserId, returnUrl,userName /* , userPersonId, productChildPersonId */);
+            if (MenuManager.IndexMenuVariables.IsNull())
+                MenuManager.IndexMenuVariables = new IndexMenuVariables(UserId);
+            
+            
             Show = new Show();
             SelectedId = selectedId;
             WebCompanyName = webCompanyName;
@@ -86,8 +97,6 @@ namespace ModelsClassLibrary.ViewModels
             //this points to the logo
             Logo = new Logo(logoaddress);
 
-            UserId = userId;
-            UserName = userName;
             string stopWordsPath = AliKuli.ConstantsNS.MyConstants.STOP_WORDS_PATH;
             //setup.
             _listOfStopWords = StringTools.GetStopWords(stopWordsPath);
@@ -494,7 +503,6 @@ namespace ModelsClassLibrary.ViewModels
             }
             return dataFiltered;
         }
-
 
         private IQueryable<IndexItemVM> doAndSearch(IQueryable<IndexItemVM> dataFiltered)
         {

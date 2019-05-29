@@ -22,7 +22,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
 
         // GET: Countries/Create
-        public virtual ActionResult Create(string isandForSearch, MenuENUM menuEnum = MenuENUM.CreateDefault, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, bool isMenu = false, string parentId = "")
+        public virtual ActionResult Create(string isandForSearch, MenuENUM menuEnum = MenuENUM.CreateDefault, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, bool isMenu = false, string parentId = "", BuySellDocumentTypeENUM buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Unknown, BuySellDocStateENUM buySellDocStateEnum = BuySellDocStateENUM.Unknown)
         {
 
             TEntity dudEntity = null;
@@ -31,7 +31,11 @@ namespace MarketPlace.Web6.Controllers.Abstract
             {
                 dudEntity = Biz.FactoryForHttpGet() as TEntity;
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
+                string buySellStatementType = "";
 
+                //string userPersonId = "";
+                //string productChildPersonId = "";
+                
                 ControllerIndexParams parms = MakeControlParameters(
                     "",
                     menuPathMainId,
@@ -43,13 +47,15 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     BreadCrumbManager,
                     UserId,
                     UserName,
-                    isMenu,
+                    productId,
+                    returnUrl,
+                    isMenu,            
                     menuEnum,
                     sortBy,
                     print,
-                    ActionNameENUM.Create,
-                    productId,
-                    returnUrl);
+                    ActionNameENUM.Create, 
+                    buySellDocumentTypeEnum,
+                    buySellDocStateEnum);
 
 
                 Biz.InitializeMenuManagerForEntity(parms);
@@ -127,14 +133,14 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 //I had to make this because sometimes I cannot use a certain required biz
                 //because it causes a recursive error... i.e. the biz being called by itself.
                 //I can fix up the parameter here before it goes in
+                //Also use it in MenuPath1,2,3 to fix the returnUrl in the entity
                 Event_BeforeSaveInCreateAndEdit(parm);
-
                 await Biz.CreateAndSaveAsync(parm);
-
+                Event_AfterSaveInCreate(parm);
                 //if (returnUrl.IsNullOrWhiteSpace())
                 //    return RedirectFromCreateHttpPostTo(BreadCrumbManager, parm);
 
-                return Redirect(returnUrl);
+                return Redirect(parm.ReturnUrl);
             }
             catch (Exception e)
             {
@@ -145,6 +151,16 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 return RedirectToAction("Index", new { id = entity.Id, searchFor = searchFor, isandForSearch = isandForSearch, selectedId = entity.Id, returnUrl = returnUrl, menuLevelEnum = menuEnum, sortBy = sortBy, print = print });
 
             }
+        }
+
+        public virtual void Event_AfterSaveInCreate(ControllerCreateEditParameter parm)
+        {
+
+        }
+
+        public virtual string Event_Update_ReturnUrl_In_CreateHTTPost(string returnUrl)
+        {
+            return returnUrl;
         }
 
         public virtual void Event_BeforeSaveInCreateAndEdit(ControllerCreateEditParameter parm)

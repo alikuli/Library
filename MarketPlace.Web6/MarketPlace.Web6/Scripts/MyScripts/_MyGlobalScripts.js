@@ -5,7 +5,6 @@
     OnHoverClassImgThumbnailBackgroundYellow();
     initializeToolTipsBootStrap4();
     //onClick();
-
 });
 
 
@@ -121,4 +120,10 @@ function AjaxPost(form) {
         $.ajax(ajaxConfig);
     }
     return false;
+}
+
+//This opens a url path. It works in a form as well
+function openPath(path) {
+    event.preventDefault();
+    window.location.replace(path);
 }

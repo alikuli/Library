@@ -15,7 +15,7 @@ namespace MarketPlace.Web4.Controllers
 
         private void LoadMessagesIntoAlerts()
         {
-            if (ConfigManagerHelper.IsVerbose)
+            if (ConfigManagerHelper_.IsVerbose)
             {
                 if (ErrorsGlobal.HasMessages)
                 {

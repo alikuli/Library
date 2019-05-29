@@ -1,0 +1,13 @@
+﻿@Html.Partial(@"MenuPathNS/_menuPathFieldsOnlyEditFormat")
+@{bool isCreate = Model.MenuManager.IsCreate;}
+
+@Html.Hidden("MenuPath1Id_Parent")
+@Html.Hidden("MenuPath2Id_Parent")
+
+@if (!isCreate)
+{
+    <div>
+        @Html.Partial(@"_ListFeatures")
+    </div>
+}
+

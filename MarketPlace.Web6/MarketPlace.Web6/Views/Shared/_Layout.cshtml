@@ -12,10 +12,10 @@
     @Scripts.Render("~/bundles/modernizr")
 
 
-    <link rel="stylesheet"
+    @*<link rel="stylesheet"
           href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-          crossorigin="anonymous">
+          crossorigin="anonymous">*@
 
     @RenderSection("styles", required: false)
 
@@ -37,16 +37,21 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="@Url.Action("Index","Home",null)">Home <span class="sr-only">(current)</span></a>
-                </li>
+            <ul class="navbar-nav active">
+                @*<li class="nav-item active">
+        <a class="nav-link" href="@Url.Action("Index","Home",null)">Home <span class="sr-only">(current)</span></a>
+    </li>*@
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="@Url.Action("Index","Products",null)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="@Url.Action("Index", "Products", null)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Products
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="@Url.Action("Index", "BuySellDocs", null)">Sale Order</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Index", "Home", null)">Home</a>
+
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="@Url.Action("Index", "Products", null)">Products</a>
                         <a class="dropdown-item" href="@Url.Action("UnapprovedProducts", "Products", null)">Products pending Approval</a>
                         <a class="dropdown-item" href="@Url.Action("DeleteAll", "Products", null)">Products -Delete All</a>
@@ -66,18 +71,20 @@
                         <a class="dropdown-item" href="@Url.Action("Index", "ProductFeatures", null)">Product Feature</a>
 
                         <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Index", "MenuPathMains", null)">Menu Path</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "MenuPath1s", null)">Menu Path 1</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "MenuPath2s", null)">Menu Path 2</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "MenuPath3s", null)">Menu Path 3</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="@Url.Action("Index", "Messages", null)">Messages</a>
+
                     </div>
 
                 </li>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="@Url.Action("Index", "Addresses", null)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Addresses Etc
+                        Addy
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="@Url.Action("Index", "Addresses", null)">Addresses</a>
@@ -113,7 +120,7 @@
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="@Url.Action("Index","FileDocs",null)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Filing
+                        Files
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="@Url.Action("Index", "FileDocs", null)">Filing</a>
@@ -123,7 +130,7 @@
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="@Url.Action("CreateMailingList", "Mailers", null)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Mailing
+                        Mail
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="@Url.Action("CreateMailingList", "Mailers", null)">Mailing List Dashborad</a>
@@ -182,7 +189,7 @@
     @Scripts.Render("~/bundles/jqueryuobtrsive")
     @Scripts.Render("~/bundles/popper")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/respond")
+@*    @Scripts.Render("~/bundles/respond")*@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/JqueryIntelisense")
     @Scripts.Render("~/bundles/FormAjaxPlugIn")
@@ -197,6 +204,7 @@
 
     @RenderSection("scripts", required: false)
     @*<script src="~/Scripts/MyScripts/_MyGlobalScripts1.js"></script>*@
+    <script src="~/Scripts/MyScripts/IndexScripts.js"></script>
 
 
 

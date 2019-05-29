@@ -1,5 +1,4 @@
-﻿using AliKuli.Extentions;
-using EnumLibrary.EnumNS;
+﻿using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
@@ -9,8 +8,9 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 {
     public class IndexMenuPath1 : MenuStateAbstract
     {
-        public IndexMenuPath1(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter)
-            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
+        public IndexMenuPath1(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter, string userId, string userName)
+            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter, userId, userName) { }
+
 
         //public override string EditLink_Id
         //{

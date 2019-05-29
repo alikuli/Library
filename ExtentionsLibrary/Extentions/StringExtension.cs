@@ -36,6 +36,22 @@ namespace AliKuli.Extentions
             return string.IsNullOrWhiteSpace(str);
         }
 
+        public static string ToNumCommaFormat(this string str)
+        {
+            if (str.IsNullOrWhiteSpace())
+                return string.Format("{0:n2}", 0);
+
+
+            decimal num;
+            bool success = decimal.TryParse(str, out num);
+
+            if (!success)
+                return "Error. ToNumCommaFormat";
+
+            string formated = string.Format("{0:n2}", num);
+            return formated;
+        }
+
         public static string ToRuppeeFormat(this string str)
         {
             if (str.IsNullOrWhiteSpace())

@@ -53,6 +53,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     BreadCrumbManager,
                     UserId,
                     UserName,
+                    productId,
+                    returnUrl,
                     isMenu,
                     menuEnum,
                     sortBy,
@@ -60,8 +62,9 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     ActionNameENUM.Delete);
 
                 Biz.InitializeMenuManagerForEntity(parms);
-
+                parms.Entity.IsDeleting = true;
                 return Event_CreateViewAndSetupSelectList(parms);
+                //return View(parms.Entity);
 
             }
             catch (Exception e)

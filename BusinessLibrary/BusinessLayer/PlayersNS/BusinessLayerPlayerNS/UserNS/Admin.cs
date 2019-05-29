@@ -2,8 +2,9 @@
 using AliKuli.UtilitiesNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
+using System.Linq;
 using UserModels;
-
 namespace UowLibrary
 {
     public partial class UserBiz : BusinessLayer<ApplicationUser>
@@ -259,6 +260,22 @@ namespace UowLibrary
             bool isAdmin = UserManager.IsInRole(userId, adminRole);
             return isAdmin;
 
+        }
+
+        public List<ApplicationUser> GetAllAdmin()
+        {
+            List<ApplicationUser> allUserList = FindAll().ToList();
+
+            List<ApplicationUser> allAdminList = new List<ApplicationUser>();
+            if (!allUserList.IsNullOrEmpty())
+            {
+                foreach (ApplicationUser user in allUserList)
+                {
+                    if (IsAdmin(user.Id))
+                        allUserList.Add(user);
+                }
+            }
+            return allAdminList;
         }
 
         //public bool IsAdmin(string userId)

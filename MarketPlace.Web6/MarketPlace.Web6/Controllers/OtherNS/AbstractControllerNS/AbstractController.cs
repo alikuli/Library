@@ -43,7 +43,7 @@ namespace MarketPlace.Web4.Controllers
 
         }
 
-        public ConfigManagerHelper ConfigManagerHelper
+        public ConfigManagerHelper ConfigManagerHelper_
         {
             get
             {
@@ -166,7 +166,7 @@ namespace MarketPlace.Web4.Controllers
             }
         }
 
-        public bool IsAdmin
+        public bool Is_Admin
         {
             get
             {

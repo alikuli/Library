@@ -37,7 +37,7 @@ namespace UowLibrary.UploadFileNS
             if (indexItem.Description.IsNullOrWhiteSpace())
                 indexItem.Description = string.Format("This is a file uploaded by you on {0}.", uploadedFile.MetaData.Created.Date_NotNull_Min.ToLongDateString());
 
-            indexItem.ImageAddressStr = uploadedFile.RelativePathWithFileName();
+            indexItem.ImageAddressStr = uploadedFile.GetRelativePathWithFileName();
         }
 
 

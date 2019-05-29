@@ -1,18 +1,18 @@
 ﻿using AliKuli.Extentions;
 using DalLibrary.Interfaces;
 using EnumLibrary.EnumNS;
-using InterfacesLibrary.SharedNS.FeaturesNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
+using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
-using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
-using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Collections.Generic;
-using System.Linq;
 using UowLibrary.FeatureNS.MenuFeatureNS;
+using UowLibrary.MenuNS.MenuStateNS;
 using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS.OwnerNS;
+using UserModels;
 namespace UowLibrary.ProductChildNS
 {
     public partial class ProductChildBiz : BusinessLayer<ProductChild>
@@ -60,67 +60,6 @@ namespace UowLibrary.ProductChildNS
             }
         }
 
-
-
-
-        public override List<string> GetPictureList(IHasUploads ihasUploads)
-        {
-            List<string> addresses = new List<string>();
-
-            if (ihasUploads.MiscFiles.Any(x => !x.MetaData.IsDeleted))
-            {
-                var lstUploadedFiles = ihasUploads.MiscFiles.Where(x => !x.MetaData.IsDeleted).ToList();
-                lstUploadedFiles.IsNullOrEmptyThrowException("Something went worng. This list cannot be empty.");
-                foreach (UploadedFile uploadFile in lstUploadedFiles)
-                {
-                    string pictureAddy = getImageAddressOf(uploadFile);
-                    if (!pictureAddy.IsNullOrWhiteSpace())
-                    {
-                        addresses.Add(pictureAddy);
-
-                    }
-                }
-            }
-
-            if (addresses.IsNullOrEmpty())
-            {
-                return GetDefaultPicture(ihasUploads as ProductChild);
-            }
-
-            return addresses;
-        }
-        /// <summary>
-        /// We need to load this because GetDefaultPicture override does not take a parameter
-        /// </summary>
-        //public ProductChild ProductChildForDefaultPicture { get; set; }
-
-        public List<string> GetDefaultPicture(ProductChild productChildForDefaultPicture)
-        {
-            List<string> lst = new List<string>();
-            productChildForDefaultPicture.IsNullThrowException("ProductChildForDefaultPicture");
-            productChildForDefaultPicture.Product.IsNullThrowException("ProductChildForDefaultPicture.Product");
-            Product product = productChildForDefaultPicture.Product;
-
-            if (product.MiscFiles.IsNullOrEmpty())
-            {
-                base.GetDefaultPicture();
-
-            }
-            else
-            {
-                foreach (UploadedFile uploadedFile in product.MiscFiles)
-                {
-                    string pictureAddy = getImageAddressOf(uploadedFile);
-                    if (pictureAddy.IsNullOrWhiteSpace())
-                        continue;
-                    lst.Add(pictureAddy);
-                }
-            }
-
-            return lst;
-        }
-
-
         public ProductChild LoadProductChildForLandingPage(string productChildId, string searchFor, string returnUrl)
         {
             //ProductChild productChild = _icrudBiz.Factory() as ProductChild;
@@ -135,11 +74,13 @@ namespace UowLibrary.ProductChildNS
             string menuPathMainIdDud = "";
             string logoAddress = "";
             //string sortByDud = "";
-
+            string buySellStatementType = "";
             LikeUnlikeParameters likeUnlikeParameters = null;
 
             bool isMenuDud = false;
             bool isUserAdmin = false;
+            BuySellDocumentTypeENUM buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Unknown;  //DUD
+            BuySellDocStateENUM BuySellDocStateEnum = BuySellDocStateENUM.Unknown; //dud
 
             if (!UserId.IsNullOrWhiteSpace())
                 isUserAdmin = UserBiz.IsAdmin(UserId);
@@ -163,16 +104,59 @@ namespace UowLibrary.ProductChildNS
                 ActionNameENUM.Unknown,
                 likeUnlikeParameters,
                 productIdDud,
-                returnUrl);
+                returnUrl,
+                buySellDocumentTypeEnum, 
+                BuySellDocStateEnum);
 
             InitializeMenuManagerForEntity(parms);
-
-            IHasUploads hasUploadsEntity = parms.Entity as IHasUploads;
+            
+            //IHasUploads hasUploadsEntity = parms.Entity as IHasUploads;
+            //MenuManager menuManager = new MenuManager(parms.Entity.MenuManager.MenuPathMain, null, null, parms.Menu.MenuEnum, BreadCrumbManager, parms.LikeUnlikeCounter, UserId, parms.ReturnUrl, UserName);
             IMenuManager menuManager = parms.Entity.MenuManager;
+            if (menuManager.IndexMenuVariables.IsNull())
+                menuManager.IndexMenuVariables = new IndexMenuVariables(UserId);
 
-            menuManager.PictureAddresses = GetPictureList(hasUploadsEntity);
 
-            productChild.AllFeatures = GetAllFeatures(productChild);
+
+            Person person = UserBiz.GetPersonFor(UserId);
+            if(!person.IsNull())
+            {
+                string userPersonId = person.Id;
+                string productChildPersonId = productChild.Owner.PersonId;
+                menuManager.IndexMenuVariables.updateRequiredProperties(userPersonId, productChildPersonId);
+
+            }
+
+
+
+            List<string> pictureAddresses = GetPictureList(productChild);
+
+            //if none are available get them from the product
+            if (pictureAddresses.IsNullOrEmpty())
+            {
+                productChild.Product.IsNullThrowException();
+                pictureAddresses = GetPictureList(productChild.Product);
+
+            }
+
+            if (pictureAddresses.IsNullOrEmpty())
+            {
+                pictureAddresses = GetDefaultPicture();
+            }            
+
+
+
+            menuManager.PictureAddresses = pictureAddresses;
+
+            ////also add the ProductChildperson and UserPerson
+            //Person userPerson = UserBiz.GetPersonFor(UserId);
+
+            //if (!productChild.Owner.IsNull())
+            //    menuManager.IndexMenuVariables.ProductChildPersonId = productChild.Owner.PersonId;
+
+            productChild.AllFeatures = Get_All_ProductChild_Features_For(productChild);
+
+
 
 
             if (UserId.IsNullOrEmpty())
@@ -184,6 +168,7 @@ namespace UowLibrary.ProductChildNS
                 //Log user as visitor to this product child
                 LogPersonsVisit(UserId, productChild);
             }
+
 
             return productChild;
         }

@@ -36,7 +36,7 @@ namespace ModelsClassLibrary.MenuNS
 
         public virtual ICollection<MenuFeature> MenuFeatures { get; set; }
 
-        string IHasUploads.MiscFilesLocation()
+        string IHasUploads.MiscFilesLocation(string aName)
         {
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, ClassNameRaw);
         }

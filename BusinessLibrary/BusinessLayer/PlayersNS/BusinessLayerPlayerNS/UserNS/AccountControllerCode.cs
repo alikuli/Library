@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using AliKuli.Extentions;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsNS.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -12,8 +15,6 @@ namespace UowLibrary
 {
     public partial class UserBiz : BusinessLayer<ApplicationUser>
     {
-
-
         #region AccountControllerBiz
 
         //-------------------------------------- AccountControllerBiz Begin
@@ -40,7 +41,7 @@ namespace UowLibrary
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task RegisterAsync(RegisterViewModel model)
+        public async Task<ApplicationUser> RegisterAsync(RegisterViewModel model)
         {
 
             //Country country = CountryBiz.Find(model.CountryID);
@@ -83,8 +84,6 @@ namespace UowLibrary
 
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                //Create a Person account as well to match the User. The business rule should do the needful.
-                //we need to do it here because User needs to be logged in.
 
                 UserName = user.UserName;
                 UserId = user.Id;
@@ -92,7 +91,7 @@ namespace UowLibrary
                 //PersonBiz.UserName = user.UserName;
 
                 UpdateAndSave(user);
-
+                return user;
                 //string code = await GenerateChangePhoneNumberTokenAsync(user.Id, fixedPhoneNumber);
 
                 // For more information on how to enable account confirmation and pas sword reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -101,6 +100,7 @@ namespace UowLibrary
                 // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
             }
+            return null;
 
         }
 
@@ -218,37 +218,125 @@ namespace UowLibrary
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<bool> IsUserConfirmedThenGenerateCode(ForgotPasswordViewModel model)
+        public async Task<bool> IsEmailConfirmed(ForgotPasswordViewModel model)
         {
-            var AppUser = await UserManager.FindByNameAsync(model.Phone);
-            if (AppUser == null || !(await UserManager.IsEmailConfirmedAsync(AppUser.Id)))
+            //var AppUser = await UserManager.FindByNameAsync(model.Phone);
+            if (model.Email.IsNullOrWhiteSpace())
+                return false;
+
+
+            ApplicationUser appUser = await UserManager.FindByEmailAsync(model.Email);
+            if (appUser == null || !(await UserManager.IsEmailConfirmedAsync(appUser.Id)))
             {
                 // Don't reveal that the user does not exist or is not confirmed
                 return false;
             }
-            Code = await UserManager.GeneratePasswordResetTokenAsync(AppUser.Id);
+            AppUser = appUser;
+            Code = await UserManager.GeneratePasswordResetTokenAsync(appUser.Id);
             return true;
 
         }
 
+        //Just a temp message collector set up to get data for errors
+        public List<string> MessageCollector { get; set; }
+
+        /// <summary>
+        /// This fixes the phone number and then checks against the phone number if he user is found.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async Task<bool> IsPhoneConfirmed(ForgotPasswordViewModel model)
+        {
+            //var AppUser = await UserManager.FindByNameAsync(model.Phone);
+            if (model.Phone.IsNullOrWhiteSpace())
+                return false;
+
+            //if (MessageCollector.IsNull())
+            //    MessageCollector = new List<string>();
+
+            //MessageCollector.Add("Entered IsPhoneConfirmed");
+            //first fix the phone number
+            Country country = CountryBiz.FindAll().FirstOrDefault(x => x.Id == model.CountryId);
+            if (country.IsNull())
+            {
+                return false;
+            }
+
+            string fixedPhoneNumber = PhoneNumberFixer(model.Phone, country.Abbreviation);
+            //MessageCollector.Add("fixedPhoneNumber = " + fixedPhoneNumber);
+
+            ApplicationUser appUser = FindAll().FirstOrDefault(x => x.PhoneNumber == fixedPhoneNumber && x.PhoneNumberConfirmed == true);
+            //MessageCollector.Add("AppUser.ID = " + appUser.Id);
+
+            if (appUser == null || !(await UserManager.IsEmailConfirmedAsync(appUser.Id)))
+            {
+                // Don't reveal that the user does not exist or is not confirmed
+                return false;
+            }
+
+            AppUser = appUser;
+            Code = await UserManager.GeneratePasswordResetTokenAsync(appUser.Id);
+            //MessageCollector.Add("Code = " + Code);
+
+            return true;
+
+        }
+
+        public async Task<bool> IsUserNameFound(ForgotPasswordViewModel model)
+        {
+            //var AppUser = await UserManager.FindByNameAsync(model.Phone);
+            if (model.UserName.IsNullOrWhiteSpace())
+                return false;
+
+            //if (MessageCollector.IsNull())
+            //    MessageCollector = new List<string>();
+            //MessageCollector.Add("Entered IsUserNameFound");
+
+
+
+            ApplicationUser appUser = UserManager.FindByName(model.UserName);
+            //if (appUser.IsNull())
+            //{
+            //    MessageCollector.Add("AppUser is null");
+
+            //}
+            //else
+            //{
+            //    MessageCollector.Add("AppUser is found");
+
+            //}
+            bool bothEmailAndPhoneNotConfirmed = !(await UserManager.IsEmailConfirmedAsync(appUser.Id)) && !(await UserManager.IsPhoneNumberConfirmedAsync(appUser.Id));
+            if (appUser == null || bothEmailAndPhoneNotConfirmed)
+            {
+                // Don't reveal that the user does not exist or is not confirmed
+                return false;
+            }
+            AppUser = appUser;
+            Code = await UserManager.GeneratePasswordResetTokenAsync(appUser.Id);
+            //MessageCollector.Add("Code is generated: " + Code);
+
+            return true;
+
+        }
 
         public async Task<bool> SendendEmailToConfirmedUserAndUrlAsync()
         {
             // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
             // Send an email with this link
-
-            await UserManager.SendEmailAsync(AppUser.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + CallBackUrl + "\">here</a>");
+            string userId = AppUser.Id;
+            string subject = "Reset Password";
+            string body = "Please reset your password by clicking <a href=\"" + CallBackUrl + "\">here</a>";
+            await UserManager.SendEmailAsync(userId, subject, body);
             return true;
 
         }
-
 
         #endregion
 
         #region Reset Password
         public async Task<bool> ResetPasswordAsync(ResetPasswordViewModel model)
         {
-            var user = await UserManager.FindByNameAsync(model.Email);
+            var user = await UserManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist

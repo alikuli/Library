@@ -4,9 +4,7 @@ using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
-using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ViewModels;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
-using UserModels;
 
 namespace UowLibrary.MenuNS.MenuStateNS
 {
@@ -20,17 +18,20 @@ namespace UowLibrary.MenuNS.MenuStateNS
         //MenuPath2 _menuPath2;
         //MenuPath3 _menuPath3;
 
-        public MenuStateAbstract(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter)
+        public MenuStateAbstract(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter, string userId, string userName)
         {
             _menuPathMain = menuPathMain;
             _product = product;
             _productChild = productChild;
             _menuEnum = menuEnum;
             LikeUnlikesCounter = likeUnlikesCounter;
+            UserId = userId;
+            UserName = UserName;
         }
 
         //public abstract string EditLink_Id { get; }
-
+        public string UserId { get; private set; }
+        public string UserName { get; private set; }
         public MenuENUM MenuEnum { get { return _menuEnum; } }
         public abstract MenuENUM EditLink_MenuEnum { get; }
         public abstract string CreateLink_Name { get; }

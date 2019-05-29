@@ -156,8 +156,9 @@ namespace DependancyResolver
 
             Bind<ProductApproverBiz>().ToSelf();
             Bind<ProductApproverCategoryBiz>().ToSelf();
-            Bind<MessageBiz>().ToSelf();
-            Bind<SaleOrderBiz>().ToSelf();
+            Bind<MessageBiz>().ToSelf();                                                  
+            Bind<BuySellItemBiz>().ToSelf();
+            //Bind<SaleOrderBiz>().ToSelf();
         }
 
         public void LoadDALs()

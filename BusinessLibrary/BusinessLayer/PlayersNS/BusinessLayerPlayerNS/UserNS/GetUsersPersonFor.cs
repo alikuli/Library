@@ -1,19 +1,19 @@
 ﻿using AliKuli.Extentions;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
 using UserModels;
 //using AliKuli.Extentions;
-using System.Linq;
 namespace UowLibrary
 {
-    public partial class UserBiz 
+    public partial class UserBiz
     {
 
         public Person GetPersonFor(string userId)
         {
-            userId.IsNullOrWhiteSpaceThrowArgumentException("userId is null");
+
+            if (userId.IsNull())
+                return null;
             ApplicationUser user = Find(userId);
-            //user.IsNullThrowException("User not found");
+
             if (user.IsNull())
                 return null;
 
@@ -21,7 +21,7 @@ namespace UowLibrary
                 return null;
 
             Person person = user.Person;
-            person.IsNullThrowException("The user does not have a person even though there should be one");
+            //person.IsNullThrowException("The user does not have a person even though there should be one");
             return person;
 
 
@@ -45,7 +45,7 @@ namespace UowLibrary
         //    user.IsNullThrowException("User not found");
         //    user.PersonId = person.Id;
         //    person.Users.Add(user);
-            
+
         //    Update(user);
         //    PersonBiz.CreateAndSave(person);
         //}

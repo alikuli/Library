@@ -196,14 +196,15 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\MyControllersNS\BuySellItemsNS\BuySellItemsController.cs" />
     <Compile Include="Controllers\MyControllersNS\MenuNS\MenuFeaturesController.cs" />
     <Compile Include="Controllers\MyControllersNS\MessageNS\MessagesController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlayersNS\ProductApproverCategoriesController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlayersNS\ProductApproversController.cs" />
-    <Compile Include="Controllers\MyControllersNS\SaleOrderNS\SaleOrdersController.cs" />
     <Compile Include="Controllers\OtherNS\AbstractControllerNS\LoadValidationErrorsIntoErrorsGlobal.cs" />
     <Compile Include="Controllers\OtherNS\AbstractControllerNS\LoadErrorsIntoModelState.cs" />
     <Compile Include="Controllers\OtherNS\AbstractControllerNS\LoadMessagesIntoAlerts.cs" />
+    <Compile Include="Controllers\OtherNS\AbstractControllerNS\getUserMoneyAccount.cs" />
     <Compile Include="Controllers\OtherNS\EntityAbstractControllerNS\InitializeMenuManager.cs" />
     <Compile Include="Controllers\OtherNS\EntityAbstractControllerNS\OnActionExecutedSetUpUserNameAndId.cs" />
     <Compile Include="Controllers\OtherNS\AbstractControllerNS\OnActionExecutedAndExecuting.cs" />
@@ -231,7 +232,6 @@
     <Compile Include="Controllers\MyControllersNS\EmailNS\Event_CreateViewAndSetupSelectList.cs" />
     <Compile Include="Controllers\MyControllersNS\PhoneNS\PhonesController.cs" />
     <Compile Include="Controllers\MyControllersNS\DashBoardNS\DashBoardController.cs" />
-    <Compile Include="Controllers\MyControllersNS\FeatureNS\MenuFeatureNS\MenuFeaturesController.cs" />
     <Compile Include="Controllers\MyControllersNS\FeatureNS\ProductChildFeatureNS\ProductChildFeaturesController.cs" />
     <Compile Include="Controllers\MyControllersNS\FeatureNS\ProductFeatureNS\ProductFeaturesController.cs" />
     <Compile Include="Controllers\MyControllersNS\GlobalCommentsNS\GlobalCommentsController.cs" />
@@ -277,7 +277,7 @@
     <Compile Include="Controllers\MyControllersNS\MenuNS\MenuPathMainsController.cs" />
     <Compile Include="Controllers\MyControllersNS\MenuNS\MenuPath3sController.cs" />
     <Compile Include="Controllers\MyControllersNS\MenuNS\MenuPath2sController.cs" />
-    <Compile Include="Controllers\MyControllersNS\DiscountNS\DiscountPrecedencesController.cs" />
+    <Compile Include="Controllers\MyControllersNS\EmailNS\DiscountNS\DiscountPrecedencesController.cs" />
     <Compile Include="Controllers\MyControllersNS\PlayersNS\CustomerCategoriesController.cs" />
     <Compile Include="Controllers\MyControllersNS\CashTrxNS\PaymentTermsController.cs" />
     <Compile Include="Controllers\MyControllersNS\CashTrxNS\PaymentMethodsController.cs" />
@@ -298,8 +298,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Content Include="ContentMine\Icons\DownLoad.png" />
+    <Content Include="ContentMine\Icons\Edit.png" />
     <Content Include="ContentMine\Icons\Envelope.png" />
     <Content Include="ContentMine\Icons\Flag.png" />
+    <Content Include="ContentMine\Icons\GarbageCan.png" />
+    <Content Include="ContentMine\Icons\Offer.png" />
+    <Content Include="ContentMine\Icons\plusSign.png" />
+    <Content Include="ContentMine\Icons\SadFace.png" />
     <Content Include="ContentMine\Icons\ShoppingCartIcon-white.png" />
     <Content Include="ContentMine\Icons\ShoppingCartIcon.png" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -310,7 +315,6 @@
     <Content Include="Controllers\Envelope.png" />
     <Content Include="ContentMine\Icons\RotateLeft.png" />
     <Content Include="ContentMine\Icons\RotateRight.png" />
-    <Content Include="ContentMine\Icons\SadFace.png" />
     <Content Include="ContentMine\Icons\smilingFace.png" />
     <Content Include="Content\bootstrap-fileinput\css\fileinput-rtl.css" />
     <Content Include="Content\bootstrap-fileinput\css\fileinput-rtl.min.css" />
@@ -343,7 +347,6 @@
     <Content Include="ContentMine\Icons\Default Green.png" />
     <Content Include="ContentMine\Icons\Default.png" />
     <Content Include="ContentMine\Icons\Default2.png" />
-    <Content Include="ContentMine\Icons\ShoppingCart.png" />
     <Content Include="ContentMine\Icons\VerificationIcons\InProccess.png" />
     <Content Include="ContentMine\Icons\VerificationIcons\Mailed.png" />
     <Content Include="ContentMine\Icons\VerificationIcons\Failed.png" />
@@ -466,12 +469,13 @@
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\MyScripts\IndexScripts0.js" />
-    <Content Include="Scripts\MyScripts\_imageRoatationScript2.js" />
+    <Content Include="Scripts\MyScripts\IndexScripts.js" />
+    <Content Include="Scripts\MyScripts\_imageRoatationScript3.js" />
     <Content Include="Scripts\MyScripts\_imageRoatationScript.js" />
     <Content Include="Scripts\MyScripts\_MyGlobalScripts.js" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Scripts\MyScripts\_ProductScripts.js" />
     <Content Include="Scripts\notifyNS\notify.min.js" />
     <Content Include="Scripts\perpetuum.knockout.js" />
     <Content Include="Scripts\plugins\piexif.js" />
@@ -597,11 +601,32 @@
     <Content Include="Views\SaleOrder\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\SaleOrderSys\_FieldsOnlyEditFormat.cshtml" />
     <Content Include="Views\Shared\test.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\CashTrxs\ShowCashMenu.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial - Copy.cshtml" />
+    <Content Include="Views\CashTrxs\ShowCashMenu_Admin.cshtml" />
+    <Content Include="Views\BuySellDocs\GetSaleOrderTotals.cshtml" />
+    <Content Include="Views\BuySellDocs\GetSaleOrderTotals_Admin.cshtml" />
+    <Content Include="Views\BuySellDocs\GetPurchaseOrderTotals.cshtml" />
+    <Content Include="Views\BuySellDocs\GetPurchaseOrderTotals_Admin.cshtml" />
+    <Content Include="Views\BuySellDocs\ListAllSalesOrders.cshtml" />
+    <Content Include="Views\MenuPath3s\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\MenuPath3s\_ListFeatures.cshtml" />
+    <Content Include="Views\MenuPath3s\AddFeature.cshtml" />
+    <Content Include="Views\MenuPath3s\DeleteFeature.cshtml" />
+    <Content Include="Views\Products\_deleteFeature.cshtml" />
+    <Content Include="Views\BuySellDocs\_ListItems.cshtml" />
+    <Content Include="Views\BuySellItems\_FieldsOnlyEditFormat.cshtml" />
+    <Content Include="Views\BuySellDocs\ListOrders.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmationErrorTEMP.cshtml" />
+    <Content Include="Views\BuySellDocs\SelectDocumentTypeView.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DecimalWithDateComplex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\myCss.css" />
     <Content Include="Controllers\Controller.cd" />
     <Content Include="ContentMine\SetupData\stop-word-list.csv" />
     <None Include="Properties\PublishProfiles\File.pubxml" />
@@ -621,7 +646,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_Layout OLD.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -644,7 +669,6 @@
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\Index.cshtml" />
     <Content Include="Views\Shared\ViewControls\Edit\_EditControls.cshtml" />
     <Content Include="Views\Shared\Details.cshtml" />
@@ -738,6 +762,7 @@
     <Folder Include="ContentMine\Uploads\UserPassportVisa\" />
     <Folder Include="ContentMine\Uploads\UserSelfie\" />
     <Folder Include="Controllers\MyControllersNS\ContactNS\" />
+    <Folder Include="Controllers\MyControllersNS\FeatureNS\MenuFeatureNS\" />
     <Folder Include="fonts\" />
     <Folder Include="Views\Languages\" />
   </ItemGroup>

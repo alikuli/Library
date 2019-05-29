@@ -40,7 +40,10 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             ActionNameENUM actionNameEnum,
             LikeUnlikeParameters likesCounter,
             string productId,
-            string returnUrl)
+            string returnUrl,
+            BuySellDocumentTypeENUM buySellDocumentTypeEnum,
+            BuySellDocStateENUM buySellDocStateEnum
+            )
         {
             Id = id;
             SearchFor = searchFor;
@@ -61,7 +64,14 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             MenuPathMainId = menuPathMainId;
             ProductId = productId;
             ReturnUrl = returnUrl;
+            BuySellDocumentTypeEnum = buySellDocumentTypeEnum;
+            BuySellDocStateEnum = buySellDocStateEnum;
+            //UserPersonId = UserPersonId;
+            //ProductChildPersonId = productChildPersonId;
         }
+
+        public BuySellDocumentTypeENUM BuySellDocumentTypeEnum { get; set; }
+        public BuySellDocStateENUM BuySellDocStateEnum { get; set; }
 
         /// <summary>
         /// If this is true then Menu features will work in the View: _IndexMiddlePart - TiledPictures
@@ -102,7 +112,8 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         //public string ReturnUrl { get; set; }
         public MenuParameters Menu { get; set; }
         public LikeUnlikeParameters LikeUnlikeCounter { get; set; }
-
+        //public string UserPersonId { get; set; }
+        //public string ProductChildPersonId { get; set; }
 
     }
 }

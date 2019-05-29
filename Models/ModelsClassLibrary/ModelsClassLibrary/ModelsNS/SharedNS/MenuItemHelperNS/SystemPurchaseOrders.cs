@@ -136,5 +136,47 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
                 return item;
             }
         }
+
+
+
+        //----------------------------------------------------------------
+
+
+        static decimal _systemCreditPurchaseOrdersInMoney;
+        static double _systemCreditPurchaseOrdersInQuantity;
+        public IMenuItemHelper Credit
+        {
+            get
+            {
+                SystemCreditPurchaseOrders item = new SystemCreditPurchaseOrders(_systemCreditPurchaseOrdersInMoney, _systemCreditPurchaseOrdersInQuantity);
+                return item;
+            }
+        }
+        //----------------------------------------------------------------
+
+
+        static decimal _systemQuotationPurchaseOrdersInMoney;
+        static double _systemQuotationPurchaseOrdersInQuantity;
+        public IMenuItemHelper Quotation
+        {
+            get
+            {
+                SystemQuotationPurchaseOrders item = new SystemQuotationPurchaseOrders(_systemQuotationPurchaseOrdersInMoney, _systemQuotationPurchaseOrdersInQuantity);
+                return item;
+            }
+        }
+        //----------------------------------------------------------------
+
+
+        public IMenuItemHelper Total
+        {
+            get
+            {
+                decimal total_PurchaseOrders_Money = 0;
+                double total_PurchaseOrders_Qty = 0;
+                SystemTotalPurchaseOrders item = new SystemTotalPurchaseOrders(total_PurchaseOrders_Money, total_PurchaseOrders_Qty);
+                return item;
+            }
+        }
     }
 }

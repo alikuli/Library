@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -30,6 +28,37 @@ namespace AliKuli.Extentions
             sb.Append(string.Format("</div>"));
 
             return new MvcHtmlString(sb.ToString());
+        }
+
+        /// <summary>
+        /// https://www.ryadel.com/en/asp-net-mvc-dinamically-set-htmlattributes-razor-html-helpers-readonly/
+        /// Gets an object containing a htmlAttributes collection for any Razor HTML helper component,
+        /// supporting a static set (anonymous object) and/or a dynamic set (Dictionary)
+        /// </summary>
+        /// <param name="fixedHtmlAttributes">A fixed set of htmlAttributes (anonymous object)</param>
+        /// <param name="dynamicHtmlAttributes">A dynamic set of htmlAttributes (Dictionary)</param>
+        /// <returns>A collection of htmlAttributes including a merge of the given set(s)</returns>
+        /// 
+        ///It can be used in the following way:
+
+        /// var dic = new Dictionary<string,object>();
+        /// if (IsReadOnly()) dic.Add("readonly", "readonly");
+        /// Html.TextBoxFor(m => m.Name, GetHtmlAttributes(new { @class="someclass" }, dic))
+        /// 
+        public static IDictionary<string, object> GetHtmlAttributes(
+            object fixedHtmlAttributes = null,
+            IDictionary<string, object> dynamicHtmlAttributes = null
+            )
+        {
+            var rvd = (fixedHtmlAttributes == null)
+                ? new RouteValueDictionary()
+                : HtmlHelper.AnonymousObjectToHtmlAttributes(fixedHtmlAttributes);
+            if (dynamicHtmlAttributes != null)
+            {
+                foreach (KeyValuePair<string, object> kvp in dynamicHtmlAttributes)
+                    rvd[kvp.Key] = kvp.Value;
+            }
+            return rvd;
         }
 
         //public static IHtmlString TextBoxEmailBoot4(this HtmlHelper helper)

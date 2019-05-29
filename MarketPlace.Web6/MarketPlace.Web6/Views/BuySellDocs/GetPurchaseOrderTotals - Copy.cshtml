@@ -1,0 +1,89 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.MoneyAndCountClass.MoneyItemParent
+
+@{
+    ViewBag.Title = "ShowCashMenu";
+
+
+    //Total Purchase
+    string userTotalPurchaseOrdersMenuItem = Model.Purchase.All.MenuName;
+    string userTotalPurchaseToolTip = Model.Purchase.All.MenuToolTip;
+    string userTotalPurchase_Path = Url.Action("ListAllPurchasesOrders", "BuySellDocs");
+
+    //In Proccess
+    string userInProccessOrdersMenuItem = Model.Purchase.InProccess.MenuName;
+    string userInProccessOrdersToolTip = Model.Purchase.InProccess.MenuToolTip;
+    string userInProccessOrders_Path = Url.Action("List_InProccess_PurchasesOrders", "BuySellDocs");
+
+    //Requests
+    string userRequestsMenuItem = Model.Purchase.RequestUnconfirmed.MenuName;
+    string userRequestsToolTip = Model.Purchase.RequestUnconfirmed.MenuToolTip;
+    string userRequests_Path = Url.Action("List_Request_PurchasesOrders", "BuySellDocs");
+
+    //Confirmed By Buyer
+    string userConfirmedByBuyersMenuItem = Model.Purchase.ConfirmedBySeller.MenuName;
+    string userConfirmedByBuyersToolTip = Model.Purchase.ConfirmedBySeller.MenuToolTip;
+    string userConfirmedByBuyers_Path = Url.Action("List_ConfirmedByBuyer_Purchase", "BuySellDocs");
+
+    //Confirmed By Courier
+    string userConfirmedByCouriersMenuItem = Model.Purchase.ConfirmedByCourier.MenuName;
+    string userConfirmedByCouriersToolTip = Model.Purchase.ConfirmedByCourier.MenuToolTip;
+    string userConfirmedByCouriers_Path = Url.Action("List_ConfirmedByCourier_Purchase", "BuySellDocs");
+
+    //Ready For Shipment
+    string userReadyForShipmentsMenuItem = Model.Purchase.ReadyForShipment.MenuName;
+    string userReadyForShipmentsToolTip = Model.Purchase.ReadyForShipment.MenuToolTip;
+    string userReadyForShipments_Path = Url.Action("List_ReadyForShipment_Purchase", "BuySellDocs");
+
+    //Picked Up
+    string userPickedUpsMenuItem = Model.Purchase.PickedUp.MenuName;
+    string userPickedUpsToolTip = Model.Purchase.PickedUp.MenuToolTip;
+    string userPickedUps_Path = Url.Action("List_PickedUp_Purchase", "BuySellDocs");
+
+    //Delivered
+    string userDeliveredsMenuItem = Model.Purchase.Delivered.MenuName;
+    string userDeliveredsToolTip = Model.Purchase.Delivered.MenuToolTip;
+    string userDelivereds_Path = Url.Action("List_Delivered_Purchase", "BuySellDocs");
+
+    //Rejected
+    string userRejectedsMenuItem = Model.Purchase.Rejected.MenuName;
+    string userRejectedsToolTip = Model.Purchase.Rejected.MenuToolTip;
+    string userRejecteds_Path = Url.Action("List_Rejected_Purchase", "BuySellDocs");
+
+    //Problem
+    string userProblemsMenuItem = Model.Purchase.Problem.MenuName;
+    string userProblemsToolTip = Model.Purchase.Problem.MenuToolTip;
+    string userProblems_Path = Url.Action("List_Problem_Purchase", "BuySellDocs");
+}
+
+<h2 class="text-info">Purchase Orders</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container p-3 ">
+        <hr />
+
+        <a class="btn btn-lg btn-default w-100" href="@userTotalPurchase_Path " data-toggle=" tooltip" title="@userTotalPurchaseToolTip" data-placement="left">@userTotalPurchaseOrdersMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default  w-100" href="@userInProccessOrders_Path" data-toggle=" tooltip" title="@userInProccessOrdersToolTip" data-placement="left">@userInProccessOrdersMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default w-100" href="@userRequests_Path " data-toggle=" tooltip" title="@userRequestsToolTip" data-placement="left">@userRequestsMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default w-100" href="@userConfirmedByBuyers_Path " data-toggle=" tooltip" title="@userConfirmedByBuyersToolTip" data-placement="left">@userConfirmedByBuyersMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default w-100" href="@userReadyForShipments_Path " data-toggle=" tooltip" title="@userReadyForShipmentsToolTip" data-placement="left">@userReadyForShipmentsMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default w-100" href="@userConfirmedByCouriers_Path " data-toggle=" tooltip" title="@userConfirmedByCouriersToolTip" data-placement="left">@userConfirmedByCouriersMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default w-100" href="@userPickedUps_Path " data-toggle=" tooltip" title="@userPickedUpsToolTip" data-placement="left">@userPickedUpsMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default w-100" href="@userDelivereds_Path " data-toggle=" tooltip" title="@userDeliveredsToolTip" data-placement="left">@userDeliveredsMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default w-100" href="@userRejecteds_Path " data-toggle=" tooltip" title="@userRejectedsToolTip" data-placement="left">@userRejectedsMenuItem</a>
+        <br />
+        <a class="btn btn-lg btn-default w-100" href="@userProblems_Path " data-toggle=" tooltip" title="@userProblemsToolTip" data-placement="left">@userProblemsMenuItem</a>
+    </div>
+    <br />
+}
+

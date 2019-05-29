@@ -36,7 +36,7 @@ namespace UowLibrary.MenuNS
             mp2.IsNullThrowException("Unable to unbox");
             //send in a MenuPathMain that is a part of this MenuPath2
             MenuPathMain mpm = mp2.MenuPathMains.FirstOrDefault();
-            indexItem.MenuManager = new MenuManager(mpm, null, null, MenuENUM.EditMenuPath2, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl);
+            indexItem.MenuManager = new MenuManager(mpm, null, null, MenuENUM.EditMenuPath2, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
 
 
             indexItem.MenuManager.PictureAddresses = GetPictureList(mp2);

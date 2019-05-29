@@ -34,6 +34,8 @@ namespace MarketPlace.Web6.Controllers
         {
             get
             {
+                _menupathmainBiz.UserId = UserId;
+                _menupathmainBiz.UserName = UserName;
                 return _menupathmainBiz;
             }
         }
@@ -47,8 +49,19 @@ namespace MarketPlace.Web6.Controllers
             return base.Event_CreateViewAndSetupSelectList(parm);
         }
 
+        //public ActionResult CreateMenuPathMain(string isandForSearch, MenuENUM menuEnum = MenuENUM.CreateDefault, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, bool isMenu = false, string parentId = "")
+        //{
+        //    return base.Create(isandForSearch, menuEnum, productChildId, menuPathMainId, productId, returnUrl, sortBy, searchFor, selectedId, print, isMenu, parentId);
+        //}
+        //public async System.Threading.Tasks.Task<ActionResult> CreateMenuPathMain(string MenuPath1Id, string MenuPath2Id, string MenuPath3Id, string returnUrl, System.Web.HttpPostedFileBase[] httpMiscUploadedFiles = null, System.Web.HttpPostedFileBase[] httpSelfieUploads = null, System.Web.HttpPostedFileBase[] httpIdCardFrontUploads = null, System.Web.HttpPostedFileBase[] httpIdCardBackUploads = null, System.Web.HttpPostedFileBase[] httpPassportFrontUploads = null, System.Web.HttpPostedFileBase[] httpPassportVisaUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseFrontUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseBackUploads = null, EnumLibrary.EnumNS.SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch = "", EnumLibrary.EnumNS.MenuENUM menuEnum = MenuENUM.CreateDefault, FormCollection fc = null)
+        //{
+        //    MenuPathMain entity = MenuPathMainBiz.Factory() as MenuPathMain;
+        //    entity.MenuPath1Id = MenuPath1Id;
+        //    entity.MenuPath2Id = MenuPath2Id;
+        //    entity.MenuPath3Id = MenuPath3Id;
 
-
+        //    return await base.Create(entity, returnUrl, httpMiscUploadedFiles, httpSelfieUploads, httpIdCardFrontUploads, httpIdCardBackUploads, httpPassportFrontUploads, httpPassportVisaUploads, httpLiscenseFrontUploads, httpLiscenseBackUploads, sortBy, searchFor, selectedId, print, isandForSearch, menuEnum, fc);
+        //}
 
     }
 }

@@ -1,9 +1,7 @@
 ﻿using AliKuli.Extentions;
-using AliKuli.UtilitiesNS;
-using BreadCrumbsLibraryNS.Programs;
-using ErrorHandlerLibrary;
 using MarketPlace.Web4.Controllers;
 using Microsoft.AspNet.Identity.Owin;
+using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsNS.Models;
 using System;
 using System.Reflection;
@@ -11,24 +9,42 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.ParametersNS;
-using UowLibrary.PageViewNS;
+using UowLibrary.PlayersNS.PersonNS;
+using UserModels;
 namespace MarketPlace.Web6.Controllers
 {
     [Authorize]
     public class AccountController : AbstractController
     {
         UserBiz _userBiz;
-        public AccountController(UserBiz userBiz, AbstractControllerParameters param)
-            : base(param) 
+        PersonBiz _personBiz;
+        public AccountController(UserBiz userBiz, PersonBiz personBiz, AbstractControllerParameters param)
+            : base(param)
         {
             _userBiz = userBiz;
+            _personBiz = personBiz;
         }
 
 
 
 
         UserBiz UserBiz { get { return _userBiz; } }
+        PersonBiz PersonBiz
+        {
+            get
+            {
+                //we need to do this because we are fooling the program in
+                //register post. If we dont do this, the program reverts to
+                //null
+                if (_personBiz.UserId.IsNull())
+                {
+                    _personBiz.UserId = UserId;
+                    _personBiz.UserName = UserName;
+                }
 
+                return _personBiz;
+            }
+        }
 
         #region Log In
 
@@ -161,15 +177,47 @@ namespace MarketPlace.Web6.Controllers
             {
                 try
                 {
-                    await UserBiz.RegisterAsync(model);
+                    ApplicationUser theUser = await UserBiz.RegisterAsync(model);
+
+                    //now create a person for this user as well.
+                    if (!theUser.IsNull())
+                    {
+                        //first check to see if a person already exists... it should not.
+                        //locate person with same name.
+
+                        Person person = PersonBiz.FindByName(theUser.UserName);
+
+                        if (person.IsNull())
+                        {
+                            //create person
+                            //we need to fool the program by adding the username and userid to the personbiz
+                            //so it thinks it is logged in
+
+                            PersonBiz.UserId = theUser.Id;
+                            PersonBiz.UserName = theUser.UserName;
+
+                            person = PersonBiz.Factory() as Person;
+                            person.Name = theUser.UserName;
+                            theUser.PersonId = person.Id;
+                            PersonBiz.CreateAndSave(person);
+                        }
+                        else
+                        {
+                            theUser.PersonId = person.Id;
+                            UserBiz.SaveChanges();
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
                     ErrorsGlobal.Add("Registration failed", MethodBase.GetCurrentMethod(), e);
                     ErrorsGlobal.MemorySave();
-                    return RedirectToLocal("");
+
                     //return RedirectToAction("Index", "Home");
                 }
+
+
+
                 return RedirectToLocal("");
 
                 //return RedirectToAction("Index", "Home");
@@ -208,7 +256,9 @@ namespace MarketPlace.Web6.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
-            return View();
+            ForgotPasswordViewModel model = new ForgotPasswordViewModel();
+            model.CountrySelectList = UserBiz.CountryBiz.SelectList();
+            return View(model);
         }
 
         //
@@ -218,22 +268,75 @@ namespace MarketPlace.Web6.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
+            model.CountrySelectList = UserBiz.CountryBiz.SelectList();
+
             if (ModelState.IsValid)
             {
 
-                if (!(await UserBiz.IsUserConfirmedThenGenerateCode(model)))
+                if ((await UserBiz.IsEmailConfirmed(model)))
+                    return await sendEmailForResettingPassword(UserBiz.AppUser.Id, UserBiz.Code);
+
+
+                if ((await UserBiz.IsUserNameFound(model)))
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+
+                    //addDataOFErrors();
+
+                    return await sendEmailForResettingPassword(UserBiz.AppUser.Id, UserBiz.Code);
                 }
 
-                UserBiz.CallBackUrl = Url.Action("ResetPassword", "Account", new { userId = UserBiz.AppUser.Id, code = UserBiz.Code }, protocol: Request.Url.Scheme);
-                await UserBiz.SendendEmailToConfirmedUserAndUrlAsync();
-                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+
+                if (model.IsPhoneOrCountryIsEmpty)
+                {
+                    if (model.Phone.IsNullOrWhiteSpace())
+                        ModelState.AddModelError("phone", "The phone number is empty. Please add the number");
+
+                    if (model.CountryId.IsNullOrWhiteSpace())
+                        ModelState.AddModelError("countryId", "Select a country for the phone number please.");
+
+                    //addDataOFErrors();
+                    return View(model);
+
+                }
+                else
+                {
+                    if ((await UserBiz.IsPhoneConfirmed(model)))
+                    {
+                        return await sendEmailForResettingPassword(UserBiz.AppUser.Id, UserBiz.Code);
+                    }
+                }
+
+                //if (true)
+                //{
+                //    //addDataOFErrors();
+                //    return View(model);
+                //}
+                // Don't reveal that the user does not exist or is not confirmed
+                return View("ForgotPasswordConfirmationErrorTEMP");
+
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        //private void addDataOFErrors()
+        //{
+        //    if (!UserBiz.MessageCollector.IsNullOrEmpty())
+        //    {
+        //        foreach (string item in UserBiz.MessageCollector)
+        //        {
+        //            ModelState.AddModelError("", item);
+        //        }
+
+        //    }
+        //}
+
+        private async Task<ActionResult> sendEmailForResettingPassword(string userId, string code)
+        {
+            UserBiz.CallBackUrl = Url.Action("ResetPassword", "Account", new { userId = UserBiz.AppUser.Id, code = UserBiz.Code }, protocol: Request.Url.Scheme);
+            await UserBiz.SendendEmailToConfirmedUserAndUrlAsync();
+            return RedirectToAction("ForgotPasswordConfirmation", "Account");
         }
 
         //
@@ -252,9 +355,22 @@ namespace MarketPlace.Web6.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
+        public ActionResult ResetPassword(string code, string userId)
         {
-            return code == null ? View("Error") : View();
+            ResetPasswordViewModel model = new ResetPasswordViewModel();
+
+            if (!userId.IsNullOrWhiteSpace())
+            {
+                ApplicationUser user = UserBiz.Find(userId);
+                if (!user.IsNull())
+                {
+                    model.Email = user.Email;
+                    model.Phone = user.PhoneNumber;
+                    model.UserName = user.UserName;
+                }
+            }
+            model.Code = code;
+            return code == null ? View("Error") : View(model);
         }
 
 

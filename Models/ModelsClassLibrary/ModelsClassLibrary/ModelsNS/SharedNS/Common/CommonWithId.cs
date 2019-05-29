@@ -1,4 +1,5 @@
 ﻿using AliKuli.Extentions;
+using AliKuli.UtilitiesNS;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
@@ -16,7 +17,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
     /// </summary>
     public abstract class CommonWithId : ICommonWithId, IIndexListItems, IFieldsToLoadFromView
     {
-
         /// <summary>
         /// If true, then duplicates are allowed.
         /// </summary>
@@ -29,20 +29,24 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             Id = CreateNewId();
             DetailInfoToDisplayOnWebsite = "";
             Comment = "";
+            HeadingForCreateForm = this.ClassName.ToString().ToTitleSentance();
 
         }
 
-        ///// <summary>
-        ///// Marked true if creating
-        ///// </summary>
-        //[NotMapped]
-        //public bool IsCreating { get; set; }
+        /// <summary>
+        /// Marked true if creating
+        /// </summary>
+        [NotMapped]
+        public bool IsCreating { get; set; }
 
-        ///// <summary>
-        ///// Marked true if deleting
-        ///// </summary>
-        //[NotMapped]
-        //public bool IsDeleting { get; set; }
+        /// <summary>
+        /// Marked true if deleting
+        /// </summary>
+        [NotMapped]
+        public bool IsDeleting { get; set; }
+
+        [NotMapped]
+        public bool IsEditing { get; set; }
 
 
         /// <summary>
@@ -324,10 +328,22 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
 
         [NotMapped]
-        public string DefaultDisplayImage { get { return AliKuli.ConstantsNS.MyConstants.DEFAULT_IMAGE_LOCATION; } }
+        public string DefaultDisplayImage
+        {
+            get
+            {
+                return ConfigManagerHelper.DefaultBlankPicture;
+            }
+        }
 
 
 
+        /// <summary>
+        /// This is the heading in the Create form. Usually this will be Model.ClassName.ToString().ToTitleSentance()
+        /// </summary>
+        [NotMapped]
+
+        public string HeadingForCreateForm { get; set; }
     }
 
 }

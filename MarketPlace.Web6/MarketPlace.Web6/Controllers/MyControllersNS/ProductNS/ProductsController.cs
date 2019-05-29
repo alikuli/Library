@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
+using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeatureNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
@@ -75,6 +76,7 @@ namespace MarketPlace.Web6.Controllers
             _productBiz.LoadMenuPathCheckedBoxes(parm);
             _productBiz.FixProductFeatures(product);
 
+
             //product.ParentSelectList = _productBiz.SelectList_ForParent(parm.Entity);
             product.SelectListUomPurchase = _productBiz.SelectList_UomPurchaseQty();
             product.SelectListUomVolume = _productBiz.SelectList_UomVolume();
@@ -93,9 +95,24 @@ namespace MarketPlace.Web6.Controllers
                 product.ShowApproveButton = ProductApproverBiz.IsApprover(UserId);
 
             }
+
+            if (parm.Entity.MenuManager.IsCreate)
+            {
+                //this controls where the product Create returns.
+                //product.MenuManager.ReturnUrl = Url.Action("Index", "Products", new { menuEnum = MenuENUM.IndexMenuProduct });
+
+                //the return URl is correct when in the Menu
+
+                if (product.MenuManager.ReturnUrl.IsNullOrWhiteSpace())
+                    product.MenuManager.ReturnUrl = Url.Action("Index", "Menus", new { menuEnum = MenuENUM.IndexMenuPath1 });
+
+                ProductBiz.FixMenuPaths(parm);
+
+            }
             return base.Event_CreateViewAndSetupSelectList(parm);
 
         }
+
 
         [Authorize]
         public async Task<ActionResult> UnapprovedProducts(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, MenuENUM menuEnum = MenuENUM.IndexDefault, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "")
@@ -122,6 +139,8 @@ namespace MarketPlace.Web6.Controllers
             }
         }
 
+
+
         [Authorize(Roles = "Administrator")]
         public ActionResult MarkAllProductsApprovedUtility()
         {
@@ -129,6 +148,8 @@ namespace MarketPlace.Web6.Controllers
             YesParameter yesParam = new YesParameter("Do you want to approve all the products?", returnUrl, false);
             return View(yesParam);
         }
+
+
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
@@ -152,6 +173,71 @@ namespace MarketPlace.Web6.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+
+        public ActionResult AddFeature(string id, string parentName, string returnUrl)
+        {
+            id.IsNullOrWhiteSpaceThrowArgumentException("Id");
+            parentName.IsNullOrWhiteSpaceThrowArgumentException("parentName");
+            returnUrl.IsNullOrWhiteSpaceThrowArgumentException("returnUrl");
+
+
+            ProductFeature productFeature = new ProductFeature();
+
+            //MenuFeatureModel menuFeatureModel = new MenuFeatureModel();
+            //menuFeatureModel.ParentId = id;
+            //menuFeatureModel.ParentName = parentName;
+            //menuFeatureModel.SelectListFeature = MenuFeatureBiz.SelectList();
+            //menuFeatureModel.ReturnUrl = returnUrl;
+            return View(productFeature);
+        }
+
+        public ActionResult CreateNewFeature(string productId, string returnUrl)
+        {
+            productId.IsNullOrWhiteSpaceThrowArgumentException("productId");
+            returnUrl.IsNullOrWhiteSpaceThrowArgumentException("returnUrl");
+
+            CreateNewFeatureModel createNewFeatureModel = new CreateNewFeatureModel();
+            createNewFeatureModel.ParentId = productId;
+            createNewFeatureModel.ReturnUrl = returnUrl;
+
+            return View(createNewFeatureModel);
+
+        }
+
+
+
+        [HttpPost]
+        public ActionResult CreateNewFeature(CreateNewFeatureModel createNewFeatureModel)
+        {
+
+            try
+            {
+                createNewFeatureModel.IsNullThrowException("createNewFeatureModel");
+                ProductBiz.CreateNewFeature(createNewFeatureModel);
+
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), e);
+            }
+            if (createNewFeatureModel.ReturnUrl.IsNullOrWhiteSpace())
+                return View("Index");
+
+            return Redirect(createNewFeatureModel.ReturnUrl);
+
+        }
+
+
+
+        public override void Event_BeforeSaveInCreateAndEdit(ControllerCreateEditParameter parm)
+        {
+            base.Event_BeforeSaveInCreateAndEdit(parm);
+            string orignalReturnUrl = parm.ReturnUrl;
+            parm.ReturnUrl = Url.Action("Edit", "Products", new { id = parm.Entity.Id, returnUrl = orignalReturnUrl });
+        }
+
+
 
 
         //public ActionResult AddFeature(string id, string parentName, string returnUrl)

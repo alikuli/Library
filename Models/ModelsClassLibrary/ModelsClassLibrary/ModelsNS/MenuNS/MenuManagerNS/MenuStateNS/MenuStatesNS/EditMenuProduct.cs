@@ -8,8 +8,9 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 {
     public class EditMenuProduct : MenuStateAbstract
     {
-        public EditMenuProduct(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter)
-            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
+        public EditMenuProduct(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter, string userId, string userName)
+            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter, userId, userName) { }
+
 
 
         public override MenuENUM EditLink_MenuEnum

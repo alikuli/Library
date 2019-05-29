@@ -55,7 +55,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             PassportVisa.HttpBase = httpPassportVisa;
             LiscenseFront.HttpBase = httpLiscenseFront;
             LiscenseBack.HttpBase = httpLiscenseBack;
-
+            ReturnUrl = returnUrl;
             UserName = userName;
             UserId = userId;
             MenuParameters = new MenuParameters(menuEnum, Entity.Id);
@@ -66,12 +66,16 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public string UserName { get; set; }
         public string UserId { get; set; }
 
+        public string ReturnUrl { get; set; }
         public MenuParameters MenuParameters { get; set; }
         public ControllerIndexParams ConvertToControllerIndexParams()
         {
             ControllerIndexParams cip = new ControllerIndexParams();
             cip.Entity = Entity;
             cip.Menu = MenuParameters;
+            cip.UserId = UserId;
+            cip.UserName = UserName;
+            cip.ReturnUrl = ReturnUrl;
             return cip;
         }
 

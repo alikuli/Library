@@ -1,100 +1,96 @@
 ﻿@using Microsoft.AspNet.Identity
 
 @{
+    //ViewBag.MoneyItemParent
 
     //ToolTips
     //string refundableToolTipViewBag = ViewBag.RefundableToolTipViewBag as string;
     ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount ?? new ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount();
 
-    string amountRefundableMenuItem = moneyAccount.PersonCash.Refundable.MenuItem;
-    string amountRefundableToolTip = moneyAccount.PersonCash.Refundable.ToolTip;
-    string amountRefundableMenu_Path = Url.Action("DebitCredit_Refundable", "CashTrxs").ToString(); ;
-    //string amountRefundable = moneyAccount.PersonCash.Refundable.a;
+    ModelsClassLibrary.ModelsNS.DocumentsNS.MoneyAndCountClass.MoneyItemParent moneyItemParent = ViewBag.MoneyItemParent as ModelsClassLibrary.ModelsNS.DocumentsNS.MoneyAndCountClass.MoneyItemParent ?? new ModelsClassLibrary.ModelsNS.DocumentsNS.MoneyAndCountClass.MoneyItemParent();
 
-    string amountNotRefundableMenuItem = moneyAccount.PersonCash.NonRefundable.MenuItem;
-    string amountNotRefundableToolTip = moneyAccount.PersonCash.NonRefundable.ToolTip;
-    string amountNotRefundableMenu_Path = Url.Action("DebitCredit_NonRefundable", "CashTrxs").ToString();
-    //string amountNotRefundable = moneyAccount.AmountNonRefundableStr;
+    //string cashPath = @Url.Action("ShowCashMenu", "CashTrxs");
+    //string cashPath_Admin = @Url.Action("ShowCashMenu_Admin", "CashTrxs");
+
 
     string amountRefundableAndNonRefundableMenuItem = moneyAccount.PersonCash.Total.MenuItem;
     string amountRefundableAndNonRefundableToolTip = moneyAccount.PersonCash.Total.ToolTip;
-    string amountRefundableAndNonRefundable_Path = Url.Action("DebitCredit_TotalRefundableAndNonRefundable", "CashTrxs").ToString(); ;
+    string amountRefundableAndNonRefundable_Path = @Url.Action("ShowCashMenu", "CashTrxs");
     string amountRefundableAndNonRefundable = moneyAccount.PersonCash.Total_AmountOnly.MenuItem;
 
+    string systemCashCreatedMenuItem = moneyAccount.SystemCash.Total.MenuItem;
+    string systemCashCreatedToolTip = moneyAccount.SystemCash.Total.ToolTip;
+    string systemCashCreated_Path = @Url.Action("ShowCashMenu_Admin", "CashTrxs");
 
-    string totalCashCreated_RefundableMenuItem = moneyAccount.SystemCash.Refundable.MenuItem;
-    string totalCashCreated_RefundableToolTip = moneyAccount.SystemCash.Refundable.ToolTip;
-    string totalCashCreated_Refundable_Path = Url.Action("DebitCredit_Refundable_Created", "CashTrxs");
+    //-----------------------------------------------------Sale Requests - fix
+
+    //string systemTotalSaleRequestsMenuItem = moneyAccount.SystemSalesOrders.Total.MenuItem;
+    //string systemTotalSaleRequestToolTip = moneyAccount.SystemSalesOrders.Total.ToolTip;
+    //string systemTotalSaleRequest_Admin = @Url.Action("GetSaleOrderTotals_Admin", "BuySellDocs");
+
+    //string personTotalSaleRequestMenuItem = moneyAccount.PersonSalesOrders.Total.MenuItem;
+    //string personTotalSaleRequestToolTip = moneyAccount.PersonSalesOrders.Total.ToolTip;
+    //string personTotalSaleRequestPath = @Url.Action("c", "BuySellDocs");
+
+    string systemTotalSaleRequestsMenuItem = moneyItemParent.Sale_Admin == null ? "" : moneyItemParent.Sale_Admin.RequestUnconfirmed.MenuName;
+    string systemTotalSaleRequestToolTip = moneyItemParent.Sale_Admin == null ? "" : moneyItemParent.Sale_Admin.RequestUnconfirmed.MenuToolTip;
+    string systemTotalSaleRequest_Admin = moneyItemParent.Sale_Admin == null ? "" : @Url.Action("GetSaleOrderTotals_Admin", "BuySellDocs");
+
+    string personTotalSaleRequestMenuItem = moneyItemParent.Sale == null ? "" : moneyItemParent.Sale.RequestUnconfirmed.MenuName;
+    string personTotalSaleRequestToolTip = moneyItemParent.Sale == null ? "" : moneyItemParent.Sale.RequestUnconfirmed.MenuToolTip;
+    string personTotalSaleRequestPath = @Url.Action("GetSaleOrderTotals", "BuySellDocs");
 
 
-    string totalCashCreated_NonRefundableMenuItem = moneyAccount.SystemCash.NonRefundable.MenuItem;
-    string totalCashCreated_NonRefundableToolTip = moneyAccount.SystemCash.NonRefundable.ToolTip;
-    string totalCashCreated_NonRefundable_Path = Url.Action("DebitCredit_NonRefundable_Created", "CashTrxs");
+    //-----------------------------------------------------Sale Confirmed - fix
 
+    string systemTotalSaleConfirmedsMenuItem = moneyAccount.SystemSalesOrders.Total.MenuItem;
+    string systemTotalSaleConfirmedToolTip = moneyAccount.SystemSalesOrders.Total.ToolTip;
+    string systemTotalSaleConfirmed_Admin = @Url.Action("GetSaleOrderTotals_Admin", "BuySellDocs");
+
+    string personTotalSaleConfirmedMenuItem = moneyAccount.PersonSalesOrders.Total.MenuItem;
+    string personTotalSaleConfirmedToolTip = moneyAccount.PersonSalesOrders.Total.ToolTip;
+    string personTotalSaleConfirmedPath = @Url.Action("GetSaleOrderTotals", "BuySellDocs");
+    //-----------------------------------------------------Sale Please Pickup,,,,,,,,,,,,,,,,, - fix
+
+    string systemTotalPleasePickupsMenuItem = moneyAccount.SystemSalesOrders.Total.MenuItem;
+    string systemTotalPleasePickupToolTip = moneyAccount.SystemSalesOrders.Total.ToolTip;
+    string systemTotalPleasePickup_Admin = @Url.Action("GetSaleOrderTotals_Admin", "BuySellDocs");
+
+    string personTotalPleasePickupMenuItem = moneyAccount.PersonSalesOrders.Total.MenuItem;
+    string personTotalPleasePickupToolTip = moneyAccount.PersonSalesOrders.Total.ToolTip;
+    string personTotalPleasePickupPath = @Url.Action("GetSaleOrderTotals", "BuySellDocs");
+    //-----------------------------------------------------Sale Orders
+
+    //string systemTotalSaleOrdersMenuItem = moneyAccount.SystemSalesOrders.Total.MenuItem;
+    //string systemTotalSaleToolTip = moneyAccount.SystemSalesOrders.Total.ToolTip;
+    //string systemTotalSale_Admin = @Url.Action("GetSaleOrderTotals_Admin", "BuySellDocs");
+    string systemTotalSaleOrdersMenuItem = moneyItemParent.Sale_Admin.All.MenuName;
+    string systemTotalSaleToolTip = moneyItemParent.Sale_Admin.All.MenuToolTip;
+    string systemTotalSale_Admin = @Url.Action("GetSaleOrderTotals_Admin", "BuySellDocs");
+
+    //string personTotalSaleOrdersMenuItem = moneyAccount.PersonSalesOrders.Total.MenuItem;
+    //string personTotalSaleOrdersToolTip = moneyAccount.PersonSalesOrders.Total.ToolTip;
+    //string personTotalSaleOrdersPath = @Url.Action("GetSaleOrderTotals", "BuySellDocs");
+
+    string personTotalSaleOrdersMenuItem = moneyItemParent.Sale == null ? "" : moneyItemParent.Sale.All.MenuName;
+    string personTotalSaleOrdersToolTip = moneyItemParent.Sale == null ? "" : moneyItemParent.Sale.All.MenuToolTip; ;
+    string personTotalSaleOrdersPath = @Url.Action("GetSaleOrderTotals", "BuySellDocs");
+
+    //-----------------------------------------------------Purchase Orders
+
+    //string personTotalPurchaseOrdersMenuItem = moneyAccount.PersonPurchaseOrders.Total.MenuItem;
+    //string personTotalPurchaseOrdersToolTip = moneyAccount.PersonPurchaseOrders.Total.ToolTip;
+    //string personTotalPurchaseOrders_Path = Url.Action("GetPurchaseOrderTotals", "BuySellDocs");
+
+    string personTotalPurchaseOrdersMenuItem = moneyItemParent.Purchase.All.MenuName;
+    string personTotalPurchaseOrdersToolTip = moneyItemParent.Purchase.All.MenuToolTip;
+    string personTotalPurchaseOrders_Path = Url.Action("GetPurchaseOrderTotals", "BuySellDocs");
     
-    string totalCashCreatedMenuItem = moneyAccount.SystemCash.Total.MenuItem;
-    string totalCashCreatedToolTip = moneyAccount.SystemCash.Total.ToolTip;
-    string totalCashCreated_Path = Url.Action("DebitCredit_NonRefundable_And_Refundable_Created", "CashTrxs");
-
-    string totalOpenOrdersMenuItem = moneyAccount.SystemSalesOrders.Open.MenuItem;
-    string totalOpenOrdersToolTip = moneyAccount.SystemSalesOrders.Open.ToolTip;
-    string totalOpenOrders_Path = Url.Action("index", "SaleOrders");
-    //string totalOpenOrders_searchStringForIndex = moneyAccount.TotalOpenOrdersInMoneyMenu.SearchStringForIndex;
-
-
-    string totalClosedOrdersMenuItem = moneyAccount.SystemSalesOrders.Closed.MenuItem;
-    string totalClosedOrdersToolTip = moneyAccount.SystemSalesOrders.Closed.ToolTip;
-    string totalClosedOrders_Path = "";
-
-
-
-    string totalInProccessOrdersMenuItem = moneyAccount.SystemSalesOrders.InProccesss.MenuItem;
-    string totalInProccessOrdersToolTip = moneyAccount.SystemSalesOrders.InProccesss.ToolTip;
-    string totalInProccessOrders_Path = "";
-
-
-    string totalCanceledOrdersMenuItem = moneyAccount.SystemSalesOrders.Canceled.MenuItem;
-    string totalCanceledOrdersToolTip = moneyAccount.SystemSalesOrders.Canceled.ToolTip;
-    string totalCanceledOrders_Path = "";
-
-
-    string totalBackOrdersMenuItem = moneyAccount.SystemSalesOrders.BackOrdered.MenuItem;
-    string totalBackOrdersToolTip = moneyAccount.SystemSalesOrders.BackOrdered.ToolTip;
-    string totalBackOrders_Path = "";
-
-
-
-
-
-
-
-
-    string userOpenOrdersMenuItem = moneyAccount.PersonSalesOrders.Open.MenuItem;
-    string userOpenOrdersToolTip = moneyAccount.PersonSalesOrders.Open.ToolTip;
-    string userOpenOrders_Path = Url.Action("index", "SaleOrders");
-
-
-    string userClosedOrdersMenuItem = moneyAccount.PersonSalesOrders.Closed.MenuItem;
-    string userClosedOrdersToolTip = moneyAccount.PersonSalesOrders.Closed.ToolTip;
-    string userClosedOrders_Path = "";
-
-
-
-    string userInProccessOrdersMenuItem = moneyAccount.PersonSalesOrders.InProccesss.MenuItem;
-    string userInProccessOrdersToolTip = moneyAccount.PersonSalesOrders.InProccesss.ToolTip;
-    string userInProccessOrders_Path = "";
-
-
-    string userCanceledOrdersMenuItem = moneyAccount.PersonSalesOrders.Canceled.MenuItem;
-    string userCanceledOrdersToolTip = moneyAccount.PersonSalesOrders.Canceled.ToolTip;
-    string userCanceledOrders_Path = "";
-
-
-    string userBackOrdersMenuItem = moneyAccount.PersonSalesOrders.BackOrdered.MenuItem;
-    string userBackOrdersToolTip = moneyAccount.PersonSalesOrders.BackOrdered.ToolTip;
-    string userBackOrders_Path = "";
+    string systemTotalPurchaseOrdersMenuItem = moneyAccount.SystemPurchaseOrders.Total.MenuItem;
+    string systemTotalPurchaseOrdersToolTip = moneyAccount.SystemPurchaseOrders.Total.ToolTip;
+    string systemTotalPurchaseOrders_Path = Url.Action("GetPurchaseOrderTotals_Admin", "BuySellDocs");
     
-
+    
 
 
 
@@ -109,63 +105,40 @@
     {
         @Html.AntiForgeryToken()
 
-    <ul class="navbar-nav">
+    <ul class="nav navbar-nav">
+        
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="@amountRefundableAndNonRefundable_Path" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Total: @amountRefundableAndNonRefundable
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+            <a class="dropdown-item" href="@amountRefundableAndNonRefundable_Path" data-toggle="tooltip" title="@amountRefundableAndNonRefundableToolTip" data-placement="left">@amountRefundableAndNonRefundableMenuItem</a>
+
+            <a class="dropdown-item" href="@personTotalSaleOrdersPath" data-toggle="tooltip" title="@personTotalSaleOrdersToolTip" data-placement="left">@personTotalSaleOrdersMenuItem</a>
+            <a class="dropdown-item" href="@personTotalPurchaseOrders_Path" data-toggle="tooltip" title="@personTotalPurchaseOrdersToolTip" data-placement="left">@personTotalPurchaseOrdersMenuItem</a>
 
 
+            @if (moneyAccount.IsAdmin)
+            {
+                <a class="dropdown-item background-yellow" href="@systemCashCreated_Path" data-toggle="tooltip" title="@systemCashCreatedToolTip" data-placement="left">@systemCashCreatedMenuItem</a>
+                <a class="dropdown-item background-yellow" href="@systemTotalSale_Admin" data-toggle="tooltip" title="@systemTotalSaleToolTip" data-placement="left">@systemTotalSaleOrdersMenuItem</a>
+                <a class="dropdown-item  background-yellow" href="@systemTotalPurchaseOrders_Path" data-toggle="tooltip" title="@systemTotalPurchaseOrdersToolTip" data-placement="left">@systemTotalPurchaseOrdersMenuItem</a>
+            }
 
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Total: @amountRefundableAndNonRefundable 
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        </div>
 
-
-
-
-
-
+    </li>
 
 
+    <li>
+        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link", id = "helloLink" })
+    </li>
+    <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
 
 
-
-
-
-
-
-                <a class="dropdown-item" href="@amountRefundableMenu_Path" data-toggle="tooltip" title="@amountRefundableToolTip" data-placement="left">@amountRefundableMenuItem</a>
-                <a class="dropdown-item" href="@amountNotRefundableMenu_Path" data-toggle="tooltip" title="@amountNotRefundableToolTip" data-placement="left">@amountNotRefundableMenuItem</a>
-                <a class="dropdown-item" href="@amountRefundableAndNonRefundable_Path" data-toggle="tooltip" title="@amountRefundableAndNonRefundableToolTip" data-placement="left">@amountRefundableAndNonRefundableMenuItem</a>
-
-
-
-                @if(moneyAccount.IsAdmin)
-                { 
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="@totalCashCreated_Refundable_Path" data-toggle="tooltip" title="@totalCashCreated_RefundableToolTip" data-placement="left">@totalCashCreated_RefundableMenuItem</a>
-                    <a class="dropdown-item" href="@totalCashCreated_NonRefundable_Path" data-toggle="tooltip" title="@totalCashCreated_NonRefundableToolTip" data-placement="left">@totalCashCreated_NonRefundableMenuItem</a>
-                    <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="@totalCashCreated_Path" data-toggle="tooltip" title="@totalCashCreatedToolTip" data-placement="left">@totalCashCreatedMenuItem</a>
-                }
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="@userOpenOrders_Path" data-toggle="tooltip" title="@userOpenOrdersToolTip" data-placement="left">@userOpenOrdersMenuItem</a>
-                @if (moneyAccount.IsAdmin)
-                {
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="@totalOpenOrders_Path" data-toggle="tooltip" title="@totalOpenOrdersToolTip" data-placement="left">@totalOpenOrdersMenuItem</a>
-                }
-            </div>
-
-        </li>
-
-
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link", id = "helloLink" })
-        </li>
-        <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-
-
-    </ul>
+</ul>
 
     }
 }

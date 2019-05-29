@@ -4,6 +4,7 @@ using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.CashTrxNS;
 using ModelsClassLibrary.ModelsNS.CashNS.CashTrxNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS;
+using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
@@ -276,6 +277,13 @@ namespace MarketPlace.Web6.Controllers
             return cashPaymentModel;
         }
 
+
+        #region Person Cash Reports
+        public ActionResult DebitCredit_Refundable()
+        {
+            CashTypeENUM cashTypeEnum = CashTypeENUM.Refundable;
+            return getCashStatemetView(cashTypeEnum);
+        }
         public ActionResult DebitCredit_NonRefundable()
         {
             CashTypeENUM cashTypeEnum = CashTypeENUM.NonRefundable;
@@ -286,83 +294,120 @@ namespace MarketPlace.Web6.Controllers
 
         public ActionResult DebitCredit_TotalRefundableAndNonRefundable()
         {
-            CashTypeENUM cashTypeEnum = CashTypeENUM.Unknown;
+            CashTypeENUM cashTypeEnum = CashTypeENUM.Total;
             return getCashStatemetView(cashTypeEnum);
 
         }
 
-        public ActionResult DebitCredit_NonRefundable_And_Refundable()
-        {
-            CashTypeENUM cashTypeEnum = CashTypeENUM.Unknown;
-            return getCashStatemetView(cashTypeEnum);
-        }
-
-
-        public ActionResult DebitCredit_Refundable()
-        {
-            CashTypeENUM cashTypeEnum = CashTypeENUM.Refundable;
-            return getCashStatemetView(cashTypeEnum);
-        }
-
-        public ActionResult DebitCredit_Refundable_Created()
-        {
-            DateTime fromDate = DateTime.Now.ThreeMonthsAgoFirstOfMonth();
-            DateTime toDate = DateTime.MaxValue;
-            CashTypeENUM cashTypeEnum = CashTypeENUM.Refundable;
-            return getCashStatement_System(cashTypeEnum, fromDate, toDate);
-        }
-
-        public ActionResult DebitCredit_NonRefundable_Created()
-        {
-            DateTime fromDate = DateTime.Now.ThreeMonthsAgoFirstOfMonth();
-            DateTime toDate = DateTime.MaxValue;
-            CashTypeENUM cashTypeEnum = CashTypeENUM.NonRefundable;
-            return getCashStatement_System(cashTypeEnum, fromDate, toDate);
-        }
-
-        public ActionResult DebitCredit_NonRefundable_And_Refundable_Created()
-        {
-            DateTime fromDate = DateTime.Now.ThreeMonthsAgoFirstOfMonth();
-            DateTime toDate = DateTime.MaxValue;
-            CashTypeENUM cashTypeEnum = CashTypeENUM.Unknown;
-            return getCashStatement_System(cashTypeEnum, fromDate, toDate);
-        }
-
-        private ActionResult getCashStatemetView(CashTypeENUM cashTypeEnum)
-        {
-            DateTime fromDate = DateTime.Now.ThreeMonthsAgoFirstOfMonth();
-            DateTime toDate = DateTime.MaxValue;
-
-            return getCashStatement(cashTypeEnum, fromDate, toDate);
-        }
-
-        //private static DateTime getThreeMonthsAgo()
+        //public ActionResult DebitCredit_NonRefundable_And_Refundable()
         //{
+        //    CashTypeENUM cashTypeEnum = CashTypeENUM.Unknown;
+        //    return getCashStatemetView(cashTypeEnum);
         //}
 
 
-        private ActionResult getCashStatement_System(CashTypeENUM cashTypeEnum, DateTime fromDate, DateTime toDate)
+        
+        #endregion
+        #region Admin Cash Reports
+        public ActionResult DebitCredit_Refundable_Admin()
         {
-            UserId.IsNullOrWhiteSpaceThrowArgumentException("You are not logged in");
-
-            if (IsAdmin)
-            {
-                CashTrxDbCrModel CashTrxDbCrModel = CashTrxBiz.GetCashTrxDbCrModel("", cashTypeEnum, fromDate, toDate);
-                return View("DebitCredit", CashTrxDbCrModel);
-
-            }
-            ErrorsGlobal.Add("You are not authourized", MethodBase.GetCurrentMethod());
-            throw new Exception(ErrorsGlobal.ToString());
+            string toDate = DateTime.Now.ToString();
+            CashTypeENUM cashTypeEnum = CashTypeENUM.Refundable;
+            return getCashStatement(cashTypeEnum, toDate, true);
         }
 
 
-        private ActionResult getCashStatement(CashTypeENUM cashTypeEnum, DateTime fromDate, DateTime toDate)
+        public ActionResult DebitCredit_NonRefundable_Admin()
+        {
+            string toDate = DateTime.Now.ToString();
+            CashTypeENUM cashTypeEnum = CashTypeENUM.NonRefundable;
+            return getCashStatement(cashTypeEnum, toDate, false);
+        }
+
+        public ActionResult DebitCredit_NonRefundable_And_Refundable_Admin()
+        {
+            string toDate = DateTime.Now.ToString();
+            CashTypeENUM cashTypeEnum = CashTypeENUM.Total;
+            return getCashStatement(cashTypeEnum, toDate, false);
+        }
+
+        #endregion
+
+        private ActionResult getCashStatemetView(CashTypeENUM cashTypeEnum)
+        {
+            string toDate = DateTime.Now.ToString();
+            return getCashStatement(cashTypeEnum, toDate, false);
+        }
+
+        //private ActionResult getCashListAdmin(CashTypeENUM cashTypeEnum)
+        //{
+        //    DateTime toDate = DateTime.Now;
+        //    return getCashStatement(cashTypeEnum, toDate, true);
+        //}
+
+
+        public ActionResult getCashStatement(CashTypeENUM cashTypeEnum, string toDateStr, bool isAdmin)
         {
             UserId.IsNullOrWhiteSpaceThrowArgumentException("You are not logged in");
+            CashTrxDbCrModel cashTrxDbCrModel = new CashTrxDbCrModel();
+            DateTime toDate = DateTime.Now;
+            if(!toDateStr.IsNullOrWhiteSpace())
+            {
+                bool success = DateTime.TryParse(toDateStr, out toDate);
+                if (!success)
+                    toDate = DateTime.Now;
+            }
+
+            DateTime fromDate = toDate.AddMonths(-3).AddDays(-1);
+            if (isAdmin)
+            {
+                if (Is_Admin)
+                {
+                    cashTrxDbCrModel = CashTrxBiz.GetCashTrxDbCrModel("", cashTypeEnum, fromDate, toDate, true);
+                    return View("DebitCredit", cashTrxDbCrModel);
+
+                }
+                ErrorsGlobal.Add("You are not authourized", MethodBase.GetCurrentMethod());
+                throw new Exception(ErrorsGlobal.ToString());
+            }
             Person person = PersonBiz.GetPersonForUserId(UserId);
             person.IsNullThrowException("No person attached to user");
-            CashTrxDbCrModel CashTrxDbCrModel = CashTrxBiz.GetCashTrxDbCrModel(person.Id, cashTypeEnum, fromDate, toDate);
-            return View("DebitCredit", CashTrxDbCrModel);
+            cashTrxDbCrModel = CashTrxBiz.GetCashTrxDbCrModel(person.Id, cashTypeEnum, fromDate, toDate, false);
+            return View("DebitCredit", cashTrxDbCrModel);
+
         }
+
+
+        //private ActionResult getCashStatement(CashTypeENUM cashTypeEnum, DateTime fromDate, DateTime toDate)
+        //{
+        //}
+
+        [HttpGet]
+        public ActionResult ShowCashMenu()
+        {
+            UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as UserMoneyAccount ?? new ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount();
+            return View(moneyAccount);
+        }
+        [HttpGet]
+        public ActionResult ShowCashMenu_Admin()
+        {
+            try
+            {
+                UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as UserMoneyAccount ?? new ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount();
+                if (!moneyAccount.IsAdmin)
+                    throw new Exception("You are not an administrator");
+                return View(moneyAccount);
+
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+                ErrorsGlobal.MemorySave();
+                return RedirectToAction("Index");
+
+            }
+        }
+
+        public CashTrxDbCrModel cashTrxDbCrModel { get; set; }
     }
 }

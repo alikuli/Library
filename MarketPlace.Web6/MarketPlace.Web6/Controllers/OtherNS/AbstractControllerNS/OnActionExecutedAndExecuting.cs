@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
+using System.Reflection;
 using System.Web.Mvc;
 
 namespace MarketPlace.Web4.Controllers
@@ -20,43 +21,36 @@ namespace MarketPlace.Web4.Controllers
         [AllowAnonymous]
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            base.OnActionExecuting(filterContext);
-
-            //get any errors that are in the memory and save them in the list
-            ErrorsGlobal.MemoryRetrieve();
-
-            LoadValidationErrorsIntoErrorsGlobal();
-
-
-            LoadErrorsForDisplay();
-
-            //If we load messages, we casue the ModelState.IsValid to become false. 
-            //use some other way to transport messages.
-
-            LoadMessagesIntoAlerts();
-            AccountsBizSuper.UserId = UserId;
-            AccountsBizSuper.UserName = UserName;
-            //this is shown in the _LoginPartial.cshtml
-            getUserMoneyAccount();
-
-
-        }
-
-        private void getUserMoneyAccount()
-        {
-            UserMoneyAccount userMoneyAccount = AccountsBizSuper.UserMoneyAccount(UserId);
-            userMoneyAccount = AccountsBizSuper.BuySellDocBiz.MoneyAccountForPerson(UserId, AccountsBizSuper.UserBiz.IsAdmin(UserId), userMoneyAccount);
-            userMoneyAccount.IsAdmin = IsAdmin;
-            userMoneyAccount.IsBank = IsBank;
-            if (!userMoneyAccount.IsNull())
+            try
             {
-                ViewBag.MoneyAccount = userMoneyAccount;
+                base.OnActionExecuting(filterContext);
+
+                //get any errors that are in the memory and save them in the list
+                ErrorsGlobal.MemoryRetrieve();
+
+                LoadValidationErrorsIntoErrorsGlobal();
+
+
+                LoadErrorsForDisplay();
+
+                //If we load messages, we casue the ModelState.IsValid to become false. 
+                //use some other way to transport messages.
+
+                LoadMessagesIntoAlerts();
+                AccountsBizSuper.UserId = UserId;
+                AccountsBizSuper.UserName = UserName;
+                //this is shown in the _LoginPartial.cshtml
+                getUserMoneyAccount();
+
+            }
+            catch (System.Exception e)
+            {
+
+                ErrorsGlobal.Add("Something wrong.", MethodBase.GetCurrentMethod(), e);
             }
 
 
         }
-
-
 
         [AllowAnonymous]
         protected override void OnActionExecuted(ActionExecutedContext filterContext)

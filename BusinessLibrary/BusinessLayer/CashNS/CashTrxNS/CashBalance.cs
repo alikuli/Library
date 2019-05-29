@@ -3,6 +3,7 @@ using EnumLibrary.EnumNS;
 using ModelsClassLibrary.CashTrxNS;
 using ModelsClassLibrary.ModelsNS.CashNS.CashTrxNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS;
+using ModelsClassLibrary.ModelsNS.DocumentsNS.MoneyAndCountClass;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using System;
@@ -68,8 +69,8 @@ namespace UowLibrary.CashTtxNS
 
 
             //get all the person's cash trx
-            List<CashTrx> cashTrxPaid = TrxPaidFor(personId, cashTypeEnum);
-            List<CashTrx> cashTrxReceived = TrxRecievedFor(personId, cashTypeEnum);
+            List<CashTrx> cashTrxPaid = TrxPaidFor(personId, cashTypeEnum).ToList();
+            List<CashTrx> cashTrxReceived = TrxRecievedFor(personId, cashTypeEnum).ToList();
 
             decimal totalPaid = 0;
             decimal totalReceived = 0;
@@ -85,12 +86,16 @@ namespace UowLibrary.CashTtxNS
 
         }
 
-        private List<CashTrx> TrxRecievedFor(string personId, CashTypeENUM cashTypeEnum)
+        private IQueryable<CashTrx> TrxRecievedFor(string personId, CashTypeENUM cashTypeEnum)
         {
 
             //            IQueryable<CashTrx> cashTrxPaid = FindAll().Where(x => x.PersonToId == personId);
 
             IQueryable<CashTrx> cashTrxPaid;
+            if (cashTypeEnum == CashTypeENUM.Unknown)
+            {
+                throw new Exception("Unknown Cash type");
+            }
 
             if (personId == "" || personId == null)
             {
@@ -103,15 +108,19 @@ namespace UowLibrary.CashTtxNS
             }
 
             //this will get all the cashTypeEnum transactions
-            if (cashTypeEnum != CashTypeENUM.Unknown)
+            if (cashTypeEnum != CashTypeENUM.Total)
             {
                 cashTrxPaid = cashTrxPaid.Where(x => x.CashTypeEnum == cashTypeEnum);
             }
-            return cashTrxPaid.ToList();
+            return cashTrxPaid;
         }
 
-        private List<CashTrx> TrxPaidFor(string personId, CashTypeENUM cashTypeEnum)
+        private IQueryable<CashTrx> TrxPaidFor(string personId, CashTypeENUM cashTypeEnum)
         {
+            if (cashTypeEnum == CashTypeENUM.Unknown)
+            {
+                throw new Exception("Unknown Cash type");
+            }
             IQueryable<CashTrx> cashTrxPaid;
 
             //this is coming from Admin
@@ -126,21 +135,21 @@ namespace UowLibrary.CashTtxNS
             }
 
             //this will get all the transactions
-            if (cashTypeEnum != CashTypeENUM.Unknown)
+            if (cashTypeEnum != CashTypeENUM.Total)
             {
                 cashTrxPaid = cashTrxPaid.Where(x => x.CashTypeEnum == cashTypeEnum);
             }
 
 
-            return cashTrxPaid.ToList();
+            return cashTrxPaid;
         }
 
 
-        public CashTrxDbCrModel GetCashTrxDbCrModel(string personId, CashTypeENUM cashTypeEnum, DateTime fromDate, DateTime toDate)
+        public CashTrxDbCrModel GetCashTrxDbCrModel(string personId, CashTypeENUM cashTypeEnum, DateTime fromDate, DateTime toDate, bool isAdmin)
         {
 
-            List<CashTrx> cashTrxPaid = TrxPaidFor(personId, cashTypeEnum);
-            List<CashTrx> cashTrxReceived = TrxRecievedFor(personId, cashTypeEnum);
+            List<CashTrx> cashTrxPaid = TrxPaidFor(personId, cashTypeEnum).Where(x => x.MetaData.Created.Date >= fromDate && x.MetaData.Created.Date <= toDate).ToList();
+            List<CashTrx> cashTrxReceived = TrxRecievedFor(personId, cashTypeEnum).Where(x => x.MetaData.Created.Date >= fromDate && x.MetaData.Created.Date <= toDate).ToList();
 
             //personId can be null if we are trying to get system cash.
             string personName = "";
@@ -153,7 +162,7 @@ namespace UowLibrary.CashTtxNS
 
             List<CashTrxVM> paidTrxVm = fixCastTrx(cashTrxPaid, "payment", cashTypeEnum);
             List<CashTrxVM> receiptTrxVm = fixCastTrx(cashTrxReceived, "receipt", cashTypeEnum);
-            CashTrxDbCrModel cashTrxDbCrModel = new CashTrxDbCrModel(receiptTrxVm, paidTrxVm, fromDate, toDate, personName, cashTypeEnum);
+            CashTrxDbCrModel cashTrxDbCrModel = new CashTrxDbCrModel(receiptTrxVm, paidTrxVm, fromDate, toDate, personName, cashTypeEnum, isAdmin);
 
             return cashTrxDbCrModel;
         }
@@ -201,19 +210,17 @@ namespace UowLibrary.CashTtxNS
         public UserMoneyAccount MoneyAccountForUser(string userId, bool isAdmin)
         {
             Person person = UserBiz.GetPersonFor(userId);
-
-            if (person.IsNull())
-                return null;
+            person.IsNullThrowException("No person");
 
             string personId = person.Id;
             return MoneyAccountForPerson(personId, isAdmin);
         }
 
 
-
         public UserMoneyAccount MoneyAccountForPerson(string personId, bool isAdmin)
         {
             personId.IsNullOrWhiteSpaceThrowArgumentException("fromId");
+
             decimal amountRefundable = BalanceForPerson(personId, CashTypeENUM.Refundable);
             decimal amountNonRefundable = BalanceForPerson(personId, CashTypeENUM.NonRefundable); ;
             decimal totalCashCreated_Refundable = 0;
@@ -234,6 +241,51 @@ namespace UowLibrary.CashTtxNS
             return userMoneyAccount;
         }
 
+
+
+        public MoneyType GetMoneyTypeForUser(string userId)
+        {
+            if (userId.IsNullOrWhiteSpace())
+                return new MoneyType();
+
+            Person person = UserBiz.GetPersonFor(userId);
+            person.IsNullThrowException("No person");
+
+            string personId = person.Id;
+            return GetMoneyTypeForPerson(personId, false);
+        }
+
+        public MoneyType GetMoneyTypeForPerson(string personId, bool isAdmin)
+        {
+            decimal amountRefundable = 0;
+            decimal amountNonRefundable = 0;
+
+            if (!isAdmin && personId.IsNullOrEmpty())
+            {
+                return new MoneyType();
+            }
+
+            if (isAdmin && personId.IsNullOrEmpty())
+            {
+                amountRefundable = TotalCashInSystem(CashTypeENUM.Refundable);
+                amountNonRefundable = TotalCashInSystem(CashTypeENUM.NonRefundable);
+
+            }
+            else
+            {
+                personId.IsNullOrWhiteSpaceThrowArgumentException("fromId");
+                amountRefundable = BalanceForPerson(personId, CashTypeENUM.Refundable);
+                amountNonRefundable = BalanceForPerson(personId, CashTypeENUM.NonRefundable);
+
+            }
+
+
+            MoneyType moneyType = new MoneyType();
+            moneyType.Refundable.MoneyAmount = amountRefundable;
+            moneyType.Non_Refundable.MoneyAmount = amountNonRefundable;
+
+            return moneyType;
+        }
 
     }
 }

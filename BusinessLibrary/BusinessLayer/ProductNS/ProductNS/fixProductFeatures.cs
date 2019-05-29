@@ -235,7 +235,7 @@ namespace UowLibrary.ProductNS
                     pf.Product = iproduct as Product;
 
                     pf.Name = pf.MakeUniqueName();
-
+                    pf.IsMenuFeature = true;
                     prodFeaturesInMenuButNotInProduct.Add(pf);
                 }
             }

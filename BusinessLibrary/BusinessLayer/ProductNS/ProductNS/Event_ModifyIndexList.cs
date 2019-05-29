@@ -164,8 +164,8 @@ namespace UowLibrary.ProductNS
             Product product = icommonWithId as Product;
             product.IsNullThrowException("Unable to unbox product.");
 
-            product.MenuManager = new MenuManager(null, product, null, MenuENUM.IndexDefault, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl);
-            indexItem.MenuManager = new MenuManager(null, product, null, MenuENUM.IndexMenuPath1, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl);
+            product.MenuManager = new MenuManager(null, product, null, MenuENUM.IndexDefault, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
+            indexItem.MenuManager = new MenuManager(null, product, null, MenuENUM.IndexMenuPath1, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
 
             indexItem.MenuManager.PictureAddresses =   GetPictureList(product);
 

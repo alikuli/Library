@@ -9,8 +9,9 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
     public class EditMenuPath3 : MenuStateAbstract
     {
 
-        public EditMenuPath3(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter)
-            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
+        public EditMenuPath3(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter, string userId, string userName)
+            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter, userId, userName) { }
+
 
         public override MenuENUM EditLink_MenuEnum
         {
@@ -64,10 +65,10 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
             get { throw new System.NotImplementedException(); }
         }
 
-        public override string MenuPath3Id
-        {
-            get { throw new System.NotImplementedException(); }
-        }
+        //public override string MenuPath3Id
+        //{
+        //    get { throw new System.NotImplementedException(); }
+        //}
 
         public override string ProductId
         {

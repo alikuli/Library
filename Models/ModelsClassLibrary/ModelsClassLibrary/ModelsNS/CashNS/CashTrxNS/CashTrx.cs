@@ -49,7 +49,7 @@ namespace ModelsClassLibrary.CashTrxNS
             if (!Comment.IsNullOrWhiteSpace())
                 commentFixed = string.Format("({0})", Comment);
 
-            string fullName = string.Format("[#{1:000000#}] {0} From: {3} To: {4} Rs{2:#,0.00} {5} {6}",
+            string fullName = string.Format("[#{1:000000#}] {0} From: {3} => {4} Rs{2:#,0.00} {5} {6}",
                 MetaData.Created.Date_NotNull_Max,
                 DocNumber,
                 Amount,

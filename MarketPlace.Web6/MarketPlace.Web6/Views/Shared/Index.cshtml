@@ -1,6 +1,5 @@
 ﻿@model ModelsClassLibrary.ViewModels.IndexListVM
 @Html.HiddenFor(x => x.MenuManager.MenuState.MenuEnum)
-
 @{
 
     ViewBag.Title = @Model.Heading.Main;
@@ -20,7 +19,7 @@
 
     string returnUrl = Request.Url.PathAndQuery;
     
-    if(Model.MenuManager.ReturnUrl.IsNullOrWhiteSpace())
+    if(!Model.MenuManager.ReturnUrl.IsNullOrWhiteSpace())
          returnUrl = Model.MenuManager.ReturnUrl;
 
     Model.MenuManager.BreadCrumbManager.Push(Model.MenuManager.MenuState.MenuDisplayName, returnUrl);
@@ -121,7 +120,7 @@
                                 {
 
                                     <div>
-                                        @Html.ActionLink(createButtonText, "Create", @controllerNameForCreate, new { menuEnum = menuEnum, menuPathMainId = menuPathmainId, sortBy = sortOrderEnum, searchFor = searchFor, selectedId = selectedId, returnUrl = returnUrl, productId = productId}, new { @class = "text-danger btn btn-success btn-sm" })
+                                        @Html.ActionLink(createButtonText, "Create", @controllerNameForCreate, new { menuEnum = menuEnum, menuPathMainId = menuPathmainId, sortBy = sortOrderEnum, searchFor = searchFor, selectedId = selectedId, returnUrl = Request.Url.PathAndQuery, productId = productId }, new { @class = "text-danger btn btn-success btn-sm" })
                                     </div>
                                 }
 
@@ -241,7 +240,6 @@
         }
 
     @section scripts{
-    <script src="~/Scripts/MyScripts/IndexScripts0.js"></script>
 
         <script>
 

@@ -119,10 +119,11 @@ namespace UowLibrary
                 return;
 
 
-            bool found = GetDataToCheckDuplicateName(entity).Any(x =>
-                x.Name.ToLower() == entity.Name.ToLower() &&
-                x.Id != entity.Id);
-            ;
+            var allData = GetDataToCheckDuplicateName(entity).ToList();
+
+            bool found = allData.Any(x =>
+                x.Name.ToLower() == entity.Name.ToLower());
+            
 
             if (found)
             {
@@ -138,7 +139,7 @@ namespace UowLibrary
 
         public virtual IQueryable<TEntity> GetDataToCheckDuplicateName(TEntity entity)
         {
-            IQueryable<TEntity> dataSet = Dal.FindAll();
+            IQueryable<TEntity> dataSet = Dal.FindAll().Where(x => x.Id != entity.Id);
             return dataSet;
         }
 
@@ -169,6 +170,8 @@ namespace UowLibrary
 
         private void create(TEntity entity)
         {
+            //update the create...
+            entity.MetaData.Created.SetToTodaysDate(UserName, UserId);
             Dal.Create(entity);
         }
 
@@ -262,11 +265,10 @@ namespace UowLibrary
         private void createEngineSimple(ControllerCreateEditParameter parm)
         {
             //entity.IsCreating = true;
-            fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
+            //fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
             handleRelatedFilesIfExist(parm);
-
             CreateEntity(parm.Entity as TEntity);
-            ClearSelectListInCache(SelectListCacheKey);
+            //ClearSelectListInCache(SelectListCacheKey);
         }
 
         /// <summary>
@@ -278,6 +280,7 @@ namespace UowLibrary
         {
             fixEntityAndBussinessRulesAndErrorCheck_Helper(entity);
             create(entity);
+            ClearSelectListInCache(SelectListCacheKey);
         }
 
 
@@ -362,7 +365,7 @@ namespace UowLibrary
         /// <param name="parm"></param>
         public virtual void Update(TEntity entity)
         {
-
+            entity.MetaData.Modified.SetToTodaysDate(UserName, UserId);
             Dal.Update(entity);
         }
 
@@ -377,6 +380,7 @@ namespace UowLibrary
         {
             try
             {
+
                 Dal.Delete(id);
                 ErrorsGlobal.AddMessage(string.Format("*** Deleted ***"));
                 ClearSelectListInCache(SelectListCacheKey);
@@ -829,37 +833,19 @@ namespace UowLibrary
             AddEntryToIndex = true;
             IHasUploads ientityHasUploads = icommonWithId as IHasUploads;
 
-            if (!ientityHasUploads.IsNull())
-            {
-                indexItem.ImageAddressStr = addressOfImageForDisplay(ientityHasUploads);
-
-
-            }
-
-            //LikeUnlikeParameter likeUnlikeCounter = _likeUnlikeBiz.Count(indexItem.Id, null null, null, null, theUserId);
-            //indexItem.MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, _breadCrumbManager, likeUnlikeCounter);
-
-
-            ////add the MenuManager and BreadCrumbManager
-            //if (indexItem.MenuManager.IsNull())
+            //if (!ientityHasUploads.IsNull())
             //{
-            //    indexItem.MenuManager = indexListVM.MenuManager;
+            //    indexItem.ImageAddressStr = addressOfImageForDisplay(ientityHasUploads);
 
 
             //}
-
-            //if (icommonWithId.MenuManager.IsNull())
-            //{
-            //    icommonWithId.MenuManager = new MenuManager()
-            //}
-
         }
 
         private string addressOfImageForDisplay(IHasUploads entity)
         {
 
             if (entity.MiscFiles.IsNullOrEmpty())
-                return new UploadedFile().RelativePathWithFileName();
+                return new UploadedFile().GetRelativePathWithFileName();
 
             //Get a list of images for this category item.
             UploadedFile image = entity.MiscFiles.FirstOrDefault(x => x.MetaData.IsDeleted == false);
@@ -868,7 +854,7 @@ namespace UowLibrary
                 image = new UploadedFile();
 
 
-            return image.RelativePathWithFileName();
+            return image.GetRelativePathWithFileName();
 
         }
 
@@ -900,7 +886,7 @@ namespace UowLibrary
 
             //Note. The LikeCounter in the MenuManger for the List is always null. The likes are counted in
             //the items.
-            indexListVM.MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, BreadCrumbManager, null, UserId, parameters.ReturnUrl);
+            indexListVM.MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, BreadCrumbManager, null, UserId, parameters.ReturnUrl, UserName);
 
 
 
@@ -931,7 +917,7 @@ namespace UowLibrary
             Product p = entity as Product;
             MenuPathMain mpm = entity as MenuPathMain;
             string returnUrl = "";
-            entity.MenuManager = new MenuManager(mpm, p, null, MenuENUM.CreateDefault, BreadCrumbManager, new LikeUnlikeParameters(0, 0, "Initialization in Factory"), UserId, returnUrl);
+            entity.MenuManager = new MenuManager(mpm, p, null, MenuENUM.CreateDefault, BreadCrumbManager, new LikeUnlikeParameters(0, 0, "Initialization in Factory"), UserId, returnUrl, UserName);
 
             return entity;
         }
@@ -1190,9 +1176,12 @@ namespace UowLibrary
         private IndexListVM createIndexListAndGiveNamesToColumns_Helper(ControllerIndexParams parameters, IList<ICommonWithId> lstEntities)
         {
             IndexListVM indexListVM = createIndexList(lstEntities, parameters);
-
+            //I think this is where te problem lies....
             if (indexListVM.IsNull())
+            {
+
                 indexListVM = new IndexListVM(parameters);
+            }
 
             return indexListVM;
         }
@@ -1217,10 +1206,9 @@ namespace UowLibrary
 
             //This names the sort links. They come directly from the entity
             parameters.DudEntity = Dal.Factory();
-            //if (parameters.Entity.IsNull())
-            //    parameters.Entity = parameters.DudEntity;
-            IndexListVM indexListVM = new IndexListVM(parameters);
 
+
+            IndexListVM indexListVM = new IndexListVM(parameters);
 
             Event_ModifyIndexList(indexListVM, parameters);
 
@@ -1265,13 +1253,15 @@ namespace UowLibrary
                     //this is a different entity from the one in parameters
                     if (entity.MenuManager.IsNull())
                         InitializeMenuManagerForEntity(parameters, entity);
-                    
+
                     entity.MenuManager.ReturnUrl = parameters.ReturnUrl;
                     //image address is added in here.
                     Event_ModifyIndexItem(indexListVM, indexItem, entity);
 
                     //return URL is added here to the item. This will be used in the Edit / Create
                     entity.MenuManager.ReturnUrl = parameters.ReturnUrl;
+
+                    //we need to initiate the IndexList.MenuManager.IndexMenuVariables
 
                     if (AddEntryToIndex)
                         if (!indexItem.IsNull())
@@ -1292,6 +1282,10 @@ namespace UowLibrary
 
             return indexListVM;
         }
+
+
+
+
 
 
         public void InitializeMenuManagerForEntity(ControllerIndexParams parm)
@@ -1318,25 +1312,25 @@ namespace UowLibrary
                     case MenuENUM.IndexMenuPath2:
                     case MenuENUM.IndexMenuPath3:
                         //Item is MenuPathMain
-                        entity.MenuManager = new MenuManager(entity as MenuPathMain, null, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl);
+                        entity.MenuManager = new MenuManager(entity as MenuPathMain, null, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
                         break;
 
                     case MenuENUM.IndexMenuProduct:
                         //item is product
-                        entity.MenuManager = new MenuManager(null, entity as Product, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl);
+                        entity.MenuManager = new MenuManager(null, entity as Product, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
                         break;
 
                     case MenuENUM.IndexMenuProductChild:
                         //item is productChild
-                        entity.MenuManager = new MenuManager(null, null, entity as ProductChild, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl);
+                        entity.MenuManager = new MenuManager(null, null, entity as ProductChild, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
                         break;
 
                     case MenuENUM.IndexMenuProductChildLandingPage:
                         //item is productChild
-                        entity.MenuManager = new MenuManager(null, null, entity as ProductChild, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl);
+                        entity.MenuManager = new MenuManager(null, null, entity as ProductChild, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
                         break;
                     default:
-                        entity.MenuManager = new MenuManager(null, null, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl);
+                        entity.MenuManager = new MenuManager(null, null, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
                         break;
                 }
 
@@ -1577,7 +1571,7 @@ namespace UowLibrary
 
             string originalname = icommonwithid.Name.RemoveAllSpaces().ToString();
             string relative_SrcPath = entityHasUploads.MiscFilesLocation_Initialization();
-            string relative_targetPath = entityHasUploads.MiscFilesLocation();
+            string relative_targetPath = entityHasUploads.MiscFilesLocation(UserName);
 
             string filenameNoExtention = getFileNameWithoutExtention(relative_SrcPath, originalname);
 
@@ -1662,7 +1656,7 @@ namespace UowLibrary
 
             string originalname = entity.Name.RemoveAllSpaces().ToString();
             string relative_SrcPath = entityHasUploads.MiscFilesLocation_Initialization();
-            string relative_targetPath = entityHasUploads.MiscFilesLocation();
+            string relative_targetPath = entityHasUploads.MiscFilesLocation(UserName);
 
             string filenameNoExtention = getFileNameWithoutExtention(relative_SrcPath, originalname);
 
@@ -1741,6 +1735,7 @@ namespace UowLibrary
             }
             return selectList;
         }
+
 
         //public SelectList UsersSelectList()
         //{
@@ -2101,7 +2096,7 @@ namespace UowLibrary
         {
             if (parm.IsIHasUploads)
             {
-                parm.MiscUploadedFiles.FileLocationConst = parm.Entity_IHasUploads.MiscFilesLocation();
+                parm.MiscUploadedFiles.FileLocationConst = parm.Entity_IHasUploads.MiscFilesLocation(UserName);
 
                 uploadFilesHelperGeneral(
                     parm.MiscUploadedFiles,
@@ -2270,10 +2265,10 @@ namespace UowLibrary
                 }
             }
 
-            if (addresses.IsNullOrEmpty())
-            {
-                return GetDefaultPicture();
-            }
+            //if (addresses.IsNullOrEmpty())
+            //{
+            //    return GetDefaultPicture();
+            //}
 
             return addresses;
         }
@@ -2283,7 +2278,7 @@ namespace UowLibrary
         {
 
             UploadedFile upf = new UploadedFile();
-            string defaultPictureAddress = upf.RelativePathWithFileName();
+            string defaultPictureAddress = upf.GetRelativePathWithFileName();
             //just load the black screen here
             //menuManager.PictureAddresses.Add(defaultPictureAddress);
             List<string> lst = new List<string>();
@@ -2296,7 +2291,7 @@ namespace UowLibrary
             if (_uf.IsNull())
                 _uf = new UploadedFile();
 
-            return _uf.RelativePathWithFileName();
+            return _uf.GetRelativePathWithFileName();
         }
 
 

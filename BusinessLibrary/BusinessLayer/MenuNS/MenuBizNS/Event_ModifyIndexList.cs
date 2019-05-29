@@ -46,6 +46,7 @@ namespace UowLibrary.MenuNS
             }
 
 
+
         }
 
         //This supplies a dummy MenuPathMain for the Back to List in the Create.
@@ -84,7 +85,7 @@ namespace UowLibrary.MenuNS
                     pc.IsNullThrowException();
 
                     //add the features
-                    pc.AllFeatures = ProductChildBiz.GetAllFeatures(pc);
+                    pc.AllFeatures = ProductChildBiz.Get_All_ProductChild_Features_For(pc);
                     break;
 
                 case EnumLibrary.EnumNS.MenuENUM.IndexMenuPath1:
@@ -104,7 +105,7 @@ namespace UowLibrary.MenuNS
                     break;
             }
 
-            MenuManager mm = new MenuManager(mpm, p, pc, parm.Menu.MenuEnum, parm.BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl);
+            MenuManager mm = new MenuManager(mpm, p, pc, parm.Menu.MenuEnum, parm.BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
             mm.BreadCrumbManager = parm.BreadCrumbManager;
             //mm.IndexMenuVariables.IsAdmin = UserBiz.IsAdmin(UserId);
 

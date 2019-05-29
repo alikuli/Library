@@ -32,7 +32,7 @@ namespace MarketPlace.Web6.Controllers
             upf.IsNullThrowException("upf");
 
             string onlyFilePath = upf.RelativeWebsitePath;
-            string oldFileNameWithPath = upf.RelativePathWithFileName();
+            string oldFileNameWithPath = upf.GetRelativePathWithFileName();
             string oldFileName = upf.Name;
             string extention = upf.Extention;
             string newFileName = FileTools.CreateNewNameForFile(extention);

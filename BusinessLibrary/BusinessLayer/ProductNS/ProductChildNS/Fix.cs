@@ -44,9 +44,9 @@ namespace UowLibrary.ProductChildNS
             pc.OwnerId = owner.Id;
             pc.Owner = owner;
 
-            //I dont want to add the features. I will add them temporarily when it is being presented,
-            //addProductFeatures(pc);
-
+            ////I dont want to add the features. I will add them temporarily when it is being presented,
+            ////addProductFeatures(pc);
+            FixProductChildFeatures(pc);
             base.Fix(parm);
         }
 
@@ -152,54 +152,48 @@ namespace UowLibrary.ProductChildNS
         }
 
 
-        public List<ProductChildFeature> GetAllFeatures(ProductChild productChild)
-        {
-            productChild.IsNullThrowExceptionArgument("productChild");
+        //public List<ProductChildFeature> GetAllFeatures(ProductChild productChild)
+        //{
+        //    productChild.IsNullThrowExceptionArgument("productChild");
 
-            //First get all of it's MenuPaths
-            //we do not know which MenuPath we have come from
+        //    //initialize the holder list
+        //    HashSet<ProductChildFeature> allFeatures = new HashSet<ProductChildFeature>();
+        //    //get the product
+        //    Product product = productChild.Product;
+        //    product.IsNullThrowException("product");
 
-            //initialize the holder list
-            HashSet<ProductChildFeature> allFeatures = new HashSet<ProductChildFeature>();
-            //get the product
-            Product product = productChild.Product;
-            product.IsNullThrowException("product");
-
-            //Add all productChild features
-            if (!productChild.ProductChildFeatures.IsNullOrEmpty())
-            {
-                foreach (ProductChildFeature pcf in productChild.ProductChildFeatures)
-                {
-                    if (!pcf.IsNull())
-                        allFeatures.Add(pcf);
-                }
-            }
-
-            //Add all the product features
-            addProductFeatures(allFeatures, product);
+        //    //Add all productChild features
+        //    if (!productChild.ProductChildFeatures.IsNullOrEmpty())
+        //    {
+        //        foreach (ProductChildFeature pcf in productChild.ProductChildFeatures)
+        //        {
+        //            if (!pcf.IsNull())
+        //                allFeatures.Add(pcf);
+        //        }
+        //    }
 
 
-            return allFeatures.OrderBy(x => x.Name).ToList();
-        }
+        //    return allFeatures.OrderBy(x => x.Name).ToList();
+        //}
 
-        private static void addProductFeatures(HashSet<ProductChildFeature> allFeatures, Product product)
-        {
-            if (!product.ProductFeatures.IsNullOrEmpty())
-            {
-                foreach (ProductFeature prodfea in product.ProductFeatures)
-                {
-                    ProductChildFeature pfa = prodfea.ToProductChildFeature();
-                    if (!pfa.IsNull())
-                    {   
-                        bool featureNameDoesNotExist = allFeatures.FirstOrDefault(x => x.Name.ToLower() == prodfea.Name.ToLower()).IsNull();
-                        if (featureNameDoesNotExist)
-                            {
-                                allFeatures.Add(pfa);
-                            }
-                        }
-                }
-            }
-        }
+        //private static void addProductFeatures(HashSet<ProductChildFeature> allFeatures, Product product)
+        //{
+        //    if (!product.ProductFeatures.IsNullOrEmpty())
+        //    {
+        //        foreach (ProductFeature prodfea in product.ProductFeatures)
+        //        {
+        //            ProductChildFeature pfa = prodfea.ToProductChildFeature();
+        //            if (!pfa.IsNull())
+        //            {   
+        //                bool featureNameDoesNotExist = allFeatures.FirstOrDefault(x => x.Name.ToLower() == prodfea.Name.ToLower()).IsNull();
+        //                if (featureNameDoesNotExist)
+        //                    {
+        //                        allFeatures.Add(pfa);
+        //                    }
+        //                }
+        //        }
+        //    }
+        //}
 
 
     }

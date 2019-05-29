@@ -1,4 +1,5 @@
-﻿using EnumLibrary.EnumNS;
+﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
@@ -12,8 +13,9 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
     public class IndexMenuProductChild : MenuStateAbstract
     {
 
-        public IndexMenuProductChild(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter)
-            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
+        public IndexMenuProductChild(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter, string userId, string userName)
+            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter, userId, userName) { }
+
 
 
         public override MenuENUM EditLink_MenuEnum
@@ -45,7 +47,12 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 
         public override bool ShowCreateButton
         {
-            get { return true; }
+            get
+            {
+                if (UserId.IsNull())
+                    return false;
+                return true;
+            }
         }
 
         public override bool ShowEditButton

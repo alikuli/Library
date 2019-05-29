@@ -10,6 +10,9 @@ namespace MenuItemHelperNS
         //void Initialize(decimal personOpenSaleOrdersInMoney, double personOpenSaleOrdersInQuantity, decimal personClosedSaleOrdersInMoney, double personClosedSaleOrdersInQuantity, decimal personInProccessSaleOrdersInMoney, double personInProccessSaleOrdersInQuantity, decimal personCanceledSaleOrdersInMoney, double personCanceledSaleOrdersInQuantity, decimal personBackSaleOrdersInMoney, double personBackSaleOrdersInQuantity);
 
         IMenuItemHelper InProccesss { get; }
-        IMenuItemHelper Open { get; }
+        IMenuItemHelper Credit { get; }
+        IMenuItemHelper Quotation { get; }
+        IMenuItemHelper Total { get; }
+
     }
 }

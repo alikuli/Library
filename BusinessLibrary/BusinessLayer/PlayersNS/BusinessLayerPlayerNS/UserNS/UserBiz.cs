@@ -18,7 +18,7 @@ namespace UowLibrary
 {
     public partial class UserBiz : BusinessLayer<ApplicationUser>
     {
-        //private CountryBiz _countryBiz;
+        private CountryBiz _countryBiz;
         //AddressBiz _addressBiz;
         private IAuthenticationManager _iAuthenticationManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -31,10 +31,11 @@ namespace UowLibrary
             IAuthenticationManager iAuthenticationManager,
             //AddressBiz addressBiz,
             IRepositry<ApplicationUser> entityDal,
+            CountryBiz countryBiz,
             BizParameters bizParameters)
             : base(entityDal, bizParameters)
         {
-            //_countryBiz = countryBiz;
+            _countryBiz = countryBiz;
             //_addressBiz = addressBiz;
             UserManager = userManager;
             SignInManager = signInManager;
@@ -78,15 +79,16 @@ namespace UowLibrary
 
         //    }
         //}
-        //public CountryBiz CountryBiz
-        //{
-        //    get
-        //    {
+        public CountryBiz CountryBiz
+        {
+            get
+            {
+                _countryBiz.UserId = UserId;
+                _countryBiz.UserName = UserName;
 
-        //        AddressBiz.CountryBiz.IsNullThrowException();
-        //        return AddressBiz.CountryBiz;
-        //    }
-        //}
+                return _countryBiz;
+            }
+        }
 
         public async Task<string> GenerateChangePhoneNumberTokenAsync(string userId, string phoneNumber)
         {

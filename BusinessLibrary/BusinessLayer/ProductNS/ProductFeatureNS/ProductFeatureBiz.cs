@@ -38,6 +38,7 @@ namespace UowLibrary.FeatureNS.MenuFeatureNS
             indexListVM.Show.EditDeleteAndCreate = true;
         }
 
+
         public override void Fix(ControllerCreateEditParameter parm)
         {
             ProductFeature pf = parm.Entity as ProductFeature;

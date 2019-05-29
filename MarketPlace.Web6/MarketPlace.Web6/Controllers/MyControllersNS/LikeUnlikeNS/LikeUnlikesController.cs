@@ -13,6 +13,7 @@ using UowLibrary.LikeUnlikeNS;
 using UowLibrary.ParametersNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
+using AliKuli.UtilitiesNS;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -110,7 +111,7 @@ namespace MarketPlace.Web6.Controllers
                     {
                         pu.UserAddressFixed = Url.Action("Edit", "Users", new { id = pu.Id });
                         if (pu.ImageLocation.IsNullOrEmpty())
-                            pu.ImageLocation = Server.MapPath(AliKuli.ConstantsNS.MyConstants.DEFAULT_IMAGE_LOCATION);
+                            pu.ImageLocation = Server.MapPath(ConfigManagerHelper.DefaultBlankPicture);
                     }
                     unlikeJsonResult = Json(param.PeopleWhoDidNotLikedThis.ToArray());
                 }
@@ -122,7 +123,7 @@ namespace MarketPlace.Web6.Controllers
                     {
                         pu.UserAddressFixed = Url.Action("Edit", "Users", new { id = pu.Id });
                         if (pu.ImageLocation.IsNullOrEmpty())
-                            pu.ImageLocation = Server.MapPath(AliKuli.ConstantsNS.MyConstants.DEFAULT_IMAGE_LOCATION);
+                            pu.ImageLocation = Server.MapPath(ConfigManagerHelper.DefaultBlankPicture);
                     }
                     likeJsonResult = Json(param.PeopleWhoLikedThis.ToArray());
                 }

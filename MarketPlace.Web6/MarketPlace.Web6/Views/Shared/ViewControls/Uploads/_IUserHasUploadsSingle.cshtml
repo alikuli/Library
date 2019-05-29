@@ -43,7 +43,7 @@
 
         foreach (ModelsClassLibrary.ModelsNS.UploadedFileNS.UploadedFile uploadedFile in userUpload.Where(x => x.MetaData.IsDeleted == false))
         {
-            string imagePath = Url.Content(uploadedFile.RelativePathWithFileName());
+            string imagePath = Url.Content(uploadedFile.GetRelativePathWithFileName());
             string actionPath = Url.Action("Edit", "UploadedFiles", new { id = uploadedFile.Id, returnUrl = returnUrl });
 
 

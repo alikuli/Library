@@ -4,6 +4,7 @@
     int count = 0;
     string controller = this.ViewContext.RouteData.Values["controller"].ToString();
     string returnUrl = Request.Url.PathAndQuery;
+    string fullName = Model.FullName() + " (Level 2)";
 
     IEnumerable<ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeature> features = null;
     if(!Model.MenuFeatures.IsNull())
@@ -16,7 +17,7 @@
     
 }
 <p>
-    @Html.ActionLink("Add Feature", "AddFeature", "MenuPath2s", new { id = Model.Id, parentName = Model.FullName(), returnUrl = returnUrl }, new { @class = "btn btn-info" })
+    @Html.ActionLink("Add Feature", "AddFeature", "MenuPath2s", new { id = Model.Id, parentName = fullName, returnUrl = returnUrl }, new { @class = "btn btn-info" })
 </p>
 
 
@@ -42,6 +43,8 @@
     { 
         foreach (var item in features)
         {
+            string delete_feature = Url.Action("DeleteFeature", "MenuPath2s", new { menuPathid = Model.Id, menuFeatureId = item.Id, returnUrl = returnUrl });
+            
             <tr>
                 <td>
                     @{
@@ -55,9 +58,19 @@
                 </td>
 
                 <td>
-                    <span data-toggle="tooltip" title="@deleteToolTip" data-placement="top">
+
+                    <button data-toggle="tooltip"
+                            class="btn btn-sm btn-danger"
+                            title="@deleteToolTip"
+                            data-placement="top"
+                            onclick="openPath('@delete_feature')">
+                        <img width="20" src="~/ContentMine/Icons/GarbageCan.png" />
+                    </button>
+
+
+                    @*<span data-toggle="tooltip" title="@deleteToolTip" data-placement="top">
                         @Html.ActionLink(" ", "DeleteFeature", "MenuPath2s", new { menuPathid = Model.Id, menuFeatreId = item.Id, returnUrl = returnUrl }, new { @class = "fas fa-trash-alt text-danger" })
-                    </span>
+                    </span>*@
 </td>
             </tr>
 }

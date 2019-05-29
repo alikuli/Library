@@ -1,0 +1,18 @@
+﻿@model InterfacesLibrary.SharedNS.ICommonWithId
+
+@{
+    ViewBag.Title = "SelectDocumentTypeView";
+}
+
+<h2>What do you want to do?</h2>
+
+@*<button class="">Sale Order</button><br />
+<button>Purchase Order</button><br />*@
+
+@Html.ActionLink("Sale Request Unconfirmed", "Create", new { returnUrl = Model.MenuManager.ReturnUrl, buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Sale, buySellDocStateEnum = BuySellDocStateENUM.RequestUnconfirmed})<br />
+@Html.ActionLink("Create Purchase Order", "Create", new { documentType = DocumentTypeENUM.PurchaseOrder, returnUrl = Model.MenuManager.ReturnUrl })<br />
+@Html.ActionLink("Create Invoice", "Create", new { documentType = DocumentTypeENUM.Invoice, returnUrl = Model.MenuManager.ReturnUrl })<br />
+@Html.ActionLink("Create Receiving", "Create", new { documentType = DocumentTypeENUM.Receiving, returnUrl = Model.MenuManager.ReturnUrl })<br />
+@Html.ActionLink("Create Offer", "Create", new { documentType = DocumentTypeENUM.Offer, returnUrl = Model.MenuManager.ReturnUrl })<br />
+@Html.ActionLink("Create Credit", "Create", new { documentType = DocumentTypeENUM.Credit, returnUrl = Model.MenuManager.ReturnUrl })<br />
+

@@ -245,15 +245,21 @@
     <Compile Include="ModelsNS\CashNS\Abstract\CashTrxAbstract.cs" />
     <Compile Include="ModelsNS\CashNS\CashTrxNS\CashTrx.cs" />
     <Compile Include="ModelsNS\DocumentsNS\BuySellDocNS\BuySellDoc.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\BuySellDocNS\BuySellStatementModel.cs" />
     <Compile Include="ModelsNS\DocumentsNS\BuySellItemNS\BuySellItem.cs" />
     <Compile Include="ModelsNS\DocumentsNS\BuySellItemNS\Quantity.cs" />
     <Compile Include="ModelsNS\DocumentsNS\BuySellItemNS\SalePurchsaeState.cs" />
-    <Compile Include="ModelsNS\FeaturesNS\MenuFeatureNS\CreateNewFeatureModel.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\MoneyAndCountClass\MoneyCountItemClass.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\MoneyAndCountClass\MoneyItemParent.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\MoneyAndCountClass\MoneyTypes.cs" />
+    <Compile Include="ModelsNS\DocumentsNS\MoneyAndCountClass\OrderTypes.cs" />
+    <Compile Include="ModelsNS\FeaturesNS\CreateNewFeatureModel.cs" />
     <Compile Include="ModelsNS\FeaturesNS\MenuFeatureNS\MenuFeatureDeleteModel.cs" />
     <Compile Include="ModelsNS\FeaturesNS\MenuFeatureNS\MenuFeatureModel.cs" />
+    <Compile Include="ModelsNS\FeaturesNS\ProductFeatureNS\ProductFeatureModel.cs" />
     <Compile Include="ModelsNS\FeaturesNS\ProductFeaturesAbstract.cs" />
     <Compile Include="ModelsNS\MenuNS\IMenuPath1.cs" />
-    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\IconPropertiesNS\IconPropertiesShoppingCart.cs" />
+    <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\IconPropertiesNS\IconPropertiesExtended.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\IconPropertiesNS\IIconProperties.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\UserMoneyAccountNS\UserMoneyAccount.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\UserMoneyAccountNS\UserMoneyAccountHelperClass.cs" />
@@ -303,10 +309,17 @@
     </Compile>
     <Compile Include="ModelsNS\PeopleNS\PersonNS\Person.cs" />
     <Compile Include="ModelsNS\ContactNS\PhoneEmailAbstract.cs" />
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\OwnerNS\Owner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModelsNS\PeopleNS\PlayersNS\OwnerNS\OwnerCategory.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ModelsNS\ProductNS\CheckBoxItemNS\CheckBoxListTree.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\fullname.cs" />
     <Compile Include="ModelsNS\SharedNS\Complex\BoolDateAndByComplexWithConfirmationCode.cs" />
     <Compile Include="ModelsNS\SharedNS\Complex\BoolDateAndByComplex.cs" />
+    <Compile Include="ModelsNS\SharedNS\Complex\DecimalWithDateComplex.cs" />
     <Compile Include="ModelsNS\SharedNS\CountModel.cs" />
     <Compile Include="ModelsNS\PageViewNS\PageView.cs" />
     <Compile Include="ModelsNS\GlobalCommentsNS\GlobalComment.cs" />
@@ -375,9 +388,7 @@
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\PlayerAbstractsNS\PlayerAbstract.cs" />
     <Compile Include="ModelsNS\PeopleNS\EntryScreenNS\CnicAndPhone_Screen1.cs" />
     <Compile Include="ModelsNS\PeopleNS\EntryScreenNS\PersonWithAddress_Screen2.cs" />
-    <Compile Include="ModelsNS\PeopleNS\PlayersNS\OwnerNS\Owner.cs" />
     <Compile Include="ModelsNS\PeopleNS\Language.cs" />
-    <Compile Include="ModelsNS\PeopleNS\PlayersNS\OwnerNS\OwnerCategory.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\ApplicationUserNS\ApplicationUser - Navigations.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\ApplicationUserNS\ApplicationUser - Index.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\UserNS\ApplicationUserNS\UpdatePropertiesDuringModify.cs" />
@@ -416,7 +427,6 @@
     <Compile Include="ModelsNS\ProductNS\ViewModelsNS\IProductVM.cs" />
     <Compile Include="ModelsNS\ProductNS\ViewModelsNS\ProductAutomobileNS\IProductAutomobileVM.cs" />
     <Compile Include="ModelsNS\ProductNS\UomNS\IUom.cs" />
-    <Compile Include="ModelsNS\SharedNS\Common\CommonWithIdDudClass.cs" />
     <Compile Include="ModelsNS\SharedNS\Common\IFieldsToLoadFromView.cs" />
     <Compile Include="ModelsNS\SharedNS\Common\PropertyValue.cs" />
     <Compile Include="ModelsNS\RightsNS\IRight.cs" />
@@ -434,33 +444,40 @@
     <Compile Include="ModelsNS\CounterNS\CounterTypeENUM.cs" />
     <Compile Include="ModelsNS\SharedNS\DateParameter.cs" />
     <Compile Include="ModelsNS\SharedNS\IdModel.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\CashNS\SystemCashNonRefundableClass.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\CashNS\SystemCashRefundableClass.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\CashNS\SystemCashRefundable_AmountOnlyClass.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\CashNS\SystemTotalCashClass.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\CashNS\SystemTotalCash_AmountOnlyClass.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\PurchaseOrdersNS\SystemBackPurchaseOrders.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\PurchaseOrdersNS\SystemCanceledPurchaseOrders.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\PurchaseOrdersNS\SystemClosedPurchaseOrders.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\PurchaseOrdersNS\SystemInProccessPurchaseOrders.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\PurchaseOrdersNS\SystemOpenPurchaseOrders.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\PurchasesNS\PersonTotalPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\SaleOrdersNS\PersonTotalSaleOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\CashNS\SystemCashNonRefundableClass.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\CashNS\SystemCashRefundableClass.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\CashNS\SystemCashRefundable_AmountOnlyClass.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\CashNS\SystemTotalCashClass.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\CashNS\SystemTotalCash_AmountOnlyClass.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\PurchaseOrdersNS\SystemBackPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\PurchaseOrdersNS\SystemCanceledPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\PurchaseOrdersNS\SystemClosedPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\PurchaseOrdersNS\SystemCreditPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\PurchaseOrdersNS\SystemInProccessPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\PurchaseOrdersNS\SystemOpenPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\PurchaseOrdersNS\SystemTotalPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\PurchaseOrdersNS\SystemQuotationPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\SaleOrdersNS\SystemTotalSaleOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\SaleOrdersNS\SystemCreditSaleOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\SaleOrdersNS\SystemQuotationOrders.cs" />
     <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\IOrdersInfo.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\SaleOrdersNS\SystemBackSaleOrders.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\SaleOrdersNS\SystemCanceledSaleOrders.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\SaleOrdersNS\SystemClosedSaleOrders.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\SaleOrdersNS\SystemInProccessSaleOrders.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\SaleOrdersNS\SystemOpenSaleOrders.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\AdminClasses\SystemCashPosition.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\SaleOrdersNS\SystemBackSaleOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\SaleOrdersNS\SystemCanceledSaleOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\SaleOrdersNS\SystemClosedSaleOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\SaleOrdersNS\SystemInProccessSaleOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\SaleOrdersNS\SystemOpenSaleOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemNS\SystemCashPosition.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\PurchasesNS\PersonBackPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\PurchasesNS\PersonCanceledPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\PurchasesNS\PersonClosedPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\PurchasesNS\PersonCreditPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\PurchasesNS\PersonInProccessPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\PurchasesNS\PersonOpenPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\PurchasesNS\PersonQuotationPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\SaleOrdersNS\PersonQuotationSaleOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\SaleOrdersNS\PersonCreditOrders.cs" />
     <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemCashPosition.cs" />
     <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonPurchaseOrders.cs" />
     <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\SystemPurchaseOrders.cs">
@@ -471,21 +488,16 @@
     <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\IMenuItemHelper.cs" />
     <Compile Include="ModelsNS\SharedNS\MenuItemClass.cs" />
     <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonCashPosition.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonClassesNS\CashNS\PersonCash_AmountOnly.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonClassesNS\CashNS\PersonTotalCashClass.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonClassesNS\CashNS\PersonCashRefundable_AmountOnlyClass.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonClassesNS\CashNS\PersonCashNonRefundableClass.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonClassesNS\CashNS\PersonCashRefundableClass.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonClassesNS\SaleOrdersNS\PersonClosedSaleOrders.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonClassesNS\SaleOrdersNS\PersonCanceledSaleOrders.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonClassesNS\SaleOrdersNS\PersonInProccessSaleOrders.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonClassesNS\SaleOrdersNS\PersonBackSaleOrders.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonClassesNS\SaleOrdersNS\PersonOpenSaleOrders.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonClassesNS\PurchasesNS\PersonBackPurchaseOrders.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonClassesNS\PurchasesNS\PersonCanceledPurchaseOrders.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonClassesNS\PurchasesNS\PersonClosedPurchaseOrders.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonClassesNS\PurchasesNS\PersonInProccessPurchaseOrders.cs" />
-    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonClassesNS\PurchasesNS\PersonOpenPurchaseOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\CashNS\PersonCash_AmountOnly.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\CashNS\PersonTotalCashClass.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\CashNS\PersonCashRefundable_AmountOnlyClass.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\CashNS\PersonCashNonRefundableClass.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\CashNS\PersonCashRefundableClass.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\SaleOrdersNS\PersonClosedSaleOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\SaleOrdersNS\PersonCanceledSaleOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\SaleOrdersNS\PersonInProccessSaleOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\SaleOrdersNS\PersonBackSaleOrders.cs" />
+    <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\SaleOrdersNS\PersonOpenSaleOrders.cs" />
     <Compile Include="ModelsNS\SharedNS\Parameters\AnnonymousStringType.cs" />
     <Compile Include="ModelsNS\SharedNS\Parameters\GlobalCommentParameter.cs" />
     <Compile Include="ModelsNS\SharedNS\Parameters\ControllerCreateEditParameter.cs" />

@@ -27,13 +27,17 @@ namespace MarketPlace.Web4.Controllers
             BreadCrumbManager breadCrumbManager,
             string userId,
             string userName,
+            string productId,
+            string returnUrl,
             bool isMenu,
+            //string userPersonId,
+            //string productChildPersonId,
             MenuENUM menuEnum = MenuENUM.IndexDefault,
             SortOrderENUM sortBy = SortOrderENUM.Item1_Asc,
             bool print = false,
             ActionNameENUM actionNameEnum = ActionNameENUM.Unknown,
-            string productId = "",
-            string returnUrl = "")
+            BuySellDocumentTypeENUM buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Unknown,
+            BuySellDocStateENUM buySellDocStateEnum = BuySellDocStateENUM.Unknown)
         {
             //FactoryParameters fp = new FactoryParameters();
 
@@ -45,6 +49,7 @@ namespace MarketPlace.Web4.Controllers
             //todo note... the company name is missing. We may need it.
 
             //the MenuController in the dudEntity entity needs to be set.
+ 
 
             ControllerIndexParams parms = new ControllerIndexParams(
                 id,
@@ -65,7 +70,9 @@ namespace MarketPlace.Web4.Controllers
                 actionNameEnum,
                 null,
                 productId,
-                returnUrl);
+                returnUrl,
+                buySellDocumentTypeEnum,
+                buySellDocStateEnum);
 
             //ViewBag.ReturnUrl = returnUrl;
 

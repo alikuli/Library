@@ -15,7 +15,8 @@ namespace MarketPlace.Web6
 
 
             bundles.Add(new ScriptBundle("~/Scripts/MyScripts/MyGlobalScript").Include(
-                        "~/Scripts/MyScripts/_MyGlobalScripts.js"));
+                        "~/Scripts/MyScripts/_MyGlobalScripts.js",
+                        "~/Scripts/MyScripts/_ProductScripts.js"));
 
 
             bundles.Add(new ScriptBundle("~/Scripts/notifyNS/notify").Include(
@@ -29,12 +30,12 @@ namespace MarketPlace.Web6
 
 
 
-            bundles.Add(new ScriptBundle("~/bundles/Knockout").Include(
-                        "~/Scripts/knockout-3.1.0.js.js",
-                        "~/Scripts/knockout-3.1.0.debug.js",
-                        "~/Scripts/knockout.mapping-latest.debug.js",
-                        "~/Scripts/perpetuum.knockout.js"
-                        ));
+            //bundles.Add(new ScriptBundle("~/bundles/Knockout").Include(
+            //            "~/Scripts/knockout-3.1.0.js.js",
+            //            "~/Scripts/knockout-3.1.0.debug.js",
+            //            "~/Scripts/knockout.mapping-latest.debug.js",
+            //            "~/Scripts/perpetuum.knockout.js"
+            //            ));
 
 
 
@@ -97,11 +98,11 @@ namespace MarketPlace.Web6
                       "~/Content/bootstrap-grid.css",
                       "~/Content/bootstrap-reboot.css",
                       "~/Content/bootstrap-theme.css",
-                      "~/Content/site.css",
                       "~/Content/PrintStyleSheet.css",
                       "~/Content/bootstrap-fileinput/themes/fas/theme.js",
                       "~/Content/bootstrap-fileinput/themes/explorer-fas/theme.js",
-                      "~/Content/bootstrap-fileinput/themes/explorer/theme.js"));
+                      "~/Content/bootstrap-fileinput/themes/explorer/theme.js",
+                      "~/Content/myCss.css"));
 
 
             bundles.Add(new StyleBundle("~/Content/css/FileinputCSS").Include(

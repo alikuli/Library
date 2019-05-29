@@ -17,7 +17,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
         public MenuManager()
         {
         }
-        public MenuManager(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, BreadCrumbManager breadCrumbManager, LikeUnlikeParameters likesCounter, string userId, string returnUrl)
+        public MenuManager(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, BreadCrumbManager breadCrumbManager, LikeUnlikeParameters likesCounter, string userId, string returnUrl, string userName /*, string userPersonId, string productChildPersonId */)
             : this()
         {
             MenuPathMain = menuPathMain;
@@ -25,10 +25,13 @@ namespace UowLibrary.MenuNS.MenuStateNS
             ProductChild = productChild;
             MenuEnum = menuEnum;
             BreadCrumbManager = breadCrumbManager;
-            LoadMenuState();
             UserId = userId;
             UserMoneyAccount = new UserMoneyAccount();
             ReturnUrl = returnUrl;
+            UserName = userName;
+            IndexMenuVariables = new IndexMenuVariables(UserId);
+            LoadMenuState();
+
         }
 
         public string UserPersonId { get; set; }
@@ -36,72 +39,74 @@ namespace UowLibrary.MenuNS.MenuStateNS
         /// This is used in the Icons IndexMenuVariables
         /// </summary>
         private string UserId { get; set; }
+        private string UserName { get; set; }
         private void LoadMenuState()
         {
             switch (MenuEnum)
             {
 
                 case MenuENUM.IndexMenuPath1:
-                    MenuState = new IndexMenuPath1(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new IndexMenuPath1(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
                 case MenuENUM.IndexMenuPath2:
-                    MenuState = new IndexMenuPath2(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new IndexMenuPath2(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
                 case MenuENUM.IndexMenuPath3:
-                    MenuState = new IndexMenuPath3(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new IndexMenuPath3(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
                 case MenuENUM.IndexMenuProduct:
-                    MenuState = new IndexMenuProduct(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new IndexMenuProduct(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
                 case MenuENUM.IndexMenuProductChild:
-                    MenuState = new IndexMenuProductChild(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new IndexMenuProductChild(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
 
                 case MenuENUM.EditDefault:
-                    MenuState = new EditDefault(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new EditDefault(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
 
                 case MenuENUM.EditMenuPath1:
-                    MenuState = new EditMenuPath1(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new EditMenuPath1(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
                 case MenuENUM.EditMenuPath2:
-                    MenuState = new EditMenuPath2(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new EditMenuPath2(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
                 case MenuENUM.EditMenuPath3:
-                    MenuState = new EditMenuPath3(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new EditMenuPath3(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
                 case MenuENUM.EditMenuProduct:
-                    MenuState = new EditMenuProduct(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new EditMenuProduct(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
                 case MenuENUM.EditMenuProductChild:
-                    MenuState = new EditMenuProductChild(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new EditMenuProductChild(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
 
 
                 case MenuENUM.CreateMenuPath1:
-                    MenuState = new CreateMenuPath1(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new CreateMenuPath1(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
                 case MenuENUM.CreateMenuPath2:
-                    MenuState = new CreateMenuPath2(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new CreateMenuPath2(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
                 case MenuENUM.CreateMenuPath3:
-                    MenuState = new CreateMenuPath3(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new CreateMenuPath3(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
                 case MenuENUM.CreateMenuProduct:
-                    MenuState = new CreateMenuProduct(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new CreateMenuProduct(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
                 case MenuENUM.CreateMenuProductChild:
-                    MenuState = new CreateMenuProductChild(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new CreateMenuProductChild(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
 
                 case MenuENUM.CreateDefault:
-                    MenuState = new CreateDefault(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new CreateDefault(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
                 case MenuENUM.IndexDefault:
-                    MenuState = new IndexDefault(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter);
+                    MenuState = new IndexDefault(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
 
                 default:
+                    MenuState = new IndexDefault(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
             }
         }
@@ -144,32 +149,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
         public SortOrderENUM SortOrderEnum { get; set; }
         public LikeUnlikeParameters LikeUnlikesCounter { get; set; }
 
-        IndexMenuVariables _indexMenuVariables;
-        public IndexMenuVariables IndexMenuVariables
-        {
-            get
-            {
-                if (_indexMenuVariables.IsNull())
-                    _indexMenuVariables = new IndexMenuVariables(UserId);
-
-
-                _indexMenuVariables.UserPersonId = UserPersonId;
-                
-                if(!ProductChild.IsNull())
-                {
-                    ProductChild.Owner.IsNullThrowException("ProductChild.Owner");
-                    ProductChild.Owner.Person.IsNullThrowException("ProductChild.Owner.Person");
-                    _indexMenuVariables.ProductChildPersonId = ProductChild.Owner.Person.Id;
-
-                }
-
-                return _indexMenuVariables;
-            }
-            set
-            {
-                _indexMenuVariables = value;
-            }
-        }
+        public IndexMenuVariables IndexMenuVariables{get;set;}
         public string WebClicksCount { get; set; }
         public UserMoneyAccount UserMoneyAccount { get; set; }
 

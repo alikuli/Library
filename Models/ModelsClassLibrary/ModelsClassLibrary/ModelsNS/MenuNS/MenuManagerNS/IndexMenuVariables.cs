@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
+using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 
 namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
 {
@@ -14,6 +15,13 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
 
             UserId = userId;
         }
+        public IndexMenuVariables(string userId, string userPersonId, string productChildPersonId)
+        {
+
+            UserId = userId;
+            UserPersonId = userPersonId;
+            ProductChildPersonId = productChildPersonId;
+        }
 
 
         public int Count { get; set; }
@@ -25,14 +33,27 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
         /// This is the owner person of the product child
         /// </summary>
         public string ProductChildPersonId { get; set; }
-        
+
         /// <summary>
         /// this is the user person of the currently logged in user
         /// </summary>
-        public string UserPersonId { get; set; }
+        /// 
+        //string _UserPersonId;
+        //public string UserPersonId
+        //{
+        //    get
+        //    {
+        //        return _UserPersonId;
+        //    }
 
+        //    set
+        //    {
+        //        _UserPersonId = value;
+        //    }
+        //}
         #region Like
 
+        public string UserPersonId { get; set; }
 
 
         IconProperties _likeIcon;
@@ -40,15 +61,18 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
         {
             get
             {
+
                 if (_likeIcon.IsNull())
                 {
+
                     int theCount = Count; //was 0 before I changed it.
                     string iconPrefix = "like";
                     string editFunction = "EditlikeUnlikeModal(this);";
                     string showFunction = "ShowPplWhoLikeUnlikeThis(this);";
-                    string icon = " ";
+                    string icon = UploadedFile.GetAbsolutePath("~/ContentMine/Icons/smilingFace.png");
+                    //string icon = "~/ContentMine/Icons/smilingFace.png";
                     //string icon = " far fa-smile ";
-                    string buttonColorClass = " btn-info ";
+                    string buttonColorClass = " btn-info mr-1 ";
                     bool isAllowEditIfLoggedIn = true;
                     bool isAllowedOnlyOnce = true;
                     string badgeClassShow = " badge badge-danger ";
@@ -75,7 +99,7 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
                 string showFunction = "ShowPplWhoLikeUnlikeThis(this);";
                 string icon = " ";
                 //string icon = " far fa-frown ";
-                string buttonColorClass = " btn-danger ";
+                string buttonColorClass = " btn-danger mr-1";
                 bool isAllowEditIfLoggedIn = true;
                 bool isAllowedOnlyOnce = true;
                 string badgeClassShow = " badge badge-warning ";
@@ -99,6 +123,13 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
 
         #endregion
 
+        public void updateRequiredProperties(string userPersonId, string productChildPersonId)
+        {
+            UserPersonId = userPersonId;
+            ProductChildPersonId = productChildPersonId;
+        }
+
+        #region Message
 
         IconProperties _messageIcon;
         public IconProperties MessageIcon
@@ -113,7 +144,7 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
                     string editFunction = "";
                     string showFunction = "";
                     string icon = " img-message ";
-                    string buttonColorClass = " btn-warning ";
+                    string buttonColorClass = " btn-warning mr-1";
                     bool isAllowEditIfLoggedIn = true;
                     bool isAllowedOnlyOnce = false;
                     string badgeClassShow = " badge badge-warning ";
@@ -128,10 +159,44 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
             }
         }
 
+        #endregion
+
+
+        #region Offer
+
+        IconProperties _offerIcon;
+        public IconProperties OfferIcon
+        {
+            get
+            {
+                if (_offerIcon.IsNull())
+                {
+                    string iconPrefix = "msg";
+                    //string editFunction = "EditOfferModal(this);";
+                    //string showFunction = "ShowOffersForThis(this);";
+                    string editFunction = "";
+                    string showFunction = "";
+                    string icon = " img-offer ";
+                    string buttonColorClass = " btn-success mr-1";
+                    bool isAllowEditIfLoggedIn = true;
+                    bool isAllowedOnlyOnce = false;
+                    string badgeClassShow = " badge badge-warning ";
+
+                    _offerIcon = new IconProperties(Count, iconPrefix, UserId, editFunction, showFunction, icon, buttonColorClass, isAllowEditIfLoggedIn, isAllowedOnlyOnce, badgeClassShow);
+                }
+                else
+                {
+                    _offerIcon.InitEachTime(Count);
+                }
+                return _offerIcon;
+            }
+        }
+
+        #endregion
 
         #region Shopping Cart
-        IconPropertiesShoppingCart _shoppingCartIcon;
-        public IconPropertiesShoppingCart ShoppingCartIcon
+        IconPropertiesExtended _shoppingCartIcon;
+        public IconPropertiesExtended ShoppingCartIcon
         {
             get
             {
@@ -141,20 +206,51 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
                     string editFunction = "BuyAjax(this); ";
                     string showFunction = "";
                     string icon = "";
-                    //string icon = " img-message ";
-                    //string icon = " fas fa-envelope-square ";
-                    string buttonColorClass = " btn-success ";
+                    string buttonColorClass = " btn-success mr-1";
                     bool isAllowEditIfLoggedIn = true;
                     bool isAllowedOnlyOnce = false;
                     string badgeClassShow = " badge badge-warning ";
-                    string ownerPersonId = ProductChildId;
-                    _shoppingCartIcon = new IconPropertiesShoppingCart(Count, iconPrefix, UserId, editFunction, showFunction, icon, buttonColorClass, isAllowEditIfLoggedIn, isAllowedOnlyOnce, badgeClassShow, UserPersonId, ProductChildPersonId);
+                    string ownerPersonId = ProductChildPersonId;
+                    string userPersonId = UserPersonId;
+                    _shoppingCartIcon = new IconPropertiesExtended(Count, iconPrefix, UserId, editFunction, showFunction, icon, buttonColorClass, isAllowEditIfLoggedIn, isAllowedOnlyOnce, badgeClassShow, userPersonId, ownerPersonId);
                 }
                 else
                 {
                     _shoppingCartIcon.InitEachTime(Count);
                 }
                 return _shoppingCartIcon;
+            }
+        }
+
+
+        #endregion
+
+        #region Edit Child Product
+        IconPropertiesExtended _iconEditProductChild;
+        public IconPropertiesExtended IconEditProductChild
+        {
+            get
+            {
+                if (_iconEditProductChild.IsNull())
+                {
+                    string editFunction = "";
+                    string showFunction = "";
+                    string icon = "";
+                    string iconPrefix = "EditProductChild";
+                    string buttonColorClass = " btn-success mr-1";
+                    bool isAllowEditIfLoggedIn = true;
+                    bool isAllowedOnlyOnce = false;
+                    string badgeClassShow = " badge badge-warning ";
+                    string ownerPersonId = ProductChildPersonId;
+                    string userPersonId = UserPersonId;
+
+                    _iconEditProductChild = new IconPropertiesExtended(Count, iconPrefix, UserId, editFunction, showFunction, icon, buttonColorClass, isAllowEditIfLoggedIn, isAllowedOnlyOnce, badgeClassShow, userPersonId, ownerPersonId);
+                }
+                else
+                {
+                    _iconEditProductChild.InitEachTime(Count);
+                }
+                return _iconEditProductChild;
             }
         }
 
@@ -244,60 +340,6 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
 
         #endregion
 
-
-        //#region Font Awesome Classes
-        //public string ClassSmileFace
-        //{
-        //    get
-        //    {
-        //        return " far fa-smile ";
-        //    }
-        //}
-
-        //public string ClassUnhappyFace
-        //{
-        //    get
-        //    {
-        //        return " far fa-frown-open ";
-        //    }
-        //}
-
-        //public string ClassWrench
-        //{
-        //    get
-        //    {
-        //        return " anchorButtons btn btn-xs aria-label fas fa-wrench ";
-        //    }
-        //}
-
-        //public string ClassAnchorButton
-        //{
-        //    get { return " anchorButtons btn btn-xs aria-label "; }
-        //}
-
-        //public string ClassAnchorButtonDisabled
-        //{
-        //    get { return " anchorButtons btn btn-xs aria-label disabled "; }
-        //}
-
-        //public string ClassHandPointingUp
-        //{
-        //    get
-        //    {
-        //        return " far fa-hand-point-up ";
-        //    }
-        //}
-
-        //public string ClassShoppingCart
-        //{
-        //    get
-        //    {
-        //        return " fa fa-shopping-cart ";
-        //    }
-        //}
-
-        //#endregion
-
         #region Product
 
         public string ProductId { get; set; }
@@ -305,7 +347,6 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
 
 
         #endregion
-
 
         #region Product Child
 
@@ -315,34 +356,6 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
 
         #endregion
 
-        //string _modalBoxId;
-        //public string ModalBoxId
-        //{
-        //    get
-        //    {
-        //        return "myModal" + _modalBoxId;
-        //    }
-        //    set
-        //    {
-        //        _modalBoxId = value;
-        //    }
-        //}
-
-        //public string ModalBoxIdInButton
-        //{
-        //    get
-        //    {
-        //        return "#" + ModalBoxId;
-        //    }
-        //}
-        //public string ModalLabelId
-        //{
-        //    get
-        //    {
-        //        return "modalLabelId" + ModalBoxId;
-        //    }
-        //}
-
         #region Controller
 
         public string CurrController { get; set; }
@@ -350,8 +363,6 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
 
 
         #endregion
-
-
 
         #region User
 
@@ -361,5 +372,7 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
         public bool IsLoggedIn { get { return !UserId.IsNullOrWhiteSpace(); } }
 
         #endregion
+
+
     }
 }

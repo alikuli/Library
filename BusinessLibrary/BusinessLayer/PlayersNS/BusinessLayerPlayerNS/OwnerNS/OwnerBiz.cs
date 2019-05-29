@@ -7,6 +7,7 @@ using UowLibrary.CashTtxNS;
 using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS.OwnerCategoryNS;
 using UowLibrary.PlayersNS.PlayerAbstractCategoryNS;
+using UserModels;
 
 namespace UowLibrary.PlayersNS.OwnerNS
 {
@@ -46,5 +47,31 @@ namespace UowLibrary.PlayersNS.OwnerNS
             return owner;
 
         }
+
+        public override Owner GetPlayerFor(string userId)
+        {
+            Owner owner = base.GetPlayerFor(userId);
+
+            if (owner.IsNull())
+            {
+                ApplicationUser user = GetUser(userId);
+                user.IsNullThrowException("user");
+                
+                Person person = GetPersonForUserId(userId);
+
+                //create a new customer for this
+                owner = Factory() as Owner;
+                owner.IsNullThrowException("Owner");
+                owner.Name = user.UserName;
+                owner.PersonId = person.Id;
+                owner.DefaultBillAddressId = person.DefaultBillAddressId;
+                //owner.DefaultShipAddressId = person.
+                //add default addresses
+                CreateAndSave(owner);
+            }
+
+            return owner;
+        }
+
     }
 }

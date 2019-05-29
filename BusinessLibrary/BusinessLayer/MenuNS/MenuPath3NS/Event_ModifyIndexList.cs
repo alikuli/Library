@@ -32,7 +32,7 @@ namespace UowLibrary.MenuNS
             mp3.IsNullThrowException("Unable to unbox");
             //send in a MenuPathMain that is a part of this MenuPath3
             MenuPathMain mpm = mp3.MenuPathMains.FirstOrDefault();
-            indexItem.MenuManager = new MenuManager(mpm, null, null, MenuENUM.EditMenuPath3, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl);
+            indexItem.MenuManager = new MenuManager(mpm, null, null, MenuENUM.EditMenuPath3, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
 
 
             indexItem.MenuManager.PictureAddresses = GetPictureList(mp3);

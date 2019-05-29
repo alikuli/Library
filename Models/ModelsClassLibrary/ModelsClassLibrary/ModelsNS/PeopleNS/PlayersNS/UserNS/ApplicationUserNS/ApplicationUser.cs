@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AliKuli.Extentions;
 
 namespace UserModels
 {
@@ -28,6 +29,8 @@ namespace UserModels
             Suspended = new UserActive();
             MetaData = new MetaDataComplex();
             //Country = new Country();
+            HeadingForCreateForm = this.ClassName.ToString().ToTitleSentance();
+
         }
 
         //[Display(Name = "Country")]

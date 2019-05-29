@@ -78,6 +78,12 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
             decimal personBackSaleOrdersInMoney,
             double personBackSaleOrdersInQuantity,
 
+            decimal personCreditSaleOrdersInMoney,
+            double personCreditSaleOrdersInQuantity,
+
+            decimal personQuotationSaleOrdersInMoney,
+            double personQuotationSaleOrdersInQuantity,
+
 
             decimal systemOpenSaleOrdersInMoney,
             double systemOpenSaleOrdersInQuantity,
@@ -92,7 +98,17 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
             double systemCanceledSaleOrdersInQuantity,
 
             decimal systemBackSaleOrdersInMoney,
-            double systemBackSaleOrdersInQuantity)
+            double systemBackSaleOrdersInQuantity,            
+
+            decimal systemCreditSaleOrdersInMoney,
+            double systemCreditSaleOrdersInQuantity,
+            
+            decimal systemQuotationSaleOrdersInMoney,
+            double systemQuotationSaleOrdersInQuantity
+
+            
+            )
+        
         {
             _personOpenSalesOrdersInMoney = personOpenSaleOrdersInMoney;
             _personOpenSalesOrdersInQuantity = personOpenSaleOrdersInQuantity;
@@ -109,7 +125,11 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
             _personBackSaleOrdersInMoney = personBackSaleOrdersInMoney;
             _personBackSaleOrdersInQuantity = personBackSaleOrdersInQuantity;
 
+            _personCreditSaleOrdersInMoney = personCreditSaleOrdersInMoney;
+            _personCreditSaleOrdersInQuantity = personCreditSaleOrdersInQuantity;
 
+            _personQuotationSaleOrdersInMoney = personQuotationSaleOrdersInMoney;
+            _personQuotationSaleOrdersInQuantity = personQuotationSaleOrdersInQuantity;
 
             _systemOpenSalesOrdersInMoney = systemOpenSaleOrdersInMoney;
             _systemOpenSalesOrdersInQuantity = systemOpenSaleOrdersInQuantity;
@@ -125,7 +145,14 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
 
             _systemBackSaleOrdersInMoney = systemBackSaleOrdersInMoney;
             _systemBackSaleOrdersInQuantity = systemBackSaleOrdersInQuantity;
+
+            _systemCreditSaleOrdersInMoney = systemCreditSaleOrdersInMoney;
+            _systemCreditSaleOrdersInQuantity = systemCreditSaleOrdersInQuantity;
+
+            _systemQuotationSaleOrdersInMoney = systemQuotationSaleOrdersInMoney;
+            _systemQuotationSaleOrdersInQuantity = systemQuotationSaleOrdersInQuantity;
         }
+
         public void InitializePurchaseOrders(
             decimal personOpenPurchaseOrdersInMoney,
             double personOpenPurchaseOrdersInQuantity,
@@ -142,6 +169,12 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
             decimal personBackPurchaseOrdersInMoney,
             double personBackPurchaseOrdersInQuantity,
 
+            decimal personCreditPurchaseOrdersInMoney,
+            double personCreditPurchaseOrdersInQuantity,
+
+            decimal personQuotationPurchaseOrdersInMoney,
+            double personQuotationPurchaseOrdersInQuantity,
+
             decimal systemOpenPurchaseOrdersInMoney,
             double systemOpenPurchaseOrdersInQuantity,
 
@@ -155,7 +188,13 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
             double systemCanceledPurchaseOrdersInQuantity,
 
             decimal systemBackPurchaseOrdersInMoney,
-            double systemBackPurchaseOrdersInQuantity
+            double systemBackPurchaseOrdersInQuantity,
+
+            decimal systemCreditPurchaseOrdersInMoney,
+            double systemCreditPurchaseOrdersInQuantity,
+
+            decimal systemQuotationPurchaseOrdersInMoney,
+            double systemQuotationPurchaseOrdersInQuantity
 
 
 
@@ -177,8 +216,11 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
             _systemBackPurchaseOrdersInMoney = systemBackPurchaseOrdersInMoney;
             _systemBackPurchaseOrdersInQuantity = systemBackPurchaseOrdersInQuantity;
 
+            _systemCreditPurchaseOrdersInMoney = systemCreditPurchaseOrdersInMoney;
+            _systemCreditPurchaseOrdersInQuantity = systemCreditPurchaseOrdersInQuantity;
 
-
+            _systemQuotationPurchaseOrdersInMoney = systemQuotationPurchaseOrdersInMoney;
+            _systemQuotationPurchaseOrdersInQuantity = systemQuotationPurchaseOrdersInQuantity;
 
             _personOpenPurchasesOrdersInMoney = personOpenPurchaseOrdersInMoney;
             _personOpenPurchasesOrdersInQuantity = personOpenPurchaseOrdersInQuantity;
@@ -194,6 +236,12 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
 
             _personBackPurchaseOrdersInMoney = personBackPurchaseOrdersInMoney;
             _personBackPurchaseOrdersInQuantity = personBackPurchaseOrdersInQuantity;
+
+            _personCreditPurchaseOrdersInMoney = personCreditPurchaseOrdersInMoney;
+            _personCreditPurchaseOrdersInQuantity = personCreditPurchaseOrdersInQuantity;
+
+            _personQuotationPurchaseOrdersInMoney = personQuotationPurchaseOrdersInMoney;
+            _personQuotationPurchaseOrdersInQuantity = personQuotationPurchaseOrdersInQuantity;
         }
 
         public void InitializeMisc(bool isAdmin, bool isBank /*, string customerFullName, string ownerFullName */)
@@ -207,9 +255,9 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
         public bool IsAdmin { get; set; }
         public bool IsBank { get; set; }
 
+
         //string CustomerFullName { get; set; }
         //string OwnerFullName { get; set; }
-
 
         #region SystemCash
         static decimal _systemCash_NonRefundable;
@@ -250,7 +298,7 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
         }
         #endregion
 
-        #region Person Sales Orders
+        #region Person Open Sales Orders
 
         static decimal _personOpenSalesOrdersInMoney;
         static double _personOpenSalesOrdersInQuantity;
@@ -263,11 +311,16 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
         static decimal _personBackSaleOrdersInMoney;
         static double _personBackSaleOrdersInQuantity;
 
-        public PersonPurchaseOrders PersonSalesOrders
+        static decimal _personQuotationSaleOrdersInMoney;
+        static double _personQuotationSaleOrdersInQuantity;
+        static decimal _personCreditSaleOrdersInMoney;
+        static double _personCreditSaleOrdersInQuantity;
+
+        public PersonSalesOrders PersonSalesOrders
         {
             get
             {
-                return new PersonPurchaseOrders(
+                return new PersonSalesOrders(
                     _personOpenSalesOrdersInMoney,
                     _personOpenSalesOrdersInQuantity,
                     _personClosedSaleOrdersInMoney,
@@ -277,7 +330,11 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
                     _personCanceledSaleOrdersInMoney,
                     _personCanceledSaleOrdersInQuantity,
                     _personBackSaleOrdersInMoney,
-                    _personBackSaleOrdersInQuantity);
+                    _personBackSaleOrdersInQuantity,
+                    _personQuotationSaleOrdersInMoney,
+                    _personQuotationSaleOrdersInQuantity,
+                    _personCreditSaleOrdersInMoney,
+                    _personCreditSaleOrdersInQuantity);
             }
         }
 
@@ -296,11 +353,15 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
         static decimal _systemBackSaleOrdersInMoney;
         static double _systemBackSaleOrdersInQuantity;
 
-        public SystemPurchaseOrders SystemSalesOrders
+        static decimal _systemQuotationSaleOrdersInMoney;
+        static double _systemQuotationSaleOrdersInQuantity;
+        static decimal _systemCreditSaleOrdersInMoney;
+        static double _systemCreditSaleOrdersInQuantity;
+        public SystemSalesOrders SystemSalesOrders
         {
             get
             {
-                return new SystemPurchaseOrders(
+                return new SystemSalesOrders(
                     _systemOpenSalesOrdersInMoney,
                     _systemOpenSalesOrdersInQuantity,
                     _systemClosedSaleOrdersInMoney,
@@ -310,7 +371,12 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
                     _systemCanceledSaleOrdersInMoney,
                     _systemCanceledSaleOrdersInQuantity,
                     _systemBackSaleOrdersInMoney,
-                    _systemBackSaleOrdersInQuantity);
+                    _systemBackSaleOrdersInQuantity,
+                    _systemQuotationSaleOrdersInMoney,
+                    _systemQuotationSaleOrdersInQuantity,
+                    _systemCreditSaleOrdersInMoney,
+                    _systemCreditSaleOrdersInQuantity);
+
             }
         }
 
@@ -329,6 +395,10 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
         static decimal _personBackPurchaseOrdersInMoney;
         static double _personBackPurchaseOrdersInQuantity;
 
+        static decimal _personQuotationPurchaseOrdersInMoney;
+        static double _personQuotationPurchaseOrdersInQuantity;
+        static decimal _personCreditPurchaseOrdersInMoney;
+        static double _personCreditPurchaseOrdersInQuantity;
 
         public PersonPurchaseOrders PersonPurchaseOrders
         {
@@ -344,7 +414,11 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
                     _personCanceledPurchaseOrdersInMoney,
                     _personCanceledPurchaseOrdersInQuantity,
                     _personBackPurchaseOrdersInMoney,
-                    _personBackPurchaseOrdersInQuantity);
+                    _personBackPurchaseOrdersInQuantity,
+                    _personQuotationPurchaseOrdersInMoney,
+                    _personQuotationPurchaseOrdersInQuantity,
+                    _personCreditPurchaseOrdersInMoney,
+                    _personCreditPurchaseOrdersInQuantity);
             }
         }
 
@@ -361,6 +435,12 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
         static double _systemCanceledPurchaseOrdersInQuantity;
         static decimal _systemBackPurchaseOrdersInMoney;
         static double _systemBackPurchaseOrdersInQuantity;
+
+        static decimal _systemQuotationPurchaseOrdersInMoney;
+        static double _systemQuotationPurchaseOrdersInQuantity;
+        static decimal _systemCreditPurchaseOrdersInMoney;
+        static double _systemCreditPurchaseOrdersInQuantity;
+
         public SystemPurchaseOrders SystemPurchaseOrders
         {
             get
@@ -380,21 +460,6 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
         }
 
         #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }

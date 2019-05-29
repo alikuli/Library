@@ -1,7 +1,6 @@
 ﻿using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
-using ModelsClassLibrary.ModelsNS;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
@@ -9,6 +8,7 @@ using ModelsClassLibrary.ModelsNS.MenuNS;
 using ModelsClassLibrary.ModelsNS.MessageNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 
 namespace ModelsClassLibrary.MenuNS
@@ -35,7 +35,7 @@ namespace ModelsClassLibrary.MenuNS
         public virtual ICollection<Message> Messages { get; set; }
         public virtual ICollection<MenuFeature> MenuFeatures { get; set; }
 
-        string IHasUploads.MiscFilesLocation()
+        string IHasUploads.MiscFilesLocation(string aName)
         {
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, ClassNameRaw);
 
@@ -46,5 +46,11 @@ namespace ModelsClassLibrary.MenuNS
             return AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY;
         }
 
+
+        [NotMapped]
+        public string MenuPath1Id_Parent { get; set; }
+
+        [NotMapped]
+        public string MenuPath2Id_Parent { get; set; }
     }
 }

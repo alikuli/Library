@@ -47,7 +47,6 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 //string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
 
                 string productIdDud = "";
-
                 if (returnUrl.IsNullOrWhiteSpace())
                     returnUrl = Request.Url.PathAndQuery;
 
@@ -64,13 +63,13 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     BreadCrumbManager,
                     UserId,
                     UserName,
+                    productIdDud,
+                    returnUrl,
                     isMenu,
                     menuEnum,
                     sortBy,
                     print,
-                    ActionNameENUM.Index,
-                    productIdDud,
-                    returnUrl);
+                    ActionNameENUM.Index);
 
                 IndexListVM indexListVM = await IndexEngine(parms);
                 indexListVM.MenuManager.ReturnUrl = returnUrl;

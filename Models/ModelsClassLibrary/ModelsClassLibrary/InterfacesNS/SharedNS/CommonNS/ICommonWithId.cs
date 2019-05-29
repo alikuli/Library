@@ -5,7 +5,13 @@ namespace InterfacesLibrary.SharedNS
 {
     public interface ICommonWithId
     {
-        //ModelsClassLibrary.ModelsNS.SharedNS.DbBoolsStorageComplex DbBoolsStorageRules { get; set; }
+        bool IsCreating { get; set; }
+        bool IsDeleting { get; set; }
+        bool IsEditing { get; set; }
+
+        string HeadingForCreateForm { get; set; }
+
+
         IMenuManager MenuManager { get; set; }
         string Comment { get; set; }
         string DetailInfoToDisplayOnWebsite { get; set; }

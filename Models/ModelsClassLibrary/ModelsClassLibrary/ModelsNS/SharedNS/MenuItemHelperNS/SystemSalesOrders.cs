@@ -18,7 +18,11 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
             double systemCanceledSaleOrdersInQuantity,
 
             decimal systemBackSaleOrdersInMoney,
-            double systemBackSaleOrdersInQuantity)
+            double systemBackSaleOrdersInQuantity,
+            decimal systemQuotationsInMoney,
+            double systemQoutationsInQuantity,
+            decimal systemCreditsInMoney,
+            double systemCreditsInQuantity)
         {
             Initialize(
                 systemOpenSaleOrdersInMoney,
@@ -34,7 +38,13 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
                 systemCanceledSaleOrdersInQuantity,
 
                 systemBackSaleOrdersInMoney,
-                systemBackSaleOrdersInQuantity);
+                systemBackSaleOrdersInQuantity,
+
+                systemQuotationsInMoney,
+                systemQoutationsInQuantity,
+
+                systemCreditsInMoney,
+                systemCreditsInQuantity);
 
         }
         public void Initialize(
@@ -51,7 +61,11 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
             double systemCanceledSaleOrdersInQuantity,
 
             decimal systemBackSaleOrdersInMoney,
-            double systemBackSaleOrdersInQuantity)
+            double systemBackSaleOrdersInQuantity,
+            decimal systemQuotationsInMoney,
+            double systemQoutationsInQuantity,
+            decimal systemCreditsInMoney,
+            double systemCreditsInQuantity)
         {
             _systemOpenSalesOrdersInMoney = systemOpenSaleOrdersInMoney;
             _systemOpenSalesOrdersInQuantity = systemOpenSaleOrdersInQuantity;
@@ -67,6 +81,13 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
 
             _systemBackSaleOrdersInMoney = systemBackSaleOrdersInMoney;
             _systemBackSaleOrdersInQuantity = systemBackSaleOrdersInQuantity;
+
+            _systemQuotationsInMoney = systemQuotationsInMoney;
+            _systemQuotationsInQuantity = systemQoutationsInQuantity;
+
+            _systemSaleOrderCreditsInMoney = systemCreditsInMoney;
+            _systemSaleOrderCreditsInQuantity = systemCreditsInQuantity;
+
         }
 
         static decimal _systemOpenSalesOrdersInMoney;
@@ -133,6 +154,42 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
             get
             {
                 SystemBackSaleOrders item = new SystemBackSaleOrders(_systemBackSaleOrdersInMoney, _systemBackSaleOrdersInQuantity);
+                return item;
+            }    
+        }
+        //---------------------------------------------------      
+        static decimal _systemQuotationsInMoney;
+        static double _systemQuotationsInQuantity;  
+        public IMenuItemHelper Quotation
+        {
+            get
+            {
+                SystemQuotationOrders item = new SystemQuotationOrders(_systemQuotationsInMoney, _systemQuotationsInQuantity);
+                return item;
+            }
+        }
+
+        static decimal _systemSaleOrderCreditsInMoney;
+        static double _systemSaleOrderCreditsInQuantity;
+        public IMenuItemHelper Credit
+        {
+            get
+            {
+                SystemCreditSaleOrders item = new SystemCreditSaleOrders(_systemSaleOrderCreditsInMoney, _systemSaleOrderCreditsInQuantity);
+                return item;
+            }
+        }
+        static decimal _systemSaleOrderTotalnMoney;
+        static double _systemSaleOrderTotalQuantity;
+        public IMenuItemHelper Total
+        {
+            get
+            {
+                _systemSaleOrderTotalnMoney = _systemBackSaleOrdersInMoney + _systemInProccessSaleOrdersInMoney + _systemOpenSalesOrdersInMoney;
+                _systemSaleOrderTotalQuantity = _systemBackSaleOrdersInQuantity + _systemInProccessSaleOrdersInQuantity + _systemOpenSalesOrdersInQuantity;
+                SystemTotalSaleOrders item = new SystemTotalSaleOrders(
+                    _systemSaleOrderTotalnMoney,
+                    _systemSaleOrderTotalQuantity);
                 return item;
             }
         }

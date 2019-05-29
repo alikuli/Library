@@ -8,8 +8,9 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 {
     public class IndexMenuPath2 : MenuStateAbstract
     {
-        public IndexMenuPath2(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter)
-            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter) { }
+        public IndexMenuPath2(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, LikeUnlikeParameters likeUnlikesCounter, string userId, string userName)
+            : base(menuPathMain, product, productChild, menuEnum, likeUnlikesCounter, userId, userName) { }
+
 
         //public override string EditLink_Id
         //{
@@ -45,7 +46,7 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 
         public override bool ShowCreateButton
         {
-            get { return true; }
+            get { return false; }
         }
 
         public override bool ShowEditButton

@@ -1,10 +1,12 @@
-﻿using ModelsClassLibrary.ModelsNS.AddressNS;
+﻿using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
+using AliKuli.Extentions;
 
 namespace ModelsClassLibrary.ModelsNS.DocumentsNS.AbstractNS
 {
@@ -69,14 +71,14 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.AbstractNS
         [Display(Name = "Document Number")]
         public long DocumentNumber { get; set; }
 
-        [Display(Name = "Owner")]
+        [Display(Name = "Vendor (Seller)")]
         public string OwnerId { get; set; }
 
-        [Display(Name = "Owner")]
+        [Display(Name = "Vendor (Seller)")]
         public virtual Owner Owner { get; set; }
 
 
-        [Display(Name = "Customer")]
+        [Display(Name = "Customer(Buyer)")]
         public string CustomerId { get; set; }
 
 
@@ -135,5 +137,21 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.AbstractNS
         }
 
 
+        public override void UpdatePropertiesDuringModify(ICommonWithId icommonWithId)
+        {
+            base.UpdatePropertiesDuringModify(icommonWithId);
+            
+            DocumentAbstract docAb = icommonWithId as DocumentAbstract;
+            docAb.IsNullThrowException();
+            DocumentNumber = docAb.DocumentNumber;
+            OwnerId = docAb.OwnerId;
+            CustomerId = docAb.CustomerId;
+            AddressInformToId = docAb.AddressInformToId;
+            AddressShipToId = docAb.AddressShipToId;
+            PoNumber = docAb.PoNumber;
+            PoDate = docAb.PoDate;
+
+
+        }
     }
 }

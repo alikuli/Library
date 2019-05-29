@@ -20,13 +20,37 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellItemNS
         public double Ordered { get; set; }
         public double Shipped { get; set; }
 
-        public double Backordered
+        public double Remaining
         {
             get
             {
                 return Ordered - Shipped;
             }
         }
+        public decimal RemainingDecimal
+        {
+            get
+            {
+                decimal dec;
+                bool success = decimal.TryParse(Remaining.ToString(), out dec);
+                if (!success)
+                    throw new Exception("Unable to convert double to decimal");
+                return dec;
+            }
+        }
+
+        public string RemainingDecimal_Formatted
+        {
+            get
+            {
+                return string.Format("{0:N2}", RemainingDecimal);
+            }
+        }
+
+
+
+
+
 
         public decimal OrderedAsDecimal
         {
@@ -39,6 +63,17 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellItemNS
                 return dec;
             }
         }
+
+        public string OrderedAsDecimal_Formatted
+        {
+            get
+            {
+                return string.Format("{0:N2}", OrderedAsDecimal);
+            }
+        }
+
+
+
         public decimal ShippedAsDecimal
         {
             get
@@ -55,7 +90,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellItemNS
             get
             {
                 decimal dec;
-                bool success = decimal.TryParse(Backordered.ToString(), out dec);
+                bool success = decimal.TryParse(Remaining.ToString(), out dec);
                 if (!success)
                     throw new Exception("Unable to convert double to decimal");
                 return dec;

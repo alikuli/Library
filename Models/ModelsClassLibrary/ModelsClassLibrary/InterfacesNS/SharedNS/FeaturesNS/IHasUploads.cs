@@ -8,7 +8,7 @@ namespace InterfacesLibrary.SharedNS.FeaturesNS
     public interface IHasUploads : ICommonWithId
     {
         ICollection<UploadedFile> MiscFiles { get; set; }
-        string MiscFilesLocation();
+        string MiscFilesLocation(string userName);
         string MiscFilesLocation_Initialization();
 
 

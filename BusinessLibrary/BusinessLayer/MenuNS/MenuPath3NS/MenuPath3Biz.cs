@@ -4,6 +4,7 @@ using ApplicationDbContextNS;
 using BreadCrumbsLibraryNS.Programs;
 using DalLibrary.Interfaces;
 using ErrorHandlerLibrary.ExceptionsNS;
+using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
@@ -53,6 +54,7 @@ namespace UowLibrary.MenuNS
                 return _productFeatureBiz;
             }
         }
+
 
     }
 }
