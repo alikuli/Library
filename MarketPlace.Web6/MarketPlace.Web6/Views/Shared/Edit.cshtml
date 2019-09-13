@@ -1,6 +1,18 @@
 ﻿@model InterfacesLibrary.SharedNS.ICommonWithId
 
 @{
+    string showEditControlsStringValue = ViewBag.ShowEditControls as string;
+    bool showEditControls = true;
+    if (!showEditControlsStringValue.IsNullOrWhiteSpace())
+    {
+        showEditControls = false;
+    }
+
+    
+    string showDeleteButtonString = ViewBag.ShowDeleteButton as string;
+    bool showDelete = showDeleteButtonString.IsNullOrEmpty() ? false :
+        showDeleteButtonString.ToLower() == "true" ? true : false;
+    
     var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
     string menuPathMainId = "";
     string productId = "";
@@ -8,12 +20,6 @@
     string selectId = "";
     string searchString = "";
     MenuENUM menuEnum = MenuENUM.EditDefault;
-    string showEditControlsStringValue = ViewBag.ShowEditControls as string;
-    bool showEditControls = true;
-    if(!showEditControlsStringValue.IsNullOrWhiteSpace())
-    {
-        showEditControls = false;
-    }
     Model.MenuManager.MenuState.ControllerCurrentName = controllerName;
     controllerName = Model.MenuManager.MenuState.CreateAndEditLink_ControllerName;
     menuPathMainId = Model.MenuManager.MenuState.MenuPathMainId;
@@ -24,12 +30,20 @@
     menuEnum = Model.MenuManager.MenuState.MenuEnum;
 
     string returnUrl = Model.MenuManager.ReturnUrl.IsNullOrWhiteSpace() ? Request.Url.PathAndQuery : Model.MenuManager.ReturnUrl;
+    ViewBag.ReturnUrl_Edit = returnUrl;
+    
     string editScreenName = string.Format("{0} - {1}", "Edit", Model.FullName());
     Model.MenuManager.BreadCrumbManager.Push(editScreenName, returnUrl);
     string urlMinusOne = Model.MenuManager.BreadCrumbManager.Url_CurrMinusOne;
     
 }
     
+<style>
+.ui-datepicker{
+  background-color: white;
+  border-color: #2b3135;
+  padding: 1em;
+}</style>
     
 
 
@@ -49,7 +63,7 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.Partial("_messages")
 
-    <div class="container-fluid">
+    @*<div class="container-fluid">
         <div class="row">
             <div class="col">
                 @Html.Partial(@"_FieldsOnlyEditFormat")
@@ -60,14 +74,23 @@
             </div>
         </div>
 
-    </div>
+    </div>*@
 
-    <div class="form-group p-3">
+    <div class="w-100">
+        @Html.Partial(@"_FieldsOnlyEditFormat")
+        @Html.Partial(@"ViewControls/Uploads/_ShowUploads")
+    </div>
+    <div class="p-3">
         @if (showEditControls)
         {
             //In order to hide these you must give a value to ViewBag.ShowEditControls in Event_CreateViewAndSetupSelectList. See example in UploadedFiles
             @Html.Partial(@"ViewControls/Edit/_EditControls")
-            @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" })
+
+            if (@showDelete)
+            {
+                @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" })
+
+            }
         }
     </div>
 

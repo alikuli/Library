@@ -80,7 +80,7 @@
                 {
                     if (item.AllowEdit)
                     {
-                        <span class="@alertFont" data-toggle="tooltip" title="@item.FullName" data-placement="top">
+                        <span class="@alertFont" data-toggle="tooltip" title="@item.Comment" data-placement="top">
                             @item.PrintLineNumber. @Html.ActionLink(item.ShortName, "Edit", new { id = item.Id, returnUrl = returnUrl }, new { @id = item.Id, @title = item.FullName, @class = @alertFont })
                         </span>
                     }

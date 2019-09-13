@@ -58,6 +58,7 @@ namespace UowLibrary.Interface
         void Detach(TEntity entity);
         void Attach(TEntity entity);
 
+        Task<TEntity> FindForAsync(string id);
         SelectList SelectList_Engine(IQueryable<TEntity> data);
         //void FixChildEntityForCreate(TEntity entity);
 

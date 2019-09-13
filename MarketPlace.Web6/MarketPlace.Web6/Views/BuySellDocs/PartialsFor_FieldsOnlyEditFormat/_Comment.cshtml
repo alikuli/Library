@@ -1,0 +1,48 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_Comment = Model.BuySellDocViewState;
+
+    bool show_Customer_Comment = viewState_Comment.HD_Show_Customer_Comment;
+    bool enable_Customer_Comment = viewState_Comment.HD_Enable_Customer_Comment;
+
+
+}
+
+
+
+
+@if (show_Customer_Comment)
+{
+    if (enable_Customer_Comment)
+    {
+        <div class="form-group">
+            <label class="background-ltgrey p-2">
+                <strong>
+                    <label>Special packing/shipping instructions</label>
+                </strong>
+            </label>
+            @Html.EditorFor(x => x.Comment, new { htmlAttributes = new { @class = "form-control", @placeholder = "Special shipping / packing instructions. Visible to all.", style = "width: 100%; max-width: 100%; white-space: pre-line" } })
+        </div>
+    }
+    else
+    {
+        @Html.HiddenFor(x => x.Comment)
+        <div class="form-group">
+            <label class="background-ltgrey p-2">
+                <strong>
+                    <label>Special packing/shipping instructions</label>
+                </strong>
+            </label>
+            @Html.EditorFor(x => x.Comment, new { htmlAttributes = new { @class = "form-control", @placeholder = "Special shipping / packing instructions. Visible to all.", disabled = "disabled", style = "width: 100%; max-width: 100%; white-space: pre-line" } })
+        </div>
+    }
+
+}
+else
+{
+    @Html.HiddenFor(x => x.Comment)
+}
+

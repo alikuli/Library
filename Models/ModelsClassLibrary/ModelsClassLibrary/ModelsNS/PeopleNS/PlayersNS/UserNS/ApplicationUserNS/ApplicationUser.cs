@@ -30,6 +30,7 @@ namespace UserModels
             MetaData = new MetaDataComplex();
             //Country = new Country();
             HeadingForCreateForm = this.ClassName.ToString().ToTitleSentance();
+            NoOfVisits = new LongWithDateComplex();
 
         }
 

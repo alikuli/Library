@@ -13,43 +13,44 @@ namespace UowLibrary.StateNS
 
         public override void AddInitData()
         {
-            var data = StateData.Data();
-            if (data.IsNullOrEmpty())
-            {
-                return;
-            }
+            throw new NotImplementedException();
+            //var data = StateData.Data();
+            //if (data.IsNullOrEmpty())
+            //{
+            //    return;
+            //}
 
-            foreach (var state in data)
-            {
-                State s = Dal.Factory() as State;
-                s.Name = state.Name.ToTitleCase();
+            //foreach (var state in data)
+            //{
+            //    State s = Dal.Factory() as State;
+            //    s.Name = state.Name.ToTitleCase();
 
-                var country = CountryDal
-                    .FindAll()
-                    .ToList()
-                    .FirstOrDefault(x => x.Abbreviation.ToLower() == state.CountryCode.ToLower());
+            //    var country = CountryBiz
+            //        .FindAll()
+            //        .ToList()
+            //        .FirstOrDefault(x => x.Abbreviation.ToLower() == state.CountryCode.ToLower());
 
-                if (country.IsNull())
-                {
-                    throw new Exception(string.Format("Unable to locate country with abbreviation: '{0}'", state.CountryCode));
-                }
+            //    if (country.IsNull())
+            //    {
+            //        throw new Exception(string.Format("Unable to locate country with abbreviation: '{0}'", state.CountryCode));
+            //    }
 
-                s.Country = country;
-                s.CountryId = country.Id;
+            //    s.Country = country;
+            //    s.CountryId = country.Id;
 
-                try
-                {
-                    CreateSave_ForInitializeOnly(s);
-                    //Create(s);
-                }
-                catch (NoDuplicateException e)
-                {
+            //    try
+            //    {
+            //        CreateSave_ForInitializeOnly(s);
+            //        //Create(s);
+            //    }
+            //    catch (NoDuplicateException e)
+            //    {
 
-                    ErrorsGlobal.AddMessage(string.Format("Duplicate entry: '{0}'", s.ToString()), MethodBase.GetCurrentMethod(), e);
-                }
+            //        ErrorsGlobal.AddMessage(string.Format("Duplicate entry: '{0}'", s.ToString()), MethodBase.GetCurrentMethod(), e);
+            //    }
 
 
-            }
+            //}
         }
     }
 }

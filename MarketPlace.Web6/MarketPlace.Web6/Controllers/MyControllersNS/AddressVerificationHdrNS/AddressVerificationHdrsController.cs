@@ -1,5 +1,6 @@
 ﻿using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Web.Mvc;
 using UowLibrary.AddressNS;
 using UowLibrary.MailerNS;
@@ -28,10 +29,15 @@ namespace MarketPlace.Web6.Controllers
             }
         }
 
-        public override ActionResult Event_CreateViewAndSetupSelectList(ModelsClassLibrary.ModelsNS.SharedNS.ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ModelsClassLibrary.ModelsNS.SharedNS.ControllerIndexParams parm)
         {
             ViewBag.MailerSelectList = _mailerBiz.SelectList();
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
+        }
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            ViewBag.MailerSelectList = _mailerBiz.SelectList();
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
         }
 
     }

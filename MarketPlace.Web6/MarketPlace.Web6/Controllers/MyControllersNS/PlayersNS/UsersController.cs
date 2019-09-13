@@ -38,14 +38,25 @@ namespace MarketPlace.Web6.Controllers
             }
         }
 
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             //ViewBag.CountrySelectList = _stateBiz.CountrySelectList;
             //addresses are added from addresses. If there is no address, it will be added during purchaing.
             ApplicationUser userIn = parm.Entity as ApplicationUser;
             userIn.IsNullThrowException("Unable to unbox user");
             userIn.SelectListPeople = _personBiz.SelectList();
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
+        }
+
+
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            //ViewBag.CountrySelectList = _stateBiz.CountrySelectList;
+            //addresses are added from addresses. If there is no address, it will be added during purchaing.
+            ApplicationUser userIn = parm.Entity as ApplicationUser;
+            userIn.IsNullThrowException("Unable to unbox user");
+            userIn.SelectListPeople = _personBiz.SelectList();
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
         }
 
         [AllowAnonymous]

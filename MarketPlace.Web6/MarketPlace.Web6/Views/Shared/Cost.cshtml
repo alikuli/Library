@@ -1,0 +1,30 @@
+﻿@model ModelsClassLibrary.ModelsNS.CostNS.CostClass_Abstract
+
+@{
+    string continueButtonText = string.Format("Continue? Rs{0:N2}", Model.Amount);
+}
+
+
+@using (Html.BeginForm())
+{
+
+
+    <div class="card mt-1" >
+        @*@Html.HiddenFor(x => x.Amount)*@
+        @Html.HiddenFor(x => x.ReturnUrl)
+        @Html.HiddenFor(x => x.GoAheadUrl)
+        @Html.HiddenFor(x => x.Heading)
+        <h4 class="card-header">@Model.Heading</h4>
+        <div class="card-body">
+            <h5 class="card-title">Only Rs.@Model.Amount.ToString("N2")</h5>
+            <p class="card-text">@Model.DetailOfInfo</p>
+            <p class="card-text">@Model.ToString()</p>
+        </div><div class="card-footer">
+            <button type="submit" value="continuebtn" name="button" id="continuebtn" class="btn btn-success m-1">@continueButtonText</button>
+            <button type="submit" value="stopbtn" name="button" id="stopbtn" class="btn btn-danger m-1">Stop (Free!)</button>
+        </div>
+    </div>
+<p>@Model.Result</p>    
+
+
+}

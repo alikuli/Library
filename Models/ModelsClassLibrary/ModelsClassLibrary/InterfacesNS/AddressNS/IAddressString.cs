@@ -1,7 +1,7 @@
 ﻿using ModelsClassLibrary.ModelsNS.SharedNS.Common;
 namespace InterfacesLibrary.AddressNS
 {
-    public interface IAddressString
+    public interface IAddressStringWithNames
     {
         string Address2 { get; set; }
         string Attention { get; set; }
@@ -16,6 +16,7 @@ namespace InterfacesLibrary.AddressNS
         string CityName { get; set; }
         //string DistrictName { get; set; }
         string CountryName { get; set; }
+        string Email { get; set; }
 
 
     }

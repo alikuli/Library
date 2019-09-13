@@ -33,33 +33,6 @@ namespace ErrorHandlerLibrary.ExceptionsNS
             //UserName = userName;
         }
         List<string> _listOfErrors = new List<string>();
-        //public List<string> ListOfErrors
-        //{
-        //    get
-        //    {
-        //        _listOfErrors.Clear();
-
-        //        if(!_dbEntityValidationErrors.IsNullOrEmpty())
-        //        {
-        //            foreach (var err in _dbEntityValidationErrors)
-        //            {
-        //                _listOfErrors.Add(err);
-        //            }
-        //        }
-
-        //        if(!Errors.IsNullOrEmpty())
-        //        {
-        //            foreach (var err in Errors)
-        //            {
-        //                _listOfErrors.Add(err.ToString());
-        //            }
-
-        //        }
-        //        return _listOfErrors;
-        //    }
-        //}
-
-        //List<string> _dbEntityValidationErrors = new List<string>();
 
         public string Get_DbEntityValidationException(DbEntityValidationException e)
         {
@@ -206,10 +179,12 @@ namespace ErrorHandlerLibrary.ExceptionsNS
         public List<string> ToListErrs()
         {
             List<string> strList = new List<string>();
+            int count = 0;
 
             if (HasErrors)
                 foreach (var error in Errors)
                 {
+                    string errStr = string.Format("{0}. {1}",count,error.ToString());
                     strList.Add(error.ToString());
                 }
 

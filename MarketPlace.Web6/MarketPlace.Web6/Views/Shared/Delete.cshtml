@@ -1,6 +1,6 @@
 ﻿@*@Html.Partial(@"ViewControls/Delete/_DeleteHeading")*@
 
-<h2 class="text-danger">Delete</h2>
+<h1 class="text-danger text-">Delete</h1>
 @{
     
     string returnUrl = Request.Url.PathAndQuery;
@@ -22,7 +22,8 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.Partial("_messages")
 
-    @Html.Partial(@"_FieldsOnlyEditFormat")
+    @Html.Partial(@"_DeleteView")
+    @*@Html.Partial(@"_FieldsOnlyEditFormat")*@
     @Html.Partial(@"ViewControls/Delete/_DeleteControls")
 }
 

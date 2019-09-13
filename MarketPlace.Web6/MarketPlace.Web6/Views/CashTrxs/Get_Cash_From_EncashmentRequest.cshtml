@@ -1,0 +1,61 @@
+﻿@model ModelsClassLibrary.ModelsNS.CashNS.CashEncashmentTrxNS.Encashment_ForGettingCash
+
+@{
+    ViewBag.Title = "Get Cash";
+}
+
+<h2>Get Cash From Encashment Request</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+
+        @**********************************************************
+        This is where the error messages are displayed
+        **********************************************************@
+        @Html.Partial("_messages")
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CashEncashmentTrxId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.CashEncashmentTrxId,
+           (@Model.SelectListCashEncashmentTrx as IEnumerable<SelectListItem>),
+                "--- Select Cash Trx ---",
+                new { @class = "form-control", data_toggle = "tooltip", title = "This is the person who is going to get paid.", data_placement = "top" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdentificationCardNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IdentificationCardNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IdentificationCardNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Accept" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

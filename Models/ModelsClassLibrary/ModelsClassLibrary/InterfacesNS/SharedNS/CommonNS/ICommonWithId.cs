@@ -47,6 +47,7 @@ namespace InterfacesLibrary.SharedNS
         //bool IsDeleting { get; set; }
 
         //bool IsUpdating { get; set; }
+        LongWithDateComplex NoOfVisits { get; set; }
 
 
     }

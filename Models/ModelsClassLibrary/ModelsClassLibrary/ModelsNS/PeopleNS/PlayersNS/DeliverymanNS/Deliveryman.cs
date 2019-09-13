@@ -7,6 +7,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
 using UserModels;
 using AliKuli.Extentions;
+using System;
+using System.Collections.Generic;
+using ModelsClassLibrary.ModelsNS.DocumentsNS.FreightOffersTrxNS;
 
 
 namespace ModelsClassLibrary.ModelsNS.PlayersNS
@@ -29,20 +32,25 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
 
         public virtual ICategory DeliverymanCategory { get; set; }
 
+        [Display(Name = "Freight Offers")]
+        public virtual ICollection<FreightOfferTrx> FreightOfferTrxs { get; set; }
 
-
-
-        
-        
         [NotMapped]
         public SelectList SelectListDeliverymanCategory { get; set; }
 
+        [Display(Name = "Min Charge")]
+        public decimal MinimumDeliveryCost { get; set; }
 
-        [NotMapped]
-        public SelectList SelectListAddressBillTo { get; set; }
+        /// <summary>
+        /// This is in percent. 2% = 2
+        /// </summary>
+        [Display(Name = "Percent Cost")]
+        
+        [Range(0,100)]
+        public double CostOfDeliveryPct { get; set; }
 
-
-
+        [Display(Name = "Max Package Weight")]
+        public double MaxWeightInKg { get; set; }
         public override void UpdatePropertiesDuringModify(ICommonWithId ic)
         {
             Deliveryman deliveryman = ic as Deliveryman;
@@ -50,44 +58,21 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
 
             DeliverymanCategoryId = deliveryman.DeliverymanCategoryId;
             DefaultBillAddressId = deliveryman.DefaultBillAddressId;
-            //DefaultShipAddressId = deliveryman.DefaultShipAddressId;
-            //DefaultInformToAddressId = deliveryman.DefaultInformToAddressId;
+
+            MinimumDeliveryCost = deliveryman.MinimumDeliveryCost;
+            CostOfDeliveryPct = deliveryman.CostOfDeliveryPct;
+            MaxWeightInKg = deliveryman.MaxWeightInKg;
 
             base.UpdatePropertiesDuringModify(ic);
         }
 
+        public override void SelfErrorCheck()
+        {
+            base.SelfErrorCheck();
 
-        //private void LoadFrom(IDeliveryman c)
-        //{
-        //    DeliverymanCategory = (DeliverymanCategory) c.DeliverymanCategory;
-        //    DeliverymanCategoryId = ((Deliveryman) c).DeliverymanCategoryId;
-        //}
+            if (CostOfDeliveryPct < 0)
+                throw new Exception("Cost of Delivery % cannot be less than 0.");
 
-
-
-
-        //public new void LoadFrom(IDeliveryman c)
-        //{
-        //    throw new NotImplementedException();
-        //}
-        //public virtual ICollection<IGeoLocation> ListOfGeoLocationsToWork { get; set; }
-        //public virtual ICollection<IDiscount> DeliverymanDiscounts { get; set; }
-
-
-        //public override void SelfErrorCheck()
-        //{
-        //    base.SelfErrorCheck();
-        //    Check_DeliverymanCategory();
-
-
-        //}
-
-        //private void Check_DeliverymanCategory()
-        //{
-        //    if (DeliverymanCategory == null)
-        //        throw new Exception("Deliveryman Category is null. Deliveryman.Check_DeliverymanCategory");
-        //    if (DeliverymanCategory == null)
-        //        throw new Exception("Deliveryman CategoryId is null. Deliveryman.Check_DeliverymanCategory");
-        //}
+        }
     }
 }

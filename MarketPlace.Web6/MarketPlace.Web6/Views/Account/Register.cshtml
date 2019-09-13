@@ -32,7 +32,13 @@
     <div class="form-horizontal">
 
         <hr />
-        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        @*@Html.ValidationSummary(false, "", new { @class = "text-danger" })*@
+
+        @**********************************************************
+        This is where the error messages are displayed
+        **********************************************************@
+        @Html.Partial("_messages")
+
 
 
 
@@ -104,13 +110,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                    @*<div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
                         <a class="card-title">
                             <h5>Additional LOG IN Info (OPTIONAL - But good to have!)</h5>
-                            
+
                         </a>
                     </div>
-                    @*<div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
+                    <div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
     <div class="form-group">
         <div class="row">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -131,6 +137,9 @@
         </div>
     </div>
                     </div>*@
+
+
+
                     <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
                         <a class="card-title">
                                     

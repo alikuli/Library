@@ -7,14 +7,14 @@ namespace UowLibrary.PlayersNS.PersonNS
 {
     public partial class PersonBiz 
     {
-        public override ICommonWithId Factory()
-        {
-            UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
+        //public override ICommonWithId Factory()
+        //{
+        //    UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
 
-            Person person = base.Factory() as Person;
-            person.IsNullThrowException("Unable to unbox person");
-            return person as ICommonWithId;
-        }
+        //    Person person = base.Factory() as Person;
+        //    person.IsNullThrowException("Unable to unbox person");
+        //    return person as ICommonWithId;
+        //}
 
 
 

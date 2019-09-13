@@ -211,6 +211,8 @@ namespace UowLibrary
         {
             ApplicationUser appUser = new ApplicationUser();
             appUser.UserName = userName;
+            appUser.Name = userName;
+            
             try
             {
                 IdentityResult result = UserManager.Create(appUser, password);

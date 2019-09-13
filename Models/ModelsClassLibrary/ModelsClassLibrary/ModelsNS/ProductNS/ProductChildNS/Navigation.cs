@@ -1,4 +1,5 @@
-﻿using ModelsClassLibrary.ModelsNS.FeaturesNS;
+﻿using ModelsClassLibrary.ModelsNS.AddressNS;
+using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 using ModelsClassLibrary.ModelsNS.MessageNS;
@@ -6,6 +7,7 @@ using ModelsClassLibrary.ModelsNS.ProductNS;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
 
 namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 {
@@ -21,7 +23,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 
 
         public virtual ICollection<ProductChildFeature> ProductChildFeatures { get; set; }
-        
+
 
         /// <summary>
         /// This contains all the features ie. from MenuPath1, Menupath2, MenuPath3, Product and ofcours, ProductChildFeatures
@@ -45,7 +47,16 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
         //public virtual ICollection<Message> MessagesAdvertisment { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
 
+        public string ShipFromAddressId { get; set; }
+        public virtual AddressMain ShipFromAddress { get; set; }
+        
+        [NotMapped]
+        public SelectList SelectListShipFromAddress { get; set; }
 
+        
+        [Display(Name = "Ship From Address")]
+        [NotMapped]
+        public AddressComplex ShipFromAddressComplex { get; set; }
     }
 
 

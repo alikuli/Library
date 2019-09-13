@@ -1,28 +1,74 @@
-﻿using AliKuli.UtilitiesNS;
-using BreadCrumbsLibraryNS.Programs;
-using ErrorHandlerLibrary;
-using ErrorHandlerLibrary.ExceptionsNS;
-using MarketPlace.Web4.Controllers;
-using ModelsClassLibrary.ModelsNS.SharedNS;
+﻿using MarketPlace.Web4.Controllers;
+using ModelsClassLibrary.ModelsNS.CostNS;
+using ModelsClassLibrary.ModelsNS.CostNS.CostStateNS;
 using System;
 using System.Reflection;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.ParametersNS;
-using UowLibrary.PageViewNS;
-using UowLibrary.PlayersNS;
+using UowLibrary.SuperLayerNS;
 
 namespace MarketPlace.Web6.Controllers
 {
     public class HomeController : AbstractController
     {
-        public HomeController(AbstractControllerParameters param)
-            : base(param) 
+        SuperBiz _superBiz;
+        public HomeController(AbstractControllerParameters param, SuperBiz superBiz)
+            : base(param)
         {
-
+            _superBiz = superBiz;
         }
 
 
+        SuperBiz SuperBiz
+        {
+            get
+            {
+                _superBiz.UserId = UserId;
+                _superBiz.UserName = UserName;
+
+                return _superBiz;
+            }
+        }
+        UserBiz UserBiz
+        {
+            get
+            {
+                return SuperBiz.UserBiz;
+            }
+        }
+
+
+
+        public ActionResult Cost()
+        {
+            ICostClass costclass = new PaymentForContact();
+
+            costclass.Heading = "If you choose to continue, you will get information to help you make a decision.";
+            costclass.DetailOfInfo = "You will receive the deliveryman's phone, email, webpage. Also, you will see all the number of completed tasks and any comments by users about him.";
+            //costclass.Amount = 10m;
+            return View(costclass);
+        }
+
+        [HttpPost]
+        public ActionResult Cost(string button, CostClass_Abstract costclass)
+        {
+            switch (button.ToLower())
+            {
+                case "continuebtn":
+                    costclass.Result = "In Continue";
+                    break;
+                case "stopbtn":
+                    costclass.Result = "In stop";
+                    break;
+
+                default:
+                    costclass.Result = "In Default";
+                    break;
+            }
+            return View(costclass);
+
+        }
         public PartialViewResult AddUserPartialView()
         {
             return PartialView("AddUserPartialView", new AddUserViewModel());
@@ -42,7 +88,7 @@ namespace MarketPlace.Web6.Controllers
         {
             try
             {
-                //UserBiz.InitializeSystem();
+                UserBiz.InitializeSystem();
                 ErrorsGlobal.ClearAllErrors();
                 ErrorsGlobal.Messages.Clear();
                 return View();

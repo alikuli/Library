@@ -1,0 +1,74 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_DelyFormat = Model.BuySellDocViewState;
+    string currentColor_DelyFormat = viewState_DelyFormat.CurrentColorClass;
+    string deliverymanPhoneNo = Model.Deliveryman.IsNull() ? 
+        "None" : Model.Deliveryman.DefaultBillAddress.IsNull() ? 
+        "None" : Model.Deliveryman.DefaultBillAddress.Phone.IsNullOrWhiteSpace() ? 
+        "None" : Model.Deliveryman.DefaultBillAddress.Phone;
+
+}
+
+
+
+@Html.HiddenFor(x => x.DocumentNumber)
+@Html.HiddenFor(x => x.AddressBillToId)
+@Html.HiddenFor(x => x.AddressBillToComplex)
+@Html.HiddenFor(x => x.BuySellDocStateEnum)
+@Html.HiddenFor(x => x.BuySellDocumentTypeEnum)
+@Html.HiddenFor(x => x.OwnerId)
+@Html.HiddenFor(x => x.CustomerId)
+
+
+<div class="row border border-dark p-1 w-100 @currentColor_DelyFormat" style="justify-content:center">
+    <h4>@Model.BuySellDocStateEnum.ToString().ToTitleSentance()</h4>
+</div>
+
+<div class="row border border-dark p-1 w-100">
+
+    @*********************************************************@
+    @*Coloumn 1                                              *@
+    @*********************************************************@
+    <div class="col-lg-3">
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_CodesShow")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_CodesEnter")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_Address_Pick_From")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_Address_Ship_To_Delivery_Format_Only")
+    </div>
+
+    @*********************************************************@
+    @*Coloumn 2                                              *@
+    @*********************************************************@
+
+    <div class="col-lg-3">
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_Date_Requested")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_Date_Agreed")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_VehicalType_Requested")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_ShowSalesmen")
+
+    </div>
+
+
+    @*********************************************************@
+    @*Coloumn 3                                              *@
+    @*********************************************************@
+    <div class="col-lg-6">
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_Total_Weight")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_Total_Qty")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_Comment")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_RequireInsurance")
+
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_ShowCustomerSalesman")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_ShowDeliverymanSalesman")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_ShowOwnerSalesman")
+
+
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_ShowHistory")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_ShowMessages")
+    </div>
+
+</div>
+

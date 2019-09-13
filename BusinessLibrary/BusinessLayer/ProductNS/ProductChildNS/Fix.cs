@@ -1,17 +1,15 @@
 ﻿using AliKuli.Extentions;
 using InterfacesLibrary.SharedNS;
-using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.FeaturesNS;
-using ModelsClassLibrary.ModelsNS.MenuNS;
+using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
-using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-
+using UowLibrary.AddressNS;
 namespace UowLibrary.ProductChildNS
 {
     public partial class ProductChildBiz
@@ -47,61 +45,121 @@ namespace UowLibrary.ProductChildNS
             ////I dont want to add the features. I will add them temporarily when it is being presented,
             ////addProductFeatures(pc);
             FixProductChildFeatures(pc);
+
             base.Fix(parm);
+
+            //check the address. If the address is a new address, make it past of the database for the ProductChild Owner
+            //check if the address exists
+
+            AddShippingAddressToOwnerPersonIfItIsNew(pc);
+            //AddPhoneNumberToOwnerPersonIfItsNew(pc);
         }
 
-        /// <summary>
-        /// this returns a complete list of filled features for a product child. i.e. the product child features and the product features
-        /// </summary>
-        /// <param name="pc"></param>
-        /// <returns></returns>
-        //public List<ProductChildFeature> GetAllFeatures(ProductChild pc)
-        //{
-        //    //get all the productFeaures from the product.
-        //    HashSet<ProductChildFeature> allfeatures = getProductFeatures(pc);
-        //    allfeatures = getProductChildFeatures(pc, allfeatures);
-        //    return allfeatures.OrderBy(x => x.Name).ToList();
+        private void AddPhoneNumberToOwnerPersonIfItsNew(ProductChild pc)
+        {
+            Owner productChildOwner = pc.Owner;
+            productChildOwner.IsNullThrowException();
+            Person ownerPerson = productChildOwner.Person;
+            ownerPerson.IsNullThrowException();
 
-        //}
+            //check if a phone number has been entered
+            pc.ShipFromAddressComplex.Phone.IsNullOrWhiteSpace();
+        }
 
-        //private HashSet<ProductChildFeature> getProductChildFeatures(ProductChild pc, HashSet<ProductChildFeature> allfeatures)
-        //{
-        //    pc.IsNullThrowExceptionArgument("productchild");
-        //    allfeatures.IsNullThrowExceptionArgument("allfeatures");
+        private void AddShippingAddressToOwnerPersonIfItIsNew(ProductChild pc)
+        {
+            Owner productChildOwner = pc.Owner;
+            productChildOwner.IsNullThrowException();
+            Person ownerPerson = productChildOwner.Person;
+            ownerPerson.IsNullThrowException();
+            AddressBiz addressBiz = OwnerBiz.AddressBiz;
 
-        //    if (pc.ProductChildFeatures.IsNullOrEmpty())
-        //        return allfeatures;
+            //get the address from the productChild
+            AddressComplex shipFromAddressComplexInProductChild = pc.ShipFromAddressComplex; 
+            shipFromAddressComplexInProductChild.ErrorCheck();
+            
+            //if there is no address... there should be an error.
+            if(!shipFromAddressComplexInProductChild.Error.IsNullOrWhiteSpace())
+            {
+                throw new Exception("You need to add the address of where the product is sitting");
+            }
+            
+            //address is complete.
+            //We need to make the unique name from this so that we can check it exists in the db
+            AddressMain addressToSave = addressBiz.Factory() as AddressMain;
+            addressToSave.LoadFor(shipFromAddressComplexInProductChild);
+            addressToSave.Name = addressToSave.MakeUniqueName();
+            //locate this address in Person
+            
+            //get all the addresses for the ownerPerson
+            List<AddressMain> allAddressForOwnerPerson = addressBiz.FindAll().Where(x => x.PersonId == ownerPerson.Id).ToList();
 
-        //    foreach (ProductChildFeature productChildFeature in pc.ProductChildFeatures.ToList())
-        //    {
-        //        allfeatures.Add(productChildFeature);
-        //    }
-        //    return allfeatures;
+            if(allAddressForOwnerPerson.IsNull())
+            {
+                //no addresses found. Its empty...
+                //so add the new address
+                addNewAddress(pc, ownerPerson, addressBiz, addressToSave);
 
-        //}
+            }
+            {
+                //addresses have been found
+                //we do not update old addresses, we just add new ones, if they change.
+                AddressMain addressFound = allAddressForOwnerPerson.FirstOrDefault(x => x.Name.ToLower() == addressToSave.Name.ToLower());
+                
+                if(addressFound.IsNull())
+                {
+                    //the address was not found.
+                    //AddressComplex contains a new address
+                    //Add it to the person's addresses
 
-        //private HashSet<ProductChildFeature> getProductFeatures(ProductChild pc)
-        //{
-        //    HashSet<ProductChildFeature> allfeatures = new HashSet<ProductChildFeature>();
-        //    pc.Product.IsNullThrowException("Product cannot be null");
+                    addNewAddress(pc, ownerPerson, addressBiz, addressToSave);
+                }
+                //else
+                //{
+                //    updateAddress(pc, addressBiz, addressToSave);
+                //}
+            }
+            
+            //otherwise do nothing
+        }
 
-        //    //there are no product features
-        //    if (pc.Product.ProductFeatures.IsNullOrEmpty())
-        //        return allfeatures;
+        private void addNewAddress(ICommonWithId entity, Person person, AddressBiz addressBiz, AddressMain addressToSave)
+        {
+            ProductChild pc = entity as ProductChild;
+            pc.IsNullThrowException();
 
-        //    List<ProductFeature> productFeaturelst = pc.Product.ProductFeatures.ToList();
-        //    foreach (ProductFeature prodFeature in productFeaturelst)
-        //    {
-        //        FeatureAbstract featureAbstract = prodFeature as FeatureAbstract;
-        //        featureAbstract.IsNullThrowException("unable to unbox Feature Abstract");
-        //        ProductChildFeature pcf = featureAbstract as ProductChildFeature;
-        //        pcf.IsNullThrowException("Unable to unbox pcf");
-        //        allfeatures.Add(pcf);
-        //    }
+            pc.ShipFromAddressId = addressToSave.Id;
 
-        //    return allfeatures;
+            if (addressToSave.ProductChilds.IsNull())
+                addressToSave.ProductChilds = new List<ProductChild>();
 
-        //}
+            addressToSave.ProductChilds.Add(pc);
+
+            person.Addresses.Add(addressToSave);
+            addressToSave.PersonId = person.Id;
+            addressBiz.Create(addressToSave);
+        }
+
+
+        private void updateAddress(ProductChild pc, AddressBiz addressBiz, AddressMain addressToSave)
+        {
+            pc.ShipFromAddressId = addressToSave.Id;
+            addressBiz.Update(addressToSave);
+        }
+
+        private static void addNewAddress(ProductChild pc, Person ownerPerson, AddressBiz addressBiz, AddressMain addressToSave)
+        {
+            pc.ShipFromAddressId = addressToSave.Id;
+
+            if (addressToSave.ProductChilds.IsNull())
+                addressToSave.ProductChilds = new List<ProductChild>();
+
+            addressToSave.ProductChilds.Add(pc);
+
+            ownerPerson.Addresses.Add(addressToSave);
+            addressToSave.PersonId = ownerPerson.Id;
+            addressBiz.Create(addressToSave);
+        }
 
 
         public override IQueryable<ProductChild> GetDataToCheckDuplicateName(ProductChild productChild)
@@ -120,17 +178,6 @@ namespace UowLibrary.ProductChildNS
 
 
 
-        public override async Task<IList<ICommonWithId>> GetListForIndexAsync(ControllerIndexParams parameters)
-        {
-            //var lstEntities = await FindAllAsync();
-            UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
-            Owner owner = OwnerBiz.GetOwnerForUser(UserId);
-            owner.IsNullThrowException("Owner not found.");
-
-            var lstEntities = await FindAll().Where(x => x.OwnerId == owner.Id).ToListAsync();
-            IList<ICommonWithId> lstIcom = lstEntities.Cast<ICommonWithId>().ToList();
-            return lstIcom;
-        }
 
         public void LogPersonsVisit(string UserId, ProductChild productChild)
         {
@@ -152,49 +199,30 @@ namespace UowLibrary.ProductChildNS
         }
 
 
-        //public List<ProductChildFeature> GetAllFeatures(ProductChild productChild)
+
+        public override void ErrorCheck(ControllerCreateEditParameter parm)
+        {
+
+            base.ErrorCheck(parm);
+
+            ProductChild productChild = parm.Entity as ProductChild;
+            
+            //address should exist.
+            productChild.ShipFromAddressComplex.ErrorCheck();
+
+            if (!productChild.ShipFromAddressComplex.Error.IsNullOrWhiteSpace())
+                throw new Exception(productChild.ShipFromAddressComplex.Error);
+        }
+
+
+        //public override IQueryable<TEntity> GetDataToCheckDuplicateName(TEntity entity)
         //{
-        //    productChild.IsNullThrowExceptionArgument("productChild");
-
-        //    //initialize the holder list
-        //    HashSet<ProductChildFeature> allFeatures = new HashSet<ProductChildFeature>();
-        //    //get the product
-        //    Product product = productChild.Product;
-        //    product.IsNullThrowException("product");
-
-        //    //Add all productChild features
-        //    if (!productChild.ProductChildFeatures.IsNullOrEmpty())
-        //    {
-        //        foreach (ProductChildFeature pcf in productChild.ProductChildFeatures)
-        //        {
-        //            if (!pcf.IsNull())
-        //                allFeatures.Add(pcf);
-        //        }
-        //    }
-
-
-        //    return allFeatures.OrderBy(x => x.Name).ToList();
+        //    IQueryable<TEntity> dataSet = FindAll().Where(x => x.Id != entity.Id);
+        //    return dataSet;
         //}
 
-        //private static void addProductFeatures(HashSet<ProductChildFeature> allFeatures, Product product)
-        //{
-        //    if (!product.ProductFeatures.IsNullOrEmpty())
-        //    {
-        //        foreach (ProductFeature prodfea in product.ProductFeatures)
-        //        {
-        //            ProductChildFeature pfa = prodfea.ToProductChildFeature();
-        //            if (!pfa.IsNull())
-        //            {   
-        //                bool featureNameDoesNotExist = allFeatures.FirstOrDefault(x => x.Name.ToLower() == prodfea.Name.ToLower()).IsNull();
-        //                if (featureNameDoesNotExist)
-        //                    {
-        //                        allFeatures.Add(pfa);
-        //                    }
-        //                }
-        //        }
-        //    }
-        //}
-
-
+        
     }
+
+
 }

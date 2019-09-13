@@ -5,6 +5,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.Complex
     [ComplexType]
     public class BoolDateAndByComplexWithConfirmationCode : DateAndByComplex
     {
+        public bool IsTrue { get; set; }
         public string ConfirmationCode { get; set; }
 
         public void AddCode(string userName, string userId, string code)

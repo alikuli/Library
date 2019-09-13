@@ -1,0 +1,89 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_PickupCodes = Model.BuySellDocViewState;
+
+    bool is_Show_Enter_PickupCode_From_Seller = viewState_PickupCodes.HD_Show_Enter_PickupCode_Seller;
+    bool is_Show_Delivery_Confirmation_Code_Entery_To_DeliveryMan = viewState_PickupCodes.HD_is_Show_Entry_DeliveryCode_To_DeliveryMan;
+    bool isShowCombinedCode = viewState_PickupCodes.HD_Show_CombinedCode;
+    
+    string deliverymanPhoneNo = Model.Deliveryman.IsNull() ?
+    "None" : Model.Deliveryman.DefaultBillAddress.IsNull() ?
+    "None" : Model.Deliveryman.DefaultBillAddress.Phone.IsNullOrWhiteSpace() ?
+    "None" : Model.Deliveryman.DefaultBillAddress.Phone;
+    
+}
+
+@if (is_Show_Enter_PickupCode_From_Seller)
+{
+    Model.BuySellDocumentTypeEnum = BuySellDocumentTypeENUM.Delivery;
+    
+    <div class="card mb-1 border-danger">
+        <div class="card-header  bg-danger text-white text-center">Enter Pickup Confirmation Code</div>
+        <div class="card-title p-2">
+            <strong>@Model.Owner.FullName()</strong>, please get the delivery pickup confirmation code from <strong>@Model.Deliveryman.FullName()</strong> when handing over your package. Then enter it here. If you do not get the code, you may face problems recovering your fees.
+
+        </div>
+        <div class="card-body ">
+            <div class="form-group ">
+                @*<h2 class="bg-dark  text-warning text-center"><strong>@Html.DisplayFor(x => x.DeliveryCode_Customer)</strong></h2>*@
+                <label><strong>Pickup Confirmation Code</strong></label>
+                @Html.EditorFor(x => x.PickupCode_Seller, new { htmlAttributes = new { @class = "form-control", @placeholder = "Get from Deliveryman" } })
+            </div>
+            <p class="card-text bg-light p-2 border-danger"><strong>Customer: </strong>@Model.Customer.FullName() </p>
+
+            
+             <button  type="submit" class="btn btn-success w-100">Save</button>
+                  
+        </div>
+        <div class="card-footer bg-danger text-white text-center"><small>Get Pickup Confirmation Code From Deliveryman</small></div>
+    </div>
+
+}
+
+
+@*This is shown to the Customer when the deliveryman is delivering the goods*@
+@if (is_Show_Delivery_Confirmation_Code_Entery_To_DeliveryMan)
+{
+    <div class="card mb-1 border-primary">
+        <div class="card-header  bg-primary text-white text-center">Enter Delivery Confirmation Code</div>
+        <div class="card-title p-2">
+            <strong>@Model.Deliveryman.FullName()</strong>, please get your delivery confirmation code from <strong>@Model.Customer.FullName()</strong> when you deliver your package. If you do not get the code, you may face problems recovering your fees.
+
+        </div>
+        <div class="card-body ">
+            <div class="form-group ">
+                @*<h2 class="bg-dark  text-warning text-center"><strong>@Html.DisplayFor(x => x.DeliveryCode_Customer)</strong></h2>*@
+                <label><strong>Delivery Confirmation Code</strong></label>
+                @Html.EditorFor(x => x.DeliveryCode_Deliveryman_AsEntered, new { htmlAttributes = new { @class = "form-control", @placeholder = "Get from customer" } })
+            </div>
+            <p class="card-text bg-light p-2 border-primary"><strong>Seller: </strong>@Model.Owner.FullName() <strong>Ph: </strong> @Model.AddressShipFrom.Phone <br /><strong>Customer: </strong>@Model.Customer.FullName() <strong>Ph: </strong> @deliverymanPhoneNo</p>
+            <button type="submit" class="btn btn-success w-100">Save</button>
+        </div>
+        <div class="card-footer bg-primary text-white text-center"><small>Get Delivery Confirmation Code</small></div>
+    </div>
+}
+
+@*@if (isShowCombinedCode)
+{
+    <div class="card mt-1 border-success">
+        <div class="card-header  bg-success text-white text-center">Receive Package Code</div>
+        <div class="card-title p-1">
+            <strong>@Model.Customer.FullName()</strong>, Give this code to the delivery man (<strong>@Model.Deliveryman.FullName()</strong>)  when he delivers your package
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <h2 class="bg-dark  text-warning text-center"><strong>@Html.DisplayFor(x => x.CombinedCode)</strong></h2>
+                <p class="card-text"><strong>Seller: </strong>@Model.Owner.FullName() <br /><strong>Ph: </strong> @Model.AddressShipFrom.Phone</p>
+                <p class="card-text"><strong>Delivery Man: </strong>@Model.Deliveryman.FullName() <br /><strong>Ph: </strong> @deliverymanPhoneNo</p>
+
+            </div>
+        </div>
+        <div class="card-footer bg-success text-white text-center"><small>Keep this code secret. Only tell the Delivery man</small></div>
+    </div>
+
+}*@
+
+

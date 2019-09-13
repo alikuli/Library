@@ -6,24 +6,73 @@
     string toolTipIdentificationNumber = "This is a unique identification number that can be given to the product. This is useful if you want to post several same products with different identification number, eg cars and their number plates.";
     string create_feature_Path = Url.Action("Create", "ProductChildFeatures", new { productChildId = Model.Id, returnUrl = childReturnUrl });
     bool isCreate = Model.MenuManager.IsCreate;
+
+    string addressPath = @Url.Action("GetAddressInfo","Addresses");
+    string dropDownListName = "ShipFromAddressId";
+    string preNameOfFields = "ShipFromAddressComplex";
+    //string updateJavascript = "updateAddressFields('@dropDownListName', '@preNameOfFields', '@addressPath')" ;
+    
 }
-
-<div class="well p-3">
-    @Html.Partial(@"_Name_And_DetailInfo")
-
-    @Html.HiddenFor(x => x.OwnerId)
-    @Html.HiddenFor(x => x.ProductId)
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.IdentificationNumber, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @toolTipIdentificationNumber, data_placement = "top" })
-        @Html.EditorFor(model => model.IdentificationNumber, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.IdentificationNumber, "", new { @class = "text-danger" })
-    </div>
+<div class="row border border-dark p-1 w-100 background-ltgreen" style="justify-content:center">
+    <h4>Product: @Model.FullName()</h4>
 </div>
 
+<div class="row border border-dark p-1 w-100 ">
+    @Html.HiddenFor(x => x.OwnerId)
+    @Html.HiddenFor(x => x.ProductId)
+    <div class="col-lg">
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdentificationNumber, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @toolTipIdentificationNumber, data_placement = "top" })
+            @Html.EditorFor(model => model.IdentificationNumber, new { htmlAttributes = new { @class = "form-control ml-1" } })
+            @Html.ValidationMessageFor(model => model.IdentificationNumber, "", new { @class = "text-danger" })
+        </div>
 
-<div class="well p-3 mt-3">
-    @Html.EditorFor(x => x.Sell)
+        @Html.Partial(@"_Name_And_DetailInfo")
+
+
+        <div class="form-check">
+            @Html.CheckBoxFor(x => x.Hide)
+            <strong>Hide?</strong>  <small>(If you hide product, you will stop getting billed.)</small> 
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="col-lg background-ltgrey">
+        @Html.EditorFor(x => x.Sell)
+
+
+    </div>
+
+    <div class="col-lg">
+
+
+
+
+
+        <div class=" bg-light p-2">
+            <label>Stored At</label>
+            <div class="form-group">
+                @Html.DropDownListFor(x => x.ShipFromAddressId,
+               (Model.SelectListShipFromAddress as IEnumerable<SelectListItem>),
+              "--- Where is product stored ---",
+                                         new { @class = "form-control", onchange = "updateAddressFields('" + @dropDownListName + "', '" + @preNameOfFields + "', '" + @addressPath + "')" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ShipFromAddressComplex, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @toolTipIdentificationNumber, data_placement = "top" })
+            @Html.EditorFor(model => model.ShipFromAddressComplex, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ShipFromAddressComplex, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
 </div>
 
 @*
@@ -35,7 +84,12 @@
 
 @if (!isCreate)
 {
-    @Html.Partial(@"~/Views/ProductChilds/_ProductChildFeatures.cshtml")
-}
+    <div class="row border border-dark p-1 w-100 background-ltgreen" style="justify-content:center">
+        <h4>Add Features</h4>
+    </div>
 
+    <div class="row border border-dark p-1 w-100">
+        @Html.Partial(@"~/Views/ProductChilds/_ProductChildFeatures.cshtml")
+    </div>
+}
 

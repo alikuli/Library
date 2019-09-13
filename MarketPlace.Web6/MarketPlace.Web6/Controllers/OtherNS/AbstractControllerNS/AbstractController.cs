@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using UowLibrary.Interface;
 using UowLibrary.PageViewNS;
 using UowLibrary.ParametersNS;
-using UowLibrary.SuperLayerNS.AccountsNS;
+using UowLibrary.SuperLayerNS;
 using WebLibrary.Programs;
 
 namespace MarketPlace.Web4.Controllers
@@ -28,6 +28,7 @@ namespace MarketPlace.Web4.Controllers
         IErrorSet _err;
         IMemoryMain _memoryMain;
         ConfigManagerHelper _configManagerHelper;
+        //GlobalObject _globalObject;
         /// <summary>
         /// All errorsets taken from DI point to the same reference.
         /// </summary>
@@ -40,8 +41,20 @@ namespace MarketPlace.Web4.Controllers
             _pageViewBiz = param.PageViewBiz;
             _memoryMain = param.MemoryMain;
             _configManagerHelper = param.ConfigManagerHelper;
-
+            //_globalObject = param.GlobalObject;
         }
+
+        //public GlobalObject GlobalObject
+        //{
+        //    get
+        //    {
+        //        return _globalObject;
+        //    }
+        //    set
+        //    {
+        //        _globalObject = value;
+        //    }
+        //}
 
         public ConfigManagerHelper ConfigManagerHelper_
         {
@@ -154,15 +167,15 @@ namespace MarketPlace.Web4.Controllers
 
 
         [Inject]
-        public AccountsBizSuper _accountsBizSuper { get; set; }
+        public SuperBiz _superCashBizInject { get; set; }
 
-        public AccountsBizSuper AccountsBizSuper
+        SuperBiz SuperCashBiz
         {
             get
             {
-                _accountsBizSuper.UserId = UserId;
-                _accountsBizSuper.UserName = UserName;
-                return _accountsBizSuper;
+                _superCashBizInject.UserId = UserId;
+                _superCashBizInject.UserName = UserName;
+                return _superCashBizInject;
             }
         }
 
@@ -172,20 +185,20 @@ namespace MarketPlace.Web4.Controllers
             {
                 if (UserId.IsNullOrEmpty())
                     return false;
-                return AccountsBizSuper.UserBiz.IsAdmin(UserId);
+                return SuperCashBiz.UserBiz.IsAdmin(UserId);
             }
         }
 
 
-        public bool IsBank
-        {
-            get
-            {
-                if (UserId.IsNullOrEmpty())
-                    return false;
-                return AccountsBizSuper.BankBiz.IsBankerFor(UserId);
-            }
+        //public bool IsBank
+        //{
+        //    get
+        //    {
+        //        if (UserId.IsNullOrEmpty())
+        //            return false;
+        //        return SuperCashBiz.BankBiz.IsBankerFor(UserId);
+        //    }
 
-        }
+        //}
     }
 }

@@ -23,33 +23,33 @@ namespace DalLibrary.DalNS
     {
 
         #region Delete
-        public virtual void Delete(string id)
-        {
-            if (id.IsNullOrEmpty())
-            {
-                ErrorsGlobal.Add("No id received for deletion. Programming error.", MethodBase.GetCurrentMethod());
-                throw new Exception(ErrorsGlobal.ToString());
-            }
+        //public virtual void Delete(string id)
+        //{
+        //    if (id.IsNullOrEmpty())
+        //    {
+        //        ErrorsGlobal.Add("No id received for deletion. Programming error.", MethodBase.GetCurrentMethod());
+        //        throw new Exception(ErrorsGlobal.ToString());
+        //    }
 
-            var entity = this.FindFor(id);
+        //    var entity = this.FindFor(id);
 
-            if(entity.IsNull())
-            {
-                ErrorsGlobal.Add("Entity not found. Programming error.", MethodBase.GetCurrentMethod());
-                throw new Exception(ErrorsGlobal.ToString());
-            }
-            this.Delete(entity);
+        //    if(entity.IsNull())
+        //    {
+        //        ErrorsGlobal.Add("Entity not found. Programming error.", MethodBase.GetCurrentMethod());
+        //        throw new Exception(ErrorsGlobal.ToString());
+        //    }
+        //    this.Delete(entity);
 
-        }
+        //}
 
 
-        public virtual async Task DeleteAsync(string id)
-        {
+        //public virtual async Task DeleteAsync(string id)
+        //{
 
-            var entity = await this.FindForAsync(id);
-            this.Delete(entity);
+        //    var entity = await this.FindForAsync(id);
+        //    this.Delete(entity);
 
-        }
+        //}
         //--------------------------------------------------------------------------------------------
 
 
@@ -81,15 +81,15 @@ namespace DalLibrary.DalNS
             _db.Set<TEntity>().Remove(entity);
 
         }
-        public virtual void DeleteActually(string id)
-        {
-            if (id.IsNullOrWhiteSpace())
-                throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing entity Id. Repository.DeleteActually (T)");
+        //public virtual void DeleteActually(string id)
+        //{
+        //    if (id.IsNullOrWhiteSpace())
+        //        throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing entity Id. Repository.DeleteActually (T)");
 
-            var entity = FindFor(id);
-            entity.IsNullThrowException("Entity not found!");
-            DeleteActually(entity);
-        }
+        //    var entity = FindFor(id);
+        //    entity.IsNullThrowException("Entity not found!");
+        //    DeleteActually(entity);
+        //}
         //--------------------------------------------------------------------------------------------
 
 

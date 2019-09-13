@@ -93,67 +93,41 @@ namespace UowLibrary.DiscountPrecedenceNS
             dpTo.Rank = tempRank;
             ControllerCreateEditParameter parmFrom = new ControllerCreateEditParameter();
             parmFrom.Entity = dpFrom;
-            UpdateAndSave(parmFrom);
+            Update(parmFrom);
 
             ControllerCreateEditParameter parmTo = new ControllerCreateEditParameter();
             parmTo.Entity = dpTo;
             UpdateAndSave(parmTo);
 
-            SaveChanges();
         }
 
-        public void MakeFirst(string idToMove, string idOfCurrFirstItem)
+        public void MakeFirst(string idToMove)
         {
 
-            if (idToMove.IsNullOrEmpty() || idOfCurrFirstItem.IsNullOrEmpty())
-            {
-                ErrorsGlobal.AddMessage("Unable to continue. Id is empty.", MethodBase.GetCurrentMethod());
-                return;
-            }
-
             DiscountPrecedence dpToMove = Find(idToMove);
-            DiscountPrecedence dpCurrFirst = Find(idOfCurrFirstItem);
+            dpToMove.IsNullThrowException();
 
+            int lowestRank = FindAll().Min(x => x.Rank);
+            dpToMove.Rank = lowestRank - 1;
 
-            if (dpToMove.IsNull() || dpCurrFirst.IsNull())
-            {
-                ErrorsGlobal.AddMessage("Unable to Continue. Unable to find item", MethodBase.GetCurrentMethod());
-                return;
-            }
-
-            dpToMove.Rank = dpCurrFirst.Rank - DiscountPrecedence.RANK_SPACING_CONST;
-            ControllerCreateEditParameter parmToMove = new ControllerCreateEditParameter();
-            parmToMove.Entity = dpToMove;
-            UpdateAndSave(parmToMove);
+            //ControllerCreateEditParameter parmToMove = new ControllerCreateEditParameter();
+            //parmToMove.Entity = dpToMove;
+            UpdateAndSave(dpToMove);
             ResetRankSpacing();
+            SaveChanges();
         }
 
-        public void MakeLast(string idToMove, string idOfCurrLastItem)
+        public void MakeLast(string idToMove)
         {
 
-            if (idToMove.IsNullOrEmpty() || idOfCurrLastItem.IsNullOrEmpty())
-            {
-                ErrorsGlobal.AddMessage("Unable to continue. Id is empty.", MethodBase.GetCurrentMethod());
-                return;
-            }
+            idToMove.IsNullOrWhiteSpaceThrowException();
 
             DiscountPrecedence dpToMove = Find(idToMove);
-            DiscountPrecedence dpCurrLast = Find(idOfCurrLastItem);
+            dpToMove.IsNullThrowException();
 
-
-            if (dpToMove.IsNull() || dpCurrLast.IsNull())
-            {
-                ErrorsGlobal.AddMessage("Unable to Continue. Unable to find item", MethodBase.GetCurrentMethod());
-                return;
-            }
-
-            dpToMove.Rank = dpCurrLast.Rank + DiscountPrecedence.RANK_SPACING_CONST;
-            ControllerCreateEditParameter parmToMove = new ControllerCreateEditParameter();
-            parmToMove.Entity = dpToMove;
-            UpdateAndSave(parmToMove);
-            SaveChanges();
-
-            //ResetRankSpacing();
+            int maxRank = FindAll().Max(x => x.Rank);
+            dpToMove.Rank = maxRank+1;
+            UpdateAndSave(dpToMove);
         }
         private void ResetRankSpacing()
         {
@@ -162,17 +136,26 @@ namespace UowLibrary.DiscountPrecedenceNS
             if (allByRank.IsNullOrEmpty())
                 return;
 
-            for (int i = 0; i < allByRank.Length; i++)
-            {
-                //rank += DiscountPrecedence.RANK_SPACING_CONST;
-                //var theDiscRec = Find(allByRank[i].Id);
-                allByRank[i].Rank = i + DiscountPrecedence.RANK_SPACING_CONST;
+            int count = 0;
 
-                ControllerCreateEditParameter byRank = new ControllerCreateEditParameter();
-                byRank.Entity = allByRank[i];
-                UpdateAndSave(byRank);
+            foreach (var item in allByRank)
+            {
+                count++;
+                item.Rank = count;
+                Update(item);
 
             }
+            //for (int i = 0; i < allByRank.Length; i++)
+            //{
+            //    //rank += DiscountPrecedence.RANK_SPACING_CONST;
+            //    //var theDiscRec = Find(allByRank[i].Id);
+            //    //allByRank[i].Rank = i + DiscountPrecedence.RANK_SPACING_CONST;
+
+            //    //ControllerCreateEditParameter byRank = new ControllerCreateEditParameter();
+            //    //byRank.Entity = allByRank[i];
+            //    //Update(byRank);
+
+            //}
 
         }
 

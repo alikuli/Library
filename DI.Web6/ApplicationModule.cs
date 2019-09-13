@@ -7,6 +7,7 @@ using ErrorHandlerLibrary;
 using ErrorHandlerLibrary.ExceptionsNS;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using ModelsClassLibrary.CashNS.PenaltyNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using Ninject.Modules;
@@ -14,6 +15,7 @@ using Ninject.Web.Common;
 using UowLibrary;
 using UowLibrary.AddressNS;
 using UowLibrary.BuySellDocNS;
+using UowLibrary.CashEncashmentTrxNS;
 using UowLibrary.CashTtxNS;
 using UowLibrary.CounterNS;
 using UowLibrary.EmailAddressNS;
@@ -21,6 +23,7 @@ using UowLibrary.FeatureNS.MenuFeatureNS;
 //using UowLibrary.FeaturesNS;
 //using UowLibrary.FeaturesNS;
 using UowLibrary.FileDocNS;
+using UowLibrary.FreightOffersTrxNS;
 using UowLibrary.GlobalCommentsNS;
 using UowLibrary.Interface;
 using UowLibrary.LikeUnlikeNS;
@@ -28,6 +31,7 @@ using UowLibrary.MailerNS;
 using UowLibrary.MenuNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.ParametersNS;
+using UowLibrary.PaymentTypeNS;
 using UowLibrary.PhoneNS;
 using UowLibrary.PlayersNS.BankCategoryNS;
 using UowLibrary.PlayersNS.BankNS;
@@ -40,6 +44,7 @@ using UowLibrary.PlayersNS.DeliverymanCategoryNS;
 using UowLibrary.PlayersNS.DeliverymanNS;
 using UowLibrary.PlayersNS.MailerCategoryNS;
 using UowLibrary.PlayersNS.MessageNS;
+using UowLibrary.PlayersNS.MessageToPeopleListNS;
 using UowLibrary.PlayersNS.OwnerCategoryNS;
 using UowLibrary.PlayersNS.OwnerNS;
 using UowLibrary.PlayersNS.PersonCategoryNS;
@@ -48,6 +53,7 @@ using UowLibrary.PlayersNS.ProductApproverCategoryNS;
 using UowLibrary.PlayersNS.ProductApproverNS;
 using UowLibrary.PlayersNS.SalesmanCategoryNS;
 using UowLibrary.PlayersNS.SalesmanNS;
+using UowLibrary.PlayersNS.VehicalTypeNS;
 using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
 using UowLibrary.StateNS;
@@ -156,9 +162,18 @@ namespace DependancyResolver
 
             Bind<ProductApproverBiz>().ToSelf();
             Bind<ProductApproverCategoryBiz>().ToSelf();
-            Bind<MessageBiz>().ToSelf();                                                  
+            Bind<MessageBiz>().ToSelf();
+            Bind<MessageToPeopleListBiz>().ToSelf();
             Bind<BuySellItemBiz>().ToSelf();
-            //Bind<SaleOrderBiz>().ToSelf();
+            Bind<FreightOfferTrxBiz>().ToSelf();
+            Bind<VehicalTypeBiz>().ToSelf();
+            Bind<CountryBizTest>().ToSelf();
+            Bind<CashEncashmentTrxBiz>().ToSelf();
+            Bind<PaymentTypeBiz>().ToSelf();
+            Bind<BuySellDocHistoryBiz>().ToSelf();
+            Bind<PenaltyHeaderBiz>().ToSelf();
+            Bind<PenaltyTrxBiz>().ToSelf();
+
         }
 
         public void LoadDALs()
@@ -193,7 +208,6 @@ namespace DependancyResolver
         {
             //Bind<DbContext>().To<ApplicationDbContext>().InRequestScope();
             Bind<ApplicationDbContext>().ToSelf().InRequestScope();
-
             Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().WithConstructorArgument("store", Kernel.GetService(typeof(ApplicationDbContext)));
 
 

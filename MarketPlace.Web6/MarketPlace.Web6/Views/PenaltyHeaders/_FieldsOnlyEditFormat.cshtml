@@ -1,0 +1,139 @@
+﻿@model ModelsClassLibrary.ModelsNS.CashNS.PenaltyNS.PenaltyHeader
+
+
+<div class="form-group">
+    <strong><label>Document Number: </label></strong>
+        @Model.Name
+</div>
+
+@*<div class="form-group">
+    <strong><label>Amount: </label></strong>
+    @Model.Amount
+</div>*@
+
+<div class="form-group">
+    <strong><label>Buy/Sell Document: </label></strong>
+        @Model.BuySellDoc.FullName()
+</div>
+
+
+<div class="form-group">
+    <strong><label>Document Type at the time: </label></strong>
+        @Model.BuySellDocumentTypeEnum.ToString().ToTitleSentance()
+</div>
+
+<div class="form-group">
+    <strong><label>Document State at the time: </label></strong>
+        @Model.BuySellDocStateEnum.ToString().ToTitleSentance()
+</div>
+
+
+
+<div class="form-group">
+    <strong><label>Document Action at the time: </label></strong>
+        @Model.BuySellDocStateModifierEnum.ToString().ToTitleSentance()
+</div>
+
+<div class="form-group">
+    <strong><label>Reason: </label></strong>
+        @Model.Comment 
+</div>
+
+
+<h2 class="row bg-danger text-white p-1 justify-content-center">
+    List of Penalties
+</h2>
+@{
+    List<ModelsClassLibrary.ModelsNS.CashNS.PenaltyNS.PenaltyTrx> lst = new List<ModelsClassLibrary.ModelsNS.CashNS.PenaltyNS.PenaltyTrx>();
+
+    if (Model.PenaltyTrxs_Fixed.IsNull())
+    {
+        
+    }
+    else
+    {
+        lst = Model.PenaltyTrxs_Fixed.OrderByDescending(x => x.IsToPay).ToList();
+    }
+    
+}
+@if (lst.IsNullOrEmpty())
+{
+
+}
+else
+{
+    int count = 0;
+    decimal totalRecipts = 0;
+    decimal totalPayments = 0;
+    decimal payment = Model.IsToPay ? Model.Amount : 0;
+    decimal receipt = !Model.IsToPay ? Model.Amount : 0;
+    totalRecipts += receipt;
+    totalPayments += payment;
+    count++;
+
+        <div class="row border bg-dark text-white font-weight-bold">
+        <div class=" col-1 text-right">Sr#</div>
+        <div class="col-2">Person</div>
+        <div class="col-2 text-right">Receipt</div>
+        <div class="col-2 text-right">Payment</div>
+        <div class="col-3">Comment</div>
+        <div class="col-2"></div>
+
+    </div>
+
+    <div class="row border">
+        <div class="col-1 text-right">@count.</div>
+        <div class="col-2">@Model.FromPerson.FullName()</div>
+        <div class="col-2  text-right">
+            @if (receipt > 0)
+            {
+                @receipt.ToString("N2")
+            }
+        </div>
+        <div class="col-2  text-right">
+            @if (payment > 0)
+            {
+                @payment.ToString("N2")
+            }
+        </div>
+        <div class="col-3">@Model.CommentFixed</div>
+        <div class="col-2"></div>
+
+    </div>
+    foreach (ModelsClassLibrary.ModelsNS.CashNS.PenaltyNS.PenaltyTrx trx in lst)
+    {
+        payment = trx.IsToPay ? trx.Amount : 0;
+        receipt = !trx.IsToPay ? trx.Amount : 0;
+        totalRecipts += receipt;
+        totalPayments += payment;
+        count++;
+        <div class="row border">
+            <div class="col-1 text-right">@count.</div>
+            <div class="col-2">@trx.Person.FullName()</div>
+            <div class="col-2  text-right">
+                @if (receipt > 0)
+                {
+                    @receipt.ToString("N2")
+                }
+            </div>
+            <div class="col-2  text-right">
+                @if (payment > 0)
+                {
+                    @payment.ToString("N2")
+                }
+            </div>
+            <div class="col-3">@trx.Comment</div>
+            <div class="col-2"></div>
+
+        </div>
+    }
+    <div class="row border bg-dark text-white font-weight-bold">
+        <div class="col-1 text-right"></div>
+        <div class="col-2">Totals</div>
+        <div class="col-2  text-right">@totalRecipts.ToString("N2")</div>
+        <div class="col-2  text-right">@totalPayments.ToString("N2")</div>
+        <div class="col-3"></div>
+        <div class="col-2"></div>
+
+    </div>
+}

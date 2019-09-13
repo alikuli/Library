@@ -1,0 +1,157 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_MakeOffers = Model.BuySellDocViewState;
+
+    bool showMakeOfferScreen_MakeOffers = viewState_MakeOffers.HD_Show_Make_Offers_Section; ;
+    bool disable_MakeOfferScreen_MakeOffers = viewState_MakeOffers.HD_Disable_Make_Offers_Section; ;
+    string currentColor_MakeOffers = viewState_MakeOffers.CurrentColorClass;
+    string returnToUrl = Url.Action("List_Delivery_All", "BuySellDocs");
+
+
+}
+
+
+
+
+@if (showMakeOfferScreen_MakeOffers)
+{
+    <div class="row border border-dark p-1 w-100 @currentColor_MakeOffers" style="justify-content:center">
+        <h4>Pickup Offer</h4>
+    </div>
+
+    if (disable_MakeOfferScreen_MakeOffers)
+    {
+        @Html.HiddenFor(x => x.FreightOffer)
+        @Html.HiddenFor(x => x.OfferedPickupOnDate)
+        @Html.HiddenFor(x => x.VehicalTypeOfferedId)
+        @Html.HiddenFor(x => x.CommentByDeliveryman)
+
+        <div class="row border border-dark p-1 w-100">
+            <div class="col ">
+                <div class="card-body bg-success mb-1">
+                    <div class="form-group">
+                        <label class="background-ltgrey p-2">
+                            <strong>
+                                <label>Delivery Phone Number</label>
+                            </strong>
+                        </label>
+                        @Html.EditorFor(x => x.Deliveryman.DefaultBillAddress.Phone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Phone number", disabled = "disabled" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="background-ltgrey p-2">
+                        <strong>
+                            <label>Freight Amount Offer</label>
+                        </strong>
+                    </label>
+                    @Html.EditorFor(x => x.FreightOffer, new { htmlAttributes = new { @class = "form-control", @placeholder = "Freight amount", disabled = "disabled" } })
+                </div>
+
+                <div class="form-group">
+                    <label class="background-ltgrey p-2">
+                        <strong>
+                            <label>Pickup Date Offer</label>
+                        </strong>
+                    </label>
+                    @Html.EditorFor(x => x.OfferedPickupOnDate, new { htmlAttributes = new { @class = "form-control DatePickers", @placeholder = "Pickup date.", disabled = "disabled" } })
+                </div>
+
+                <div class="form-group">
+                    <strong>
+                        @Html.LabelFor(model => model.VehicalTypeOfferedId, htmlAttributes: new { @class = "background-ltgrey p-2" })
+                    </strong>
+                    @Html.DropDownListFor(x => x.VehicalTypeOfferedId,
+               (@Model.SelectListVehicalTypeOffered as IEnumerable<SelectListItem>),
+                      "--- Select Vehical Type ---",
+               new { @class = "form-control", title = "This is the vehical type that will do the delivery.", data_placement = "right", disabled = "disabled" })
+                </div>
+
+
+
+            </div>
+
+            @*<input type="text" class="tail-datetime-field" />*@
+
+            <div class="col ">
+                <div class="form-group">
+                    <label class="background-ltgrey p-2">
+                        <strong>
+                            <label>Comment by Delivery Man</label><br />
+                        </strong>
+                    </label>
+                    @Html.TextAreaFor(x => x.CommentByDeliveryman, 5, 30, new { @class = "form-control", @placeholder = "Message to shipper.", disabled = "disabled" })
+                </div>
+
+                @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_RequireInsurance - MakeOffers")
+
+
+                <button type="button" class="btn btn-success" disabled>Make offer</button>
+                <button type="button" class="btn btn-danger" onclick="openPath('@returnToUrl')">Back to list</button>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        
+        <div class="row border border-dark p-1 w-100">
+            <div class="col ">
+                <div class="form-group">
+                    <label class="background-ltgrey p-2">
+                        <strong>
+                            <label>Freight Amount Offer</label>
+                        </strong>
+                    </label>
+                    @Html.EditorFor(x => x.FreightOffer, new { htmlAttributes = new { @class = "form-control", @placeholder = "Freight amount" } })
+                </div>
+                <div class="form-group">
+                    <label class="background-ltgrey p-2">
+                        <strong>
+                            <label>Pickup Date Offer</label>
+                        </strong>
+                    </label>
+                    @Html.EditorFor(x => x.OfferedPickupOnDate, new { htmlAttributes = new { @class = "form-control DatePickers", @placeholder = "Pickup date.", } })
+                </div>
+
+                <div class="form-group">
+                    <strong>
+                        @Html.LabelFor(model => model.VehicalTypeOfferedId, htmlAttributes: new { @class = "background-ltgrey p-2" })
+                    </strong>
+                    @Html.DropDownListFor(x => x.VehicalTypeOfferedId,
+               (@Model.SelectListVehicalTypeOffered as IEnumerable<SelectListItem>),
+                      "--- Select Vehical Type ---",
+                      new { @class = "form-control", title = "This is the vehical type that will do the delivery.", data_placement = "right" })
+                </div>
+
+
+
+            </div>
+
+            @*<input type="text" class="tail-datetime-field" />*@
+
+            <div class="col ">
+                <div class="form-group">
+                    <label class="background-ltgrey p-2">
+                        <strong>
+                            <label>Comment by Delivery Man</label><br />
+                        </strong>
+                    </label>
+                    @Html.TextAreaFor(x => x.CommentByDeliveryman, 5, 30, new { @class = "form-control", @placeholder = "Message to shipper." })
+                </div>
+
+                @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_RequireInsurance - MakeOffers")
+
+
+                <button type="submit" class="btn btn-success" >Make offer</button>
+                <button type="button" class="btn btn-danger" onclick="openPath('@returnToUrl')" >Back to list</button>
+
+            </div>
+
+        </div>
+    }
+}

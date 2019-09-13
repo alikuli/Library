@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Reflection;
@@ -48,7 +49,7 @@ namespace MarketPlace.Web6.Controllers
                 return _personBiz;
             }
         }
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
             Person person = parm.Entity as Person;
@@ -62,9 +63,25 @@ namespace MarketPlace.Web6.Controllers
             person.SelectListUsers = AddressBiz.UserBiz.SelectList();
             person.SelectListCountries = AddressBiz.CountryBiz.SelectList();
 
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
         }
 
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            //ViewBag.UserSelectList = MailerBiz.SelectListUsers;
+            UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
+            Person person = parm.Entity as Person;
+            person.IsNullThrowException("Unable to unbox Person");
+
+            person.SelectListPersonCategory = PersonBiz.PersonCategoryBiz.SelectList();
+            person.PersonComplex.SelectListSonOfOrWifeOf = PersonBiz.SelectListSonOfWifeOf();
+            person.PersonComplex.SelectListSex = PersonBiz.SelectListSex();
+
+            person.SelectListBillAddress = AddressBiz.SelectListBillAddressCurrentUser();
+            person.SelectListUsers = AddressBiz.UserBiz.SelectList();
+            person.SelectListCountries = AddressBiz.CountryBiz.SelectList();
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
+        }
 
         public ActionResult IWannaTrade()
         {
@@ -80,6 +97,7 @@ namespace MarketPlace.Web6.Controllers
             try
             {
                 var person = PersonBiz.Factory();
+                string btnValue = "";
                 ControllerCreateEditParameter parm = new ControllerCreateEditParameter(
                     person,
                     null,
@@ -93,7 +111,8 @@ namespace MarketPlace.Web6.Controllers
                     MenuENUM.CreateDefault,
                     UserName,
                     UserId,
-                    returnUrl);
+                    returnUrl,
+                    ViewBag.GlobalObject as GlobalObject, btnValue);
 
                 PersonBiz.CreateAndSave(parm);
 

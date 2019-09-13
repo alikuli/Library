@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\MarketPlace.Web6\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\MarketPlace.Web6\packages\NUnit.3.12.0\build\NUnit.props')" />
+  <Import Project="..\MarketPlace.Web6\packages\NUnit3TestAdapter.3.14.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\MarketPlace.Web6\packages\NUnit3TestAdapter.3.14.0\build\net35\NUnit3TestAdapter.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,6 +14,7 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>1da1ff67</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -75,6 +78,11 @@
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TestTools.UITest.ExtensionUtilities, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
@@ -97,6 +105,10 @@
     </Reference>
     <Reference Include="Ninject.Web.Mvc, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\MarketPlace.Web6\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
@@ -145,25 +157,38 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLayer\BuySellDocHistoryNS\BuySellDocHistoryBiz.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\BuySellDocBiz.cs" />
-    <Compile Include="BusinessLayer\BuySellDocNS\ErrorCheck.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\AddToSale.cs" />
+    <Compile Include="BusinessLayer\BuySellDocNS\BusinessRules.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\IsSaleOrPurchase.cs" />
-    <Compile Include="BusinessLayer\BuySellDocNS\OpenOrdersForPerson - Copy.cs" />
-    <Compile Include="BusinessLayer\BuySellDocNS\OpenOrdersForPerson.cs" />
+    <Compile Include="BusinessLayer\BuySellDocNS\Load_SaleOrders_And_PurchaseOrders_Into_GlobalObject.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\Fix.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\Index.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\Factory.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\Delete.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\SelectList.cs" />
     <Compile Include="BusinessLayer\BuySellItemNS\BuySellItemBiz.cs" />
+    <Compile Include="BusinessLayer\CashNS\CashEncashmentTrxNS\Index.cs" />
+    <Compile Include="BusinessLayer\CashNS\CashEncashmentTrxNS\Initialization.cs" />
+    <Compile Include="BusinessLayer\CashNS\CashEncashmentTrxNS\CashEncashmentTrxBiz.cs" />
+    <Compile Include="BusinessLayer\CashNS\CashEncashmentTrxNS\SelectList.cs" />
+    <Compile Include="BusinessLayer\CashNS\CashTrDistributionNS\CashTrxDistributionBiz.cs" />
     <Compile Include="BusinessLayer\CashNS\CashTrxNS\CashPayments.cs" />
     <Compile Include="BusinessLayer\CashNS\CashTrxNS\Fix.cs" />
     <Compile Include="BusinessLayer\CashNS\CashTrxNS\Factory.cs" />
     <Compile Include="BusinessLayer\CashNS\CashTrxNS\GetNextDocNumber.cs" />
-    <Compile Include="BusinessLayer\CashNS\CashTrxNS\CashBalance.cs" />
     <Compile Include="BusinessLayer\CashNS\CashTrxNS\ErrorCheck.cs" />
-    <Compile Include="BusinessLayer\CashNS\CashTrxNS\GetCashTrxDbCrModel.cs" />
+    <Compile Include="BusinessLayer\CashNS\PaymentTypeNS\Index.cs" />
+    <Compile Include="BusinessLayer\CashNS\PaymentTypeNS\Initialization.cs" />
+    <Compile Include="BusinessLayer\CashNS\PaymentTypeNS\PaymentTypeBiz.cs" />
+    <Compile Include="BusinessLayer\CashNS\PaymentTypeNS\SelectList.cs" />
+    <Compile Include="BusinessLayer\CashNS\PenaltyHeaderNS\Index.cs" />
+    <Compile Include="BusinessLayer\CashNS\PenaltyHeaderNS\PenaltyHeaderBiz.cs" />
+    <Compile Include="BusinessLayer\CashNS\PenaltyHeaderNS\SelectList.cs" />
+    <Compile Include="BusinessLayer\CashNS\PenaltyTrxNS\Index.cs" />
+    <Compile Include="BusinessLayer\CashNS\PenaltyTrxNS\PenaltyTrxBiz.cs" />
+    <Compile Include="BusinessLayer\CashNS\PenaltyTrxNS\SelectList.cs" />
     <Compile Include="BusinessLayer\ContactsNS\AddressNS\Event_ModifyIndexItem.cs" />
     <Compile Include="BusinessLayer\ContactsNS\AddressNS\Factory.cs" />
     <Compile Include="BusinessLayer\ContactsNS\AddressNS\UpdateAndSaveDefaultAddress.cs" />
@@ -190,18 +215,25 @@
     <Compile Include="BusinessLayer\ContactsNS\EmailNS\SelectList.cs" />
     <Compile Include="BusinessLayer\ContactsNS\PhoneNS\Event_ModifyIndexList.cs" />
     <Compile Include="BusinessLayer\ContactsNS\PhoneNS\PhoneBiz.cs" />
+    <Compile Include="BusinessLayer\FreightOfferTrxNS\FreightOffersTrxBiz.cs" />
+    <Compile Include="BusinessLayer\LanguagesNS\LanguageBiz_Test.cs" />
     <Compile Include="BusinessLayer\LanguagesNS\LikeUnLikeNS\Fix.cs" />
     <Compile Include="BusinessLayer\MenuNS\MenuBizNS\InitializeMenuManagerForEntity.cs" />
     <Compile Include="BusinessLayer\MenuNS\MenuFeatureNS\Fix.cs" />
     <Compile Include="BusinessLayer\MenuNS\MenuFeatureNS\Factory.cs" />
     <Compile Include="BusinessLayer\MenuNS\MenuFeatureNS\Event_ModifyIndexList.cs" />
     <Compile Include="BusinessLayer\MenuNS\MenuFeatureNS\MenuFeatureBiz.cs" />
+    <Compile Include="BusinessLayer\MessageToPeopleListNS\Fix.cs" />
+    <Compile Include="BusinessLayer\MessageToPeopleListNS\MessageToPeopleListBiz.cs" />
+    <Compile Include="BusinessLayer\MessageToPeopleListNS\SelectList.cs" />
     <Compile Include="BusinessLayer\MessageNS\Fix.cs" />
     <Compile Include="BusinessLayer\MessageNS\CreateMessageAndSave.cs" />
     <Compile Include="BusinessLayer\MessageNS\MessageBiz.cs" />
     <Compile Include="BusinessLayer\MessageNS\SelectList.cs" />
     <Compile Include="BusinessLayer\PeopleMessagesNS\PeopleMessageBiz.cs" />
     <Compile Include="BusinessLayer\PeopleMessagesNS\SelectList.cs" />
+    <Compile Include="BusinessLayer\PlacesNS\CountryNS\CountryBizTest.cs" />
+    <Compile Include="BusinessLayer\PlayersNS\BusinessLayerPlayerNS\DeliverymanNS\GetListForIndex.cs" />
     <Compile Include="BusinessLayer\PlayersNS\BusinessLayerPlayerNS\ProductAppoverNS\Fix.cs" />
     <Compile Include="BusinessLayer\PlayersNS\BusinessLayerPlayerNS\ProductAppoverNS\ProductApproverBiz.cs" />
     <Compile Include="BusinessLayer\PlayersNS\BusinessLayerPlayerNS\ProductAppoverNS\SelectList.cs" />
@@ -502,6 +534,7 @@
     <Compile Include="BusinessLayer\PlayersNS\BusinessLayerPlayerNS\UserNS\UserRelated\ManageControllerBiz.cs" />
     <Compile Include="BusinessLayer\PlayersNS\BusinessLayerPlayerNS\UserNS\UserRelated\AccountControllerBiz.cs" />
     <Compile Include="BusinessLayer\Interface\IBiz.cs" />
+    <Compile Include="BusinessLayer\VehicalTypeNS\VehicalTypeBiz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BusinessLayer\PlayersNS\BusinessLayerPlayerNS\UserNS\Index.cs" />
     <Compile Include="BusinessLayer\PlayersNS\BusinessLayerPlayerNS\UserNS\UserBiz.cs">
@@ -512,6 +545,10 @@
     <Compile Include="BusinessLayer\VisitorLogs\VisitorLogBiz - SelectList.cs" />
     <Compile Include="BusinessLayer\VisitorLogs\VisitorLogBiz.cs" />
     <Compile Include="SuperLayerNS\AccountsNS\AccountsBiz.cs" />
+    <Compile Include="SuperLayerNS\SuperBizNS\getListOfPeopleOwnedBySalesman.cs" />
+    <Compile Include="SuperLayerNS\SuperBizNS\allocatedBuySellDocs.cs" />
+    <Compile Include="SuperLayerNS\SuperBizNS\Penalty.cs" />
+    <Compile Include="SuperLayerNS\SuperBizNS\SuperBiz.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BreadCrumbsLibrary\BreadCrumbsLibrary\BreadCrumbsLibrary.csproj">
@@ -589,7 +626,17 @@
   <ItemGroup>
     <Folder Include="BusinessLayer\MenuNS\NewFolder1\" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\MarketPlace.Web6\packages\NUnit3TestAdapter.3.14.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\MarketPlace.Web6\packages\NUnit3TestAdapter.3.14.0\build\net35\NUnit3TestAdapter.props'))" />
+    <Error Condition="!Exists('..\MarketPlace.Web6\packages\NUnit.3.12.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\MarketPlace.Web6\packages\NUnit.3.12.0\build\NUnit.props'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

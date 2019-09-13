@@ -1,0 +1,44 @@
+﻿@model ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS.SalesmanNS.PersonServedBySalesmanWithTotalTrxAmountAdded_Header
+
+@{
+    ViewBag.Title = "List Of People You have Sold To";
+}
+
+<h2>@Model.Heading()</h2>
+
+
+<table class="table table-hover table-light">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Detail.FirstOrDefault().Person)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Detail.FirstOrDefault().Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Detail.FirstOrDefault().FirstDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Detail.FirstOrDefault().LastDate)
+        </th>
+    </tr>
+
+@foreach (var item in Model.Detail) {
+    string amountClass = item.Amount < Model.MinimumSaleAmountRequired ? "text-danger" : "" ;
+    <tr>
+        <td>
+            @item.Person.FullName()
+        </td>
+        <td class="@amountClass">
+            @item.Amount.ToString().ToRuppeeFormat()
+        </td>
+        <td>
+            @item.FirstDate.ToLongDateString() @item.FirstDate.ToString("hh:mm:ss") @item.DaysAgo_FirstDate_Str()
+        </td>
+        <td>
+            @item.LastDate.ToLongDateString() @item.LastDate.ToString("hh:mm:ss") @item.DaysAgo_LastDate_Str()
+        </td>
+    </tr>
+}
+
+</table>

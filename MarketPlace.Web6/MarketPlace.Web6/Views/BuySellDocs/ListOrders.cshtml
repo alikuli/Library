@@ -1,85 +1,147 @@
 ﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellStatementModel
 
+
+
 @{
-    ViewBag.Title = "Purchases Order List";
-    string colorFor_RequestUnconfirmed = "badge badge-pill badge-requestunconfirmed";
-    string colorFor_RequestConfirmed = "badge  badge-pill badge-requestconfirmed";
-    string colorFor_ConfirmedBySeller = "badge badge-pill badge-confirmedbyseller";
-    string colorFor_ReadyForShipment = "badge badge-pill badge-readyforshipment";
-    string colorFor_ConfirmedByCourier = "badge badge-pill badge-confirmedbycourier";
-    string colorFor_PickedUp = "badge badge-pill badge-pickedup";
-    string colorFor_Delivered = "badge badge-pill badge-delivered";
-    string colorFor_Rejected = "badge badge-pill badge-rejected";
-    string colorFor_Problem = "badge badge-pill badge-problem";
-}
 
-<h2>
-    <span class="text-success ">@Model.MainHeading</span>
 
-</h2>
-<h3>
-    <span class="text-success ">@Model.SubHeading</span>
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState = Model.BuySellDocViewState;
 
-</h3>
+    ViewBag.Title = "Order List";
 
-@if (!Model.Docs.IsNullOrEmpty())
-{
-    string path_live_Orders_BF_ToolTip = "Click here to see older live orders.";
-    string fromDateString = new DateTime(Model.FromDate.Year,Model.FromDate.Month,Model.FromDate.Day).ToShortDateString();
-    //string path_live_Orders_BF = Url.Action("List_Live_PurchasesOrders", "BuySellDocs") + "?toDateString=" + fromDateString;
+
+    //string editIcon = @"/ContentMine/Icons/Edit.png";
+    //string viewIcon = @"/ContentMine/Icons/View.png";
+    //string deleteIcon = @"/ContentMine/Icons/GarbageCan.png";
+    //string editBtnIcon = editIcon;
+    //string deleteBtnIcon = deleteIcon;
+    string colorFor_RequestUnconfirmed_pill = viewState.ClassFor_RequestUnconfirmed_Pill;
+    string colorFor_RequestConfirmed_pill = viewState.ClassFor_RequestConfirmed_Pill;
+    string colorFor_BeingPreparedForShipmentBySeller_pill = viewState.ClassFor_BeingPreparedForShipmentBySeller_Pill;
+    string colorFor_ReadyForShipment_pill = viewState.ClassFor_ReadyForShipment_Pill;
+    string colorFor_CourierAccepted_pill = viewState.ClassFor_CourierAccepted_Pill;
+    string colorFor_ConfirmedByCourier_pill = viewState.ClassFor_ConfirmedByCourier_Pill;
+    string colorFor_PickedUp_pill = viewState.ClassFor_PickedUp_Pill;
+    string colorFor_Delivered_pill = viewState.ClassFor_Delivered_Pill;
+    string colorFor_Canceled_pill = viewState.ClassFor_Canceled_Pill;
+    string colorFor_Rejected_pill = viewState.ClassFor_Rejected_Pill;
+    string colorFor_Problem_pill = viewState.ClassFor_Problem_Pill;
+
 
     string tooltip_Request_Unconfirmed = "When an order has Request Unconfirmed status it means that the a potential buyer is thinking of purchasing this item. The sale has not been confirmed yet";
     string tooltip_Request_Confirmed = "When an order has Request Confirmed status it means that the sale has been confirmed by the buyer. This can be executed. If the price is red, it means that the price has been changed.";
-    string tooltip_ConfirmedBySeller = "The item has been confirmed by the seller. He is promising to ship the product.";
+    string tooltip_BeingPreparedForShipmentBySeller = "The item has been confirmed by the seller. He is promising to ship the product.";
     string tooltip_ReadyForShipment = "The item is ready for shipment. If a courier has not been designated, a courier company is being found.";
     string tooltip_ConfirmedByCourier = "A courier has confirmed they will pick the product.";
     string tooltip_PickedUp = "The product has been picked up by the courier.";
     string tooltip_Delivered = "The product has been delivered to the customer.";
-    string tooltip_Rejected = "The product has been rejected for some reason.";
+
+    string tooltip_Canceled = viewState.OL_Cancel_Button_ToolTip;
+    string tooltip_Rejected = viewState.OL_Reject_Button_ToolTip;
     string tooltip_Problem = "There is a problem";
 
+    bool showBFs = false;
+
     string path_live_Orders_BF = "";
+    int colSpan = 7;
+    bool hideOrderCompleteCol = viewState.OL_HideCompletedCol;
+    bool hideOrderCol = viewState.OL_HideOrderedCol;
+
+
+    @Html.Partial("_messages")
+
+    if (hideOrderCol && hideOrderCompleteCol)
+    {
+        colSpan = 5;
+    }
+    else
+    {
+        if (!hideOrderCol && !hideOrderCompleteCol)
+        {
+            colSpan = 7;
+        }
+        else
+        {
+            colSpan = 6;
+
+        }
+    }
+}
+
+<style>
+    a:hover {
+        color: white;
+        background-color: navy;
+    }
+</style>
+
+@if (!Model.Docs.IsNullOrEmpty())
+{
+    string path_live_Orders_BF_ToolTip = "Click here to see older live orders.";
+    string fromDateString = new DateTime(Model.FromDate.Year, Model.FromDate.Month, Model.FromDate.Day).ToShortDateString();
+    //string path_live_Orders_BF = Url.Action("List_Live_PurchasesOrders", "BuySellDocs") + "?toDateString=" + fromDateString;
+
 
     switch (Model.BuySellDocumentTypeEnum)
     {
         case BuySellDocumentTypeENUM.Sale:
-            path_live_Orders_BF = Url.Action("List_Live_PurchasesOrders", "BuySellDocs", new { toDateString = fromDateString, isAdmin = Model.IsAdmin, BuySellDocumentTypeEnum = BuySellDocumentTypeENUM.Sale});
+            showBFs = true;
+            path_live_Orders_BF = Url.Action("List_Live_PurchasesOrders", "BuySellDocs", new { toDateString = fromDateString, isAdmin = Model.IsAdmin, BuySellDocumentTypeEnum = BuySellDocumentTypeENUM.Sale });
             break;
-            
+
         case BuySellDocumentTypeENUM.Purchase:
+            showBFs = true;
             path_live_Orders_BF = Url.Action("List_Live_PurchasesOrders", "BuySellDocs", new { toDateString = fromDateString, isAdmin = Model.IsAdmin, BuySellDocumentTypeEnum = BuySellDocumentTypeENUM.Purchase });
             break;
-            
+
         case BuySellDocumentTypeENUM.Unknown:
-            break;
         default:
+            showBFs = false;
             break;
     }
-    
-    <table class=" table table-responsive table-striped table-light table-hover table-bordered" >
-        <caption class="badge-">
-            <span class="@colorFor_RequestUnconfirmed" data-toggle="tooltip" title="@tooltip_Request_Unconfirmed" data-placement="top">Request Unconfirmed</span>
-            <span class="@colorFor_RequestConfirmed" data-toggle="tooltip" title="@tooltip_Request_Confirmed" data-placement="top">Request Confirmed</span>
-            <span class="@colorFor_ConfirmedBySeller" data-toggle="tooltip" title="@tooltip_ConfirmedBySeller" data-placement="top">Confirmed By Seller</span>
-            <span class="@colorFor_ReadyForShipment" data-toggle="tooltip" title="@tooltip_ReadyForShipment" data-placement="top">Ready For Shipment</span>
-            <span class="@colorFor_ConfirmedByCourier" data-toggle="tooltip" title="@tooltip_ConfirmedByCourier" data-placement="top">Confirmed By Courier</span>
-            <span class="@colorFor_PickedUp" data-toggle="tooltip" title="@tooltip_PickedUp" data-placement="top">Picked Up</span>
-            <span class="@colorFor_Delivered" data-toggle="tooltip" title="@tooltip_Delivered" data-placement="top">Delivered</span>
-            <span class="@colorFor_Rejected" data-toggle="tooltip" title="@tooltip_Rejected" data-placement="top">Rejected</span>
-            <span class="@colorFor_Problem" data-toggle="tooltip" title="@tooltip_Problem" data-placement="top">Problem</span>
+
+
+
+
+    <table class=" table  table-striped table-light table-hover table-bordered">
+        <caption>
+            <div class="alert alert-dark">
+                <span class="@colorFor_RequestUnconfirmed_pill" data-toggle="tooltip" title="@tooltip_Request_Unconfirmed" data-placement="top">Request Unconfirmed</span>
+                <span><img src="~/ContentMine/Icons/RightArrow.png" /></span>
+                <span class="@colorFor_RequestConfirmed_pill" data-toggle="tooltip" title="@tooltip_Request_Confirmed" data-placement="top">Request Confirmed</span>
+                <span><img src="~/ContentMine/Icons/RightArrow.png" /></span>
+                <span class="@colorFor_BeingPreparedForShipmentBySeller_pill" data-toggle="tooltip" title="@tooltip_BeingPreparedForShipmentBySeller" data-placement="top">Confirmed By Seller</span>
+                <span><img src="~/ContentMine/Icons/RightArrow.png" /></span>
+                <span class="@colorFor_ReadyForShipment_pill" data-toggle="tooltip" title="@tooltip_ReadyForShipment" data-placement="top">Ready For Shipment</span>
+                <span><img src="~/ContentMine/Icons/RightArrow.png" /></span>
+                <span class="@colorFor_ConfirmedByCourier_pill" data-toggle="tooltip" title="@tooltip_ConfirmedByCourier" data-placement="top">Ready For Shipment</span>
+                <span><img src="~/ContentMine/Icons/RightArrow.png" /></span>
+                <span class="@colorFor_ConfirmedByCourier_pill" data-toggle="tooltip" title="@tooltip_ConfirmedByCourier" data-placement="top">Confirmed By Courier</span>
+                <span><img src="~/ContentMine/Icons/RightArrow.png" /></span>
+                <span class="@colorFor_PickedUp_pill" data-toggle="tooltip" title="@tooltip_PickedUp" data-placement="top">Picked Up</span>
+                <span><img src="~/ContentMine/Icons/RightArrow.png" /></span>
+                <span class="@colorFor_Delivered_pill" data-toggle="tooltip" title="@tooltip_Delivered" data-placement="top">Delivered</span>
+                <span class="@colorFor_Rejected_pill" data-toggle="tooltip" title="@tooltip_Rejected" data-placement="top">Rejected</span>
+                <span class="@colorFor_Canceled_pill" data-toggle="tooltip" title="@tooltip_Canceled" data-placement="top">Canceled</span>
+                <span class="@colorFor_Problem_pill" data-toggle="tooltip" title="@tooltip_Problem" data-placement="top">Problem</span>
+            </div>
         </caption>
         <thead>
-            <tr class="alert-info p-1 ">
-                <th scope="row"></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th class=""></th>
+            <tr class="alert-info p-1 text-center">
+                <th scope="row" colspan="@colSpan">
+                    <h5>
+                        <span class="text-success ">@Model.MainHeading</span> -
+                        <small>
+                            <span class="text-success ">@Model.SubHeading</span>
+                        </small>
+
+                    </h5>
+
+                </th>
             </tr>
         </thead>
-        <tr >
+
+        <tr>
             <th>
                 Date
             </th>
@@ -89,12 +151,26 @@
             <th>
                 From/To
             </th>
-            <th>
-                Live
-            </th>
-            <th>
-                Completed
-            </th>
+
+
+            @if (hideOrderCol)
+            { }
+            else
+            {
+                <th>
+                    Order
+                </th>
+            }
+
+            @if (hideOrderCompleteCol)
+            { }
+            else
+            {
+
+                <th>
+                    Completed
+                </th>
+            }
             <th>
                 Comment
             </th>
@@ -103,50 +179,67 @@
             </th>
         </tr>
 
-         @*Running balance*@
-        <tr>
-            <td>
-                Up to 
-            </td>
-            <td>
-                Various
-            </td>
-            <td>
-                
-                Brought forward
+        @*Running balance*@
+        @if (showBFs)
+        {
+            <tr>
+                <td>
+                    Up to
+                </td>
+                <td>
+                    Various
+                </td>
+                <td>
 
-            </td>
-            <td>
-                <span>
-                    <a href="@path_live_Orders_BF" data-toggle="tooltip" title="@path_live_Orders_BF_ToolTip" data-placement="left">@string.Format("{0:N2}", Model.Live_BF)</a>
-                    
-                </span>
-            </td>
-            <td>
-                <span>
-                    <a href="@path_live_Orders_BF" data-toggle="tooltip" title="@path_live_Orders_BF_ToolTip" data-placement="left">@string.Format("{0:N2}", Model.Dead_BF)</a>
-                    
-                </span>
-            </td>
-            <td>
-                Old Orders
-            </td>
-            <td>
+                    Brought forward
 
+                </td>
+                @if (hideOrderCol)
+                { }
+                else
+                {
+                    <td>
+                        <span>
+                            <a href="@path_live_Orders_BF" data-toggle="tooltip" title="@path_live_Orders_BF_ToolTip" data-placement="left">@string.Format("{0:N2}", Model.Live_BF)</a>
 
-            </td>
-        </tr>
+                        </span>
+                    </td>
+                }
+                @if (hideOrderCompleteCol)
+                { }
+                else
+                {
+                    <td>
+                        <span>
+                            <a href="@path_live_Orders_BF" data-toggle="tooltip" title="@path_live_Orders_BF_ToolTip" data-placement="left">@string.Format("{0:N2}", Model.Dead_BF)</a>
+
+                        </span>
+                    </td>
+                }
+                <td>
+                    Old Orders
+                </td>
+                <td></td>
+            </tr>
+        }
+
+        @*===================================================================================*@
+
         @foreach (ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc item in Model.Docs.ToList())
         {
-            string edit_order_path ="";
-            string delete_order_path = Url.Action("Delete", "BuySellDocs", new { id = item.Id, returnUrl = Request.Url.PathAndQuery, buySellStatementType = AliKuli.ConstantsNS.MyConstants.PURCHASE_ORDER_STATEMENT });
+            viewState = Model.GetBuySellDocViewState(item.BuySellDocStateEnum, item.BuySellDocumentTypeEnum, item.Customer, item.Owner);
+
+            //string edit_order_path = "";
+
+
+
             string classForLineItem = "";
-            string disableEditButton = "";
-            string disableDeleteButton = "";
+
+
             string highlightIfPriceDifferentClass = "";
 
-            string toolTip_Delete = "Select this to delete the order.";
-            string toolTip_Edit = "Select this to edit the order. You can also click on the order from/to link";
+            //string toolTip_Delete = viewState.OL_DELETE_Button_ToolTip;
+
             string tooltip_Date = "This is the date of the order";
             string tooltip_Number = "This is the order number";
             string tooltip_Name = "This is item that is being sold or bought";
@@ -154,156 +247,215 @@
             string tooltip_CompletedSale = "This sale has been completed, delivered.";
             string tooltip_Comment = "This is the status of the sale. A comment by the system. This is color coded. Look below at the legend.";
 
-            
-            
-            
-            
-            switch (Model.BuySellDocumentTypeEnum)
-            {
-                case BuySellDocumentTypeENUM.Sale:
-                    tooltip_Name = "This is item that is being sold ";
-                    
-                    break;
-                    
-                    
-                case BuySellDocumentTypeENUM.Purchase:
-                    tooltip_Name = "This is item that is being bought";
-                    edit_order_path = Url.Action("Edit", "BuySellDocs", new { id = item.Id, returnUrl = Request.Url.PathAndQuery, buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Purchase });
-                    
 
-                    break;
-                case BuySellDocumentTypeENUM.Unknown:
-                    break;
-                default:
-                    break;
-            }
+            //Edit/View Button
+            string edit_order_path = Url.Action("Edit", "BuySellDocs", new { id = item.Id, returnUrl = Request.Url.PathAndQuery, buySellDocumentTypeEnum = Model.BuySellDocumentTypeEnum });
+            string toolTip_Edit = viewState.OL_ToolTip_Edit;
+            string editBtnIcon = viewState.OL_IconForEditView;
+            string disableEditButton = viewState.OL_IsEditEnabled ? "" : " disabled ";
+            bool show_Edit_Button = viewState.OL_IsShowEditButton;
+
+
+            //Delete Button
+            string delete_order_path = Url.Action("Delete", "BuySellDocs", new { Id = item.Id, returnUrl = Request.Url.PathAndQuery, buySellStatementType = AliKuli.ConstantsNS.MyConstants.PURCHASE_ORDER_STATEMENT });
+            string disableDeleteButton = viewState.OL_IsDeleteEnabled ? "" : " disabled ";
+            string deleteBtnIcon = viewState.OL_IconForDeleteView;
+            bool show_Delete_Button = viewState.OL_IsShowDeleteButton;
+            string toolTip_Delete_Button = viewState.OL_DELETE_Button_ToolTip;
+
+
 
             
             
+            //Cancel Button
+            tooltip_Canceled = item.BuySellDocViewState.OL_Cancel_Button_ToolTip;
+            string path_Cancel_Order = Url.Action("CancelRejectOrder", "BuySellDocs", new { buySellDocId = item.Id, returnUrl = Request.Url.PathAndQuery, text = tooltip_Canceled, buySellDocumentTypeEnum = Model.BuySellDocumentTypeEnum, buySellDocStateModifierEnum = BuySellDocStateModifierENUM.Cancel });
             
-            switch (item.BuySellDocStateEnum)
-            {
-                case BuySellDocStateENUM.RequestUnconfirmed:
-                    classForLineItem = "badge-requestunconfirmed";
-                    highlightIfPriceDifferentClass = item.IsAllItemPricesOriginal ? "" : " badge-problem ";
-                    break;
-                case BuySellDocStateENUM.RequestConfirmed:
-                    classForLineItem = "badge-requestconfirmed";
-                    highlightIfPriceDifferentClass = item.IsAllItemPricesOriginal ? "" : " badge-problem ";
-                    
-                    break;
-                case BuySellDocStateENUM.ConfirmedBySeller:
-                    classForLineItem = "badge-confirmedbyseller";
-                    disableEditButton = "disabled";
-                    disableDeleteButton = "disabled";
-                    break;
+            string disableCancelButton = viewState.OL_IsCanceledEnabled ? "" : " disabled ";
+            string cancelButtonIcon = viewState.OL_IconForCancel;
+            bool show_Cancel_Button = viewState.OL_IsShowCancelButton;
+            string tooltip_Cancele_Button = viewState.OL_Cancel_Button_ToolTip;
 
-                case BuySellDocStateENUM.ReadyForShipment:
-                    classForLineItem = "badge-readyforshipment";
-                    disableEditButton = "disabled";
-                    disableDeleteButton = "disabled";
-                    break;
-                case BuySellDocStateENUM.ConfirmedByCourier:
-                    classForLineItem = "badge-confirmedbycourier";
-                    disableEditButton = "disabled";
-                    disableDeleteButton = "disabled";
-                    break;
-                case BuySellDocStateENUM.PickedUp:
-                    classForLineItem = "badge-pickedup";
-                    disableEditButton = "disabled";
-                    disableDeleteButton = "disabled";
-                    break;
-                case BuySellDocStateENUM.Delivered:
-                    classForLineItem = "badge-delivered";
-                    disableEditButton = "disabled";
-                    disableDeleteButton = "disabled";
-                    break;
-                case BuySellDocStateENUM.Rejected:
-                    disableEditButton = "disabled";
-                    disableDeleteButton = "disabled";
-                    classForLineItem = "badge-rejected";
-                    break;
-                case BuySellDocStateENUM.Problem:
-                    disableEditButton = "disabled";
-                    disableDeleteButton = "disabled";
-                    classForLineItem = "badge-problem";
-                    break;
-                default:
-                    break;
 
-            }
+            //Reject Button
+            tooltip_Rejected = item.BuySellDocViewState.OL_Reject_Button_ToolTip;
+            string path_Reject_Order = Url.Action("CancelRejectOrder", "BuySellDocs", new { buySellDocId = item.Id, returnUrl = Request.Url.PathAndQuery, text = tooltip_Rejected, buySellDocumentTypeEnum = Model.BuySellDocumentTypeEnum, buySellDocStateModifierEnum = BuySellDocStateModifierENUM.Reject });
+            string disableRejectButton = viewState.OL_IsRejectEnabled ? "" : " disabled ";
+            string rejectBtnIcon = viewState.OL_IconForReject;
+            bool show_Reject_Button = viewState.OL_IsShowReject;
+            string tooltip_Reject_Button = viewState.OL_Reject_Button_ToolTip;
 
-            <tr >
-                
+            string itemPicture = Url.Content(item.PictureAddressPathAny());
+
+            classForLineItem = viewState.CurrentColorClass;
+            highlightIfPriceDifferentClass = item.IsAllItemPricesOriginal ? "" : " badge-problem ";
+
+            <tr class="small" style="border: 10px solid white">
                 <td class="@classForLineItem " data-toggle="tooltip" title="@tooltip_Date" data-placement="top">
                     @Html.DisplayFor(modelItem => item.MetaData.Created.Date_NotNull_Min)
                 </td>
-                
-                
+
+
                 <td class="@classForLineItem" data-toggle="tooltip" title="@tooltip_Number" data-placement="top">
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
-                
-                
+
+
                 <td class="@classForLineItem" data-toggle="tooltip" title="@tooltip_Name" data-placement="top">
-                    <a class="@classForLineItem" href="@edit_order_path">@item.FullName()</a>
+                    <div class="row">
+                        <div class="col-auto p-2">
+                            <img src="@itemPicture" class="rounded" alt="Cinque Terre" height="50">
+
+                        </div>
+                        <div class="col p-2">
+
+                            <a class="@classForLineItem" href="@edit_order_path">@item.AnchorDescriptionInOrderListItem()</a>
+                            @if (@item.CurrentUsers_FreightOfferTrx_String(Model.CurrentUsers_DeliverymanId).IsNullOrWhiteSpace())
+                            {
+                            }
+                            else
+                            {
+                                if(item.FreightOfferTrxAcceptedId.IsNullOrWhiteSpace())
+                                { 
+                                <p class="bg-warning text-dark p-1">
+                                    @item.CurrentUsers_FreightOfferTrx_String(Model.CurrentUsers_DeliverymanId)
+                                </p>
+                                }
+                                else
+                                {
+                                    <p class="bg-danger text-white p-1">
+                                        @item.CurrentUsers_FreightOfferTrx_String(Model.CurrentUsers_DeliverymanId)
+                                    </p>
+                                }
+                            }
+                            @if (@item.FreightOfferTrxs.IsNullOrEmpty())
+                            {
+
+                            }
+                            else
+                            {
+                                if (item.BuySellDocStateEnum == BuySellDocStateENUM.ReadyForPickup)
+                                {
+                                    if (@item.FreightOfferTrxs.Where(x => x.MetaData.IsDeleted == false).ToList().IsNullOrEmpty())
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        int count = @item.FreightOfferTrxs.Where(x => x.MetaData.IsDeleted == false).Count();
+                                        <p class="bg-info text-warning p-2">
+                                            @{string noOfBids = count == 1 ? count.ToString("N0") + " Bid" : count.ToString("N0") + " Bids"; }
+                                            @noOfBids
+                                        </p>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
                 </td>
-                
-                
-                <td class="@classForLineItem @highlightIfPriceDifferentClass" data-toggle="tooltip" title="@tooltip_LiveSale" data-placement="top">
-                    @if (@Model.IsShippable(item))
-                    {
-                        if (item.TotalRemaining != 0)
+
+
+                @if (hideOrderCol)
+                { }
+                else
+                {
+                    <td class="@classForLineItem @highlightIfPriceDifferentClass" data-toggle="tooltip" title="@tooltip_LiveSale" data-placement="top">
+                        @if (item.TotalOrdered != 0)
                         {
                             <span>
-                                @string.Format("{0:N2}", item.TotalRemaining)
+                                @string.Format("{0:N2}", item.TotalOrdered)
                             </span>
                         }
-                    }
-                </td>
+                    </td>
+                }
 
-
-
-                <td class="@classForLineItem" data-toggle="tooltip" title="@tooltip_CompletedSale" data-placement="top">
-                    >
-                    @if (!@Model.IsShippable(item))
-                    {
-                        if (item.TotalRemaining != 0)
+                @if (hideOrderCompleteCol)
+                { }
+                else
+                {
+                    <td class="@classForLineItem" data-toggle="tooltip" title="@tooltip_CompletedSale" data-placement="top">
+                        @if (item.TotalOrdered != 0)
                         {
                             <span>
-                                @string.Format("{0:N2}", item.TotalRemaining)
+                                @string.Format("{0:N2}", item.TotalCompleted)
                             </span>
                         }
-                    }
-                </td>
-                
-                
-            
-                    
+                    </td>
+                }
+
+
                 <td class="@classForLineItem" data-toggle="tooltip" title="@tooltip_Comment" data-placement="top">
-                    >
                     @item.BuySellDocStateEnum.ToString().ToTitleSentance()
-
-
                 </td>
-                <td class="@classForLineItem">
-                    <button data-toggle="tooltip"
-                            title="@toolTip_Edit"
-                            data-placement="top"
-                            class="btn btn-sm btn-success"
-                            onclick="openPath('@edit_order_path')"
-                            @disableEditButton>
 
-                        <img width="20" src="~/ContentMine/Icons/Edit.png" />
-                    </button>
-                    <button data-toggle="tooltip"
-                            title="@toolTip_Delete"
-                            data-placement="top"
-                            class="btn btn-sm btn-danger"
-                            onclick="openPath('@delete_order_path')"
-                            @disableDeleteButton>
-                        <img width="20" src="~/ContentMine/Icons/GarbageCan.png" />
-                    </button>
+
+
+
+
+
+
+
+
+
+
+                @*Edit/View Button*@
+                <td class="@classForLineItem">
+
+                    @if (@show_Edit_Button)
+                    {
+                        <button data-toggle="tooltip"
+                                title="@toolTip_Edit"
+                                data-placement="top"
+                                class="btn btn-sm btn-success m-1"
+                                onclick="openPath('@edit_order_path')"
+                                @disableEditButton>
+
+                            <img width="20" src=@editBtnIcon />
+                        </button>
+                    }
+
+                    @if (show_Delete_Button)
+                    {
+                        @*Delete Button*@
+                        <button data-toggle="tooltip"
+                                title="@toolTip_Delete_Button"
+                                data-placement="top"
+                                class="btn btn-sm btn-danger m-1"
+                                onclick="openPath('@delete_order_path')"
+                                @disableDeleteButton>
+                            <img width="20" src=@deleteBtnIcon />
+
+                        </button>
+                    }
+
+
+
+                    @if (show_Reject_Button)
+                    {
+                        //Reject Button
+                        <button data-toggle="tooltip"
+                                title="@tooltip_Rejected"
+                                data-placement="top"
+                                class="btn btn-sm btn-info m-1"
+                                onclick="openPath('@path_Reject_Order')"
+                                @disableRejectButton>
+                            <img width="20" src=@rejectBtnIcon />
+                        </button>
+                    }
+
+                    @if (show_Cancel_Button)
+                    {
+                        //Reject Button
+                        <button data-toggle="tooltip"
+                                title="@tooltip_Canceled"
+                                data-placement="top"
+                                class="btn btn-sm btn-info m-1"
+                                onclick="openPath('@path_Cancel_Order')"
+                                @disableCancelButton>
+                            <img width="20" src=@cancelButtonIcon />
+                        </button>
+                    }
+
 
                 </td>
             </tr>
@@ -313,11 +465,22 @@
                 <th scope="row"></th>
                 <th></th>
                 <th></th>
-                <th><strong>@string.Format("{0:N2}", Model.GrandTotal_Live)</strong></th>
-                <th><strong>@string.Format("{0:N2}", Model.GrandTotal_Dead)</strong></th>
-                <td></td>
-                <th class=""></th>
+                @if (hideOrderCol)
+                { }
+                else
+                {
 
+                    <th><strong class="pull-right">@string.Format("{0:N2}", Model.GrandTotal_OpenOrders)</strong></th>
+                }
+                @if (hideOrderCompleteCol)
+                { }
+                else
+                {
+
+                    <th><strong class="pull-right">@string.Format("{0:N2}", Model.GrandTotal_ClosedOrders)</strong></th>
+                }
+                <th></th>
+                <th class=""></th>
             </tr>
         </tfoot>
     </table>

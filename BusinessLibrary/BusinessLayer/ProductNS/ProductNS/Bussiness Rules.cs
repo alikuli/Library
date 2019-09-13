@@ -19,7 +19,6 @@ namespace UowLibrary.ProductNS
 
         public override void BusinessRulesFor(ControllerCreateEditParameter parm)
         {
-            base.BusinessRulesFor(parm);
 
             Product p = parm.Entity as Product;
             //GetDataFromMenuCheckBoxes(p);
@@ -28,6 +27,7 @@ namespace UowLibrary.ProductNS
             addOwner(p);
             addRemoveApprover(p);
             //FixProductFeatures(iproduct);
+            base.BusinessRulesFor(parm);
         }
 
         private void addRemoveApprover(Product p)
@@ -68,6 +68,10 @@ namespace UowLibrary.ProductNS
                         //user is an owner
                         //Now this user will own this product.
                         p.OwnerId = owner.Id;
+
+                        if (owner.Products.IsNull())
+                            owner.Products = new List<Product>();
+                        owner.Products.Add(p);
                     }
 
                 }

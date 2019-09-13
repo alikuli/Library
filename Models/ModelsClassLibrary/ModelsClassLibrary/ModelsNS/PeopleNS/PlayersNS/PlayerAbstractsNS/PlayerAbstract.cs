@@ -35,6 +35,9 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
         public virtual AddressMain DefaultBillAddress { get; set; }
 
 
+        [NotMapped]
+        public SelectList SelectListAddressBillTo { get; set; }
+
 
         [Display(Name = "Ship To")]
         [MaxLength(128)]

@@ -1,0 +1,152 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_AgreedFrt = Model.BuySellDocViewState;
+
+    bool isShowAgreedFreightAndDate = viewState_AgreedFrt.HD_Show_AgreedFreightAndDate;
+    bool isEnableAgreedFreightAndDate_AgreedFrt = viewState_AgreedFrt.HD_Enable_AgreedFreightAndDate;
+    
+
+
+}
+
+
+        @if (isShowAgreedFreightAndDate)
+        {
+            <div class="card-body background-ltgrey">
+
+                @if (isEnableAgreedFreightAndDate_AgreedFrt)
+                {
+                    <div class="form-group">
+                        <label class="background-ltgrey p-2">
+                            <strong>
+                                <label>Delivery man</label>
+                            </strong>
+                        </label>
+                        @Html.DropDownListFor(x => x.DeliverymanId,
+                (@Model.SelectListDeliveryman as IEnumerable<SelectListItem>),
+                "--- Select Delivery man ---",
+                new { @class = "form-control", data_toggle = "tooltip", title = "This is deliveryman.", data_placement = "top" })
+                    </div>
+                    
+                    
+
+                    <div class="form-group">
+                        <label class="background-ltgrey p-2">
+                            <strong>
+                                <label>Agreed Freight</label>
+                            </strong>
+                        </label>
+                        @Html.EditorFor(x => x.Freight_Accepted_Formatted, new { htmlAttributes = new { @class = "form-control", @placeholder = "This is the agreed freight.", data_toggle = "tooltip", title = "This is the freight that has been agreed upon.", data_placement = "top" } })
+                    </div>
+
+                    
+                    
+                    <div class="form-group">
+                        <label class="background-ltgrey p-2">
+                            <strong>
+                                <label>Pick up date</label>
+                            </strong>
+                        </label>
+                        @Html.EditorFor(x => x.AgreedPickupDateByDeliveryman, new { htmlAttributes = new { @class = "form-control ", @placeholder = "This is the pick up date.", data_toggle = "tooltip", title = "This is the pickup date agreed upon", data_placement = "top", @type = "text" } })
+                    </div>
+                    
+                    
+                    
+
+                    <div class="form-group">
+                        <strong>
+                            @Html.LabelFor(model => model.VehicalTypeAcceptedId, htmlAttributes: new { @class = "background-ltgrey p-2" })
+                        </strong>
+                        @Html.DropDownListFor(x => x.VehicalTypeAcceptedId,
+                                    (@Model.SelectListVehicalTypeAccepted as IEnumerable<SelectListItem>),
+                                    "--- Select Vehical Type ---",
+                                    new { @class = "form-control", data_toggle = "tooltip", title = "This is the vehical type that will do the delivery.", data_placement = "top" })
+                    </div>
+
+
+
+                }
+
+
+                else
+                {
+                    @Html.HiddenFor(x => x.Freight_Accepted_Formatted)
+                    @Html.HiddenFor(x => x.AgreedPickupDateByDeliveryman)
+                    @Html.HiddenFor(x => x.DeliverymanId)
+                    @Html.HiddenFor(x => x.VehicalTypeAcceptedId)
+                    @Html.HiddenFor(x => x.InsuranceRequired)
+
+                    <div class="form-group">
+                        <label class="background-ltgrey p-2">
+                            <strong>
+                                <label>Delivery man</label>
+                            </strong>
+                        </label>
+                        @Html.DropDownListFor(x => x.DeliverymanId,
+                            (@Model.SelectListDeliveryman as IEnumerable<SelectListItem>),
+                            "--- Select Delivery man ---",
+                            new { @class = "form-control", data_toggle = "tooltip", title = "This is deliveryman.", data_placement = "top", disabled = "disabled" })
+                    </div>
+                    
+                    
+                    
+
+                    <div class="form-group">
+                        <label class="background-ltgrey p-2">
+                            <strong>
+                                <label>Agreed Freight</label>
+                            </strong>
+                        </label>
+                        @Html.EditorFor(x => x.Freight_Accepted_Formatted, new { htmlAttributes = new { @class = "form-control", @placeholder = "This is the agreed freight.", disabled = "disabled", data_toggle = "tooltip", title = "This is the freight that has been agreed upon.", data_placement = "top" } })
+                    </div>
+
+                    
+                    
+                    
+                    <div class="form-group">
+                        <label class="background-ltgrey p-2">
+                            <strong>
+                                <label>Pick up date</label>
+                            </strong>
+                        </label>
+                        @Html.EditorFor(x => x.AgreedPickupDateByDeliveryman, new { htmlAttributes = new { @class = "form-control ", @placeholder = "This is the pick up date.", disabled = "disabled", data_toggle = "tooltip", title = "This is the pickup date agreed upon", data_placement = "top", @type = "text" } })
+                    </div>
+                    
+                    
+                    
+
+                    <div class="form-group">
+                        <strong>
+                            @Html.LabelFor(model => model.VehicalTypeAcceptedId, htmlAttributes: new { @class = "background-ltgrey p-2" })
+                        </strong>
+
+                        @Html.DropDownListFor(x => x.VehicalTypeAcceptedId,
+                            (@Model.SelectListVehicalTypeAccepted as IEnumerable<SelectListItem>),
+                            "--- Select Vehical Type ---",
+                            new { @class = "form-control", data_toggle = "tooltip", title = "This is the vehical type that will do the delivery.", data_placement = "top", disabled = "disabled" })
+                    </div>
+                    
+                    
+
+                    <div class="form-group background-ltgrey">
+                        <strong>@Html.LabelFor(model => model.InsuranceRequired, htmlAttributes: new { @class = "background-ltgrey p-2" })</strong>
+                        @Html.EditorFor(x => x.InsuranceRequired, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @placeholder = "If your product is guaranteed, you may need to pay more, but the delivery man will have to pay you this amount if he does not deliver the goods intact." } })
+                    </div>
+
+
+                }
+            </div>
+
+        }
+        else
+        {
+            @Html.HiddenFor(x => x.Freight_Accepted_Formatted)
+            @Html.HiddenFor(x => x.AgreedPickupDateByDeliveryman)
+            @Html.HiddenFor(x => x.DeliverymanId)
+            @Html.HiddenFor(x => x.VehicalTypeAcceptedId)
+
+        }
+

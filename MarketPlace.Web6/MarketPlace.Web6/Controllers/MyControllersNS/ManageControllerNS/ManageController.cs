@@ -131,9 +131,10 @@ namespace MarketPlace.Web6.Controllers
             // Generate the token and send it
             try
             {
-
+                
                 //await ManageControllerUow.AddPhoneNumberAsync(model);
-                return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.FixedPhoneNumber });
+                //https://stackoverflow.com/questions/28659322/asynchronous-task-in-asp-net-mvc-5
+                return await Task.Run( () => RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.FixedPhoneNumber }));
 
             }
             catch (Exception e)

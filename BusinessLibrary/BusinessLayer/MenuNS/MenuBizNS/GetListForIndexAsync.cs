@@ -139,6 +139,19 @@ namespace UowLibrary.MenuNS
             var allMenuPathMainWithMenuPath1 = allMenuPathMain.Where(x => x.MenuPath1Id == mpm.MenuPath1Id).ToList();
             List<string> listOfMenuPath2Ids = UniqueListOfMenuPath2_IDs(allMenuPathMainWithMenuPath1);
 
+
+            //update the count of Menu1Path
+            MenuPath1 mp1 = MenuPathMainBiz.MenuPath1Biz.FindAll().FirstOrDefault(x => x.Id == mpm.MenuPath1Id);
+            if (!mp1.IsNull())
+            {
+                if (!UserId.IsNullOrWhiteSpace())
+                {
+
+                    mp1.NoOfVisits.AddOne(UserId, UserName);
+                    await MenuPathMainBiz.MenuPath1Biz.UpdateAndSaveAsync(mp1);
+                }
+            }
+
             if (listOfMenuPath2Ids.IsNullOrEmpty())
                 return null;
 
@@ -187,6 +200,20 @@ namespace UowLibrary.MenuNS
 
             List<MenuPathMain> uniqueListOfMainPaths = UniqueListOfMainPath_IDs(mpm.MenuPath1Id, mpm.MenuPath2Id);
 
+            //update the count of Menu2Path
+            MenuPath2 mp2 = MenuPathMainBiz.MenuPath2Biz.FindAll().FirstOrDefault(x => x.Id == mpm.MenuPath2Id);
+            if (!mp2.IsNull())
+            {
+                if (!UserId.IsNullOrWhiteSpace())
+                {
+                    //these can be wrng if they also describe other paths
+                    //this is how many times this particular picture has been clicked
+                    mp2.NoOfVisits.AddOne(UserId, UserName);
+                    await MenuPathMainBiz.MenuPath2Biz.UpdateAndSaveAsync(mp2);
+                }
+            }
+
+
             if (uniqueListOfMainPaths.IsNullOrEmpty())
                 return null;
 
@@ -225,7 +252,28 @@ namespace UowLibrary.MenuNS
             mpm.IsNullThrowException("Menu Path does note exist. Something is wrong.");
 
             //Get all the products listed by it
-            List<Product> listOfProducts = mpm.Products.Where(x=> x.MetaData.IsDeleted == false && x.IsUnApproved == false).ToList();
+            List<Product> listOfProducts = mpm.Products.Where(x => x.MetaData.IsDeleted == false && x.IsUnApproved == false).ToList();
+
+            //update the count of Menu3Path
+            MenuPath3 mp3 = MenuPathMainBiz.MenuPath3Biz.FindAll().FirstOrDefault(x => x.Id == mpm.MenuPath3Id);
+            if (!mp3.IsNull())
+            {
+                if (!UserId.IsNullOrWhiteSpace())
+                {
+
+                    mpm.NoOfVisits.AddOne(UserId, UserName);
+                    MenuPathMainBiz.Update(mpm);
+
+                    //these can be wrng if they also describe other paths
+                    //this is how many times this particular picture has been clicked
+
+                    mp3.NoOfVisits.AddOne(UserId, UserName);
+                    await MenuPathMainBiz.MenuPath3Biz.UpdateAndSaveAsync(mp3);
+                }
+            }
+
+
+
             if (listOfProducts.IsNullOrEmpty())
                 return null;
 
@@ -254,13 +302,25 @@ namespace UowLibrary.MenuNS
             //parent product cannot be null. It is some kind of programming error if it is.
             parentProduct.IsNullThrowException(string.Format("Product not found. Id ='{0}'", parms.Menu.ProductId));
 
+
+            //update the number of visits
+            if (!UserId.IsNullOrWhiteSpace())
+            {
+
+                parentProduct.NoOfVisits.AddOne(UserId, UserName);
+                await ProductBiz.UpdateAndSaveAsync(parentProduct);
+            }
             //get all its child products and display them
 
             if (parentProduct.ProductChildren.IsNullOrEmpty())
                 return null;
 
-            List<ProductChild> children = parentProduct.ProductChildren.Where(x => x.MetaData.IsDeleted == false).ToList();
-            children.IsNullOrEmptyThrowException("Something went wrong, No Product Children found.");
+            List<ProductChild> children = parentProduct.ProductChildren.Where(x => x.MetaData.IsDeleted == false && x.Hide == false).ToList();
+
+            if (children.IsNullOrEmpty())
+                return null;
+
+            //children.IsNullOrEmptyThrowException("Something went wrong, No Product Children found.");
             List<ICommonWithId> childrenAsIcommonLst = children.Cast<ICommonWithId>().ToList();
 
             return childrenAsIcommonLst;

@@ -68,7 +68,52 @@ namespace MarketPlace.Web6.Controllers
                 return _productApproverBiz;
             }
         }
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            Product product = parm.Entity as Product;
+            product.IsNullThrowException("Unable to unbox");
+
+            _productBiz.LoadMenuPathCheckedBoxes(parm);
+            _productBiz.FixProductFeatures(product);
+
+
+            //product.ParentSelectList = _productBiz.SelectList_ForParent(parm.Entity);
+            product.SelectListUomPurchase = _productBiz.SelectList_UomPurchaseQty();
+            product.SelectListUomVolume = _productBiz.SelectList_UomVolume();
+            product.SelectListUomShipWeight = _productBiz.SelectList_UomWeight();
+            product.SelectListUomWeight = _productBiz.SelectList_UomWeight();
+            product.SelectListUomLength = _productBiz.SelectList_UomLength();
+            product.SelectListUomDimensionsLength = _productBiz.SelectList_UomLength();
+            
+            if (!parm.ReturnUrl.IsNullOrWhiteSpace())
+            {
+                product.MenuManager.ReturnUrl = parm.ReturnUrl;
+            }
+
+            if (!UserId.IsNullOrWhiteSpace())
+            {
+                product.ShowApproveButton = ProductApproverBiz.IsApprover(UserId);
+
+            }
+
+            if (parm.Entity.MenuManager.IsCreate)
+            {
+                //this controls where the product Create returns.
+                //product.MenuManager.ReturnUrl = Url.Action("Index", "Products", new { menuEnum = MenuENUM.IndexMenuProduct });
+
+                //the return URl is correct when in the Menu
+
+                if (product.MenuManager.ReturnUrl.IsNullOrWhiteSpace())
+                    product.MenuManager.ReturnUrl = Url.Action("Index", "Menus", new { menuEnum = MenuENUM.IndexMenuPath1 });
+
+                ProductBiz.FixMenuPaths(parm);
+
+            }
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
+
+        }
+
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             Product product = parm.Entity as Product;
             product.IsNullThrowException("Unable to unbox");
@@ -109,9 +154,9 @@ namespace MarketPlace.Web6.Controllers
                 ProductBiz.FixMenuPaths(parm);
 
             }
-            return base.Event_CreateViewAndSetupSelectList(parm);
-
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
         }
+
 
 
         [Authorize]

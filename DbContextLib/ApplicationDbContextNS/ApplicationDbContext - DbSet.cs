@@ -9,6 +9,7 @@ using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FileDocsNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
+using ModelsClassLibrary.ModelsNS.DocumentsNS.FreightOffersTrxNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.PaymentsNS;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
 //using ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeatureNS;
@@ -66,6 +67,8 @@ namespace ApplicationDbContextNS
         //public virtual IDbSet<Feature> Features { get; set; }
 
         public virtual IDbSet<FileDoc> FileDocs { get; set; }
+        public virtual IDbSet<FreightOfferTrx> FreightOfferTrxs { get; set; }
+        
         public virtual IDbSet<OldFileData> OldFileDatas { get; set; }
         //public IDbSet<FileCategory> FileCategories { get; set; }
 

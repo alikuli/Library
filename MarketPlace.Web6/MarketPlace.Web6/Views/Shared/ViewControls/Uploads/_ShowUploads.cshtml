@@ -1,7 +1,10 @@
 ﻿@model InterfacesLibrary.SharedNS.ICommonWithId
 
 
-@{    var modelHasUploads = Model as InterfacesLibrary.SharedNS.FeaturesNS.IHasUploads;}
+@{    
+    var modelHasUploads = Model as InterfacesLibrary.SharedNS.FeaturesNS.IHasUploads;
+    //var modelHasUploads = Model as ModelsClassLibrary.ModelsNS.UploadedFileNS.UploadedFile;
+    }
 
 
 @if (modelHasUploads != null)

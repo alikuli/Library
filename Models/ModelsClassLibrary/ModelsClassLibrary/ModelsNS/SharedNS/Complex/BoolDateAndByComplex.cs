@@ -15,7 +15,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.Complex
         public override void Clear()
         {
             Selected = false;
-            Clear();
+            base.Clear();
         }
     }
 }

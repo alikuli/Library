@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using DalLibrary.Interfaces;
 using EnumLibrary.EnumNS;
+using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
@@ -9,10 +10,13 @@ using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using System.Collections.Generic;
 using UowLibrary.FeatureNS.MenuFeatureNS;
-using UowLibrary.MenuNS.MenuStateNS;
 using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS.OwnerNS;
-using UserModels;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Data.Entity;
+ 
+
 namespace UowLibrary.ProductChildNS
 {
     public partial class ProductChildBiz : BusinessLayer<ProductChild>
@@ -73,8 +77,8 @@ namespace UowLibrary.ProductChildNS
             string selectIdDud = "";
             string menuPathMainIdDud = "";
             string logoAddress = "";
+            string buttonDud = "";
             //string sortByDud = "";
-            string buySellStatementType = "";
             LikeUnlikeParameters likeUnlikeParameters = null;
 
             bool isMenuDud = false;
@@ -105,11 +109,12 @@ namespace UowLibrary.ProductChildNS
                 likeUnlikeParameters,
                 productIdDud,
                 returnUrl,
-                buySellDocumentTypeEnum, 
-                BuySellDocStateEnum);
+                buySellDocumentTypeEnum,
+                BuySellDocStateEnum,
+                buttonDud);
 
             InitializeMenuManagerForEntity(parms);
-            
+
             //IHasUploads hasUploadsEntity = parms.Entity as IHasUploads;
             //MenuManager menuManager = new MenuManager(parms.Entity.MenuManager.MenuPathMain, null, null, parms.Menu.MenuEnum, BreadCrumbManager, parms.LikeUnlikeCounter, UserId, parms.ReturnUrl, UserName);
             IMenuManager menuManager = parms.Entity.MenuManager;
@@ -119,7 +124,7 @@ namespace UowLibrary.ProductChildNS
 
 
             Person person = UserBiz.GetPersonFor(UserId);
-            if(!person.IsNull())
+            if (!person.IsNull())
             {
                 string userPersonId = person.Id;
                 string productChildPersonId = productChild.Owner.PersonId;
@@ -142,7 +147,7 @@ namespace UowLibrary.ProductChildNS
             if (pictureAddresses.IsNullOrEmpty())
             {
                 pictureAddresses = GetDefaultPicture();
-            }            
+            }
 
 
 
@@ -172,6 +177,40 @@ namespace UowLibrary.ProductChildNS
 
             return productChild;
         }
+
+
+
+        public bool IsShowHidden { get; set; }
+        public override IList<ICommonWithId> GetListForIndex()
+        {
+
+            UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
+            Owner owner = OwnerBiz.GetOwnerForUser(UserId);
+            owner.IsNullThrowException("Owner not found.");
+
+            IList<ProductChild> lst = FindAll().Where(x => x.OwnerId == owner.Id && x.Hide == IsShowHidden).ToList() as IList<ProductChild>;
+
+            return lst.Cast<ICommonWithId>().ToList();
+        }
+
+        //public override async Task<IList<ICommonWithId>> GetListForIndexAsync(ControllerIndexParams parameters)
+        //{
+        //    IList<ProductChild> lst = await FindAllAsync();
+        //    lst = lst.Where(x => x.Hide == IsDontShowHidden).ToList() as IList<ProductChild>;
+        //    return lst.Cast<ICommonWithId>().ToList();
+        //}
+        public override async Task<IList<ICommonWithId>> GetListForIndexAsync(ControllerIndexParams parameters)
+        {
+            //var lstEntities = await FindAllAsync();
+            UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
+            Owner owner = OwnerBiz.GetOwnerForUser(UserId);
+            owner.IsNullThrowException("Owner not found.");
+
+            var lstEntities = await FindAll().Where(x => x.OwnerId == owner.Id && x.Hide == IsShowHidden).ToListAsync();
+            IList<ICommonWithId> lstIcom = lstEntities.Cast<ICommonWithId>().ToList();
+            return lstIcom;
+        }
+
 
 
     }

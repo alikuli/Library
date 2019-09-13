@@ -20,8 +20,6 @@ namespace DalLibrary.DalNS
 
             //Initialize();
             IsCreating = true;
-
-            Fix(entity);
             ErrorCheck(entity);
             _db.Set<TEntity>().Add(entity);
             _db.Entry(entity).State = EntityState.Added;

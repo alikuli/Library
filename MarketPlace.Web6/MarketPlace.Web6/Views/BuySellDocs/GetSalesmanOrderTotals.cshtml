@@ -1,0 +1,238 @@
+﻿@model ModelsClassLibrary.ModelsNS.GlobalObjectNS.GlobalObject
+
+
+@{
+    ViewBag.Title = "ShowCashMenu";
+    const string SALE_ORDER_STATEMENT = "saleorderstatement";
+    ViewBag.StatementType = SALE_ORDER_STATEMENT;
+
+    bool zeroUnconfirmedRequests = Model.Salesman.RequestUnconfirmed.IsZero;
+    bool zeroConfirmedRequests = Model.Salesman.RequestConfirmed.IsZero;
+    bool zeroTotal = Model.Salesman.All.IsZero;
+    bool zeroInProccessOrders = Model.Salesman.InProccess.IsZero;
+    bool zeroConfirmedBySeller = Model.Salesman.BeingPreparedForShipmentBySeller.IsZero;
+    bool zeroConfirmedByCourier = Model.Salesman.CourierComingToPickUp.IsZero;
+    bool zeroReadyForShipment = Model.Salesman.ReadyForPickup.IsZero;
+    bool zeroEnroute = Model.Salesman.Enroute.IsZero;
+    bool zeroDelivered = Model.Salesman.Delivered.IsZero;
+    bool zeroRejected = Model.Salesman.Rejected.IsZero;
+    bool zeroProblem = Model.Salesman.Problem.IsZero;
+    //bool zeroCourierAccepted = Model.Salesman.CourierAccepted.IsZero;
+    
+    string userRequestsUnconfirmedMenuItem = Model.Salesman.RequestUnconfirmed.MenuName;
+    string userRequestsConfirmedMenuItem = Model.Salesman.RequestConfirmed.MenuName;
+    string userTotalSalesmanOrdersMenuItem = Model.Salesman.All.MenuName;
+    string userInProccessOrdersMenuItem = Model.Salesman.InProccess.MenuName;
+    string userConfirmedBySellersMenuItem = Model.Salesman.BeingPreparedForShipmentBySeller.MenuName;
+    string userConfirmedByCouriersMenuItem = Model.Salesman.CourierComingToPickUp.MenuName;
+    string userReadyForShipmentsMenuItem = Model.Salesman.ReadyForPickup.MenuName;
+    string userEnrouteMenuItem = Model.Salesman.Enroute.MenuName;
+    string userDeliveredsMenuItem = Model.Salesman.Delivered.MenuName;
+    string userRejectedsMenuItem = Model.Salesman.Rejected.MenuName;
+    //string userCourierAcceptedMenuItem = Model.Salesman.CourierAccepted.MenuName;
+    string userProblemsMenuItem = Model.Salesman.Problem.MenuName;
+
+
+    string userRequestsUnconfirmedToolTip = Model.Salesman.RequestUnconfirmed.MenuToolTip;
+    string userRequestsConfirmedToolTip = Model.Salesman.RequestConfirmed.MenuToolTip;
+    string userTotalSalesmanToolTip = Model.Salesman.All.MenuToolTip;
+    string userInProccessOrdersToolTip = Model.Salesman.InProccess.MenuToolTip;
+    string userConfirmedBySellersToolTip = Model.Salesman.BeingPreparedForShipmentBySeller.MenuToolTip;
+    string userConfirmedByCouriersToolTip = Model.Salesman.CourierComingToPickUp.MenuToolTip;
+    string userReadyForShipmentsToolTip = Model.Salesman.ReadyForPickup.MenuToolTip;
+    string userEnrouteToolTip = Model.Salesman.Enroute.MenuToolTip;
+    string userDeliveredsToolTip = Model.Salesman.Delivered.MenuToolTip;
+    string userRejectedsToolTip = Model.Salesman.Rejected.MenuToolTip;
+    string userProblemsToolTip = Model.Salesman.Problem.MenuToolTip;
+    //string userCourierAcceptedToolTip = Model.Salesman.CourierAccepted.MenuToolTip;
+
+    string userRequestsUnconfirmed_Path = Url.Action("List_Salesman_RequestUnconfirmed", "BuySellDocs");
+    string userRequestsConfirmed_Path = Url.Action("List_Salesman_RequestConfirmed", "BuySellDocs");
+    string userTotalSalesman_Path = Url.Action("List_Salesman_All", "BuySellDocs");
+    string userInProccessOrders_Path = Url.Action("List_Salesman_InProccess", "BuySellDocs");
+    string userConfirmedBySellers_Path = Url.Action("List_Salesman_ConfirmedBySeller", "BuySellDocs");
+    string userConfirmedByCouriers_Path = Url.Action("List_Salesman_ConfirmedByCourier", "BuySellDocs");
+    string userReadyForShipments_Path = Url.Action("List_Salesman_ReadyForShipment", "BuySellDocs");
+    string userEnroute_Path = Url.Action("List_Salesman_Enroute", "BuySellDocs");
+    string userDelivereds_Path = Url.Action("List_Salesman_Delivered", "BuySellDocs");
+    string userRejecteds_Path = Url.Action("List_Salesman_Rejected", "BuySellDocs");
+    string userProblems_Path = Url.Action("List_Salesman_Problem", "BuySellDocs");
+    string userCourierAccepted_Path = Url.Action("List_Salesman_CourierAccepted", "BuySellDocs");
+}
+
+<h2 class="text-white w-100 mt-1 p-2 bg-danger text-center">Salesman Orders</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="">
+        <hr />
+
+        @if (zeroTotal)
+        {
+            <p class="text-center">You have no orders.</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@userTotalSalesman_Path " data-toggle=" tooltip" title="@userTotalSalesmanToolTip" data-placement="left">@userTotalSalesmanOrdersMenuItem</a>
+            <br />
+
+        }
+
+    
+        @if (zeroInProccessOrders)
+        {
+            <p class="text-center">You have no orders in proccess</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@userInProccessOrders_Path" data-toggle=" tooltip" title="@userInProccessOrdersToolTip" data-placement="left">@userInProccessOrdersMenuItem</a>
+            <br />
+
+        }
+
+
+
+        <h5 class="text-dark background-ltgrey  w-100 m-1 text-center p-2">Detail</h5>
+
+        
+        
+        
+        @if (zeroRejected)
+        {
+            <p class="text-center">You have no orders that have been rejected</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@userRejecteds_Path " data-toggle=" tooltip" title="@userRejectedsToolTip" data-placement="left">@userRejectedsMenuItem</a>
+            <br />
+
+        }
+
+
+
+
+        @if (zeroProblem)
+        {
+            <p class="text-center">You have no orders that are a problem (lucky you)</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@userProblems_Path " data-toggle=" tooltip" title="@userProblemsToolTip" data-placement="left">@userProblemsMenuItem</a>
+            <br />
+
+        }
+
+
+
+        @if (zeroUnconfirmedRequests)
+        {
+            <p class="text-center">You have no unconfirmed requests</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@userRequestsUnconfirmed_Path " data-toggle=" tooltip" title="@userRequestsUnconfirmedToolTip" data-placement="left">@userRequestsUnconfirmedMenuItem</a>
+            <br />
+
+        }
+
+
+
+        @if (zeroConfirmedRequests)
+        {
+            <p class="text-center">You have no CONFIRMED requests</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@userRequestsConfirmed_Path " data-toggle=" tooltip" title="@userRequestsConfirmedToolTip" data-placement="left">@userRequestsConfirmedMenuItem</a>
+            <br />
+
+        }
+
+
+
+
+
+
+        @if (zeroConfirmedBySeller)
+        {
+            <p class="text-center">You have no orders being prepared for shipment by Seller </p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@userConfirmedBySellers_Path " data-toggle=" tooltip" title="@userConfirmedBySellersToolTip" data-placement="left">@userConfirmedBySellersMenuItem</a>
+            <br />
+
+        }
+
+
+
+        @if (zeroReadyForShipment)
+        {
+            <p class="text-center">You have no orders Ready for Shipment </p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@userReadyForShipments_Path " data-toggle=" tooltip" title="@userReadyForShipmentsToolTip" data-placement="left">@userReadyForShipmentsMenuItem</a>
+            <br />
+
+        }
+
+        @*@if (zeroCourierAccepted)
+        {
+            <p class="text-center">You have accepted any couriers for Shipment </p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@userCourierAccepted_Path " data-toggle=" tooltip" title="@userCourierAcceptedToolTip" data-placement="left">@userCourierAcceptedMenuItem</a>
+            <br />
+
+        }*@
+
+
+        @*@if (zeroConfirmedByCourier)
+        {
+            <p class="text-center">You have no orders confirmed by courier for shipment</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@userConfirmedByCouriers_Path " data-toggle=" tooltip" title="@userConfirmedByCouriersToolTip" data-placement="left">@userConfirmedByCouriersMenuItem</a>
+            <br />
+
+        }*@
+
+
+
+        @if (zeroEnroute)
+        {
+            <p class="text-center">You have no orders that have been picked up by the courier</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@userEnroute_Path " data-toggle=" tooltip" title="@userEnrouteToolTip" data-placement="left">@userEnrouteMenuItem</a>
+            <br />
+
+        }
+
+
+
+        @if (zeroDelivered)
+        {
+            <p class="text-center">You have no orders delivered</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@userDelivereds_Path " data-toggle=" tooltip" title="@userDeliveredsToolTip" data-placement="left">@userDeliveredsMenuItem</a>
+            <br />
+
+        }
+
+
+
+
+
+
+
+    </div>
+}

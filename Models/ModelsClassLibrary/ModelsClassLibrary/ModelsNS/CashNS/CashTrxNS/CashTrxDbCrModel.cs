@@ -1,6 +1,8 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using ModelsClassLibrary.CashTrxNS;
+using ModelsClassLibrary.ModelsNS.BuySellDocNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,21 +22,31 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
         {
 
         }
-        public CashTrxDbCrModel(List<CashTrxVM> receivedTrx, List<CashTrxVM> paidTrx, DateTime fromDate, DateTime toDate, string personName, CashTypeENUM cashTypeEnum, bool isAdmin)
+        public CashTrxDbCrModel(List<CashTrxVM2> cashTrx, DateTime fromDate, DateTime toDate, CashTypeENUM cashTypeEnum, CashStateENUM cashStateEnum, UserParameter userParameter, bool isShowAdminReports)
         {
-            //Person = person;
-            ReceivedTrx = receivedTrx;
-            PaidTrx = paidTrx;
+            CashTrx = cashTrx;
             FromDate = fromDate;
             ToDate = toDate;
             CashTypeEnum = cashTypeEnum;
-            PersonName = personName;
-            IsAdmin = isAdmin;
+            CashStateEnum = cashStateEnum;
+            UserParameter = userParameter;
+            IsShowAdminReports = isShowAdminReports;
 
         }
-        //public Person Person { get; set; }
+        public bool IsShowAdminReports { get; private set; }
 
-        public bool IsAdmin { get; private set; }
+        //public Person Person { get; set; }
+        UserParameter UserParameter { get; set; }
+        public CashStateENUM CashStateEnum { get; set; }
+
+        public bool IsAdmin
+        {
+            get
+            {
+                UserParameter.IsNullThrowException();
+                return UserParameter.IsAdmin;
+            }
+        }
         public string Heading
         {
             get
@@ -80,11 +92,21 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
         /// This is tne name of the person for whom we are conducting
         /// the trxs. So in Paid, it will be the from name, and in received it will be the To name
         /// </summary>
-        public string PersonName { get; set; }
+        public string PersonName
+        {
+            get
+            {
+                UserParameter.IsNullThrowException();
+                return UserParameter.PersonName;
+            }
+        }
 
-        public List<CashTrxVM> ReceivedTrx { get; set; }
+        //public List<CashTrxVM2> ReceivedTrx { get; set; }
 
-        public List<CashTrxVM> PaidTrx { get; set; }
+        //public List<CashTrxVM2> PaidTrx { get; set; }
+
+        public List<CashTrxVM2> CashTrx { get; set; }
+        
 
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
@@ -95,13 +117,15 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
             get
             {
                 decimal _paidBf = 0;
-                if (!PaidTrx.IsNullOrEmpty())
+                if (!CashTrx.IsNullOrEmpty())
                 {
-                    foreach (var trx in PaidTrx)
+                    DateParameter dateparam = new DateParameter();
+
+                    foreach (var trx in CashTrx)
                     {
                         DateTime date = trx.Date;
-                        if (date < FromDate)
-                            _paidBf += trx.PaymentAmount;
+                        if (dateparam.Date1BeforeDate2(trx.Date, FromDate))
+                            _paidBf += trx.PaymentAmount_ForTotal;
                     }
                 }
                 return _paidBf;
@@ -112,14 +136,15 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
         {
             get
             {
+                DateParameter dateparam = new DateParameter();
                 decimal _receivedBF = 0;
-                if (!ReceivedTrx.IsNullOrEmpty())
+                if (!CashTrx.IsNullOrEmpty())
                 {
-                    foreach (var trx in ReceivedTrx)
+                    foreach (var trx in CashTrx)
                     {
-                        DateTime date = trx.Date;
-                        if (date < FromDate)
-                            _receivedBF += trx.ReceiptAmount;
+                        if (dateparam.Date1BeforeDate2(trx.Date, FromDate))
+                            if (trx.CashStateEnum == CashStateENUM.Available)
+                                _receivedBF += trx.ReceiptAmount_ForTotal;
                     }
                 }
                 return _receivedBF;
@@ -139,47 +164,167 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
             }
         }
 
-        /// <summary>
-        /// This gets the transactions within date. It also fixes the description. If from/to is null, it adds bank in there.
-        /// </summary>
-        public List<CashTrxVM> CashTrxs
+
+
+        public bool IsNoMoreData
         {
             get
             {
-                List<CashTrxVM> lst = new List<CashTrxVM>();
-                if (!PaidTrx.IsNullOrEmpty())
+                if (CashTrxs_DateDelimited.IsNullOrEmpty())
                 {
-                    foreach (var trx in PaidTrx)
-                    {
-                        lst.Add(trx);
-                    }
+                    FromDate = DateTime.MinValue;
                 }
-                if (!ReceivedTrx.IsNullOrEmpty())
+
+                DateParameter dateParm = new DateParameter();
+
+                if (!CashTrx.IsNull())
                 {
-                    foreach (var trx in ReceivedTrx)
+                    foreach (var item in CashTrx)
                     {
-                        lst.Add(trx);
+                        if (dateParm.IsDateWithinBeginAndEndDatesInclusive(item.Date, DateTime.MinValue, ToDate))
+                            return false;
                     }
                 }
 
-                if (lst.IsNullOrEmpty())
-                    return null;
+                //if (!ReceivedTrx.IsNull())
+                //{
+                //    foreach (var item in ReceivedTrx)
+                //    {
+                //        if (dateParm.IsDateWithinBeginAndEndDatesInclusive(item.Date, DateTime.MinValue, ToDate))
+                //            return false;
+                //    }
+                //}
 
-                return lst.OrderBy(x => x.Date).ToList();
+
+
+                return true;
             }
+
         }
 
+        /// <summary>
+        /// This gets the transactions within date. It also fixes the description. If from/to is null, it adds bank in there.
+        /// </summary>
+        public List<CashTrxVM2> CashTrxs_DateDelimited
+        {
+            get
+            {
 
+                if (CashTrx.IsNullOrEmpty())
+                    return null;
+
+                List<CashTrxVM2> lst = new List<CashTrxVM2>();
+                DateParameter dateParam = new DateParameter();
+                if (!CashTrx.IsNullOrEmpty())
+                {
+                    foreach (var trx in CashTrx)
+                    {
+                        if (dateParam.IsDateWithinBeginAndEndDatesInclusive(trx.Date, FromDate, ToDate))
+                            lst.Add(trx);
+                    }
+                }
+
+                return lst.OrderBy(x => x.Date).ToList();
+
+
+                //DateParameter dateParam = new DateParameter();
+
+                //if (!PaidTrx.IsNullOrEmpty())
+                //{
+                //    foreach (var trx in PaidTrx)
+                //    {
+                //        if(dateParam.IsDateWithinBeginAndEndDatesInclusive(trx.Date, FromDate, ToDate))
+                //            lst.Add(trx);
+                //    }
+                //}
+                //if (!ReceivedTrx.IsNullOrEmpty())
+                //{
+                //    foreach (var trx in ReceivedTrx)
+                //    {
+                //        if (dateParam.IsDateWithinBeginAndEndDatesInclusive(trx.Date, FromDate, ToDate))
+                //            lst.Add(trx);
+                //    }
+                //}
+
+            }
+        }
+        //public List<CashTrxVM2> PaidTrx_DateDelimited
+        //{
+        //    get
+        //    {
+        //        List<CashTrxVM2> lst = new List<CashTrxVM2>();
+        //        lst = Get_PaidTrx_DateDelimited(lst);
+
+        //        return lst;
+        //    }
+        //}
+        //public List<CashTrxVM2> ReceivedTrx_DateDelimited
+        //{
+        //    get
+        //    {
+        //        List<CashTrxVM2> lst = new List<CashTrxVM2>();
+        //        lst = Get_ReceivedTrx_DateDelimited(lst);
+
+
+        //        return lst;
+        //    }
+        //}
+
+
+        public List<CashTrxVM2> Get_Trx_DateDelimited(List<CashTrxVM2> lst)
+        {
+            DateParameter dateParam = new DateParameter();
+
+            if (!CashTrx.IsNullOrEmpty())
+            {
+                foreach (var trx in CashTrx)
+                {
+                    if (dateParam.IsDateWithinBeginAndEndDatesInclusive(trx.Date, FromDate, ToDate))
+                        lst.Add(trx);
+                }
+            }
+            return lst;
+        }
+
+        //public List<CashTrxVM2> Get_PaidTrx_DateDelimited(List<CashTrxVM2> lst)
+        //{
+        //    DateParameter dateParam = new DateParameter();
+
+        //    if (!CashTrx.IsNullOrEmpty())
+        //    {
+        //        foreach (var trx in CashTrx)
+        //        {
+        //            if (dateParam.IsDateWithinBeginAndEndDatesInclusive(trx.Date, FromDate, ToDate))
+        //                lst.Add(trx);
+        //        }
+        //    }
+        //    return lst;
+        //}
+
+        //public List<CashTrxVM2> Get_ReceivedTrx_DateDelimited(List<CashTrxVM2> lst)
+        //{
+        //    DateParameter dateParam = new DateParameter();
+
+        //    if (!ReceivedTrx.IsNullOrEmpty())
+        //    {
+        //        foreach (var trx in ReceivedTrx)
+        //        {
+        //            if (dateParam.IsDateWithinBeginAndEndDatesInclusive(trx.Date, FromDate, ToDate))
+        //                lst.Add(trx);
+        //        }
+        //    }
+        //    return lst;
+        //}
         public decimal FinalBalance
         {
             get
             {
                 decimal finalBalance = BroughtForward;
-                if (CashTrxs.IsNullOrEmpty())
+                if (CashTrxs_DateDelimited.IsNullOrEmpty())
                     return finalBalance;
-                foreach (CashTrxVM trx in CashTrxs)
+                foreach (CashTrxVM2 trx in CashTrxs_DateDelimited)
                 {
-                    finalBalance += trx.ReceiptAmount - trx.PaymentAmount;
+                    finalBalance += trx.ReceiptAmount_ForTotal - trx.PaymentAmount_ForTotal;
                 }
                 return finalBalance;
             }
@@ -190,14 +335,17 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
             get
             {
                 decimal _ttlPaid = 0;
-                if (!PaidTrx.IsNullOrEmpty())
+                if (!CashTrxs_DateDelimited.IsNullOrEmpty())
                 {
-                    foreach (var trx in PaidTrx)
+                    foreach (var trx in CashTrxs_DateDelimited)
                     {
-                        _ttlPaid += trx.PaymentAmount;
+                        //in paid you have to let allocated go otherwise
+                        //it becomes part of the balance if you hide it.
+                        //if (trx.CashStateEnum != CashStateENUM.Allocated)
+                        _ttlPaid += trx.PaymentAmount_ForTotal;
                     }
                 }
-                return _ttlPaid;
+                return _ttlPaid + PaidBF;
             }
         }
 
@@ -206,14 +354,15 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
             get
             {
                 decimal _totalReceived = 0;
-                if (!ReceivedTrx.IsNullOrEmpty())
+                if (!CashTrxs_DateDelimited.IsNullOrEmpty())
                 {
-                    foreach (var trx in ReceivedTrx)
+                    foreach (var trx in CashTrxs_DateDelimited)
                     {
-                        _totalReceived += trx.ReceiptAmount;
+                        if (trx.CashStateEnum != CashStateENUM.Allocated)
+                            _totalReceived += trx.ReceiptAmount_ForTotal;
                     }
                 }
-                return _totalReceived;
+                return _totalReceived + RecievedBF;
 
             }
         }

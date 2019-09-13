@@ -1,6 +1,7 @@
 ﻿using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.ProductNS.ProductNS.ProductAbstractNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.SharedNS;
 using System.Collections.Generic;
 namespace ModelsClassLibrary.ModelsNS.ProductNS.ProductNS

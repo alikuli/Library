@@ -28,11 +28,11 @@ namespace EnumLibrary.EnumNS
         Invoice,
         Credit,
         Debit,
-        PurchaseOrder,
+        PurchaseOrder,//
         Receiving,
         Offer,
         Request,
-        Delivered,
+        Delivered,//
         Received,
         OnDelivery
 

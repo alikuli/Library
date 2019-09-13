@@ -60,5 +60,7 @@ namespace ModelsClassLibrary.MenuNS
         {
             return CreateNameFromEnum(MenuPath1Enum);
         }
+
+
     }
 }

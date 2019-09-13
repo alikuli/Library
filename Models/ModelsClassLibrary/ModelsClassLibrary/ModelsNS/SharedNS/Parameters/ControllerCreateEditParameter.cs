@@ -3,6 +3,8 @@ using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
 
@@ -43,7 +45,9 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             MenuENUM menuEnum,
             string userName,
             string userId,
-            string returnUrl)
+            string returnUrl,
+            GlobalObject globalObject,
+            string buttonValue)
             : this()
         {
             Entity = entity;
@@ -59,9 +63,12 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             UserName = userName;
             UserId = userId;
             MenuParameters = new MenuParameters(menuEnum, Entity.Id);
-
+            GlobalObject = globalObject;
+            ButtonValue = buttonValue;
         }
 
+        public string ButtonValue { get; set; }
+        public GlobalObject GlobalObject { get; set; }
         public ICommonWithId Entity { get; set; }
         public string UserName { get; set; }
         public string UserId { get; set; }
@@ -134,6 +141,33 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             }
         }
         #endregion
+
+
+        public BuySellDocStateModifierENUM BuySellDocStateModifierEnum { get { return get_BuySellDocStateModifierEnum_from_Button(); } }
+        private BuySellDocStateModifierENUM get_BuySellDocStateModifierEnum_from_Button()
+        {
+            if (ButtonValue.IsNullOrWhiteSpace())
+            {
+                return BuySellDocStateModifierENUM.Unknown;
+            }
+            else
+            {
+                BuySellDocStateModifierENUM buySellDocStateModifierEnum;
+                bool success = Enum.TryParse(ButtonValue, out buySellDocStateModifierEnum);
+
+                if (success)
+                {
+                    return buySellDocStateModifierEnum;
+                }
+                else
+                {
+                    throw new Exception("Unable to get Document Modifier");
+                }
+
+
+            }
+        }
+
 
     }
 }

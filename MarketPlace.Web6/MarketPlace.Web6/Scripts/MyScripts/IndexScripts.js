@@ -94,10 +94,6 @@ function Like(thisButton)
     });
 }
 
-
-
-
-
 function EditlikeUnlikeModal(sender,isLike) {
 
     var modalBody = document.getElementById("myModalbodyNewid");
@@ -129,7 +125,6 @@ function EditlikeUnlikeModal(sender,isLike) {
 
 
 }//end function
-
 
 function EditlikeUnlikeModalHTML(modalBody) {
     
@@ -304,18 +299,6 @@ function makeModalToShowUsersHtml(modalBody, theImage, counter, userComment, use
 }
 
 
-
-
-//------------------------------------------------------
-
-function Bid() {
-    alert("Bidding Not implemented");
-}
-
-function ShoppingCart() {
-    alert("Shopping Cart Not implemented");
-
-}
 //------------------------------------------------------
 
 //Looks at the id and decides if it is a like button or not.

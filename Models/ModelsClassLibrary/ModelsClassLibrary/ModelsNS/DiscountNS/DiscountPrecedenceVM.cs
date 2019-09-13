@@ -28,7 +28,7 @@ namespace ModelsClassLibrary.ModelsNS.DiscountNS
         {
             dp.DiscountRuleEnum = this.DiscountRuleEnum;
             dp.DiscountTypeEnum = this.DiscountTypeEnum;
-            dp.MetaData.Created.DateStart = this.MetaData.Created.DateStart;
+            dp.MetaData.Created.Date = this.MetaData.Created.Date;
             dp.Rank = this.Rank;
             dp.UserId = this.UserId;
 

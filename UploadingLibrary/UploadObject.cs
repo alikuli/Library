@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Web;
+using System.Web.Helpers;
 
 namespace AliKuli.UtilitiesNS
 {
@@ -109,6 +110,7 @@ namespace AliKuli.UtilitiesNS
         public void SaveFilesInHttpPostedFileBase()
         {
             int noOfFiles = NumberOfFilesInHttpPostedFileBase;
+            //WebImage
             if (noOfFiles > 0)
             {
                 for (int i = 0; i < noOfFiles; i++)

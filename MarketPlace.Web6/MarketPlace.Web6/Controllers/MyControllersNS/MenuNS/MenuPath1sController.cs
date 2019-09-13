@@ -172,12 +172,18 @@ namespace MarketPlace.Web6.Controllers
         }
 
 
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             parm.Entity.MenuManager.ReturnUrl = Url.Action("Index", "MenuPath1s", new { menuEnum = MenuENUM.IndexMenuPath1 });
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
         }
 
+
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            parm.Entity.MenuManager.ReturnUrl = Url.Action("Index", "MenuPath1s", new { menuEnum = MenuENUM.IndexMenuPath1 });
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
+        }
         public override void Event_BeforeSaveInCreateAndEdit(ControllerCreateEditParameter parm)
         {
             base.Event_BeforeSaveInCreateAndEdit(parm);

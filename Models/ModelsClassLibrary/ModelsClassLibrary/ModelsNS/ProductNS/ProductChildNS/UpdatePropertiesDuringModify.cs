@@ -19,14 +19,17 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
             }
 
             //UserId = pc.UserId;
+            ExpiryDate = pc.ExpiryDate;
+            IdentificationNumber = pc.IdentificationNumber;
+            OwnerId = pc.OwnerId;
             ProductId = pc.ProductId;
             Sell = pc.Sell;
             Buy = pc.Buy;
-            ExpiryDate = pc.ExpiryDate;
-            OwnerId = pc.OwnerId;
             SerialNumber = pc.SerialNumber;
-            IdentificationNumber = pc.IdentificationNumber;
 
+            ShipFromAddressComplex = pc.ShipFromAddressComplex;
+            ShipFromAddressId = pc.ShipFromAddressId;
+            Hide = pc.Hide;
         }
 
     }

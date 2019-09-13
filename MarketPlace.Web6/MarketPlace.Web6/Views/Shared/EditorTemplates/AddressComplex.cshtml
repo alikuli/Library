@@ -1,17 +1,19 @@
 ﻿@model ModelsClassLibrary.ModelsNS.AddressNS.AddressComplex
 
+@*<p>AddressComplex</p>*@
+
 <div class="form-group">
 
-    @Html.LabelFor(model => model.HouseNo, htmlAttributes: new { @class = "" })
+    @*@Html.LabelFor(model => model.HouseNo, htmlAttributes: new { @class = "" })*@
 
-    @Html.EditorFor(model => model.HouseNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter house #" } })
+    @Html.EditorFor(model => model.HouseNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter house/office/building #" } })
     @Html.ValidationMessageFor(model => model.HouseNo, "", new { @class = "text-danger" })
 </div>
 
 
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Road, htmlAttributes: new { @class = "" })
+    @*@Html.LabelFor(model => model.Road, htmlAttributes: new { @class = "" })*@
     @Html.EditorFor(model => model.Road, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter road" } })
     @Html.ValidationMessageFor(model => model.Road, "", new { @class = "text-danger" })
 </div>
@@ -20,16 +22,16 @@
 <div class="form-group">
 
 
-    @Html.LabelFor(model => model.Address2, htmlAttributes: new { @class = "" })
+    @*@Html.LabelFor(model => model.Address2, htmlAttributes: new { @class = "" })*@
 
-    @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter additional address info" } })
+    @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter additional road address" } })
     @Html.ValidationMessageFor(model => model.Address2, "", new { @class = "text-danger" })
 </div>
 
 <div class="form-group">
 
 
-    @Html.LabelFor(model => model.TownName, htmlAttributes: new { @class = "" })
+    @*@Html.LabelFor(model => model.TownName, htmlAttributes: new { @class = "" })*@
 
     @Html.EditorFor(model => model.TownName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter town name" } })
     @Html.ValidationMessageFor(model => model.TownName, "", new { @class = "text-danger" })
@@ -39,7 +41,7 @@
 <div class="form-group">
 
 
-    @Html.LabelFor(model => model.CityName, htmlAttributes: new { @class = "" })
+    @*@Html.LabelFor(model => model.CityName, htmlAttributes: new { @class = "" })*@
 
     @Html.EditorFor(model => model.CityName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter city name" } })
     @Html.ValidationMessageFor(model => model.CityName, "", new { @class = "text-danger" })
@@ -49,20 +51,63 @@
 <div class="form-group">
 
 
-    @Html.LabelFor(model => model.StateName, htmlAttributes: new { @class = "" })
+    @*@Html.LabelFor(model => model.StateName, htmlAttributes: new { @class = "" })*@
 
     @Html.EditorFor(model => model.StateName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter state/province name" } })
     @Html.ValidationMessageFor(model => model.StateName, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group">
+
+
+    @*@Html.LabelFor(model => model.StateName, htmlAttributes: new { @class = "" })*@
+
+    @Html.EditorFor(model => model.Zip, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter state/Zip code" } })
+    @Html.ValidationMessageFor(model => model.Zip, "", new { @class = "text-danger" })
 </div>
 
 
 <div class="form-group">
 
 
-    @Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "" })
+    @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "" })*@
 
     @Html.EditorFor(model => model.CountryName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter country name" } })
     @Html.ValidationMessageFor(model => model.CountryName, "", new { @class = "text-danger" })
+</div>
+
+
+<div class="form-group">
+    @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "" })*@
+
+    @Html.EditorFor(model => model.Attention, new { htmlAttributes = new { @class = "form-control", @placeholder = "Attention to" } })
+    @Html.ValidationMessageFor(model => model.Attention, "", new { @class = "text-danger" })
+</div>
+
+
+<div class="form-group">
+    @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "" })*@
+
+    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter a phone number" } })
+    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+</div>
+
+
+
+
+<div class="form-group">
+    @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "" })*@
+
+    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "The email" } })
+    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+</div>
+
+
+<div class="form-group">
+    @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "" })*@
+
+    @Html.EditorFor(model => model.WebAddress, new { htmlAttributes = new { @class = "form-control", @placeholder = "The web address" } })
+    @Html.ValidationMessageFor(model => model.WebAddress, "", new { @class = "text-danger" })
 </div>
 
 

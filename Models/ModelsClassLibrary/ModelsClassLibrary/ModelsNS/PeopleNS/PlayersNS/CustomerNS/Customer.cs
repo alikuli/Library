@@ -29,8 +29,14 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
 
         public virtual ICategory CustomerCategory { get; set; }
 
-        
 
+
+        //[Display(Name="Salesman")]
+        //public string SalesmanId { get; set; }
+        //public virtual Salesman Salesman { get; set; }
+
+        //[NotMapped]
+        //public SelectList SelectListSalesman { get; set; }
 
         //[Display(Name = "Bill To")]
         //public virtual string DefaultBillAddressId { get;set; }
@@ -50,8 +56,8 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
         public SelectList SelectListCustomerCategory { get; set; }
 
 
-        [NotMapped]
-        public SelectList SelectListAddressBillTo { get; set; }
+        //[NotMapped]
+        //public SelectList SelectListAddressBillTo { get; set; }
 
 
         [NotMapped]

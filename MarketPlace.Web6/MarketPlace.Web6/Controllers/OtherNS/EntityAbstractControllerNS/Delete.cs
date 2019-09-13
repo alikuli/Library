@@ -33,6 +33,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     return HttpNotFound();
                 }
 
+                string buttonDud = "";
                 //this is where the return URL is added.
                 //this is used when you want to return somewhere else other than the Index
                 //It will be passed on to a hidden field is Delete and then passed on
@@ -56,6 +57,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     productId,
                     returnUrl,
                     isMenu,
+                    buttonDud,
                     menuEnum,
                     sortBy,
                     print,
@@ -63,7 +65,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                 Biz.InitializeMenuManagerForEntity(parms);
                 parms.Entity.IsDeleting = true;
-                return Event_CreateViewAndSetupSelectList(parms);
+                return Event_Create_ViewAndSetupSelectList_GET(parms);
                 //return View(parms.Entity);
 
             }

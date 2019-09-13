@@ -16,6 +16,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
     {
         public MenuManager()
         {
+            PictureAddresses = new List<string>();
         }
         public MenuManager(MenuPathMain menuPathMain, Product product, ProductChild productChild, MenuENUM menuEnum, BreadCrumbManager breadCrumbManager, LikeUnlikeParameters likesCounter, string userId, string returnUrl, string userName /*, string userPersonId, string productChildPersonId */)
             : this()
@@ -26,7 +27,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
             MenuEnum = menuEnum;
             BreadCrumbManager = breadCrumbManager;
             UserId = userId;
-            UserMoneyAccount = new UserMoneyAccount();
+            ////UserMoneyAccount = new UserMoneyAccount();
             ReturnUrl = returnUrl;
             UserName = userName;
             IndexMenuVariables = new IndexMenuVariables(UserId);
@@ -149,9 +150,9 @@ namespace UowLibrary.MenuNS.MenuStateNS
         public SortOrderENUM SortOrderEnum { get; set; }
         public LikeUnlikeParameters LikeUnlikesCounter { get; set; }
 
-        public IndexMenuVariables IndexMenuVariables{get;set;}
+        public IndexMenuVariables IndexMenuVariables { get; set; }
         public string WebClicksCount { get; set; }
-        public UserMoneyAccount UserMoneyAccount { get; set; }
+        //public UserMoneyAccount UserMoneyAccount { get; set; }
 
         //This is used in the view of Product and ProductChild
         //It causes the features to display as editable during create

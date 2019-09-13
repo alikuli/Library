@@ -1,0 +1,36 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    int count = 0;
+}
+
+<style>
+    div {
+        word-wrap: break-word;
+    }
+</style>
+
+
+
+<a class ="btn btn-info m-1" href="#historyId" data-toggle="collapse">History</a>
+@if (!Model.BuySellDocHistorys_Fixed.IsNullOrEmpty())
+{
+
+    <div id="historyId" class="collapse  border-bottom-2">
+
+        @foreach (ModelsClassLibrary.ModelsNS.BuySellDocNS.BuySellDocHistory item in Model.BuySellDocHistorys_Fixed)
+        {
+            count++;
+            <div class="row border border-white border-bottom-2 background-ltblue rounded">
+                <div class="col overflow-wrap">
+                    <strong>@count)</strong> @item.Name
+                </div>
+            </div>
+
+        }
+
+    </div>
+
+}

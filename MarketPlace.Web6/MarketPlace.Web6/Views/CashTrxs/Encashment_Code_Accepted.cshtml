@@ -1,0 +1,112 @@
+﻿@model ModelsClassLibrary.ModelsNS.CashNS.CashEncashmentTrxNS.CashEncashmentTrx
+
+@{
+    ViewBag.Title = "Encashment Accepted";
+    string classForNoOfTries = Model.NoOfTriesToEnterSecretNumber > 1 ? "col-md-10 font-weight-bold  text-white  bg-danger" : "col-md-10";
+    string classForCurrentBalance_Refundable = Model.CurrentBalance_Refundable < 0 ? "col-md-10 font-weight-bold  text-white  bg-danger" : "col-md-10";
+    classForCurrentBalance_Refundable = Model.CurrentBalance_Refundable == 0 ? "col-md-10 font-weight-bold  text-black  bg-warning" : "col-md-10";
+}
+
+<h2>Cash Encashment Accepted</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+
+        @**********************************************************
+        This is where the error messages are displayed
+        **********************************************************@
+        @Html.Partial("_messages")
+
+        <h2 class="text-danger">Your Encashment has been Accepted</h2>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 font-weight-bold">
+                Document Number
+            </label>
+            <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Name)
+            </div>
+        </div>
+
+        <div class="form-group ">
+            @Html.LabelFor(model => model.PersonRequestingPayment, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @Model.PersonRequestingPayment.FullName()
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AmountString, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.AmountString, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AmountString, "", new { @class = "text-danger" })*@
+                @Model.AmountString
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CurrentBalance_Refundable, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="@classForCurrentBalance_Refundable">
+                @*@Html.EditorFor(model => model.CurrentBalance_Refundable, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CurrentBalance_Refundable, "", new { @class = "text-danger" })*@
+                @Model.CurrentBalance_Refundable_String
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PaymentDetail, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.PaymentDetail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PaymentDetail, "", new { @class = "text-danger" })*@
+                @Model.PaymentDetail
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SecretNumber, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.SecretNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SecretNumber, "", new { @class = "text-danger" })*@
+                @Model.SecretNumber
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReceiversIdentificationCardNumber, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.ReceiversIdentificationCardNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ReceiversIdentificationCardNumber, "", new { @class = "text-danger" })*@
+                @Model.ReceiversIdentificationCardNumber
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NoOfTriesToEnterSecretNumber, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="@classForNoOfTries">
+                @*@Html.EditorFor(model => model.NoOfTriesToEnterSecretNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NoOfTriesToEnterSecretNumber, "", new { @class = "text-danger" })*@
+                @Model.NoOfTriesToEnterSecretNumber
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PaymentMethodId, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.PaymentMethodId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PaymentMethodId, "", new { @class = "text-danger" })*@
+                @Model.PaymentMethod.FullName()
+            </div>
+        </div>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

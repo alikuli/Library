@@ -1,0 +1,28 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_DocState = Model.BuySellDocViewState;
+
+    bool show_Document_State = viewState_DocState.HD_Show_DocumentState;
+
+
+}
+
+
+
+
+@if (show_Document_State)
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.BuySellDocStateEnum, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.BuySellDocStateEnum,
+                           (@Model.SelectListBuySellDocStateEnum as IEnumerable<SelectListItem>),
+                  "--- Select Document Type ---",
+                  new { @class = "form-control", disabled = "disabled" })
+    </div>
+
+}
+
+
+
+

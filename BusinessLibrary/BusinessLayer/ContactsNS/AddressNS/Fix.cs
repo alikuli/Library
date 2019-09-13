@@ -27,14 +27,14 @@ namespace UowLibrary.AddressNS
 
         private void AttachCountry(AddressMain addy)
         {
-            addy.CountryId.IsNullOrWhiteSpaceThrowException("Country ID is null. Programming Error");
+            //addy.CountryId.IsNullOrWhiteSpaceThrowException("Country ID is null. Programming Error");
 
-            if (addy.Country.IsNull())
-            {
-                Country country = CountryBiz.Find(addy.CountryId);
-                country.IsNullThrowException("Country not found.");
-                addy.Country = country;
-            }
+            //if (addy.Country.IsNull())
+            //{
+            //    Country country = CountryBiz.Find(addy.CountryId);
+            //    country.IsNullThrowException("Country not found.");
+            //    addy.Country = country;
+            //}
         }
 
         //private void attachPerson (AddressMain address)

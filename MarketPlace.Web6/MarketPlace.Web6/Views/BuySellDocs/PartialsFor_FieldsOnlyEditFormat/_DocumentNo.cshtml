@@ -1,0 +1,26 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_DocNo = Model.BuySellDocViewState;
+
+    bool show_DocumentNumber = viewState_DocNo.HD_Show_DocumentNo;
+
+
+}
+
+
+
+
+@if (show_DocumentNumber)
+{
+    @Html.HiddenFor(x => x.DocumentNumber)
+    <div class="form-group">
+        <strong class="background-ltgrey p-1">
+            @Html.LabelFor(model => model.DocumentNumber, htmlAttributes: new { @class = "" })
+            @Html.DisplayFor(model => model.DocumentNumber)
+        </strong>
+    </div>
+
+}
+
+

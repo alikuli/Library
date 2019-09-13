@@ -1,0 +1,65 @@
+﻿@model ModelsClassLibrary.ModelsNS.CashNS.CashEncashmentTrxNS.CashEncashmentTrx
+
+@{
+    string path = @Url.Action("GetCommentFromPaymentMethod", "PaymentMethods");
+    string commentTitle = "Add comment";
+}
+<h1 class="text-center">Encashment Request</h1>
+
+<p>
+    How much do you want to encash. Your available amount is <strong>@Model.CurrentBalance_Refundable.ToString().ToRuppeeFormat()</strong>
+</p>
+
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+
+        @Html.HiddenFor(x => x.CurrentBalance_Refundable)
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PaymentMethodId, htmlAttributes: new { @class = "" })
+            @Html.DropDownListFor(x => x.PaymentMethodId,
+        (@Model.SelectListPaymentMethod as IEnumerable<SelectListItem>),
+                          "--- Select Payment Method ---",
+                        new { @class = "form-control ", onchange = "getCommentOfPaymentMethod('PaymentMethodId', '" + @path + "', 'divToChangeId', 'Comment')" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "" })
+            @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control", rows= "5", placeHolder = @commentTitle, style = "width: 100%; max-width: 100%; white-space: pre-line" } })
+            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="alert alert-info" id="divToChangeId">
+            @Model.SystemMessageToApplicant
+        </div>
+
+
+        <button class="btn btn-success" type="submit" name="button" value="accept">Encash</button>
+        <button class="btn btn-danger" type="submit" name="button" value="cancel">Cancel</button>
+
+
+    </div>
+    
+    
+    
+
+}
+
+
+@section scripts
+    {
+
+<script src="~/Scripts/MyScripts/_GetCommentFromDropDownBox.js"></script>
+
+}

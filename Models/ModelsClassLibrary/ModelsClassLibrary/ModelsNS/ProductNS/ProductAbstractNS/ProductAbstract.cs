@@ -22,9 +22,10 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
             Buy = new CostsComplex();
             Sell = new SalePriceComplex();
             Dimensions = new Dimensions();
+            NoOfVisits = new LongWithDateComplex();
+            Qty = new Quantity();
 
         }
 
-       
     }
 }

@@ -4,8 +4,43 @@
     OnLoadModelSelectFirstInput();
     OnHoverClassImgThumbnailBackgroundYellow();
     initializeToolTipsBootStrap4();
-    //onClick();
+    $('#PleasePickupOnDate_Start').datepicker({
+            format: "yyyy/mm/dd",
+            todayBtn: true,
+            autoclose: true,
+            todayHighlight: true,
+            title:"Start Date"
+
+        });
+    $('#PleasePickupOnDate_End').datepicker({
+        format: "yyyy/mm/dd",
+        todayBtn: true,
+        autoclose: true,
+        todayHighlight: true,
+        title: "End Date"
+
+    });
+
+    $('#AgreedPickupDateByDeliveryman').datepicker({
+        format: "yyyy/mm/dd",
+        todayBtn: true,
+        autoclose: true,
+        todayHighlight: true,
+        title: "Delivery Date"
+
+    });
+
+    
+    //$('.datepicker').datepicker({
+    //    format: "yyyy/mm/dd",
+    //    //todayBtn: "linked",
+    //    //autoclose: true,
+    //    todayHighlight: true,
+
+    //});
 });
+
+
 
 
 function initializeToolTipsBootStrap4()
@@ -62,7 +97,7 @@ function OnHoverClassImgThumbnailBackgroundYellow() {
 }
 
 function OnLoadModelSelectFirstInput() {
-    $('form:first *:input[type!=hidden]:first').focus();
+   $('form:first *:input[type!=hidden]:first').focus();
 
 }
 
@@ -81,20 +116,6 @@ function LogOut(sendingControl, dataUrl, helloLink) {
 
     
 }
-
-
-//This is taken from JqTest8.
-//we need to wire the form as well as follows...
-//
-
-//@using (Html.BeginForm("AddOrEdit", "Employees", new { isedit = @ViewBag.IsEdit }, FormMethod.Post, 
-//    new
-//    {
-//        enctype = "multipart/form-data",
-//        onsubmit = "return AjaxPost(this);",
-//        data_resetUrl = @Url.Action("AddOrEdit", "Employees", new { id = 0 })
-//    }))
-
 
 
 
@@ -126,4 +147,18 @@ function AjaxPost(form) {
 function openPath(path) {
     event.preventDefault();
     window.location.replace(path);
+}
+
+
+//-------------------------Drop Down List Functions
+function getSelectValueOf(dropdownlistName) {
+    var e = document.getElementById(dropdownlistName);
+    var thevalue = e.options[e.selectedIndex].value;
+    return thevalue
+}
+
+function getSelectTextOf(dropdownlistName) {
+    var e = document.getElementById(dropdownlistName);
+    var thetext = e.options[e.selectedIndex].text;
+    return thetext
 }

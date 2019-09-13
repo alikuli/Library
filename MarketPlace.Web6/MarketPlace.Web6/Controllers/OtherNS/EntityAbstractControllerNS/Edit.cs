@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Reflection;
@@ -9,7 +10,7 @@ using System.Web.Mvc;
 namespace MarketPlace.Web6.Controllers.Abstract
 {
     /// <summary>
-    /// This needs to know which Uow to call. It has to be hard pr
+    /// Use the button to send info about a button where name of the button will be button and the value will be the info.
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     public partial class EntityAbstractController<TEntity>
@@ -21,7 +22,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         //[NoCache]
         //[OutputCache(Duration = 0, Location = System.Web.UI.OutputCacheLocation.None, NoStore = true)]
 
-        public virtual async Task<ActionResult> Edit(string id, string selectedId = "", string searchFor = "", string isandForSearch = "", MenuENUM menuEnum = MenuENUM.EditDefault, string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "", string productId = "", BuySellDocumentTypeENUM buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Unknown, BuySellDocStateENUM buySellDocStateEnum = BuySellDocStateENUM.Unknown)
+        public virtual async Task<ActionResult> Edit(string id, string selectedId = "", string searchFor = "", string isandForSearch = "", MenuENUM menuEnum = MenuENUM.EditDefault, string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "", string productId = "", BuySellDocumentTypeENUM buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Unknown, BuySellDocStateENUM buySellDocStateEnum = BuySellDocStateENUM.Unknown, string button = "")
         {
             Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
             Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
@@ -52,6 +53,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     productId,
                     returnUrl,
                     isMenu,
+                    button,
                     menuEnum,
                     sortBy,
                     print,
@@ -60,7 +62,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     buySellDocStateEnum);
 
                 Biz.InitializeMenuManagerForEntity(parms);
-                return Event_CreateViewAndSetupSelectList(parms);
+
+                return Event_Edit_ViewAndSetupSelectList_GET(parms);
 
             }
             catch (Exception e)
@@ -68,8 +71,22 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                 ErrorsGlobal.Add(string.Format("Not Saved!"), MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
-                return RedirectToAction("Index", new { id = id, searchFor = searchFor, isandForSearch = isandForSearch, selectedId = id, returnUrl = returnUrl, menuLevelEnum = menuEnum, sortBy = sortBy, print = print });
+
+                if (returnUrl.IsNullOrWhiteSpace())
+                    return RedirectToAction("Index", new { id = id, searchFor = searchFor, isandForSearch = isandForSearch, selectedId = id, returnUrl = returnUrl, menuLevelEnum = menuEnum, sortBy = sortBy, print = print });
+
+                return Redirect(returnUrl);
             }
+        }
+
+        public virtual ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            if (parm.Entity.IsNull())
+                return View(Biz.FactoryForHttpGet());
+
+            TEntity entity = (TEntity)parm.Entity;
+
+            return View(entity);
         }
 
 
@@ -83,7 +100,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         //[NoCache]
         //[OutputCache(Duration = 0, Location = System.Web.UI.OutputCacheLocation.None, NoStore = true)]
 
-        public virtual async Task<ActionResult> Edit(TEntity entity, string returnUrl, System.Web.HttpPostedFileBase[] httpMiscUploadedFiles = null, System.Web.HttpPostedFileBase[] httpSelfieUploads = null, System.Web.HttpPostedFileBase[] httpIdCardFrontUploads = null, System.Web.HttpPostedFileBase[] httpIdCardBackUploads = null, System.Web.HttpPostedFileBase[] httpPassportFrontUploads = null, System.Web.HttpPostedFileBase[] httpPassportVisaUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseFrontUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseBackUploads = null, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch = "", MenuENUM menuEnum = MenuENUM.EditDefault, bool isMenu = false, FormCollection fc = null)
+        public virtual async Task<ActionResult> Edit(TEntity entity, string returnUrl, System.Web.HttpPostedFileBase[] httpMiscUploadedFiles = null, System.Web.HttpPostedFileBase[] httpSelfieUploads = null, System.Web.HttpPostedFileBase[] httpIdCardFrontUploads = null, System.Web.HttpPostedFileBase[] httpIdCardBackUploads = null, System.Web.HttpPostedFileBase[] httpPassportFrontUploads = null, System.Web.HttpPostedFileBase[] httpPassportVisaUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseFrontUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseBackUploads = null, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch = "", MenuENUM menuEnum = MenuENUM.EditDefault, bool isMenu = false, string button = "", FormCollection fc = null)
         {
             //var req = Request;
             //string fileNameOnly = Path.GetFileNameWithoutExtension(files[0].FileName);
@@ -93,6 +110,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
             Response.AppendHeader("Expires", "0"); // Proxies.
 
             string dbEntiyId = "";
+            ControllerCreateEditParameter parm = new ControllerCreateEditParameter();
             try
             {
 
@@ -102,7 +120,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 //get the Db Entity for this...
                 TEntity dbEntity = Biz.Find(dbEntiyId);
                 dbEntity.IsNullThrowException("Entity not found!");
-
+                //Event_Edit_Update_The_entity(dbEntity, entity);
 
                 //we dont need entity after this
                 //remember to add the UpdatePropertiesDuringModify when you are adding new stuff.
@@ -112,7 +130,9 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 dbEntity.IsEditing = true;
                 entity.IsEditing = true;
 
-                ControllerCreateEditParameter parm = new ControllerCreateEditParameter(
+                GlobalObject globalObject = ViewBag.GlobalObject as GlobalObject;
+
+                parm = new ControllerCreateEditParameter(
                     dbEntity,
                     httpMiscUploadedFiles,
                     httpSelfieUploads,
@@ -125,33 +145,68 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     MenuENUM.EditDefault,
                     UserName,
                     UserId,
-                    returnUrl);
+                    returnUrl,
+                    globalObject,
+                    button);
 
                 //I had to make this because sometimes I cannot use a certain required biz
                 //because it causes a recursive error... i.e. the biz being called by itself.
                 //I can fix up the parameter here before it goes in
-                Event_BeforeSaveInCreateAndEdit(parm);
-
+                //Event_BeforeSaveInCreateAndEdit(parm);
+                Event_Before_Edit_UpdateAndSaveAsync(parm);
                 await Biz.UpdateAndSaveAsync(parm);
                 Biz.InitializeMenuManager(parm);
 
-                if (returnUrl.IsNullOrWhiteSpace())
+                Event_AfterSaveInEdit_Post(parm);
+
+                if (parm.ReturnUrl.IsNullOrWhiteSpace())
                     return RedirectToAction("Index", new { selectedId = selectedId, menuEnum = menuEnum });
-                Event_AfterSaveInEdit(parm);
-                return Redirect(returnUrl);
+
             }
             catch (Exception e)
             {
+                Event_Edit_InError_Post(parm);
                 ErrorsGlobal.Add(string.Format("Not saved!"), MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
-                return RedirectToAction("Index", "Home");
+                if (parm.ReturnUrl.IsNullOrWhiteSpace())
+                    return RedirectToAction("Index", "Home");
             }
+
+            return Redirect(parm.ReturnUrl);
         }
 
-        public virtual void Event_AfterSaveInEdit(ControllerCreateEditParameter parm)
+        public virtual void Event_Before_Edit_UpdateAndSaveAsync(ControllerCreateEditParameter parm)
+        {
+        }
+
+
+
+
+        /// <summary>
+        /// I created this because whenI move the entity to ICommonWithId, I lose
+        /// the classes.
+        /// </summary>
+        /// <param name="dbEntity"></param>
+        public virtual void Event_Edit_Update_The_entity(TEntity dbEntity, TEntity inComingEntity)
+        {
+            //do nothing
+
+        }
+
+        /// <summary>
+        /// this event occours in Edit Post in the error. this can be used to change there return URL of the Error from the Index
+        /// </summary>
+        /// <param name="parm"></param>
+        public virtual void Event_Edit_InError_Post(ControllerCreateEditParameter parm)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public virtual void Event_AfterSaveInEdit_Post(ControllerCreateEditParameter parm)
         {
             //do nothing
         }
+
 
 
 

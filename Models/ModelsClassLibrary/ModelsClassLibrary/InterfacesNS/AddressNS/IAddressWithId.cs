@@ -6,7 +6,7 @@ using UserModels;
 
 namespace InterfacesLibrary.AddressNS
 {
-    public interface IAddressMain : ICommonWithId
+    public interface IAddressMain : ICommonWithId, IAddressStringWithNames
     {
         AddressTypeComplex AddressType { get; set; }
         //ApplicationUser User { get; set; }

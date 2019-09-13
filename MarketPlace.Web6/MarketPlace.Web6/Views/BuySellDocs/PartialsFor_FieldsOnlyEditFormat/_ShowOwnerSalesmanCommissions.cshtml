@@ -1,0 +1,60 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_Salesman = Model.BuySellDocViewState;
+
+    bool show_Salesman = viewState_Salesman.HD_Show_Salesman;
+
+
+}
+
+
+@Html.HiddenFor(x => x.CustomerSalesmanId)
+@Html.HiddenFor(x => x.OwnerSalesmanId)
+@Html.HiddenFor(x => x.DeliverymanSalesmanId)
+
+
+
+
+@if (show_Salesman)
+{
+    <div class="form-group">
+        <strong>
+            @Html.LabelFor(model => model.CustomerSalesmanId, htmlAttributes: new { @class = "background-ltgrey p-2" })
+        </strong>
+        @Html.DropDownListFor(x => x.CustomerSalesmanId,
+                (@Model.SelectListCustomerSalesman as IEnumerable<SelectListItem>),
+                       "--- Select Customer's Salesman ---",
+               new { @class = "form-control", title = "This is customer's salesman.", data_placement = "right", disabled = "disabled" })
+    </div>
+
+
+    <div class="form-group">
+        <strong>
+            @Html.LabelFor(model => model.OwnerSalesmanId, htmlAttributes: new { @class = "background-ltgrey p-2" })
+        </strong>
+        @Html.DropDownListFor(x => x.OwnerSalesmanId,
+                (@Model.SelectListOwnerSalesman as IEnumerable<SelectListItem>),
+                       "--- Select Customer's Salesman ---",
+               new { @class = "form-control", title = "This is customer's salesman.", data_placement = "right", disabled = "disabled" })
+    </div>
+
+
+    <div class="form-group">
+        <strong>
+            @Html.LabelFor(model => model.DeliverymanSalesmanId, htmlAttributes: new { @class = "background-ltgrey p-2" })
+        </strong>
+        @Html.DropDownListFor(x => x.DeliverymanSalesmanId,
+                (@Model.SelectListDeliverymanSalesman as IEnumerable<SelectListItem>),
+                       "--- Select Customer's Salesman ---",
+               new { @class = "form-control", title = "This is customer's salesman.", data_placement = "right", disabled = "disabled" })
+    </div>
+
+
+}
+else
+{
+}
+

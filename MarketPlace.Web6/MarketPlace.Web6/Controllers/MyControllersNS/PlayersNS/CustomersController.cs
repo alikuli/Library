@@ -34,7 +34,7 @@ namespace MarketPlace.Web6.Controllers
             }
         }
 
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             UserId.IsNullOrWhiteSpaceThrowException("You must be logged in");
 
@@ -47,7 +47,23 @@ namespace MarketPlace.Web6.Controllers
             customer.SelectListAddressBillTo = AddressBiz.SelectListBillAddressCurrentUser();
             customer.SelectListAddressInformTo = AddressBiz.SelectListInformAddressCurrentUser();
             customer.SelectListAddressShipTo = AddressBiz.SelectListShipAddressCurrentuser();
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
+        }
+
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            UserId.IsNullOrWhiteSpaceThrowException("You must be logged in");
+
+            Customer customer = parm.Entity as Customer;
+            customer.IsNullThrowException("Unable to unbox customer");
+
+            customer.SelectListPeople = _customerBiz.PersonBiz.SelectList();
+            customer.SelectListCustomerCategory = _customerBiz.SelectListCustomerCategory;
+
+            customer.SelectListAddressBillTo = AddressBiz.SelectListBillAddressCurrentUser();
+            customer.SelectListAddressInformTo = AddressBiz.SelectListInformAddressCurrentUser();
+            customer.SelectListAddressShipTo = AddressBiz.SelectListShipAddressCurrentuser();
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
         }
     }
 }

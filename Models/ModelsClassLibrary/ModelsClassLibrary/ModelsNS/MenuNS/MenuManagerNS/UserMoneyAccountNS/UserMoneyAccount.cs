@@ -98,17 +98,16 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
             double systemCanceledSaleOrdersInQuantity,
 
             decimal systemBackSaleOrdersInMoney,
-            double systemBackSaleOrdersInQuantity,            
+            double systemBackSaleOrdersInQuantity,
 
             decimal systemCreditSaleOrdersInMoney,
             double systemCreditSaleOrdersInQuantity,
-            
+
             decimal systemQuotationSaleOrdersInMoney,
             double systemQuotationSaleOrdersInQuantity
 
-            
+
             )
-        
         {
             _personOpenSalesOrdersInMoney = personOpenSaleOrdersInMoney;
             _personOpenSalesOrdersInQuantity = personOpenSaleOrdersInQuantity;

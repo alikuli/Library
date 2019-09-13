@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.Tools;
+using AliKuli.ToolsNS;
 using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
@@ -28,9 +29,18 @@ namespace ModelsClassLibrary.ViewModels
 
         public IndexListVM()
         {
+            Data = new List<IndexItemVM>();
+            Heading = new Headings();
+            Show = new Show();
+                        //setup.
+            string stopWordsPath = AliKuli.ConstantsNS.MyConstants.STOP_WORDS_PATH;
+            _listOfStopWords = StringTools.GetStopWords(stopWordsPath);
+            _searchWords = getSearchWords();
+
 
         }
         public IndexListVM(ControllerIndexParams p)
+            : this()
         {
             initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, "", p.LogoAddress, p.UserId, p.UserName, p.IsAndForSearch, p.BreadCrumbManager, p.ActionNameEnum, p.LikeUnlikeCounter, p.IsMenu, p.ReturnUrl /* , p.UserPersonId, p.ProductChildPersonId */);
 
@@ -65,21 +75,14 @@ namespace ModelsClassLibrary.ViewModels
             UserName = userName;
 
             DudEntity = dudEntity;
-            Data = new List<IndexItemVM>();
-            Heading = new Headings();
-            //this creates the incoming description. Otherwise it was only being created everytime we 
-            //sorted... that is still happening.
-
-            //Menu = new MenuModel();
-            //Menu.ReturnUrl = returnUrl;
 
 
             MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, breadCrumbManager, likeUnlikesCounter, UserId, returnUrl,userName /* , userPersonId, productChildPersonId */);
+
             if (MenuManager.IndexMenuVariables.IsNull())
                 MenuManager.IndexMenuVariables = new IndexMenuVariables(UserId);
             
             
-            Show = new Show();
             SelectedId = selectedId;
             WebCompanyName = webCompanyName;
 
@@ -97,12 +100,9 @@ namespace ModelsClassLibrary.ViewModels
             //this points to the logo
             Logo = new Logo(logoaddress);
 
-            string stopWordsPath = AliKuli.ConstantsNS.MyConstants.STOP_WORDS_PATH;
-            //setup.
-            _listOfStopWords = StringTools.GetStopWords(stopWordsPath);
-            _searchWords = getSearchWords();
 
         }
+
 
         public ApplicationUser User { get; set; }
         //public void Load(ControllerIndexParams p)

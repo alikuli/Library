@@ -81,9 +81,10 @@ namespace UowLibrary.BuySellDocNS
             buySellDoc.IsNullThrowException("Unable to unbox buySellDoc");
 
             //we need to know if this is a sale or a purchase order
+
             ////get current user's PersonId first...
-            BuySellDocumentTypeENUM buySellDocumentTypeEnum = IsSaleOrPurchase(buySellDoc);
-            buySellDoc.BuySellDocumentTypeEnum = buySellDocumentTypeEnum;
+            //BuySellDocumentTypeENUM buySellDocumentTypeEnum = IsSaleOrPurchaseOrDelivery(buySellDoc);
+            //buySellDoc.BuySellDocumentTypeEnum = buySellDocumentTypeEnum;
             indexItem.Name = buySellDoc.FullName();
             //Person person = UserBiz.GetPersonFor(UserId);
         }

@@ -1,0 +1,37 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_Salesman = Model.BuySellDocViewState;
+
+    bool show_Salesman = viewState_Salesman.HD_Show_DeliverymanSalesman;
+
+
+}
+
+
+
+
+
+
+@if (show_Salesman)
+{
+
+
+    <div class="form-group">
+        <strong>
+            @Html.LabelFor(model => model.DeliverymanSalesmanId, htmlAttributes: new { @class = "background-ltgrey p-2" })
+        </strong>
+        @Html.DropDownListFor(x => x.DeliverymanSalesmanId,
+                (@Model.SelectListDeliverymanSalesman as IEnumerable<SelectListItem>),
+                       "--- Select Customer's Salesman ---",
+               new { @class = "form-control", title = "This is customer's salesman.", data_placement = "right", disabled = "disabled" })
+    </div>
+
+
+}
+else
+{
+}
+

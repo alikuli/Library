@@ -21,43 +21,43 @@ namespace DalLibrary.DalNS
         /// i.e. Create/Update/Delete
         /// </summary>
         /// <param name="entity"></param>
-        private void Fix(TEntity entity)
-        {
-            Fix_Name(entity);
-            //entity = Fix_Dates(entity);
-        }
+        //private void Fix(TEntity entity)
+        //{
+        //    Fix_Name(entity);
+        //    //entity = Fix_Dates(entity);
+        //}
 
-        /// <summary>
-        /// The entity date is changing... however the referenced entity date is NOT changing.
-        /// </summary>
-        /// <param name="entity"></param>
-        private TEntity Fix_Dates(TEntity entity)
-        {
-            if (IsCreating)
-                entity.MetaData.Created.SetToTodaysDate("","");
+        ///// <summary>
+        ///// The entity date is changing... however the referenced entity date is NOT changing.
+        ///// </summary>
+        ///// <param name="entity"></param>
+        //private TEntity Fix_Dates(TEntity entity)
+        //{
+        //    if (IsCreating)
+        //        entity.MetaData.Created.SetToTodaysDate("","");
 
-            if (IsUpdating)
-                entity.MetaData.Modified.SetToTodaysDate("","");
+        //    if (IsUpdating)
+        //        entity.MetaData.Modified.SetToTodaysDate("","");
 
 
-            if (IsDeleting)
-                entity.MetaData.Deleted.SetToTodaysDate("","");
+        //    if (IsDeleting)
+        //        entity.MetaData.Deleted.SetToTodaysDate("","");
 
-            return entity;
-        }
+        //    return entity;
+        //}
 
         /// <summary>
         /// Use this when user is typing in the name. Otherwise, override
         /// </summary>
         /// <param name="entity"></param>
-        protected void Fix_Name(TEntity entity)
-        {
-            if (entity.Name.IsNullOrWhiteSpace())
-                return;
+        //protected void Fix_Name(TEntity entity)
+        //{
+        //    if (entity.Name.IsNullOrWhiteSpace())
+        //        return;
             
-            if(entity.IsAllowNameToBeSentanceCased)
-                entity.Name = entity.Name.ToTitleCase();
-        }
+        //    if(entity.IsAllowNameToBeSentanceCased)
+        //        entity.Name = entity.Name.ToTitleCase();
+        //}
 
 
 

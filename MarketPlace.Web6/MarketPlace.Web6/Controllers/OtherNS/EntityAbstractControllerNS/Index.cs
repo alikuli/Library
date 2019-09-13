@@ -50,6 +50,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 if (returnUrl.IsNullOrWhiteSpace())
                     returnUrl = Request.Url.PathAndQuery;
 
+                string buttonDud = "";
+
                 ControllerIndexParams parms = MakeControlParameters(
                     id,
                     menuPathMainId,
@@ -66,12 +68,13 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     productIdDud,
                     returnUrl,
                     isMenu,
+                    buttonDud,
                     menuEnum,
                     sortBy,
                     print,
                     ActionNameENUM.Index);
 
-                IndexListVM indexListVM = await IndexEngine(parms);
+                IndexListVM indexListVM = await IndexEngineAsync(parms);
                 indexListVM.MenuManager.ReturnUrl = returnUrl;
 
                 if (print)
@@ -105,15 +108,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
         }
 
 
-        public async virtual Task<IndexListVM> IndexEngine(ControllerIndexParams parameters)
+        public async virtual Task<IndexListVM> IndexEngineAsync(ControllerIndexParams parameters)
         {
-            //IndexListVM indexListVM = await Biz.IndexAsync(parameters);
-
-            //if (indexListVM.IsNull())
-            //{
-            //    ErrorsGlobal.Add("No data received to make Index list", MethodBase.GetCurrentMethod());
-            //    ErrorsGlobal.MemorySave();
-            //}
             IndexListVM indexListVM = new IndexListVM();
             try
             {
@@ -125,9 +121,11 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                 ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
+                throw new Exception(ErrorsGlobal.ToString());
             }
 
-            return indexListVM;
+
+            return indexListVM ?? new IndexListVM(parameters);
 
         }
 
@@ -137,7 +135,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
             try
             {
-                var indexListVM = await IndexEngine(parameters);
+                var indexListVM = await IndexEngineAsync(parameters);
                 return indexListVM;
             }
             catch (Exception e)

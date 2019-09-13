@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
-using ModelsClassLibrary.ModelsNS.DocumentsNS.MoneyAndCountClass;
+using ModelsClassLibrary.ModelsNS.DocumentsNS.GlobalObjectNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using System;
 using System.Web.Mvc;
@@ -22,21 +23,16 @@ namespace MarketPlace.Web4.Controllers
 
         private void getUserMoneyAccount()
         {
-            UserMoneyAccount userMoneyAccount = AccountsBizSuper.UserMoneyAccount(UserId);
-            userMoneyAccount = AccountsBizSuper.BuySellDocBiz.GetMoneyAccount(UserId, AccountsBizSuper.UserBiz.IsAdmin(UserId), userMoneyAccount);
-            userMoneyAccount.IsAdmin = Is_Admin;
-            userMoneyAccount.IsBank = IsBank;
 
-            ViewBag.MoneyAccount = userMoneyAccount;
 
-            //------ New code ------- GetMoneyItemParent MoneyItemParent 
-            MoneyItemParent moneyItemParent = AccountsBizSuper.BuySellDocBiz.GetMoneyItemParent(UserId, AccountsBizSuper.UserBiz.IsAdmin(UserId), DateTime.MinValue, DateTime.MaxValue);
 
-            moneyItemParent.Money_System = AccountsBizSuper.CashTrxBiz.GetMoneyTypeForPerson("", Is_Admin);
-            moneyItemParent.Money_User = AccountsBizSuper.CashTrxBiz.GetMoneyTypeForUser(UserId);
-           
-            ViewBag.MoneyItemParent = moneyItemParent;
+            GlobalObject globalObject = SuperCashBiz.GetGlobalObject();
+            //ViewBag.MoneyItemParent = globalObject;
+            ViewBag.GlobalObject = globalObject;
+            string customerMsg = string.Format("You can Buy. Your balance is {0:N2}", globalObject.Money_User.Refundable.MoneyAmount);
+            ErrorsGlobal.AddMessage(customerMsg);
 
+            ErrorsGlobal.MemorySave();
         }
     }
 }

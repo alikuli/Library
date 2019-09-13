@@ -1,0 +1,24 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_OwnerDropDown = Model.BuySellDocViewState;
+
+    bool show_Owner_DropDown = viewState_OwnerDropDown.HD_Show_DocumentState;
+
+
+}
+
+
+@if (show_Owner_DropDown)
+{
+    @Html.HiddenFor(x => x.OwnerId)
+    
+    <div class="form-group">
+        @Html.LabelFor(model => model.OwnerId, htmlAttributes: new { @class = "" })
+        @Html.DropDownListFor(x => x.OwnerId,
+                         (@Model.SelectListOwner as IEnumerable<SelectListItem>),
+                  "--- Select Owner---",
+                           new { @class = "form-control", data_toggle = "tooltip", title = "This is the person selling the product.", data_placement = "top", disabled = "disabled" })
+    </div>
+
+}

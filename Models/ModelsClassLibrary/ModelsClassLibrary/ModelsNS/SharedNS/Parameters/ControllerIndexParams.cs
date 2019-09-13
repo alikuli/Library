@@ -4,7 +4,6 @@ using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using System.ComponentModel.DataAnnotations.Schema;
 using UserModels;
-using AliKuli.Extentions;
 
 namespace ModelsClassLibrary.ModelsNS.SharedNS
 {
@@ -17,10 +16,10 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
     {
         public ControllerIndexParams()
         {
+            Menu = new MenuParameters(MenuENUM.IndexDefault, "");
 
         }
 
-        readonly bool _isUserAdmin;
         public ControllerIndexParams(
             string id,
             string menuPathMainId,
@@ -42,10 +41,10 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             string productId,
             string returnUrl,
             BuySellDocumentTypeENUM buySellDocumentTypeEnum,
-            BuySellDocStateENUM buySellDocStateEnum
-            )
+            BuySellDocStateENUM buySellDocStateEnum, string button)
         {
             Id = id;
+            Button = button;
             SearchFor = searchFor;
             IsAndForSearch = isandForSearch == "And";
             SelectedId = selectedId;
@@ -55,7 +54,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             LogoAddress = logoAddress;
             UserName = userName;
             UserId = userId;
-            _isUserAdmin = isUserAdmin;
+            IsUserAdmin = isUserAdmin;
             ActionNameEnum = actionNameEnum;
             DudEntity = dudEntity;
             BreadCrumbManager = breadCrumbManager;
@@ -66,8 +65,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             ReturnUrl = returnUrl;
             BuySellDocumentTypeEnum = buySellDocumentTypeEnum;
             BuySellDocStateEnum = buySellDocStateEnum;
-            //UserPersonId = UserPersonId;
-            //ProductChildPersonId = productChildPersonId;
         }
 
         public BuySellDocumentTypeENUM BuySellDocumentTypeEnum { get; set; }
@@ -85,7 +82,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         /// It is switched on in CreateHttp of EntityAbstractController
         /// </summary>
         public bool IsCreate { get; set; }
-
+        public string Button { get; set; }
         public ApplicationUser User { get; set; }
         public string ProductId { get; set; }
         public string ReturnUrl { get; set; }
@@ -108,7 +105,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public string UserId { get; set; }
         //public ApplicationUser User { get; set; }
 
-        public bool UserIsAdmin { get { return _isUserAdmin; } }
+        public bool IsUserAdmin { get;set;} 
         //public string ReturnUrl { get; set; }
         public MenuParameters Menu { get; set; }
         public LikeUnlikeParameters LikeUnlikeCounter { get; set; }

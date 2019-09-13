@@ -18,7 +18,7 @@ namespace MarketPlace.Web6.Controllers
     {
 
 
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
 
 

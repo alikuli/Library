@@ -1,49 +1,94 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
+using ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS;
+using ModelsClassLibrary.ModelsNS.CashNS.PenaltyNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
-using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellItemNS;
-using ModelsClassLibrary.ModelsNS.DocumentsNS.MoneyAndCountClass;
-using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
-using ModelsClassLibrary.ModelsNS.PlayersNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Mvc;
 using UowLibrary.AddressNS;
 using UowLibrary.BuySellDocNS;
+using UowLibrary.FreightOffersTrxNS;
 using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS.CustomerNS;
+using UowLibrary.PlayersNS.DeliverymanNS;
 using UowLibrary.PlayersNS.OwnerNS;
 using UowLibrary.PlayersNS.PersonNS;
-using UserModels;
-
-
+using UowLibrary.PlayersNS.VehicalTypeNS;
+using UowLibrary.SuperLayerNS;
 
 namespace MarketPlace.Web6.Controllers
 {
+    /// <summary>
+    /// Note, where programming for different kinds of documents, Sale, Purchase and Delivery, the following program levels
+    /// have to be considered.
+    /// 
+    /// CONTROLLER LEVEL
+    ///     BuySellDocsController
+    ///
+    ///     BuySellDoc.ListOrders
+    ///     BuySellDoc._FieldsOnlyEditFormatfor 
+    ///     BuySellDoc._ListItems
+    ///     BuySellItem._FieldsOnlyEditFormat 
+    ///     
+    /// BUSINESS RULE LEVELS
+    ///     BuySellDocBiz.BussinessRules
+    ///     BuySellItem.BussinessRules
+    ///     
+    /// MODEL LEVEL
+    ///     BuySellDoc.UpdatePropertiesDuringModify
+    ///     BuySellItem.UpdatePropertiesDuringModify
+    ///     
+    /// </summary>
     [Authorize]
     public class BuySellDocsController : EntityAbstractController<BuySellDoc>
     {
 
-        BuySellDocBiz _buySellDocsBiz;
+        //BuySellDocBiz _buySellDocsBiz;
         AddressBiz _addressBiz;
+        //DeliverymanBiz _deliverymanBiz;
+        SuperBiz _superBiz;
 
-
-        public BuySellDocsController(BuySellDocBiz buySellDocsBiz, AddressBiz addressBiz, AbstractControllerParameters param)
-            : base(buySellDocsBiz, param)
+        public BuySellDocsController(/* BuySellDocBiz buySellDocsBiz DeliverymanBiz deliverymanBiz, */ AbstractControllerParameters param, SuperBiz superBiz, AddressBiz addressBiz)
+            : base(superBiz.BuySellDocBiz, param)
         {
-            _buySellDocsBiz = buySellDocsBiz;
+            //_buySellDocsBiz = buySellDocsBiz;
             _addressBiz = addressBiz;
+            //_deliverymanBiz = deliverymanBiz;
+            _superBiz = superBiz;
         }
 
-
+        SuperBiz SuperBiz
+        {
+            get
+            {
+                _superBiz.UserId = UserId;
+                _superBiz.UserName = UserName;
+                return _superBiz;
+            }
+        }
+        VehicalTypeBiz VehicalTypeBiz
+        {
+            get
+            {
+                return SuperBiz.VehicalTypeBiz;
+            }
+        }
+        DeliverymanBiz DeliverymanBiz
+        {
+            get
+            {
+                return SuperBiz.DeliverymanBiz;
+            }
+        }
         CustomerBiz CustomerBiz
         {
             get
             {
-                return _buySellDocsBiz.CustomerBiz;
+                return SuperBiz.CustomerBiz;
             }
         }
 
@@ -51,7 +96,7 @@ namespace MarketPlace.Web6.Controllers
         {
             get
             {
-                return _buySellDocsBiz.OwnerBiz;
+                return SuperBiz.OwnerBiz;
             }
         }
         AddressBiz AddressBiz
@@ -68,7 +113,7 @@ namespace MarketPlace.Web6.Controllers
         {
             get
             {
-                return _buySellDocsBiz.PersonBiz;
+                return SuperBiz.PersonBiz;
             }
         }
 
@@ -77,389 +122,298 @@ namespace MarketPlace.Web6.Controllers
             get
             {
 
-                return _buySellDocsBiz;
+                return SuperBiz.BuySellDocBiz;
+            }
+        }
+        FreightOfferTrxBiz FreightOfferTrxBiz
+        {
+            get { return SuperBiz.BuySellDocBiz.FreightOfferTrxBiz; }
+        }
+
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            try
+            {
+
+                UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
+
+                BuySellDoc buySellDoc = (BuySellDoc)parm.Entity;
+                buySellDoc.IsNullThrowException("Unable to unbox buySellDoc");
+
+                //do work
+                BuySellDocBiz.CreateHeadingForCreateForm(parm);
+                BuySellDocBiz.Load_DocStateAndType_Into_Items(buySellDoc);
+
+                BuySellDocBiz.GetDefaultVehicalType(buySellDoc);
+                BuySellDocBiz.LoadSelectListsFor_GET(buySellDoc);
+
+                //buySellDoc.BuySellDocumentTypeEnum = parm.BuySellDocumentTypeEnum;
+
+            }
+            catch (Exception e)
+            {
+
+                ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+            }
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
+
+        }
+
+        public ActionResult RejectOrder(string id, string returnUrl, BuySellDocumentTypeENUM buySellDocumentTypeEnum)
+        {
+            try
+            {
+
+                BuySellDocBiz.RejectOrder_Code(id, buySellDocumentTypeEnum);
+
+            }
+            catch (Exception e)
+            {
+
+                ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+            }
+            return Redirect(returnUrl);
+        }
+
+        public ActionResult CancelRejectOrder(string buySellDocId, string returnUrl, string text, BuySellDocumentTypeENUM buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Unknown, BuySellDocStateModifierENUM buySellDocStateModifierEnum = BuySellDocStateModifierENUM.Unknown)
+        {
+
+            try
+            {
+                buySellDocId.IsNullOrWhiteSpaceThrowArgumentException("Id");
+                returnUrl.IsNullOrWhiteSpaceThrowArgumentException("returnUrl");
+                text.IsNullOrWhiteSpaceThrowArgumentException("text");
+                if (buySellDocumentTypeEnum == BuySellDocumentTypeENUM.Unknown)
+                    throw new Exception("buySellDocumentType unknown");
+
+
+                BuySellDoc buySellDoc = BuySellDocBiz.Find(buySellDocId);
+                buySellDoc.IsNullThrowException();
+                buySellDoc.BuySellDocumentTypeEnum = buySellDocumentTypeEnum;
+                buySellDoc.BuySellDocStateModifierEnum = buySellDocStateModifierEnum;
+                //get the penalty amounts
+                PersonPayingPenalty personPayingPenalty;
+                IPenaltyClass penaltyClass = PenaltyController.GetPenalty(buySellDoc, out personPayingPenalty);
+                
+                if (!penaltyClass.IsNull())
+                    text = penaltyClass.Text;
+
+                RejectCancelDeleteInbetweenClass rejectCancelDeleteInbetweenClass = new RejectCancelDeleteInbetweenClass(
+                    returnUrl, 
+                    text, 
+                    buySellDoc);
+
+                return View(rejectCancelDeleteInbetweenClass);
+            }
+            catch (Exception ex)
+            {
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), ex);
+                return Redirect(returnUrl);
             }
         }
 
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult CancelRejectOrder(RejectCancelDeleteInbetweenClass rejectCancelDeleteInbetweenClass, string button)
         {
-            UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
-            BuySellDoc buySellDoc = (BuySellDoc)parm.Entity;
-
-            buySellDoc.IsNullThrowException("Unable to unbox buySellDoc");
-            buySellDoc.HeadingForCreateForm = parm.BuySellDocumentTypeEnum.ToString().ToTitleSentance();
 
 
-            //All document types are relative to the UserId
-            //There are only 2 document types - Sale, Purchase
-            //For some reason I am unable to get the dropdown box 
-            //for to bind with the value during create. It works during Edit.
-            //Anyway, we want to discourage creatingBuySellDocs directly. They should be created
-            //through shopping cart only.
-            if (parm.Entity.MenuManager.IsCreate)
+            try
             {
-                buySellDoc.BuySellDocStateEnum = parm.BuySellDocStateEnum;
-                buySellDoc.BuySellDocumentTypeEnum = parm.BuySellDocumentTypeEnum;
 
-                switch (buySellDoc.BuySellDocumentTypeEnum)
+                rejectCancelDeleteInbetweenClass.IsNullThrowException();
+                rejectCancelDeleteInbetweenClass.ReturnUrl.IsNullOrWhiteSpaceThrowException();
+
+                if (button.IsNullOrWhiteSpace())
+                    return Redirect(rejectCancelDeleteInbetweenClass.ReturnUrl);
+
+
+                if (button.ToLower() == "accept")
                 {
 
+                    //rejectCancelDeleteInbetweenClass.BuySellDocumentTypeEnum + rejectCancelDeleteInbetweenClass.BuySellDoc.BuySellDocStateEnum.ToString().ToTitleSentance();
 
-                    case BuySellDocumentTypeENUM.Purchase: //This is a sale
-                        //Customer customer = CustomerBiz.Factory() as Customer;
-                        break;
-
-
-                    case BuySellDocumentTypeENUM.Sale:     //this is a delivery from the vendor's point of view 
-
-                        //the customer is not the user.
-                        buySellDoc.SelectListCustomer = CustomerBiz.SelectListWithout(UserId);
-
-                        //the Owner is the User
-                        buySellDoc.SelectListOwner = OwnerBiz.SelectListOnlyWith(UserId);
-
-                        Owner ownerSale = OwnerBiz.GetPlayerFor(UserId);
-                        ownerSale.IsNullThrowException();
-                        buySellDoc.OwnerId = ownerSale.Id;
-                        buySellDoc.BuySellDocStateEnum = BuySellDocStateENUM.Quotation;
-                        if (buySellDoc.BuySellItems.IsNull())
-                            buySellDoc.BuySellItems = new List<BuySellItem>();
-
-                        break;
-
-                    case BuySellDocumentTypeENUM.Unknown:
-                    default:
-                        buySellDoc.BuySellDocumentTypeEnum = BuySellDocumentTypeENUM.Unknown;
-                        return View("SelectDocumentTypeView", buySellDoc);
+                    SuperBiz.CancelRejectOrder(rejectCancelDeleteInbetweenClass);
                 }
 
-
-                buySellDoc.SelectListAddressInformTo = AddressBiz.SelectListInformAddressFor(UserId);
-                buySellDoc.SelectListAddressShipTo = AddressBiz.SelectListShipAddressFor(UserId);
-
             }
-            else
+            catch (Exception ex)
             {
-                codeForEdit(buySellDoc);
-
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), ex);
             }
-            //BuySellDocBiz.Detach(buySellDoc);
 
-
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return Redirect(rejectCancelDeleteInbetweenClass.ReturnUrl);
 
         }
 
-        private void codeForCreate(BuySellDoc buySellDoc)
+
+        public override void Event_Before_Edit_UpdateAndSaveAsync(ControllerCreateEditParameter parm)
         {
-        }
+            parm.Entity.IsNullThrowException();
+            BuySellDoc buySellDoc = BuySellDoc.UnBox(parm.Entity);
 
-        private void codeForEdit(BuySellDoc buySellDoc)
-        {
-            //this is the code if we are in Edit.
-            //BASICALLY we need to load the select lists
+            //set the buySellDoc.BuySellDocStateModifierEnum value
+            buySellDoc.BuySellDocStateModifierEnum = parm.BuySellDocStateModifierEnum;
 
-            //we need to know on which side the user is of this transaction
-            //then we will know if this is a purchase order or a sale type.
-
-            //if the user is the customer, then this is a sale type
-            //if the user is the owner, then this is a purchase order
-            //if user is neither, and user is Admin, then allow.
-
-            buySellDoc.BuySellDocumentTypeEnum = BuySellDocBiz.IsSaleOrPurchase(buySellDoc);
-
-            switch (buySellDoc.BuySellDocumentTypeEnum)
+            if (buySellDoc.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
             {
-                case BuySellDocumentTypeENUM.Sale:
-                    //here the UserId is the Owner
-                    buySellDoc.SelectListOwner = OwnerBiz.SelectListOnlyWith(UserId);
-                    buySellDoc.SelectListCustomer = CustomerBiz.SelectListWithout(UserId);
-
-                    buySellDoc.SelectListAddressInformTo = AddressBiz.SelectList();
-                    buySellDoc.SelectListAddressShipTo = AddressBiz.SelectList();
-                    buySellDoc.BuySellDocumentTypeEnum = BuySellDocumentTypeENUM.Sale;
-
-                    break;
-
-                case BuySellDocumentTypeENUM.Purchase:
-                    //here the UserId is the customer
-                    buySellDoc.SelectListOwner = OwnerBiz.SelectListWithout(UserId);
-                    buySellDoc.SelectListCustomer = CustomerBiz.SelectListOnlyWith(UserId);
-
-                    buySellDoc.SelectListAddressInformTo = AddressBiz.SelectListInformAddressFor(UserId);
-                    buySellDoc.SelectListAddressShipTo = AddressBiz.SelectListShipAddressFor(UserId);
-                    buySellDoc.BuySellDocumentTypeEnum = BuySellDocumentTypeENUM.Purchase;
-                    break;
-
-                case BuySellDocumentTypeENUM.Unknown:
-                    break;
-
-                default:
-                    break;
+                getCustomerSalesmanAndOwnerSalesman(buySellDoc);
+                getDeliverymanSalesman(buySellDoc);
             }
-
-
         }
 
-
-        public override void Event_BeforeSaveInCreateAndEdit(ControllerCreateEditParameter parm)
+        private void getDeliverymanSalesman(BuySellDoc buySellDoc)
         {
-            base.Event_BeforeSaveInCreateAndEdit(parm);
+            if (buySellDoc.BuySellDocumentTypeEnum == BuySellDocumentTypeENUM.Delivery)
+            {
+                //this is the current state BuySellDocStateENUM.RequestConfirmed moving on to BuySellDocStateENUM.CourierComingToPickUp
+                if (buySellDoc.BuySellDocStateEnum == BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller)
+                {
+                    if (buySellDoc.DeliverymanSalesmanId.IsNullOrWhiteSpace())
+                        buySellDoc.DeliverymanSalesmanId = SuperBiz.GetSalesmanForDeliveryman(buySellDoc.DeliverymanId);
 
+                }
+            }
         }
-        //private BuySellDocumentTypeENUM IsSaleOrPurchase(BuySellDoc buySellDoc)
+
+        private void getCustomerSalesmanAndOwnerSalesman(BuySellDoc buySellDoc)
+        {
+            if (buySellDoc.BuySellDocumentTypeEnum == BuySellDocumentTypeENUM.Sale)
+            {
+                if (buySellDoc.BuySellDocStateEnum == BuySellDocStateENUM.RequestConfirmed)
+                {
+                    if (buySellDoc.CustomerSalesmanId.IsNullOrWhiteSpace())
+                        buySellDoc.CustomerSalesmanId = SuperBiz.GetSalesmanIdForCustomer(buySellDoc.CustomerId);
+
+                    if (buySellDoc.OwnerSalesmanId.IsNullOrWhiteSpace())
+                        buySellDoc.OwnerSalesmanId = SuperBiz.GetSalesmanIdForOwner(buySellDoc.OwnerId);
+                }
+            }
+        }
+
+
+
+
+
+        public ActionResult CancelDeliveryMan(string buySellDocId, string returnUrl, BuySellDocumentTypeENUM buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Unknown)
+        {
+
+            try
+            {
+                BuySellDocBiz.CancelDeliveryManAndSave_GET(buySellDocId, buySellDocumentTypeEnum);
+
+            }
+            catch (Exception ex)
+            {
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), ex);
+            }
+            return Redirect(returnUrl);
+        }
+
+        //private void CancelDeliveryMan_Code(string buySellDocId, BuySellDocumentTypeENUM buySellDocumentTypeEnum)
         //{
-        //    if (buySellDoc.CustomerId.IsNullOrWhiteSpace() && buySellDoc.OwnerId.IsNullOrWhiteSpace())
+        //    try
         //    {
-        //        ErrorsGlobal.Add("Both Customer and Owner are empty.", "Event_CreateViewAndSetupSelectList");
-        //        throw new Exception();
-
+        //        BuySellDocBiz.CancelDeliveryManAndSave(buySellDocId, buySellDocumentTypeEnum);
         //    }
-
-        //    if (buySellDoc.CustomerId.IsNullOrWhiteSpace())
+        //    catch (Exception e)
         //    {
-        //        //this is a purchase order
-        //        return BuySellDocumentTypeENUM.Purchase;
 
+        //        ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), e);
         //    }
-        //    ApplicationUser ownerUser = OwnerBiz.GetUserForEntityrWhoIsNotAdminFor(buySellDoc.OwnerId);
-        //    ownerUser.IsNullThrowException();
-        //    if (UserId == ownerUser.Id)
-        //    {
-        //        //this is a purchase
-        //        return BuySellDocumentTypeENUM.Purchase;
-        //    }
-
-
-        //    if (buySellDoc.OwnerId.IsNullOrWhiteSpace())
-        //    {
-        //        //this is a sale.
-        //        return BuySellDocumentTypeENUM.Sale;
-
-
-        //    }
-
-        //    //get the CustomerUser
-        //    ApplicationUser customerUser = CustomerBiz.GetUserForEntityrWhoIsNotAdminFor(buySellDoc.CustomerId);
-        //    customerUser.IsNullThrowException();
-        //    if (UserId == customerUser.Id)
-        //    {
-        //        //this is a sale
-        //        return BuySellDocumentTypeENUM.Sale;
-        //    }
-
-        //    throw new Exception("Unknown type");
         //}
 
-        private void setup_Purchase(BuySellDoc buySellDoc)
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
-            //the customer is the user.
-            ApplicationUser customerUser = CustomerBiz.GetUserForEntityrWhoIsNotAdminFor(UserId);
-            customerUser.IsNullThrowException("customerUser");
+            try
+            {
+                SuperBiz.Event_Edit_ViewAndSetupSelectList_Get_Code(parm);
+                Hide_Save_Button(parm.Entity as BuySellDoc);
 
-            //the Owner is the responding party
+            }
+            catch (Exception ex)
+            {
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), ex);
 
-            buySellDoc.SelectListOwner = OwnerBiz.SelectListOnlyWith(UserId);
-            buySellDoc.BuySellDocumentTypeEnum = BuySellDocumentTypeENUM.Sale;
-            buySellDoc.SelectListCustomer = CustomerBiz.SelectListOnlyWith(customerUser.Id);
-            buySellDoc.SelectListAddressInformTo = AddressBiz.SelectListInformAddressFor(customerUser.Id);
-            buySellDoc.SelectListAddressShipTo = AddressBiz.SelectListShipAddressFor(customerUser.Id);
-            buySellDoc.SelectListOwner = OwnerBiz.SelectListOnlyWith(UserId);
+            }
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
+
         }
 
-        /// <summary>
-        /// Note. This can be approached from sale or purchase point of view. 
-        /// </summary>
-        /// <param name="buySellDoc"></param>
-        /// <param name="userId"></param>
-        private void setup_SalesOrder_And_Purchase(BuySellDoc buySellDoc, string userId)
+
+
+
+        public override void Event_Edit_InError_Post(ControllerCreateEditParameter parm)
         {
-            //get the customer for the user.
-            //
-            ApplicationUser customerUser = CustomerBiz.GetUserForEntityrWhoIsNotAdminFor(buySellDoc.CustomerId);
-            customerUser.IsNullThrowException("customerUser");
-            buySellDoc.SelectListCustomer = CustomerBiz.SelectListOnlyWith(customerUser.Id);
-            buySellDoc.SelectListAddressInformTo = AddressBiz.SelectListInformAddressFor(customerUser.Id);
-            buySellDoc.SelectListAddressShipTo = AddressBiz.SelectListShipAddressFor(customerUser.Id);
-
-            //get userId for Owner
-            ApplicationUser ownerUser = OwnerBiz.GetUserForEntityrWhoIsNotAdminFor(buySellDoc.OwnerId);
-            ownerUser.IsNullThrowException("ownerUser");
-            buySellDoc.SelectListOwner = OwnerBiz.SelectListOnlyWith(ownerUser.Id);
-
-            buySellDoc.BuySellDocumentTypeEnum = BuySellDocumentTypeENUM.Sale;
+            //I added the if because when it breaks in get offers, it goes into edit... we
+            //dont want that.
+            if (parm.ReturnUrl.IsNullOrWhiteSpace())
+                parm.ReturnUrl = Url.Action("Edit", new { id = parm.Entity.Id });
         }
-        /// <summary>
-        /// this is where the shopping cart enters.
-        /// </summary>
-        /// <param name="productChildId"></param>
-        /// <returns></returns>
 
         [HttpPost]
         public ActionResult BuyAjax(string productChildId)
         {
-            string message = "Success!";
+            string message;
+            bool success;
             try
             {
-                //save the item , 
-                string poNumber = "";
-                DateTime poDate = DateTime.MinValue;
-                UserId.IsNullOrWhiteSpaceThrowException("You are not logged in.");
-                productChildId.IsNullOrWhiteSpaceThrowArgumentException("Product not recieved.");
-                message = BuySellDocBiz.AddToSale(UserId, productChildId, poNumber, poDate);
-                return Json(new
-                {
-                    success = true,
-                    message = message,
-                },
-                JsonRequestBehavior.DenyGet);
+                SuperBiz.BuyAjax_Code(productChildId, out message, out success);
 
+                return Json(new
+                            {
+                                success = success,
+                                message = message,
+                            },
+                            JsonRequestBehavior.DenyGet);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), e);
-                message = string.Format("Not saved. Error: {0}", ErrorsGlobal.ToString());
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), ex);
                 return Json(new
                 {
                     success = false,
-                    message = message,
+                    message = ErrorsGlobal.ToString(),
                 },
                 JsonRequestBehavior.DenyGet);
+
             }
         }
 
 
-        #region Sales Orders
-        public ActionResult ListAllSalesOrders()
+
+
+        public ActionResult GetDeliveryOrderTotals()
         {
             try
             {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.All, false);
+                GlobalObject globalObject = ViewBag.GlobalObject as GlobalObject ?? new GlobalObject();
+                globalObject.IsNullThrowException();
+                return View(globalObject);
 
             }
             catch (Exception e)
             {
-                return throwError(e);
 
+                ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+                ErrorsGlobal.MemorySave();
+                return RedirectToAction("Index");
             }
-
         }
-        public ActionResult List_Open_SalesOrders()
+
+        public ActionResult GetDeliveryOrderTotals_Admin()
         {
             try
             {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.New, false);
 
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
+                GlobalObject globalObject = ViewBag.GlobalObject as GlobalObject ?? new GlobalObject();
+                globalObject.IsNullThrowException("money account not received.");
 
-            }
+                if (!globalObject.IsAdmin)
+                    throw new Exception("You are not an administrator");
 
-        }
-        public ActionResult List_BackOrdered_SalesOrders()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.BackOrdered, false);
-
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
-
-            }
-
-        }
-        public ActionResult List_Canceled_SalesOrders()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Canceled, false);
-
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
-
-            }
-
-        }
-        public ActionResult List_Closed_SalesOrders()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Closed, false);
-
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
-
-            }
-
-        }
-        public ActionResult List_Credit_SalesOrders()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Credit, false);
-
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
-
-            }
-
-        }
-        public ActionResult List_InProccess_SalesOrders()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.InProccess, false);
-
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
-
-            }
-
-        }
-        public ActionResult List_Quotation_SalesOrders()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Quotation, false);
-
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
-
-            }
-
-        }
-
-
-
-
-        public ActionResult ListAllSalesOrders_AdminScreen()
-        {
-            try
-            {
-                if (!Is_Admin)
-                {
-                    throw new Exception("Unable to continue. You do not have admin rights.");
-
-                }
-                //UserId.IsNullOrWhiteSpaceThrowException("You are not logged in.");
-                DateTime fromDate = DateTime.Now.AddMonths(-3);
-                DateTime toDate = DateTime.Now;
-                BuySellStatementModel salesOrderList = BuySellDocBiz.Get_X_Orders_List(UserId, fromDate, toDate, true, BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.All);
-                return View("ListAllSalesOrders", salesOrderList);
+                return View(globalObject);
 
             }
             catch (Exception e)
@@ -471,11 +425,60 @@ namespace MarketPlace.Web6.Controllers
             }
 
         }
-        public ActionResult List_Open_SalesOrders_AdminScreen()
+
+
+
+
+        public ActionResult Delivery(string buySellId)
+        {
+            BuySellDoc buySellDoc = new BuySellDoc();
+            try
+            {
+                buySellDoc = SuperBiz.GetDeliveryOrder(buySellId);
+            }
+            catch (Exception ex)
+            {
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), ex);
+            }
+            return View(buySellDoc);
+        }
+
+        public ActionResult AcceptDeliveryman(string frtOfferId, string returnUrl, BuySellDocumentTypeENUM buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Unknown)
         {
             try
             {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.New, true);
+                AcceptDeliveryMan_Code(frtOfferId, buySellDocumentTypeEnum);
+            }
+            catch (Exception ex)
+            {
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), ex);
+            }
+            return Redirect(returnUrl);
+
+        }
+
+        public ActionResult Deliveryman_Accepts_To_Deliver(string frtOfferId, string returnUrl)
+        {
+            try
+            {
+                SuperBiz.Deliveryman_Accepts_To_Deliver(frtOfferId);
+            }
+            catch (Exception ex)
+            {
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), ex);
+            }
+            return Redirect(returnUrl);
+
+        }
+
+
+        #region Sales Orders Admin
+        public ActionResult List_Sale_All_Admin()
+        {
+            try
+            {
+
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.All, true);
 
             }
             catch (Exception e)
@@ -485,11 +488,1051 @@ namespace MarketPlace.Web6.Controllers
             }
 
         }
+        public ActionResult List_Sale_RequestConfirmed_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.RequestConfirmed, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        public ActionResult List_Sale_RequestUnconfirmed_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.RequestUnconfirmed, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+
+        public ActionResult List_Sale_CourierAccepted_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_ConfirmedByCourier_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.CourierComingToPickUp, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_ConfirmedBySeller_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.BeingPreparedForShipmentBySeller, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_Delivered_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Delivered, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_InProccess_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.InProccess, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_PickedUp_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.PickedUp, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        //public ActionResult List_Sale_Enroute()
+        //{
+        //    try
+        //    {
+        //        return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Enroute, true);
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return throwError(e);
+
+        //    }
+
+        //}
+        public ActionResult List_Sale_Enroute_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Enroute, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_Problem_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Problem, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_ReadyForShipment_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.ReadyForPickup, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_Rejected_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Rejected, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+
+        public ActionResult List_Sale_CourierAcceptedByBuyerAndSeller_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        #endregion
+
+
+        #region Purchase Orders Admin
+        public ActionResult List_Purchase_All_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.All, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Purchase_RequestConfirmed_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.RequestConfirmed, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        public ActionResult List_Purchase_RequestUnconfirmed_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.RequestUnconfirmed, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        public ActionResult List_Purchase_CourierAccepted_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        public ActionResult List_Purchase_ConfirmedByCourier_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.CourierComingToPickUp, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Purchase_ConfirmedBySeller_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.BeingPreparedForShipmentBySeller, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Purchase_Delivered_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Delivered, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Purchase_InProccess_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.InProccess, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Purchase_PickedUp_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.PickedUp, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Purchase_Enroute_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Enroute, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Purchase_Problem_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Problem, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Purchase_ReadyForShipment_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.ReadyForPickup, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Purchase_Rejected_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Rejected, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+
+
+
+        //public ActionResult ListAllPurchasesOrders_AdminScreen()
+        //{
+        //    try
+        //    {
+        //        if (!Is_Admin)
+        //        {
+        //            throw new Exception("Unable to continue. You do not have admin rights.");
+
+        //        }
+        //        //UserId.IsNullOrWhiteSpaceThrowException("You are not logged in.");
+        //        DateTime fromDate = DateTime.Now.AddMonths(-3);
+        //        DateTime toDate = DateTime.Now;
+        //        BuySellStatementModel salesOrderList = BuySellDocBiz.GetBuySellStatementModel(UserId, fromDate, toDate, true, BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.All);
+        //        return View("ListAllPurchasesOrders", salesOrderList);
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+        //        ErrorsGlobal.MemorySave();
+        //        return RedirectToAction("Index");
+
+        //    }
+
+        //}
+        //public ActionResult List_Open_PurchasesOrders_AdminScreen()
+        //{
+        //    try
+        //    {
+        //        return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.New, true);
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return throwError(e);
+
+        //    }
+
+        //}
+        //public ActionResult List_BackOrdered_PurchasesOrders_AdminScreen()
+        //{
+        //    try
+        //    {
+        //        return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.BackOrdered, true);
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return throwError(e);
+
+        //    }
+
+        //}
+        //public ActionResult List_Live_PurchasesOrders(string toDateString, bool isAdmin = true)
+        //{
+        //    try
+        //    {
+        //        if (isAdmin)
+        //        {
+        //            //check if person is actually admin
+        //            if (!Is_Admin)
+        //            {
+        //                throw new Exception("Unable to continue. You do not have admin rights.");
+
+        //            }
+        //        }
+        //        DateTime toDateNotNull;
+        //        bool success = DateTime.TryParse(toDateString, out toDateNotNull);
+
+        //        if (!success)
+        //        {
+        //            throw new Exception("Unable to parse date. String recieved: '" + toDateString + "'");
+        //        }
+
+        //        toDateNotNull = toDateNotNull.AddDays(-1);
+        //        UserId.IsNullOrWhiteSpaceThrowException("You are not logged in.");
+        //        DateTime fromDate = toDateNotNull.AddMonths(-3);
+        //        BuySellStatementModel salesOrderList = BuySellDocBiz.GetBuySellStatementModel(UserId, fromDate, toDateNotNull, isAdmin, BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.All);
+        //        return View("ListAllPurchasesOrders", salesOrderList);
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+        //        ErrorsGlobal.MemorySave();
+        //        return RedirectToAction("Index");
+
+        //    }
+
+        //}
+
+        //public ActionResult GetPurchaseOrderTotals()
+        //{
+        //    try
+        //    {
+        //        GlobalObject globalObject = ViewBag.GlobalObject as GlobalObject ?? new GlobalObject();
+        //        globalObject.IsNullThrowException();
+        //        return View(globalObject);
+
+        //    }
+        //    catch (Exception e)
+        //    {
+
+        //        ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+        //        ErrorsGlobal.MemorySave();
+        //        return RedirectToAction("Index");
+        //    }
+        //}
+        //public ActionResult GetPurchaseOrderTotals_Admin()
+        //{
+        //    try
+        //    {
+
+        //        GlobalObject globalObject = ViewBag.GlobalObject as GlobalObject ?? new GlobalObject();
+        //        globalObject.IsNullThrowException("money account not received.");
+
+        //        if (!globalObject.IsAdmin)
+        //            throw new Exception("You are not an administrator");
+
+        //        return View(globalObject);
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+        //        ErrorsGlobal.MemorySave();
+        //        return RedirectToAction("Index");
+
+        //    }
+        //}
+
+
+
+
+
+
+
+        //public ActionResult GetPurchaseTotals()
+        //{
+        //    UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as UserMoneyAccount ?? new UserMoneyAccount();
+        //    return View(moneyAccount);
+
+        //}
+        //public ActionResult GetPurchaseTotals_Admin()
+        //{
+        //    try
+        //    {
+        //        UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as UserMoneyAccount ?? new ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount();
+        //        if (!moneyAccount.IsAdmin)
+        //            throw new Exception("You are not an administrator");
+        //        return View(moneyAccount);
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+        //        ErrorsGlobal.MemorySave();
+        //        return RedirectToAction("Index");
+
+        //    }
+        //}
+        //public ActionResult GetPurchaseTotals()
+        //{
+        //    UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as UserMoneyAccount ?? new UserMoneyAccount();
+        //    return View(moneyAccount);
+
+        //}
+        //public ActionResult GetPurchaseTotals_Admin()
+        //{
+        //    try
+        //    {
+        //        UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as UserMoneyAccount ?? new ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount();
+        //        if (!moneyAccount.IsAdmin)
+        //            throw new Exception("You are not an administrator");
+        //        return View(moneyAccount);
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+        //        ErrorsGlobal.MemorySave();
+        //        return RedirectToAction("Index");
+
+        //    }
+        //}
+
+        #endregion
+
+
+        #region Salesman Orders Admin
+        public ActionResult List_Salesman_All_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.All, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_RequestConfirmed_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.RequestConfirmed, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        public ActionResult List_Salesman_RequestUnconfirmed_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.RequestUnconfirmed, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        public ActionResult List_Salesman_CourierAccepted_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        public ActionResult List_Salesman_ConfirmedByCourier_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.CourierComingToPickUp, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_ConfirmedBySeller_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.BeingPreparedForShipmentBySeller, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_Delivered_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.Delivered, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_InProccess_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.InProccess, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_PickedUp_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.PickedUp, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_Enroute_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.Enroute, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_Problem_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.Problem, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_ReadyForShipment_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.ReadyForPickup, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_Rejected_Admin()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.Rejected, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+
+
+
+
+
+        #endregion
+
+
+
+
+        #region Sales Orders
+        public ActionResult List_Sale_All()
+        {
+            try
+            {
+
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.All, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_RequestConfirmed()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.RequestConfirmed, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        public ActionResult List_Sale_RequestUnconfirmed()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.RequestUnconfirmed, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+
+        public ActionResult List_Sale_CourierAccepted()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_ConfirmedByCourier()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.CourierComingToPickUp, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_ConfirmedBySeller()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.BeingPreparedForShipmentBySeller, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_Delivered()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Delivered, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_InProccess()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.InProccess, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_PickedUp()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.PickedUp, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        //public ActionResult List_Sale_Enroute()
+        //{
+        //    try
+        //    {
+        //        return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Enroute, false);
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return throwError(e);
+
+        //    }
+
+        //}
+        public ActionResult List_Sale_Enroute()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Enroute, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_Problem()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Problem, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_ReadyForShipment()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.ReadyForPickup, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Sale_Rejected()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Rejected, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+
+        public ActionResult List_Sale_CourierAcceptedByBuyerAndSeller()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+
+        public ActionResult ListAllSalesOrders_AdminScreen()
+        {
+            throw new NotImplementedException();
+            //try
+            //{
+            //    if (!Is_Admin)
+            //    {
+            //        throw new Exception("Unable to continue. You do not have admin rights.");
+
+            //    }
+            //    //UserId.IsNullOrWhiteSpaceThrowException("You are not logged in.");
+            //    DateTime fromDate = DateTime.Now.AddMonths(-3);
+            //    DateTime toDate = DateTime.Now;
+            //    BuySellStatementModel salesOrderList = BuySellDocBiz.Get_X_Orders_List(UserId, fromDate, toDate, true, BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.All);
+            //    return View("ListAllSalesOrders", salesOrderList);
+
+            //}
+            //catch (Exception e)
+            //{
+            //    ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+            //    ErrorsGlobal.MemorySave();
+            //    return RedirectToAction("Index");
+
+            //}
+
+        }
+        //public ActionResult List_Open_SalesOrders_AdminScreen()
+        //{
+        //    try
+        //    {
+        //        return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.New, true);
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return throwError(e);
+
+        //    }
+
+        //}
         public ActionResult List_BackOrdered_SalesOrders_AdminScreen()
         {
             try
             {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.BackOrdered, true);
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.BackOrdered, true);
 
             }
             catch (Exception e)
@@ -499,53 +1542,54 @@ namespace MarketPlace.Web6.Controllers
             }
 
         }
-        public ActionResult List_Canceled_SalesOrders_AdminScreen()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Canceled, true);
+        //public ActionResult List_Canceled_SalesOrders_AdminScreen()
+        //{
 
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
+        //    try
+        //    {
+        //        return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Canceled, true);
 
-            }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return throwError(e);
 
-        }
-        public ActionResult List_Closed_SalesOrders_AdminScreen()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Closed, true);
+        //    }
 
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
+        //}
+        //public ActionResult List_Closed_SalesOrders_AdminScreen()
+        //{
+        //    try
+        //    {
+        //        return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Closed, true);
 
-            }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return throwError(e);
 
-        }
-        public ActionResult List_Credit_SalesOrders_AdminScreen()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Credit, true);
+        //    }
 
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
+        //}
+        //public ActionResult List_Credit_SalesOrders_AdminScreen()
+        //{
+        //    try
+        //    {
+        //        return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Credit, true);
 
-            }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return throwError(e);
 
-        }
+        //    }
+
+        //}
         public ActionResult List_InProccess_SalesOrders_AdminScreen()
         {
             try
             {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.InProccess, true);
+                return getOrdersListFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.InProccess, true);
 
             }
             catch (Exception e)
@@ -555,20 +1599,9 @@ namespace MarketPlace.Web6.Controllers
             }
 
         }
-        public ActionResult List_Quotation_SalesOrders_AdminScreen()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.Quotation, true);
 
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
 
-            }
 
-        }
         public ActionResult List_Live_SalesOrders(string toDateString, bool isAdmin = false)
         {
             try
@@ -593,8 +1626,9 @@ namespace MarketPlace.Web6.Controllers
                 toDateNotNull = toDateNotNull.AddDays(-1);
                 UserId.IsNullOrWhiteSpaceThrowException("You are not logged in.");
                 DateTime fromDate = toDateNotNull.AddMonths(-3);
-                BuySellStatementModel salesOrderList = BuySellDocBiz.Get_X_Orders_List(UserId, fromDate, toDateNotNull, isAdmin, BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.All);
-                return View("ListAllSalesOrders", salesOrderList);
+                BuySellStatementModel buySellStatementModel = BuySellDocBiz.GetBuySellStatementModel(UserId, fromDate, toDateNotNull, isAdmin, BuySellDocumentTypeENUM.Sale, BuySellDocStateENUM.All);
+
+                return View("ListAllSalesOrders", buySellStatementModel);
 
             }
             catch (Exception e)
@@ -610,7 +1644,7 @@ namespace MarketPlace.Web6.Controllers
         public ActionResult GetSaleOrderTotals()
         {
             //UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as UserMoneyAccount ?? new UserMoneyAccount();
-            MoneyItemParent moneyItemParent = ViewBag.MoneyItemParent as MoneyItemParent ?? new MoneyItemParent();
+            GlobalObject moneyItemParent = ViewBag.GlobalObject as GlobalObject ?? new GlobalObject();
 
             return View(moneyItemParent);
 
@@ -619,11 +1653,12 @@ namespace MarketPlace.Web6.Controllers
         {
             try
             {
-                UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as UserMoneyAccount ?? new ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount();
+                GlobalObject globalAccount = ViewBag.GlobalObject as GlobalObject ?? new GlobalObject();
+                //UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as UserMoneyAccount ?? new ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount();
 
-                if (!moneyAccount.IsAdmin)
+                if (!globalAccount.IsAdmin)
                     throw new Exception("You are not an administrator");
-                return View(moneyAccount);
+                return View(globalAccount);
 
             }
             catch (Exception e)
@@ -642,7 +1677,7 @@ namespace MarketPlace.Web6.Controllers
         {
             try
             {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.All, false);
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.All, false);
 
             }
             catch (Exception e)
@@ -652,11 +1687,11 @@ namespace MarketPlace.Web6.Controllers
             }
 
         }
-        public ActionResult List_Open_PurchasesOrders()
+        public ActionResult List_Purchase_RequestConfirmed()
         {
             try
             {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.New, false);
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.RequestConfirmed, false);
 
             }
             catch (Exception e)
@@ -666,11 +1701,12 @@ namespace MarketPlace.Web6.Controllers
             }
 
         }
-        public ActionResult List_BackOrdered_PurchasesOrders()
+
+        public ActionResult List_Purchase_RequestUnconfirmed()
         {
             try
             {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.BackOrdered, false);
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.RequestUnconfirmed, false);
 
             }
             catch (Exception e)
@@ -680,11 +1716,12 @@ namespace MarketPlace.Web6.Controllers
             }
 
         }
-        public ActionResult List_Canceled_PurchasesOrders()
+
+        public ActionResult List_Purchase_CourierAccepted()
         {
             try
             {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Canceled, false);
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller, false);
 
             }
             catch (Exception e)
@@ -694,11 +1731,12 @@ namespace MarketPlace.Web6.Controllers
             }
 
         }
-        public ActionResult List_Closed_PurchasesOrders()
+
+        public ActionResult List_Purchase_ConfirmedByCourier()
         {
             try
             {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Closed, false);
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.CourierComingToPickUp, false);
 
             }
             catch (Exception e)
@@ -708,11 +1746,11 @@ namespace MarketPlace.Web6.Controllers
             }
 
         }
-        public ActionResult List_Credit_PurchasesOrders()
+        public ActionResult List_Purchase_ConfirmedBySeller()
         {
             try
             {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Credit, false);
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.BeingPreparedForShipmentBySeller, false);
 
             }
             catch (Exception e)
@@ -722,11 +1760,11 @@ namespace MarketPlace.Web6.Controllers
             }
 
         }
-        public ActionResult List_InProccess_PurchasesOrders()
+        public ActionResult List_Purchase_Delivered()
         {
             try
             {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.InProccess, false);
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Delivered, false);
 
             }
             catch (Exception e)
@@ -736,11 +1774,81 @@ namespace MarketPlace.Web6.Controllers
             }
 
         }
-        public ActionResult List_Quotation_PurchasesOrders()
+        public ActionResult List_Purchase_InProccess()
         {
             try
             {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Quotation, false);
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.InProccess, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Purchase_PickedUp()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.PickedUp, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Purchase_Enroute()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Enroute, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Purchase_Problem()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Problem, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Purchase_ReadyForShipment()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.ReadyForPickup, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Purchase_Rejected()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Rejected, false);
 
             }
             catch (Exception e)
@@ -766,7 +1874,7 @@ namespace MarketPlace.Web6.Controllers
                 //UserId.IsNullOrWhiteSpaceThrowException("You are not logged in.");
                 DateTime fromDate = DateTime.Now.AddMonths(-3);
                 DateTime toDate = DateTime.Now;
-                BuySellStatementModel salesOrderList = BuySellDocBiz.Get_X_Orders_List(UserId, fromDate, toDate, true, BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.All);
+                BuySellStatementModel salesOrderList = BuySellDocBiz.GetBuySellStatementModel(UserId, fromDate, toDate, true, BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.All);
                 return View("ListAllPurchasesOrders", salesOrderList);
 
             }
@@ -779,95 +1887,25 @@ namespace MarketPlace.Web6.Controllers
             }
 
         }
-        public ActionResult List_Open_PurchasesOrders_AdminScreen()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.New, true);
+        //public ActionResult List_Open_PurchasesOrders_AdminScreen()
+        //{
+        //    try
+        //    {
+        //        return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.New, true);
 
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return throwError(e);
 
-            }
+        //    }
 
-        }
+        //}
         public ActionResult List_BackOrdered_PurchasesOrders_AdminScreen()
         {
             try
             {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.BackOrdered, true);
-
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
-
-            }
-
-        }
-        public ActionResult List_Canceled_PurchasesOrders_AdminScreen()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Canceled, true);
-
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
-
-            }
-
-        }
-        public ActionResult List_Closed_PurchasesOrders_AdminScreen()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Closed, true);
-
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
-
-            }
-
-        }
-        public ActionResult List_Credit_PurchasesOrders_AdminScreen()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Credit, true);
-
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
-
-            }
-
-        }
-        public ActionResult List_InProccess_PurchasesOrders_AdminScreen()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.InProccess, true);
-
-            }
-            catch (Exception e)
-            {
-                return throwError(e);
-
-            }
-
-        }
-        public ActionResult List_Quotation_PurchasesOrders_AdminScreen()
-        {
-            try
-            {
-                return ListOrdersFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.Quotation, true);
+                return getOrdersListFor(BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.BackOrdered, true);
 
             }
             catch (Exception e)
@@ -901,7 +1939,7 @@ namespace MarketPlace.Web6.Controllers
                 toDateNotNull = toDateNotNull.AddDays(-1);
                 UserId.IsNullOrWhiteSpaceThrowException("You are not logged in.");
                 DateTime fromDate = toDateNotNull.AddMonths(-3);
-                BuySellStatementModel salesOrderList = BuySellDocBiz.Get_X_Orders_List(UserId, fromDate, toDateNotNull, isAdmin, BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.All);
+                BuySellStatementModel salesOrderList = BuySellDocBiz.GetBuySellStatementModel(UserId, fromDate, toDateNotNull, isAdmin, BuySellDocumentTypeENUM.Purchase, BuySellDocStateENUM.All);
                 return View("ListAllPurchasesOrders", salesOrderList);
 
             }
@@ -919,10 +1957,9 @@ namespace MarketPlace.Web6.Controllers
         {
             try
             {
-                //UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as UserMoneyAccount ?? new UserMoneyAccount();
-                MoneyItemParent moneyItemParent = ViewBag.MoneyItemParent as MoneyItemParent ?? new MoneyItemParent();
-                moneyItemParent.IsNullThrowException();
-                return View(moneyItemParent);
+                GlobalObject globalObject = ViewBag.GlobalObject as GlobalObject ?? new GlobalObject();
+                globalObject.IsNullThrowException();
+                return View(globalObject);
 
             }
             catch (Exception e)
@@ -938,11 +1975,13 @@ namespace MarketPlace.Web6.Controllers
             try
             {
 
-                UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as UserMoneyAccount ?? new ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount();
-                moneyAccount.IsNullThrowException("money account not received.");
-                if (!moneyAccount.IsAdmin)
+                GlobalObject globalObject = ViewBag.GlobalObject as GlobalObject ?? new GlobalObject();
+                globalObject.IsNullThrowException("money account not received.");
+
+                if (!globalObject.IsAdmin)
                     throw new Exception("You are not an administrator");
-                return View(moneyAccount);
+
+                return View(globalObject);
 
             }
             catch (Exception e)
@@ -953,6 +1992,11 @@ namespace MarketPlace.Web6.Controllers
 
             }
         }
+
+
+
+
+
 
 
         //public ActionResult GetPurchaseTotals()
@@ -1006,62 +2050,649 @@ namespace MarketPlace.Web6.Controllers
 
         #endregion
 
-        public override void Event_AfterDeleting(string id)
+
+
+        #region Salesman Orders
+        public ActionResult List_Salesman_All()
         {
-            base.Event_AfterDeleting(id);
-
-            //we need to mark all the items deleted as well.
-            //get a list of all the items
-            //  List<BuySellItem> listOfItems = 
-
-        }
-
-
-
-        private ActionResult throwError(Exception e)
-        {
-            ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
-            ErrorsGlobal.MemorySave();
-            return RedirectToAction("Index", "Menus");
-        }
-
-        private ActionResult ListOrdersFor(BuySellDocumentTypeENUM buySellDocumentTypeEnum, BuySellDocStateENUM buySellDocStateEnum, bool isAdmin)
-        {
-
             try
             {
-                UserId.IsNullOrWhiteSpaceThrowException("You are not logged in.");
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.All, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_RequestConfirmed()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.RequestConfirmed, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        public ActionResult List_Salesman_RequestUnconfirmed()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.RequestUnconfirmed, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        public ActionResult List_Salesman_CourierAccepted()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        public ActionResult List_Salesman_ConfirmedByCourier()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.CourierComingToPickUp, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_ConfirmedBySeller()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.BeingPreparedForShipmentBySeller, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_Delivered()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.Delivered, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_InProccess()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.InProccess, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_PickedUp()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.PickedUp, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_Enroute()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.Enroute, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_Problem()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.Problem, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_ReadyForShipment()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.ReadyForPickup, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Salesman_Rejected()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.Rejected, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+
+
+
+        public ActionResult ListAllSalesmansOrders_AdminScreen()
+        {
+            try
+            {
+                if (!Is_Admin)
+                {
+                    throw new Exception("Unable to continue. You do not have admin rights.");
+
+                }
+                //UserId.IsNullOrWhiteSpaceThrowException("You are not logged in.");
                 DateTime fromDate = DateTime.Now.AddMonths(-3);
                 DateTime toDate = DateTime.Now;
-                BuySellStatementModel orderList = BuySellDocBiz.Get_X_Orders_List(UserId, fromDate, toDate, isAdmin, buySellDocumentTypeEnum, buySellDocStateEnum);
-                switch (buySellDocumentTypeEnum)
+                BuySellStatementModel salesOrderList = BuySellDocBiz.GetBuySellStatementModel(UserId, fromDate, toDate, true, BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.All);
+                return View("ListAllSalesmansOrders", salesOrderList);
+
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+                ErrorsGlobal.MemorySave();
+                return RedirectToAction("Index");
+
+            }
+
+        }
+
+        public ActionResult List_BackOrdered_SalesmansOrders_AdminScreen()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.BackOrdered, true);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Live_SalesmansOrders(string toDateString, bool isAdmin = false)
+        {
+            try
+            {
+                if (isAdmin)
                 {
-                    case BuySellDocumentTypeENUM.Sale:
+                    //check if person is actually admin
+                    if (!Is_Admin)
+                    {
+                        throw new Exception("Unable to continue. You do not have admin rights.");
 
-                        return View("ListAllSalesOrders", orderList);
-
-                    case BuySellDocumentTypeENUM.Purchase:
-                        return View("ListOrders", orderList);
-
-                    case BuySellDocumentTypeENUM.Unknown:
-                    default:
-                        ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod());
-                        throw new Exception(ErrorsGlobal.ToString());
+                    }
                 }
+                DateTime toDateNotNull;
+                bool success = DateTime.TryParse(toDateString, out toDateNotNull);
+
+                if (!success)
+                {
+                    throw new Exception("Unable to parse date. String recieved: '" + toDateString + "'");
+                }
+
+                toDateNotNull = toDateNotNull.AddDays(-1);
+                UserId.IsNullOrWhiteSpaceThrowException("You are not logged in.");
+                DateTime fromDate = toDateNotNull.AddMonths(-3);
+                BuySellStatementModel salesOrderList = BuySellDocBiz.GetBuySellStatementModel(UserId, fromDate, toDateNotNull, isAdmin, BuySellDocumentTypeENUM.Salesman, BuySellDocStateENUM.All);
+                return View("ListAllSalesmansOrders", salesOrderList);
+
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+                ErrorsGlobal.MemorySave();
+                return RedirectToAction("Index");
+
+            }
+
+        }
+
+        public ActionResult GetSalesmanOrderTotals()
+        {
+            try
+            {
+                GlobalObject globalObject = ViewBag.GlobalObject as GlobalObject ?? new GlobalObject();
+                globalObject.IsNullThrowException();
+                return View(globalObject);
 
             }
             catch (Exception e)
             {
 
+                ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+                ErrorsGlobal.MemorySave();
+                return RedirectToAction("Index");
+            }
+        }
+        public ActionResult GetSalesmanOrderTotals_Admin()
+        {
+            try
+            {
+
+                GlobalObject globalObject = ViewBag.GlobalObject as GlobalObject ?? new GlobalObject();
+                globalObject.IsNullThrowException("money account not received.");
+
+                if (!globalObject.IsAdmin)
+                    throw new Exception("You are not an administrator");
+
+                return View(globalObject);
+
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+                ErrorsGlobal.MemorySave();
+                return RedirectToAction("Index");
+
+            }
+        }
+
+
+
+
+
+
+
+
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #region Delivery
+
+
+        public ActionResult List_Delivery_All()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Delivery, BuySellDocStateENUM.All, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Delivery_RequestConfirmed()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Delivery, BuySellDocStateENUM.RequestConfirmed, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        public ActionResult List_Delivery_RequestUnconfirmed()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Delivery, BuySellDocStateENUM.RequestUnconfirmed, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        public ActionResult List_Delivery_CourierAccepted()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Delivery, BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        public ActionResult List_Delivery_ConfirmedByCourier()
+        {
+            try
+            {
+
+                return getOrdersListFor(BuySellDocumentTypeENUM.Delivery, BuySellDocStateENUM.CourierComingToPickUp, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Delivery_ConfirmedBySeller()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Delivery, BuySellDocStateENUM.BeingPreparedForShipmentBySeller, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Delivery_Delivered()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Delivery, BuySellDocStateENUM.Delivered, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Delivery_InProccess()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Delivery, BuySellDocStateENUM.InProccess, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Delivery_PickedUp()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Delivery, BuySellDocStateENUM.PickedUp, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Delivery_Enroute()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Delivery, BuySellDocStateENUM.Enroute, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Delivery_Problem()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Delivery, BuySellDocStateENUM.Problem, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Delivery_ReadyForShipment()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Delivery, BuySellDocStateENUM.ReadyForPickup, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        public ActionResult List_Delivery_Rejected()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Delivery, BuySellDocStateENUM.Rejected, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+
+        public ActionResult List_Delivery_CourierAcceptedByBuyerAndSeller()
+        {
+            try
+            {
+                return getOrdersListFor(BuySellDocumentTypeENUM.Delivery, BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller, false);
+
+            }
+            catch (Exception e)
+            {
+                return throwError(e);
+
+            }
+
+        }
+        #endregion
+
+        #region Delivery Orders
+
+        public ActionResult GetAllOrdersReadyForShipment()
+        {
+            try
+            {
+                BuySellStatementModel buySellStatementModel = SuperBiz.GetOrdersList(BuySellDocumentTypeENUM.Delivery, BuySellDocStateENUM.ReadyForPickup, false);
+                hide_Save_Buton(buySellStatementModel);
+
+                return View("ListOrders", buySellStatementModel);
+
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+                ErrorsGlobal.MemorySave();
                 return RedirectToAction("Index", "Menus");
             }
         }
 
-        //public  ActionResult SelectDocumentTypeView(string isandForSearch, MenuENUM menuEnum = MenuENUM.CreateDefault, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, bool isMenu = false, string parentId = "", DocumentTypeENUM documentType = DocumentTypeENUM.Unknown)
-        //{
+        private void hide_Save_Buton(BuySellStatementModel buySellStatementModel)
+        {
+            if (buySellStatementModel.GetBuySellDocViewState(BuySellDocStateENUM.ReadyForPickup, BuySellDocumentTypeENUM.Delivery, null, null).HD_Hide_Save_Button_In_Edit)
+            {
+                ViewBag.ShowEditControls = false.ToString();
+            }
+        }
 
-        //    return View("SelectDocumentTypeView");
-        //}
+        #endregion
+
+        #region Controller Methods
+
+        private void Hide_Save_Button(BuySellDoc buySellDoc)
+        {
+            buySellDoc.BuySellDocViewState.IsNullThrowException();
+            if (buySellDoc.BuySellDocViewState.HD_Hide_Save_Button_In_Edit)
+            {
+                ViewBag.ShowEditControls = false.ToString();
+
+            }
+        }
+
+
+
+        private bool Deliveryman_Accepts_To_Deliver_Code(string frtOfferId)
+        {
+            try
+            {
+                UserId.IsNullOrWhiteSpaceThrowException();
+                SuperBiz.Deliveryman_Accepts_To_Deliver(frtOfferId);
+                return true;
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+
+            }
+            return false;
+        }
+
+        private bool AcceptDeliveryMan_Code(string frtOfferId, BuySellDocumentTypeENUM buySellDocumentTypeEnum)
+        {
+            try
+            {
+                if (buySellDocumentTypeEnum == BuySellDocumentTypeENUM.Unknown)
+                {
+                    throw new Exception("Document type is not known.");
+                }
+                UserId.IsNullOrWhiteSpaceThrowException();
+
+                decimal currRefundabelBalance = SuperBiz.BalanceFor_User(UserId, CashTypeENUM.Refundable);
+                BuySellDocBiz.AcceptCourier(frtOfferId, buySellDocumentTypeEnum, currRefundabelBalance);
+                return true;
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+
+            }
+            return false;
+        }
+
+
+        private ActionResult getOrdersListFor(BuySellDocumentTypeENUM buySellDocumentTypeEnum, BuySellDocStateENUM buySellDocStateEnum, bool isWantAdminPrivilages)
+        {
+
+            try
+            {
+                BuySellStatementModel buySellStatementModel = SuperBiz.GetOrdersList(buySellDocumentTypeEnum, buySellDocStateEnum, isWantAdminPrivilages);
+                return View("ListOrders", buySellStatementModel);
+
+            }
+            catch (Exception e)
+            {
+                ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+                ErrorsGlobal.MemorySave();
+                return RedirectToAction("Index", "Menus");
+            }
+        }
+
+
+
+
+        #endregion
+
+
 
     }
 }

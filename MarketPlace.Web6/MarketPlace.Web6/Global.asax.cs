@@ -24,6 +24,7 @@ namespace MarketPlace.Web6
             CreateInitializationDirectories();
 
 
+
         }
 
         //https://stackoverflow.com/questions/12553639/ef-codefirst-get-all-poco-types-for-dbcontext

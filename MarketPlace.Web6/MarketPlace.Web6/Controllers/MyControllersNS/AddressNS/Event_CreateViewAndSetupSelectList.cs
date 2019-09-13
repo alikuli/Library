@@ -21,12 +21,16 @@ namespace MarketPlace.Web6.Controllers
     public partial class AddressesController
     {
 
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             ViewBag.CountrySelectList = AddressBiz.CountrySelectList;
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
         }
 
-
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            ViewBag.CountrySelectList = AddressBiz.CountrySelectList;
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
+        }
     }
 }

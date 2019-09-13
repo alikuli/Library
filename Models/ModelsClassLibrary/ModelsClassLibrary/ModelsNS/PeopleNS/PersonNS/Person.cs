@@ -2,6 +2,8 @@
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
+using ModelsClassLibrary.ModelsNS.CashNS.CashEncashmentTrxNS;
+using ModelsClassLibrary.ModelsNS.CashNS.PenaltyNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FilesDocsNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
@@ -60,7 +62,8 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
         public virtual ICollection<Phone> Phones { get; set; }
 
 
-
+        public virtual ICollection<PenaltyHeader> PenaltyHeaders { get; set; }
+        public virtual ICollection<PenaltyTrx> PenaltyTrxs { get; set; }
 
         public virtual PersonComplex PersonComplex { get; set; }
 
@@ -181,22 +184,23 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
             return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "LiscenseBack");
         }
 
-        public virtual ICollection<Message> FromPerson { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
 
-        public virtual ICollection<PeopleMessage> MessagesToPeople { get; set; }
-
-
+        public virtual ICollection<PeopleMessage> PeopleMessages { get; set; }
 
 
-        //public virtual ICollection<ProductChild> ProductChildren { get; set; }
-
+        public virtual ICollection<CashEncashmentTrx> CashEncashmentTrxs { get; set; }
 
         public virtual ICollection<GlobalComment> GlobalComments { get; set; }
+        //public virtual ICollection<PenaltyTrx> PenaltyTrxs { get; set; }
 
         /// <summary>
         /// These are the likes and unlikes for this person.
         /// </summary>
         public virtual ICollection<LikeUnlike> LikeUnlikes { get; set; }
+
+
+
 
 
         [NotMapped]
@@ -216,6 +220,8 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
         [NotMapped]
         public SelectList SelectListCountries { get; set; }
 
+
+
         public string MiscFilesLocation_Initialization()
         {
             return AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY;
@@ -226,10 +232,8 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
             return ClassesWithRightsENUM.Person;
         }
 
-        //[NotMapped]
-        //public bool SuspendedOldValue { get; set; }
-        //[NotMapped]
-        //public bool BlackListOldValue { get; set; }
+
+
         public override void UpdatePropertiesDuringModify(InterfacesLibrary.SharedNS.ICommonWithId ic)
         {
             base.UpdatePropertiesDuringModify(ic);

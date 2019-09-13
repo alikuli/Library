@@ -17,7 +17,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         /// </summary>
         /// <param name="iCommonWithId"></param>
         /// <returns></returns>
-        public virtual ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public virtual ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             if (parm.Entity.IsNull())
                 return View(Biz.FactoryForHttpGet());

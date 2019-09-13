@@ -59,7 +59,7 @@ namespace UowLibrary.StateNS
         }
         public bool BlankStateExistsForCountryId(string id)
         {
-            State s = Dal.FindAll().FirstOrDefault(x => x.CountryId == id && (x.Name == "" || x.Name == null));
+            State s = Dal.FindAllFor().FirstOrDefault(x => x.CountryId == id && (x.Name == "" || x.Name == null));
             return !s.IsNull();
         }
     }

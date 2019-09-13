@@ -1,0 +1,228 @@
+﻿@model ModelsClassLibrary.ModelsNS.GlobalObjectNS.GlobalObject
+
+@{
+    ViewBag.Title = "ShowCashMenu";
+    const string SALE_ORDER_STATEMENT = "saleorderstatement";
+    ViewBag.StatementType = SALE_ORDER_STATEMENT;
+
+    bool zeroUnconfirmedRequests = Model.Purchase.RequestUnconfirmed.IsZero;
+    bool zeroConfirmedRequests = Model.Purchase.RequestConfirmed.IsZero;
+    bool zeroTotal = Model.Purchase.All.IsZero;
+    bool zeroInProccessOrders = Model.Purchase.InProccess.IsZero;
+    bool zeroConfirmedBySeller = Model.Purchase.BeingPreparedForShipmentBySeller.IsZero;
+    bool zeroConfirmedByCourier = Model.Purchase.CourierComingToPickUp.IsZero;
+    bool zeroReadyForShipment = Model.Purchase.ReadyForPickup.IsZero;
+    bool zeroEnroute = Model.Purchase.Enroute.IsZero;
+    bool zeroDelivered = Model.Purchase.Delivered.IsZero;
+    bool zeroRejected = Model.Purchase.Rejected.IsZero;
+    bool zeroProblem = Model.Purchase.Problem.IsZero;
+
+    string userRequestsUnconfirmedMenuItem = Model.Purchase.RequestUnconfirmed.MenuName;
+    string userRequestsConfirmedMenuItem = Model.Purchase.RequestConfirmed.MenuName;
+    string userTotalPurchaseOrdersMenuItem = Model.Purchase.All.MenuName;
+    string userInProccessOrdersMenuItem = Model.Purchase.InProccess.MenuName;
+    string userConfirmedBySellersMenuItem = Model.Purchase.BeingPreparedForShipmentBySeller.MenuName;
+    string userConfirmedByCouriersMenuItem = Model.Purchase.CourierComingToPickUp.MenuName;
+    string userReadyForShipmentsMenuItem = Model.Purchase.ReadyForPickup.MenuName;
+    string userEnrouteMenuItem = Model.Purchase.Enroute.MenuName;
+    string userDeliveredsMenuItem = Model.Purchase.Delivered.MenuName;
+    string userRejectedsMenuItem = Model.Purchase.Rejected.MenuName;
+    string userProblemsMenuItem = Model.Purchase.Problem.MenuName;
+
+
+    string userRequestsUnconfirmedToolTip = Model.Purchase.RequestUnconfirmed.MenuToolTip;
+    string userRequestsConfirmedToolTip = Model.Purchase.RequestConfirmed.MenuToolTip;
+    string userTotalPurchaseToolTip = Model.Purchase.All.MenuToolTip;
+    string userInProccessOrdersToolTip = Model.Purchase.InProccess.MenuToolTip;
+    string userConfirmedBySellersToolTip = Model.Purchase.BeingPreparedForShipmentBySeller.MenuToolTip;
+    string userConfirmedByCouriersToolTip = Model.Purchase.CourierComingToPickUp.MenuToolTip;
+    string userReadyForShipmentsToolTip = Model.Purchase.ReadyForPickup.MenuToolTip;
+    string userEnrouteToolTip = Model.Purchase.Enroute.MenuToolTip;
+    string userDeliveredsToolTip = Model.Purchase.Delivered.MenuToolTip;
+    string userRejectedsToolTip = Model.Purchase.Rejected.MenuToolTip;
+    string userProblemsToolTip = Model.Purchase.Problem.MenuToolTip;
+
+    string userRequestsUnconfirmed_Path = Url.Action("List_Purchase_RequestUnconfirmed_Admin", "BuySellDocs");
+    string userRequestsConfirmed_Path = Url.Action("List_Purchase_RequestConfirmed_Admin", "BuySellDocs");
+    string userTotalPurchase_Path = Url.Action("List_Purchase_All_Admin", "BuySellDocs");
+    string userInProccessOrders_Path = Url.Action("List_Purchase_InProccess_Admin", "BuySellDocs");
+    string userConfirmedBySellers_Path = Url.Action("List_Purchase_ConfirmedBySeller_Admin", "BuySellDocs");
+    string userConfirmedByCouriers_Path = Url.Action("List_Purchase_ConfirmedByCourier_Admin", "BuySellDocs");
+    string userReadyForShipments_Path = Url.Action("List_Purchase_ReadyForShipment_Admin", "BuySellDocs");
+    string userEnroute_Path = Url.Action("List_Purchase_Enroute_Admin", "BuySellDocs");
+    string userDelivereds_Path = Url.Action("List_Purchase_Delivered_Admin", "BuySellDocs");
+    string userRejecteds_Path = Url.Action("List_Purchase_Rejected_Admin", "BuySellDocs");
+    string userProblems_Path = Url.Action("List_Purchase_Problem_Admin", "BuySellDocs");
+}
+
+<h2 class="text-white bg-success p-2 w-100 mt-1 text-center">Purchase Orders -Administration</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="">
+        <hr />
+
+        @if (zeroTotal)
+        {
+            <p class="text-center">You have no orders.</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-success w-100 m-1" href="@userTotalPurchase_Path " data-toggle=" tooltip" title="@userTotalPurchaseToolTip" data-placement="left">@userTotalPurchaseOrdersMenuItem</a>
+            <br />
+
+        }
+
+
+        @if (zeroInProccessOrders)
+        {
+            <p class="text-center">You have no orders in proccess</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-success w-100 m-1" href="@userInProccessOrders_Path" data-toggle=" tooltip" title="@userInProccessOrdersToolTip" data-placement="left">@userInProccessOrdersMenuItem</a>
+            <br />
+
+        }
+
+
+
+
+
+        <h5 class="text-dark background-ltgrey  w-100 m-1 text-center p-2">Detail</h5>
+
+        
+        
+        
+        
+        @if (zeroRejected)
+        {
+            <p class="text-center">You have no orders that have been rejected</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-success w-100 m-1" href="@userRejecteds_Path " data-toggle=" tooltip" title="@userRejectedsToolTip" data-placement="left">@userRejectedsMenuItem</a>
+            <br />
+
+        }
+
+
+
+
+        @if (zeroProblem)
+        {
+            <p class="text-center">You have no orders that are a problem (lucky you)</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-success w-100 m-1" href="@userProblems_Path " data-toggle=" tooltip" title="@userProblemsToolTip" data-placement="left">@userProblemsMenuItem</a>
+            <br />
+
+        }
+
+
+
+
+
+        @if (zeroUnconfirmedRequests)
+        {
+            <p class="text-center">You have no unconfirmed requests</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-success w-100 m-1" href="@userRequestsUnconfirmed_Path " data-toggle=" tooltip" title="@userRequestsUnconfirmedToolTip" data-placement="left">@userRequestsUnconfirmedMenuItem</a>
+            <br />
+
+        }
+
+
+
+        @if (zeroConfirmedRequests)
+        {
+            <p class="text-center">You have no CONFIRMED requests</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-success w-100 m-1" href="@userRequestsConfirmed_Path " data-toggle=" tooltip" title="@userRequestsConfirmedToolTip" data-placement="left">@userRequestsConfirmedMenuItem</a>
+            <br />
+
+        }
+
+
+
+
+
+
+        @if (zeroConfirmedBySeller)
+        {
+            <p class="text-center">You have no orders confirmed by the Seller </p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-success w-100 m-1" href="@userConfirmedBySellers_Path " data-toggle=" tooltip" title="@userConfirmedBySellersToolTip" data-placement="left">@userConfirmedBySellersMenuItem</a>
+            <br />
+
+        }
+
+
+
+        @if (zeroReadyForShipment)
+        {
+            <p class="text-center">You have no orders Ready for Shipment </p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-success w-100 m-1" href="@userReadyForShipments_Path " data-toggle=" tooltip" title="@userReadyForShipmentsToolTip" data-placement="left">@userReadyForShipmentsMenuItem</a>
+            <br />
+
+        }
+
+
+
+        @if (zeroConfirmedByCourier)
+        {
+            <p class="text-center">You have no orders confirmed by courier for shipment</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-success w-100 m-1" href="@userConfirmedByCouriers_Path " data-toggle=" tooltip" title="@userConfirmedByCouriersToolTip" data-placement="left">@userConfirmedByCouriersMenuItem</a>
+            <br />
+
+        }
+
+
+
+        @if (zeroEnroute)
+        {
+            <p class="text-center">You have no orders that have been picked up by the courier</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-success w-100 m-1" href="@userEnroute_Path " data-toggle=" tooltip" title="@userEnrouteToolTip" data-placement="left">@userEnrouteMenuItem</a>
+            <br />
+
+        }
+
+
+
+        @if (zeroDelivered)
+        {
+            <p class="text-center">You have no orders delivered</p>
+        }
+        else
+        {
+            <a class="btn btn-lg btn-default text-success w-100 m-1" href="@userDelivereds_Path " data-toggle=" tooltip" title="@userDeliveredsToolTip" data-placement="left">@userDeliveredsMenuItem</a>
+            <br />
+
+        }
+
+
+
+
+
+
+
+    </div>
+}

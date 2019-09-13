@@ -62,7 +62,7 @@ namespace MarketPlace.Web6.Controllers
         //        return _productFeatureBiz;
         //    }
         //}
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             ProductFeature productFeature = parm.Entity as ProductFeature;
             productFeature.IsNullThrowException("Unable to unbox product feature");
@@ -81,10 +81,31 @@ namespace MarketPlace.Web6.Controllers
             productFeature.SelectListFeature = MenuFeatureBiz.SelectList();
             productFeature.SelectListProducts = ProductBiz.SelectList();
 
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
 
         }
 
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            ProductFeature productFeature = parm.Entity as ProductFeature;
+            productFeature.IsNullThrowException("Unable to unbox product feature");
+
+            //get the product and load its name in
+            productFeature.ProductId.IsNullOrWhiteSpaceThrowException("ProductId did nto get value in view");
+
+            if (productFeature.Product.IsNull())
+            {
+                if (productFeature.ProductId.IsNull())
+                {
+                    throw new Exception("Product has not been loaded.");
+                }
+            }
+
+            productFeature.SelectListFeature = MenuFeatureBiz.SelectList();
+            productFeature.SelectListProducts = ProductBiz.SelectList();
+
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
+        }
 
         public override void Event_BeforeSaveInCreateAndEdit(ControllerCreateEditParameter parm)
         {

@@ -27,7 +27,8 @@ namespace UowLibrary.AddressNS
             avr.AddressMailForm = address.ToPostalHTML();
 
             avr.AddressId = addressId;
-            avr.CountryId = address.CountryId;
+            //tod
+            //avr.CountryId = address.CountryId;
             //avr.CourierInternationalPayment = VerificationConfig.Sale_Courier_International.ToString();
             //avr.CourierLocalPayment = VerificationConfig.Sale_Courier_Local.ToString();
             //avr.PostalInternationalPayment = VerificationConfig.Sale_Postal_International.ToString();

@@ -21,27 +21,30 @@ namespace UowLibrary.StateNS
 {
     public partial class StateBiz : BusinessLayer<State>
     {
-        readonly IRepositry<Country> _iCountryDal;
-        public StateBiz(IRepositry<Country> countryDal, IRepositry<State> entityDal, BizParameters bizParameters)
-            : base(entityDal, bizParameters)
+        //readonly CountryBiz _countryBiz;
+        public StateBiz(IRepositry<State> dal, BizParameters bizParameters)
+            : base(dal, bizParameters)
         {
-            _iCountryDal = countryDal;
+            //_countryBiz = countryBiz;
 
 
         }
 
-        protected Repositry<Country> CountryDal
-        {
-            get
-            {
-                if (_iCountryDal.IsNull())
-                {
-                    ErrorsGlobal.Add("Country DAL not loaded.", MethodBase.GetCurrentMethod());
-                    throw new Exception(ErrorsGlobal.ToString());
-                }
-                return (Repositry<Country>)_iCountryDal;
-            }
-        }
+        //protected CountryBiz CountryBiz
+        //{
+        //    get
+        //    {
+        //        if (_countryBiz.IsNull())
+        //        {
+        //            ErrorsGlobal.Add("Country DAL not loaded.", MethodBase.GetCurrentMethod());
+        //            throw new Exception(ErrorsGlobal.ToString());
+        //        }
+        //        _countryBiz.UserId = UserId;
+        //        _countryBiz.UserName = UserName;
+
+        //        return _countryBiz;
+        //    }
+        //}
 
 
 

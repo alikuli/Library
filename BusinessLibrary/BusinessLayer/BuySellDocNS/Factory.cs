@@ -1,9 +1,7 @@
 ﻿using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
-using AliKuli.Extentions;
-using System.Collections.Generic;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellItemNS;
-
+using System.Collections.Generic;
 
 namespace UowLibrary.BuySellDocNS
 {
@@ -13,12 +11,17 @@ namespace UowLibrary.BuySellDocNS
         public override ICommonWithId Factory()
         {
             ICommonWithId iCommonWithId = base.Factory();
-            BuySellDoc buySellDoc = iCommonWithId as BuySellDoc;
-            buySellDoc.IsNullThrowException("Boxing buySellDoc");
+            BuySellDoc buySellDoc = BuySellDoc.UnBox(iCommonWithId)
+                ;
             buySellDoc.BuySellItems = new List<BuySellItem>();
+
+            //int noOfDays = GetMoneyBackGuaranteeNumberOfDays();
+            //buySellDoc.MoneyBackGuarantee.MarkTrue(noOfDays, UserName, UserId);
+
             return iCommonWithId;
 
         }
+
 
     }
 }

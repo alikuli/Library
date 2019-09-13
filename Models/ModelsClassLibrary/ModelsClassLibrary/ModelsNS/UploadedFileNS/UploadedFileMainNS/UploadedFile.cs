@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.ToolsNS;
 using EnumLibrary.EnumNS;
+using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -24,14 +25,28 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
         {
 
         }
-        public UploadedFile(HttpPostedFileBase file, string relativePath)
+        public UploadedFile(HttpPostedFileBase file, string relativePath, int noOfTrys = 0)
             : this(
             Path.GetFileNameWithoutExtension(file.FileName),
             FileTools.CreateNewNameForFile(Path.GetExtension(file.FileName)),
             Path.GetExtension(file.FileName),
             relativePath)
         {
-            file.SaveAs(AbsolutePathWithFileName());
+
+            try
+            {
+                file.SaveAs(AbsolutePathWithFileName());
+            }
+            catch (DirectoryNotFoundException)
+            {
+                if (noOfTrys > 3)
+                    throw new Exception("Unable to create directory " + AbsolutePathWithFileName());
+
+                //create the directory
+                FileTools.CreateDirectory(GetAbsolutePath(relativePath));
+                noOfTrys += 1;
+                new UploadedFile(file, relativePath, noOfTrys);
+            }
 
             //if (file.IsNull())
             //    return;

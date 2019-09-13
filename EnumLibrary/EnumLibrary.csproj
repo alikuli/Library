@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\MarketPlace.Web6\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\MarketPlace.Web6\packages\NUnit.3.12.0\build\NUnit.props')" />
+  <Import Project="..\MarketPlace.Web6\packages\NUnit3TestAdapter.3.14.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\MarketPlace.Web6\packages\NUnit3TestAdapter.3.14.0\build\net35\NUnit3TestAdapter.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,6 +14,7 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>8b10b7ae</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,6 +52,10 @@
     </Reference>
     <Reference Include="Ninject.Web.Common.OwinHost, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\..\MarketPlace.Web4\packages\Ninject.Web.Common.OwinHost.3.2.3.0\lib\net45-full\Ninject.Web.Common.OwinHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\MarketPlace.Web6\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
@@ -91,9 +98,17 @@
   <ItemGroup>
     <Compile Include="AKATest.cs" />
     <Compile Include="EnumNS\ActionNameENUM.cs" />
+    <Compile Include="EnumNS\AddressDetailENUM.cs" />
     <Compile Include="EnumNS\BuySellDocStateENUM.cs" />
-    <Compile Include="EnumNS\BuySellDocumentTypeENUM.cs" />
+    <Compile Include="EnumNS\BuySellDocStateModifierENUM.cs" />
+    <Compile Include="EnumNS\CashTrxDocumentTypeENUM.cs" />
+    <Compile Include="EnumNS\BuySellDocumentTypeENUM.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EnumNS\CashStateENUM.cs" />
+    <Compile Include="EnumNS\CashTransactionENUM.cs" />
     <Compile Include="EnumNS\CashTypeENUM.cs" />
+    <Compile Include="EnumNS\DeleteButtonENUM.cs" />
     <Compile Include="EnumNS\MessageENUM.cs" />
     <Compile Include="EnumNS\VerificationNS\AddressVerificaionENUM.cs" />
     <Compile Include="EnumNS\MenuENUM.cs" />
@@ -137,8 +152,10 @@
     <Compile Include="EnumNS\Product Related\UomWeightEnum.cs" />
     <Compile Include="EnumNS\VerificationNS\MailLocalOrForigenENUM.cs" />
     <Compile Include="EnumNS\VerificationNS\MailServiceENUM.cs" />
+    <Compile Include="EnumNS\VerificationNS\PlayerTypeENUM.cs" />
     <Compile Include="EnumNS\VerificationNS\SuccessENUM.cs" />
     <Compile Include="EnumNS\VerificationNS\TrustLevelENUM.cs" />
+    <Compile Include="EnumNS\WhoPaysWhoENUM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EnumNS\Sale Documents\SaleOrderTypeEnum.cs" />
     <Compile Include="EnumNS\SalesmanCategoryENUM.cs" />
@@ -161,6 +178,13 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\MarketPlace.Web6\packages\NUnit3TestAdapter.3.14.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\MarketPlace.Web6\packages\NUnit3TestAdapter.3.14.0\build\net35\NUnit3TestAdapter.props'))" />
+    <Error Condition="!Exists('..\MarketPlace.Web6\packages\NUnit.3.12.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\MarketPlace.Web6\packages\NUnit.3.12.0\build\NUnit.props'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

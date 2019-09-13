@@ -1,45 +1,27 @@
-﻿@model ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount
+﻿@model ModelsClassLibrary.ModelsNS.GlobalObjectNS.GlobalObject
 
 @{
     ViewBag.Title = "ShowCashMenu";
     
     
     
-    ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount ?? new ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount();
-
-    string amountRefundableMenuItem = moneyAccount.PersonCash.Refundable.MenuItem;
-    string amountRefundableToolTip = moneyAccount.PersonCash.Refundable.ToolTip;
-    string amountRefundableMenu_Path = Url.Action("DebitCredit_Refundable", "CashTrxs").ToString(); 
-    //string amountRefundable = moneyAccount.PersonCash.Refundable.a;
-
-    string amountNotRefundableMenuItem = moneyAccount.PersonCash.NonRefundable.MenuItem;
-    string amountNotRefundableToolTip = moneyAccount.PersonCash.NonRefundable.ToolTip;
-    string amountNotRefundableMenu_Path = Url.Action("DebitCredit_NonRefundable", "CashTrxs").ToString();
-    //string amountNotRefundable = moneyAccount.AmountNonRefundableStr;
-
-    string amountRefundableAndNonRefundableMenuItem = moneyAccount.PersonCash.Total.MenuItem;
-    string amountRefundableAndNonRefundableToolTip = moneyAccount.PersonCash.Total.ToolTip;
-    string amountRefundableAndNonRefundable_Path = Url.Action("DebitCredit_TotalRefundableAndNonRefundable", "CashTrxs").ToString(); ;
-    string amountRefundableAndNonRefundable = moneyAccount.PersonCash.Total_AmountOnly.MenuItem;
+    //ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount ?? new ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount();
 
 
-    string systemCashCreated_RefundableMenuItem = moneyAccount.SystemCash.Refundable.MenuItem;
-    string systemCashCreated_RefundableToolTip = moneyAccount.SystemCash.Refundable.ToolTip;
-    string systemCashCreated_Refundable_Path = Url.Action("DebitCredit_Refundable_Admin", "CashTrxs");
 
+    string amountRefundableMenuItem = Model.Money_System.Refundable.MenuName;
+    string amountRefundableToolTip = Model.Money_System.Refundable.MenuToolTip;
+    string amountRefundableMenu_Path = Url.Action("DebitCredit_Refundable_All_Admin", "CashTrxs").ToString();
 
-    string systemCashCreated_NonRefundableMenuItem = moneyAccount.SystemCash.NonRefundable.MenuItem;
-    string systemCashCreated_NonRefundableToolTip = moneyAccount.SystemCash.NonRefundable.ToolTip;
-    string systemCashCreated_NonRefundable_Path = Url.Action("DebitCredit_NonRefundable_Admin", "CashTrxs");
+    string amountNotRefundableMenuItem = Model.Money_System.Non_Refundable.MenuName;
+    string amountNotRefundableToolTip = Model.Money_System.Non_Refundable.MenuToolTip;
+    string amountNotRefundableMenu_Path = Url.Action("DebitCredit_NonRefundable_All_Admin", "CashTrxs").ToString();
 
+    string amountRefundableAndNonRefundableMenuItem = Model.Money_System.TotalCash.MenuName;
+    string amountRefundableAndNonRefundableToolTip = Model.Money_System.TotalCash.MenuToolTip;
+    string amountRefundableAndNonRefundable_Path = Url.Action("DebitCredit_TotalRefundableAndNonRefundable_All_Admin", "CashTrxs").ToString(); ;
 
-    string systemCashCreatedMenuItem = moneyAccount.SystemCash.Total.MenuItem;
-    string systemCashCreatedToolTip = moneyAccount.SystemCash.Total.ToolTip;
-    string systemCashCreated_Path = Url.Action("DebitCredit_NonRefundable_And_Refundable_Admin", "CashTrxs");
-
-    string systemOpenOrdersMenuItem = moneyAccount.SystemSalesOrders.Open.MenuItem;
-    string systemOpenOrdersToolTip = moneyAccount.SystemSalesOrders.Open.ToolTip;
-    string systemOpenOrders_Path = Url.Action("index", "SaleOrders");
+    string amountRefundableAndNonRefundable = Model.Money_System.TotalCash.MenuName;
     
 }
 
@@ -48,19 +30,17 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="container p-3 ">
         <hr />
 
-        <a class="btn btn-lg btn-default w-100" href="@systemCashCreated_Refundable_Path" data-toggle="tooltip" title="@systemCashCreated_RefundableToolTip" data-placement="left">@systemCashCreated_RefundableMenuItem</a>
+        <a class="btn btn-lg btn-default w-100" href="@amountRefundableMenu_Path" data-toggle="tooltip" title="@amountRefundableToolTip" data-placement="left">@amountRefundableMenuItem</a>
         <br />
-        <a class="btn btn-lg btn-default  w-100 "  href="@systemCashCreated_NonRefundable_Path" data-toggle=" tooltip" title="@systemCashCreated_NonRefundableToolTip" data-placement="left">@systemCashCreated_NonRefundableMenuItem</a>
+        <a class="btn btn-lg btn-default  w-100" href="@amountNotRefundableMenu_Path" data-toggle=" tooltip" title="@amountNotRefundableToolTip" data-placement="left">@amountNotRefundableMenuItem</a>
         <br />
-        <a class="btn btn-lg btn-default w-100" href="@systemCashCreated_Path " data-toggle=" tooltip" title="@systemCashCreatedToolTip" data-placement="left">@systemCashCreatedMenuItem</a>
-        </div>
+        <a class="btn btn-lg btn-default w-100" href="@amountRefundableAndNonRefundable_Path " data-toggle=" tooltip" title="@amountRefundableAndNonRefundableToolTip" data-placement="left">@amountRefundableAndNonRefundableMenuItem</a>
+    </div>
     <br />
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+

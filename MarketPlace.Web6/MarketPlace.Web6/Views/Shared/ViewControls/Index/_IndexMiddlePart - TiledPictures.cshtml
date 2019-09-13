@@ -9,7 +9,7 @@
 
     @{
         Model.MenuManager.MenuState.ControllerCurrentName = this.ViewContext.RouteData.Values["controller"].ToString();
-        ModelsClassLibrary.ViewModels.IndexItemVM[] IndexListVMArray = Model.DataSortedAndFilteredArray;
+        ModelsClassLibrary.ViewModels.IndexItemVM[] IndexItemArray = Model.DataSortedAndFilteredArray;
         ModelsClassLibrary.ViewModels.IndexItemVM currIndexItemVM = null;
 
         var menuVar = Model.MenuManager.IndexMenuVariables;
@@ -31,15 +31,15 @@
 
 
 
-    @for (int i = 0; i < IndexListVMArray.Length; i++)
+    @for (int i = 0; i < IndexItemArray.Length; i++)
     {
         <div>
             <!-- #region Initialization -->
             @{
         //count = i;
         menuVar.Count = i;
-        currIndexItemVM = IndexListVMArray[i];
-        menuVar.IdForEdit = IndexListVMArray[i].Id;
+        currIndexItemVM = IndexItemArray[i];
+        menuVar.IdForEdit = IndexItemArray[i].Id;
         menuVar.MainMenuPath = "";
         
         menuVar.MenuPath1Id = "";
@@ -55,12 +55,12 @@
         menuVar.UnLikeIcon.UrlCount = "";
         menuVar.ShoppingCartIcon.Url = "";
         menuVar.HandPointingUrl = "";
-        var itemMenuVar = IndexListVMArray[i].MenuManager;
+        var itemMenuVar = IndexItemArray[i].MenuManager;
    
         string shoppingCartToolTip = "To buy";
         string editIconToolTip = "Click here to edit this item";
         string flagToolTip = "Offended? Flag them!";
-        string itemHeading = IndexListVMArray[i].ShortName;
+        string itemHeading = IndexItemArray[i].ShortName;
         string editAction = Url.Action("Edit", menuVar.EditController, new { id = menuVar.IdForEdit, returnUrl = returnUrl });
         
             }
@@ -69,7 +69,7 @@
             <!-- #endregion -->
             <!-- #region alert and short name initialization -->
             @{
-                menuVar.ShortNameOfProduct = IndexListVMArray[i].ShortName;
+                menuVar.ShortNameOfProduct = IndexItemArray[i].ShortName;
 
                 //this is for the table type of index
 
@@ -83,13 +83,7 @@
                 alert += " background-ltgrey ";
             }
             <!-- #endregion -->
-            @if (@itemHeading == "Qingqi")
-            {
-                if (true)
-                {
 
-                }
-            }
 
 
             <!-- #region if (Model.MenuManager.MenuState.IsMenu) -->
@@ -97,7 +91,7 @@
             {
                 menuVar.MainMenuPath = Url.Action("index", menuVar.CurrController, new { id = menuVar.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu, returnUrl = @Request.Url.PathAndQuery });
 
-                switch (IndexListVMArray[i].MenuManager.MenuState.MenuEnum)
+                switch (IndexItemArray[i].MenuManager.MenuState.MenuEnum)
                 {
 
                     case MenuENUM.IndexDefault:
@@ -108,42 +102,43 @@
 
                         //item is menuPathMain
                         menuVar.MenuPathMainId = menuVar.IdForEdit;
-                        menuVar.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
-                        menuVar.MenuPath1Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath1Id;
+                        menuVar.IdForEdit = IndexItemArray[i].MenuManager.MenuState.MenuPath1Id;
+                        menuVar.MenuPath1Id = IndexItemArray[i].MenuManager.MenuState.MenuPath1Id;
                         break;
 
 
                     case MenuENUM.IndexMenuPath2:
                         //item is menuPathMain
                         menuVar.MenuPathMainId = menuVar.IdForEdit;
-                        menuVar.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
-                        menuVar.MenuPath2Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath2Id;
+                        menuVar.IdForEdit = IndexItemArray[i].MenuManager.MenuState.MenuPath2Id;
+                        menuVar.MenuPath2Id = IndexItemArray[i].MenuManager.MenuState.MenuPath2Id;
                         break;
 
 
                     case MenuENUM.IndexMenuPath3:
                         //item is menuPathMain
                         menuVar.MenuPathMainId = menuVar.IdForEdit;
-                        menuVar.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
-                        menuVar.MenuPath3Id = IndexListVMArray[i].MenuManager.MenuState.MenuPath3Id;
+                        menuVar.IdForEdit = IndexItemArray[i].MenuManager.MenuState.MenuPath3Id;
+                        menuVar.MenuPath3Id = IndexItemArray[i].MenuManager.MenuState.MenuPath3Id;
                         break;
 
 
                     case MenuENUM.IndexMenuProduct:
                         //item is product
-                        menuVar.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductId;
-                        menuVar.ProductId = IndexListVMArray[i].MenuManager.MenuState.ProductId;
+                        menuVar.IdForEdit = IndexItemArray[i].MenuManager.MenuState.ProductId;
+                        menuVar.ProductId = IndexItemArray[i].MenuManager.MenuState.ProductId;
                         break;
 
 
                     case MenuENUM.IndexMenuProductChild:
                         //item is productChild
-                        menuVar.IdForEdit = IndexListVMArray[i].MenuManager.MenuState.ProductChildId;
-                        menuVar.ProductChildId = IndexListVMArray[i].MenuManager.MenuState.ProductChildId;
+                        menuVar.IdForEdit = IndexItemArray[i].MenuManager.MenuState.ProductChildId;
+                        menuVar.ProductChildId = IndexItemArray[i].MenuManager.MenuState.ProductChildId;
 
                         menuVar.MainMenuPath = Url.Action("ProductChildLandingPage", "ProductChilds", new { productChildId = menuVar.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu, returnUrl = returnUrl });
                         //this causes the shopping cart button to be active only for product child
                         itemMenuVar.IndexMenuVariables.ShoppingCartIcon.IsProductChild = true;
+                        
                         break;
 
 
@@ -155,7 +150,19 @@
             else
             {
                 //menuVar.MainMenuPath = Url.Action("Edit", menuVar.EditController, new { id = menuVar.IdForEdit, returnUrl = returnUrl });
-                menuVar.MainMenuPath = editAction;
+
+                if (currIndexItemVM.IsPickup)
+                {
+                    //menuVar.MainMenuPath = Url.Action("GetDeliveryOrder", "BuySellDocs", new { id = currIndexItemVM.ParentId });
+                    menuVar.MainMenuPath = Url.Action("Edit", "BuySellDocs", new { id = currIndexItemVM.ParentId, returnUrl = Request.Url.PathAndQuery, buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Delivery });
+                    
+                }
+                else
+                {
+                    menuVar.MainMenuPath = editAction;
+                    
+                }
+
             }
 
             <!-- #endregion -->
@@ -172,7 +179,7 @@
                 menuVar.UnLikeIcon.UrlCount = Url.Action("Count", "LikeUnlikes", new { menuPath1Id = menuVar.MenuPath1Id, menuPath2Id = menuVar.MenuPath2Id, menuPath3Id = menuVar.MenuPath3Id, productId = menuVar.ProductId, productChildId = menuVar.ProductChildId, userId = menuVar.UserId });
 
 
-                menuVar.MessageIcon.Url = Url.Action("SaleMessage", "Messages", new { menuPathMainId = menuVar.MenuPathMainId, productId = menuVar.ProductId, productChildId = menuVar.ProductChildId, returnUrl = returnUrl, messageEnum = MessageENUM.Paid, menuEnum = IndexListVMArray[i].MenuManager.MenuState.MenuEnum });
+                menuVar.MessageIcon.Url = Url.Action("SaleMessage", "Messages", new { menuPathMainId = menuVar.MenuPathMainId, productId = menuVar.ProductId, productChildId = menuVar.ProductChildId, returnUrl = returnUrl, messageEnum = MessageENUM.Paid, menuEnum = IndexItemArray[i].MenuManager.MenuState.MenuEnum });
                 
                 menuVar.CommentUrl = Url.Action("AddComment", "GlobalComments", new { menuPath1Id = menuVar.MenuPath1Id, menuPath2Id = menuVar.MenuPath2Id, menuPath3Id = menuVar.MenuPath3Id, productId = menuVar.ProductId, productChildId = menuVar.ProductChildId, userId = menuVar.UserId });
 
@@ -192,13 +199,26 @@
         <div class="col-lg-3 col-md-6  p-0" >
 
             <div class="border border-dark rounded text-center backgroundYellowOnHover m-1 " >
+                
+                @if (IndexItemArray[i].CompleteMenuPathViews == 0 && IndexItemArray[i].PictureViews == 0)
+                {
+
+                }
+                else
+                {
+                    <small class="text-center">
+                        @string.Format("Menu Views {0:N0} / Picture Views {1:N0}", IndexItemArray[i].CompleteMenuPathViews, IndexItemArray[i].PictureViews) 
+                    </small>
+
+                }
+
 
                 <h4>@itemHeading</h4>
 
 
                 @{
                     int pictureCount = 0;
-                    List<string> picturesList = IndexListVMArray[i].MenuManager.PictureAddresses.ToList();
+                    List<string> picturesList = IndexItemArray[i].MenuManager.PictureAddresses.ToList();
                     string carouselItemClass = "carousel-item active";
                     string caouselIndicatorLiClass = "active";
                     carouselId = carouselName + carouselCount;
@@ -226,12 +246,13 @@
                             {
 
                                 string imageSrc = Url.Content(pictureAddy);
-                                string imageAlt = IndexListVMArray[i].ShortName;
+                                string imageAlt = IndexItemArray[i].ShortName;
 
-                                ModelsClassLibrary.ViewModels.IndexItemVM.PriceStatic = IndexListVMArray[i].Price;
-                                string imageHeading = ModelsClassLibrary.ViewModels.IndexItemVM.PriceDisplay;
 
-                                string imageDescription = "";
+                                string amount = IndexItemArray[i].Price == 0 ? "" :  IndexItemArray[i].Price.ToString().ToRuppeeFormat(); 
+
+                                //string amount2ndLine = "Test";
+                                string amount2ndLine = IndexItemArray[i].Amount2ndLine;
 
                                 ModelsClassLibrary.ViewModels.IndexItemVM.PictureCalculateDimensions(pictureAddy);
                                 string imageWidth = ModelsClassLibrary.ViewModels.IndexItemVM.PictureWidth;
@@ -243,8 +264,8 @@
                                 }
 
                                 <div class="@carouselItemClass">
-                                    <a href="@menuVar.MainMenuPath" data-toggle="tooltip" title="@IndexListVMArray[i].Description" data-placement="top" class="d-block h-100 text-center mb-0">
-                                        @*<img src="@imageSrc" alt="@imageAlt" width="@imageWidth">*@
+                                    <a href="@menuVar.MainMenuPath" data-toggle="tooltip" title="@IndexItemArray[i].Description" data-placement="top" class="d-block h-100 text-center mb-0">
+                                        
                                         <div class="container" style="height: 200px;" >
                                             @if (imageWidth == "0")
                                             {
@@ -257,14 +278,15 @@
 
                                             }
                                         </div>
+
                                         <div class=" carousel-caption">
-                                            @if (!imageHeading.IsNullOrWhiteSpace())
+                                            @if (!amount.IsNullOrWhiteSpace())
                                             {
-                                                <h3>@imageHeading</h3>
+                                                <strong>@amount</strong>
                                             }
-                                            @if (!imageDescription.IsNullOrWhiteSpace())
+                                            @if (!amount2ndLine.IsNullOrWhiteSpace())
                                             {
-                                                <p>@imageDescription</p>
+                                                <p>@amount2ndLine</p>
 
                                             }
                                         </div>
@@ -348,12 +370,12 @@
 
                         @{
 
-                            if (!IndexListVMArray[i].MenuManager.IsNull())
+                            if (!IndexItemArray[i].MenuManager.IsNull())
                             {
-                                if (!IndexListVMArray[i].MenuManager.LikeUnlikesCounter.IsNull())
+                                if (!IndexItemArray[i].MenuManager.LikeUnlikesCounter.IsNull())
                                 {
-                                    menuVar.LikeIcon.HasPressed = IndexListVMArray[i].MenuManager.LikeUnlikesCounter.HasLiked;
-                                    menuVar.LikeIcon.CountIcon = @IndexListVMArray[i].MenuManager.LikeUnlikesCounter.LikeCount;
+                                    menuVar.LikeIcon.HasPressed = IndexItemArray[i].MenuManager.LikeUnlikesCounter.HasLiked;
+                                    menuVar.LikeIcon.CountIcon = @IndexItemArray[i].MenuManager.LikeUnlikesCounter.LikeCount;
                                 }
                             }
 
@@ -382,12 +404,12 @@
 
                         @{
 
-                            if (!IndexListVMArray[i].MenuManager.IsNull())
+                            if (!IndexItemArray[i].MenuManager.IsNull())
                             {
-                                if (!IndexListVMArray[i].MenuManager.LikeUnlikesCounter.IsNull())
+                                if (!IndexItemArray[i].MenuManager.LikeUnlikesCounter.IsNull())
                                 {
-                                    menuVar.UnLikeIcon.CountIcon = @IndexListVMArray[i].MenuManager.LikeUnlikesCounter.UnlikeCount;
-                                    menuVar.UnLikeIcon.HasPressed = IndexListVMArray[i].MenuManager.LikeUnlikesCounter.HasUnLiked;
+                                    menuVar.UnLikeIcon.CountIcon = @IndexItemArray[i].MenuManager.LikeUnlikesCounter.UnlikeCount;
+                                    menuVar.UnLikeIcon.HasPressed = IndexItemArray[i].MenuManager.LikeUnlikesCounter.HasUnLiked;
                                 }
                             }
 
@@ -450,9 +472,9 @@
 
                         @{
 
-                            if (!IndexListVMArray[i].MenuManager.IsNull())
+                            if (!IndexItemArray[i].MenuManager.IsNull())
                             {
-                                if (!IndexListVMArray[i].MenuManager.LikeUnlikesCounter.IsNull())
+                                if (!IndexItemArray[i].MenuManager.LikeUnlikesCounter.IsNull())
                                 {
                                     //ADD THE MESSAGE ICON CODE HERE.
                                 }
@@ -496,9 +518,9 @@
 
                         @{
 
-                            if (!IndexListVMArray[i].MenuManager.IsNull())
+                            if (!IndexItemArray[i].MenuManager.IsNull())
                             {
-                                if (!IndexListVMArray[i].MenuManager.LikeUnlikesCounter.IsNull())
+                                if (!IndexItemArray[i].MenuManager.LikeUnlikesCounter.IsNull())
                                 {
                                     //ADD THE FLAG BADGE HERE
                                 }

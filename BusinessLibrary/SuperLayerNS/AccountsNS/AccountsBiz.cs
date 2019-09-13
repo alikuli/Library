@@ -3,25 +3,34 @@ using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using UowLibrary.BuySellDocNS;
 using UowLibrary.CashTtxNS;
 using UowLibrary.PlayersNS.BankNS;
+using UowLibrary.SuperLayerNS;
 
 namespace UowLibrary.SuperLayerNS.AccountsNS
 {
     public class AccountsBizSuper
     {
-        CashTrxBiz _cashTrxBiz;
-        BankBiz _bankBiz;
-        BuySellDocBiz _buySellDocBiz;
-        public AccountsBizSuper(CashTrxBiz cashTrxBiz, BankBiz bankBiz, BuySellDocBiz buySellDocBiz)
+        //CashTrxBiz _cashTrxBiz;
+        //BankBiz _bankBiz;
+        //BuySellDocBiz _buySellDocBiz;
+        SuperBiz _superCashBiz;
+        public AccountsBizSuper(SuperBiz superCashBiz)
         {
-            _cashTrxBiz = cashTrxBiz;
-            _bankBiz = bankBiz;
-            _buySellDocBiz = buySellDocBiz;
+            _superCashBiz = superCashBiz;
         }
 
         public string UserId { get; set; }
         public string UserName { get; set; }
 
+        SuperBiz SuperCashBiz
+        {
+            get
+            {
 
+                _superCashBiz.UserId = UserId;
+                _superCashBiz.UserName = UserName;
+                return _superCashBiz;
+            }
+        }
         public BankBiz BankBiz
         {
             get
@@ -29,9 +38,7 @@ namespace UowLibrary.SuperLayerNS.AccountsNS
                 //UserId.IsNullOrWhiteSpaceThrowException("You are not logged in. User Id not found.");
                 //UserName.IsNullOrWhiteSpaceThrowException("You are not logged in. User Name not found");
 
-                _bankBiz.UserId = UserId;
-                _bankBiz.UserName = UserName;
-                return _bankBiz;
+                return _superCashBiz.BankBiz;
 
             }
         }
@@ -42,37 +49,35 @@ namespace UowLibrary.SuperLayerNS.AccountsNS
                 //UserId.IsNullOrWhiteSpaceThrowException("You are not logged in. User Id not found.");
                 //UserName.IsNullOrWhiteSpaceThrowException("You are not logged in. User Name not found");
 
-                _cashTrxBiz.UserId = UserId;
-                _cashTrxBiz.UserName = UserName;
-                return _cashTrxBiz;
+                return _superCashBiz.CashTrxBiz; ;
             }
         }
 
 
-        public UserMoneyAccount UserMoneyAccount(string userId)
-        {
+        //public UserMoneyAccount UserMoneyAccount(string userId)
+        //{
 
-            if (userId.IsNullOrWhiteSpace())
-                return new UserMoneyAccount();
+        //    if (userId.IsNullOrWhiteSpace())
+        //        return new UserMoneyAccount();
 
-            bool isAdmin = UserBiz.IsAdmin(userId);
+        //    bool isAdmin = UserBiz.IsAdmin(userId);
             
-            //if there is no
-            UserMoneyAccount userMoneyAccount = CashTrxBiz.MoneyAccountForUser(userId, isAdmin);
+        //    //if there is no
+        //    UserMoneyAccount userMoneyAccount = MoneyAccountForUser(userId, isAdmin);
 
-            if (userId.IsNullOrWhiteSpace())
-                return new UserMoneyAccount();
+        //    if (userId.IsNullOrWhiteSpace())
+        //        return new UserMoneyAccount();
 
-            return userMoneyAccount;
+        //    return userMoneyAccount;
 
-        }
+        //}
 
         public UserBiz UserBiz
         {
             get
             {
                 UserBiz _userBiz = CashTrxBiz.UserBiz;
-                return _userBiz;
+                return _superCashBiz.CashTrxBiz.UserBiz;
             }
         }
 
@@ -80,9 +85,7 @@ namespace UowLibrary.SuperLayerNS.AccountsNS
         {
             get
             {
-                _buySellDocBiz.UserId = UserId;
-                _buySellDocBiz.UserName = UserName;
-                return _buySellDocBiz;
+                return _superCashBiz.BuySellDocBiz;
             }
         }
     }

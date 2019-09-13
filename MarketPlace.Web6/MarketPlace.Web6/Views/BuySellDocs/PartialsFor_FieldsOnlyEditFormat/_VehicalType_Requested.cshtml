@@ -1,0 +1,59 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_vehicalType = Model.BuySellDocViewState;
+
+    //bool isEnableAgreedFreightAndDate_DelyFormat = viewState_DelyFormat.HD_Enable_AgreedFreightAndDate;
+    //bool isShowAgreedFreightAndDate = viewState_DelyFormat.HD_Show_AgreedFreightAndDate;
+    bool isShowVehicalType = viewState_vehicalType.HD_Show_Vehical_Type_Requested;
+    bool isEnableVehicalType = viewState_vehicalType.HD_Enable_Vehical_Type_Requested;
+    string currentColor_DelyFormat = viewState_vehicalType.CurrentColorClass;
+
+
+
+
+}
+
+
+
+
+
+
+@if (isShowVehicalType)
+{
+
+    if (isEnableVehicalType)
+    {
+
+        <div class="form-group">
+            <strong>
+                @Html.LabelFor(model => model.VehicalTypeRequestedId, htmlAttributes: new { @class = "background-ltgrey p-2" })
+            </strong>
+            @Html.DropDownListFor(x => x.VehicalTypeRequestedId,
+                (@Model.SelectListVehicalTypeRequested as IEnumerable<SelectListItem>),
+                "--- Select Vehical Type ---",
+                new { @class = "form-control", data_toggle = "tooltip", title = "This is the vehical type that will do the delivery.", data_placement = "top" })
+        </div>
+    }
+    else
+    {
+        @Html.HiddenFor(x => x.VehicalTypeRequestedId)
+
+        <div class="form-group">
+            <strong>
+                @Html.LabelFor(model => model.VehicalTypeRequestedId, htmlAttributes: new { @class = "background-ltgrey p-2" })
+            </strong>
+            @Html.DropDownListFor(x => x.VehicalTypeRequestedId,
+                 (@Model.SelectListVehicalTypeRequested as IEnumerable<SelectListItem>),
+                  "--- Select Vehical Type ---",
+                  new { @class = "form-control", data_toggle = "tooltip", title = "This is the vehical type that will do the delivery.", data_placement = "top", disabled = "disabled" })
+        </div>
+
+
+    }
+}
+
+
+

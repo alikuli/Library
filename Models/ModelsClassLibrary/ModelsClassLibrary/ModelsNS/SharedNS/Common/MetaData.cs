@@ -19,7 +19,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             Modified = new DateAndByComplex();
             Deleted = new DateAndByComplex();
             UnDeleted = new DateAndByComplex();
-            Created.SetToTodaysDateStart("","");
 
             IsInactive = false;
             IsEditLocked = false;
@@ -53,23 +52,23 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         #region Methods
         public string GetCreatedTicks()
         {
-            if (Created.DateStart == default(DateTime))
+            if (Created.Date == default(DateTime))
                 return "";
 
             Check_CreatedTicksStart();
-            DateTime dt = Created.DateStart ?? default(DateTime);
+            DateTime dt = Created.Date ?? default(DateTime);
             return dt.Ticks.ToString();
         }
 
         private void Check_CreatedTicksStart()
         {
-            if (Created.DateStart == null)
+            if (Created.Date == null)
                 throw new Exception("Created Date Start is null");
 
-            if (Created.DateStart == DateTime.MaxValue)
+            if (Created.Date == DateTime.MaxValue)
                 throw new Exception("Created Date Start is Max value");
 
-            if (Created.DateStart == DateTime.MinValue)
+            if (Created.Date == DateTime.MinValue)
                 throw new Exception("Created Date Start is min value");
         }
 

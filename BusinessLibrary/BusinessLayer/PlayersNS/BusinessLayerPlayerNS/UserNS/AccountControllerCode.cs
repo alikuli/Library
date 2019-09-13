@@ -37,60 +37,45 @@ namespace UowLibrary
 
         /// <summary>
         /// This registers the user.
-        /// The UserName is the fixed User PhoneNumber.
+        /// this also creates a customer, owner person for the user. If there is a problem in creation of anyone of these...
+        /// the user is also not created.
+        /// All the work is done is SuperCashBiz
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<ApplicationUser> RegisterAsync(RegisterViewModel model)
+        public async Task<ApplicationUser> RegisterAsync(RegisterViewModel model, string personId)
         {
 
-            //Country country = CountryBiz.Find(model.CountryID);
-
-            //if (country.IsNull())
-            //{
-            //    ErrorsGlobal.Add("No Country found!", MethodBase.GetCurrentMethod());
-            //    throw new Exception(ErrorsGlobal.ToString());
-            //}
-
-
-
-            //string fixedPhoneNumber = fixPhoneNumber(model, country);
-
-            //use the supplied userName or the fixed phone number if nothing supplied.
-            //at the moment we are using the complete phone number as the user name.
-            //if we use the phone number as the user name and the user changes his phone
-            //number then we will have a problem. It is better not to link the user name
-            //with the phone number.
 
             string userName = model.UserName;
-            //if (model.UserName.IsNullOrWhiteSpace())
-            //{
-            //    userName = fixedPhoneNumber;
-            //}
 
+            //see if a user exists under the same name
+            bool userFound = (await UserManager.FindByNameAsync(userName)) != null;
+
+            if (userFound)
+            {
+                throw new Exception(string.Format("User with '{0}' name already exists! Try another name.", userName));
+            }
 
             var user = new ApplicationUser
             {
                 UserName = userName,
-                //PhoneNumber = fixedPhoneNumber,
-                //PhoneNumberAsEntered = model.Phone
+                //PersonId = personId,
             };
 
 
-            var result = await UserManager.CreateAsync(user, model.Password);
+
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
 
-                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                await SignInUser(user,false);
 
 
                 UserName = user.UserName;
                 UserId = user.Id;
-                //PersonBiz.UserId = user.Id;
-                //PersonBiz.UserName = user.UserName;
 
-                UpdateAndSave(user);
                 return user;
                 //string code = await GenerateChangePhoneNumberTokenAsync(user.Id, fixedPhoneNumber);
 
@@ -100,8 +85,30 @@ namespace UowLibrary
                 // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
             }
-            return null;
+            else
+            {
+                //User did not get  created for some reason
+                if (result.Errors.IsNull())
+                {
+                    throw new Exception("Unable to create a login id. Try again");
+                }
+                else
+                {
+                    foreach (string item in result.Errors)
+                    {
+                        ErrorsGlobal.Add(item, "Login");
+                    }
+                    throw new Exception();
 
+                }
+
+            }
+
+        }
+
+        public async Task SignInUser(ApplicationUser user, bool rememberMe)
+        {
+            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: rememberMe);
         }
 
         //private string fixPhoneNumber(RegisterViewModel model, Country country)

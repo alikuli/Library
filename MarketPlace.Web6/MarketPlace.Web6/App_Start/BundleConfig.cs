@@ -14,9 +14,17 @@ namespace MarketPlace.Web6
                         "~/Scripts/jquery-{version}.js"));
 
 
-            bundles.Add(new ScriptBundle("~/Scripts/MyScripts/MyGlobalScript").Include(
-                        "~/Scripts/MyScripts/_MyGlobalScripts.js",
-                        "~/Scripts/MyScripts/_ProductScripts.js"));
+            bundles.Add(new ScriptBundle(
+                "~/Scripts/MyScripts/MyGlobalScriptNew").Include(
+                "~/Scripts/MyScripts/_MyGlobalScripts.js",
+                "~/Scripts/MyScripts/_AddressCopyScriptGlobal.js",
+                "~/Scripts/MyScripts/_CalculateTotalShipping1.js",
+                "~/Scripts/MyScripts/_PostShippingAddressToDb.js",
+                "~/Scripts/MyScripts/_ProductScripts.js",
+                "~/Scripts/MyScripts/_GetInfoFromAddressD",
+                "~/Scripts/MyScripts/_GetInfoFromAddressDropDownList.js",
+                "~/Scripts/bootstrap-datepicker/bootstrap-datepicker.js"
+                ));
 
 
             bundles.Add(new ScriptBundle("~/Scripts/notifyNS/notify").Include(
@@ -99,20 +107,20 @@ namespace MarketPlace.Web6
                       "~/Content/bootstrap-reboot.css",
                       "~/Content/bootstrap-theme.css",
                       "~/Content/PrintStyleSheet.css",
-                      "~/Content/bootstrap-fileinput/themes/fas/theme.js",
-                      "~/Content/bootstrap-fileinput/themes/explorer-fas/theme.js",
-                      "~/Content/bootstrap-fileinput/themes/explorer/theme.js",
-                      "~/Content/myCss.css"));
+                      "~/Content/bootstrap-datepicker/dist/bootstrap-datepicker.min.css",
+                      "~/Content/myCss1.css"));
 
 
             bundles.Add(new StyleBundle("~/Content/css/FileinputCSS").Include(
                       "~/Content/bootstrap-fileinput/css/fileinput.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/Fileinput").Include(
-                        "~/Scripts/fileinput.js",
-                      "~/Content/bootstrap-fileinput/themes/fas/theme.js",
-                      "~/Content/bootstrap-fileinput/themes/explorer-fas/theme.js",
-                      "~/Content/bootstrap-fileinput/themes/explorer/theme.js"));
+                        "~/Scripts/fileinput.js"
+                //,
+                //"~/Content/bootstrap-fileinput/themes/fas/theme.js",
+                //"~/Content/bootstrap-fileinput/themes/explorer-fas/theme.js",
+                //"~/Content/bootstrap-fileinput/themes/explorer/theme.js"
+                      ));
 
 
         }

@@ -164,11 +164,12 @@ namespace UowLibrary.AddressNS
             addressId.IsNullOrWhiteSpaceThrowArgumentException("addressId");
             AddressMain addy = Find(addressId);
             addy.IsNullThrowException("Address not found.");
+            //todo
+            //addy.CountryId.IsNullOrWhiteSpaceThrowException("Country Id is empty in Address");
 
-            addy.CountryId.IsNullOrWhiteSpaceThrowException("Country Id is empty in Address");
-
-            bool IsInPakistan = CountryBiz.IsAddressInPakistan(addy.CountryId);
-            return IsInPakistan;
+            //bool IsInPakistan = CountryBiz.IsAddressInPakistan(addy.CountryId);
+            //return IsInPakistan;
+            throw new NotImplementedException();
         }
 
 

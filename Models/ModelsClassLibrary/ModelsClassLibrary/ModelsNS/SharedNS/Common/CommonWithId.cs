@@ -17,12 +17,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
     /// </summary>
     public abstract class CommonWithId : ICommonWithId, IIndexListItems, IFieldsToLoadFromView
     {
-        /// <summary>
-        /// If true, then duplicates are allowed.
-        /// </summary>
-        [NotMapped]
-        public virtual bool IsAllowDuplicates { get { return false; } }
-
         public CommonWithId()
         {
             MetaData = new MetaDataComplex();
@@ -30,8 +24,18 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             DetailInfoToDisplayOnWebsite = "";
             Comment = "";
             HeadingForCreateForm = this.ClassName.ToString().ToTitleSentance();
+            NoOfVisits = new LongWithDateComplex();
 
         }
+
+        public LongWithDateComplex NoOfVisits { get; set; }
+
+        /// <summary>
+        /// If true, then duplicates are allowed.
+        /// </summary>
+        [NotMapped]
+        public virtual bool IsAllowDuplicates { get { return false; } }
+
 
         /// <summary>
         /// Marked true if creating
@@ -136,7 +140,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public virtual void UpdatePropertiesDuringModify(ICommonWithId icommonWithId)
         {
 
-            MetaData.Modified.DateStart = icommonWithId.MetaData.Modified.DateStart;
+            MetaData.Modified.Date = icommonWithId.MetaData.Modified.Date;
 
             MetaData.IsInactive = icommonWithId.MetaData.IsInactive;
             MetaData.IsDeleted = icommonWithId.MetaData.IsDeleted;
@@ -145,7 +149,6 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
             DetailInfoToDisplayOnWebsite = icommonWithId.DetailInfoToDisplayOnWebsite;
             Name = icommonWithId.Name;
-            //ReturnUrl = icommonWithId.ReturnUrl;
             Comment = icommonWithId.Comment;
 
 

@@ -1,0 +1,82 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_PickFrom = Model.BuySellDocViewState;
+    string shipFromAddress_PickFrom = "";
+    bool show_Address_Bill_To = viewState_PickFrom.HD_Show_Complex_Address_Bill_To;
+    string addressTemplate_For_Shipping_And_BillTo_Address = viewState_PickFrom.HD_AddressTemplate_For_Shipping_And_BillTo_Address;
+    string billing_dropDownListName_NHF = "AddressBillToId";
+    string billing_preNameOfFields_NHF = "AddressBillToComplex";
+    string addressPath_NHF = @Url.Action("GetAddressInfo", "Addresses");
+    string shipping_preNameOfFields_NHF = "AddressShipToComplex";
+    bool enable_DropDown = false;
+    bool isShowAddressButtons_BillTo_NHF = viewState_PickFrom.HD_Show_Button_SaveAndCopy_BillTo;
+    
+
+
+}
+@switch (addressTemplate_For_Shipping_And_BillTo_Address)
+{
+    //this is for the dropdown
+    case ConstantsLibrary.BuySellConstants.COMPLEX_ADDRESS_ENABLED:
+        enable_DropDown = true;
+        break;
+    case ConstantsLibrary.BuySellConstants.COMPLEX_ADDRESS_DISABLED:
+    case ConstantsLibrary.BuySellConstants.COMPLEX_ADDRESS_CITY_COUNTRY_DISABLED:
+        enable_DropDown = false;
+        Html.HiddenFor(x => x.AddressBillTo);
+        Html.HiddenFor(x => x.AddressBillToComplex);
+        break;
+}
+
+
+
+
+
+@if (show_Address_Bill_To)
+{
+    <div class="col-md background-yellow m-1 p-1">
+
+
+        <strong class="background-ltgrey p-1">
+            @Html.LabelFor(model => model.AddressBillTo, htmlAttributes: new { @class = "" })
+        </strong>
+        
+
+        <div class="form-group">
+            @if (enable_DropDown)
+            { 
+                @Html.DropDownListFor(x => x.AddressBillToId,
+                           (@Model.SelectListAddressBillTo as IEnumerable<SelectListItem>),
+                          "--- Change Bill To Address ---",
+                           new { @class = "form-control", data_toggle = "tooltip", title = "This is the person to whom the product is going to.", data_placement = "top", onchange = "updateAddressFields('" + @billing_dropDownListName_NHF + "', '" + @billing_preNameOfFields_NHF + "', '" + @addressPath_NHF + "')" })
+            }
+            else
+            {
+                @Html.DropDownListFor(x => x.AddressBillToId,
+                           (@Model.SelectListAddressBillTo as IEnumerable<SelectListItem>),
+                          "--- Change Bill To Address ---",
+                                new { @class = "form-control", data_toggle = "tooltip", title = "This is the person to whom the product is going to.", data_placement = "top", disabled = "disabled" })
+
+            }
+            </div>
+
+        <div class="form-group">
+            @Html.EditorFor(model => model.AddressBillToComplex, addressTemplate_For_Shipping_And_BillTo_Address, null, null)
+        </div>
+
+
+
+        @if (isShowAddressButtons_BillTo_NHF)
+        {
+            <button type="button" id="copyfromshipto" class="btn btn-warning" onclick="copyFromAtoB('@billing_preNameOfFields_NHF', '@shipping_preNameOfFields_NHF')">Copy to Ship To</button>
+        }
+
+    </div>
+}
+else
+{
+    @Html.HiddenFor(x => x.AddressBillToId)
+}

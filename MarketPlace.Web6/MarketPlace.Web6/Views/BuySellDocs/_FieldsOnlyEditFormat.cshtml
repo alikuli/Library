@@ -1,85 +1,71 @@
 ﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
 
-<div class="well p-3 m-3">
+@*
+
+    We are going to assume everyything is enabled because when we disable, sometimes we need to add
+    a hidden field so we do not lose the value.
+
+*@
+<div class="">
     @{
-        string theSellDocStateNumber = Model.BuySellDocStateEnum.ToString();
+        //give view state a shorter name...
+        ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState = Model.BuySellDocViewState;
+        bool showDeliveryFormat = viewState.HD_Show_Delivery_Format;
+        string titleClass = "";
     }
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.BuySellDocStateEnum, htmlAttributes: new { @class = "" })
-        @Html.DropDownListFor(x => x.BuySellDocStateEnum,
-                           (@Model.BuySellDocStateEnumSelectList as IEnumerable<SelectListItem>),
-                  "--- Select Document Type ---",
-                  new { @class = "form-control" })
-    </div>
 
-    <div class="form-group">
-        <strong>
-            @Html.LabelFor(model => model.DocumentNumber, htmlAttributes: new { @class = "" })
-            @Html.DisplayFor(model => model.DocumentNumber)
-        </strong>
-    </div>
-    
+  
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.OwnerId, htmlAttributes: new { @class = "" })
-        @Html.DropDownListFor(x => x.OwnerId,
-                         (@Model.SelectListOwner as IEnumerable<SelectListItem>),
-                  "--- Select Owner---",
-                  new { @class = "form-control" })
-    </div>
+    @switch (Model.BuySellDocumentTypeEnum)
+    {
+        case BuySellDocumentTypeENUM.Unknown:
+            break;
+        case BuySellDocumentTypeENUM.Sale:
+            titleClass = "bg-info text-white";
+            break;
+        case BuySellDocumentTypeENUM.Purchase:
+            titleClass = "bg-danger text-white";
+            break;
+        case BuySellDocumentTypeENUM.Delivery:
+            titleClass = "bg-success text-white";
+            break;
+        default:
+            break;
+    }
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.CustomerId, htmlAttributes: new { @class = "" })
-        @Html.DropDownListFor(x => x.CustomerId,
-                         (@Model.SelectListCustomer as IEnumerable<SelectListItem>),
-                  "--- Select Customer---",
-                  new { @class = "form-control", data_toggle = "tooltip", title = "An address that needs to be informed.", data_placement = "top" })
+
+    <div class="row border border-dark w-100 text-center">
+
+        <h1 class="@titleClass w-100 p-2">@Model.BuySellDocumentTypeEnum.ToString().ToTitleSentance() @*(@Model.BuySellDocStateEnum.ToString().ToTitleSentance() )*@ #@Model.DocumentNumber</h1>
     </div>
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.AddressShipToId, htmlAttributes: new { @class = "" })
-        @Html.DropDownListFor(x => x.AddressShipToId,
-                          (@Model.SelectListAddressShipTo as IEnumerable<SelectListItem>),
-                  "--- Add Ship To Address ---",
-                  new { @class = "form-control", data_toggle = "tooltip", title = "The ship to address.", data_placement = "top" })
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.AddressInformTo, htmlAttributes: new { @class = "" })
-        @Html.DropDownListFor(x => x.AddressInformTo,
-                 (@Model.SelectListAddressInformTo as IEnumerable<SelectListItem>),
-                  "--- Add Inform To Address ---",
-                  new { @class = "form-control", data_toggle="tooltip", title="An address that needs to be informed.", data_placement="top"  })
-    </div>
+    @if (showDeliveryFormat)
+    {
+
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_DeliveryFormat")
+    }
+    else
+    {
+
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_NormalHeaderFormat")
+
+    }
+</div>
 
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.LastShipDate, htmlAttributes: new { @class = "" })
-            @Html.EditorFor(model => model.LastShipDate, new { htmlAttributes = new { @class = "form-control",  type="date", data_toggle="tooltip", title="This is the last date this product was shipped.", data_placement="top"  } })
-            @Html.ValidationMessageFor(model => model.LastShipDate, "", new { @class = "text-danger" })
-        </div>
+<div class="row border border-dark p-1 w-100">
 
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PoDate, htmlAttributes: new { @class = "" })
-            @Html.EditorFor(model => model.PoDate, new { htmlAttributes = new { @class = "form-control", type="date", data_toggle="tooltip", title="A purchase order number of your choosing.", data_placement="top"  } })
-            @Html.ValidationMessageFor(model => model.PoDate, "", new { @class = "text-danger" })
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PoNumber, htmlAttributes: new { @class = "" })
-            @Html.EditorFor(model => model.PoNumber, new { htmlAttributes = new { @class = "form-control", data_toggle="tooltip", title="A purchase order number of your choosing.", data_placement="top"  } })
-            @Html.ValidationMessageFor(model => model.PoNumber, "", new { @class = "text-danger" })
-        </div>
-
-        @Html.Partial(@"_Name_And_DetailInfo")
-
-        *@
-
+    @Html.Partial(@"PartialsFor_FieldsOnlyEditFormat/_ListItems")
+    @*@Html.Partial(@"PartialsFor_FieldsOnlyEditFormat/_Signatures")*@
+    @Html.Partial(@"PartialsFor_FieldsOnlyEditFormat/_DeliveryButton")
 
 </div>
-@Html.Partial(@"_ListItems")
+
+
+
+@Html.Partial("PartialsFor_FieldsOnlyEditFormat/_MakeOffers")
+@Html.Partial("PartialsFor_FieldsOnlyEditFormat/_ShowOffers")

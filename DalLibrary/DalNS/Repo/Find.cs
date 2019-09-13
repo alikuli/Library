@@ -1,11 +1,6 @@
-﻿using AliKuli.Extentions;
-using DalLibrary.Interfaces;
+﻿using DalLibrary.Interfaces;
 using InterfacesLibrary.SharedNS;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 
 
 namespace DalLibrary.DalNS
@@ -19,458 +14,468 @@ namespace DalLibrary.DalNS
 
 
         #region SearchForAsync and SearchFor
-        public virtual async Task<IList<TEntity>> SearchForAsync(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
-        {
-            //return await (FindAll().Where(predicate).Where(x => x.MetaData.IsDeleted == false)).ToListAsync();
-            return await SearchForIQueriable(predicate).ToListAsync();
-        }
+        //public virtual async Task<IList<TEntity>> SearchForAsync(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
+        //{
+        //    //return await (FindAll().Where(predicate).Where(x => x.MetaData.IsDeleted == false)).ToListAsync();
+        //    return await SearchForIQueriable(predicate).ToListAsync();
+        //}
 
 
-        private IQueryable<TEntity> SearchForIQueriable(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
-        {
-            var zAll = FindAll();
-            var zList = zAll.Where(predicate).Where(x => x.MetaData.IsDeleted == false && x.MetaData.IsInactive == false);
-            return zList.AsQueryable();
-        }
+        //private IQueryable<TEntity> SearchForIQueriable(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
+        //{
+        //    var zAll = FindAll();
+        //    var zList = zAll.Where(predicate).Where(x => x.MetaData.IsDeleted == false && x.MetaData.IsInactive == false);
+        //    return zList.AsQueryable();
+        //}
 
 
-        public virtual IList<TEntity> SearchFor(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
-        {
-            //var zAll = FindAll();
-            //var zList = zAll.Where(predicate).Where(x => x.MetaData.IsDeleted == false).ToList();
-            //return zList as IList<TEntity>;
-            return SearchForIQueriable(predicate).ToList();
-        }
+        //public virtual IList<TEntity> SearchFor(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
+        //{
+        //    //var zAll = FindAll();
+        //    //var zList = zAll.Where(predicate).Where(x => x.MetaData.IsDeleted == false).ToList();
+        //    //return zList as IList<TEntity>;
+        //    return SearchForIQueriable(predicate).ToList();
+        //}
 
 
-        #endregion
+        //#endregion
 
-        #region FindForName and FindForNameAsync
+        //#region FindForName and FindForNameAsync
 
-        /// <summary>
-        /// The domain data for this can be narowed so that the search takes place
-        /// between bounds as sometimes is required. Eg. Same user cannot have a duplicate address, 
-        /// but other users can have the same address with a different record.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        //private TEntity FindDuplicateNameFor(TEntity entity)
+        ///// <summary>
+        ///// The domain data for this can be narowed so that the search takes place
+        ///// between bounds as sometimes is required. Eg. Same user cannot have a duplicate address, 
+        ///// but other users can have the same address with a different record.
+        ///// </summary>
+        ///// <param name="name"></param>
+        ///// <returns></returns>
+        ////private TEntity FindDuplicateNameFor(TEntity entity)
+        ////{
+
+        ////    if (entity.Name.IsNullOrWhiteSpace())
+        ////    {
+        ////        entity.Name = "";
+        ////    }
+
+        ////    //This part can be overridden to insert only that data where the duplication is
+        ////    //relevant.
+        ////    var dataForSearching = GetDomainDataForDuplicateNameSearch(entity);
+
+        ////    TEntity foundIt;
+        ////    if(entity.Name.IsNullOrWhiteSpace())
+        ////    {
+        ////        foundIt = dataForSearching
+        ////            .FirstOrDefault(x => x.Name.ToLower() == entity.Name || x.Name == null);
+
+        ////    }
+        ////    else
+        ////    {
+        ////        foundIt = dataForSearching
+        ////            .FirstOrDefault(x => x.Name.ToLower() == entity.Name.ToLower());
+
+        ////    }
+
+
+        ////    return foundIt;
+
+        ////}
+        ///// <summary>
+        ///// This will be used to narrow down the search data when doing a duplicate search. For example, if we are
+        ///// searching for a duplicate address, this data will be narrowed down to all addresses that are for a 
+        ///// certain user. Normally, the whole data will be searched.
+        ///// </summary>
+        ///// <returns></returns>
+        //public virtual IQueryable<TEntity> GetDomainDataForDuplicateNameSearch(TEntity entity)
+        //{
+        //    return FindAll();
+        //}
+
+
+
+
+
+        //public virtual TEntity FindForName(string name)
         //{
 
-        //    if (entity.Name.IsNullOrWhiteSpace())
+        //    if (name.IsNullOrWhiteSpace())
         //    {
-        //        entity.Name = "";
+        //        name = "";
         //    }
 
-        //    //This part can be overridden to insert only that data where the duplication is
-        //    //relevant.
-        //    var dataForSearching = GetDomainDataForDuplicateNameSearch(entity);
+        //    var foundall = FindForNameAll(name);
 
-        //    TEntity foundIt;
-        //    if(entity.Name.IsNullOrWhiteSpace())
+        //    if (foundall.IsNull())
+        //        return null;
+
+
+        //    TEntity first = foundall
+        //        .FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+
+
+        //    return first;
+
+        //}
+
+
+        //public virtual async Task<TEntity> FindForNameAsync(string name)
+        //{
+
+        //    if (name.IsNullOrWhiteSpace())
+        //        return null;
+
+        //    var foundall = await FindForNameAllAsync(name);
+
+        //    if (foundall.IsNull())
+        //        return null;
+
+        //    TEntity foundIt = foundall.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+        //    return foundIt;
+
+        //}
+
+
+        //#endregion
+
+
+
+        //#region FindForNameNoTracking and FindForNameNoTrackingAsync
+
+
+        ////Use DetachAll() to clear the cache. This NoTracking is not working.
+        //public virtual TEntity FindForNameNoTracking(string name)
+        //{
+
+        //    if (name.IsNullOrWhiteSpace())
         //    {
-        //        foundIt = dataForSearching
-        //            .FirstOrDefault(x => x.Name.ToLower() == entity.Name || x.Name == null);
-
+        //        name = "";
         //    }
-        //    else
-        //    {
-        //        foundIt = dataForSearching
-        //            .FirstOrDefault(x => x.Name.ToLower() == entity.Name.ToLower());
 
-        //    }
+        //    var foundall = FindForNameAllNoTracking(name);
+
+        //    if (foundall.IsNull())
+        //        return null;
+
+
+        //    TEntity foundIt = foundall
+        //        .FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
 
 
         //    return foundIt;
 
         //}
-        /// <summary>
-        /// This will be used to narrow down the search data when doing a duplicate search. For example, if we are
-        /// searching for a duplicate address, this data will be narrowed down to all addresses that are for a 
-        /// certain user. Normally, the whole data will be searched.
-        /// </summary>
-        /// <returns></returns>
-        public virtual IQueryable<TEntity> GetDomainDataForDuplicateNameSearch(TEntity entity)
-        {
-            return FindAll();
-        }
 
 
+        //public virtual async Task<TEntity> FindForNameNoTrackingAsync(string name)
+        //{
 
+        //    if (name.IsNullOrWhiteSpace())
+        //        return null;
 
+        //    var foundall = await FindForNameAllNoTrackingAsync(name);
 
-        public virtual TEntity FindForName(string name)
-        {
+        //    if (foundall.IsNull())
+        //        return null;
 
-            if (name.IsNullOrWhiteSpace())
-            {
-                name = "";
-            }
+        //    TEntity foundIt = foundall.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+        //    return foundIt;
 
-            var foundall = FindForNameAll(name);
+        //}
 
-            if (foundall.IsNull())
-                return null;
+        //#endregion
 
 
-            TEntity first = foundall
-                .FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
 
+        //#region FindForLight and FindForLightAsync
 
-            return first;
+        //public virtual TEntity FindForLight(string id, bool deleted = false)
+        //{
+        //    if (id.IsNullOrEmpty())
+        //        return null;
+        //    //throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
 
-        }
+        //    var item = FindAll().FirstOrDefault(x => x.Id == id);
 
+        //    return item;
 
-        public virtual async Task<TEntity> FindForNameAsync(string name)
-        {
+        //    //if (itemList.IsNullOrEmpty())
+        //    //    return default(TEntity);
 
-            if (name.IsNullOrWhiteSpace())
-                return null;
+        //    //return itemList.FirstOrDefault(x => x.Id == id) as TEntity;
 
-            var foundall = await FindForNameAllAsync(name);
+        //}
 
-            if (foundall.IsNull())
-                return null;
+        //public virtual async Task<TEntity> FindForLightAsync(string id, bool deleted = false)
+        //{
+        //    if (id.IsNullOrEmpty())
+        //        throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
 
-            TEntity foundIt = foundall.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
-            return foundIt;
+        //    var itemList = await FindAllAsync();
+        //    if (itemList.IsNullOrEmpty())
+        //        return default(TEntity);
 
-        }
+        //    return itemList.FirstOrDefault(x => x.Id == id) as TEntity;
 
+        //}
 
-        #endregion
 
 
+        //#endregion
 
-        #region FindForNameNoTracking and FindForNameNoTrackingAsync
+        //#region FindFor and FindForAsync
 
 
-        //Use DetachAll() to clear the cache. This NoTracking is not working.
-        public virtual TEntity FindForNameNoTracking(string name)
-        {
+        ///// <summary>
+        ///// This finds a record for the Entity. Checks for a zero value being passed. Then finds the record. 
+        ///// It defaults to non deleted records, however if you pass a true value in the 2nd parameter you can find deleted records as well.
+        ///// Exceptions
+        /////     AliKuli.Exceptions.MiscNS.NoDataException -Missing parameter: id
+        ///// </summary>
+        ///// <param name="id">id, deleted=false</param>
+        ///// <returns>T</returns>
+        //public virtual TEntity FindFor(string id, bool deleted = false)
+        //{
+        //    var item = FindForLight(id, deleted);
 
-            if (name.IsNullOrWhiteSpace())
-            {
-                name = "";
-            }
+        //    if (item != null)
+        //    {
+        //        Fix(item);
+        //    }
 
-            var foundall = FindForNameAllNoTracking(name);
+        //    return item;
+        //}
 
-            if (foundall.IsNull())
-                return null;
+        //public virtual async Task<TEntity> FindForAsync(string id, bool deleted = false)
+        //{
+        //    var item = await FindForLightAsync(id, deleted);
 
+        //    if (item != null)
+        //    {
+        //        Fix(item);
+        //    }
 
-            TEntity foundIt = foundall
-                .FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+        //    return item;
+        //}
 
 
-            return foundIt;
+        ////--------------------------------------------------------------------------------------------
+        ///// <summary>
+        ///// This finds a record for the Entity. Checks for a zero value being passed. Then finds the record. 
+        ///// It defaults to non deleted records, however if you pass a true value in the 2nd parameter you can find deleted records as well.
+        ///// </summary>
+        ///// <param name="id">id, deleted=false</param>
+        ///// <returns>T</returns>
 
-        }
+        //public virtual TEntity FindFor(TEntity entity, bool deleted = false)
+        //{
+        //    return this.FindFor(entity.Id, deleted);
+        //}
 
 
-        public virtual async Task<TEntity> FindForNameNoTrackingAsync(string name)
-        {
+        //#endregion
 
-            if (name.IsNullOrWhiteSpace())
-                return null;
+        //#region FindForNameAll and FindForNameAllAsync
 
-            var foundall = await FindForNameAllNoTrackingAsync(name);
+        //public virtual IEnumerable<TEntity> FindForNameAll(string name)
+        //{
+        //    if (name.IsNullOrEmpty())
+        //        return null;
 
-            if (foundall.IsNull())
-                return null;
+        //    var allT = FindAll().Where(x => x.Name.ToLower() == name.ToLower()).ToList();
 
-            TEntity foundIt = foundall.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
-            return foundIt;
+        //    if (allT.IsNullOrEmpty())
+        //        return null;
 
-        }
+        //    //var foundIt = allT.Where(x => x.Name.ToLower() == name.ToLower()).ToList();
 
-        #endregion
+        //    return allT.AsEnumerable();
 
+        //}
 
+        //public virtual async Task<IEnumerable<TEntity>> FindForNameAllAsync(string name)
+        //{
+        //    if (name.IsNullOrEmpty())
+        //        return null;
 
-        #region FindForLight and FindForLightAsync
+        //    var allT = await FindAllAsync();
 
-        public virtual TEntity FindForLight(string id, bool deleted = false)
-        {
-            if (id.IsNullOrEmpty())
-                return null;
-            //throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
+        //    if (allT.IsNullOrEmpty())
+        //        return null;
 
-            var item = FindAll().FirstOrDefault(x => x.Id == id);
+        //    var foundIt = allT.Where(x => x.Name.ToLower() == name.ToLower());
 
-            return item;
+        //    return (IEnumerable<TEntity>)foundIt;
 
-            //if (itemList.IsNullOrEmpty())
-            //    return default(TEntity);
+        //}
 
-            //return itemList.FirstOrDefault(x => x.Id == id) as TEntity;
 
-        }
+        //#endregion
 
-        public virtual async Task<TEntity> FindForLightAsync(string id, bool deleted = false)
-        {
-            if (id.IsNullOrEmpty())
-                throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
+        //#region FindForNameAllNoTracking and FindForNameAllNoTrackingAsync
 
-            var itemList = await FindAllAsync();
-            if (itemList.IsNullOrEmpty())
-                return default(TEntity);
+        //public virtual IEnumerable<TEntity> FindForNameAllNoTracking(string name)
+        //{
+        //    if (name.IsNullOrEmpty())
+        //        return null;
 
-            return itemList.FirstOrDefault(x => x.Id == id) as TEntity;
+        //    var allT = FindAll().Where(x => x.Name.ToLower() == name.ToLower()).ToList();
 
-        }
+        //    if (allT.IsNullOrEmpty())
+        //        return null;
 
+        //    foreach (var item in allT)
+        //    {
+        //        Detach(item);
+        //    }
 
+        //    //var foundIt = allT.Where(x => x.Name.ToLower() == name.ToLower()).ToList();
 
-        #endregion
+        //    return allT.AsEnumerable();
 
-        #region FindFor and FindForAsync
+        //}
 
+        //public virtual async Task<IEnumerable<TEntity>> FindForNameAllNoTrackingAsync(string name)
+        //{
+        //    if (name.IsNullOrEmpty())
+        //        return null;
 
-        /// <summary>
-        /// This finds a record for the Entity. Checks for a zero value being passed. Then finds the record. 
-        /// It defaults to non deleted records, however if you pass a true value in the 2nd parameter you can find deleted records as well.
-        /// Exceptions
-        ///     AliKuli.Exceptions.MiscNS.NoDataException -Missing parameter: id
-        /// </summary>
-        /// <param name="id">id, deleted=false</param>
-        /// <returns>T</returns>
-        public virtual TEntity FindFor(string id, bool deleted = false)
-        {
-            var item = FindForLight(id, deleted);
+        //    var allT = await FindAllNoTrackingAsync();
 
-            if (item != null)
-            {
-                Fix(item);
-            }
+        //    if (allT.IsNullOrEmpty())
+        //        return null;
 
-            return item;
-        }
+        //    var foundIt = allT.Where(x => x.Name.ToLower() == name.ToLower());
 
-        public virtual async Task<TEntity> FindForAsync(string id, bool deleted = false)
-        {
-            var item = await FindForLightAsync(id, deleted);
+        //    return (IEnumerable<TEntity>)foundIt;
 
-            if (item != null)
-            {
-                Fix(item);
-            }
+        //}
 
-            return item;
-        }
 
+        //#endregion
 
-        //--------------------------------------------------------------------------------------------
-        /// <summary>
-        /// This finds a record for the Entity. Checks for a zero value being passed. Then finds the record. 
-        /// It defaults to non deleted records, however if you pass a true value in the 2nd parameter you can find deleted records as well.
-        /// </summary>
-        /// <param name="id">id, deleted=false</param>
-        /// <returns>T</returns>
 
-        public virtual TEntity FindFor(TEntity entity, bool deleted = false)
-        {
-            return this.FindFor(entity.Id, deleted);
-        }
+        //#region NameExistsAsync and NameExists
 
+        ///// <summary>
+        ///// This checks to see if the name exists. If it exists, then it deattaches the entity
+        ///// so that it does not mess with the saving of the one for which a test is being carried
+        ///// out.
+        ///// </summary>
+        ///// <param name="entity"></param>
+        ///// <returns></returns>
 
-        #endregion
+        //public virtual bool NameExists(TEntity entity)
+        //{
+        //    var entity2 = FindForName(entity.Name);
+        //    return nameExists(entity, entity2);
+        //}
 
-        #region FindForNameAll and FindForNameAllAsync
 
-        public virtual IEnumerable<TEntity> FindForNameAll(string name)
-        {
-            if (name.IsNullOrEmpty())
-                return null;
+        //public async virtual Task<bool> NameExistsAsync(TEntity entity)
+        //{
+        //    var entity2 = await FindForNameAsync(entity.Name);
+        //    return nameExists(entity, entity2);
+        //}
 
-            var allT = FindAll().Where(x => x.Name.ToLower() == name.ToLower()).ToList();
 
-            if (allT.IsNullOrEmpty())
-                return null;
+        //private bool nameExists(TEntity entity, TEntity entity2)
+        //{
+        //    if (entity2.IsNull())
+        //        return false;
 
-            //var foundIt = allT.Where(x => x.Name.ToLower() == name.ToLower()).ToList();
+        //    // we dont want to track this object
+        //    _db.Entry(entity2).State = EntityState.Detached;
 
-            return allT.AsEnumerable();
+        //    return !(entity.Id.Equals(entity2.Id));
+        //}
 
-        }
 
-        public virtual async Task<IEnumerable<TEntity>> FindForNameAllAsync(string name)
-        {
-            if (name.IsNullOrEmpty())
-                return null;
 
-            var allT = await FindAllAsync();
 
-            if (allT.IsNullOrEmpty())
-                return null;
+        //#endregion
 
-            var foundIt = allT.Where(x => x.Name.ToLower() == name.ToLower());
+        //#region Find No Tracking
 
-            return (IEnumerable<TEntity>)foundIt;
+        ////public virtual IQueryable<TEntity> FindAllLightNoTracking(bool deleted = false)
+        ////{
+        ////    var query = from b in _db.Set<TEntity>().AsNoTracking()
+        ////                where b.MetaData.IsDeleted == deleted && b.MetaData.IsInactive == false
+        ////                orderby b.Name
+        ////                select b;
 
-        }
+        ////    return query.AsQueryable();
+        ////}
 
+        //public virtual IList<TEntity> FindAllNoTracking(bool deleted = false)
+        //{
+        //    var listOfItems = FindAll().ToList();
 
-        #endregion
+        //    if (listOfItems.IsNull())
+        //        return null;
 
-        #region FindForNameAllNoTracking and FindForNameAllNoTrackingAsync
+        //    foreach (var item in listOfItems)
+        //    {
+        //        Detach(item);
+        //    }
+        //    return listOfItems;
+        //}
 
-        public virtual IEnumerable<TEntity> FindForNameAllNoTracking(string name)
-        {
-            if (name.IsNullOrEmpty())
-                return null;
 
-            var allT = FindAllNoTracking().Where(x => x.Name.ToLower() == name.ToLower()).ToList();
+        //public virtual TEntity FindForLightNoTracking(string id, bool deleted = false)
+        //{
+        //    if (id.IsNullOrEmpty())
+        //        throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
 
-            if (allT.IsNullOrEmpty())
-                return null;
+        //    return FindAllNoTracking().FirstOrDefault(x => x.Id == id);
+        //}
 
-            //var foundIt = allT.Where(x => x.Name.ToLower() == name.ToLower()).ToList();
+        //public virtual async Task<TEntity> FindForLightNoTrackingAsync(string id, bool deleted = false)
+        //{
+        //    if (id.IsNullOrEmpty())
+        //        throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
 
-            return allT.AsEnumerable();
+        //    var itemList = await FindAllNoTrackingAsync();
+        //    if (itemList.IsNullOrEmpty())
+        //        return default(TEntity);
 
-        }
+        //    return itemList.FirstOrDefault(x => x.Id == id) as TEntity;
 
-        public virtual async Task<IEnumerable<TEntity>> FindForNameAllNoTrackingAsync(string name)
-        {
-            if (name.IsNullOrEmpty())
-                return null;
+        //}
 
-            var allT = await FindAllNoTrackingAsync();
+        //public virtual async Task<List<TEntity>> FindAllNoTrackingAsync(bool deleted = false)
+        //{
+        //    var lst = await FindAllAsync(deleted);
 
-            if (allT.IsNullOrEmpty())
-                return null;
+        //    if (lst.IsNull())
+        //        return null;
 
-            var foundIt = allT.Where(x => x.Name.ToLower() == name.ToLower());
+        //    foreach (var item in lst)
+        //    {
+        //        Detach(item);
+        //    }
+        //    return  lst;
 
-            return (IEnumerable<TEntity>)foundIt;
+        //}
 
-        }
 
+        //#endregion
 
-        #endregion
+        //#region FindAll
 
 
-        #region NameExistsAsync and NameExists
+        ///// <summary>
+        ///// This retrieves all the values where deleted is false.
+        ///// </summary>
+        ///// <returns></returns>
+        //public virtual IQueryable<TEntity> FindAll(bool deleted = false)
+        //{
+        //    var listOfItems = FindAllLight(deleted);
+        //    return listOfItems;
+        //}
 
-        /// <summary>
-        /// This checks to see if the name exists. If it exists, then it deattaches the entity
-        /// so that it does not mess with the saving of the one for which a test is being carried
-        /// out.
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-
-        public virtual bool NameExists(TEntity entity)
-        {
-            var entity2 = FindForName(entity.Name);
-            return nameExists(entity, entity2);
-        }
-
-
-        public async virtual Task<bool> NameExistsAsync(TEntity entity)
-        {
-            var entity2 = await FindForNameAsync(entity.Name);
-            return nameExists(entity, entity2);
-        }
-
-
-        private bool nameExists(TEntity entity, TEntity entity2)
-        {
-            if (entity2.IsNull())
-                return false;
-
-            // we dont want to track this object
-            _db.Entry(entity2).State = EntityState.Detached;
-
-            return !(entity.Id.Equals(entity2.Id));
-        }
-
-
-
-
-        #endregion
-
-        #region Find No Tracking
-
-        public virtual IQueryable<TEntity> FindAllLightNoTracking(bool deleted = false)
-        {
-            //var queryListOfItems = SearchFor(x => x.MetaData.IsDeleted == deleted);
-            //var queryListOfItems = _db.Set<TEntity>().Where(x => x.MetaData.IsDeleted == deleted);
-            var query = from b in _db.Set<TEntity>().AsNoTracking()
-                        where b.MetaData.IsDeleted == deleted && b.MetaData.IsInactive == false
-                        orderby b.Name
-                        select b;
-
-            return query.AsQueryable();
-        }
-
-        public virtual IQueryable<TEntity> FindAllNoTracking(bool deleted = false)
-        {
-            var listOfItems = FindAllLightNoTracking(deleted);
-            return listOfItems;
-        }
-
-
-        public virtual TEntity FindForLightNoTracking(string id, bool deleted = false)
-        {
-            if (id.IsNullOrEmpty())
-                throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
-
-            return FindAllNoTracking().FirstOrDefault(x => x.Id == id);
-
-            //if (itemList.IsNullOrEmpty())
-            //    return default(TEntity);
-
-            //return itemList.FirstOrDefault(x => x.Id == id) as TEntity;
-
-        }
-
-        public virtual async Task<TEntity> FindForLightNoTrackingAsync(string id, bool deleted = false)
-        {
-            if (id.IsNullOrEmpty())
-                throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
-
-            var itemList = await FindAllNoTrackingAsync();
-            if (itemList.IsNullOrEmpty())
-                return default(TEntity);
-
-            return itemList.FirstOrDefault(x => x.Id == id) as TEntity;
-
-        }
-
-        public virtual async Task<IList<TEntity>> FindAllNoTrackingAsync(bool deleted = false)
-        {
-            return await FindAllLightNoTracking(deleted).ToListAsync();
-
-        }
-
-
-        #endregion
-
-        #region FindAll
-
-
-        /// <summary>
-        /// This retrieves all the values where deleted is false.
-        /// </summary>
-        /// <returns></returns>
-        public virtual IQueryable<TEntity> FindAll(bool deleted = false)
-        {
-            var listOfItems = FindAllLight(deleted);
-            return listOfItems;
-        }
-
-        public virtual async Task<List<TEntity>> FindAllAsync(bool deleted = false)
-        {
-
-
-            return await FindAllLight(deleted).ToListAsync();
-
-
-        }
+        //public virtual async Task<List<TEntity>> FindAllAsync(bool deleted = false)
+        //{
+        //    return await FindAllLight(deleted).ToListAsync();
+        //}
 
 
 
@@ -479,25 +484,20 @@ namespace DalLibrary.DalNS
         /// </summary>
         /// <param name="deleted"></param>
         /// <returns></returns>
-        public virtual IQueryable<TEntity> FindAllLight(bool deleted = false)
+        public virtual IQueryable<TEntity> FindAllFor(bool deleted = false, bool isInactive = false)
         {
 
-            //if (canRetrieve())
-            //{
             var query = from b in _db.Set<TEntity>()
-                        where b.MetaData.IsDeleted == deleted && b.MetaData.IsInactive == false
+                        where b.MetaData.IsDeleted == deleted && b.MetaData.IsInactive == isInactive
                         orderby b.Name
                         select b;
 
             return query.AsQueryable();
-            //}
-            //else
-            //{
-            //    //the code will never get here because error is thrown in isUserAuthourizedToRetrieve()
-            //    ErrorsGlobal.Add("User not autourized to receive.", MethodBase.GetCurrentMethod());
-            //    throw new Exception(ErrorsGlobal.ToString());
-            //}
+
         }
+
+
+
 
 
 

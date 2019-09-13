@@ -42,7 +42,7 @@ namespace MarketPlace.Web6.Controllers
             }
         }
 
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             Message message = parm.Entity as Message;
             message.IsNullThrowException("Unable to unbox");
@@ -53,10 +53,24 @@ namespace MarketPlace.Web6.Controllers
                 message.MenuManager.ReturnUrl = parm.ReturnUrl;
             }
 
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
 
         }
 
+
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            Message message = parm.Entity as Message;
+            message.IsNullThrowException("Unable to unbox");
+            message.SelectListPersonFrom = _messageBiz.PersonBiz.SelectList();
+
+            if (!parm.ReturnUrl.IsNullOrWhiteSpace())
+            {
+                message.MenuManager.ReturnUrl = parm.ReturnUrl;
+            }
+
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
+        }
 
         [HttpGet]
         public ActionResult SaleMessage(string menuPathMainId, string productId, string productChildId, string returnUrl, ICollection<ProductChild> productChildrenBeingAdvertised, MessageENUM messageEnum = MessageENUM.Unknown, MenuENUM menuEnum = MenuENUM.Unknown)

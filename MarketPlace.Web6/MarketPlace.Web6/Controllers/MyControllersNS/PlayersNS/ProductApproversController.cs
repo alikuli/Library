@@ -39,7 +39,7 @@ namespace MarketPlace.Web6.Controllers
                 return ProductApproverBiz.CashTrxBiz.PersonBiz.UserBiz;
             }
         }
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
 
@@ -53,9 +53,24 @@ namespace MarketPlace.Web6.Controllers
 
             productApprover.SelectListPeople = ProductApproverBiz.PersonBiz.SelectList();
 
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
         }
 
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
+
+            if (!UserBiz.IsAdmin(UserId))
+                throw new Exception("You are not an administrator");
+
+            ProductApprover productApprover = parm.Entity as ProductApprover;
+            productApprover.IsNullThrowException("Unable to unbox ProductApprover");
+
+            productApprover.SelectListProductApproverCategory = ProductApproverBiz.ProductApproverCategoryBiz.SelectList();
+
+            productApprover.SelectListPeople = ProductApproverBiz.PersonBiz.SelectList();
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
+        }
 
         public override async Task<ActionResult> Index(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, EnumLibrary.EnumNS.MenuENUM menuEnum = MenuENUM.IndexDefault, EnumLibrary.EnumNS.SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "", string viewName = "Index")
         {

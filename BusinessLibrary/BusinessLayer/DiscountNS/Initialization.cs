@@ -23,7 +23,7 @@ namespace UowLibrary.DiscountPrecedenceNS
                 throw new Exception(ErrorsGlobal.ToString());
             }
 
-            //int rank = 0;
+            int rank = 0;
             foreach (DiscountPrecedenceInitParameter discPrecedenceParameter in DiscountPrecedenceNamesLst)
             {
                 try
@@ -32,8 +32,8 @@ namespace UowLibrary.DiscountPrecedenceNS
                     {
                         DiscountPrecedence dp = Factory() as DiscountPrecedence;
 
-                        //rank += DiscountPrecedence.RANK_SPACING_CONST;
-                        //dp.Rank = rank;
+                        rank += DiscountPrecedence.RANK_SPACING_CONST;
+                        dp.Rank = rank;
 
                         //Item will be put at the end of the list with calculated rank
                         dp.DiscountTypeEnum = discPrecedenceParameter.DiscountTypeEnum;

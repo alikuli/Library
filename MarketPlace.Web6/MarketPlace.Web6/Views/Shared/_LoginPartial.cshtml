@@ -1,98 +1,70 @@
 ﻿@using Microsoft.AspNet.Identity
 
 @{
-    //ViewBag.MoneyItemParent
 
-    //ToolTips
-    //string refundableToolTipViewBag = ViewBag.RefundableToolTipViewBag as string;
-    ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount moneyAccount = ViewBag.MoneyAccount as ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount ?? new ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.UserMoneyAccount();
+    ModelsClassLibrary.ModelsNS.GlobalObjectNS.GlobalObject globalObject = ViewBag.GlobalObject as ModelsClassLibrary.ModelsNS.GlobalObjectNS.GlobalObject ?? new ModelsClassLibrary.ModelsNS.GlobalObjectNS.GlobalObject();
 
-    ModelsClassLibrary.ModelsNS.DocumentsNS.MoneyAndCountClass.MoneyItemParent moneyItemParent = ViewBag.MoneyItemParent as ModelsClassLibrary.ModelsNS.DocumentsNS.MoneyAndCountClass.MoneyItemParent ?? new ModelsClassLibrary.ModelsNS.DocumentsNS.MoneyAndCountClass.MoneyItemParent();
-
-    //string cashPath = @Url.Action("ShowCashMenu", "CashTrxs");
-    //string cashPath_Admin = @Url.Action("ShowCashMenu_Admin", "CashTrxs");
-
-
-    string amountRefundableAndNonRefundableMenuItem = moneyAccount.PersonCash.Total.MenuItem;
-    string amountRefundableAndNonRefundableToolTip = moneyAccount.PersonCash.Total.ToolTip;
+    string amountRefundableAndNonRefundableMenuItem = globalObject.Money_User.TotalCash.MenuName;
+    string amountRefundableAndNonRefundableToolTip = globalObject.Money_User.TotalCash.MenuToolTip;
     string amountRefundableAndNonRefundable_Path = @Url.Action("ShowCashMenu", "CashTrxs");
-    string amountRefundableAndNonRefundable = moneyAccount.PersonCash.Total_AmountOnly.MenuItem;
+    string amountTotalUser = globalObject.Money_User.TotalCash.MoneyAmount.ToString().ToRuppeeFormat();
 
-    string systemCashCreatedMenuItem = moneyAccount.SystemCash.Total.MenuItem;
-    string systemCashCreatedToolTip = moneyAccount.SystemCash.Total.ToolTip;
+    string systemCashCreatedMenuItem = globalObject.Money_System.TotalCash.MenuName;
+    string systemCashCreatedToolTip = globalObject.Money_System.TotalCash.MenuToolTip;
     string systemCashCreated_Path = @Url.Action("ShowCashMenu_Admin", "CashTrxs");
 
-    //-----------------------------------------------------Sale Requests - fix
 
-    //string systemTotalSaleRequestsMenuItem = moneyAccount.SystemSalesOrders.Total.MenuItem;
-    //string systemTotalSaleRequestToolTip = moneyAccount.SystemSalesOrders.Total.ToolTip;
-    //string systemTotalSaleRequest_Admin = @Url.Action("GetSaleOrderTotals_Admin", "BuySellDocs");
-
-    //string personTotalSaleRequestMenuItem = moneyAccount.PersonSalesOrders.Total.MenuItem;
-    //string personTotalSaleRequestToolTip = moneyAccount.PersonSalesOrders.Total.ToolTip;
-    //string personTotalSaleRequestPath = @Url.Action("c", "BuySellDocs");
-
-    string systemTotalSaleRequestsMenuItem = moneyItemParent.Sale_Admin == null ? "" : moneyItemParent.Sale_Admin.RequestUnconfirmed.MenuName;
-    string systemTotalSaleRequestToolTip = moneyItemParent.Sale_Admin == null ? "" : moneyItemParent.Sale_Admin.RequestUnconfirmed.MenuToolTip;
-    string systemTotalSaleRequest_Admin = moneyItemParent.Sale_Admin == null ? "" : @Url.Action("GetSaleOrderTotals_Admin", "BuySellDocs");
-
-    string personTotalSaleRequestMenuItem = moneyItemParent.Sale == null ? "" : moneyItemParent.Sale.RequestUnconfirmed.MenuName;
-    string personTotalSaleRequestToolTip = moneyItemParent.Sale == null ? "" : moneyItemParent.Sale.RequestUnconfirmed.MenuToolTip;
-    string personTotalSaleRequestPath = @Url.Action("GetSaleOrderTotals", "BuySellDocs");
+    //-----------------------------------------------------Salesman Please Pickup
 
 
-    //-----------------------------------------------------Sale Confirmed - fix
+    string personTotalSalesmanOrdersMenuItem = globalObject.Salesman == null ? "" : globalObject.Salesman.All.MenuName;
+    string personTotalSalesmanOrdersToolTip = globalObject.Salesman == null ? "" : globalObject.Salesman.All.MenuToolTip; ;
+    string personTotalSalesmanOrders_Path = @Url.Action("GetSalesmanOrderTotals", "BuySellDocs");
 
-    string systemTotalSaleConfirmedsMenuItem = moneyAccount.SystemSalesOrders.Total.MenuItem;
-    string systemTotalSaleConfirmedToolTip = moneyAccount.SystemSalesOrders.Total.ToolTip;
-    string systemTotalSaleConfirmed_Admin = @Url.Action("GetSaleOrderTotals_Admin", "BuySellDocs");
+    string systemTotalSalesmanOrdersMenuItem = globalObject.Salesman_Admin.All.MenuName;
+    string systemTotalSalesmanToolTip = globalObject.Salesman_Admin.All.MenuToolTip;
+    string systemTotalSalesman_Path = @Url.Action("GetSalesmanOrderTotals_Admin", "BuySellDocs");
 
-    string personTotalSaleConfirmedMenuItem = moneyAccount.PersonSalesOrders.Total.MenuItem;
-    string personTotalSaleConfirmedToolTip = moneyAccount.PersonSalesOrders.Total.ToolTip;
-    string personTotalSaleConfirmedPath = @Url.Action("GetSaleOrderTotals", "BuySellDocs");
-    //-----------------------------------------------------Sale Please Pickup,,,,,,,,,,,,,,,,, - fix
 
-    string systemTotalPleasePickupsMenuItem = moneyAccount.SystemSalesOrders.Total.MenuItem;
-    string systemTotalPleasePickupToolTip = moneyAccount.SystemSalesOrders.Total.ToolTip;
-    string systemTotalPleasePickup_Admin = @Url.Action("GetSaleOrderTotals_Admin", "BuySellDocs");
 
-    string personTotalPleasePickupMenuItem = moneyAccount.PersonSalesOrders.Total.MenuItem;
-    string personTotalPleasePickupToolTip = moneyAccount.PersonSalesOrders.Total.ToolTip;
-    string personTotalPleasePickupPath = @Url.Action("GetSaleOrderTotals", "BuySellDocs");
-    //-----------------------------------------------------Sale Orders
+    //-----------------------------------------------------Sale Please Pickup
 
-    //string systemTotalSaleOrdersMenuItem = moneyAccount.SystemSalesOrders.Total.MenuItem;
-    //string systemTotalSaleToolTip = moneyAccount.SystemSalesOrders.Total.ToolTip;
-    //string systemTotalSale_Admin = @Url.Action("GetSaleOrderTotals_Admin", "BuySellDocs");
-    string systemTotalSaleOrdersMenuItem = moneyItemParent.Sale_Admin.All.MenuName;
-    string systemTotalSaleToolTip = moneyItemParent.Sale_Admin.All.MenuToolTip;
-    string systemTotalSale_Admin = @Url.Action("GetSaleOrderTotals_Admin", "BuySellDocs");
 
-    //string personTotalSaleOrdersMenuItem = moneyAccount.PersonSalesOrders.Total.MenuItem;
-    //string personTotalSaleOrdersToolTip = moneyAccount.PersonSalesOrders.Total.ToolTip;
-    //string personTotalSaleOrdersPath = @Url.Action("GetSaleOrderTotals", "BuySellDocs");
+    string personTotalSaleOrdersMenuItem = globalObject.Sale == null ? "" : globalObject.Sale.All.MenuName;
+    string personTotalSaleOrdersToolTip = globalObject.Sale == null ? "" : globalObject.Sale.All.MenuToolTip; ;
+    string personTotalSaleOrders_Path = @Url.Action("GetSaleOrderTotals", "BuySellDocs");
 
-    string personTotalSaleOrdersMenuItem = moneyItemParent.Sale == null ? "" : moneyItemParent.Sale.All.MenuName;
-    string personTotalSaleOrdersToolTip = moneyItemParent.Sale == null ? "" : moneyItemParent.Sale.All.MenuToolTip; ;
-    string personTotalSaleOrdersPath = @Url.Action("GetSaleOrderTotals", "BuySellDocs");
+    string systemTotalSaleOrdersMenuItem = globalObject.Sale_Admin.All.MenuName;
+    string systemTotalSaleToolTip = globalObject.Sale_Admin.All.MenuToolTip;
+    string systemTotalSale_Path = @Url.Action("GetSaleOrderTotals_Admin", "BuySellDocs");
+
 
     //-----------------------------------------------------Purchase Orders
 
-    //string personTotalPurchaseOrdersMenuItem = moneyAccount.PersonPurchaseOrders.Total.MenuItem;
-    //string personTotalPurchaseOrdersToolTip = moneyAccount.PersonPurchaseOrders.Total.ToolTip;
-    //string personTotalPurchaseOrders_Path = Url.Action("GetPurchaseOrderTotals", "BuySellDocs");
-
-    string personTotalPurchaseOrdersMenuItem = moneyItemParent.Purchase.All.MenuName;
-    string personTotalPurchaseOrdersToolTip = moneyItemParent.Purchase.All.MenuToolTip;
+    string personTotalPurchaseOrdersMenuItem = globalObject.Purchase.All.MenuName;
+    string personTotalPurchaseOrdersToolTip = globalObject.Purchase.All.MenuToolTip;
     string personTotalPurchaseOrders_Path = Url.Action("GetPurchaseOrderTotals", "BuySellDocs");
-    
-    string systemTotalPurchaseOrdersMenuItem = moneyAccount.SystemPurchaseOrders.Total.MenuItem;
-    string systemTotalPurchaseOrdersToolTip = moneyAccount.SystemPurchaseOrders.Total.ToolTip;
+
+    string systemTotalPurchaseOrdersMenuItem = globalObject.Purchase_Admin.All.MenuName;
+    string systemTotalPurchaseOrdersToolTip = globalObject.Purchase_Admin.All.MenuToolTip;
     string systemTotalPurchaseOrders_Path = Url.Action("GetPurchaseOrderTotals_Admin", "BuySellDocs");
-    
-    
 
 
+    //-----------------------------------------------------Delivery Orders
+
+    string personTotalDeliveryOrdersMenuItem = globalObject.Delivery.All.MenuName;
+    string personTotalDeliveryOrdersToolTip = globalObject.Delivery.All.MenuToolTip;
+    string personTotalDeliveryOrders_Path = Url.Action("GetDeliveryOrderTotals", "BuySellDocs");
+
+    string systemTotalDeliveryOrdersMenuItem = globalObject.Delivery_Admin.All.MenuName;
+    string systemTotalDeliveryOrdersToolTip = globalObject.Delivery_Admin.All.MenuToolTip;
+    string systemTotalDeliveryOrders_Path = Url.Action("GetDeliveryOrderTotals_Admin", "BuySellDocs");
+
+    bool isAdmin = globalObject.IsAdmin;
+    bool isCustomer = globalObject.IsCustomer;
+    bool isOwner = globalObject.IsOwner;
+    bool isDeliveryman = globalObject.IsDeliveryman;
+    bool isSalesman = globalObject.IsSalesman;
 
 
 
@@ -105,40 +77,59 @@
     {
         @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav">
-        
-
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="@amountRefundableAndNonRefundable_Path" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Total: @amountRefundableAndNonRefundable
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-            <a class="dropdown-item" href="@amountRefundableAndNonRefundable_Path" data-toggle="tooltip" title="@amountRefundableAndNonRefundableToolTip" data-placement="left">@amountRefundableAndNonRefundableMenuItem</a>
-
-            <a class="dropdown-item" href="@personTotalSaleOrdersPath" data-toggle="tooltip" title="@personTotalSaleOrdersToolTip" data-placement="left">@personTotalSaleOrdersMenuItem</a>
-            <a class="dropdown-item" href="@personTotalPurchaseOrders_Path" data-toggle="tooltip" title="@personTotalPurchaseOrdersToolTip" data-placement="left">@personTotalPurchaseOrdersMenuItem</a>
+        <ul class="nav navbar-nav">
 
 
-            @if (moneyAccount.IsAdmin)
-            {
-                <a class="dropdown-item background-yellow" href="@systemCashCreated_Path" data-toggle="tooltip" title="@systemCashCreatedToolTip" data-placement="left">@systemCashCreatedMenuItem</a>
-                <a class="dropdown-item background-yellow" href="@systemTotalSale_Admin" data-toggle="tooltip" title="@systemTotalSaleToolTip" data-placement="left">@systemTotalSaleOrdersMenuItem</a>
-                <a class="dropdown-item  background-yellow" href="@systemTotalPurchaseOrders_Path" data-toggle="tooltip" title="@systemTotalPurchaseOrdersToolTip" data-placement="left">@systemTotalPurchaseOrdersMenuItem</a>
-            }
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="@amountRefundableAndNonRefundable_Path" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Total: @amountTotalUser
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-        </div>
+                    <a class="dropdown-item" href="@amountRefundableAndNonRefundable_Path" data-toggle="tooltip" title="@amountRefundableAndNonRefundableToolTip" data-placement="left">@amountRefundableAndNonRefundableMenuItem</a>
 
-    </li>
+                    @if (isOwner || isAdmin)
+                    {
+                        <a class="dropdown-item" href="@personTotalSaleOrders_Path" data-toggle="tooltip" title="@personTotalSaleOrdersToolTip" data-placement="left">@personTotalSaleOrdersMenuItem</a>
+                    }
+                    @if (isCustomer || isAdmin)
+                    {
+                        <a class="dropdown-item" href="@personTotalPurchaseOrders_Path" data-toggle="tooltip" title="@personTotalPurchaseOrdersToolTip" data-placement="left">@personTotalPurchaseOrdersMenuItem</a>
+                    }
+                    @if (isDeliveryman || isAdmin)
+                    {
+                        <a class="dropdown-item" href="@personTotalDeliveryOrders_Path" data-toggle="tooltip" title="@personTotalDeliveryOrdersToolTip" data-placement="left">@personTotalDeliveryOrdersMenuItem</a>
+                    }
+
+                    @if (isSalesman || isAdmin)
+                    {
+                        <a class="dropdown-item" href="@personTotalSalesmanOrders_Path" data-toggle="tooltip" title="@personTotalSalesmanOrdersToolTip" data-placement="left">@personTotalSalesmanOrdersMenuItem</a>
+                    }
+
+                    @if (globalObject.IsAdmin)
+                    {
+                        <a class="dropdown-item background-yellow" href="@systemCashCreated_Path" data-toggle="tooltip" title="@systemCashCreatedToolTip" data-placement="left">@systemCashCreatedMenuItem</a>
+                        
+                        <a class="dropdown-item background-yellow" href="@systemTotalSale_Path" data-toggle="tooltip" title="@systemTotalSaleToolTip" data-placement="left">@systemTotalSaleOrdersMenuItem</a>
+                        
+                        <a class="dropdown-item  background-yellow" href="@systemTotalPurchaseOrders_Path" data-toggle="tooltip" title="@systemTotalPurchaseOrdersToolTip" data-placement="left">@systemTotalPurchaseOrdersMenuItem</a>
+                        
+                        <a class="dropdown-item  background-yellow" href="@systemTotalSalesman_Path" data-toggle="tooltip" title="@systemTotalSalesmanToolTip" data-placement="left">@systemTotalSalesmanOrdersMenuItem</a>
+
+                    }
+
+                </div>
+
+            </li>
 
 
-    <li>
-        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link", id = "helloLink" })
-    </li>
-    <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            <li>
+                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link", id = "helloLink" })
+            </li>
+            <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
 
 
-</ul>
+        </ul>
 
     }
 }

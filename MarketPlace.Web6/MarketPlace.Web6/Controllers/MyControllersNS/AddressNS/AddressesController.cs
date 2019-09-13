@@ -1,14 +1,14 @@
-﻿using EnumLibrary.EnumNS;
+﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.AddressNS.AddessWithIdNS;
-using System;
+using ModelsClassLibrary.ModelsNS.ContactNS.AddressNS.AddressNS;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary.AddressNS;
 using UowLibrary.ParametersNS;
-using AliKuli.Extentions;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -49,11 +49,11 @@ namespace MarketPlace.Web6.Controllers
         /// </summary>
         /// <param name="avr"></param>
         /// <returns></returns>
-        public ActionResult DisplayAddressVerifcationForConfirmation(string addressId, MailServiceENUM mailServiceEnum, MailLocalOrForiegnENUM mailLocalOrForiegnENUM )
+        public ActionResult DisplayAddressVerifcationForConfirmation(string addressId, MailServiceENUM mailServiceEnum, MailLocalOrForiegnENUM mailLocalOrForiegnENUM)
         {
             try
             {
-                AddressVerificationRequest avr = AddressBiz.GetAddressVerificationRequestConfirmationHttp( addressId, mailServiceEnum, mailLocalOrForiegnENUM );
+                AddressVerificationRequest avr = AddressBiz.GetAddressVerificationRequestConfirmationHttp(addressId, mailServiceEnum, mailLocalOrForiegnENUM);
                 return View(avr);
 
             }
@@ -172,6 +172,8 @@ namespace MarketPlace.Web6.Controllers
 
         }
 
+
+
         [HttpGet]
         public ActionResult UpdateAndSaveDefaultAddress(
             string addressId,
@@ -208,6 +210,28 @@ namespace MarketPlace.Web6.Controllers
 
                 throw;
             }
+        }
+
+
+
+        [HttpPost]
+        public ActionResult SaveAddressFromJavaScript(AddressJsVm address)
+        {
+
+            return Json(new
+            {
+                message = "Address Successfully posted!"
+            });
+        }
+
+        [HttpPost]
+        public ActionResult GetAddressInfo(string id)
+        {
+            id.IsNullOrWhiteSpaceThrowArgumentException();
+            AddressMain addyMain = AddressBiz.Find(id);
+            addyMain.IsNullThrowExceptionArgument();
+            AddressStringWithNames addressString = addyMain.ToAddressComplex();
+            return Json(addressString,JsonRequestBehavior.DenyGet);
         }
 
     }

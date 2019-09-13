@@ -1,12 +1,8 @@
-﻿using AliKuli.Extentions;
-using EnumLibrary.EnumNS;
+﻿using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
-using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.ViewModels;
-using System.Linq;
 using UowLibrary.MenuNS.MenuStateNS;
 
 namespace UowLibrary.ProductChildNS
@@ -21,16 +17,20 @@ namespace UowLibrary.ProductChildNS
             indexListVM.IsImageTiled = true;
             indexListVM.MenuManager.ReturnUrl = parameters.ReturnUrl;
 
+            indexListVM.Heading.Main = "Seller Product";
+            if (IsShowHidden)
+                indexListVM.Heading.Main = "Seller Product (Hidden)";
+
+
         }
 
 
         public override void Event_ModifyIndexItem(IndexListVM indexListVM, IndexItemVM indexItem, ICommonWithId icommonWithId)
         {
             base.Event_ModifyIndexItem(indexListVM, indexItem, icommonWithId);
-            ProductChild productChild = icommonWithId as ProductChild;
-            productChild.IsNullThrowException("unable to unbox productChild");
+            ProductChild productChild = ProductChild.Unbox(icommonWithId);
 
-            indexItem.MenuManager = new MenuManager(null, null,productChild, MenuENUM.IndexMenuPath1, BreadCrumbManager,null,UserId, indexListVM.MenuManager.ReturnUrl, UserName);
+            indexItem.MenuManager = new MenuManager(null, null, productChild, MenuENUM.IndexMenuPath1, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
             indexItem.MenuManager.PictureAddresses = GetPictureList(productChild);
             indexItem.Price = productChild.Sell.SellPrice;
 

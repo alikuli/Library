@@ -1,6 +1,5 @@
 ﻿using AliKuli.Extentions;
 using ModelsClassLibrary.MenuNS;
-using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
@@ -33,7 +32,7 @@ namespace UowLibrary.MenuNS
                 webClicksCount,
                 recordStr);
 
-            if(!UserId.IsNullOrEmpty())
+            if (!UserId.IsNullOrEmpty())
             {
                 Person userPerson = UserBiz.GetPersonFor(UserId);
                 userPerson.IsNullThrowException("userPerson");
@@ -115,12 +114,13 @@ namespace UowLibrary.MenuNS
                 Person person = CashTrxBiz.PersonBiz.GetPersonForUserId(UserId);
                 if (person.IsNull())
                 {
-                    mm.UserMoneyAccount = new UserMoneyAccount();
+                    //mm.UserMoneyAccount = new UserMoneyAccount();
                 }
                 else
                 {
-                    bool isBank = BankBiz.IsBankerFor(UserId);
-                    mm.UserMoneyAccount = CashTrxBiz.MoneyAccountForPerson(person.Id, isBank);
+                    bool isBank = BankBiz.IsBanker_User(UserId);
+                    //swithched off to get rid of error. MAY NEED IT BACK!
+                    //mm.UserMoneyAccount = MoneyAccountForPerson(person.Id, isBank);
                 }
             }
 

@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
 using AliKuli.Extentions;
+using System.Collections.Generic;
+using ModelsClassLibrary.ModelsNS.ProductNS;
 
 namespace ModelsClassLibrary.ModelsNS.PlayersNS
 {
@@ -33,7 +35,7 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
         public virtual OwnerCategory OwnerCategory { get; set; }
 
 
-
+        public virtual ICollection<Product> Products { get; set; }
 
 
 
@@ -46,6 +48,12 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
         public SelectList SelectListOwnerCategory { get; set; }
 
 
+        //[Display(Name = "Salesman")]
+        //public string SalesmanId { get; set; }
+        //public virtual Salesman Salesman { get; set; }
+
+        [NotMapped]
+        public SelectList SelectListSalesman { get; set; }
 
         //[NotMapped]
         //public SelectList SelectListBillAddress { get; set; }

@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.ToolsNS;
 using MarketPlace.Web6.Controllers.Abstract;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System;
 using System.IO;
@@ -100,11 +101,17 @@ namespace MarketPlace.Web6.Controllers
         }
 
 
-        public override ActionResult Event_CreateViewAndSetupSelectList(ModelsClassLibrary.ModelsNS.SharedNS.ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ModelsClassLibrary.ModelsNS.SharedNS.ControllerIndexParams parm)
+        {
+            //ViewBag.ShowEditControls = "false";
+            ViewBag.ShowDeleteButton = "true";
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
+        }
+
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             ViewBag.ShowEditControls = "false";
-
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
         }
 
 

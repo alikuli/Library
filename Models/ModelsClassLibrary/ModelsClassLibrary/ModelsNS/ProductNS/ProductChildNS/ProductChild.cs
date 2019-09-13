@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
+using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
@@ -29,6 +30,16 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
         {
             Sell = new SalePriceComplex();
             Buy = new CostsComplex();
+            NoOfVisits = new LongWithDateComplex();
+
+        }
+
+
+        public static ProductChild Unbox(ICommonWithId icommonWithId)
+        {
+            ProductChild pc = icommonWithId as ProductChild;
+            pc.IsNullThrowException();
+            return pc;
 
         }
 
@@ -71,6 +82,8 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 
 
 
+
+
         [NotMapped]
         public SelectList SelectListProducts { get; set; }
 
@@ -96,32 +109,37 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 
         public override string FullName()
         {
-            if (IdentificationNumber.IsNullOrWhiteSpace())
+            string fullName = base.FullName();
+            if (SerialNumber.IsNullOrWhiteSpace())
             {
-                if (SerialNumber.IsNullOrWhiteSpace())
+                if (IdentificationNumber.IsNullOrWhiteSpace())
                 {
-                    return base.FullName();
+                    fullName = base.FullName();
 
                 }
                 else
                 {
-                    return string.Format("{0} [Serial#: {1}]", Name, SerialNumber);
+                    fullName = string.Format("{0} [Identification#: {1}]", Name, IdentificationNumber);
                 }
             }
             {
-                if (SerialNumber.IsNullOrWhiteSpace())
+                if (IdentificationNumber.IsNullOrWhiteSpace())
                 {
-                    return string.Format("{0} [Identification#: {1}]", Name, IdentificationNumber);
-
+                    fullName = string.Format("{0} [Serial#: {1}]", Name, SerialNumber);
                 }
                 else
                 {
-                    return string.Format("{0} [Serial#: {1}] [Identification#: {2}]", Name, SerialNumber, IdentificationNumber);
+                    fullName = string.Format("{0} [Serial#: {1}] [Identification#: {2}]", Name, SerialNumber, IdentificationNumber);
                 }
+
             }
+
+            if (Hide)
+                fullName += " (HIDDEN)";
+            return fullName;
         }
 
-
+        public bool Hide { get; set; }
     }
 
 

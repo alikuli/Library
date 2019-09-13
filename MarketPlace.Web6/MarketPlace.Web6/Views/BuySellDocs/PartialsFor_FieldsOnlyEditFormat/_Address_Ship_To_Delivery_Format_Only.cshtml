@@ -1,0 +1,57 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_ShipFrom = Model.BuySellDocViewState;
+    string shipToAddress_ShipTo = "";
+    bool show_Address_Ship_To = viewState_ShipFrom.HD_Show_Address_Ship_To;
+
+}
+
+
+@switch (viewState_ShipFrom.HD_AddressDetailToShow)
+{
+    case AddressDetailToShowENUM.Complete:
+        shipToAddress_ShipTo = Model.AddressShipToComplex.ToString();
+        break;
+
+    case AddressDetailToShowENUM.OnlyAddressNoPhoneOrEmail:
+        shipToAddress_ShipTo = Model.AddressShipToComplex.ToAddressWithoutContact;
+        break;
+    case AddressDetailToShowENUM.OnlyNameCityCountry:
+
+    default:
+        shipToAddress_ShipTo = Model.AddressShipToComplex.ToStringOnlyNameAndCityAndCountry;
+        break;
+}
+
+
+
+@Html.HiddenFor(x => x.AddressShipToId)
+@Html.HiddenFor(x => x.AddressShipToComplex)
+
+@if (show_Address_Ship_To)
+{
+    <div class="form-group">
+        <label class="background-ltgrey p-2">
+            <strong>
+                <label>Ship To</label>
+            </strong>
+        </label>
+        @Html.TextAreaFor(model => shipToAddress_ShipTo, 7, 25, new { disabled = "disabled", style = "width: 100%; max-width: 100%; white-space: pre-line" })
+    </div>
+
+    if (viewState_ShipFrom.HD_AddressDetailToShow == AddressDetailToShowENUM.Complete)
+    {
+        <div class="form-group">
+            <label class="bg-success  text-white p-2">
+                <strong>
+                    <label>Customers Phone/Email</label>
+                </strong>
+            </label>
+                @Html.EditorFor(model => model.AddressShipToComplex.ToString_Phone_And_Email, new { htmlAttributes = new { @class = "form-control bg-success text-white", @placeholder = "No Contact.", disabled = "disabled" } })
+
+        </div>
+    }
+}

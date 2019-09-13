@@ -11,11 +11,11 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
     public class DateAndByComplex : IDateAndBy, IFieldsToLoadFromView
     {
 
-        [Column(TypeName = "DateTime2")]
-        [Display(Name = "Date Start (UTC)")]
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
-        public DateTime? DateStart { get; set; }
+        //[Column(TypeName = "DateTime2")]
+        //[Display(Name = "Date Start (UTC)")]
+        //[DataType(DataType.DateTime)]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
+        //public DateTime? DateStart { get; set; }
 
 
 
@@ -27,11 +27,13 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
 
         [Display(Name = "Date (UTC)")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
         [NotMapped]
         public DateTime Date_NotNull_Min { get { return Date ?? DateTime.MinValue; } }
 
 
         [Display(Name = "Date (UTC)")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
         [NotMapped]
         public DateTime Date_NotNull_Max { get { return Date ?? DateTime.MaxValue; } }
 
@@ -50,13 +52,13 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             By = byUser;
             ByUserId = byUserId;
         }
-        public void SetToTodaysDateStart(string byUser, string byUserId)
-        {
-            DateStart = DateTime.UtcNow;
-            By = byUser;
-            ByUserId = byUserId;
+        //public void SetToTodaysDateStart(string byUser, string byUserId)
+        //{
+        //    DateStart = DateTime.UtcNow;
+        //    By = byUser;
+        //    ByUserId = byUserId;
 
-        }
+        //}
 
         public void SetDateTo(string byUser, int noOfDays)
         {
@@ -64,6 +66,10 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             By = byUser;
         }
 
+        public void AddDate(DateTime date)
+        {
+            Date = date;
+        }
         //public void CopyMeInto(object obj)
         //{
         //    DateAndByComplex dabc = obj as DateAndByComplex;
@@ -80,7 +86,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         public virtual void Clear()
         {
-            DateStart = null;
+            //DateStart = null;
             Date = null;
             By = "";
             ByUserId = "";

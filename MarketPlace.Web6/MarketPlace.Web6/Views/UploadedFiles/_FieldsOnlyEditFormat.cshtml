@@ -2,7 +2,7 @@
 
 
 @{
-    string theUrl = Model.RelativePathWithFileName();
+    string theUrl = Model.GetRelativePathWithFileName();
     var urlString = Url.Content(theUrl);
 }
     <div class="form-horizontal">
@@ -38,7 +38,8 @@
             }
 
             <span data-toggle="tooltip" title="Save this image" data-placement="bottom">
-                <a href="#" class="m-1 btn fas fa-save btn-info" id="saveImage" data-urltofile="@pathToFileSave"> </a>
+                <a href="#" class="m-1 btn fas fa-save btn-info" id="saveImage" data-urltofile="@pathToFileSave">
+                    <img src="~/ContentMine/Icons/Save.png" /> </a>
             </span>
 
 
@@ -69,13 +70,17 @@
                 string deleteImage = Url.Action(actionNameDel, controlerNameDel, new { id= Model.Id});
             }
             <span data-toggle="tooltip" title="Delete this image" data-placement="bottom">
-                <a href="@deleteImage" class="m-1 btn fas fa-trash-alt btn-danger"> </a>
+                <a href="@deleteImage" class="m-1 btn btn-danger">
+                    <img src="~/ContentMine/Icons/GarbageCan.png" />
+                    </a>
             </span>
             <span data-toggle="tooltip" title="Life ring." data-placement="bottom">
                 <a href="#" class="m-1 btn fas fa-life-ring btn-light"> </a>
             </span>
             <span data-toggle="tooltip" title="Buy. I want it now!." data-placement="bottom">
-                <a href="#" class="btn btn-success ">Buy</a>
+                <a href="#" class="btn btn-success ">
+                    <img src="~/ContentMine/Icons/ShoppingCartIcon.png" />
+                </a>
             </span>
             <span data-toggle="tooltip" title="I want it but I want to offer another price. I know there is a chance that my offer may be declined." data-placement="bottom">
                 <a href="#" class="btn btn-warning ml-1 mr-1">Offer</a>

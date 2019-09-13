@@ -104,7 +104,7 @@ namespace UowLibrary.AddressNS
             address.AddressVerificationTrxs.Add(addyVerfTrx);
             address.Verification.VerificaionStatusEnum = VerificaionStatusENUM.Requested;
 
-            AddressVerificationTrxBiz.CreateEntity(addyVerfTrx);
+            AddressVerificationTrxBiz.Create(addyVerfTrx);
             UpdateAndSave(address);
 
         }
@@ -118,7 +118,8 @@ namespace UowLibrary.AddressNS
             //addyVerfTrx.Address = address;
             addyVerfTrx.AddressId = avr.AddressId;
             addyVerfTrx.MailServiceEnum = avr.MailServiceEnum;
-            addyVerfTrx.MailLocalOrForiegnEnum = GetMailLocalOrForiegnEnum(address.CountryId);
+            //todo
+            //addyVerfTrx.MailLocalOrForiegnEnum = GetMailLocalOrForiegnEnum(address.CountryId);
             
             //Accept payment here?
             addyVerfTrx.DateVerifcationPaymentAccepted = DateTime.UtcNow;

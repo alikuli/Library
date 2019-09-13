@@ -7,6 +7,8 @@ using UowLibrary.PlayersNS.PersonNS;
 using UowLibrary.PlayersNS.PlayerAbstractCategoryNS;
 using AliKuli.Extentions;
 using UowLibrary.CashTtxNS;
+using InterfacesLibrary.SharedNS;
+using System.Configuration;
 
 namespace UowLibrary.PlayersNS.DeliverymanNS
 {
@@ -35,6 +37,53 @@ namespace UowLibrary.PlayersNS.DeliverymanNS
                 return _deliverymanCategoryBiz; 
             } 
         }
+
+
+
+        public override ICommonWithId Factory()
+        {
+
+            Deliveryman deliveryMan = base.Factory() as Deliveryman;
+        
+    
+            //add default values
+            double costOfDeliveryPct;
+            string costOfDeliveryPctStr = ConfigurationManager.AppSettings["Deliveryman.CostOfDeliveryPct"];
+            bool success = double.TryParse(costOfDeliveryPctStr , out costOfDeliveryPct);
+            if(success)
+            {
+                deliveryMan.CostOfDeliveryPct = costOfDeliveryPct;
+
+            }
+
+
+
+            decimal minimumDeliveryCost;
+            string minimumDeliveryCostStr = ConfigurationManager.AppSettings["Deliveryman.MinimumDeliveryCost"];
+            success = decimal.TryParse(minimumDeliveryCostStr, out minimumDeliveryCost);
+            if (success)
+            {
+                deliveryMan.MinimumDeliveryCost = minimumDeliveryCost;
+
+            }
+
+            double maxWeightInKg;
+            string maxWeightInKgStr = ConfigurationManager.AppSettings["Deliveryman.MaxWeightInKg"];
+            success = double.TryParse(minimumDeliveryCostStr, out maxWeightInKg);
+            if (success)
+            {
+                deliveryMan.MaxWeightInKg = maxWeightInKg;
+
+            }
+
+            return deliveryMan as ICommonWithId;
+
+        }
+
+
+
+
+
         //public AddressBiz AddressBiz { get { return _userBiz.AddressBiz; } }
         //public AddressVerificationHdrBiz AddressVerificationHdrBiz
         //{

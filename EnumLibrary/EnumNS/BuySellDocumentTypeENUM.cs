@@ -6,5 +6,8 @@ namespace EnumLibrary.EnumNS
         Unknown,
         Sale,
         Purchase,
+        Delivery,
+        Salesman,
+
     }
 }

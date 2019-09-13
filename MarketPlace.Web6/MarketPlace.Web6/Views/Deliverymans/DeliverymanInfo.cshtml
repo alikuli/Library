@@ -1,0 +1,28 @@
+﻿@model ModelsClassLibrary.ModelsNS.PlayersNS.Deliveryman
+
+@{
+    ViewBag.Title = "Delivery man Info";
+}
+
+
+@**********************************************************
+    This is where the error messages are displayed
+    **********************************************************@
+@Html.Partial("_messages")
+
+
+<h2>Deliveryman Info</h2>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "" })
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+</div>
+
+
+<p>
+    <a href="@Model.MenuManager.ReturnUrl">Go Back</a>
+
+</p>
+
+
+

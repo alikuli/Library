@@ -48,30 +48,30 @@ namespace UowLibrary.PlayersNS.OwnerNS
 
         }
 
-        public override Owner GetPlayerFor(string userId)
-        {
-            Owner owner = base.GetPlayerFor(userId);
+        //public override Owner GetPlayerFor(string userId)
+        //{
+        //    Owner owner = base.GetPlayerFor(userId);
 
-            if (owner.IsNull())
-            {
-                ApplicationUser user = GetUser(userId);
-                user.IsNullThrowException("user");
+        //    if (owner.IsNull())
+        //    {
+        //        ApplicationUser user = GetUser(userId);
+        //        user.IsNullThrowException("user");
                 
-                Person person = GetPersonForUserId(userId);
+        //        Person person = GetPersonForUserId(userId);
 
-                //create a new customer for this
-                owner = Factory() as Owner;
-                owner.IsNullThrowException("Owner");
-                owner.Name = user.UserName;
-                owner.PersonId = person.Id;
-                owner.DefaultBillAddressId = person.DefaultBillAddressId;
-                //owner.DefaultShipAddressId = person.
-                //add default addresses
-                CreateAndSave(owner);
-            }
+        //        //create a new customer for this
+        //        owner = Factory() as Owner;
+        //        owner.IsNullThrowException("Owner");
+        //        owner.Name = user.UserName;
+        //        owner.PersonId = person.Id;
+        //        owner.DefaultBillAddressId = person.DefaultBillAddressId;
+        //        //owner.DefaultShipAddressId = person.
+        //        //add default addresses
+        //        CreateAndSave(owner);
+        //    }
 
-            return owner;
-        }
+        //    return owner;
+        //}
 
     }
 }

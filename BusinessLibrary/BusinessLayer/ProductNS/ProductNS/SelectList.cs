@@ -19,7 +19,7 @@ namespace UowLibrary.ProductNS
                 if (!entity.Name.IsNullOrWhiteSpace())
                     allItemsExceptThisOne = allItemsExceptThisOne.Where(x => x.Name.ToLower() != entity.Name.ToLower());
 
-            var s = Dal.SelectList_Engine(allItemsExceptThisOne);
+            var s = SelectList_Engine(allItemsExceptThisOne);
             return s;
         }
 

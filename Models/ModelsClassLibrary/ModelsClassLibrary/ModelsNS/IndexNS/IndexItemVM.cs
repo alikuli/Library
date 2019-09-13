@@ -18,7 +18,7 @@ namespace ModelsClassLibrary.ViewModels
         {
 
         }
-        public IndexItemVM(string id, string name, string input1SortStr, string input2SortStr, string input3SortStr, bool isEditLocked, string description, VerificaionStatusENUM verificationStatus, decimal price)
+        public IndexItemVM(string id, string name, string input1SortStr, string input2SortStr, string input3SortStr, bool isEditLocked, string description, VerificaionStatusENUM verificationStatus, decimal price, string comment)
         {
             Input3SortString = input3SortStr;
             Input2SortString = input2SortStr;
@@ -36,16 +36,19 @@ namespace ModelsClassLibrary.ViewModels
             VerificationIconResult = new VerificationIconResult();
 
             Price = price;
+            Comment = comment;
         }
 
-
+        public bool IsPickup { get; set; }
+        public long CompleteMenuPathViews { get; set; }
+        public long PictureViews { get; set; }
         public string Id { get; set; }
-
+        public string ParentId { get; set; }
         public string ImageAddressStr { get; set; }
 
         public string Description { get; set; }
 
-        public string GlobalComment { get; set; }
+        public string Comment { get; set; }
 
         public VerificaionStatusENUM VerificationStatus { get; set; }
         public VerificationIconResult VerificationIconResult { get; set; }
@@ -67,10 +70,10 @@ namespace ModelsClassLibrary.ViewModels
         {
             get
             {
-                if (Name.IsNullOrWhiteSpace())
+                if (FullName.IsNullOrWhiteSpace())
                     return "";
 
-                if (Name.Trim().Length > MAX_LENGTH_ALLOWED)
+                if (FullName.Trim().Length > MAX_LENGTH_ALLOWED)
                 {
                     return Name.Trim().Substring(0, MAX_LENGTH_ALLOWED) + "...";
                 }
@@ -169,6 +172,10 @@ namespace ModelsClassLibrary.ViewModels
             get { return maxHeightFound; }
         }
 
+        /// <summary>
+        /// This is the second heading line.
+        /// </summary>
+        public string Amount2ndLine { get; set; }
         public static void PictureCalculateDimensions(string pictureAddress)
         {
             PictureHeight = MaxHeightFound.ToString();

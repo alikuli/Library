@@ -2,6 +2,7 @@
 using BreadCrumbsLibraryNS.Programs;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Reflection;
@@ -22,7 +23,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
 
         // GET: Countries/Create
-        public virtual ActionResult Create(string isandForSearch, MenuENUM menuEnum = MenuENUM.CreateDefault, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, bool isMenu = false, string parentId = "", BuySellDocumentTypeENUM buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Unknown, BuySellDocStateENUM buySellDocStateEnum = BuySellDocStateENUM.Unknown)
+        public virtual ActionResult Create(string isandForSearch, MenuENUM menuEnum = MenuENUM.CreateDefault, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, bool isMenu = false, string parentId = "", BuySellDocumentTypeENUM buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Unknown, BuySellDocStateENUM buySellDocStateEnum = BuySellDocStateENUM.Unknown, string button = "")
         {
 
             TEntity dudEntity = null;
@@ -31,11 +32,10 @@ namespace MarketPlace.Web6.Controllers.Abstract
             {
                 dudEntity = Biz.FactoryForHttpGet() as TEntity;
                 string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
-                string buySellStatementType = "";
 
                 //string userPersonId = "";
                 //string productChildPersonId = "";
-                
+
                 ControllerIndexParams parms = MakeControlParameters(
                     "",
                     menuPathMainId,
@@ -49,11 +49,12 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     UserName,
                     productId,
                     returnUrl,
-                    isMenu,            
+                    isMenu,
+                    button,
                     menuEnum,
                     sortBy,
                     print,
-                    ActionNameENUM.Create, 
+                    ActionNameENUM.Create,
                     buySellDocumentTypeEnum,
                     buySellDocStateEnum);
 
@@ -71,7 +72,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 //It causes the features to display as editable during create
                 // and not during Edit or any other operation.
                 parms.Entity.MenuManager.IsCreate = true;
-                return Event_CreateViewAndSetupSelectList(parms);
+                return Event_Create_ViewAndSetupSelectList_GET(parms);
 
             }
             catch (Exception e)
@@ -103,7 +104,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> Create(TEntity entity, string returnUrl, HttpPostedFileBase[] httpMiscUploadedFiles = null, HttpPostedFileBase[] httpSelfieUploads = null, HttpPostedFileBase[] httpIdCardFrontUploads = null, HttpPostedFileBase[] httpIdCardBackUploads = null, HttpPostedFileBase[] httpPassportFrontUploads = null, HttpPostedFileBase[] httpPassportVisaUploads = null, HttpPostedFileBase[] httpLiscenseFrontUploads = null, HttpPostedFileBase[] httpLiscenseBackUploads = null, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch = "", MenuENUM menuEnum = MenuENUM.CreateDefault, FormCollection fc = null)
+        public virtual async Task<ActionResult> Create(TEntity entity, string returnUrl, HttpPostedFileBase[] httpMiscUploadedFiles = null, HttpPostedFileBase[] httpSelfieUploads = null, HttpPostedFileBase[] httpIdCardFrontUploads = null, HttpPostedFileBase[] httpIdCardBackUploads = null, HttpPostedFileBase[] httpPassportFrontUploads = null, HttpPostedFileBase[] httpPassportVisaUploads = null, HttpPostedFileBase[] httpLiscenseFrontUploads = null, HttpPostedFileBase[] httpLiscenseBackUploads = null, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch = "", MenuENUM menuEnum = MenuENUM.CreateDefault, string button = "", FormCollection fc = null)
         {
             try
             {
@@ -124,7 +125,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     MenuENUM.CreateDefault,
                     UserName,
                     UserId,
-                    returnUrl);
+                    returnUrl,
+                    ViewBag.GlobalObject as GlobalObject, button);
 
 
                 Biz.InitializeMenuManager(parm);
@@ -148,7 +150,10 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 ErrorsGlobal.Add(string.Format("'{0}' Not saved!", ((ICommonWithId)entity).Name), MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
 
-                return RedirectToAction("Index", new { id = entity.Id, searchFor = searchFor, isandForSearch = isandForSearch, selectedId = entity.Id, returnUrl = returnUrl, menuLevelEnum = menuEnum, sortBy = sortBy, print = print });
+                if (returnUrl.IsNullOrWhiteSpace())
+                    return RedirectToAction("Index", "Menus", new { id = entity.Id, searchFor = searchFor, isandForSearch = isandForSearch, selectedId = entity.Id, returnUrl = returnUrl, menuLevelEnum = menuEnum, sortBy = sortBy, print = print });
+
+                return Redirect(returnUrl);
 
             }
         }

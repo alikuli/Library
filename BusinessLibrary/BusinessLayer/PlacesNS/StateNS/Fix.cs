@@ -27,20 +27,21 @@ namespace UowLibrary.StateNS
 
         private void fixTheCountry(State entity)
         {
-            if (entity.CountryId.IsNullOrEmpty())
-            {
-                if (entity.Country.IsNull())
-                {
-                    ErrorsGlobal.Add("No country has been added", MethodBase.GetCurrentMethod());
-                    throw new Exception(ErrorsGlobal.ToString());
-                }
-            }
+            throw new NotImplementedException();
+        //    if (entity.CountryId.IsNullOrEmpty())
+        //    {
+        //        if (entity.Country.IsNull())
+        //        {
+        //            ErrorsGlobal.Add("No country has been added", MethodBase.GetCurrentMethod());
+        //            throw new Exception(ErrorsGlobal.ToString());
+        //        }
+        //    }
 
-            if (entity.CountryId.IsNullOrEmpty())
-                entity.CountryId = entity.Country.Id;
+        //    if (entity.CountryId.IsNullOrEmpty())
+        //        entity.CountryId = entity.Country.Id;
 
-            if (entity.Country.IsNull())
-                entity.Country = CountryDal.FindFor(entity.CountryId);
+        //    if (entity.Country.IsNull())
+        //        entity.Country = CountryBiz.Find(entity.CountryId);
         }
 
 

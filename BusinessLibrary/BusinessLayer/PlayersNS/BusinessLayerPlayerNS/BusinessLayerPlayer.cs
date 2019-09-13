@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using DalLibrary.Interfaces;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.CashNS.CashTrxNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
@@ -14,6 +15,9 @@ using UowLibrary.CashTtxNS;
 using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS.PersonNS;
 using UserModels;
+using System.Data.Entity;
+
+
 namespace UowLibrary.PlayersNS.PlayerAbstractCategoryNS
 {
 
@@ -189,30 +193,36 @@ namespace UowLibrary.PlayersNS.PlayerAbstractCategoryNS
 
         public override void Fix(ControllerCreateEditParameter parm)
         {
-            UserId.IsNullOrWhiteSpaceThrowException("You are not logged in!");
+            //UserId.IsNullOrWhiteSpaceThrowException("You are not logged in!");
             base.Fix(parm);
 
             PlayerAbstract playerAbstract = PlayerAbstract.UnboxPlayerAbstract(parm);
-            if (playerAbstract.PersonId.IsNullOrWhiteSpace())
-            {
-                //we need to add a person Id
-                Person person = UserBiz.GetPersonFor(UserId);
-                person.IsNullThrowException("No person for this user");
+            //if (!playerAbstract.PersonId.IsNullOrWhiteSpace())
+            //{
+            //    //we need to add a person Id
+            //    Person person = PersonBiz.Find(playerAbstract.PersonId);
+            //    person.IsNullThrowException();
 
-                playerAbstract.PersonId = person.Id;
-                playerAbstract.Person = person;
-            }
+            //    playerAbstract.PersonId = person.Id;
+            //    playerAbstract.Person = person;
+            //}
+            //else
+            //{
+            //    throw new Exception("No person found");
+            //}
 
 
 
-            if (playerAbstract.Person.IsNull())
-                playerAbstract.Person = PersonBiz.Find(playerAbstract.PersonId);
+            //if (playerAbstract.Person.IsNull())
+            //    playerAbstract.Person = PersonBiz.Find(playerAbstract.PersonId);
 
-            playerAbstract.Person.IsNullThrowException("No Person");
+            //playerAbstract.Person.IsNullThrowException("No Person");
 
             //the user name
-            if (playerAbstract.Name.IsNullOrWhiteSpace())
-                playerAbstract.Name = playerAbstract.Person.Name;
+
+
+            //if (playerAbstract.Name.IsNullOrWhiteSpace())
+            //    playerAbstract.Name = playerAbstract.Person.Name;
 
             if (playerAbstract.DefaultBillAddressId.IsNullOrWhiteSpace())
                 playerAbstract.DefaultBillAddressId = null;
@@ -225,21 +235,21 @@ namespace UowLibrary.PlayersNS.PlayerAbstractCategoryNS
 
         public override ICommonWithId Factory()
         {
-            UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
+            //UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
 
             //add the default addresses if they are available
             PlayerAbstract playerAbstract = base.Factory() as PlayerAbstract;
 
-            //get the person so we can get the deafult addresses.
-            Person person = UserBiz.GetPersonFor(UserId);
-            person.IsNullThrowException("User has no person");
+            ////get the person so we can get the deafult addresses.
+            //Person person = UserBiz.GetPersonFor(UserId);
+            //person.IsNullThrowException("User has no person");
 
-            if (!person.DefaultBillAddressId.IsNullOrWhiteSpace())
-            {
-                playerAbstract.DefaultBillAddressId = person.DefaultBillAddressId;
-                playerAbstract.DefaultShipAddressId = person.DefaultBillAddressId;
+            //if (!person.DefaultBillAddressId.IsNullOrWhiteSpace())
+            //{
+            //    playerAbstract.DefaultBillAddressId = person.DefaultBillAddressId;
+            //    playerAbstract.DefaultShipAddressId = person.DefaultBillAddressId;
 
-            }
+            //}
             return playerAbstract as ICommonWithId;
         }
 
@@ -253,16 +263,27 @@ namespace UowLibrary.PlayersNS.PlayerAbstractCategoryNS
             Person person = UserBiz.GetPersonFor(UserId);
             person.IsNullThrowException("There is no Person for this user");
 
-            var lstEntities = await FindAllAsync();
 
-            if (lstEntities.IsNullOrEmpty())
+
+            List<TEntity> lst = new List<TEntity>();
+
+
+            if(UserBiz.IsAdmin(UserId))
+            {
+                lst = await FindAllAsync();
+                parameters.IsUserAdmin = true;
+            }
+            else
+            {
+                lst = await FindAll().Where(x => x.PersonId == person.Id).ToListAsync();
+                parameters.IsUserAdmin = false;
+            }
+
+
+            if (lst.IsNullOrEmpty())
                 return null;
-
-            var lstEntitiesForPerson = lstEntities.Where(x => x.PersonId == person.Id).ToList();
-            if (lstEntitiesForPerson.IsNullOrEmpty())
-                return null;
-
-            IList<ICommonWithId> lstEntitiesForPersonAsCommonWithId = lstEntitiesForPerson.Cast<ICommonWithId>().ToList();
+            
+            IList<ICommonWithId> lstEntitiesForPersonAsCommonWithId = lst.Cast<ICommonWithId>().ToList();
             return lstEntitiesForPersonAsCommonWithId;
 
         }
@@ -302,6 +323,37 @@ namespace UowLibrary.PlayersNS.PlayerAbstractCategoryNS
             //entity.IsNullThrowExceptionArgument("Not found entity");
             return entity;
         }
+
+        public TEntity GetPlayerForPersonId(string personId)
+        {
+            if (personId.IsNullOrWhiteSpace())
+                return null;
+
+            TEntity player = FindAll().FirstOrDefault(x => x.PersonId == personId);
+            return player;
+        }
+
+        public Person GetPersonForPlayer(string playerId)
+        {
+            playerId.IsNullOrWhiteSpaceThrowArgumentException();
+            TEntity entity = FindAll().FirstOrDefault(x => x.Id == playerId);
+            if (entity.IsNull())
+                return null;
+
+            Person person = entity.Person;
+            Detach(entity);
+            return person;
+        }
+        public string GetPersonIdForPlayer(string playerId)
+        {
+            playerId.IsNullOrWhiteSpaceThrowArgumentException();
+            TEntity entity = FindAll().FirstOrDefault(x => x.Id == playerId);
+            entity.IsNullThrowException();
+
+            entity.PersonId.IsNullOrWhiteSpaceThrowException();
+            return entity.PersonId;
+        }
+
         public string GetPersonIdForCurrentUser()
         {
             Person person = GetPersonForCurrentUser();
@@ -332,27 +384,47 @@ namespace UowLibrary.PlayersNS.PlayerAbstractCategoryNS
         {
             userId.IsNullOrWhiteSpaceThrowException("User not logged in.");
             //find the person
-            Person person = UserBiz.GetPersonFor(userId);
+            Person userPerson = UserBiz.GetPersonFor(userId);
+            ApplicationUser user = GetUser(userId);
+            user.IsNullThrowException();
 
-            //create a person if one does not exist.
-            if (person.IsNull())
+            if (userPerson.IsNull())
             {
-                //create person
-                
-                ApplicationUser user = GetUser(userId);
-                user.IsNullThrowException();
+                //the userPerson is coming back as null. This can also happen if the user
+                //and the person have become disconnected due to user being deleted.
+                //so check to see if the person exists. If the person exists then attach him to the
+                //user.
+                Person personWithAdminName = PersonBiz.FindByName(user.UserName);
 
-                person = PersonBiz.Factory() as Person;
-                person.Name = user.Name;
+                //create a person if one does not exist.
+                if (personWithAdminName.IsNull())
+                {
+                    //create person
 
-                if (person.Users.IsNull())
-                    person.Users = new List<ApplicationUser>();
+                    user.IsNullThrowException();
 
-                person.Users.Add(user);
-                PersonBiz.CreateAndSave(person);
+                    userPerson = PersonBiz.Factory() as Person;
+                    userPerson.Name = user.Name;
+
+                    if (userPerson.Users.IsNull())
+                        userPerson.Users = new List<ApplicationUser>();
+
+                    userPerson.Users.Add(user);
+                    PersonBiz.Create(userPerson);
+
+                }
+                else
+                {
+                    personWithAdminName.Users.Add(user);
+                    PersonBiz.Update(personWithAdminName);
+
+
+                }
+                SaveChanges();
             }
-            //person.IsNullThrowException("No person attached to this user");
-            return person;
+
+
+            return userPerson;
         }
 
 
@@ -433,6 +505,13 @@ namespace UowLibrary.PlayersNS.PlayerAbstractCategoryNS
 
 
         //}
+
+        public CashBalance GetCashBalancePerson(string personId)
+        {
+            CashBalance cashBal = new CashBalance();
+
+            return cashBal;
+        }
 
 
 

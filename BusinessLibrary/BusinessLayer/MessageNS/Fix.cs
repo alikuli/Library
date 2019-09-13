@@ -12,13 +12,34 @@ namespace UowLibrary.PlayersNS.MessageNS
             Message message = parm.Entity as Message;
             message.IsNullThrowException("Unable to unbox message");
 
+            message.Name = message.Id;
+            if (message.BuySellDocId.IsNullOrWhiteSpace())
+                message.BuySellDocId = null;
 
 
-            //if (message.AddressDefaultShipFromId.IsNullOrWhiteSpace())
-            //    message.AddressDefaultShipFromId = null;
+            if (message.MenuPath1Id.IsNullOrWhiteSpace())
+                message.MenuPath1Id = null;
 
-            //if (message.MessageCategoryId.IsNullOrWhiteSpace())
-            //    message.MessageCategoryId = null;
+
+            if (message.MenuPath2Id.IsNullOrWhiteSpace())
+                message.MenuPath2Id = null;
+
+
+            if (message.MenuPath3Id.IsNullOrWhiteSpace())
+                message.MenuPath3Id = null;
+
+
+
+
+            if (message.ProductChildId.IsNullOrWhiteSpace())
+                message.ProductChildId = null;
+
+
+            if (message.ProductId.IsNullOrWhiteSpace())
+                message.ProductId = null;
+
+
+
 
         }
     }

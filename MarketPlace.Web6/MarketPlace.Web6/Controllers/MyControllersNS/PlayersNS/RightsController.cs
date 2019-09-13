@@ -1,18 +1,10 @@
-﻿using System.Threading.Tasks;
-using System.Web.Mvc;
-using ErrorHandlerLibrary.ExceptionsNS;
-using MarketPlace.Web6.Controllers.Abstract;
-using ModelsClassLibrary.ModelsNS.PeopleNS;
-using ModelsClassLibrary.ModelsNS.PlacesNS;
+﻿using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using UowLibrary.PlayersNS;
 using ModelsClassLibrary.RightsNS;
-using EnumLibrary.EnumNS;
+using System.Web.Mvc;
 using UowLibrary;
-using BreadCrumbsLibraryNS.Programs;
 using UowLibrary.ParametersNS;
-using ErrorHandlerLibrary;
-using UowLibrary.PageViewNS;
+using UowLibrary.PlayersNS;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -20,7 +12,7 @@ namespace MarketPlace.Web6.Controllers
     {
         RightBiz _biz;
         public RightsController(RightBiz biz, UserBiz userBiz, AbstractControllerParameters param)
-            : base(biz, param) 
+            : base(biz, param)
         {
             _biz = biz;
             _userBiz = userBiz;
@@ -38,10 +30,15 @@ namespace MarketPlace.Web6.Controllers
         {
             get { return _biz; }
         }
-        public override System.Web.Mvc.ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override System.Web.Mvc.ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             ViewBag.UserSelectList = UserBiz.SelectList();
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
+        }
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            ViewBag.UserSelectList = UserBiz.SelectList();
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
         }
 
 

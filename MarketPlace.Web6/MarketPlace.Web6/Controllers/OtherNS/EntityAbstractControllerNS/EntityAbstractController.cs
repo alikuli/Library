@@ -1,28 +1,12 @@
 ﻿using AliKuli.Extentions;
-using AliKuli.UtilitiesNS;
-using BreadCrumbsLibraryNS.Programs;
-using EnumLibrary.EnumNS;
-using ErrorHandlerLibrary;
-using ErrorHandlerLibrary.ExceptionsNS;
 using InterfacesLibrary.SharedNS;
 using MarketPlace.Web4.Controllers;
-using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.ViewModels;
 using System;
-using System.Net;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.Interface;
 using UowLibrary.ParametersNS;
-using UowLibrary.PageViewNS;
-using UowLibrary.PlayersNS;
-using UowLibrary.UploadFileNS;
-using UserModels;
-using WebLibrary.Programs;
-using UowLibrary.SuperLayerNS.AccountsNS;
-using Ninject;
 
 namespace MarketPlace.Web6.Controllers.Abstract
 {
@@ -39,7 +23,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
         //RightBiz _rightBiz;
         //MyWorkClasses _myWorkClasses;
         public EntityAbstractController(IBusinessLayer<TEntity> icrudUow, AbstractControllerParameters param)
-            : base(param) 
+            : base(param)
         {
             _icrudBiz = icrudUow;
             _tEntityType = typeof(TEntity);
@@ -61,6 +45,22 @@ namespace MarketPlace.Web6.Controllers.Abstract
         //[Inject]
         //public AccountsBiz AccountsBiz { get; set; }
 
+        protected void Hide_Save_Button()
+        {
+            ViewBag.ShowEditControls = false.ToString();
+        }
+
+        protected void Show_Save_Button()
+        {
+            ViewBag.ShowEditControls = true.ToString();
+        }
+
+        protected ActionResult throwError(Exception e)
+        {
+            ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+            ErrorsGlobal.MemorySave();
+            return RedirectToAction("Index", "Menus");
+        }
 
     }
 }

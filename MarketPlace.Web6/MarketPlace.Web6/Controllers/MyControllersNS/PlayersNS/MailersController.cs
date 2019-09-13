@@ -1,7 +1,6 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
-using ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS;
 using ModelsClassLibrary.ModelsNS.MailerNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS.MailerNS;
@@ -43,16 +42,25 @@ namespace MarketPlace.Web6.Controllers
         //}
 
 
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             //ViewBag.UserSelectList = MailerBiz.SelectListUsers;
             Mailer mailer = parm.Entity as Mailer;
             mailer.IsNullThrowException("Unable to unbox mailer");
             mailer.SelectListTrustLevel = MailerBiz.SelectListTrustLevel;
             mailer.SelectListPeople = MailerBiz.PersonBiz.SelectList();
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
         }
 
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            //ViewBag.UserSelectList = MailerBiz.SelectListUsers;
+            Mailer mailer = parm.Entity as Mailer;
+            mailer.IsNullThrowException("Unable to unbox mailer");
+            mailer.SelectListTrustLevel = MailerBiz.SelectListTrustLevel;
+            mailer.SelectListPeople = MailerBiz.PersonBiz.SelectList();
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
+        }
 
 
         public ActionResult PrintVerificationLetters(string id)

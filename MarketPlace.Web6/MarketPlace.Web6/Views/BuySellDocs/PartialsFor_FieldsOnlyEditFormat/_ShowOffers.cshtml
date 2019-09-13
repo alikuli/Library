@@ -1,0 +1,315 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_ShowOffers = Model.BuySellDocViewState;
+
+    bool showMakeOfferScreen_ShowOffers = viewState_ShowOffers.HD_Show_Make_Offers_Section;
+    bool isShowOffers_ShowOffers = viewState_ShowOffers.HD_ShowOffers;
+    bool Show_Accept_By_Cust_And_Seller_Button = viewState_ShowOffers.HD_OFF_Show_Accept_By_Cust_And_Seller_Button;
+    bool isCoourierAcceptBtnVisible = viewState_ShowOffers.HD_OFF_Show_Accept_By_Courier_Button;
+
+
+    string currentColor_ShowOffers = viewState_ShowOffers.CurrentColorClass;
+    string ownerId_ShowOffers = "";
+    string customerId_ShowOffers = "";
+    string personOwnerId = Model.Owner.IsNull() ? "" : Model.Owner.PersonId;
+    string icon_CancelOfferButton = viewState_ShowOffers.HD_OFF_Icon_Cancel_Courier_Button;
+    string tooltip_CancelOfferButton = viewState_ShowOffers.HD_OFF_Tooltip_Cancel_Courier_Button;
+    string icon_Deliveryman_Accept_To_Deliver_Product_Button = viewState_ShowOffers.HD_OFF_Icon_Deliveryman_Accept_To_Deliver_Product_Button;
+    
+}
+
+
+
+@if (isShowOffers_ShowOffers)
+{
+    int offerNo = 0;
+    var offerTrxsList = Model.FreightOfferTrxs_Fixed;
+
+    if (offerTrxsList.IsNullOrEmpty())
+    {
+        <div class="row border border-dark p-1 w-100">
+            <div class="alert alert-danger text-center w-100">No offers</div>
+        </div>
+    }
+    else
+    {
+        decimal lowestOffer = offerTrxsList.Min(x => x.OfferAmount);
+        <div class="row border border-dark p-1 w-100 @currentColor_ShowOffers" style="justify-content:center">
+            <h4>Open Pickup Offers.</h4>
+        </div>
+
+
+        <div class="row border border-dark p-1 w-100 ">
+            <table class="table table-bordered table-responsive-lg">
+                <tr>
+                    <th>
+                    </th>
+                    <th>
+                        Date of offer
+                    </th>
+                    <th>
+                        Offer by
+                    </th>
+                    <th>Vehical Type</th>
+                    <th>
+                        Pick up date
+                    </th>
+                    <th class="text-right">
+                        Amount
+                    </th>
+                    <th>
+                        Comment
+                    </th>
+                    @if (Show_Accept_By_Cust_And_Seller_Button)
+                                                {
+
+                        <td></td>
+                    }
+                </tr>
+
+                @******************************************************************************************@
+
+                @foreach (ModelsClassLibrary.ModelsNS.DocumentsNS.FreightOffersTrxNS.FreightOfferTrx offer in offerTrxsList)
+                {
+                    viewState_ShowOffers = Model.GetBuySellDocViewState(Model.BuySellDocStateEnum, Model.BuySellDocumentTypeEnum);
+
+                    string pathToDeliverymanUrl = Url.Action("DeliveryManInfo", "Deliverymans", new { id = offer.DeliverymanId, returnUrl = Request.Url.PathAndQuery });
+                    string acceptBtnUrl = Url.Action("AcceptDeliveryman", "BuySellDocs", new { frtOfferId = offer.Id, returnUrl = Request.Url.PathAndQuery, buySellDocumentTypeEnum = Model.BuySellDocumentTypeEnum });
+
+                    string path_Cancel_Offer_Button = Url.Action("CancelDeliveryMan", "BuySellDocs", new { buySellDocId = offer.BuySellDocId, returnUrl = Request.Url.PathAndQuery, buySellDocumentTypeEnum = Model.BuySellDocumentTypeEnum }); 
+                    
+                    offerNo++;
+                    
+                    string lowestOfferClass = "";
+                    string vehicalType = offer.VehicalType.IsNull()? "Empty" : offer.VehicalType.FullName();
+
+
+
+                    string path_Deliveryman_Accept_To_Deliver_Product = Url.Action("Deliveryman_Accepts_To_Deliver", "BuySellDocs", new { frtOfferId = offer.Id, returnUrl = Request.Url.PathAndQuery}); ;
+
+                    string offerDate = offer.MetaData.Modified.Date_NotNull_Min == DateTime.MinValue ?
+                        offer.MetaData.Created.Date_NotNull_Max.ToLongDateString() :
+                        offer.MetaData.Modified.Date_NotNull_Min.ToLongDateString();
+                    
+
+                    string tooltip_DeleteOfferButton = viewState_ShowOffers.HD_OFF_Enable_Offer_Delete_Button_Tooltip;
+                    string icon_DeleteOfferButton = viewState_ShowOffers.HD_OFF_Enable_Offer_Delete_Button_Icon;
+
+                    string path_Offer_Delete_Button = Url.Action("Deliveryman_Deletes_Accepted_Offer", "BuySellDoc", new { id = offer.Id, returnUrl = Request.Url.PathAndQuery });
+
+                    string path_DeleteBid_Button = Url.Action("Delete", "FreightOfferTrxs", new { id = offer.Id, returnUrl = Request.Url.PathAndQuery });
+
+                    bool enableDeleteOfferButton = viewState_ShowOffers.HD_OFF_Enable_Offer_Delete_Button;
+                    bool showDeleteOfferButton = viewState_ShowOffers.HD_OFF_Show_Offer_Delete_Button;
+                    bool enabled_DeleteOfferButton = Model.CurrentUser_DeliverymanId == offer.DeliverymanId;
+                    bool bid_Belongs_To_deliveryman = Model.CurrentUser_DeliverymanId == offer.DeliverymanId;
+                    bool  enabled_Deliveryman_Accept_To_Deliver_Product_Button = false;
+                    
+                    
+                    bool isSellerTheDeliveryman_And_We_Are_In_Sale = personOwnerId.IsNullOrWhiteSpace() ? false : 
+                        offer.Deliveryman.PersonId == personOwnerId && Model.BuySellDocumentTypeEnum == BuySellDocumentTypeENUM.Sale;
+
+                    bool isLowestOffer = offer.OfferAmount == lowestOffer;
+
+                    bool isOfferAcceptedByCustomerAndSeller = offer.Id.IsNullOrWhiteSpace() ? false : offer.Id == (Model.FreightOfferTrxAcceptedId ?? "");
+
+
+                    bool isOfferAcceptedByCourier = isOfferAcceptedByCustomerAndSeller && offer.IsOfferAccepted == true;
+
+
+
+
+                    bool isCurrentUserTheSelectedDeliveryman = Model.DeliverymanId.IsNullOrWhiteSpace()? false : Model.CurrentUser_DeliverymanId.IsNullOrWhiteSpace() ? false : Model.CurrentUser_DeliverymanId == Model.DeliverymanId;
+
+                    bool isCurrUserDeliveryman_And_OfferAcceptedByShipper = isCurrentUserTheSelectedDeliveryman && isOfferAcceptedByCustomerAndSeller;
+                    ownerId_ShowOffers = offer.BuySellDoc.OwnerId;
+                    customerId_ShowOffers = offer.BuySellDoc.CustomerId;
+
+                    bool isAcceptedBuCustAndSellerBtnEnabled = viewState_ShowOffers.HD_OFF_Enable_Accept_Button;
+                    bool isAcceptedByCourierBtnEnabled = viewState_ShowOffers.HD_OFF_Enable_Accept_Button;
+                    
+
+                    
+                    if (isLowestOffer)
+                    {
+                        lowestOfferClass = " background-yellow ";
+                    }
+
+
+
+                    if (isOfferAcceptedByCustomerAndSeller)
+                    {
+                        lowestOfferClass = " bg-warning ";
+                    }
+                    
+                    <tr class="@lowestOfferClass ">
+                        <td>
+                            @if (isLowestOffer)
+                            {
+                                <span>* </span>
+                            }
+                            @if (isOfferAcceptedByCustomerAndSeller)
+                            {
+                                <span># </span>
+                            }
+                            @offerNo
+                        </td>
+                        <td>@offerDate </td>
+                        <td><a href="@pathToDeliverymanUrl">@offer.Deliveryman.Name</a> </td>
+                        <td>@vehicalType</td>
+                        <td>@offer.PickupDate.ToLongDateString()</td>
+                        <td class="text-right">@offer.OfferAmount.ToString("N2")</td>
+                        <td>
+                            @offer.Comment
+                            @if (isLowestOffer)
+                            {
+                                <span> (*Lowest)</span>
+                            }
+                            @if (isOfferAcceptedByCustomerAndSeller)
+                            {
+                                <span> (#Selected)</span>
+                            }
+
+                        </td>
+
+                        <td>
+
+                            @*This is the accept button that the buyer/seller press*@
+                            @if (Show_Accept_By_Cust_And_Seller_Button)
+                            {
+                                
+                                    if (isOfferAcceptedByCustomerAndSeller)
+                                    {
+                                        <div class="btn btn-success p-2 disabled" align="center"><strong>Offer Accepted</strong> </div>
+
+                                        <button data-toggle="tooltip"
+                                                title="@tooltip_CancelOfferButton"
+                                                data-placement="top"
+                                                class="btn btn-sm btn-warning"
+                                                onclick="openPath('@path_Cancel_Offer_Button')"
+                                                @enabled_DeleteOfferButton>
+                                            <img width="20" src="@icon_CancelOfferButton" />
+                                        </button>
+
+                                    }
+                                    else
+                                    {
+                                        if (isAcceptedBuCustAndSellerBtnEnabled && !isSellerTheDeliveryman_And_We_Are_In_Sale)
+                                        {
+
+
+                                            <button type="button" class="btn btn-info" onclick="openPath('@acceptBtnUrl')">
+                                                Accept
+                                            </button>
+
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-info" disabled>Accept</button>
+
+                                        }
+
+                                    }
+
+
+                            }
+
+
+
+                            @*After the customer/seller have accepted the deliveryman, This is where the courier accepts the offer*@
+                            @if (isCurrUserDeliveryman_And_OfferAcceptedByShipper)
+                            {
+                                if (isCoourierAcceptBtnVisible)
+                                {
+                                    if (isOfferAcceptedByCourier)
+                                    {
+
+                                        <button data-toggle="tooltip"
+                                                title="Accept the request to deliver product"
+                                                data-placement="top"
+                                                class="btn btn-sm btn-success"
+                                                onclick=""
+                                                @enabled_Deliveryman_Accept_To_Deliver_Product_Button>
+                                            <img width="20" src="@icon_Deliveryman_Accept_To_Deliver_Product_Button" />
+                                            Accept Delivery
+
+                                        </button>
+                                
+                                        <button data-toggle="tooltip"
+                                                title="@tooltip_DeleteOfferButton"
+                                                data-placement="top"
+                                                class="btn btn-sm btn-danger"
+                                                onclick="openPath('@path_Offer_Delete_Button')"
+                                                @enabled_DeleteOfferButton>
+                                            <img width="20" src="@icon_DeleteOfferButton" />
+                                        </button>
+
+                                        }
+                                    else
+                                    {
+
+
+                                        <button data-toggle="tooltip"
+                                                title="Accept the request to deliver product"
+                                                data-placement="top"
+                                                class="btn btn-sm btn-success"
+                                                onclick="openPath('@path_Deliveryman_Accept_To_Deliver_Product')"
+                                                @enabled_Deliveryman_Accept_To_Deliver_Product_Button>
+                                            <img width="20" src="@icon_Deliveryman_Accept_To_Deliver_Product_Button" />
+                                            Accept Delivery
+
+                                        </button>
+                            
+                                        <button data-toggle="tooltip"
+                                                title="@tooltip_DeleteOfferButton"
+                                                data-placement="top"
+                                                class="btn btn-sm btn-danger"
+                                                onclick="openPath('@path_Offer_Delete_Button')"
+                                                @enabled_DeleteOfferButton>
+                                            <img width="20" src="@icon_DeleteOfferButton" />
+                                        </button>
+                                    }
+                                }
+
+                            }
+                            else
+                            {
+                                @*This is where the deliveryman can see his offer and can delete his bid.*@
+                                if (bid_Belongs_To_deliveryman)
+                                {
+                                    <button data-toggle="tooltip"
+                                            type="button"
+                                            title="Delete Bid"
+                                            data-placement="top"
+                                            class="btn btn-sm btn-danger"
+                                            onclick="openPath('@path_DeleteBid_Button')">
+
+                                        <img width="20" src="~/ContentMine/Icons/GarbageCan.png" />
+
+                                    </button>
+                                }
+                                else
+                                {
+                                    @*<button data-toggle="tooltip"
+                                            type="button"
+                                            title="Delete Bid"
+                                            data-placement="top"
+                                            class="btn btn-sm btn-danger"
+                                            disabled="disabled">
+                                        <img width="20" src="~/ContentMine/Icons/GarbageCan.png" />ddd
+
+                                    </button>*@
+                                }
+                            }
+                            
+                            
+                        </td>
+                    </tr>
+                }
+              </table>
+          </div>
+    }
+}                

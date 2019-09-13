@@ -9,6 +9,7 @@ using UowLibrary.ParametersNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.PlayersNS;
 using UowLibrary.ProductNS;
+using System.Web.Mvc;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -23,11 +24,17 @@ namespace MarketPlace.Web6.Controllers
         }
 
 
-        public override System.Web.Mvc.ActionResult Event_CreateViewAndSetupSelectList(ModelsClassLibrary.ModelsNS.SharedNS.ControllerIndexParams parm)
+        public override System.Web.Mvc.ActionResult Event_Create_ViewAndSetupSelectList_GET(ModelsClassLibrary.ModelsNS.SharedNS.ControllerIndexParams parm)
         {
 
             ViewBag.ProductSelectList = _productBiz.SelectList();
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
+        }
+
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            ViewBag.ProductSelectList = _productBiz.SelectList();
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
         }
 
     }

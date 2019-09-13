@@ -1,25 +1,11 @@
-﻿using AliKuli.Extentions;
-using AliKuli.UtilitiesNS;
-using ApplicationDbContextNS;
-using BreadCrumbsLibraryNS.Programs;
-using DalLibrary.Interfaces;
+﻿using DalLibrary.Interfaces;
 using EnumLibrary.EnumNS;
-using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.DiscountNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using ModelsClassLibrary.RightsNS;
-using ModelsClassLibrary.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Web;
-using System.Web.Mvc;
 using UowLibrary.ParametersNS;
-using UowLibrary.PlayersNS;
-using UowLibrary.UploadFileNS;
-using UserModels;
-using WebLibrary.Programs;
+using AliKuli.Extentions;
 
 namespace UowLibrary.DiscountPrecedenceNS
 {
@@ -27,7 +13,6 @@ namespace UowLibrary.DiscountPrecedenceNS
     {
         public DiscountPrecedenceBiz(IRepositry<DiscountPrecedence> entityDal, BizParameters bizParameters)
             : base(entityDal, bizParameters)
-
         {
 
         }
@@ -42,6 +27,7 @@ namespace UowLibrary.DiscountPrecedenceNS
 
             base.CreateSimple(parm);
         }
+
 
         public override void Fix(ControllerCreateEditParameter parm)
         {
@@ -76,7 +62,31 @@ namespace UowLibrary.DiscountPrecedenceNS
         }
 
 
+        public List<DiscountPrecedence> FixRanks(List<DiscountPrecedence> listIn)
+        {
+            if (listIn.IsNullOrEmpty())
+                return null;
 
+            listIn.Sort();
+
+            int curRank = 0;
+            foreach (var d in listIn)
+            {
+                curRank = curRank + 5;
+                d.Rank = curRank;
+                //Update
+            };
+
+            return listIn;
+
+        }
+
+        public override void Event_DoSpecialInitializationStuff(DiscountPrecedence tentity)
+        {
+            base.Event_DoSpecialInitializationStuff(tentity);
+            
+
+        }
 
 
 

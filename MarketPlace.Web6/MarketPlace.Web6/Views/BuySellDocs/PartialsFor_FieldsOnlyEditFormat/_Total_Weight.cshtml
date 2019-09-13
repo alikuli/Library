@@ -1,0 +1,11 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+<div class="form-group">
+    <label class="background-ltgrey p-2">
+        <strong>
+            Total Weight
+        </strong>
+    </label>
+    @Html.HiddenFor(x => x.TotalWeight)
+    @Html.EditorFor(x => x.TotalWeight, new { htmlAttributes = new { @class = "form-control", @placeholder = "Total Weight.", disabled = "disabled", data_toggle = "tooltip", title = "This is the weight of the item", data_placement = "top" } })
+</div>

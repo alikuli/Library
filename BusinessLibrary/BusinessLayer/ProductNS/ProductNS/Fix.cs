@@ -1,10 +1,7 @@
 ﻿using AliKuli.Extentions;
-using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace UowLibrary.ProductNS
 {
@@ -13,31 +10,13 @@ namespace UowLibrary.ProductNS
 
         public override void Fix(ControllerCreateEditParameter parm)
         {
+            //this does not work here because we need to update the number of visits and that can be by anyone.
             //You must be logged in
-            UserId.IsNullOrWhiteSpaceThrowArgumentException("You are not logged in.");
+            //UserId.IsNullOrWhiteSpaceThrowArgumentException("You are not logged in.");
 
             Product product = parm.Entity as Product;
             product.IsNullThrowException("Unable to unbox product");
 
-            //purge out all the productFeatures that do not have
-            //productId of ProductFeatureId.
-            //this is required for create because all of them are empty with no id's coming back
-            //from the view into create. It works in Update because in update
-            //if (!product.ProductFeatures.IsNullOrEmpty())
-            //{
-            //    List<ProductFeature> pfRemovalList = new List<ProductFeature>();
-            //    foreach (ProductFeature pf in product.ProductFeatures)
-            //    {
-            //        if (pf.ProductId.IsNullOrEmpty())
-            //            pfRemovalList.Add(pf);
-
-            //    }
-
-            //    foreach (ProductFeature pf in pfRemovalList)
-            //    {
-            //        product.ProductFeatures.Remove(pf);
-            //    }
-            //}
 
             if (product.UomDimensionsId.IsNullOrWhiteSpace())
                 product.UomDimensionsId = null;
@@ -61,29 +40,12 @@ namespace UowLibrary.ProductNS
 
             if (product.OwnerId.IsNullOrWhiteSpace())
             {
-                //get the owner for the current user.
-                Owner owner = OwnerBiz.GetPlayerFor(UserId);
-                product.OwnerId = owner.Id;
-
+                product.OwnerId = null;
             }
 
 
-            //fixTheMenuFeautreKeys(product);
+
         }
-
-        //private void fixTheMenuFeautreKeys(Product product)
-        //{
-        //    if (product.ProductFeatures.IsNullOrEmpty())
-        //        return;
-
-        //    List<ProductFeature> productFeatures = product.ProductFeatures.ToList();
-
-        //    foreach (ProductFeature item in productFeatures)
-        //    {
-        //        item.ProductId = product.Id;
-        //    }
-
-        //}
 
 
     }

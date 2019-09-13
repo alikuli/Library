@@ -1,0 +1,28 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_AgreedFrt = Model.BuySellDocViewState;
+
+    bool isShowRequireInsurance_MakeOffers = viewState_AgreedFrt.HD_Show_RequireInsuranace_MakeOffersScreen;
+    bool isEnableRequireInsurance = viewState_AgreedFrt.HD_Enable_RequireInsuranace;
+
+
+}
+
+
+        @if (isShowRequireInsurance_MakeOffers)
+        {
+
+                    <div class="form-group">
+                        <strong>@Html.LabelFor(model => model.InsuranceRequired, htmlAttributes: new { @class = "background-ltgrey p-2" })</strong>
+                        @Html.EditorFor(x => x.InsuranceRequired_ToSring, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @placeholder = "If your product is guaranteed, you may need to pay more, but the delivery man will have to pay you this amount if he does not deliver the goods intact." } })
+                    </div>
+
+
+
+        }
+
+
+

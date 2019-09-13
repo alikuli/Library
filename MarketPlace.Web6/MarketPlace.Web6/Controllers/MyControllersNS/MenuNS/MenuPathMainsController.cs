@@ -40,15 +40,25 @@ namespace MarketPlace.Web6.Controllers
             }
         }
 
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             ViewBag.MenuPath1SelectList = _menupathmainBiz.MenuPath1_SelectList();
             ViewBag.MenuPath2SelectList = _menupathmainBiz.MenuPath2_SelectList();
             ViewBag.MenuPath3SelectList = _menupathmainBiz.MenuPath3_SelectList();
 
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
         }
 
+
+
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            ViewBag.MenuPath1SelectList = _menupathmainBiz.MenuPath1_SelectList();
+            ViewBag.MenuPath2SelectList = _menupathmainBiz.MenuPath2_SelectList();
+            ViewBag.MenuPath3SelectList = _menupathmainBiz.MenuPath3_SelectList();
+
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
+        }
         //public ActionResult CreateMenuPathMain(string isandForSearch, MenuENUM menuEnum = MenuENUM.CreateDefault, string productChildId = "", string menuPathMainId = "", string productId = "", string returnUrl = "", SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, bool isMenu = false, string parentId = "")
         //{
         //    return base.Create(isandForSearch, menuEnum, productChildId, menuPathMainId, productId, returnUrl, sortBy, searchFor, selectedId, print, isMenu, parentId);

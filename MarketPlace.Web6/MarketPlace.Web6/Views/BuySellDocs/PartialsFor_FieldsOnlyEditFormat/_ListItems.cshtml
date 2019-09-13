@@ -1,0 +1,125 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+        @*
+            We dont want to create from here... all creations should be from the shopping cart.
+            @Html.ActionLink("Create New Item", "Create", "BuySellItems", new { parentId = Model.Id, returnUrl = Request.Url.PathAndQuery }, new { @class ="btn btn-success m-1"})
+            
+            *@
+
+
+@{
+    
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState _viewState = Model.BuySellDocViewState;
+    
+
+    
+    
+        
+}
+        <table class="table table-bordered">
+            <tr>
+                <th>Sr#</th>
+                <th>Item</th>
+                <th>Order</th>
+                @*<th>Ship</th>*@
+                <th>Price</th>
+                <th>Extention</th>
+                <th></th>
+            </tr>
+
+            @if (!Model.BuySellItems.IsNullOrEmpty())
+            {
+                List<ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellItemNS.BuySellItem> buySellItemsList = Model.BuySellItems.Where(x => x.MetaData.IsDeleted == false).ToList();
+                decimal ExtentionSubTotal = 0;
+                decimal count = 0;
+                string deleteToolTip = "Delete the item";
+                string editToolTip = _viewState.HD_OL_EditToolTip;
+
+                foreach (ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellItemNS.BuySellItem item in buySellItemsList)
+                {
+
+                    _viewState = Model.GetBuySellDocViewState(item.BuySellDocStateEnum, item.BuySellDocumentTypeEnum);
+                    
+                    
+                    string delete_Item_path = Url.Action("Delete", "BuySellItems", new { id = item.Id, returnUrl = Request.Url.PathAndQuery, buySellDocumentTypeEnum = Model.BuySellDocumentTypeEnum, buySellDocStateEnum = Model.BuySellDocStateEnum });
+
+                    string edit_Item_path = Url.Action("Edit", "BuySellItems", new { id = item.Id, returnUrl = Request.Url.PathAndQuery, buySellDocumentTypeEnum = Model.BuySellDocumentTypeEnum, buySellDocStateEnum = Model.BuySellDocStateEnum});
+                    
+                    count++;
+                    string salePriceDifferentClass = "";
+                    decimal totalExtention = item.Quantity.OrderedAsDecimal * item.SalePrice;
+                    ExtentionSubTotal += totalExtention;
+
+                    string tooltip_SrNo = "Line number";
+                    string tooltip_Item = "This is the name of the item";
+                    string tooltip_Ordered = "This is the quantity ordered";
+                    string tooltip_Price = "This is the price. If it is red, it has been changed.";
+                    string tooltip_Extention = "This is the total sale at the current price.";
+
+                    string deleteBtnDisabled = _viewState.HD_OL_Button_Is_Delete_Enabled ? "" : " disabled ";
+                    string editViewIcon = _viewState.HD_OL_IconForEditView;
+                    string deleteViewIcon = _viewState.HD_OL_IconForDelete;
+
+
+
+
+                    //IF PRICE is different                                                        
+                    if(!item.IsSalePriceSame)
+                    {
+                        salePriceDifferentClass =  "badge-problem";
+                        tooltip_Price = string.Format("The price has been changed from {0} to {1}. There is a difference of {2}. If you do not agree, delete or edit the item so that the price is satisfactory. If you delete it, the sale is over. If you edit it, maybe buyer will accept the price. In any case, none of the items will not be available for shipping until price issue is resolved.", item.OriginalPrice_Formatted, item.SalePriceStr, item.Difference_Formatted);
+                    }
+                    
+                    <tr>
+                        <td data-toggle="tooltip" title="@tooltip_SrNo" data-placement="top">@count)</td>
+                        <td data-toggle="tooltip" title="@tooltip_Item" data-placement="top">@item.FullName()</td>
+                        <td data-toggle="tooltip" title="@tooltip_Ordered" data-placement="top">@string.Format("{0:N2}", item.Quantity.Order)</td>
+                        @*<td data-toggle="tooltip" title="@tooltip_Ordered" data-placement="top">@string.Format("{0:N2}", item.Quantity.Ship)</td>*@
+    
+                        <td data-toggle="tooltip" title="@tooltip_Price" data-placement="top" class="@salePriceDifferentClass">
+                            @string.Format("{0:N2}", item.SalePrice)
+                        </td>
+                        <td data-toggle="tooltip" title="@tooltip_Extention" data-placement="top">
+                            @string.Format("{0:N2}", totalExtention)
+                        </td>
+                        <td >
+                    
+                            <button data-toggle="tooltip"
+                                    title="@editToolTip"
+                                    data-placement="top"
+                                    class="btn btn-sm btn-success"
+                                    onclick="openPath('@edit_Item_path')">
+
+                                <img width="20" src="@editViewIcon" />
+                            </button>
+                            <button data-toggle="tooltip"
+                                    title="@deleteToolTip"
+                                    data-placement="top"
+                                    class="btn btn-sm btn-danger"
+                                    onclick="openPath('@delete_Item_path')"
+                                    @deleteBtnDisabled>
+                                <img width="20" src="@deleteViewIcon" />
+                            </button>
+                    
+                        </td>
+
+
+                    </tr>
+
+    
+                }
+            }
+
+        </table>
+
+
+
+
+
+
+
+
+
+

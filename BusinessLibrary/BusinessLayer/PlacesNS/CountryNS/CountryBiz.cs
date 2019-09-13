@@ -32,7 +32,7 @@ namespace UowLibrary
 
         }
 
-        StateBiz StateBiz { get { return _stateBiz; } }
+        protected StateBiz StateBiz { get { return _stateBiz; } }
 
 
         

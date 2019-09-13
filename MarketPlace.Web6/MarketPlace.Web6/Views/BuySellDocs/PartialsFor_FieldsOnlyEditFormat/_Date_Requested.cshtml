@@ -1,0 +1,115 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_DelyFormat = Model.BuySellDocViewState;
+
+    //bool isEnableAgreedFreightAndDate_DelyFormat = viewState_DelyFormat.HD_Enable_AgreedFreightAndDate;
+    //bool isShowAgreedFreightAndDate = viewState_DelyFormat.HD_Show_AgreedFreightAndDate;
+    bool isShowRequestedFreightInfo = viewState_DelyFormat.HD_Show_Freight_Request_Info;
+    bool isEnableCustomersRequestFreight_DelyFormat = viewState_DelyFormat.HD_Enable_Freight_Request_Info;
+
+    string currentColor_DelyFormat = viewState_DelyFormat.CurrentColorClass;
+
+    //bool isEnabledInsuranceRequired_NHF = viewState_DelyFormat.HD_Enable_Insurance;
+    //bool isShowDeliveryCodeToCustomer = viewState_DelyFormat.HD_Show_DeliveryCode;
+    //bool isShowPickupCodeToDeliveryman = viewState_DelyFormat.HD_Show_PickupCode;
+    //bool isShowCombinedCode = viewState_DelyFormat.HD_Show_CombinedCode;
+    //string tooltip_DeleteOfferButton = viewState_DelyFormat.HD_OFF_Enable_Offer_Delete_Button_Tooltip;
+    //string icon_DeleteOfferButton = viewState_DelyFormat.HD_OFF_Enable_Offer_Delete_Button_Icon;
+    ////bool enabled_DeleteOfferButton = true;
+    //string path_Offer_Delete_Button = Url.Action("Delete", "FreightOfferTrxs", new { id = Model.Id, returnUrl = Request.Url.PathAndQuery });
+    //string deliverymanPhoneNo = Model.Deliveryman.DefaultBillAddress.IsNull() ? "None" : Model.Deliveryman.DefaultBillAddress.Phone;
+
+
+
+}
+
+
+
+
+
+
+    @if (isShowRequestedFreightInfo)
+    {
+
+        if (isEnableCustomersRequestFreight_DelyFormat)
+        {
+            <div class="form-group">
+                <label class="background-ltgrey p-2">
+                    <strong>
+                        <label>Freight Request Amount</label>
+                    </strong>
+                </label>
+                @Html.EditorFor(x => x.FreightCustomerBudget_String, new { htmlAttributes = new { @class = "form-control", @placeholder = "This is the agreed freight.", data_toggle = "tooltip", title = "This is the the customer's freight budget. They would not like to pay more than this.", data_placement = "top" } })
+            </div>
+        
+        
+        
+            <div class="form-group">
+                <label class="background-ltgrey p-2">
+                    <strong>
+                        <label>Pick Date Start</label>
+                    </strong>
+                </label>
+                @Html.EditorFor(x => x.PleasePickupOnDate_Start, new { htmlAttributes = new { @class = "form-control DatePickers", @type = "text" } })
+            </div>
+        
+        
+        
+        
+        
+            <div class="form-group">
+                <label class="background-ltgrey p-2">
+                    <strong>
+                        <label>Pick Date End</label>
+                    </strong>
+                </label>
+                @Html.EditorFor(x => x.PleasePickupOnDate_End, new { htmlAttributes = new { @class = "form-control DatePickers", @type = "text" } })
+            </div>
+        
+        
+        }
+        else
+        {
+            @Html.HiddenFor(x => x.FreightCustomerBudget_String)
+            @Html.HiddenFor(x => x.PleasePickupOnDate_Start)
+            @Html.HiddenFor(x => x.PleasePickupOnDate_End)
+        
+            <div class="form-group">
+                <label class="background-ltgrey p-2">
+                    <strong>
+                        <label>Freight Request Amount</label>
+                    </strong>
+                </label>
+                @Html.EditorFor(x => x.FreightCustomerBudget_String, new { htmlAttributes = new { @class = "form-control", @placeholder = "This is the agreed freight.", disabled = "disabled", data_toggle = "tooltip", title = "This is the the customer's freight budget. They would not like to pay more than this.", data_placement = "top" } })
+            </div>
+        
+        
+            <div class="form-group">
+                <label class="background-ltgrey p-2">
+                    <strong>
+                        <label>Pick Date Start</label>
+                    </strong>
+                </label>
+                @Html.EditorFor(x => x.PleasePickupOnDate_Start, new { htmlAttributes = new { @class = "form-control", @placeholder = "This is the requested start date.", disabled = "disabled", data_toggle = "tooltip", title = "This is the beginning pickup date. The customer wants the product on or after this date.", data_placement = "top" } })
+            </div>
+        
+        
+            <div class="form-group">
+                <label class="background-ltgrey p-2">
+                    <strong>
+                        <label>Pick Date End</label>
+                    </strong>
+                </label>
+                @Html.EditorFor(x => x.PleasePickupOnDate_End, new { htmlAttributes = new { @class = "form-control", @placeholder = "This is the requested end date.", disabled = "disabled", data_toggle = "tooltip", title = "This is the end pickup date. After that, the customer does not want the product", data_placement = "top" } })
+            </div>
+        
+
+
+        }
+    }
+        
+
+

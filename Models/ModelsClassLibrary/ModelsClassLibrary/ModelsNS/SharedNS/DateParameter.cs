@@ -72,24 +72,24 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             }
         }
 
-        public bool BeginDateGreaterThanEndDate
+        public bool BeginDateAfterEndDate
         {
             get
             {
                 //int result = DateTime.Compare(BeginDate, EndDate);
                 //return result == 1;
-                return Date1GreaterThanDate2(BeginDate, EndDate);
+                return Date1AfterDate2(BeginDate, EndDate);
             }
         }
 
-        public bool BeginDateLessThanEndDate
+        public bool BeginDateBeforeEndDate
         {
             get
             {
                 //int result = DateTime.Compare(BeginDate, EndDate);
                 //return result == -1;
 
-                return Date1LessThanDate2(BeginDate, EndDate);
+                return Date1BeforeDate2(BeginDate, EndDate);
             }
         }
 
@@ -119,7 +119,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         }
 
 
-        public bool Date1GreaterThanDate2(DateTime date1, DateTime date2)
+        public bool Date1AfterDate2(DateTime date1, DateTime date2)
         {
             int result = DateTime.Compare(date1, date2);
             bool success = result == 1;
@@ -142,7 +142,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             return success;
 
         }
-        public bool Date1LessThanDate2(DateTime date1, DateTime date2)
+        public bool Date1BeforeDate2(DateTime date1, DateTime date2)
         {
             int result = DateTime.Compare(date1, date2);
 
@@ -170,22 +170,22 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
 
 
-        public bool Date1GreaterThanOrEqualToDate2(DateTime date1, DateTime date2)
+        public bool Date1AfterOrEqualToDate2(DateTime date1, DateTime date2)
         {
             if (DatesAreEqual(date1, date2))
                 return true;
 
-            if (Date1GreaterThanDate2(date1, date2))
+            if (Date1AfterDate2(date1, date2))
                 return true;
 
             return false;
         }
-        public bool Date1LessThanOrEqualDate2(DateTime date1, DateTime date2)
+        public bool Date1BeforeOrEqualToDate2(DateTime date1, DateTime date2)
         {
             if (DatesAreEqual(date1, date2))
                 return true;
 
-            if (Date1LessThanDate2(date1, date2))
+            if (Date1BeforeDate2(date1, date2))
                 return true;
 
             return false;
@@ -194,26 +194,30 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public void ErrorCheck()
         {
 
-            isBeginDateGreaterThanEndDateThrowError();
+            isBeginDateAfterEndDateThrowError();
         }
-
 
 
         public bool IsDateWithinBeginAndEndDatesInclusive(DateTime inDate)
         {
-            if (Date1LessThanOrEqualDate2(inDate, BeginDate))
+            return IsDateWithinBeginAndEndDatesInclusive(inDate, BeginDate, EndDate);
+        }
+
+        public bool IsDateWithinBeginAndEndDatesInclusive(DateTime inDate, DateTime beginDate, DateTime endDate)
+        {
+            if (Date1BeforeDate2(inDate, beginDate))
                 return false;
 
-            if (Date1GreaterThanOrEqualToDate2(inDate, EndDate))
+            if (Date1AfterDate2(inDate, endDate))
                 return false;
 
             return true;
         }
 
-        private void isBeginDateGreaterThanEndDateThrowError()
+        private void isBeginDateAfterEndDateThrowError()
         {
 
-            if (BeginDateGreaterThanEndDate)
+            if (BeginDateAfterEndDate)
                 throw new Exception(string.Format("Begin date: '{0} is greater than the end date: '{1}' This is not allowed!", BeginDate, EndDate));
         }
 

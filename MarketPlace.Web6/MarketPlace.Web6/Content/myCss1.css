@@ -1,0 +1,432 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/*For responsive thumbnail size you can use vw against px. Like this:*/
+
+.thumb-img{
+   object-fit: cover;
+   overflow: hidden;
+   height: 30vw; 
+   width : 30vw;
+}  
+
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+.row-bordered:after {
+  content: "";
+  display: block;
+  border-bottom: 1px solid #ccc;
+  margin: 0 15px;
+}
+.background-blackFontWhite {
+  background-color: black;
+  color:white;
+  /*padding: 0 90px;*/
+}
+
+.background-ltgrey {
+  background-color: lightgray
+  /*padding: 0 90px;*/
+}
+.background-yellow {
+  background-color: yellow
+  /*padding: 0 90px;*/
+}
+.background-ltgreen{
+  background-color: lightgreen
+  /*padding: 0 90px;*/
+}
+
+.background-ltblue{
+  background-color: lightblue
+  /*padding: 0 90px;*/
+}
+
+.background-Red{
+  background-color: red
+  /*padding: 0 90px;*/
+}
+
+.OnHoverbackgroundYellow{
+  background-color: yellow;
+
+}
+
+/* Print styling */
+
+@media print {
+
+  [class*="col-sm-"] {
+    float: left;
+  }
+
+  [class*="col-xs-"] {
+    float: left;
+  }
+
+  .col-sm-12, .col-xs-12 {
+    width:100% !important;
+  }
+
+  .col-sm-11, .col-xs-11 {
+    width:91.66666667% !important;
+  }
+
+  .col-sm-10, .col-xs-10 {
+    width:83.33333333% !important;
+  }
+
+  .col-sm-9, .col-xs-9 {
+    width:75% !important;
+  }
+
+  .col-sm-8, .col-xs-8 {
+    width:66.66666667% !important;
+  }
+
+  .col-sm-7, .col-xs-7 {
+    width:58.33333333% !important;
+  }
+
+  .col-sm-6, .col-xs-6 {
+    width:50% !important;
+  }
+
+  .col-sm-5, .col-xs-5 {
+    width:41.66666667% !important;
+  }
+
+  .col-sm-4, .col-xs-4 {
+    width:33.33333333% !important;
+  }
+
+  .col-sm-3, .col-xs-3 {
+    width:25% !important;
+  }
+
+  .col-sm-2, .col-xs-2 {
+    width:16.66666667% !important;
+  }
+
+  .col-sm-1, .col-xs-1 {
+    width:8.33333333% !important;
+  }
+
+  .col-sm-1,
+  .col-sm-2,
+  .col-sm-3,
+  .col-sm-4,
+  .col-sm-5,
+  .col-sm-6,
+  .col-sm-7,
+  .col-sm-8,
+  .col-sm-9,
+  .col-sm-10,
+  .col-sm-11,
+  .col-sm-12,
+  .col-xs-1,
+  .col-xs-2,
+  .col-xs-3,
+  .col-xs-4,
+  .col-xs-5,
+  .col-xs-6,
+  .col-xs-7,
+  .col-xs-8,
+  .col-xs-9,
+  .col-xs-10,
+  .col-xs-11,
+  .col-xs-12 {
+  float: left !important;
+  }
+
+  body {
+    margin: 0;
+    padding: 0 !important;
+    min-width: 768px;
+  }
+
+  .container {
+    width: auto;
+    min-width: 750px;
+  }
+
+  body {
+    font-size: 10px;
+  }
+
+  a[href]:after {
+    content: none;
+  }
+
+  .noprint,
+  div.alert,
+  header,
+  .group-media,
+  .btn,
+  .footer,
+  form,
+  #comments,
+  .nav,
+  ul.links.list-inline,
+  ul.action-links {
+    display:none !important;
+  }
+}
+
+
+/*@media (max-width: 768px) {
+  .btn-responsive {
+    padding:2px 4px;
+    font-size:80%;
+    line-height: 1;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+  .btn-responsive {
+    padding:4px 9px;
+    font-size:90%;
+    line-height: 1.2;
+  }
+}*/
+
+    .akaFix
+    {
+        display:flex;
+        flex-wrap:wrap;
+        
+        
+        
+    }
+
+
+.btn-xs {
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+.notVisible{
+    visibility: hidden;
+}
+
+.noBorderButton{
+    border-width: 0px;
+    padding: 0px;
+}
+
+
+
+.minWidthHeight{
+    min-width: 200px !important; 
+    min-height: 200px !important
+
+}
+
+.backgroundYellowOnHover{
+  background-color:inherit;
+  border-top-color: inherit;    
+  border-top-width: inherit;
+}
+
+.selectedItem{
+  background-color:white;
+  border-top-color: blue;    
+  border-top-width: 5px;
+
+}
+
+
+.tiledimagemiddlepart{
+    object-fit: scale-down;
+}
+
+/*carousel color control*/
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background: black no-repeat center center;
+  background-size: 100% 100%;
+}
+
+
+.carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+}
+
+.carousel-control-next-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+
+
+.carousel-indicators .active {
+  background-color: white;
+}
+
+
+.carousel-caption {
+  position: absolute;
+  right: 15%;
+  bottom: 20px;
+  left: 15%;
+  z-index: 10;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #f00;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+/*My Images*/
+.img-message {
+    display: inline-flex;
+    background-repeat: no-repeat;
+    background: url('../ContentMine/Icons/Envelope.png') no-repeat center;
+    color: #000000;
+    background-size: 100%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.envelope {
+    /*background: url('images/Envelope.png') no-repeat;*/
+    background: url('../ContentMine/Icons/Envelope.png') no-repeat center;
+    color: #000000;
+    background-size: 100%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+image-for-button-class{
+     background-size: 100%;
+}
+
+
+.garbageCan {
+    /*background: url('images/Envelope.png') no-repeat;*/
+    background: url('../ContentMine/Icons/GarbageCan.png') no-repeat center;
+    color: #000000;
+    background-size: 100%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.badge-requestunconfirmed {
+   color: white;
+   background-color: blue;
+}
+.badge-requestconfirmed {
+   color: blue;
+   background-color: yellow;
+}
+.badge-confirmedbyseller {
+   color: white;
+   background-color: brown;
+}
+.badge-readyforshipment {
+   color: skyblue;
+   background-color: brown;
+}
+
+.badge-courierSelected {
+    color: lightblue;
+    background-color: darkgreen;
+}
+
+.badge-confirmedbycourier {
+   color: yellow;
+   background-color: darkgreen;
+}
+.badge-pickedup {
+   color: white;
+   background-color: darkgreen;
+}
+.badge-delivered {
+   color: skyblue;
+   background-color: darkgreen;
+}
+.badge-rejected {
+   color: blue;
+   background-color: #ff3300;
+}
+
+
+.badge-canceled {
+   color: yellow;
+   background-color: #ff3300;
+}
+
+.badge-problem {
+   color: white;
+   background-color: #ff3300;
+}
+
+
+/*
+    supressing the google chrome date picker
+    To Hide the arrow
+
+*/
+
+input::-webkit-calendar-picker-indicator{
+    display: none;
+}
+
+/*And to hide the prompt:*/
+input[type="date"]::-webkit-input-placeholder{ 
+    visibility: hidden !important;
+}
+
+/*.ui-datepicker {
+    background-color: white;
+    border-color: #2b3135;
+    padding: 1em;
+}*/
+
+
+
+.lh-0-5-em {
+    line-height: 0.5em;
+}
+
+
+.lh-0-75-em {
+    line-height: 0.75em;
+}
+
+.lh-1-0-em {
+    line-height: 0.5em;
+}
+
+
+.text-black{
+    color: black;
+}

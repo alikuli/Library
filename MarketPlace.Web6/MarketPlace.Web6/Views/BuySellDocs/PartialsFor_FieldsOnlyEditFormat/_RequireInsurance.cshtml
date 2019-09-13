@@ -1,0 +1,49 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_AgreedFrt = Model.BuySellDocViewState;
+
+    bool isShowRequireInsurance = viewState_AgreedFrt.HD_Show_RequireInsuranace;
+    bool isEnableRequireInsurance = viewState_AgreedFrt.HD_Enable_RequireInsuranace;
+
+
+}
+
+
+        @if (isShowRequireInsurance)
+        {
+            <div class="">
+
+                @if (isEnableRequireInsurance)
+                {
+
+                    <div class="form-group">
+                        <strong>@Html.LabelFor(model => model.InsuranceRequired, htmlAttributes: new { @class = "background-ltgrey p-2" })</strong>
+
+                        @Html.EditorFor(x => x.InsuranceRequired, new { htmlAttributes = new { @class = "form-control", @placeholder = "If your product is guaranteed, you may need to pay more, but the delivery man will have to pay you this amount if he does not deliver the goods intact." } })
+                    </div>
+
+
+                }
+
+
+                else
+                {
+
+
+                    @Html.HiddenFor(x => x.InsuranceRequired)
+
+                    <div class="form-group">
+                        <strong>@Html.LabelFor(model => model.InsuranceRequired, htmlAttributes: new { @class = "background-ltgrey p-2" })</strong>
+                        @Html.EditorFor(x => x.InsuranceRequired_ToSring, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @placeholder = "If your product is guaranteed, you may need to pay more, but the delivery man will have to pay you this amount if he does not deliver the goods intact." } })
+                    </div>
+
+
+                }
+            </div>
+
+        }
+
+

@@ -9,7 +9,7 @@ using UowLibrary.PlayersNS.BankNS;
 namespace MarketPlace.Web6.Controllers
 {
 
-    [Authorize(Roles="Administrator")]
+    [Authorize(Roles = "Administrator")]
     public class BanksController : EntityAbstractController<Bank>
     {
 
@@ -21,7 +21,7 @@ namespace MarketPlace.Web6.Controllers
         }
 
 
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
             Bank bank = parm.Entity as Bank;
@@ -34,7 +34,22 @@ namespace MarketPlace.Web6.Controllers
 
             bank.SelectListPeople = _bankBiz.PersonBiz.SelectList();
 
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
+        }
+
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
+            Bank bank = parm.Entity as Bank;
+            bank.IsNullThrowException("Unable to unbox Bank");
+
+            bank.SelectListBankCategory = _bankBiz.BankCategoryBiz.SelectList();
+
+            bank.SelectListBillAddress = _bankBiz.SelectListBillAddressesFor(UserId);
+            bank.SelectListShipAddress = _bankBiz.SelectListShipAddressesFor(UserId);
+
+            bank.SelectListPeople = _bankBiz.PersonBiz.SelectList();
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
         }
     }
 }

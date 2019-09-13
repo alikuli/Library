@@ -13,8 +13,12 @@ namespace UowLibrary.BuySellDocNS
     public partial class BuySellDocBiz
     {
 
-        public BuySellDocumentTypeENUM IsSaleOrPurchase(BuySellDoc buySellDoc)
+        public BuySellDocumentTypeENUM IsSaleOrPurchaseOrDelivery(BuySellDoc buySellDoc)
         {
+
+            if (buySellDoc.BuySellDocumentTypeEnum == BuySellDocumentTypeENUM.Delivery)
+                return BuySellDocumentTypeENUM.Delivery;
+
             if (buySellDoc.CustomerId.IsNullOrWhiteSpace() && buySellDoc.OwnerId.IsNullOrWhiteSpace())
             {
                 ErrorsGlobal.Add("Both Customer and Owner are empty.", "Event_CreateViewAndSetupSelectList");
@@ -41,7 +45,6 @@ namespace UowLibrary.BuySellDocNS
 
             if (UserId == ownerUser.Id)
             {
-                //this is a purchase
                 return BuySellDocumentTypeENUM.Sale;
             }
 
@@ -52,10 +55,10 @@ namespace UowLibrary.BuySellDocNS
             customerUser.IsNullThrowException();
             if (UserId == customerUser.Id)
             {
-                //this is a sale
                 return BuySellDocumentTypeENUM.Purchase;
             }
 
+            //if(buySellDoc.)
             throw new Exception("Unknown type");
         }
 

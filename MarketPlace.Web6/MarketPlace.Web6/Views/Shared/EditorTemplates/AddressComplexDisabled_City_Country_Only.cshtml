@@ -1,0 +1,58 @@
+﻿@model ModelsClassLibrary.ModelsNS.AddressNS.AddressComplex
+@*<p>AddressComplexDisabled</p>*@
+
+
+@Html.HiddenFor(x => x.HouseNo)
+@Html.HiddenFor(x => x.Road)
+@Html.HiddenFor(x => x.Address2)
+@Html.HiddenFor(x => x.TownName)
+@Html.HiddenFor(x => x.CityName)
+@Html.HiddenFor(x => x.StateName)
+@Html.HiddenFor(x => x.Zip)
+@Html.HiddenFor(x => x.CountryName)
+@Html.HiddenFor(x => x.Attention)
+@Html.HiddenFor(x => x.Phone)
+@Html.HiddenFor(x => x.Email)
+@Html.HiddenFor(x => x.WebAddress)
+
+
+<div class="form-group">
+
+
+    @*@Html.LabelFor(model => model.CityName, htmlAttributes: new { @class = "" })*@
+
+    @Html.EditorFor(model => model.CityName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter city name", disabled = "disabled" } })
+    @Html.ValidationMessageFor(model => model.CityName, "", new { @class = "text-danger" })
+</div>
+
+
+<div class="form-group">
+
+
+    @*@Html.LabelFor(model => model.StateName, htmlAttributes: new { @class = "" })*@
+
+    @Html.EditorFor(model => model.StateName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter state/province name", disabled = "disabled" } })
+    @Html.ValidationMessageFor(model => model.StateName, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group">
+
+
+    @*@Html.LabelFor(model => model.StateName, htmlAttributes: new { @class = "" })*@
+
+    @Html.EditorFor(model => model.Zip, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter state/Zip code", disabled = "disabled" } })
+    @Html.ValidationMessageFor(model => model.Zip, "", new { @class = "text-danger" })
+</div>
+
+
+<div class="form-group">
+
+
+    @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "" })*@
+
+    @Html.EditorFor(model => model.CountryName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter country name", disabled = "disabled" } })
+    @Html.ValidationMessageFor(model => model.CountryName, "", new { @class = "text-danger" })
+</div>
+
+
+

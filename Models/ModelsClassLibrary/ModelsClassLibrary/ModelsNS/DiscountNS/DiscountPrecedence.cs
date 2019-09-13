@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
+using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,13 @@ using UserModels;
 
 namespace ModelsClassLibrary.ModelsNS.DiscountNS
 {
-    
+
     public class DiscountPrecedence : CommonWithId, IComparable, IDiscountPrecedence
     {
 
         public override ClassesWithRightsENUM ClassNameForRights()
         {
-                return ClassesWithRightsENUM.DiscountPrecedence;
+            return ClassesWithRightsENUM.DiscountPrecedence;
         }
         public static int RANK_SPACING_CONST = 1;
 
@@ -72,25 +73,6 @@ namespace ModelsClassLibrary.ModelsNS.DiscountNS
             }
         }
 
-
-
-        //public override string NameInput3
-        //{
-        //    get
-        //    {
-        //        return "Rule";
-        //    }
-        //}
-        //public override string Input3SortString
-        //{
-        //    get
-        //    {
-        //        return Enum.GetName(typeof(DiscountRuleENUM), DiscountRuleEnum).ToString() + Enum.GetName(typeof(DiscountTypeENUM), DiscountTypeEnum).ToString();
-        //    }
-        //}
-
-
-
         public string FixNameFor(DiscountPrecedence discountPrecedence)
         {
             string discRuleName = FixDiscountRuleName(discountPrecedence.DiscountRuleEnum.ToString());
@@ -128,6 +110,8 @@ namespace ModelsClassLibrary.ModelsNS.DiscountNS
             return string.Format("{0} [{1}]", Name, Rank.ToString("00000"));
         }
 
+
+
         #region Error Checks
 
 
@@ -161,30 +145,32 @@ namespace ModelsClassLibrary.ModelsNS.DiscountNS
 
 
 
-        #endregion        //public void LoadFrom(DiscountPrecedence d)
+        #endregion        
+        
+        //public void LoadFrom(DiscountPrecedence d)
 
         /// <summary>
         /// This re-indexes the ranking
         /// </summary>
         /// <param name="listIn"></param>
         /// <returns></returns>
-        public static List<DiscountPrecedence> FixRanks(List<DiscountPrecedence> listIn)
-        {
-            if (listIn.IsNullOrEmpty())
-                return null;
+        //public static List<DiscountPrecedence> FixRanks(List<DiscountPrecedence> listIn)
+        //{
+        //    if (listIn.IsNullOrEmpty())
+        //        return null;
 
-            listIn.Sort();
+        //    listIn.Sort();
 
-            int curRank = 0;
-            foreach (var d in listIn)
-            {
-                curRank = curRank + RANK_SPACING_CONST;
-                d.Rank = curRank;
-            };
+        //    int curRank = 0;
+        //    foreach (var d in listIn)
+        //    {
+        //        curRank = curRank + RANK_SPACING_CONST;
+        //        d.Ra    nk = curRank;
+        //    };
 
-            return listIn;
+        //    return listIn;
 
-        }
+        //}
 
         #region IComparable Members
 
@@ -220,16 +206,22 @@ namespace ModelsClassLibrary.ModelsNS.DiscountNS
             return lst;
         }
 
+
+
+        public static DiscountPrecedence UnBox(ICommonWithId icommonWithId)
+        {
+            DiscountPrecedence discountPrecedence = icommonWithId as DiscountPrecedence;
+            discountPrecedence.IsNullThrowException();
+            return discountPrecedence;
+        }
+
+
+
         public override void UpdatePropertiesDuringModify(InterfacesLibrary.SharedNS.ICommonWithId ic)
         {
             base.UpdatePropertiesDuringModify(ic);
 
-            DiscountPrecedence d = ic as DiscountPrecedence ;
-
-            if(d == null)
-            {
-                throw new Exception("Unable to box DiscountPrecedence. UpdatePropertiesDuringModify");
-            }
+            DiscountPrecedence d = DiscountPrecedence.UnBox(ic);
 
             Rank = d.Rank;
             DiscountRuleEnum = d.DiscountRuleEnum;

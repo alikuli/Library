@@ -142,29 +142,29 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.MenuItemHelperNS
         //----------------------------------------------------------------
 
 
-        static decimal _systemCreditPurchaseOrdersInMoney;
-        static double _systemCreditPurchaseOrdersInQuantity;
-        public IMenuItemHelper Credit
-        {
-            get
-            {
-                SystemCreditPurchaseOrders item = new SystemCreditPurchaseOrders(_systemCreditPurchaseOrdersInMoney, _systemCreditPurchaseOrdersInQuantity);
-                return item;
-            }
-        }
-        //----------------------------------------------------------------
+        //static decimal _systemCreditPurchaseOrdersInMoney;
+        //static double _systemCreditPurchaseOrdersInQuantity;
+        //public IMenuItemHelper Credit
+        //{
+        //    get
+        //    {
+        //        SystemCreditPurchaseOrders item = new SystemCreditPurchaseOrders(_systemCreditPurchaseOrdersInMoney, _systemCreditPurchaseOrdersInQuantity);
+        //        return item;
+        //    }
+        //}
+        ////----------------------------------------------------------------
 
 
-        static decimal _systemQuotationPurchaseOrdersInMoney;
-        static double _systemQuotationPurchaseOrdersInQuantity;
-        public IMenuItemHelper Quotation
-        {
-            get
-            {
-                SystemQuotationPurchaseOrders item = new SystemQuotationPurchaseOrders(_systemQuotationPurchaseOrdersInMoney, _systemQuotationPurchaseOrdersInQuantity);
-                return item;
-            }
-        }
+        //static decimal _systemQuotationPurchaseOrdersInMoney;
+        //static double _systemQuotationPurchaseOrdersInQuantity;
+        //public IMenuItemHelper Quotation
+        //{
+        //    get
+        //    {
+        //        SystemQuotationPurchaseOrders item = new SystemQuotationPurchaseOrders(_systemQuotationPurchaseOrdersInMoney, _systemQuotationPurchaseOrdersInQuantity);
+        //        return item;
+        //    }
+        //}
         //----------------------------------------------------------------
 
 

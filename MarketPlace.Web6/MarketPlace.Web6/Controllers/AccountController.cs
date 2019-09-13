@@ -1,7 +1,6 @@
 ﻿using AliKuli.Extentions;
 using MarketPlace.Web4.Controllers;
 using Microsoft.AspNet.Identity.Owin;
-using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsNS.Models;
 using System;
 using System.Reflection;
@@ -9,42 +8,51 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.ParametersNS;
+using UowLibrary.PlayersNS.CustomerNS;
+using UowLibrary.PlayersNS.DeliverymanNS;
+using UowLibrary.PlayersNS.OwnerNS;
 using UowLibrary.PlayersNS.PersonNS;
+using UowLibrary.SuperLayerNS;
 using UserModels;
 namespace MarketPlace.Web6.Controllers
 {
     [Authorize]
     public class AccountController : AbstractController
     {
-        UserBiz _userBiz;
-        PersonBiz _personBiz;
-        public AccountController(UserBiz userBiz, PersonBiz personBiz, AbstractControllerParameters param)
+        //UserBiz _userBiz;
+        //PersonBiz _personBiz;
+        SuperBiz _superCashBiz;
+        public AccountController(/* UserBiz userBiz, PersonBiz personBiz, */ SuperBiz superCashBiz, AbstractControllerParameters param)
             : base(param)
         {
-            _userBiz = userBiz;
-            _personBiz = personBiz;
+            _superCashBiz = superCashBiz;
         }
 
-
-
-
-        UserBiz UserBiz { get { return _userBiz; } }
-        PersonBiz PersonBiz
+        SuperBiz SuperCashBiz
         {
             get
             {
-                //we need to do this because we are fooling the program in
-                //register post. If we dont do this, the program reverts to
-                //null
-                if (_personBiz.UserId.IsNull())
+                if (!UserId.IsNullOrWhiteSpace())
                 {
-                    _personBiz.UserId = UserId;
-                    _personBiz.UserName = UserName;
+                    _superCashBiz.UserId = UserId;
+                    _superCashBiz.UserName = UserName;
                 }
 
-                return _personBiz;
+                return _superCashBiz;
             }
+
         }
+
+
+
+        UserBiz UserBiz { get { return SuperCashBiz.UserBiz; } }
+        PersonBiz PersonBiz { get { return SuperCashBiz.PersonBiz; } }
+
+        CustomerBiz CustomerBiz { get { return SuperCashBiz.CustomerBiz; } }
+        OwnerBiz OwnerBiz { get { return SuperCashBiz.OwnerBiz; } }
+
+        DeliverymanBiz DeliverymanBiz { get { return SuperCashBiz.DeliverymanBiz; } }
+
 
         #region Log In
 
@@ -177,50 +185,21 @@ namespace MarketPlace.Web6.Controllers
             {
                 try
                 {
-                    ApplicationUser theUser = await UserBiz.RegisterAsync(model);
+                    ApplicationUser theUser = await SuperCashBiz.RegisterAsync(model);
+                    return RedirectToAction("Index", "Menus");
 
-                    //now create a person for this user as well.
-                    if (!theUser.IsNull())
-                    {
-                        //first check to see if a person already exists... it should not.
-                        //locate person with same name.
 
-                        Person person = PersonBiz.FindByName(theUser.UserName);
-
-                        if (person.IsNull())
-                        {
-                            //create person
-                            //we need to fool the program by adding the username and userid to the personbiz
-                            //so it thinks it is logged in
-
-                            PersonBiz.UserId = theUser.Id;
-                            PersonBiz.UserName = theUser.UserName;
-
-                            person = PersonBiz.Factory() as Person;
-                            person.Name = theUser.UserName;
-                            theUser.PersonId = person.Id;
-                            PersonBiz.CreateAndSave(person);
-                        }
-                        else
-                        {
-                            theUser.PersonId = person.Id;
-                            UserBiz.SaveChanges();
-                        }
-                    }
                 }
                 catch (Exception e)
                 {
                     ErrorsGlobal.Add("Registration failed", MethodBase.GetCurrentMethod(), e);
                     ErrorsGlobal.MemorySave();
 
-                    //return RedirectToAction("Index", "Home");
+                    return View(model);
                 }
 
 
 
-                return RedirectToLocal("");
-
-                //return RedirectToAction("Index", "Home");
             }
 
             //model = UserBiz.LoadCountrySelectListIn(model);

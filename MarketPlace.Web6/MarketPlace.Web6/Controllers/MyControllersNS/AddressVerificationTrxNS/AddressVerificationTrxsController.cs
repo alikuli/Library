@@ -1,6 +1,7 @@
 ﻿using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Web.Mvc;
 using UowLibrary.AddressNS;
 using UowLibrary.ParametersNS;
@@ -38,12 +39,20 @@ namespace MarketPlace.Web6.Controllers
             }
         }
 
-        public override ActionResult Event_CreateViewAndSetupSelectList(ModelsClassLibrary.ModelsNS.SharedNS.ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ModelsClassLibrary.ModelsNS.SharedNS.ControllerIndexParams parm)
         {
 
             ViewBag.SelectListAddress = AddressBiz.SelectList();
             ViewBag.SelectListAddressVerificationHdr = AddressVerificationHdrBiz.SelectList();
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
         }
+
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            ViewBag.SelectListAddress = AddressBiz.SelectList();
+            ViewBag.SelectListAddressVerificationHdr = AddressVerificationHdrBiz.SelectList();
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
+        }
+
     }
 }

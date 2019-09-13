@@ -202,7 +202,7 @@ namespace UowLibrary.EmailAddressNS
         public string GetPersonIdForCurrentUser()
         {
             UserId.IsNullOrWhiteSpaceThrowException("User not logged in.");
-            return GetPersonIdFor(UserId);
+            return GetPersonIdFor(UserId)                                      ;
         }
 
         //public string GetPersonIdForCurrentUser()

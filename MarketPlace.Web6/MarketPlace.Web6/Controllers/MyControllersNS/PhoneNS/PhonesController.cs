@@ -1,18 +1,10 @@
-﻿using BreadCrumbsLibraryNS.Programs;
-using EnumLibrary.EnumNS;
-using ErrorHandlerLibrary;
-using ErrorHandlerLibrary.ExceptionsNS;
+﻿using AliKuli.Extentions;
 using MarketPlace.Web6.Controllers.Abstract;
-using ModelsClassLibrary.ModelsNS.PlacesNS;
+using ModelsClassLibrary.ModelsNS.PlacesNS.PhoneNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using UowLibrary;
 using UowLibrary.ParametersNS;
-using UowLibrary.PageViewNS;
-using UowLibrary.PlayersNS;
-using UowLibrary.StateNS;
 using UowLibrary.PhoneNS;
-using ModelsClassLibrary.ModelsNS.PlacesNS.PhoneNS;
-using AliKuli.Extentions;
 
 namespace MarketPlace.Web6.Controllers
 {
@@ -20,7 +12,7 @@ namespace MarketPlace.Web6.Controllers
     {
         CountryBiz _countryBiz;
         public PhonesController(PhoneBiz biz, AbstractControllerParameters param, CountryBiz countryBiz)
-            : base(biz, param) 
+            : base(biz, param)
         {
             _countryBiz = countryBiz;
         }
@@ -37,14 +29,24 @@ namespace MarketPlace.Web6.Controllers
             }
         }
 
-        public override System.Web.Mvc.ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override System.Web.Mvc.ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             Phone phone = parm.Entity as Phone;
             phone.IsNullThrowException("Unable to unbox phone");
 
             phone.SelectListCountry = CountryBiz.SelectList();
             //phone.Name = phone.PhoneNo;
-            return base.Event_CreateViewAndSetupSelectList(parm);
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
+        }
+
+        public override System.Web.Mvc.ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            Phone phone = parm.Entity as Phone;
+            phone.IsNullThrowException("Unable to unbox phone");
+
+            phone.SelectListCountry = CountryBiz.SelectList();
+            //phone.Name = phone.PhoneNo;
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
         }
 
 

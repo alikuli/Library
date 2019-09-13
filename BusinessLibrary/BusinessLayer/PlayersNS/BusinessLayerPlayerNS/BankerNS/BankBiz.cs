@@ -70,40 +70,52 @@ namespace UowLibrary.PlayersNS.BankNS
             }
         }
 
-        public bool IsBankerFor(string userId)
-        {
+        //public bool IsBankerFor(string userId)
+        //{
 
-            return !GetBankFor(userId).IsNull();
+        //    return !GetBankFor(userId).IsNull();
+        //}
+
+        //public Bank GetBankFor(string userId)
+        //{
+        //    Person person = PersonBiz.GetPersonForUserId(userId);
+        //    person.IsNullThrowException("Person");
+        //    string personId = person.Id;
+        //    personId.IsNullOrWhiteSpaceThrowException("personId");
+        //    Bank bank = FindAll().FirstOrDefault(x => x.PersonId == personId);
+        //    return bank;
+        //}
+
+        public bool IsBanker_User(string userId)
+        {
+            Bank bank = GetPlayerFor(userId);
+            return !bank.IsNull();
+        }
+        public bool IsBanker_Person(string personId)
+        {
+            personId.IsNullOrWhiteSpaceThrowException();
+
+            Bank bank = GetPlayerForPersonId(personId);
+            return !bank.IsNull();
         }
 
-        public Bank GetBankFor(string userId)
-        {
-            Person person = PersonBiz.GetPersonForUserId(userId);
-            person.IsNullThrowException("Person");
-            string personId = person.Id;
-            personId.IsNullOrWhiteSpaceThrowException("personId");
-            Bank bank = FindAll().FirstOrDefault(x => x.PersonId == personId);
-            return bank;
-        }
+        //public bool Add_RefundablePayment(CashPaymentModel cashPaymentModel)
+        //{
+        //    UserId.IsNullOrWhiteSpaceThrowArgumentException("UserId");
+        //    bool isBank = IsBankerFor(UserId);
+        //    string personFromId = PersonBiz.GetPersonIdForUserId(UserId);
 
+        //    return CashTrxBiz.Add_RefundablePayment(personFromId, cashPaymentModel.PersonToId, cashPaymentModel.Amount, cashPaymentModel.Comment, isBank);
+        //}
 
-        public bool Add_RefundablePayment(CashPaymentModel cashPaymentModel)
-        {
-            UserId.IsNullOrWhiteSpaceThrowArgumentException("UserId");
-            bool isBank = IsBankerFor(UserId);
-            string personFromId = PersonBiz.GetPersonIdForUserId(UserId);
+        //public bool Add_NON_RefundablePayment(CashPaymentModel cashPaymentModel)
+        //{
+        //    UserId.IsNullOrWhiteSpaceThrowArgumentException("UserId");
+        //    bool isBank = IsBankerFor(UserId);
+        //    string personFromId = PersonBiz.GetPersonIdForUserId(UserId);
 
-            return CashTrxBiz.Add_RefundablePayment(personFromId, cashPaymentModel.PersonToId, cashPaymentModel.Amount, cashPaymentModel.Comment, isBank);
-        }
-
-        public bool Add_NON_RefundablePayment(CashPaymentModel cashPaymentModel)
-        {
-            UserId.IsNullOrWhiteSpaceThrowArgumentException("UserId");
-            bool isBank = IsBankerFor(UserId);
-            string personFromId = PersonBiz.GetPersonIdForUserId(UserId);
-
-            return CashTrxBiz.Add_NON_RefundablePayment(personFromId, cashPaymentModel.PersonToId, cashPaymentModel.Amount, cashPaymentModel.Comment, isBank);
-        }
+        //    return CashTrxBiz.Add_NON_RefundablePayment(personFromId, cashPaymentModel.PersonToId, cashPaymentModel.Amount, cashPaymentModel.Comment, isBank);
+        //}
 
     }
 }

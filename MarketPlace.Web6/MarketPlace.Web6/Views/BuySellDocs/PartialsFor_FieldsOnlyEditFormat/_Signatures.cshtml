@@ -1,0 +1,28 @@
+﻿
+
+
+
+@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_Signature = Model.BuySellDocViewState;
+    bool is_Signature_Shown = viewState_Signature.HD_Show_Signature;
+    
+
+
+}
+
+
+
+@if (is_Signature_Shown)
+{
+
+    <div class="card-body">
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_DeliveryButton")
+    </div>
+
+}
+
+

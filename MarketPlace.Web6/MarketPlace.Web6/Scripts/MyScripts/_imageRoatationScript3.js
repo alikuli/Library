@@ -4,12 +4,23 @@ $(document).ready(function () {
     //  Initialize image and canvas
     var previous = 0;
     img = document.getElementById('image');
+
     canvas = document.getElementById('canvas');
+
+    if (canvas)
+    {
+
+    }
+    else
+    {
+        return false;
+    }
+
 
     if (!canvas || !canvas.getContext) {
         if(canvas.parentNode)
             canvas.parentNode.removeChild(canvas);
-    }
+     }
     else {
         img.style.position = 'absolute';
         img.style.visibility = 'hidden';

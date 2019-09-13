@@ -75,5 +75,15 @@ namespace UowLibrary.PlayersNS.PersonNS
             return person.Id;
         }
 
+        public ApplicationUser GetUserFor(string personId)
+        {
+            Person person = Find(personId);
+            person.IsNullThrowException();
+            //we are using the fact that they have the same name
+            ApplicationUser user = UserBiz.FindByUserName_UserManager(person.Name);
+            user.IsNullThrowException();
+            //every person must have a user.
+            return user;
+        }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using InterfacesLibrary.DocumentsNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using System.Collections.Generic;
 
 namespace ModelsClassLibrary.ModelsNS.DeliveryMethodNS
 {
@@ -14,5 +15,7 @@ namespace ModelsClassLibrary.ModelsNS.DeliveryMethodNS
         {
             return EnumLibrary.EnumNS.ClassesWithRightsENUM.PaymentMethod;
         }
+
+        public virtual ICollection<PaymentMethod> PaymentMethods { get; set; }
     }
 }

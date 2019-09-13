@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.ToolsNS;
 using AliKuli.UtilitiesNS;
+using AliKuli.UtilitiesNS.RandomNumberGeneratorNS;
 using BreadCrumbsLibraryNS.Programs;
 using ConfigManagerLibrary;
 using ConstantsLibrary;
@@ -25,6 +26,7 @@ using ModelsClassLibrary.ModelsNS.VerificatonNS;
 using ModelsClassLibrary.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core;
@@ -47,6 +49,8 @@ namespace UowLibrary
 {
     /// <summary>
     /// This is where all the Fix, bussiness Rules and ErrorChecks are implemented
+    /// When updateing IsUpdate is true at bussiness layer level
+    /// When creating IsCreate is true at bussiness layer level
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     public abstract partial class BusinessLayer<TEntity> : AbstractBiz, IBusinessLayer<TEntity> where TEntity : class, ICommonWithId
@@ -70,6 +74,13 @@ namespace UowLibrary
             //_uploadedFileBiz = param.UploadedFileBiz;
 
         }
+
+
+
+
+
+
+
 
 
         protected IRepositry<TEntity> Dal
@@ -105,11 +116,17 @@ namespace UowLibrary
         /// <param name="entity"></param>
         public virtual void BusinessRulesFor(ControllerCreateEditParameter parm)
         {
-            NoDuplicateNameAllowed(parm.Entity as TEntity);
+            TEntity entity = GetTheEntityForDuplicateCheck(parm);
+            NoDuplicateNameAllowed(entity);
 
             //other defaults
             //entity.MetaData.IsEditLocked = true; This is used during initialization mainly... but can be use
 
+        }
+
+        public virtual TEntity GetTheEntityForDuplicateCheck(ControllerCreateEditParameter parm)
+        {
+            return parm.Entity as TEntity;
         }
 
         private void NoDuplicateNameAllowed(TEntity entity)
@@ -120,15 +137,18 @@ namespace UowLibrary
 
 
             var allData = GetDataToCheckDuplicateName(entity).ToList();
+            //var debugDat = allData.ToList();
+            //var debugDat2 = debugDat.Where(x => x.Name.ToLower() == entity.Name.ToLower()).ToList();
+            //var debugDat3 = debugDat.Any(x => x.Name.ToLower() == entity.Name.ToLower());
 
-            bool found = allData.Any(x =>
-                x.Name.ToLower() == entity.Name.ToLower());
-            
+            var entityFound = allData.FirstOrDefault(x => x.Name.ToLower() == entity.Name.ToLower());
+            bool found = !entityFound.IsNull();
+
 
             if (found)
             {
                 //This is required otherwise all the previous entries that were found remain in the cache and get added. The Notracking does not work.
-                Dal.Detach(entity);
+                Detach(entity);
                 throw new NoDuplicateException(string.Format("{0}: '{1}' already exists in the db.", entity.GetType().Name, entity.Name));
                 //throw new NoDuplicateException(string.Format("{0}: '{1}' already exists in the db.", entity.GetType().Name, entity.Name));
 
@@ -139,7 +159,7 @@ namespace UowLibrary
 
         public virtual IQueryable<TEntity> GetDataToCheckDuplicateName(TEntity entity)
         {
-            IQueryable<TEntity> dataSet = Dal.FindAll().Where(x => x.Id != entity.Id);
+            IQueryable<TEntity> dataSet = FindAll().Where(x => x.Id != entity.Id);
             return dataSet;
         }
 
@@ -161,7 +181,6 @@ namespace UowLibrary
         }
 
 
-        #region Create
 
         public virtual void CreateSimple(ControllerCreateEditParameter parm)
         {
@@ -267,7 +286,7 @@ namespace UowLibrary
             //entity.IsCreating = true;
             //fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
             handleRelatedFilesIfExist(parm);
-            CreateEntity(parm.Entity as TEntity);
+            Create(parm.Entity as TEntity);
             //ClearSelectListInCache(SelectListCacheKey);
         }
 
@@ -276,8 +295,11 @@ namespace UowLibrary
         /// ProductVm
         /// </summary>
         /// <param name="entity"></param>
-        public virtual void CreateEntity(TEntity entity)
+        public virtual void Create(TEntity entity)
         {
+            IsCreate = true;
+            entity.MetaData.Created.SetToTodaysDate(UserName, UserId);
+
             fixEntityAndBussinessRulesAndErrorCheck_Helper(entity);
             create(entity);
             ClearSelectListInCache(SelectListCacheKey);
@@ -294,8 +316,9 @@ namespace UowLibrary
         {
             Fix(parm);
             BusinessRulesFor(parm);
-            ErrorCheck(parm);
             Monetize(parm);
+            ErrorCheck(parm);
+
         }
 
         /// <summary>
@@ -314,10 +337,6 @@ namespace UowLibrary
 
         }
 
-        #endregion
-
-        #region Update
-
         public void UpdateAndSave(TEntity entity)
         {
             ControllerCreateEditParameter param = new ControllerCreateEditParameter();
@@ -334,6 +353,13 @@ namespace UowLibrary
 
 
 
+        public async Task UpdateAndSaveAsync(TEntity entity)
+        {
+            ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+            param.Entity = entity as ICommonWithId;
+            await UpdateAndSaveAsync(param);
+
+        }
         public async Task UpdateAndSaveAsync(ControllerCreateEditParameter parm)
         {
             updateEngine(parm);
@@ -341,47 +367,79 @@ namespace UowLibrary
 
         }
 
+
+        //public virtual void AddParentChildCode(ControllerCreateEditParameter parm)
+        //{
+
+        //}
+
+        public virtual void Update(TEntity entity)
+        {
+            ControllerCreateEditParameter parm = new ControllerCreateEditParameter();
+            parm.Entity = entity as ICommonWithId;
+
+            Update(parm);
+
+        }
+
+        public virtual void Update(ControllerCreateEditParameter parm)
+        {
+            updateEngine(parm);
+        }
+
         private void updateEngine(ControllerCreateEditParameter parm)
         {
             //parm.Entity.IsUpdating = true;
+            IsUpdate = true;
             fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
             handleRelatedFilesIfExist(parm);
 
-            Product productTest = parm.Entity as Product;
-            AddParentChildCode(parm);
-            Update(parm.Entity as TEntity);
+            //AddParentChildCode(parm);
+            Dal.Update(parm.Entity as TEntity);
             ClearSelectListInCache(SelectListCacheKey);
 
         }
 
-        public virtual void AddParentChildCode(ControllerCreateEditParameter parm)
-        {
-
-        }
-
-        /// <summary>
-        /// This will need to be updated in each individual Product VM
-        /// </summary>
-        /// <param name="parm"></param>
-        public virtual void Update(TEntity entity)
-        {
-            entity.MetaData.Modified.SetToTodaysDate(UserName, UserId);
-            Dal.Update(entity);
-        }
+        ///// <summary>
+        ///// This will need to be updated in each individual Product VM
+        ///// </summary>
+        ///// <param name="parm"></param>
+        //public void Update(TEntity entity)
+        //{
+        //    entity.MetaData.Modified.SetToTodaysDate(UserName, UserId);
+        //    Dal.Update(entity);
+        //}
 
 
 
 
-        #endregion
-
-        #region Delete
 
         public virtual bool Delete(string id)
         {
             try
             {
+                TEntity entity = FindFor(id);
 
-                Dal.Delete(id);
+                if (entity.IsNull())
+                    return true;
+
+                return Delete(entity);
+            }
+            catch (Exception e)
+            {
+
+                ErrorsGlobal.AddMessage(string.Format("*** NOT Deleted ***"));
+                ErrorsGlobal.Add(string.Format("Unable to find the {0} record", typeof(TEntity).Name.ToUpper()), MethodBase.GetCurrentMethod(), e);
+            }
+            return false;
+        }
+
+        public virtual bool Delete(TEntity entity)
+        {
+            try
+            {
+                entity.IsNullThrowException();
+                Dal.Delete(entity);
                 ErrorsGlobal.AddMessage(string.Format("*** Deleted ***"));
                 ClearSelectListInCache(SelectListCacheKey);
                 return true;
@@ -393,9 +451,10 @@ namespace UowLibrary
                 ErrorsGlobal.Add(string.Format("Unable to find the {0} record", typeof(TEntity).Name.ToUpper()), MethodBase.GetCurrentMethod(), e);
             }
             return false;
+
         }
 
-        string _nameOfItemBeingDeleted;
+        //string _nameOfItemBeingDeleted;
         ///// <summary>
         ///// This stores the Entity name for onward use while deleting.
         ///// </summary>
@@ -456,30 +515,11 @@ namespace UowLibrary
         //}
         public virtual async Task<bool> DeleteAsync(string id)
         {
-            TEntity entity = await Dal.FindForAsync(id);
-            try
-            {
-                if (entity.IsNull())
-                {
+            TEntity entity = await FindForAsync(id);
+            if (entity.IsNull())
+                return false;
+            return Delete(entity);
 
-                    ErrorsGlobal.Add(string.Format("Unable to find the record"), "Delete");
-                    ErrorsGlobal.AddMessage(string.Format("*** NOT Deleted ***"));
-                    return false;
-                }
-                _nameOfItemBeingDeleted = entity.Name; //NameOfItemBeingDeleted is updated here
-                Dal.Delete(id);
-                await SaveChangesAsync();
-                ErrorsGlobal.AddMessage(string.Format("*** Deleted '{0}' ***", entity.Name));
-                ClearSelectListInCache(SelectListCacheKey);
-                return true;
-            }
-            catch (Exception e)
-            {
-
-                ErrorsGlobal.AddMessage(string.Format("*** NOT Deleted '{0}' ***", entity.Name));
-                ErrorsGlobal.Add(string.Format("Unable to find the {0} record", typeof(TEntity).Name.ToUpper()), MethodBase.GetCurrentMethod(), e);
-            }
-            return false;
         }
 
 
@@ -574,10 +614,6 @@ namespace UowLibrary
 
 
 
-        #endregion
-
-        #region DeleteActually
-
         public async Task DeleteActuallyAndSaveAsync(TEntity entity)
         {
             DeleteActuallyEngine(entity);
@@ -615,14 +651,14 @@ namespace UowLibrary
 
         public virtual void DeleteActuallyAllAndSave()
         {
-            var lst = Dal.FindAll().ToList();
+            var lst = FindAll().ToList();
             deleteActuallyAll(lst);
             SaveChanges();
         }
 
         public virtual async Task DeleteActuallyAllAndSaveAsync()
         {
-            var lst = await Dal.FindAll().ToListAsync();
+            var lst = await FindAllAsync();
             deleteActuallyAll(lst);
             await SaveChangesAsync();
         }
@@ -661,41 +697,51 @@ namespace UowLibrary
         }
 
 
-        #endregion
+        public async Task<TEntity> FindForAsync(string id)
+        {
+            id.IsNullOrWhiteSpaceThrowArgumentException();
 
-        #region Find
+            var list = await FindAllAsync();
+            if (list.IsNullOrEmpty())
+                return null;
+            TEntity entity = list.FirstOrDefault(x => x.Id == id);
+            return entity;
+        }
+
 
         public TEntity Find(string id)
         {
-            return Dal.FindFor(id) as TEntity;
+            id.IsNullOrWhiteSpaceThrowArgumentException();
+            TEntity entity = FindAll().FirstOrDefault(x => x.Id == id);
+            return entity;
         }
         public async Task<TEntity> FindAsync(string id)
         {
-            return (await Dal.FindForAsync(id)) as TEntity;
+            return await FindForAsync(id);
         }
 
-        public IQueryable<TEntity> FindAll(bool deleted = false)
-        {
-            return Dal.FindAll(deleted) as IQueryable<TEntity>;
-        }
-        public IQueryable<TEntity> FindAllNoTracking(bool deleted = false)
-        {
-            return Dal.FindAllNoTracking(deleted) as IQueryable<TEntity>;
-        }
+        //public virtual IQueryable<TEntity> FindAll(bool deleted = false)
+        //{
+        //    return Dal.FindAll(deleted) as IQueryable<TEntity>;
+        //}
+        //public IQueryable<TEntity> FindAllNoTracking(bool deleted = false)
+        //{
+        //    return Dal.FindAllNoTracking(deleted) as IQueryable<TEntity>;
+        //}
 
 
-        public async Task<List<TEntity>> FindAllAsync()
+        public virtual async Task<List<TEntity>> FindAllAsync()
         {
-            return await Dal.FindAllAsync();
+            return await FindAll().ToListAsync();
         }
         public TEntity FindByName(string name)
         {
-            return Dal.FindForName(name);
+            name.IsNullOrWhiteSpaceThrowArgumentException();
+            TEntity entity = FindAll().FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+            return entity;
 
         }
-        #endregion
 
-        #region Save
 
         public virtual int SaveChanges()
         {
@@ -819,10 +865,9 @@ namespace UowLibrary
         }
 
 
-        #endregion
 
 
-        public virtual bool AddEntryToIndex { get; set; }
+        public bool AddEntryToIndex { get; set; }
 
         /// <summary>
         /// Use this to add different fields... such as Image.
@@ -830,15 +875,9 @@ namespace UowLibrary
         /// <param name="indexItem"></param>
         public virtual void Event_ModifyIndexItem(IndexListVM indexListVM, IndexItemVM indexItem, ICommonWithId icommonWithId)
         {
-            AddEntryToIndex = true;
-            IHasUploads ientityHasUploads = icommonWithId as IHasUploads;
-
-            //if (!ientityHasUploads.IsNull())
-            //{
-            //    indexItem.ImageAddressStr = addressOfImageForDisplay(ientityHasUploads);
 
 
-            //}
+
         }
 
         private string addressOfImageForDisplay(IHasUploads entity)
@@ -864,6 +903,8 @@ namespace UowLibrary
             //note... edit is also controlled from entity.MetaData.IsEditLocked in the entity metaData controlled through 
             //Event_LockEdit which fires during Creation.
             //indexListVM.Heading_Column = "Discount Precedence Rules ( Type-Rule-Rank)";
+            //indexListVM.IsImageTiled = true;
+            //indexListVM.Heading.Main = "Menu";
 
             indexListVM.Show.MoveUpMoveDown(false);
             indexListVM.Show.EditDeleteAndCreate = false;
@@ -874,7 +915,7 @@ namespace UowLibrary
 
             indexListVM.Heading.Main = string.Format("{0}", typeof(TEntity).Name.ToSentence().ToTitleCase());
             indexListVM.Heading.Column = "All Items";
-            indexListVM.Heading.Small = "List";
+            //indexListVM.Heading.Small = "List";
 
             //indexListVM.MainHeading = string.Format("{0}", typeof(TEntity).Name.ToSentence().ToTitleCase());
             //indexListVM.Heading_Column = "All Items";
@@ -911,7 +952,6 @@ namespace UowLibrary
         public virtual ICommonWithId Factory()
         {
             ICommonWithId entity = Dal.Factory();
-            entity.MetaData.Created.SetToTodaysDateStart(UserName, UserId);
             entity.MetaData.Created.SetToTodaysDate(UserName, UserId);
 
             Product p = entity as Product;
@@ -1009,8 +1049,41 @@ namespace UowLibrary
             return false;
         }
 
+        /// <summary>
+        /// This generates a random number of a specified length which is controlled in the web.config
+        /// </summary>
+        /// <returns></returns>
+        public string GetRandomCode()
+        {
+            string numberLength = ConfigurationManager.AppSettings["PickupDelivery.RandomNumberGenerator.Length"];
+            string minNumber = ConfigurationManager.AppSettings["PickupDelivery.RandomNumberGenerator.MinimumNumber"];
 
+            int minNum = 0;
+            bool success = int.TryParse(numberLength, out minNum);
 
+            if (success)
+            { }
+            else
+            {
+                throw new Exception("Something went wrong. PickupDelivery.RandomNumberGenerator.MinimumNumber is not set.");
+
+            }
+
+            int len = 0;
+            success = int.TryParse(numberLength, out len);
+            if (success)
+            {
+                if (len == 0)
+                    throw new Exception("PickupDelivery.RandomNumberGenerator.Length is not set.");
+
+                RandomNoGenerator randomNoGenerator = new RandomNoGenerator(len);
+                return randomNoGenerator.GetRandomNumber(minNum);
+
+            }
+
+            throw new Exception("Something went wrong. PickupDelivery.RandomNumberGenerator.Length is not set.");
+
+        }
 
         public virtual string GetClassName()
         {
@@ -1078,6 +1151,8 @@ namespace UowLibrary
         /// Sometimes we need to do different things when we are creating
         /// </summary>
         public bool IsCreate { get; set; }
+        public bool IsUpdate { get; set; }
+        public bool IsDelete { get; set; }
         public bool IsHasUploads
         {
             get
@@ -1205,21 +1280,28 @@ namespace UowLibrary
 
 
             //This names the sort links. They come directly from the entity
-            parameters.DudEntity = Dal.Factory();
+            parameters.DudEntity = Factory();
 
 
             IndexListVM indexListVM = new IndexListVM(parameters);
 
             Event_ModifyIndexList(indexListVM, parameters);
 
+            if (parameters.IsUserAdmin)
+            {
+                indexListVM.Heading.Small = "User is Admin";
+            }
+
             if (lstEntities.IsNullOrEmpty())
             {
                 return indexListVM;
             }
 
+
             foreach (var entity in lstEntities)
             {
-
+                AddEntryToIndex = true;
+                Event_ModifyIndexItem_Before_Creating_IndexItem(entity as ICommonWithId);
                 try
                 {
                     string id = entity.Id;
@@ -1232,7 +1314,7 @@ namespace UowLibrary
                     decimal price = 0;
                     VerificaionStatusENUM addressVerificaionEnum = doVerificationWork(entity);
 
-                    IndexItemVM indexItem = new IndexItemVM(
+                    IndexItemVM indexItemVM = new IndexItemVM(
                         id,
                         fullName,
                         input1SortString,
@@ -1241,31 +1323,46 @@ namespace UowLibrary
                         isEditLocked,
                         detailInfoToDisplayOnWebsite,
                         addressVerificaionEnum,
-                        price);
+                        price,
+                        entity.Comment);
 
                     //indexItem.MenuManager = indexListVM.MenuManager as IMenuManager;
-
-                    indexItem.VerificationIconResult = GetVerificationIconResult(indexItem.VerificationStatus);
+                    //indexItem= entity.NoOfVisits.Amount;
+                    indexItemVM.VerificationIconResult = GetVerificationIconResult(indexItemVM.VerificationStatus);
 
                     //add menuManager if not a menu
                     //if(!parameters.IsMenu)
                     //    indexItem.MenuManager = getMenuManager(parameters);
+                    ////this is a different entity from the one in parameters
+                    //if (entity.MenuManager.IsNull())
+                    //    InitializeMenuManagerForEntity(parameters, entity);
+
+
+                    Event_ModifyIndexItem(indexListVM, indexItemVM, entity);
+
+
+                    //we need to initiate the IndexList.MenuManager.IndexMenuVariables
+
                     //this is a different entity from the one in parameters
                     if (entity.MenuManager.IsNull())
                         InitializeMenuManagerForEntity(parameters, entity);
 
-                    entity.MenuManager.ReturnUrl = parameters.ReturnUrl;
-                    //image address is added in here.
-                    Event_ModifyIndexItem(indexListVM, indexItem, entity);
+                    //IndexItem.Menumanager is initialized here
+                    if (indexItemVM.MenuManager.IsNull())
+                    {
+                        indexItemVM.MenuManager = new MenuManager(null, null, null, parameters.Menu.MenuEnum, BreadCrumbManager, parameters.LikeUnlikeCounter, UserId, parameters.ReturnUrl, UserName);
+                        indexItemVM.MenuManager.PictureAddresses.Add(AliKuli.UtilitiesNS.ConfigManagerHelper.DefaultBlankPicture);
+                    }
+                    if (indexListVM.MenuManager.IsNull())
+                        indexListVM.MenuManager = new MenuManager(null, null, null, parameters.Menu.MenuEnum, BreadCrumbManager, parameters.LikeUnlikeCounter, UserId, parameters.ReturnUrl, UserName);
+
 
                     //return URL is added here to the item. This will be used in the Edit / Create
                     entity.MenuManager.ReturnUrl = parameters.ReturnUrl;
 
-                    //we need to initiate the IndexList.MenuManager.IndexMenuVariables
-
                     if (AddEntryToIndex)
-                        if (!indexItem.IsNull())
-                            indexListVM.Add(indexItem);
+                        if (!indexItemVM.IsNull())
+                            indexListVM.Add(indexItemVM);
 
                 }
                 catch (Exception e)
@@ -1281,6 +1378,11 @@ namespace UowLibrary
 
 
             return indexListVM;
+        }
+
+        public virtual void Event_ModifyIndexItem_Before_Creating_IndexItem(ICommonWithId commonWithId)
+        {
+
         }
 
 
@@ -1415,7 +1517,6 @@ namespace UowLibrary
         }
 
 
-        #region overrideable methods for controlling initialization
 
         //Sometimes if you need to save after every addition, make this true
         //public bool IsSaveAfterEveryAddition { get; set; }
@@ -1466,9 +1567,7 @@ namespace UowLibrary
             addInitData_Helper(GetDataForStringArrayFormat);
         }
 
-        #endregion
 
-        #region Helper methods
 
         /// <summary>
         /// this is the save message
@@ -1514,7 +1613,6 @@ namespace UowLibrary
 
 
 
-        #endregion
 
         /// <summary>
         /// This is where all the data initialization takes place. There is a default built version which accepts data as string[].
@@ -1721,19 +1819,104 @@ namespace UowLibrary
 
 
 
+
+
+
+
+
+
+
+        SelectList selectList()
+        {
+
+            var allItems = this.FindAll();
+            return SelectList_Engine(allItems);
+        }
+
+
+        /// <summary>
+        /// You can switch the data of the SelectList from here.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public virtual SelectList SelectList_Engine(IQueryable<TEntity> data)
+        {
+            var allItems = data;
+
+            //if (allItems.IsNull() || allItems.Count() == 0)
+            //    return new SelectList(null, "Value", "Text");
+
+            var sortedList = allItems
+                .OrderBy(x => x.Name)
+                .Select(x =>
+                new
+                {
+                    Text = x.Name,
+                    Value = x.Id
+                })
+                .ToList();
+            var selectList = new SelectList(sortedList, "Value", "Text");
+            return selectList;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         /// <summary>
         /// This loads the Language Data into the select list
         /// </summary>
         /// <returns></returns>
         public virtual SelectList SelectList()
         {
-            SelectList selectList = getSelectListFromCache();
-            if (selectList.IsNull())
+            SelectList _selectList = getSelectListFromCache();
+            if (_selectList.IsNull())
             {
-                selectList = Dal.SelectList();
-                storeIntoCache(selectList);
+                _selectList = selectList();
+                storeIntoCache(_selectList);
             }
-            return selectList;
+            return _selectList;
         }
 
 
@@ -1775,10 +1958,10 @@ namespace UowLibrary
             throw new NotImplementedException();
         }
 
-        public SelectList SelectList_Engine(IQueryable<TEntity> data)
-        {
-            return Dal.SelectList_Engine(data);
-        }
+        //public virtual SelectList SelectList_Engine(IQueryable<TEntity> data)
+        //{
+        //    return selectList_Engine(data);
+        //}
 
 
         /// <summary>
@@ -2152,24 +2335,24 @@ namespace UowLibrary
 
 
 
-        public Person GetPersonForUser(string userId, List<Person> people)
-        {
-            List<Person> found = ListOfPeopleForUser(userId, people);
-            if (found.IsNullOrEmpty())
-                return null;
+        //public Person GetPersonForUser(string userId, List<Person> people)
+        //{
+        //    List<Person> found = ListOfPeopleForUser(userId, people);
+        //    if (found.IsNullOrEmpty())
+        //        return null;
 
-            if (found.Count > 1)
-            {
-                string nameStr = "";
+        //    if (found.Count > 1)
+        //    {
+        //        string nameStr = "";
 
-                foreach (var p in found)
-                    nameStr += string.Format("{0}; ", p.Name);
+        //        foreach (var p in found)
+        //            nameStr += string.Format("{0}; ", p.Name);
 
-                throw new Exception(string.Format("There are more than one person for this user! '{0}'", nameStr));
-            }
+        //        throw new Exception(string.Format("There are more than one person for this user! '{0}'", nameStr));
+        //    }
 
-            return found.FirstOrDefault();
-        }
+        //    return found.FirstOrDefault();
+        //}
 
 
 
@@ -2259,16 +2442,23 @@ namespace UowLibrary
                     string pictureAddy = getImageAddressOf(uploadFile);
                     if (!pictureAddy.IsNullOrWhiteSpace())
                     {
-                        addresses.Add(pictureAddy);
+                        //check to see if the file exists
+                        //i.e. it has not been deleted inadvertantly
+                        string sysAddress = getImageAbsoluteAddressOf(pictureAddy);
+                        if (FileTools.IsExistFile(sysAddress))
+                            addresses.Add(pictureAddy);
+
 
                     }
                 }
             }
 
-            //if (addresses.IsNullOrEmpty())
-            //{
-            //    return GetDefaultPicture();
-            //}
+            if (addresses.IsNullOrEmpty())
+            {
+                return GetDefaultPicture();
+
+            }
+
 
             return addresses;
         }
@@ -2293,6 +2483,498 @@ namespace UowLibrary
 
             return _uf.GetRelativePathWithFileName();
         }
+        protected string getImageAbsoluteAddressOf(string relativePath)
+        {
+            return UploadedFile.GetAbsolutePath(relativePath);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public virtual async Task<IList<TEntity>> SearchForAsync(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
+        {
+            //return await (FindAll().Where(predicate).Where(x => x.MetaData.IsDeleted == false)).ToListAsync();
+            return await SearchForIQueriable(predicate).ToListAsync();
+        }
+
+
+        private IQueryable<TEntity> SearchForIQueriable(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
+        {
+            var zAll = FindAll();
+            var zList = zAll.Where(predicate).Where(x => x.MetaData.IsDeleted == false && x.MetaData.IsInactive == false);
+            return zList.AsQueryable();
+        }
+
+
+        public virtual IList<TEntity> SearchFor(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
+        {
+            //var zAll = FindAll();
+            //var zList = zAll.Where(predicate).Where(x => x.MetaData.IsDeleted == false).ToList();
+            //return zList as IList<TEntity>;
+            return SearchForIQueriable(predicate).ToList();
+        }
+
+
+
+
+
+        /// <summary>
+        /// The domain data for this can be narowed so that the search takes place
+        /// between bounds as sometimes is required. Eg. Same user cannot have a duplicate address, 
+        /// but other users can have the same address with a different record.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        //private TEntity FindDuplicateNameFor(TEntity entity)
+        //{
+
+        //    if (entity.Name.IsNullOrWhiteSpace())
+        //    {
+        //        entity.Name = "";
+        //    }
+
+        //    //This part can be overridden to insert only that data where the duplication is
+        //    //relevant.
+        //    var dataForSearching = GetDomainDataForDuplicateNameSearch(entity);
+
+        //    TEntity foundIt;
+        //    if(entity.Name.IsNullOrWhiteSpace())
+        //    {
+        //        foundIt = dataForSearching
+        //            .FirstOrDefault(x => x.Name.ToLower() == entity.Name || x.Name == null);
+
+        //    }
+        //    else
+        //    {
+        //        foundIt = dataForSearching
+        //            .FirstOrDefault(x => x.Name.ToLower() == entity.Name.ToLower());
+
+        //    }
+
+
+        //    return foundIt;
+
+        //}
+        /// <summary>
+        /// This will be used to narrow down the search data when doing a duplicate search. For example, if we are
+        /// searching for a duplicate address, this data will be narrowed down to all addresses that are for a 
+        /// certain user. Normally, the whole data will be searched.
+        /// </summary>
+        /// <returns></returns>
+        public virtual IQueryable<TEntity> GetDomainDataForDuplicateNameSearch(TEntity entity)
+        {
+            return FindAll();
+        }
+
+
+
+
+
+        public virtual TEntity FindForName(string name)
+        {
+
+            if (name.IsNullOrWhiteSpace())
+            {
+                name = "";
+            }
+
+            var foundall = FindForNameAll(name);
+
+            if (foundall.IsNull())
+                return null;
+
+
+            TEntity first = foundall
+                .FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+
+
+            return first;
+
+        }
+
+
+        public virtual async Task<TEntity> FindForNameAsync(string name)
+        {
+
+            if (name.IsNullOrWhiteSpace())
+                return null;
+
+            var foundall = await FindForNameAllAsync(name);
+
+            if (foundall.IsNull())
+                return null;
+
+            TEntity foundIt = foundall.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+            return foundIt;
+
+        }
+
+
+
+
+
+        //Use DetachAll() to clear the cache. This NoTracking is not working.
+        public virtual TEntity FindForNameNoTracking(string name)
+        {
+
+            if (name.IsNullOrWhiteSpace())
+            {
+                name = "";
+            }
+
+            var foundall = FindForNameAllNoTracking(name);
+
+            if (foundall.IsNull())
+                return null;
+
+
+            TEntity foundIt = foundall
+                .FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+
+
+            return foundIt;
+
+        }
+
+
+        public virtual async Task<TEntity> FindForNameNoTrackingAsync(string name)
+        {
+
+            if (name.IsNullOrWhiteSpace())
+                return null;
+
+            var foundall = await FindForNameAllNoTrackingAsync(name);
+
+            if (foundall.IsNull())
+                return null;
+
+            TEntity foundIt = foundall.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+            return foundIt;
+
+        }
+
+
+        public virtual TEntity FindForLight(string id, bool deleted = false)
+        {
+            if (id.IsNullOrEmpty())
+                return null;
+            //throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
+
+            var item = FindAll().FirstOrDefault(x => x.Id == id);
+
+            return item;
+
+            //if (itemList.IsNullOrEmpty())
+            //    return default(TEntity);
+
+            //return itemList.FirstOrDefault(x => x.Id == id) as TEntity;
+
+        }
+
+        public virtual async Task<TEntity> FindForLightAsync(string id, bool deleted = false)
+        {
+            if (id.IsNullOrEmpty())
+                throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
+
+            var itemList = await FindAllAsync();
+            if (itemList.IsNullOrEmpty())
+                return default(TEntity);
+
+            return itemList.FirstOrDefault(x => x.Id == id) as TEntity;
+
+        }
+
+
+
+
+        /// <summary>
+        /// This finds a record for the Entity. Checks for a zero value being passed. Then finds the record. 
+        /// It defaults to non deleted records, however if you pass a true value in the 2nd parameter you can find deleted records as well.
+        /// Exceptions
+        ///     AliKuli.Exceptions.MiscNS.NoDataException -Missing parameter: id
+        /// </summary>
+        /// <param name="id">id, deleted=false</param>
+        /// <returns>T</returns>
+        public virtual TEntity FindFor(string id, bool deleted = false)
+        {
+            var item = FindForLight(id, deleted);
+
+            //if (item != null)
+            //{
+            //    Fix(item);
+            //}
+
+            return item;
+        }
+
+        public virtual async Task<TEntity> FindForAsync(string id, bool deleted = false)
+        {
+            var item = await FindForLightAsync(id, deleted);
+
+            //if (item != null)
+            //{
+            //    Fix(item);
+            //}
+
+            return item;
+        }
+
+
+        //--------------------------------------------------------------------------------------------
+        /// <summary>
+        /// This finds a record for the Entity. Checks for a zero value being passed. Then finds the record. 
+        /// It defaults to non deleted records, however if you pass a true value in the 2nd parameter you can find deleted records as well.
+        /// </summary>
+        /// <param name="id">id, deleted=false</param>
+        /// <returns>T</returns>
+
+        public virtual TEntity FindFor(TEntity entity, bool deleted = false)
+        {
+            return this.FindFor(entity.Id, deleted);
+        }
+
+
+
+        public virtual IEnumerable<TEntity> FindForNameAll(string name)
+        {
+            if (name.IsNullOrEmpty())
+                return null;
+
+            var allT = FindAll().Where(x => x.Name.ToLower() == name.ToLower()).ToList();
+
+            if (allT.IsNullOrEmpty())
+                return null;
+
+            //var foundIt = allT.Where(x => x.Name.ToLower() == name.ToLower()).ToList();
+
+            return allT.AsEnumerable();
+
+        }
+
+        public virtual async Task<IEnumerable<TEntity>> FindForNameAllAsync(string name)
+        {
+            if (name.IsNullOrEmpty())
+                return null;
+
+            var allT = await FindAllAsync();
+
+            if (allT.IsNullOrEmpty())
+                return null;
+
+            var foundIt = allT.Where(x => x.Name.ToLower() == name.ToLower());
+
+            return (IEnumerable<TEntity>)foundIt;
+
+        }
+
+
+
+
+        public virtual IEnumerable<TEntity> FindForNameAllNoTracking(string name)
+        {
+            if (name.IsNullOrEmpty())
+                return null;
+
+            var allT = FindAll().Where(x => x.Name.ToLower() == name.ToLower()).ToList();
+
+            if (allT.IsNullOrEmpty())
+                return null;
+
+            foreach (var item in allT)
+            {
+                Detach(item);
+            }
+
+            //var foundIt = allT.Where(x => x.Name.ToLower() == name.ToLower()).ToList();
+
+            return allT.AsEnumerable();
+
+        }
+
+        public virtual async Task<IEnumerable<TEntity>> FindForNameAllNoTrackingAsync(string name)
+        {
+            if (name.IsNullOrEmpty())
+                return null;
+
+            var allT = await FindAllNoTrackingAsync();
+
+            if (allT.IsNullOrEmpty())
+                return null;
+
+            var foundIt = allT.Where(x => x.Name.ToLower() == name.ToLower());
+
+            return (IEnumerable<TEntity>)foundIt;
+
+        }
+
+
+
+
+        /// <summary>
+        /// This checks to see if the name exists. If it exists, then it deattaches the entity
+        /// so that it does not mess with the saving of the one for which a test is being carried
+        /// out.
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+
+        public virtual bool NameExists(TEntity entity)
+        {
+            var entity2 = FindForName(entity.Name);
+            return nameExists(entity, entity2);
+        }
+
+
+        public async virtual Task<bool> NameExistsAsync(TEntity entity)
+        {
+            var entity2 = await FindForNameAsync(entity.Name);
+            return nameExists(entity, entity2);
+        }
+
+
+        private bool nameExists(TEntity entity, TEntity entity2)
+        {
+            if (entity2.IsNull())
+                return false;
+
+            // we dont want to track this object
+            Detach(entity2);
+
+            return !(entity.Id.Equals(entity2.Id));
+        }
+
+
+
+
+
+        //public virtual IQueryable<TEntity> FindAllLightNoTracking(bool deleted = false)
+        //{
+        //    var query = from b in _db.Set<TEntity>().AsNoTracking()
+        //                where b.MetaData.IsDeleted == deleted && b.MetaData.IsInactive == false
+        //                orderby b.Name
+        //                select b;
+
+        //    return query.AsQueryable();
+        //}
+
+        public virtual IList<TEntity> FindAllNoTracking(bool deleted = false)
+        {
+            var listOfItems = FindAll().ToList();
+
+            if (listOfItems.IsNull())
+                return null;
+
+            foreach (var item in listOfItems)
+            {
+                Detach(item);
+            }
+            return listOfItems;
+        }
+
+
+        public virtual TEntity FindForLightNoTracking(string id, bool deleted = false)
+        {
+            if (id.IsNullOrEmpty())
+                throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
+
+            return FindAllNoTracking().FirstOrDefault(x => x.Id == id);
+        }
+
+        public virtual async Task<TEntity> FindForLightNoTrackingAsync(string id, bool deleted = false)
+        {
+            if (id.IsNullOrEmpty())
+                throw new ErrorHandlerLibrary.ExceptionsNS.NoDataException("Missing parameter: id. FindFor.Repository");
+
+            var itemList = await FindAllNoTrackingAsync();
+            if (itemList.IsNullOrEmpty())
+                return default(TEntity);
+
+            return itemList.FirstOrDefault(x => x.Id == id) as TEntity;
+
+        }
+
+        public virtual async Task<List<TEntity>> FindAllNoTrackingAsync(bool deleted = false)
+        {
+            var lst = await FindAllAsync(deleted);
+
+            if (lst.IsNull())
+                return null;
+
+            foreach (var item in lst)
+            {
+                Detach(item);
+            }
+            return lst;
+
+        }
+
+
+
+
+
+        /// <summary>
+        /// This retrieves all the values where deleted is false.
+        /// </summary>
+        /// <returns></returns>
+        public virtual IQueryable<TEntity> FindAll(bool deleted = false)
+        {
+            var listOfItems = Dal.FindAllFor(deleted);
+            return listOfItems;
+        }
+
+        public virtual async Task<List<TEntity>> FindAllAsync(bool deleted = false)
+        {
+            return await Dal.FindAllFor(deleted).ToListAsync();
+        }
+
+
+
+
+
+
+
+
+
 
 
     }

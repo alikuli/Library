@@ -1,0 +1,57 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_vehicalType_offered = Model.BuySellDocViewState;
+
+    bool isShowVehicalType = viewState_vehicalType_offered.HD_Show_Vehical_Type_Offered;
+    bool isEnableVehicalType = viewState_vehicalType_offered.HD_Enable_Vehical_Type_Offered;
+    string currentColor_DelyFormat = viewState_vehicalType_offered.CurrentColorClass;
+
+
+
+
+}
+
+
+
+
+
+
+    @if (isShowVehicalType)
+    {
+
+        if (isEnableVehicalType)
+        {
+        
+            <div class="form-group">
+                <strong>
+                    @Html.LabelFor(model => model.VehicalTypeOfferedId, htmlAttributes: new { @class = "background-ltgrey p-2" })
+                </strong>
+                @Html.DropDownListFor(x => x.VehicalTypeOfferedId,
+                 (@Model.SelectListVehicalTypeOffered as IEnumerable<SelectListItem>),
+                "--- Select Vehical Type ---",
+                new { @class = "form-control", data_toggle = "tooltip", title = "This is the vehical type that will do the delivery.", data_placement = "top" })
+            </div>
+        }
+        else
+        {
+            @Html.HiddenFor(x => x.VehicalTypeOfferedId)
+
+            <div class="form-group">
+                <strong>
+                    @Html.LabelFor(model => model.VehicalTypeOfferedId, htmlAttributes: new { @class = "background-ltgrey p-2" })
+                </strong>
+                @Html.DropDownListFor(x => x.VehicalTypeOfferedId,
+                                                     (@Model.SelectListVehicalTypeOffered as IEnumerable<SelectListItem>),
+                                    "--- Select Vehical Type ---",
+                                            new { @class = "form-control", data_toggle = "tooltip", title = "This is the vehical type that will do the delivery.", data_placement = "top", disabled = "disabled" })
+            </div>
+
+
+        }
+    }
+        
+
+

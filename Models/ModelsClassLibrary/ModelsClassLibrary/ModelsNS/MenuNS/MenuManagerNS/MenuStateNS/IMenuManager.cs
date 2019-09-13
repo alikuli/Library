@@ -6,7 +6,6 @@ using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
 using System.Collections.Generic;
 using UowLibrary.MenuNS.MenuStateNS;
-using UserModels;
 namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS
 {
     public interface IMenuManager
@@ -34,7 +33,7 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS
 
         IndexMenuVariables IndexMenuVariables { get; set; }
         string WebClicksCount { get; set; }
-        UserMoneyAccount UserMoneyAccount { get; set; }
+        //UserMoneyAccount UserMoneyAccount { get; set; }
         bool IsCreate { get; set; }
 
         List<string> PictureAddresses { get; set; }

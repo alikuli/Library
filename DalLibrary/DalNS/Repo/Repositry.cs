@@ -39,18 +39,11 @@ namespace DalLibrary.DalNS
             }
         }
 
-        //private IRepositry<ApplicationUser> userDAL { get { return _userDal; } }
-        ////private IRepositry<ApplicationUser> userDAL { get { return new Repositry<ApplicationUser>(_db, _err); } }
-        //private IRepositry<Right> rightDAL { get { return _rightDal; } }
-        //private IRepositry<Right> rightDAL { get { return new Repositry<Right>(_db, _err); } }
-        //IRepositry<ApplicationUser> _userDal;
-        //IRepositry<Right> _rightDal;
+
         public Repositry(ApplicationDbContext db, IErrorSet errorSet)
         {
             _err = errorSet;
             _db = db;
-            //_userDal = userDal;
-            //_rightDal = rightDal;
         }
         public ErrorSet ErrorsGlobal
         {

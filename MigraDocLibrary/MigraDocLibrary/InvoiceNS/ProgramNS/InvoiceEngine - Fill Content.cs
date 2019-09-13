@@ -77,7 +77,7 @@ namespace InvoiceNS
             header_DocNo_Cell.AddParagraph(param.DocumentInfo.DocumentNoWithTitle);
             header_DocDate_Cell.AddParagraph(param.DocumentInfo.Date);
 
-            string webCoAddy = param.Addresses.WebCompany.ToStringTwoLine();
+            string webCoAddy = param.Addresses.WebCompany.ToStringTwoLine;
             //header_CoAddy_Cell.AddParagraph(param.WebCompanyName);
             header_CoAddy_Cell.AddParagraph(webCoAddy);
         }
@@ -97,7 +97,7 @@ namespace InvoiceNS
             Paragraph leftparagraph = left.AddParagraph();
             leftparagraph.AddText("Printed: " + DateTime.Now.ToLocalTime().ToString());
 
-            middle.AddParagraph(param.Addresses.WebCompany.ToStringTwoLine());
+            middle.AddParagraph(param.Addresses.WebCompany.ToStringTwoLine);
 
             Paragraph paragraph = right.AddParagraph();
             paragraph.AddText("Page ");

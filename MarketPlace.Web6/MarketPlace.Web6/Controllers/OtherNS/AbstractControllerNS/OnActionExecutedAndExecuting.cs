@@ -36,11 +36,13 @@ namespace MarketPlace.Web4.Controllers
                 //If we load messages, we casue the ModelState.IsValid to become false. 
                 //use some other way to transport messages.
 
-                LoadMessagesIntoAlerts();
-                AccountsBizSuper.UserId = UserId;
-                AccountsBizSuper.UserName = UserName;
+                SuperCashBiz.UserId = UserId;
+                SuperCashBiz.UserName = UserName;
                 //this is shown in the _LoginPartial.cshtml
                 getUserMoneyAccount();
+
+
+                LoadMessagesIntoAlerts();
 
             }
             catch (System.Exception e)

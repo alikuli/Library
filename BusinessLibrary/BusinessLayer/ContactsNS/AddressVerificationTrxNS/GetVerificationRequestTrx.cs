@@ -10,14 +10,14 @@ namespace UowLibrary.AddressNS
         public IQueryable<AddressVerificationTrx> GetVerificationRequestTrx_Pakistan()
         {
             string pakistanId = CountryBiz.PakistanId;
-            var iq = GetTrxFor(VerificaionStatusENUM.Requested).Where(x => x.Address.CountryId == pakistanId);
+            var iq = GetTrxFor(VerificaionStatusENUM.Requested).Where(x => x.Address.CountryName.ToLower().Contains("pakistan"));
             return iq;
         }
 
         public IQueryable<AddressVerificationTrx> GetVerificationRequestTrx_Other()
         {
             string pakistanId = CountryBiz.PakistanId;
-            var iq = GetTrxFor(VerificaionStatusENUM.Requested).Where(x => x.Address.CountryId != pakistanId);
+            var iq = GetTrxFor(VerificaionStatusENUM.Requested).Where(x => !x.Address.CountryName.ToLower().Contains("pakistan"));
             return iq;
         }
 

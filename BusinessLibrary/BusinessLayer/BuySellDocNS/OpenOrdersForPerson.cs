@@ -757,56 +757,56 @@ namespace UowLibrary.BuySellDocNS
             }
         }
 
-        public BuySellStatementModel Get_X_Orders_List(string userId, DateTime fromDate, DateTime toDate, bool isAdmin, BuySellDocumentTypeENUM buySellDocumentTypeEnum, BuySellDocStateENUM buySellDocStateEnum)
-        {
-            userId.IsNullOrWhiteSpaceThrowArgumentException("You are not logged in.");
-            List<BuySellDoc> buySellDocs = new List<BuySellDoc>();
-            switch (buySellDocStateEnum)
-            {
-                case BuySellDocStateENUM.New:
-                case BuySellDocStateENUM.InProccess:
-                case BuySellDocStateENUM.Closed:
-                case BuySellDocStateENUM.BackOrdered:
-                case BuySellDocStateENUM.Canceled:
-                case BuySellDocStateENUM.Quotation:
-                case BuySellDocStateENUM.Credit:
-                case BuySellDocStateENUM.All:
-                    {
-                        switch (buySellDocumentTypeEnum)
-                        {
-                            case BuySellDocumentTypeENUM.Sale:
-                                buySellDocs = getAllSaleOrders_For(UserId, fromDate, toDate, buySellDocStateEnum);
-                                //buySellDocs = makeAllBuySellDocs(BuySellDocumentTypeENUM.Sale, buySellDocs);
-                                break;
+        //public BuySellStatementModel Get_X_Orders_List(string userId, DateTime fromDate, DateTime toDate, bool isAdmin, BuySellDocumentTypeENUM buySellDocumentTypeEnum, BuySellDocStateENUM buySellDocStateEnum)
+        //{
+        //    userId.IsNullOrWhiteSpaceThrowArgumentException("You are not logged in.");
+        //    List<BuySellDoc> buySellDocs = new List<BuySellDoc>();
+        //    switch (buySellDocStateEnum)
+        //    {
+        //        case BuySellDocStateENUM.New:
+        //        case BuySellDocStateENUM.InProccess:
+        //        case BuySellDocStateENUM.Closed:
+        //        case BuySellDocStateENUM.BackOrdered:
+        //        case BuySellDocStateENUM.Canceled:
+        //        case BuySellDocStateENUM.Quotation:
+        //        case BuySellDocStateENUM.Credit:
+        //        case BuySellDocStateENUM.All:
+        //            {
+        //                switch (buySellDocumentTypeEnum)
+        //                {
+        //                    case BuySellDocumentTypeENUM.Sale:
+        //                        buySellDocs = getAllSaleOrders_For(UserId, fromDate, toDate, buySellDocStateEnum);
+        //                        //buySellDocs = makeAllBuySellDocs(BuySellDocumentTypeENUM.Sale, buySellDocs);
+        //                        break;
 
-                            case BuySellDocumentTypeENUM.Purchase:
-                                buySellDocs = getAllPurchaseOrders_For(UserId, fromDate, toDate, buySellDocStateEnum);
-                                //buySellDocs = makeAllBuySellDocs(BuySellDocumentTypeENUM.Purchase, buySellDocs);
-                                break;
+        //                    case BuySellDocumentTypeENUM.Purchase:
+        //                        buySellDocs = getAllPurchaseOrders_For(UserId, fromDate, toDate, buySellDocStateEnum);
+        //                        //buySellDocs = makeAllBuySellDocs(BuySellDocumentTypeENUM.Purchase, buySellDocs);
+        //                        break;
 
-                            case BuySellDocumentTypeENUM.Unknown:
-                            default:
-                                throw new Exception("Unknown statement type");
-                        }
-                    }
-                    break;
-                case BuySellDocStateENUM.Unknown:
-                default:
-                    throw new Exception(string.Format("Switch statement is incorrect '{0}'", buySellDocStateEnum.ToString()));
-            }
+        //                    case BuySellDocumentTypeENUM.Unknown:
+        //                    default:
+        //                        throw new Exception("Unknown statement type");
+        //                }
+        //            }
+        //            break;
+        //        case BuySellDocStateENUM.Unknown:
+        //        default:
+        //            throw new Exception(string.Format("Switch statement is incorrect '{0}'", buySellDocStateEnum.ToString()));
+        //    }
 
-            if (!buySellDocs.IsNullOrEmpty())
-            {
-                foreach (BuySellDoc item in buySellDocs)
-                {
-                    item.BuySellDocumentTypeEnum = buySellDocumentTypeEnum;
-                }
-            }
-            BuySellStatementModel buySellStatementModel = new BuySellStatementModel(buySellDocs, fromDate, toDate, buySellDocumentTypeEnum, isAdmin, buySellDocStateEnum);
+        //    if (!buySellDocs.IsNullOrEmpty())
+        //    {
+        //        foreach (BuySellDoc item in buySellDocs)
+        //        {
+        //            item.BuySellDocumentTypeEnum = buySellDocumentTypeEnum;
+        //        }
+        //    }
+        //    BuySellStatementModel buySellStatementModel = new BuySellStatementModel(buySellDocs, fromDate, toDate, buySellDocumentTypeEnum, isAdmin, buySellDocStateEnum);
 
-            return buySellStatementModel;
+        //    return buySellStatementModel;
 
-        }
+        //}
 
   
  

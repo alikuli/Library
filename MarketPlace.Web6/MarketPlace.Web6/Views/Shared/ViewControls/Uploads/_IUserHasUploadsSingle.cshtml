@@ -17,9 +17,6 @@
     </div>
 
 
-
-
-
     <div class="form-group">
         <label class="col-sm-3 control-label">
             Attachment(s)
@@ -39,18 +36,18 @@
 
         string returnUrl = Url.Action("Edit", new { productCatId = modelHasUploadsSingle.Id });
 
-
-
+        int imageCount = 0;
         foreach (ModelsClassLibrary.ModelsNS.UploadedFileNS.UploadedFile uploadedFile in userUpload.Where(x => x.MetaData.IsDeleted == false))
         {
             string imagePath = Url.Content(uploadedFile.GetRelativePathWithFileName());
             string actionPath = Url.Action("Edit", "UploadedFiles", new { id = uploadedFile.Id, returnUrl = returnUrl });
 
-
+            string imageId = string.Format("ImageId_{0}", imageCount);
+            imageCount += 1;
+                        
             <span class="col-md-12 thumbnail img-responsive img-rounded">
-
                 <a href="@actionPath" title="@uploadedFile.OrignalCompleteName @uploadedFile.FullName()">
-                    <img src="@imagePath" alt="Image" class="img-responsive img-thumbnail" height="50" width="50" style="  border:1px solid blue;" >
+                    <img src="@imagePath" id="@imageId"  alt="Image" class="img-responsive img-thumbnail" height="50" width="50" style="  border:1px solid blue;" >
                 </a>
             </span>
         }
@@ -59,7 +56,6 @@
     {
         <div class="container text-center text-info">
             <h4>No Pictures uploaded!</h4>
-
         </div>
     }
 

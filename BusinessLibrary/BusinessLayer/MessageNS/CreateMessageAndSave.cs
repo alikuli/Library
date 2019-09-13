@@ -108,34 +108,35 @@ namespace UowLibrary.PlayersNS.MessageNS
 
         public List<Message> GetAllMessagesForUser(string userId)
         {
-            userId.IsNullOrWhiteSpaceThrowException("userId");
-            Person person = UserBiz.GetPersonFor(userId);
-            person.IsNullThrowException("Person not found");
-            string personId = person.Id;
+            throw new NotImplementedException();
+            //userId.IsNullOrWhiteSpaceThrowException("userId");
+            //Person person = UserBiz.GetPersonFor(userId);
+            //person.IsNullThrowException("Person not found");
+            //string personId = person.Id;
 
-            //now get all the Message for this person
-            List<Message> messages = FindAll().ToList();
+            ////now get all the Message for this person
+            //List<Message> messages = FindAll().ToList();
 
-            if (messages.IsNullOrEmpty())
-                return messages;
+            //if (messages.IsNullOrEmpty())
+            //    return messages;
 
-            List<Message> selectedMsgs = new List<Message>();
-            foreach (Message msg in messages)
-            {
-                if (msg.FromPersonId == personId)
-                {
-                    selectedMsgs.Add(msg);
-                    continue;
-                }
+            //List<Message> selectedMsgs = new List<Message>();
+            //foreach (Message msg in messages)
+            //{
+            //    if (msg.FromPersonId == personId)
+            //    {
+            //        selectedMsgs.Add(msg);
+            //        continue;
+            //    }
 
-                if (msg.ToPeople.Any(x => x.Id == personId))
-                {
-                    selectedMsgs.Add(msg);
-                }
-            }
+            //    if (msg.ToPeople.Any(x => x.Id == personId))
+            //    {
+            //        selectedMsgs.Add(msg);
+            //    }
+            //}
 
 
-            return selectedMsgs;
+            //return selectedMsgs;
 
         }
 
@@ -168,22 +169,24 @@ namespace UowLibrary.PlayersNS.MessageNS
         }
         public void CreateMessageAndSave(string subject, string body, string menuPathMainId, string productId, string productChildId, MessageENUM messageEnum = MessageENUM.Unknown, MenuENUM menuEnum = MenuENUM.Unknown)
         {
-            UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
+            throw new NotImplementedException();
+            //UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
 
-            if (messageEnum == MessageENUM.Unknown)
-                throw new Exception("messageEnum.Unknown");
+            //if (messageEnum == MessageENUM.Unknown)
+            //    throw new Exception("messageEnum.Unknown");
 
 
-            MessageParameter messageParameter = GetPeopleListCount(menuPathMainId, productId, productChildId, menuEnum);
-            List<ProductChild> pChildSelectedForAdvertisment = getProductChildrenFromCheckItem(messageParameter);
-            //you need to fix the toPeople
-            Message message = new Message(messageParameter.FromPerson, toPeopleHashSet.ToList(), subject, body, messageEnum, pChildSelectedForAdvertisment);
-            message.SelfErrorCheck();
+            //MessageParameter messageParameter = GetPeopleListCount(menuPathMainId, productId, productChildId, menuEnum);
+            //List<ProductChild> pChildSelectedForAdvertisment = getProductChildrenFromCheckItem(messageParameter);
+            ////you need to fix the toPeople
+            //toPeopleHashSet = new HashSet<Person>();
+            //Message message = new Message(messageParameter.FromPerson, toPeopleHashSet.ToList(), subject, body, messageEnum, pChildSelectedForAdvertisment);
+            //message.SelfErrorCheck();
 
-            //wire it up
-            //WireUpMessageWithPeople(mpm, productId, productChildId, toPeopleHashSet.ToList(), message, fromPerson, menuEnum);
+            ////wire it up
+            ////WireUpMessageWithPeople(mpm, productId, productChildId, toPeopleHashSet.ToList(), message, fromPerson, menuEnum);
 
-            CreateAndSave(message);
+            //CreateAndSave(message);
         }
 
         //this recieves a list of selected product children Ids from MessageParameter and then gets the 
@@ -395,87 +398,89 @@ namespace UowLibrary.PlayersNS.MessageNS
 
         private void WireUpMessageWithPeople(MenuPathMain mpm, string productId, string productChildId, List<Person> toPeople, Message message, Person fromPerson, MenuENUM menuEnum)
         {
-            fromPerson.FromPerson.Add(message);
+            throw new NotImplementedException();
 
-            foreach (Person toPerson in toPeople)
-            {
-                PeopleMessage pm = new PeopleMessage();
+            //fromPerson.Messages.Add(message);
 
-                pm.MessageId = message.Id;
-                pm.PersonId = toPerson.Id;
+            //foreach (Person toPerson in toPeople)
+            //{
+            //    PeopleMessage pm = new PeopleMessage();
 
-                toPerson.MessagesToPeople.Add(pm);
-                message.ToPeople.Add(pm);
-            }
-            switch (menuEnum)
-            {
+            //    pm.MessageId = message.Id;
+            //    pm.PersonId = toPerson.Id;
 
-
-                case MenuENUM.IndexMenuPath1:
-                    MenuPath1 mp1 = mpm.MenuPath1;
-                    mp1.IsNullThrowException("MenuPath1 not found");
-
-                    if (mp1.Messages.IsNull())
-                        mp1.Messages = new List<Message>();
-
-                    mp1.Messages.Add(message);
-                    message.MenuPath1Id = mp1.Id;
-                    break;
+            //    toPerson.MessagesToPeople.Add(pm);
+            //    message.ToPeople.Add(pm);
+            //}
+            //switch (menuEnum)
+            //{
 
 
-                case MenuENUM.IndexMenuPath2:
-                    MenuPath2 mp2 = mpm.MenuPath2;
-                    mp2.IsNullThrowException("MenuPath2 not found");
+            //    case MenuENUM.IndexMenuPath1:
+            //        MenuPath1 mp1 = mpm.MenuPath1;
+            //        mp1.IsNullThrowException("MenuPath1 not found");
 
-                    if (mp2.Messages.IsNull())
-                        mp2.Messages = new List<Message>();
+            //        if (mp1.Messages.IsNull())
+            //            mp1.Messages = new List<Message>();
 
-                    mp2.Messages.Add(message);
-                    message.MenuPath2Id = mp2.Id;
-                    break;
-
-
-                case MenuENUM.IndexMenuPath3:
-                    MenuPath3 mp3 = mpm.MenuPath3;
-                    mp3.IsNullThrowException("MenuPath3 not found");
-
-                    if (mp3.Messages.IsNull())
-                        mp3.Messages = new List<Message>();
-
-                    mp3.Messages.Add(message);
-                    message.MenuPath3Id = mp3.Id;
-                    break;
+            //        mp1.Messages.Add(message);
+            //        message.MenuPath1Id = mp1.Id;
+            //        break;
 
 
-                case MenuENUM.IndexMenuProduct:
-                    Product product = ProductBiz.Find(productId);
-                    product.IsNullThrowException("Product not found");
+            //    case MenuENUM.IndexMenuPath2:
+            //        MenuPath2 mp2 = mpm.MenuPath2;
+            //        mp2.IsNullThrowException("MenuPath2 not found");
 
-                    if (product.Messages.IsNull())
-                        product.Messages = new List<Message>();
+            //        if (mp2.Messages.IsNull())
+            //            mp2.Messages = new List<Message>();
 
-                    product.Messages.Add(message);
-                    message.MenuPath3Id = product.Id;
-
-                    break;
-
-
-                case MenuENUM.IndexMenuProductChild:
-                    ProductChild productChild = ProductChildBiz.Find(productChildId);
-                    productChild.IsNullThrowException("Product Child not found");
-
-                    if (productChild.Messages.IsNull())
-                        productChild.Messages = new List<Message>();
-
-                    productChild.Messages.Add(message);
-                    message.MenuPath3Id = productChild.Id;
-                    break;
+            //        mp2.Messages.Add(message);
+            //        message.MenuPath2Id = mp2.Id;
+            //        break;
 
 
-                case MenuENUM.IndexDefault:
-                default:
-                    break;
-            }
+            //    case MenuENUM.IndexMenuPath3:
+            //        MenuPath3 mp3 = mpm.MenuPath3;
+            //        mp3.IsNullThrowException("MenuPath3 not found");
+
+            //        if (mp3.Messages.IsNull())
+            //            mp3.Messages = new List<Message>();
+
+            //        mp3.Messages.Add(message);
+            //        message.MenuPath3Id = mp3.Id;
+            //        break;
+
+
+            //    case MenuENUM.IndexMenuProduct:
+            //        Product product = ProductBiz.Find(productId);
+            //        product.IsNullThrowException("Product not found");
+
+            //        if (product.Messages.IsNull())
+            //            product.Messages = new List<Message>();
+
+            //        product.Messages.Add(message);
+            //        message.MenuPath3Id = product.Id;
+
+            //        break;
+
+
+            //    case MenuENUM.IndexMenuProductChild:
+            //        ProductChild productChild = ProductChildBiz.Find(productChildId);
+            //        productChild.IsNullThrowException("Product Child not found");
+
+            //        if (productChild.Messages.IsNull())
+            //            productChild.Messages = new List<Message>();
+
+            //        productChild.Messages.Add(message);
+            //        message.MenuPath3Id = productChild.Id;
+            //        break;
+
+
+            //    case MenuENUM.IndexDefault:
+            //    default:
+            //        break;
+            //}
 
         }
 

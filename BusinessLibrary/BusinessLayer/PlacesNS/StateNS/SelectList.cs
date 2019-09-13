@@ -8,13 +8,13 @@ namespace UowLibrary.StateNS
 
 
 
-        public SelectList CountrySelectList
-        {
-            get
-            {
-                return CountryDal.SelectList();
-            }
-        }
+        //public SelectList CountrySelectList
+        //{
+        //    get
+        //    {
+        //        return CountryBiz.SelectList();
+        //    }
+        //}
 
 
 

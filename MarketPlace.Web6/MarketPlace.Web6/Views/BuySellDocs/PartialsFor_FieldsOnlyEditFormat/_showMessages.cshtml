@@ -1,0 +1,64 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_viewMsgs = Model.BuySellDocViewState;
+
+    List<ModelsClassLibrary.ModelsNS.MessageNS.Message> messagesList = Model.Messages_Fixed;
+    int count = 0;
+
+}
+
+<style>
+    div{
+          word-wrap: break-word;
+    }
+</style>
+
+@if (messagesList.IsNullOrEmpty())
+{
+}
+else
+{
+    <a class ="btn btn-success m-1" href="#messageTable" data-toggle="collapse">Show Messages</a>
+    <div id="messageTable" class="collapse w-100">
+
+        <div class="row bg-success text-white" >
+            <div class="col-8">Subject</div>
+            <div class="4">Body</div>
+        </div>
+        @foreach (var item in messagesList)
+        {
+            count++;
+
+            @*<div class="card m-1 small">
+
+                    <div class="card-header background-ltgrey">
+                        <div class="text-center">MESSAGE</div>
+                            @Html.DisplayFor(x => item.Subject_Print_Version)
+
+                    </div>
+                    <div class="card-text p-1">
+                        <strong>Reason: </strong> @item.Body
+                    </div>
+                </div>*@
+            <div class="row border p-1 mb-1 background-ltgreen">
+                <div class="col-8 ">
+                    <strong>@count)</strong> @item.Subject_Print_Version
+                </div>
+                <div class="col-4 ">
+                    @item.Body
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+}
+
+
+
+
+

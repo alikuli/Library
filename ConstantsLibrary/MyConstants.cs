@@ -15,8 +15,7 @@ namespace AliKuli.ConstantsNS
         //public const string ADMIN_COUNTRY_ID_NUMBER_LENGTH = "LengthOfCountryIdNumber";
         // 
 
-        public const string STOP_WORDS_PATH = @"\ContentMine\SetupData\stop-word-list.csv";
-
+        public const string STOP_WORDS_PATH = @"~\ContentMine\SetupData\stop-word-list.csv";
         public const string ADMIN_USER_PHONE = "AdminUserPhone";
         public const string ADMIN_NAME = "AdminName";
         public const string ADMIN_PASSWORD = "AdminPassword";

@@ -1,0 +1,89 @@
+﻿
+
+
+
+@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_NHF = Model.BuySellDocViewState;
+
+    string currentColor_NHF = viewState_NHF.CurrentColorClass;
+    string addressTemplate_For_Shipping_And_BillTo_Address = viewState_NHF.HD_AddressTemplate_For_Shipping_And_BillTo_Address;
+
+
+    //bool isVehicalTypeEnabled_NHF = viewState_NHF.HD_Enable_Vehical_Type_R;
+    bool isDeliveryManEnabled_NHF = viewState_NHF.HD_EnableDeliveryMan;
+    bool isPleasePickUpDatesEnabled_NHF = viewState_NHF.HD_EnableDeliveryDatesRequested;
+
+    bool isEnableCustomersRequestFreight_NHF = viewState_NHF.HD_Enable_Freight_Request_Info;
+    //bool is_Comment_Enabled_NHF = viewState_NHF.HD_Enable_Customer_Comment;
+
+    bool showAddressDropDowns_ShipTo_NHF = viewState_NHF.HD_Show_DropDown_ShipToAddress;
+    bool showAddressDropDowns_BillTo_NHF = viewState_NHF.HD_Show_DropDown_BillToAddress;
+    bool isShowAddressButtons_ShipTo_NHF = viewState_NHF.HD_Show_Button_SaveAndCopy_ShipTo;
+    bool isShowAddressButtons_BillTo_NHF = viewState_NHF.HD_Show_Button_SaveAndCopy_BillTo;
+    bool isEnabledInsuranceRequired_NHF = viewState_NHF.HD_Enable_Insurance;
+    //string shipping_preNameOfFields_NHF = "AddressShipToComplex";
+    string addressPath_NHF = @Url.Action("GetAddressInfo", "Addresses");
+
+    //string billing_dropDownListName_NHF = "AddressBillToId";
+    //string billing_preNameOfFields_NHF = "AddressBillToComplex";
+
+    //string shipping_dropDownListName_NHF = "AddressShipToId";
+        
+
+}
+
+
+
+
+@Html.HiddenFor(x => x.BuySellDocumentTypeEnum)
+@Html.HiddenFor(x => x.BuySellDocStateEnum)
+@Html.HiddenFor(x => x.CustomerId)
+@Html.HiddenFor(x => x.OwnerId)
+
+<div class="row border border-dark p-1 w-100">
+    <div class=" col-md border border-dark m-1 p-1">
+
+
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_DocumentNo")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_DocumentState")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_OwnerDropdown")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_Address_Pick_From")
+        @*@Html.Partial("PartialsFor_FieldsOnlyEditFormat/_Address_Ship_To")*@
+
+        @*DELIVERY INFORMATION*@
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_RequireInsurance")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_VehicalType_Requested")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_Date_Requested")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_Comment")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_ShowMessages")
+        @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_ShowSalesmen")
+
+
+
+
+
+
+
+
+    </div>
+
+ 
+
+
+    @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_Address_Complex_Bill_To")
+    @Html.Partial("PartialsFor_FieldsOnlyEditFormat/_Address_Complex_Ship_To")
+
+
+
+
+
+
+  
+</div>
+
+
+

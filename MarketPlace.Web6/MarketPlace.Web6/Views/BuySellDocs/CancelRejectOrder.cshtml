@@ -1,0 +1,30 @@
+﻿@model ModelsClassLibrary.ModelsNS.SharedNS.RejectCancelDeleteInbetweenClass
+
+@{
+    ViewBag.Title = "Cancel / Reject";
+    string placeholder_msg = string.Format("{0}? Please tell us why? ", Model.BuySellDoc.BuySellDocStateModifierEnum);
+}
+
+<h1 class="text-center text-white font-weight-bold bg-primary mt-2 p-1">@Model.BuySellDoc.BuySellDocStateModifierEnum <small>@Model.BuySellDoc.FullName() </small></h1>
+<h2 class="bg-danger text-white text-center p-1">@Model.Text</h2>
+
+<h3 class="text-center">
+    Are you sure you want to @Model.BuySellDoc.BuySellDocStateModifierEnum?
+
+</h3>
+
+@using (Html.BeginForm())
+{
+    Html.HiddenFor(x => x.ReturnUrl);
+    Html.HiddenFor(x => x.BuySellDocumentTypeEnum);
+    Html.HiddenFor(x => x.ReturnUrl);
+    @Html.AntiForgeryToken()
+
+   @Html.TextAreaFor(x => x.Comment, 5,  0, new {@class = "p-1", @placeholder = placeholder_msg, style = "white-space: pre-line; width: 100%; max-width: 100%;" })
+
+    <div class="btn-block btn-dark p-2 ">
+        <button class="btn btn-success btn-lg" type="submit" value="accept" name="button" id="button">Yes</button>
+        <button class="btn btn-danger btn-lg" type="submit" value="cancel" name="button" id="button">No</button>
+    </div>
+}
+

@@ -181,6 +181,16 @@ namespace AliKuli.Extentions
                     throw new FormatException(string.Format("'{0}' cannot be converted as double", input));
             return result;
         }
+        public static decimal ToDecimal(this string input, bool throwExceptionIfFailed = false)
+        {
+            decimal result;
+            var valid = decimal.TryParse(input, NumberStyles.AllowDecimalPoint,
+              new NumberFormatInfo { NumberDecimalSeparator = "." }, out result);
+            if (!valid)
+                if (throwExceptionIfFailed)
+                    throw new FormatException(string.Format("'{0}' cannot be converted as decimal", input));
+            return result;
+        }
 
         /// <summary>
         /// This removes anything that is not a digit or an alphabet (also removes spaces)

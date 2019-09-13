@@ -1,0 +1,180 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_PickupCodes = Model.BuySellDocViewState;
+
+    bool isShowPickupCodeToSellerAsInfo = viewState_PickupCodes.HD_Show_PickupCode_To_Seller_As_info;
+    bool isShowPickupCodeToDeliveryman = viewState_PickupCodes.HD_Show_PickupCode_Deliveryman;
+    bool isShowDeliveryCodeToCustomer = viewState_PickupCodes.HD_Show_DeliveryCode_Customer;
+    bool isShowCombinedCode = viewState_PickupCodes.HD_Show_CombinedCode;
+    bool isShowCombinedCodeWithAsEntered = viewState_PickupCodes.HD_Show_CombinedCode_With_As_Entered;
+    //string deliverymanPhone = @Model.AddressShipTo.IsNull() ? "No Address" : @Model.AddressShipTo.Phone.IsNullOrWhiteSpace() ? "No Phone" : @Model.AddressShipTo.Phone;
+    //string deliverymanPhoneNo = Model.Deliveryman.DefaultBillAddress.IsNull() ? "None" : Model.Deliveryman.DefaultBillAddress.Phone;
+
+    string ownerPhoneNo = Model.AddressShipFrom.IsNull() ?
+    "No Ship From Address!" : Model.AddressShipFrom.Phone.IsNull() ?
+    "No Phone" : Model.AddressShipFrom.Phone;
+
+    string customerPhoneNo = Model.AddressShipTo.IsNull() ?
+    "No Ship From Address!" : Model.AddressShipTo.IsNull() ?
+    "No Address" : Model.AddressShipTo.Phone.IsNullOrWhiteSpace() ?
+    "No Phone" : Model.AddressShipTo.Phone;
+
+    string deliverymanPhoneNo = Model.Deliveryman.IsNull() ?
+    "No Deliveryman!" : Model.Deliveryman.DefaultBillAddress.IsNull() ?
+    "No Address" : Model.Deliveryman.DefaultBillAddress.Phone.IsNullOrWhiteSpace() ?
+    "No Phone" : Model.Deliveryman.DefaultBillAddress.Phone;
+
+}
+
+@if (isShowPickupCodeToDeliveryman)
+{
+
+    <div class="card mb-1 border-danger">
+        @*isShowPickupCodeToDeliveryman _CodesShow*@
+
+        <div class="card-header  bg-danger text-white text-center">Pickup package code</div>
+        <div class="card-title p-1">
+
+            The seller will give you the product to deliver <strong>AFTER</strong> you give this code.
+
+        </div>
+        <div class="card-body">
+            <div class="form-group ">
+                <h2 class="bg-dark  text-warning text-center"><strong>@Html.DisplayFor(x => x.PickupCode_Deliveryman)</strong></h2>
+                <p class="card-text bg-light p-2 border-primary"><strong>Seller: </strong>@Model.Owner.FullName() <strong>Ph: </strong> @ownerPhoneNo</p>
+                <p class="card-text bg-light p-2 border-primary"><strong>Customer: </strong>@Model.Customer.FullName() <strong>Ph: </strong> @Model.AddressShipTo.Phone</p>
+
+            </div>
+        </div>
+        <div class="card-footer bg-danger text-white text-center"><small>Keep this code secret. Only tell the seller</small></div>
+    </div>
+
+}
+
+
+
+
+
+
+
+@if (isShowPickupCodeToSellerAsInfo)
+{
+
+    <div class="card mb-1 border-danger">
+        @*isShowPickupCodeToDeliveryman _CodesShow*@
+
+        <div class="card-header  bg-danger text-white text-center">Pickup package code</div>
+        <div class="card-title p-1">
+
+            <strong>@Model.Deliveryman.FullName()</strong>, give this code to the seller (<strong>@Model.Owner.FullName()</strong>) when you pick the package.
+
+        </div>
+        <div class="card-body">
+            <div class="form-group ">
+                <h2 class="bg-dark  text-warning text-center"><strong>@Html.DisplayFor(x => x.PickupCode_Deliveryman)</strong></h2>
+                <p class="card-text bg-light p-2 border-primary"><strong>Seller: </strong>@Model.Owner.FullName() <strong>Ph: </strong> @Model.AddressShipFrom.Phone</p>
+
+            </div>
+        </div>
+        <div class="card-footer bg-danger text-white text-center"><small>Keep this code secret. Do not give this to the customer.</small></div>
+    </div>
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@if (isShowDeliveryCodeToCustomer)
+{
+    <div class="card mb-1 border-primary">
+        @*isShowDeliveryCodeToCustomer _CodesShow*@
+        <div class="card-header  bg-primary text-white text-center">Receive Package Code</div>
+        <div class="card-title p-1">
+            <strong>@Model.Customer.FullName()</strong>, Give this code to the delivery man (<strong>@Model.Deliveryman.FullName()</strong>) when he delivers your package
+
+        </div>
+        <div class="card-body ">
+            <div class="form-group ">
+                <h2 class="bg-dark  text-warning text-center"><strong>@Html.DisplayFor(x => x.DeliveryCode_Customer)</strong></h2>
+                <p class="card-text"><strong>Seller: </strong>@Model.Owner.FullName() <br /><strong>Ph: </strong> @Model.AddressShipFrom.Phone</p>
+                <p class="card-text"><strong>Delivery Man: </strong>@Model.Deliveryman.FullName() <br /><strong>Ph: </strong> @deliverymanPhoneNo</p>
+            </div>
+        </div>
+        <div class="card-footer bg-primary text-white text-center"><small>Keep this code secret. Only tell the Delivery man</small></div>
+    </div>
+}
+
+@if (isShowCombinedCode)
+{
+    <div class="card mb-1 border-success">
+        @*isShowCombinedCode _CodesShow*@
+
+        <div class="card-header  bg-success text-white text-center">Receive Package Code</div>
+        <div class="card-title p-1">
+            <strong>@Model.Customer.FullName()</strong>, Give this code to the delivery man (<strong>@Model.Deliveryman.FullName()</strong>)  when he delivers your package
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <h2 class="bg-dark  text-warning text-center"><strong>@Html.DisplayFor(x => x.CombinedCode)</strong></h2>
+                <p class="card-text"><strong>Seller: </strong>@Model.Owner.FullName() <br /><strong>Ph: </strong> @Model.AddressShipFrom.Phone</p>
+                <p class="card-text"><strong>Delivery Man: </strong>@Model.Deliveryman.FullName() <br /><strong>Ph: </strong> @deliverymanPhoneNo</p>
+
+            </div>
+        </div>
+        <div class="card-footer bg-success text-white text-center"><small>Keep this code secret. Only tell the Delivery man</small></div>
+    </div>
+
+}
+
+
+@if (isShowCombinedCodeWithAsEntered)
+{
+    <div class="card mb-1 border-success">
+        @*isShowCombinedCode _CodesShow*@
+
+        <div class="card-header  bg-success text-white text-center">Package Delivery Information</div>
+        <div class="card-title p-1">
+            This is how the package was delivered. XXXX
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+
+
+                <label><strong>Pickup Confirmation Code (As entered)</strong></label>
+                @Html.EditorFor(x => x.PickupCode_Seller, new { htmlAttributes = new { @class = "form-control", @placeholder = "Get from customer", disabled = "disabled" } })
+
+                <label><strong>Delivery Confirmation Code (As entered)</strong></label>
+                @Html.EditorFor(x => x.DeliveryCode_Deliveryman_AsEntered, new { htmlAttributes = new { @class = "form-control", @placeholder = "Get from customer", disabled = "disabled" } })
+
+                <label><strong>Code in System</strong></label>
+
+                <h2 class="bg-dark  text-warning text-center"><strong>@Html.DisplayFor(x => x.CombinedCode)</strong></h2>
+
+                <p class="card-text"><strong>Customer: </strong>@Model.Customer.FullName() <br /><strong>Ph: </strong> @Model.AddressShipTo.Phone</p>
+                <p class="card-text"><strong>Seller: </strong>@Model.Owner.FullName() <br /><strong>Ph: </strong> @Model.AddressShipFrom.Phone</p>
+                <p class="card-text"><strong>Delivery Man: </strong>@Model.Deliveryman.FullName() <br /><strong>Ph: </strong> @deliverymanPhoneNo</p>
+
+            </div>
+        </div>
+        <div class="card-footer bg-success text-white text-center"><small>This is for your information</small></div>
+    </div>
+
+}
+
+

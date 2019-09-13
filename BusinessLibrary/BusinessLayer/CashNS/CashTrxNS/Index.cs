@@ -61,7 +61,7 @@ namespace UowLibrary.CashTtxNS
 
             //first get a list of all the people
             List<Person> peopleList = await PersonBiz.FindAllAsync();
-            Person person = GetPersonForUser(UserId, peopleList);
+            Person person = PersonBiz.GetPersonForUserId(UserId);
             person.IsNullThrowException("Person not found!");
 
             //now, get all the payment trx for this person

@@ -99,6 +99,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerificationLetterTest", "V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailTest", "EmailTest\EmailTest.csproj", "{8741FA37-47BD-4833-ABC3-BB039AF2D44B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLibrary_Tests", "UnitTestProject1\BusinessLibrary_Tests.csproj", "{9E44B83B-BF82-4BA5-8EF5-C0C884C44497}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -213,6 +215,10 @@ Global
 		{8741FA37-47BD-4833-ABC3-BB039AF2D44B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8741FA37-47BD-4833-ABC3-BB039AF2D44B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8741FA37-47BD-4833-ABC3-BB039AF2D44B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E44B83B-BF82-4BA5-8EF5-C0C884C44497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E44B83B-BF82-4BA5-8EF5-C0C884C44497}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E44B83B-BF82-4BA5-8EF5-C0C884C44497}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E44B83B-BF82-4BA5-8EF5-C0C884C44497}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -245,5 +251,6 @@ Global
 		{69E0271A-CCD1-402E-BD73-5240DADF6680} = {248C8FD4-F332-4F61-8CE1-781D093FD152}
 		{546999B2-35F3-42AF-95A6-2BE3D45E9C4C} = {248C8FD4-F332-4F61-8CE1-781D093FD152}
 		{8741FA37-47BD-4833-ABC3-BB039AF2D44B} = {248C8FD4-F332-4F61-8CE1-781D093FD152}
+		{9E44B83B-BF82-4BA5-8EF5-C0C884C44497} = {F7B86184-FEC8-4036-A6B9-860F233E7169}
 	EndGlobalSection
 EndGlobal

@@ -32,6 +32,7 @@ namespace MarketPlace.Web4.Controllers
             bool isMenu,
             //string userPersonId,
             //string productChildPersonId,
+            string button,
             MenuENUM menuEnum = MenuENUM.IndexDefault,
             SortOrderENUM sortBy = SortOrderENUM.Item1_Asc,
             bool print = false,
@@ -49,7 +50,6 @@ namespace MarketPlace.Web4.Controllers
             //todo note... the company name is missing. We may need it.
 
             //the MenuController in the dudEntity entity needs to be set.
- 
 
             ControllerIndexParams parms = new ControllerIndexParams(
                 id,
@@ -72,7 +72,7 @@ namespace MarketPlace.Web4.Controllers
                 productId,
                 returnUrl,
                 buySellDocumentTypeEnum,
-                buySellDocStateEnum);
+                buySellDocStateEnum, button);
 
             //ViewBag.ReturnUrl = returnUrl;
 

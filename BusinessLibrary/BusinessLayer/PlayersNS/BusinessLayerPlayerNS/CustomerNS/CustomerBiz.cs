@@ -1,13 +1,17 @@
 ﻿using AliKuli.Extentions;
 using DalLibrary.Interfaces;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
+using System;
+using System.Configuration;
 using UowLibrary.AddressNS;
 using UowLibrary.CashTtxNS;
 using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS.CustomerCategoryNS;
 using UowLibrary.PlayersNS.PlayerAbstractCategoryNS;
 using UserModels;
-
+using System.Linq;
+using ModelsClassLibrary.CashTrxNS;
+using System.Collections.Generic;
 namespace UowLibrary.PlayersNS.CustomerNS
 {
     public partial class CustomerBiz : BusinessLayerPlayer<Customer>
@@ -53,22 +57,26 @@ namespace UowLibrary.PlayersNS.CustomerNS
         //    }
         //}
 
-        public override Customer GetPlayerFor(string userId)
-        {
-            Customer customer = base.GetPlayerFor(userId);
+        //public override Customer GetPlayerFor(string userId)
+        //{
+        //    Customer customer = base.GetPlayerFor(userId);
 
-            if(customer.IsNull())
-            {
-                ApplicationUser user = GetUser(userId);
-                user.IsNullThrowException("user");
+        //    if(customer.IsNull())
+        //    {
+        //        ApplicationUser user = GetUser(userId);
+        //        user.IsNullThrowException("user");
 
-                //create a new customer for this
-                customer = Factory() as Customer;
-                customer.IsNullThrowException();
-                customer.Name = user.UserName;
-            }
+        //        //create a new customer for this
+        //        customer = Factory() as Customer;
+        //        customer.IsNullThrowException();
+        //        customer.Name = user.UserName;
+        //    }
 
-            return customer;
-        }
+        //    return customer;
+        //}
+
+        
+
+
     }
 }

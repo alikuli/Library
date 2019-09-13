@@ -1,7 +1,6 @@
 ﻿using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using Microsoft.AspNet.Identity.EntityFramework;
-using ModelsClassLibrary.ModelsNS.SharedNS;
 
 namespace UserModels
 {
@@ -14,28 +13,14 @@ namespace UserModels
 
             ApplicationUser u = (ApplicationUser)icommonWithId;
 
-            MetaData.Modified.DateStart = u.MetaData.Modified.DateStart;
-
             DetailInfoToDisplayOnWebsite = u.DetailInfoToDisplayOnWebsite;
             Name = icommonWithId.Name;
-            //ReturnUrl = u.ReturnUrl;
             Comment = u.Comment;
             PersonId = u.PersonId;
-            //CountryId = u.CountryId;
-            //PhoneNumberAsEntered = u.PhoneNumberAsEntered;
-            //AddressComplex = u.AddressComplex;
-            //PersonComplex = u.PersonComplex;
-
-            //IsActive = u.IsActive;
             SuspendedOldValue = Suspended.Value;
             BlackListOldValue = BlackListed.Value;
-
             Suspended.Value = u.Suspended.Value;
             BlackListed.Value = u.BlackListed.Value;
-
-            //PhoneNumber = u.PhoneNumber;
-            //CountryIdCardNumber = u.CountryIdCardNumber;
-
 
 
         }

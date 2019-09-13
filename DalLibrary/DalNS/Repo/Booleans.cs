@@ -31,17 +31,17 @@ namespace DalLibrary.DalNS
 
         protected static bool IsUpdating { get; set; }
 
-        protected virtual bool IsExistName(string s)
-        {
+        //protected virtual bool IsExistName(string s)
+        //{
 
-            if (string.IsNullOrWhiteSpace(s))
-                return false;
+        //    if (string.IsNullOrWhiteSpace(s))
+        //        return false;
 
-            //check for name
-            bool found = FindForName(s) != null ? true : false;
+        //    //check for name
+        //    bool found = FindForName(s) != null ? true : false;
 
-            return found;
-        }
+        //    return found;
+        //}
 
 
         protected static bool IsDuplicateNameAllowed { get; set; }

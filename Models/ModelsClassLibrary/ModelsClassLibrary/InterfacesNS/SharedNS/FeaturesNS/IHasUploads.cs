@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace InterfacesLibrary.SharedNS.FeaturesNS
 
 {
-    public interface IHasUploads : ICommonWithId
+    public interface IHasUploads :ICommonWithId
     {
         ICollection<UploadedFile> MiscFiles { get; set; }
         string MiscFilesLocation(string userName);

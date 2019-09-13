@@ -41,7 +41,20 @@
     @*This is the heading*@
 
 
-<h2>@ViewBag.Title Index</h2>
+<h2>
+    @Model.Heading.Main 
+    
+    @if (@Model.Heading.Small.IsNullOrWhiteSpace())
+    {
+
+    }
+    else
+    {
+        <small class="text-danger">- @Model.Heading.Small</small>
+    }
+
+
+</h2>
 
         @**********************************************************
         This is where the error messages are displayed
@@ -194,7 +207,9 @@
             }
             else
             {
-                @Html.Partial(@"ViewControls/index/_IndexMiddlePart")
+                <div id="indexmiddlepart">
+                    @Html.Partial(@"ViewControls/index/_IndexMiddlePart")
+                </div>
             }
         }
         else
@@ -240,55 +255,5 @@
         }
 
     @section scripts{
-
-        <script>
-
-            @*$("#printButton").click(function () {
-            window.open("@Url.Action("Print", new { sortBy = SortOrderENUM.Item1_Asc, searchFor = @Model.SearchFor as string, selectedId = @Model.SelectedId as string })", "_blank",
-                "menubar=no, toolbar=no, resizable=no, top=100, left=200, width=500, height=500");
-        });*@
-
-
-
-            $('#AddUser').on('click', function () {
-                $("#AddUserForm").dialog({
-                    autoOpen: true,
-                    position: { my: "center", at: "top+350", of: window },
-                    width: 1000,
-                    resizable: false,
-                    title: 'Add User Form',
-                    modal: true,
-                    open: function () {
-                        $(this).load('@Url.Action("AddUserPartialView", "Home")');
-                    },
-                    buttons: {
-                        "Add User": function () {
-                            addUserInfo();
-                        },
-                        Cancel: function () {
-                            $(this).dialog("close");
-                        }
-                    }
-                });
-                return false;
-            });
-            function addUserInfo() {
-                $.ajax({
-                    url: '@Url.Action("AddUserInfo", "Home")',
-                    type: 'POST',
-                    data: $("#myForm").serialize(),
-                    success: function (data) {
-                        if (data.result) {
-                            $(':input', '#myForm')
-                                .not(':button, :submit, :reset, :hidden')
-                                .val('')
-                                .removeAttr('checked')
-                                .removeAttr('selected');
-                        } else {
-                            $("#showErrorMessage").append(data.responseText);
-                        }
-                    }
-                });
-            }
-        </script>
+        <script src="~/Scripts/MyScripts/IndexScripts.js"></script>
     }

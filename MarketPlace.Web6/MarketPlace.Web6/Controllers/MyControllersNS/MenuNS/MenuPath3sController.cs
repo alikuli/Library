@@ -198,7 +198,7 @@ namespace MarketPlace.Web6.Controllers
             string menupath2Id = mp3.MenuPath2Id_Parent;
 
             //if either id's is missing, abort
-            if(menupath1Id.IsNullOrWhiteSpace() || menupath1Id.IsNullOrWhiteSpace())
+            if (menupath1Id.IsNullOrWhiteSpace() || menupath1Id.IsNullOrWhiteSpace())
             {
                 return;
             }
@@ -220,7 +220,7 @@ namespace MarketPlace.Web6.Controllers
 
         }
 
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             if (parm.Entity.IsNull())
                 return View(Biz.FactoryForHttpGet());
@@ -229,7 +229,7 @@ namespace MarketPlace.Web6.Controllers
             MenuPath3 menuPath3 = (MenuPath3)parm.Entity;
             string menuPathMainId = parm.MenuPathMainId;
             //menuPathMainId.IsNullOrWhiteSpaceThrowException("menuPathMainId");
-            
+
             //this would be during create when a menuPathMainId is sent.
             if (!menuPathMainId.IsNullOrWhiteSpace())
             {
@@ -246,6 +246,33 @@ namespace MarketPlace.Web6.Controllers
             }
             return View(menuPath3);
 
+        }
+
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            if (parm.Entity.IsNull())
+                return View(Biz.FactoryForHttpGet());
+
+
+            MenuPath3 menuPath3 = (MenuPath3)parm.Entity;
+            string menuPathMainId = parm.MenuPathMainId;
+            //menuPathMainId.IsNullOrWhiteSpaceThrowException("menuPathMainId");
+
+            //this would be during create when a menuPathMainId is sent.
+            if (!menuPathMainId.IsNullOrWhiteSpace())
+            {
+                MenuPathMain mpm = MenuPathMainBiz.Find(menuPathMainId);
+                mpm.IsNullThrowException();
+
+
+                mpm.MenuPath1Id.IsNullOrWhiteSpaceThrowException("MenuPath1Id");
+                mpm.MenuPath2Id.IsNullOrWhiteSpaceThrowException("MenuPath2Id");
+
+                //this loads the MenuPath3 so that it can create a new MenuPathMain when created
+                menuPath3.MenuPath1Id_Parent = mpm.MenuPath1Id;
+                menuPath3.MenuPath2Id_Parent = mpm.MenuPath2Id;
+            }
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
         }
     }
 }

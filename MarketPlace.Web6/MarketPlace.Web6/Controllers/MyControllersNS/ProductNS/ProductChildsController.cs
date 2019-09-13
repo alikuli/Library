@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
+using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
@@ -8,6 +9,7 @@ using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using UowLibrary.AddressNS;
 using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS.OwnerNS;
 using UowLibrary.ProductChildNS;
@@ -56,7 +58,51 @@ namespace MarketPlace.Web6.Controllers
                 return ProductBiz.ProductChildBiz;
             }
         }
-        public override ActionResult Event_CreateViewAndSetupSelectList(ControllerIndexParams parm)
+        AddressBiz AddressBiz
+        {
+            get
+            {
+                return OwnerBiz.AddressBiz;
+            }
+        }
+        public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            //ProductChild pc = parm.Entity as ProductChild;
+
+            //Owner ownerForUser = OwnerBiz.GetOwnerForUser(UserId);
+            //ownerForUser.IsNullThrowException("Owner not found!");
+
+            //pc.OwnerId = ownerForUser.Id;
+            //pc.Owner = ownerForUser;
+
+            //pc.IsNullThrowException("Unable to unbox product Child");
+            //pc.SelectListOwners = OwnerBiz.SelectList();
+            //pc.SelectListProducts = ProductBiz.SelectList();
+
+            //if (!parm.ReturnUrl.IsNullOrWhiteSpace())
+            //{
+            //    pc.MenuManager.ReturnUrl = parm.ReturnUrl;
+            //}
+            loadSelectListsAndReturnUrl(parm);
+
+            return base.Event_Create_ViewAndSetupSelectList_GET(parm);
+
+        }
+
+        public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
+        {
+            loadSelectListsAndReturnUrl(parm);
+
+            ProductChild pc = parm.Entity as ProductChild;
+            AddressMain addressWhereProductIsStored = AddressBiz.Find(pc.ShipFromAddressId);
+            addressWhereProductIsStored.IsNullThrowException();
+
+            pc.ShipFromAddressComplex = addressWhereProductIsStored.ToAddressComplex();
+
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
+        }
+
+        private void loadSelectListsAndReturnUrl(ControllerIndexParams parm)
         {
             ProductChild pc = parm.Entity as ProductChild;
 
@@ -75,11 +121,13 @@ namespace MarketPlace.Web6.Controllers
                 pc.MenuManager.ReturnUrl = parm.ReturnUrl;
             }
 
-            return base.Event_CreateViewAndSetupSelectList(parm);
-
+            //add into the addressComplex fields showing where product is stored.
+            //first get the address
+            pc.SelectListShipFromAddress = AddressBiz.SelectListShipAddressCurrentuser();
         }
 
-        public override async Task<ActionResult> Create(ProductChild entity, string returnUrl, System.Web.HttpPostedFileBase[] httpMiscUploadedFiles = null, System.Web.HttpPostedFileBase[] httpSelfieUploads = null, System.Web.HttpPostedFileBase[] httpIdCardFrontUploads = null, System.Web.HttpPostedFileBase[] httpIdCardBackUploads = null, System.Web.HttpPostedFileBase[] httpPassportFrontUploads = null, System.Web.HttpPostedFileBase[] httpPassportVisaUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseFrontUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseBackUploads = null, EnumLibrary.EnumNS.SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch = "", EnumLibrary.EnumNS.MenuENUM menuEnum = MenuENUM.CreateDefault, FormCollection fc = null)
+
+        public override async Task<ActionResult> Create(ProductChild entity, string returnUrl, System.Web.HttpPostedFileBase[] httpMiscUploadedFiles = null, System.Web.HttpPostedFileBase[] httpSelfieUploads = null, System.Web.HttpPostedFileBase[] httpIdCardFrontUploads = null, System.Web.HttpPostedFileBase[] httpIdCardBackUploads = null, System.Web.HttpPostedFileBase[] httpPassportFrontUploads = null, System.Web.HttpPostedFileBase[] httpPassportVisaUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseFrontUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseBackUploads = null, EnumLibrary.EnumNS.SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch = "", EnumLibrary.EnumNS.MenuENUM menuEnum = MenuENUM.CreateDefault, string button = "", FormCollection fc = null)
         {
             try
             {
@@ -100,17 +148,17 @@ namespace MarketPlace.Web6.Controllers
                 ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), e);
                 ErrorsGlobal.MemorySave();
             }
-            return await base.Create(entity, returnUrl, httpMiscUploadedFiles, httpSelfieUploads, httpIdCardFrontUploads, httpIdCardBackUploads, httpPassportFrontUploads, httpPassportVisaUploads, httpLiscenseFrontUploads, httpLiscenseBackUploads, sortBy, searchFor, selectedId, print, isandForSearch, menuEnum, fc);
+            return await base.Create(entity, returnUrl, httpMiscUploadedFiles, httpSelfieUploads, httpIdCardFrontUploads, httpIdCardBackUploads, httpPassportFrontUploads, httpPassportVisaUploads, httpLiscenseFrontUploads, httpLiscenseBackUploads, sortBy, searchFor, selectedId, print, isandForSearch, menuEnum, button, fc);
         }
 
 
 
-        public override async Task<ActionResult> Edit(ProductChild entity, string returnUrl, System.Web.HttpPostedFileBase[] httpMiscUploadedFiles = null, System.Web.HttpPostedFileBase[] httpSelfieUploads = null, System.Web.HttpPostedFileBase[] httpIdCardFrontUploads = null, System.Web.HttpPostedFileBase[] httpIdCardBackUploads = null, System.Web.HttpPostedFileBase[] httpPassportFrontUploads = null, System.Web.HttpPostedFileBase[] httpPassportVisaUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseFrontUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseBackUploads = null, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch = "", MenuENUM menuEnum = MenuENUM.EditDefault, bool isMenu = false, FormCollection fc = null)
+        public override async Task<ActionResult> Edit(ProductChild entity, string returnUrl, System.Web.HttpPostedFileBase[] httpMiscUploadedFiles = null, System.Web.HttpPostedFileBase[] httpSelfieUploads = null, System.Web.HttpPostedFileBase[] httpIdCardFrontUploads = null, System.Web.HttpPostedFileBase[] httpIdCardBackUploads = null, System.Web.HttpPostedFileBase[] httpPassportFrontUploads = null, System.Web.HttpPostedFileBase[] httpPassportVisaUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseFrontUploads = null, System.Web.HttpPostedFileBase[] httpLiscenseBackUploads = null, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, string searchFor = "", string selectedId = "", bool print = false, string isandForSearch = "", MenuENUM menuEnum = MenuENUM.EditDefault, bool isMenu = false, string button = "", FormCollection fc = null)
         {
 
             await loadProductIntoProductChild(entity);
 
-            return await base.Edit(entity, returnUrl, httpMiscUploadedFiles, httpSelfieUploads, httpIdCardFrontUploads, httpIdCardBackUploads, httpPassportFrontUploads, httpPassportVisaUploads, httpLiscenseFrontUploads, httpLiscenseBackUploads, sortBy, searchFor, selectedId, print, isandForSearch, menuEnum, isMenu, fc);
+            return await base.Edit(entity, returnUrl, httpMiscUploadedFiles, httpSelfieUploads, httpIdCardFrontUploads, httpIdCardBackUploads, httpPassportFrontUploads, httpPassportVisaUploads, httpLiscenseFrontUploads, httpLiscenseBackUploads, sortBy, searchFor, selectedId, print, isandForSearch, menuEnum, isMenu, button, fc);
         }
 
         private async Task loadProductIntoProductChild(ProductChild entity)
@@ -139,6 +187,11 @@ namespace MarketPlace.Web6.Controllers
             try
             {
                 ProductChild productChild = ProductChildBiz.LoadProductChildForLandingPage(productChildId, searchFor, returnUrl);
+
+                if (!UserId.IsNullOrWhiteSpace())
+                {
+                    productChild.NoOfVisits.AddOne(UserId, UserName);
+                }
                 return View(productChild);
 
             }
@@ -152,6 +205,17 @@ namespace MarketPlace.Web6.Controllers
         }
 
 
+        public ActionResult HiddenSellerProducts()
+        {
+
+            return View();
+        }
+
+        public async Task<ActionResult> ShowHidden(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, MenuENUM menuEnum = MenuENUM.IndexDefault, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "", string viewName = "Index")
+        {
+            ProductChildBiz.IsShowHidden = true;
+            return await base.Index(id, searchFor, isandForSearch, selectedId, returnUrl, menuEnum, sortBy, print, isMenu, menuPathMainId, viewName);
+        }
 
     }
 
