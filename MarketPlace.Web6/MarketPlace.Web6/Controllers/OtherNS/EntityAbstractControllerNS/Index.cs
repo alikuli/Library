@@ -40,28 +40,22 @@ namespace MarketPlace.Web6.Controllers.Abstract
             try
             {
                 TEntity dudEntity = Biz.Factory() as TEntity;
-                //ApplicationUser user = GetApplicationUser();
 
-                //bool isUserAdmin = IsUserAdmin(user);
-
-                //string logoAddress = Server.MapPath(AliKuli.ConstantsNS.MyConstants.LOGO_LOCATION);
 
                 string productIdDud = "";
                 if (returnUrl.IsNullOrWhiteSpace())
                     returnUrl = Request.Url.PathAndQuery;
 
                 string buttonDud = "";
-
+                TEntity nullEntity = null;
                 ControllerIndexParams parms = MakeControlParameters(
                     id,
                     menuPathMainId,
                     searchFor,
                     isandForSearch,
                     selectedId,
-                    //dudEntity as ICommonWithId,// new addition
-                    //dudEntity as ICommonWithId,
-                    null,
-                    null,
+                    nullEntity,
+                    nullEntity,
                     BreadCrumbManager,
                     UserId,
                     UserName,

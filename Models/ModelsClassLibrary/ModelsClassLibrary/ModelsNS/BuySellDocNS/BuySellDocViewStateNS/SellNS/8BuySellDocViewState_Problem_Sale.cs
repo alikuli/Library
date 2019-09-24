@@ -38,6 +38,8 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         #region Header  (HD)  This is Header of the order
         public override bool HD_Show_OwnersSalesman { get { return true; } }
 
+
+
         #endregion
 
 

@@ -205,7 +205,9 @@
     <Compile Include="InterfacesNS\SharedNS\CommonNS\ICommonNoId.cs" />
     <Compile Include="InterfacesNS\SharedNS\IEntity.cs" />
     <Compile Include="InterfacesNS\SharedNS\FeaturesNS\IHasUser.cs" />
-    <Compile Include="ModelsNS\BuySellDocNS\BuySellDocHistory.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\BuySellDocHistoryNS\BuySellDocHistory.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\BuySellDocNS\DeliverymanStuff.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\BuySellDocNS\UpdatePropertiesDuringModify.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\SalesmanNS\0BuySellDocViewState_RequestUnconfirmed_Salesman.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\SalesmanNS\1BuySellDocViewState_RequestConfirmed_Salesman.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\SalesmanNS\38BuySellDocViewState_BeingPreparedForShipmentBySellert_Salesman.cs" />
@@ -223,6 +225,7 @@
     <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PenaltyController.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PenaltyFlatFile.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PurchaseNS\CourierAcceptedByBuyerAndSeller_Purchase.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PurchaseNS\Delivered_Purchase.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\SellNS\CourierComingToPickUp_Sale.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\userParameter.cs" />
     <Compile Include="ModelsNS\CashNS\CashEncashmentTrxNS\Encashment_ForGettingCash.cs" />
@@ -232,9 +235,13 @@
     <Compile Include="ModelsNS\CashNS\PenaltyTrxNS\PenaltyTrx.cs" />
     <Compile Include="ModelsNS\CashNS\PenaltyTrxNS\PenltyHeader.cs" />
     <Compile Include="ModelsNS\CashNS\PenaltyTrxNS\PersonPayingPenalty.cs" />
+    <Compile Include="ModelsNS\CashNS\PenaltyTrxNS\PersonPayingPenaltyDetail.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\SalesmanNS\PersonServedBySalesmanWithTotalTrxAmountAdded.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\SalesmanNS\PersonServedBySalesman.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\SalesmanNS\PersonServedBySalesmanWithTotalTrxAmountAdded_Header.cs" />
+    <Compile Include="ModelsNS\ServiceRequestNS\ServiceRequestHdrNS\IServiceRequestHdr.cs" />
+    <Compile Include="ModelsNS\ServiceRequestNS\ServiceRequestHdrNS\ServiceRequestHdr.cs" />
+    <Compile Include="ModelsNS\ServiceRequestNS\ServiceRequestTrxNS\ServiceRequestTrx.cs" />
     <Compile Include="ModelsNS\SharedNS\Complex\BoolAndDaysDateAndByComplex.cs" />
     <Compile Include="ModelsNS\SharedNS\Complex\StringDateAndByComplex.cs" />
     <Compile Include="ModelsNS\SharedNS\Complex\CommissionComplex.cs" />
@@ -327,7 +334,7 @@
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\PurchaseNS\7BuySellDocViewState_Delivered_Purchase.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\PurchaseNS\9BuySellDocViewState_Rejected_Purchase.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\PurchaseNS\8BuySellDocViewState_Problem_Purchase.cs" />
-    <Compile Include="ModelsNS\BuySellDocNS\BuySellDoc.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\BuySellDocNS\BuySellDoc.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellStatementModel.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\VehicalTypeNS\VehicalType.cs" />
     <Compile Include="ModelsNS\BuySellItemNS\BuySellItem.cs" />
@@ -531,6 +538,7 @@
     <Compile Include="ModelsNS\CounterNS\Counter.cs" />
     <Compile Include="ModelsNS\CounterNS\CounterTypeENUM.cs" />
     <Compile Include="ModelsNS\SharedNS\DateParameter.cs" />
+    <Compile Include="ModelsNS\SharedNS\DateStringStringBool.cs" />
     <Compile Include="ModelsNS\SharedNS\IdModel.cs" />
     <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\PurchasesNS\PersonTotalPurchaseOrders.cs" />
     <Compile Include="ModelsNS\SharedNS\MenuItemHelperNS\PersonNS\SaleOrdersNS\PersonTotalSaleOrders.cs" />
@@ -650,6 +658,8 @@
     <Compile Include="ModelsNS\SharedNS\Parameters\SuccessEnumNS\IHasSuccessEnum.cs" />
     <Compile Include="ModelsNS\SharedNS\Parameters\SuccessEnumNS\SuccessEnum_Helper.cs" />
     <Compile Include="ModelsNS\SharedNS\RejectCancelDeleteInbetweenClass.cs" />
+    <Compile Include="ModelsNS\SharedNS\StringAndBool.cs" />
+    <Compile Include="ModelsNS\SharedNS\StringStringAndBool.cs" />
     <Compile Include="ModelsNS\UploadedFileNS\UploadedFileMainNS\UploadedFile - Image Adjustment.cs" />
     <Compile Include="ModelsNS\UploadedFileNS\UploadedFileMainNS\UploadedFile - Navigation.cs" />
     <Compile Include="ModelsNS\UploadedFileNS\UploadedFileMainNS\UploadedFile.cs" />

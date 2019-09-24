@@ -67,6 +67,8 @@ namespace EnumLibrary.EnumNS
         Right,
         Salesman,
         SalesmanCategory,
+        ServiceRequestHdr,
+        ServiceRequestTrx,
         State,
         Town,
         UomLength,

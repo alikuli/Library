@@ -265,17 +265,29 @@
 
 
 
-            
-            
+
+
             //Cancel Button
             tooltip_Canceled = item.BuySellDocViewState.OL_Cancel_Button_ToolTip;
             string path_Cancel_Order = Url.Action("CancelRejectOrder", "BuySellDocs", new { buySellDocId = item.Id, returnUrl = Request.Url.PathAndQuery, text = tooltip_Canceled, buySellDocumentTypeEnum = Model.BuySellDocumentTypeEnum, buySellDocStateModifierEnum = BuySellDocStateModifierENUM.Cancel });
-            
-            string disableCancelButton = viewState.OL_IsCanceledEnabled ? "" : " disabled ";
+
             string cancelButtonIcon = viewState.OL_IconForCancel;
             bool show_Cancel_Button = viewState.OL_IsShowCancelButton;
-            string tooltip_Cancele_Button = viewState.OL_Cancel_Button_ToolTip;
+            //string tooltip_Cancele_Button = viewState.OL_Cancel_Button_ToolTip;
 
+            string disableCancelButton = viewState.OL_IsCanceledEnabled ? "" : " disabled ";
+
+            if (item.BuySellDocStateEnum == BuySellDocStateENUM.Delivered)
+            {
+                tooltip_Canceled += item.GetDateGuaranteeExpires().ToShortDateString();
+
+                if (item.IsGuaranteePeriodIsOver())
+                {
+                    disableCancelButton = " disabled ";
+
+                }
+
+            }
 
             //Reject Button
             tooltip_Rejected = item.BuySellDocViewState.OL_Reject_Button_ToolTip;
@@ -310,43 +322,46 @@
                         <div class="col p-2">
 
                             <a class="@classForLineItem" href="@edit_order_path">@item.AnchorDescriptionInOrderListItem()</a>
-                            @if (@item.CurrentUsers_FreightOfferTrx_String(Model.CurrentUsers_DeliverymanId).IsNullOrWhiteSpace())
+                            @if (item.IsShowFreightMessage)
                             {
-                            }
-                            else
-                            {
-                                if(item.FreightOfferTrxAcceptedId.IsNullOrWhiteSpace())
-                                { 
-                                <p class="bg-warning text-dark p-1">
-                                    @item.CurrentUsers_FreightOfferTrx_String(Model.CurrentUsers_DeliverymanId)
-                                </p>
+                                if (@item.CurrentUsers_FreightOfferTrx_String(Model.CurrentUsers_DeliverymanId).IsNullOrWhiteSpace())
+                                {
                                 }
                                 else
                                 {
-                                    <p class="bg-danger text-white p-1">
-                                        @item.CurrentUsers_FreightOfferTrx_String(Model.CurrentUsers_DeliverymanId)
-                                    </p>
-                                }
-                            }
-                            @if (@item.FreightOfferTrxs.IsNullOrEmpty())
-                            {
-
-                            }
-                            else
-                            {
-                                if (item.BuySellDocStateEnum == BuySellDocStateENUM.ReadyForPickup)
-                                {
-                                    if (@item.FreightOfferTrxs.Where(x => x.MetaData.IsDeleted == false).ToList().IsNullOrEmpty())
+                                    if (item.FreightOfferTrxAcceptedId.IsNullOrWhiteSpace())
                                     {
-
+                                        <p class="bg-warning text-dark p-1">
+                                            @item.CurrentUsers_FreightOfferTrx_String(Model.CurrentUsers_DeliverymanId)
+                                        </p>
                                     }
                                     else
                                     {
-                                        int count = @item.FreightOfferTrxs.Where(x => x.MetaData.IsDeleted == false).Count();
-                                        <p class="bg-info text-warning p-2">
-                                            @{string noOfBids = count == 1 ? count.ToString("N0") + " Bid" : count.ToString("N0") + " Bids"; }
-                                            @noOfBids
+                                        <p class="bg-danger text-white p-1">
+                                            @item.CurrentUsers_FreightOfferTrx_String(Model.CurrentUsers_DeliverymanId)
                                         </p>
+                                    }
+                                }
+                                if (@item.FreightOfferTrxs.IsNullOrEmpty())
+                                {
+
+                                }
+                                else
+                                {
+                                    if (item.BuySellDocStateEnum == BuySellDocStateENUM.ReadyForPickup)
+                                    {
+                                        if (@item.FreightOfferTrxs.Where(x => x.MetaData.IsDeleted == false).ToList().IsNullOrEmpty())
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            int count = @item.FreightOfferTrxs.Where(x => x.MetaData.IsDeleted == false).Count();
+                                            <p class="bg-info text-warning p-2">
+                                                @{string noOfBids = count == 1 ? count.ToString("N0") + " Bid" : count.ToString("N0") + " Bids"; }
+                                                @noOfBids
+                                            </p>
+                                        }
                                     }
                                 }
                             }
@@ -386,15 +401,8 @@
 
                 <td class="@classForLineItem" data-toggle="tooltip" title="@tooltip_Comment" data-placement="top">
                     @item.BuySellDocStateEnum.ToString().ToTitleSentance()
+                    @item.Get_BuySellDocState_Date_Controller()
                 </td>
-
-
-
-
-
-
-
-
 
 
 
@@ -424,7 +432,6 @@
                                 onclick="openPath('@delete_order_path')"
                                 @disableDeleteButton>
                             <img width="20" src=@deleteBtnIcon />
-
                         </button>
                     }
 

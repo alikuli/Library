@@ -14,59 +14,8 @@ namespace UowLibrary.BuySellDocNS
     public partial class BuySellDocBiz
     {
 
-        /// <summary>
-        /// This is the entry point.
-        /// This loads up all the account for the user or admin.  
-        /// if User is the Customer,then it is a purchase;
-        /// if user is the Owner/Seller, then it is a sale;
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="buySellDocumentTypeEnum"></param>
-        /// <param name="fromDate"></param>
-        /// <param name="toDate"></param>
-        /// <param name="isAdmin"></param>
-        /// <returns></returns>
-        public GlobalObject Load_SO_And_PO_And_DO_Into_GlobalObject(string userId, DateTime fromDate, DateTime toDate)
-        {
-            bool isCustomer = CustomerBiz.GetPlayerFor(UserId) != null;
-            bool isOwner = OwnerBiz.GetPlayerFor(UserId) != null;
-            bool isDeliveryman = DeliverymanBiz.GetPlayerFor(UserId) != null;
-            bool isSalesman = SalesmanBiz.GetPlayerFor(UserId) != null;
-            bool isAdmin = UserBiz.IsAdmin(UserId);
-            bool isLoggedIn = !UserId.IsNullOrWhiteSpace();
 
-            GlobalObject mip = new GlobalObject(UserId, isAdmin, isCustomer, isOwner, isDeliveryman, isSalesman, isLoggedIn);
-
-            //if we let this through, thr program will think we have an admin.
-            //anyway, without userId we fail.
-            if (userId.IsNullOrEmpty())
-                return mip;
-
-            if (isOwner)
-                mip.Sale = getOrderTypesFor(userId, BuySellDocumentTypeENUM.Sale, fromDate, toDate);
-
-            if (isCustomer)
-                mip.Purchase = getOrderTypesFor(userId, BuySellDocumentTypeENUM.Purchase, fromDate, toDate);
-
-            if (isDeliveryman)
-                mip.Delivery = getOrderTypesFor(userId, BuySellDocumentTypeENUM.Delivery, fromDate, toDate);
-
-            if (isSalesman)
-                mip.Salesman = getOrderTypesFor(userId, BuySellDocumentTypeENUM.Salesman, fromDate, toDate);
-
-            if (isAdmin)
-            {
-                mip.Sale_Admin = getOrderTypesFor("", BuySellDocumentTypeENUM.Sale, fromDate, toDate);
-                mip.Purchase_Admin = getOrderTypesFor("", BuySellDocumentTypeENUM.Purchase, fromDate, toDate);
-                mip.Delivery_Admin = getOrderTypesFor("", BuySellDocumentTypeENUM.Delivery, fromDate, toDate);
-                mip.Salesman_Admin = getOrderTypesFor("", BuySellDocumentTypeENUM.Salesman, fromDate, toDate);
-
-            }
-            return mip;
-        }
-
-
-        OrderTypes getOrderTypesFor(string userId, BuySellDocumentTypeENUM buySellDocumentTypeEnum, DateTime fromDate, DateTime toDate)
+        public OrderTypes GetOrderTypesFor(string userId, BuySellDocumentTypeENUM buySellDocumentTypeEnum, DateTime fromDate, DateTime toDate)
         {
             OrderTypes orderType = new OrderTypes();
 
@@ -176,25 +125,25 @@ namespace UowLibrary.BuySellDocNS
                 iq_orderListDateDelimitedByDocumentTypeAndState);
 
             long count = 0;
-            if (buySellDocumentTypeEnum == BuySellDocumentTypeENUM.Delivery)
-            {
-                if (buySellDocStateEnum == BuySellDocStateENUM.ReadyForPickup || buySellDocStateEnum == BuySellDocStateENUM.All)
-                { }
-                else
-                {
-                    Deliveryman deliveryman = DeliverymanBiz.GetPlayerFor(UserId);
+            //if (buySellDocumentTypeEnum == BuySellDocumentTypeENUM.Delivery)
+            //{
+            //    if (buySellDocStateEnum == BuySellDocStateENUM.ReadyForPickup || buySellDocStateEnum == BuySellDocStateENUM.All)
+            //    { }
+            //    else
+            //    {
+            //        Deliveryman deliveryman = DeliverymanBiz.GetPlayerFor(UserId);
 
-                    if (deliveryman.IsNull())
-                        return 0;
+            //        if (deliveryman.IsNull())
+            //            return 0;
 
-                    count = orderListDuplicate
-                        .Where(x => x.DeliverymanId == deliveryman.Id)
-                        .Count();
+            //        count = orderListDuplicate
+            //            .Where(x => x.DeliverymanId == deliveryman.Id)
+            //            .Count();
 
-                    return count;
-                }
-            }
-
+            //        return count;
+            //    }
+            //}
+            //for the deliveryman, it should return all items as per its query
             count = orderListDuplicate.Count();
             return count;
         }

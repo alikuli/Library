@@ -14,6 +14,8 @@ using Ninject.Modules;
 using Ninject.Web.Common;
 using UowLibrary;
 using UowLibrary.AddressNS;
+using UowLibrary.BusinessLayer.ServiceRequestNS.ServiceRequestHdrNS;
+using UowLibrary.BusinessLayer.ServiceRequestNS.ServiceRequestTrxNS;
 using UowLibrary.BuySellDocNS;
 using UowLibrary.CashEncashmentTrxNS;
 using UowLibrary.CashTtxNS;
@@ -53,6 +55,8 @@ using UowLibrary.PlayersNS.ProductApproverCategoryNS;
 using UowLibrary.PlayersNS.ProductApproverNS;
 using UowLibrary.PlayersNS.SalesmanCategoryNS;
 using UowLibrary.PlayersNS.SalesmanNS;
+using UowLibrary.PlayersNS.ServiceRequestHdrNS;
+using UowLibrary.PlayersNS.ServiceRequestTrxNS;
 using UowLibrary.PlayersNS.VehicalTypeNS;
 using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
@@ -173,6 +177,8 @@ namespace DependancyResolver
             Bind<BuySellDocHistoryBiz>().ToSelf();
             Bind<PenaltyHeaderBiz>().ToSelf();
             Bind<PenaltyTrxBiz>().ToSelf();
+            Bind<IServiceRequestHdrBiz>().To<ServiceRequestHdrBiz>();
+            Bind<IServiceRequestTrxBiz>().To<ServiceRequestTrxBiz>();
 
         }
 

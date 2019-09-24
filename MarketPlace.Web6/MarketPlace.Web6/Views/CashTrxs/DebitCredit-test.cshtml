@@ -1,0 +1,98 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS.CashTrxDbCrModel
+
+@{
+    ViewBag.Title = "Debit Credit";
+    decimal runningBalance = Model.BroughtForward;
+
+    ModelsClassLibrary.ModelsNS.SharedNS.DateParameter dp = new ModelsClassLibrary.ModelsNS.SharedNS.DateParameter();
+}
+
+
+
+
+@if(Model.CashTrxs.IsNullOrEmpty())
+{
+    if(Model.CashTrxs.IsNull())
+    {
+        <div>Model.CashTrxs.IsNull()</div>
+    }
+    else
+    {
+        <div>Model.CashTrxs.Empty</div>
+
+    }
+}
+else
+{
+    <div class="text-danger">CashTrxs</div>
+    <div class="row">
+        <div class="col">Date</div>
+        <div class="col">Payment</div>
+        <div class="col">Receipt</div>
+        <div class="col">Cash Type</div>
+        <div class="col">Model.FromDate</div>
+        <div class="col">Model.ToDate</div>
+        <div class="col">Date1 Before From</div>
+        <div class="col">Date1 After To</div>
+        <div class="col">IsDateWithin From and To</div>
+    </div>
+    foreach (var item in Model.CashTrxs)
+    {
+        <div class="row">
+            <div class="col">@item.Date</div>
+            <div class="col">@item.PaymentAmount</div>
+            <div class="col">@item.ReceiptAmount</div>
+            <div class="col">@item.CashTypeEnum.ToString()</div>
+            <div class="col">@Model.FromDate</div>
+            <div class="col">@Model.ToDate</div>
+
+            <div class="col">@dp.Date1BeforeDate2(item.Date, Model.FromDate)</div>
+            <div class="col">@dp.Date1AfterDate2(item.Date, Model.ToDate)</div>
+            <div class="col">@dp.IsDateWithinBeginAndEndDatesInclusive(item.Date, Model.FromDate, Model.ToDate)</div>
+        </div>
+
+    }
+}
+
+<br />
+<br />
+<hr />
+<br />
+@if (Model.CashTrxs_DateDelimited.IsNullOrEmpty())
+{
+    if (Model.CashTrxs_DateDelimited.IsNull())
+    {
+        <div class="text-danger">Model.CashTrxs_DateDelimited.IsNull()</div>
+    }
+    else
+    {
+        <div class="text-danger">Model.CashTrxs_DateDelimited.Empty</div>
+
+    }
+}
+else
+{
+    <div class="text-danger">CashTrxs_DateDelimited</div>
+    <div class="row">
+        <div class="col">Date</div>
+        <div class="col">Payment</div>
+        <div class="col">Receipt</div>
+        <div class="col">Cash Type</div>
+        <div class="col"></div>
+    </div>
+    foreach (var item in Model.CashTrxs_DateDelimited)
+    {
+        <div class="row">
+            <div class="col">@item.Date</div>
+            <div class="col">@item.PaymentAmount</div>
+            <div class="col">@item.ReceiptAmount</div>
+            <div class="col">@item.CashTypeEnum.ToString()</div>
+            <div class="col"></div>
+        </div>
+
+    }
+}
+
+<br />
+
+

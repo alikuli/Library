@@ -1,0 +1,43 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellStatementModel
+@{
+    ViewBag.Title = "ServiceRequests";
+    string beASalesman_Path = Url.Action("IWantToBeASalesman", "ServiceRequestHdrs");
+    string beASalesmanEquation = "openPath('" + beASalesman_Path + "')";
+
+
+    string beAMailer_Path = Url.Action("IWantToBeAMailer", "ServiceRequestHdrs");
+    string beAMailerEquation = "openPath('" + beAMailer_Path + "')";
+
+
+    string beADeliveryman_Path = Url.Action("IWantToBeADeliveryman", "ServiceRequestHdrs");
+    string beADeliverymanEquation = "openPath('" + beADeliveryman_Path + "')";
+
+
+    string beASeller_Path = Url.Action("IWantToBeASeller", "ServiceRequestHdrs");
+    string beASellerEquation = "openPath('" + beASeller_Path + "')";
+    }
+
+
+
+@**********************************************************
+    This is where the error messages are displayed
+    **********************************************************@
+@Html.Partial("_messages")
+
+
+
+<h2 class="text-center">I want to ...</h2>
+@using(Html.BeginForm())
+{ 
+<div class="container w-100">
+    <div class="text-center">
+        <button type="submit" value="salesman" name="button" class="btn btn-lg btn-default text-success m-1" @*onclick="@beASalesmanEquation"*@>Be a 11 Salesman</button>
+        <button type="button" value="mailer" name="button" class="btn btn-lg btn-default text-success m-1">Be a Mailer</button>
+        <button type="button" value="seller" name="button" class="btn btn-lg btn-default text-success m-1">Be a Seller</button>
+        <button type="button" value="deliveryman" name="button" class="btn btn-lg btn-default text-success m-1">Be a Deliveryman</button>
+    </div>
+
+    
+
+</div>
+}

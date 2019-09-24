@@ -21,6 +21,9 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
 
         public override bool OL_IsShowCancelButton { get { return true; } }
 
+        public override bool HD_Show_ExpectedDeliveryDate { get { return true; } }
+//        public override bool HD_Enable_ExpectedDeliveryDate { get { return true; } }
+
 
         #endregion
 

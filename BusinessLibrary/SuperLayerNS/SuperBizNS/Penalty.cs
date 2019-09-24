@@ -3,12 +3,8 @@ using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS;
 using ModelsClassLibrary.ModelsNS.CashNS.PenaltyNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
-using ModelsClassLibrary.ModelsNS.MessageNS;
-using ModelsClassLibrary.ModelsNS.PeopleMessageNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
-using System.Collections.Generic;
 
 namespace UowLibrary.SuperLayerNS
 {
@@ -28,6 +24,7 @@ namespace UowLibrary.SuperLayerNS
 
                 if (penalty.IsNull())
                     return;
+
                 //we want to delete the maximum commission.
                 //payments will be made to people who exist.
                 //balance will go to the system
@@ -36,12 +33,13 @@ namespace UowLibrary.SuperLayerNS
                 if (totalPaymentAmount == 0)
                     return;
 
-                calculateAndDistributePenaltyPayments_Controller(buySellDoc, systemPerson, ppp, penalty, totalPaymentAmount);
-                createAndSavePenalty(buySellDoc, reason, ppp, totalPaymentAmount);
-
                 //get all the persons involved
                 //create a cash transaction
                 //here we should know who is paying
+
+                calculateAndDistributePenaltyPayments_Controller(buySellDoc, systemPerson, ppp, penalty, totalPaymentAmount);
+                createAndSavePenalty(buySellDoc, reason, ppp, totalPaymentAmount);
+
 
             }
 
@@ -130,10 +128,10 @@ namespace UowLibrary.SuperLayerNS
 
         private void customerPaysDeliveryman_Penalty(BuySellDoc buySellDoc, Person systemPerson, PersonPayingPenalty ppp, decimal totalPaymentAmount)
         {
-                calculate_Customer_Payment(buySellDoc, ppp, totalPaymentAmount);
-                calculateCommissions(buySellDoc, systemPerson, ppp, totalPaymentAmount);
-                calculate_Penalty_When_Deliveryman_Is_Receiving(buySellDoc, ppp, totalPaymentAmount);
-                calculate_ExtraCommission(buySellDoc, systemPerson, ppp, totalPaymentAmount);
+            calculate_Customer_Payment(buySellDoc, ppp, totalPaymentAmount);
+            calculateCommissions(buySellDoc, systemPerson, ppp, totalPaymentAmount);
+            calculate_Penalty_When_Deliveryman_Is_Receiving(buySellDoc, ppp, totalPaymentAmount);
+            calculate_ExtraCommission(buySellDoc, systemPerson, ppp, totalPaymentAmount);
 
 
         }
@@ -150,12 +148,20 @@ namespace UowLibrary.SuperLayerNS
         private void calculateCommissions(BuySellDoc buySellDoc, Person systemPerson, PersonPayingPenalty ppp, decimal totalPaymentAmount)
         {
             calculate_OwnerSalesmanPenalty(buySellDoc, ppp, totalPaymentAmount);
+            calculate_Super_OwnerSalesmanPenalty(buySellDoc, ppp, totalPaymentAmount);
+            calculate_Super_Super_OwnerSalesmanPenalty(buySellDoc, ppp, totalPaymentAmount);
+
             calculate_CustomerSalesmanPenalty(buySellDoc, ppp, totalPaymentAmount);
+            calculate_Super_CustomerSalesmanPenalty(buySellDoc, ppp, totalPaymentAmount);
+            calculate_Super_Super_CustomerSalesmanPenalty(buySellDoc, ppp, totalPaymentAmount);
+
             calculate_DeliverySalesman_Penalty(buySellDoc, ppp, totalPaymentAmount);
+            calculate_Super_DeliverySalesman_Penalty(buySellDoc, ppp, totalPaymentAmount);
+            calculate_Super_Super_DeliverySalesman_Penalty(buySellDoc, ppp, totalPaymentAmount);
+
             calculate_SystemCommission_OnSale(buySellDoc, systemPerson, ppp, totalPaymentAmount);
             calculate_SystemCommission_OnFreight(buySellDoc, systemPerson, ppp, totalPaymentAmount);
         }
-
 
 
         private void calculate_Penalty_When_Deliveryman_Is_Receiving(BuySellDoc buySellDoc, PersonPayingPenalty ppp, decimal totalPaymentAmount)
@@ -165,14 +171,14 @@ namespace UowLibrary.SuperLayerNS
             if (!buySellDoc.DeliverymanId.IsNullOrWhiteSpace())
             {
 
-                ppp.Deliveryman = DeliverymanBiz.GetPersonForPlayer(buySellDoc.DeliverymanId);
+                ppp.Deliveryman.Person = DeliverymanBiz.GetPersonForPlayer(buySellDoc.DeliverymanId);
                 ppp.Deliveryman.IsNullThrowException();
-                ppp.Deliveryman_Comment = "You are the Deliveryman";
+                ppp.Deliveryman.Comment = "Deliveryman";
 
-                ppp.Deliveryman_RecivedAmount = totalPaymentAmount - maxCommission_Amount;
+                ppp.Deliveryman.Amount = totalPaymentAmount - maxCommission_Amount;
 
-                if (ppp.Deliveryman_RecivedAmount > 0)
-                    ppp.Deliveryman_Pct_Of_Total = Math.Round(ppp.Deliveryman_RecivedAmount / totalPaymentAmount * 100, 2);
+                if (ppp.Deliveryman.Amount > 0)
+                    ppp.Deliveryman.Percent = Math.Round(ppp.Deliveryman.Amount / totalPaymentAmount * 100, 2);
 
             }
         }
@@ -186,13 +192,13 @@ namespace UowLibrary.SuperLayerNS
 
             decimal totalPaidOutToCustomerDeliverymanOwner = get_TotalPaidOut_To_Deliveryman_Owner_Customer(ppp);
 
-            ppp.Customer = CustomerBiz.GetPersonForPlayer(buySellDoc.CustomerId);
+            ppp.Customer.Person = CustomerBiz.GetPersonForPlayer(buySellDoc.CustomerId);
             ppp.Customer.IsNullThrowException();
-            ppp.Customer_Comment = "You are the Customer";
-            ppp.Customer_RecivedAmount = totalPaymentAmount - maxPayableAccordingToMaxCommission_Amount;
+            ppp.Customer.Comment = "Customer";
+            ppp.Customer.Amount = totalPaymentAmount - maxPayableAccordingToMaxCommission_Amount;
 
-            if (ppp.Customer_RecivedAmount != 0)
-                ppp.Customer_Pct_Of_Total = ppp.Customer_RecivedAmount / totalPaymentAmount;
+            if (ppp.Customer.Amount != 0)
+                ppp.Customer.Percent = ppp.Customer.Amount / totalPaymentAmount;
 
         }
 
@@ -202,10 +208,10 @@ namespace UowLibrary.SuperLayerNS
 
         private void calculate_Owner_Payment(BuySellDoc buySellDoc, PersonPayingPenalty ppp, decimal totalPaymentAmount)
         {
-            ppp.PersonFrom = OwnerBiz.GetPersonForPlayer(buySellDoc.OwnerId);
-            ppp.PersonFrom.IsNullThrowException();
-            ppp.PersonFrom_PaymentAmount = totalPaymentAmount;
-            ppp.PersonFrom_Comment = "You are the Seller";
+            ppp.From.Person = OwnerBiz.GetPersonForPlayer(buySellDoc.OwnerId);
+            ppp.From.Person.IsNullThrowException();
+            ppp.From.Amount = totalPaymentAmount;
+            ppp.From.Comment = "Owner";
 
         }
 
@@ -220,20 +226,20 @@ namespace UowLibrary.SuperLayerNS
 
         private void calculate_Customer_Payment(BuySellDoc buySellDoc, PersonPayingPenalty ppp, decimal totalPaymentAmount)
         {
-            ppp.PersonFrom = CustomerBiz.GetPersonForPlayer(buySellDoc.CustomerId);
-            ppp.PersonFrom.IsNullThrowException();
-            ppp.PersonFrom_PaymentAmount = totalPaymentAmount;
-            ppp.PersonFrom_Comment = "You are the Customer";
+            ppp.From.Person = CustomerBiz.GetPersonForPlayer(buySellDoc.CustomerId);
+            ppp.From.Person.IsNullThrowException();
+            ppp.From.Amount = totalPaymentAmount;
+            ppp.From.Comment = "Customer";
 
         }
 
         private void calculate_Deliveryman_Payment(BuySellDoc buySellDoc, PersonPayingPenalty ppp, decimal totalPaymentAmount)
         {
-            buySellDoc.DeliverymanSalesmanId.IsNullOrWhiteSpaceThrowException();
-            ppp.PersonFrom = DeliverymanBiz.GetPersonForPlayer(buySellDoc.DeliverymanId);
-            ppp.PersonFrom.IsNullThrowException();
-            ppp.PersonFrom_PaymentAmount = totalPaymentAmount;
-            ppp.PersonFrom_Comment = "You are the Customer";
+            buySellDoc.DeliverymanId.IsNullOrWhiteSpaceThrowException();
+            ppp.From.Person = DeliverymanBiz.GetPersonForPlayer(buySellDoc.DeliverymanId);
+            ppp.From.Person.IsNullThrowException();
+            ppp.From.Amount = totalPaymentAmount;
+            ppp.From.Comment = "Deliveryman";
 
         }
 
@@ -248,18 +254,18 @@ namespace UowLibrary.SuperLayerNS
         private void calculate_Owner_Amount_When_Receiving_Penalty(BuySellDoc buySellDoc, Person systemPerson, PersonPayingPenalty ppp, decimal totalPaymentAmount)
         {
 
-            ppp.ClearOwner();
+            ppp.Owner.Clear();
             //get the maximum commission payable on the freight and sale
             decimal maxPayableAccordingToMaxCommission_Amount = getMaxCommissionPayable_Amount(buySellDoc, totalPaymentAmount);
 
 
-            ppp.Owner = OwnerBiz.GetPersonForPlayer(buySellDoc.OwnerId);
-            ppp.Owner.IsNullThrowException();
-            ppp.Owner_Comment = "You are the Owner";
-            ppp.Owner_RecivedAmount = totalPaymentAmount - maxPayableAccordingToMaxCommission_Amount;
+            ppp.Owner.Person = OwnerBiz.GetPersonForPlayer(buySellDoc.OwnerId);
+            ppp.Owner.Person.IsNullThrowException();
+            ppp.Owner.Comment = "Owner";
+            ppp.Owner.Amount = totalPaymentAmount - maxPayableAccordingToMaxCommission_Amount;
 
-            if (ppp.Owner_RecivedAmount != 0)
-                ppp.Owner_Pct_Of_Total = ppp.Owner_RecivedAmount / totalPaymentAmount;
+            if (ppp.Owner.Amount != 0)
+                ppp.Owner.Percent = ppp.Owner.Amount / totalPaymentAmount;
         }
 
 
@@ -269,60 +275,68 @@ namespace UowLibrary.SuperLayerNS
         {
             ppp.SelfErrorCheck();
 
-            PenaltyHeader ph = new PenaltyHeader(buySellDoc, reason, totalPaymentAmount, ppp.PersonFrom, true);
+            PenaltyHeader ph = new PenaltyHeader(buySellDoc, reason, totalPaymentAmount, ppp.From.Person, true);
             PenaltyHeaderBiz.Create(ph);
 
-            //if (!ppp.PersonFrom.IsNull())
-            //{
-            //    PenaltyTrx personFrom = new PenaltyTrx(ppp.PersonFrom.Id, ppp.PersonFrom_PaymentAmount, ppp.PersonFrom_Comment, true);
-            //    PenaltyHeaderBiz.AddPenaltyTrx(ph, personFrom);
-
-            //}
             if (!ppp.Owner.IsNull())
             {
-                PenaltyTrx owner = new PenaltyTrx(ppp.Owner.Id, ppp.Owner_RecivedAmount, ppp.Owner_Comment, false);
+                PenaltyTrx owner = new PenaltyTrx(ppp.Owner.Person.Id, ppp.Owner.Amount, ppp.Owner.Comment, false);
                 PenaltyHeaderBiz.AddPenaltyTrx(ph, owner);
 
             }
+
+
             if (!ppp.Deliveryman.IsNull())
             {
-                PenaltyTrx deliveryman = new PenaltyTrx(ppp.Deliveryman.Id, ppp.Deliveryman_RecivedAmount, ppp.Deliveryman_Comment, false);
+                PenaltyTrx deliveryman = new PenaltyTrx(ppp.Deliveryman.Person.Id, ppp.Deliveryman.Amount, ppp.Deliveryman.Comment, false);
                 PenaltyHeaderBiz.AddPenaltyTrx(ph, deliveryman);
 
             }
+
+
             if (!ppp.Salesman_Owner.IsNull())
             {
-                PenaltyTrx salesman_Owner = new PenaltyTrx(ppp.Salesman_Owner.Id, ppp.Salesman_Owner_RecivedAmount, ppp.Salesman_Owner_Comment, false);
+                PenaltyTrx salesman_Owner = new PenaltyTrx(ppp.Salesman_Owner.Person.Id, ppp.Salesman_Owner.Amount, ppp.Salesman_Owner.Comment, false);
                 PenaltyHeaderBiz.AddPenaltyTrx(ph, salesman_Owner);
 
             }
+
+
             if (!ppp.Salesman_Customer.IsNull())
             {
-                PenaltyTrx salesman_Customer = new PenaltyTrx(ppp.Salesman_Customer.Id, ppp.Salesman_Customer_RecivedAmount, ppp.Salesman_Customer_Comment, false);
+                PenaltyTrx salesman_Customer = new PenaltyTrx(ppp.Salesman_Customer.Person.Id, ppp.Salesman_Customer.Amount, ppp.Salesman_Customer.Comment, false);
                 PenaltyHeaderBiz.AddPenaltyTrx(ph, salesman_Customer);
 
             }
+
+
             if (!ppp.Salesman_Deliveryman.IsNull())
             {
-                PenaltyTrx salesman_Deliveryman = new PenaltyTrx(ppp.Salesman_Deliveryman.Id, ppp.Salesman_Deliveryman_RecivedAmount, ppp.Salesman_Deliveryman_Comment, false);
+                PenaltyTrx salesman_Deliveryman = new PenaltyTrx(ppp.Salesman_Deliveryman.Person.Id, ppp.Salesman_Deliveryman.Amount, ppp.Salesman_Deliveryman.Comment, false);
                 PenaltyHeaderBiz.AddPenaltyTrx(ph, salesman_Deliveryman);
 
             }
+
+
             if (!ppp.System_Freight.IsNull())
             {
-                PenaltyTrx system_Freight = new PenaltyTrx(ppp.System_Freight.Id, ppp.System_Freight_RecivedAmount, ppp.System_Freight_Comment, false);
+                PenaltyTrx system_Freight = new PenaltyTrx(ppp.System_Freight.Person.Id, ppp.System_Freight.Amount, ppp.System_Freight.Comment, false);
                 PenaltyHeaderBiz.AddPenaltyTrx(ph, system_Freight);
 
             }
+
+
             if (!ppp.System_Sale.IsNull())
             {
-                PenaltyTrx system_Sale = new PenaltyTrx(ppp.System_Sale.Id, ppp.System_Sale_RecivedAmount, ppp.System_Sale_Comment, false);
+                PenaltyTrx system_Sale = new PenaltyTrx(ppp.System_Sale.Person.Id, ppp.System_Sale.Amount, ppp.System_Sale.Comment, false);
                 PenaltyHeaderBiz.AddPenaltyTrx(ph, system_Sale);
 
             }
+
+
             if (!ppp.System_ExtraCommission.IsNull())
             {
-                PenaltyTrx system_ExtraCommission = new PenaltyTrx(ppp.System_ExtraCommission.Id, ppp.System_ExtraCommission_RecivedAmount, ppp.System_ExtraCommission_Comment, false);
+                PenaltyTrx system_ExtraCommission = new PenaltyTrx(ppp.System_ExtraCommission.Person.Id, ppp.System_ExtraCommission.Amount, ppp.System_ExtraCommission.Comment, false);
                 PenaltyHeaderBiz.AddPenaltyTrx(ph, system_ExtraCommission);
 
             }
@@ -336,8 +350,8 @@ namespace UowLibrary.SuperLayerNS
         private static decimal get_TotalPaidOutToSystem(PersonPayingPenalty ppp)
         {
 
-            decimal totalPaidOut = ppp.System_Freight_RecivedAmount +
-                                   ppp.System_Sale_RecivedAmount;
+            decimal totalPaidOut = ppp.System_Freight.Amount +
+                                   ppp.System_Sale.Amount;
 
             return totalPaidOut;
         }
@@ -356,9 +370,9 @@ namespace UowLibrary.SuperLayerNS
         private static decimal get_TotalPaidOutToSalesMen(PersonPayingPenalty ppp)
         {
 
-            decimal totalPaidOut = ppp.Salesman_Customer_RecivedAmount +
-                                   ppp.Salesman_Deliveryman_RecivedAmount +
-                                   ppp.Salesman_Owner_RecivedAmount;
+            decimal totalPaidOut = ppp.Salesman_Customer.Amount +
+                                   ppp.Salesman_Deliveryman.Amount +
+                                   ppp.Salesman_Owner.Amount;
 
             return totalPaidOut;
         }
@@ -366,9 +380,9 @@ namespace UowLibrary.SuperLayerNS
         private static decimal get_TotalPaidOut_To_Deliveryman_Owner_Customer(PersonPayingPenalty ppp)
         {
 
-            decimal totalPaidOut = ppp.Deliveryman_RecivedAmount +
-                                   ppp.Customer_RecivedAmount +
-                                   ppp.Owner_RecivedAmount;
+            decimal totalPaidOut = ppp.Deliveryman.Amount +
+                                   ppp.Customer.Amount +
+                                   ppp.Owner.Amount;
             return totalPaidOut;
         }
 
@@ -385,12 +399,12 @@ namespace UowLibrary.SuperLayerNS
 
             if (extraCommission > 0)
             {
-                ppp.System_ExtraCommission = systemPerson;
+                ppp.System_ExtraCommission.Person = systemPerson;
                 ppp.System_ExtraCommission.IsNullThrowException();
 
-                ppp.System_ExtraCommission_Comment = "This is Extra Left Over Money";
-                ppp.System_ExtraCommission_RecivedAmount = extraCommission;
-                ppp.System_ExtraCommission_Pct_Of_Total = extraCommission / totalPaymentAmount * 100;
+                ppp.System_ExtraCommission.Comment = "This is Extra Left Over Money";
+                ppp.System_ExtraCommission.Amount = extraCommission;
+                ppp.System_ExtraCommission.Percent = extraCommission / totalPaymentAmount * 100;
 
             }
 
@@ -400,9 +414,9 @@ namespace UowLibrary.SuperLayerNS
         private static decimal get_ActualCommissionPayableForFreight_Amount(PersonPayingPenalty ppp)
         {
             decimal Actual_CommissionPayableForFreight_Amount =
-                ppp.Salesman_Deliveryman_RecivedAmount +
-                ppp.Deliveryman_RecivedAmount +
-                ppp.System_Freight_RecivedAmount;
+                ppp.Salesman_Deliveryman.Amount +
+                ppp.Deliveryman.Amount +
+                ppp.System_Freight.Amount;
 
             return Actual_CommissionPayableForFreight_Amount;
         }
@@ -410,9 +424,9 @@ namespace UowLibrary.SuperLayerNS
         private static decimal get_ActualCommissionPayableOnSaleFreight_Amount(PersonPayingPenalty ppp)
         {
             decimal Actual_CommissionPayableForSaleFreight_Amount =
-                ppp.Salesman_Owner_RecivedAmount +
-                ppp.Salesman_Customer_RecivedAmount +
-                ppp.System_Sale_RecivedAmount;
+                ppp.Salesman_Owner.Amount +
+                ppp.Salesman_Customer.Amount +
+                ppp.System_Sale.Amount;
 
             return Actual_CommissionPayableForSaleFreight_Amount;
         }
@@ -435,49 +449,157 @@ namespace UowLibrary.SuperLayerNS
             if (!buySellDoc.DeliverymanId.IsNullOrWhiteSpace())
             {
 
-                ppp.Deliveryman = DeliverymanBiz.GetPersonForPlayer(buySellDoc.DeliverymanId);
+                ppp.Deliveryman.Person = DeliverymanBiz.GetPersonForPlayer(buySellDoc.DeliverymanId);
                 ppp.Deliveryman.IsNullThrowException();
-                ppp.Deliveryman_Comment = "You are the Deliveryman";
+                ppp.Deliveryman.Comment = "Deliveryman";
 
-                ppp.Deliveryman_RecivedAmount = totalPaymentAmount - maxCommission_Amount;
+                ppp.Deliveryman.Amount = totalPaymentAmount - maxCommission_Amount;
 
-                if (ppp.Deliveryman_RecivedAmount > 0)
-                    ppp.Deliveryman_Pct_Of_Total = Math.Round(ppp.Deliveryman_RecivedAmount / totalPaymentAmount * 100, 2);
+                if (ppp.Deliveryman.Amount > 0)
+                    ppp.Deliveryman.Percent = Math.Round(ppp.Deliveryman.Amount / totalPaymentAmount * 100, 2);
 
             }
         }
 
         private void calculate_SystemCommission_OnSale(BuySellDoc buySellDoc, Person systemPerson, PersonPayingPenalty ppp, decimal totalPaymentAmount)
         {
-            ppp.ClearSystem_Sale();
-            ppp.System_Sale = systemPerson;
+            ppp.System_Sale.Clear();
+            ppp.System_Sale.Person = systemPerson;
             ppp.System_Sale.IsNullThrowException();
-            ppp.System_Sale_Comment = "This is System Commission (Sale)";
-            ppp.System_Sale_Pct_Of_Total = buySellDoc.System_Commission_For_SaleWithoutFreight.Percent;
+            ppp.System_Sale.Comment = "System Commission (Sale)";
+            ppp.System_Sale.Percent = buySellDoc.System_Commission_For_SaleWithoutFreight.Percent;
 
-            if (ppp.System_Sale_Pct_Of_Total == 0)
+            if (ppp.System_Sale.Percent == 0)
                 return;
 
-            ppp.System_Sale_RecivedAmount = Math.Round(totalPaymentAmount * ppp.System_Sale_Pct_Of_Total / 100, 2);
+            ppp.System_Sale.Amount = Math.Round(totalPaymentAmount * ppp.System_Sale.Percent / 100, 2);
 
         }
 
         private void calculate_SystemCommission_OnFreight(BuySellDoc buySellDoc, Person systemPerson, PersonPayingPenalty ppp, decimal totalPaymentAmount)
         {
 
-            ppp.ClearSystem_Freight();
-            ppp.System_Freight = systemPerson;
+            ppp.System_Freight.Clear();
+            ppp.System_Freight.Person = systemPerson;
             ppp.System_Freight.IsNullThrowException();
-            ppp.System_Freight_Comment = "This Is System Commission (Freight)";
-            ppp.System_Freight_Pct_Of_Total = buySellDoc.System_Commission_For_Freight.Percent;
+            ppp.System_Freight.Comment = "System Commission (Freight)";
+            ppp.System_Freight.Percent = buySellDoc.System_Commission_For_Freight.Percent;
 
-            if (ppp.System_Freight_Pct_Of_Total == 0)
+            if (ppp.System_Freight.Percent == 0)
                 return;
 
-            ppp.System_Freight_RecivedAmount = Math.Round(totalPaymentAmount * ppp.System_Freight_Pct_Of_Total / 100, 2);
+            ppp.System_Freight.Amount = Math.Round(totalPaymentAmount * ppp.System_Freight.Percent / 100, 2);
         }
 
 
+
+
+        private void calculate_Super_Super_DeliverySalesman_Penalty(BuySellDoc buySellDoc, PersonPayingPenalty ppp, decimal totalPaymentAmount)
+        {
+            if (!buySellDoc.DeliverymanId.IsNullOrWhiteSpace())
+            {
+                if (!buySellDoc.SuperSuperDeliverymanSalesmanId.IsNullOrWhiteSpace())
+                {
+                    ppp.Super_Super_Salesman_Deliveryman.Clear();
+                    ppp.Super_Super_Salesman_Deliveryman.Person = SalesmanBiz.GetPersonForPlayer(buySellDoc.SuperSuperDeliverymanSalesmanId);
+                    ppp.Super_Super_Salesman_Deliveryman.IsNullThrowException();
+                    ppp.Super_Super_Salesman_Deliveryman.Comment = "Super Super Deliveryman Salesman";
+                    ppp.Super_Super_Salesman_Deliveryman.Percent = buySellDoc.DeliverymanSalesmanCommission.Percent;
+
+                    if (ppp.Super_Super_Salesman_Deliveryman.Percent == 0)
+                        return;
+
+                    ppp.Super_Super_Salesman_Deliveryman.Amount = Math.Round(ppp.Super_Super_Salesman_Deliveryman.Percent * totalPaymentAmount / 100, 2);
+                }
+            }
+        }
+
+        private void calculate_Super_DeliverySalesman_Penalty(BuySellDoc buySellDoc, PersonPayingPenalty ppp, decimal totalPaymentAmount)
+        {
+            if (!buySellDoc.DeliverymanId.IsNullOrWhiteSpace())
+            {
+                if (!buySellDoc.SuperDeliverymanSalesmanId.IsNullOrWhiteSpace())
+                {
+                    ppp.Super_Salesman_Deliveryman.Clear();
+                    ppp.Super_Salesman_Deliveryman.Person = SalesmanBiz.GetPersonForPlayer(buySellDoc.SuperDeliverymanSalesmanId);
+                    ppp.Super_Salesman_Deliveryman.IsNullThrowException();
+                    ppp.Super_Salesman_Deliveryman.Comment = "Super Deliveryman Salesman";
+                    ppp.Super_Salesman_Deliveryman.Percent = buySellDoc.DeliverymanSalesmanCommission.Percent;
+
+                    if (ppp.Super_Salesman_Deliveryman.Percent == 0)
+                        return;
+
+                    ppp.Super_Salesman_Deliveryman.Amount = Math.Round(ppp.Super_Salesman_Deliveryman.Percent * totalPaymentAmount / 100, 2);
+                }
+            }
+        }
+
+        private void calculate_Super_Super_CustomerSalesmanPenalty(BuySellDoc buySellDoc, PersonPayingPenalty ppp, decimal totalPaymentAmount)
+        {
+            if (!buySellDoc.SuperSuperCustomerSalesmanId.IsNullOrWhiteSpace())
+            {
+                ppp.Super_Super_Salesman_Customer.Clear();
+                ppp.Super_Super_Salesman_Customer.Person = SalesmanBiz.GetPersonForPlayer(buySellDoc.SuperSuperCustomerSalesmanId);
+                ppp.Super_Super_Salesman_Customer.Person.IsNullThrowException();
+                ppp.Super_Super_Salesman_Customer.Comment = "Super Super Customer Salesman";
+                ppp.Super_Super_Salesman_Customer.Percent = buySellDoc.CustomerSalesmanCommission.Percent;
+
+                if (ppp.Super_Super_Salesman_Customer.Percent == 0)
+                    return;
+                ppp.Super_Super_Salesman_Customer.Amount = Math.Round(totalPaymentAmount * ppp.Super_Super_Salesman_Customer.Percent / 100, 2);
+            }
+        }
+
+        private void calculate_Super_CustomerSalesmanPenalty(BuySellDoc buySellDoc, PersonPayingPenalty ppp, decimal totalPaymentAmount)
+        {
+            if (!buySellDoc.SuperCustomerSalesmanId.IsNullOrWhiteSpace())
+            {
+                ppp.Super_Salesman_Customer.Clear();
+                ppp.Super_Salesman_Customer.Person = SalesmanBiz.GetPersonForPlayer(buySellDoc.SuperCustomerSalesmanId);
+                ppp.Super_Salesman_Customer.Person.IsNullThrowException();
+                ppp.Super_Salesman_Customer.Comment = "Super Customer Salesman";
+                ppp.Super_Salesman_Customer.Percent = buySellDoc.CustomerSalesmanCommission.Percent;
+
+                if (ppp.Super_Salesman_Customer.Percent == 0)
+                    return;
+
+                ppp.Super_Salesman_Customer.Amount = Math.Round(totalPaymentAmount * ppp.Super_Salesman_Customer.Percent / 100, 2);
+            }
+        }
+
+        private void calculate_Super_Super_OwnerSalesmanPenalty(BuySellDoc buySellDoc, PersonPayingPenalty ppp, decimal totalPaymentAmount)
+        {
+            if (!buySellDoc.SuperSuperOwnerSalesmanId.IsNullOrWhiteSpace())
+            {
+                ppp.Super_Super_Salesman_Owner.Clear();
+                ppp.Super_Super_Salesman_Owner.Person = SalesmanBiz.GetPersonForPlayer(buySellDoc.SuperSuperOwnerSalesmanId);
+                ppp.Super_Super_Salesman_Owner.IsNullThrowException();
+                ppp.Super_Super_Salesman_Owner.Comment = "Super Super Owner Salesman";
+                ppp.Super_Super_Salesman_Owner.Percent = buySellDoc.OwnerSalesmanCommission.Percent;
+
+                if (ppp.Super_Super_Salesman_Owner.Percent == 0)
+                    return;
+
+                ppp.Super_Super_Salesman_Owner.Amount = Math.Round(totalPaymentAmount * ppp.Super_Super_Salesman_Owner.Percent / 100, 2);
+            }
+        }
+
+        private void calculate_Super_OwnerSalesmanPenalty(BuySellDoc buySellDoc, PersonPayingPenalty ppp, decimal totalPaymentAmount)
+        {
+            if (!buySellDoc.SuperOwnerSalesmanId.IsNullOrWhiteSpace())
+            {
+                ppp.Super_Salesman_Owner.Clear();
+                ppp.Super_Salesman_Owner.Person = SalesmanBiz.GetPersonForPlayer(buySellDoc.SuperOwnerSalesmanId);
+                ppp.Super_Salesman_Owner.IsNullThrowException();
+                ppp.Super_Salesman_Owner.Comment = "Super Owner Salesman";
+                ppp.Super_Salesman_Owner.Percent = buySellDoc.OwnerSalesmanCommission.Percent;
+
+                if (ppp.Super_Salesman_Owner.Percent == 0)
+                    return;
+
+                ppp.Super_Salesman_Owner.Amount = Math.Round(totalPaymentAmount * ppp.Super_Salesman_Owner.Percent / 100, 2);
+            }
+        }
 
 
 
@@ -487,16 +609,16 @@ namespace UowLibrary.SuperLayerNS
             {
                 if (!buySellDoc.DeliverymanSalesmanId.IsNullOrWhiteSpace())
                 {
-                    ppp.ClearSalesman_Deliveryman();
-                    ppp.Salesman_Deliveryman = SalesmanBiz.GetPersonForPlayer(buySellDoc.DeliverymanSalesmanId);
+                    ppp.Salesman_Deliveryman.Clear();
+                    ppp.Salesman_Deliveryman.Person = SalesmanBiz.GetPersonForPlayer(buySellDoc.DeliverymanSalesmanId);
                     ppp.Salesman_Deliveryman.IsNullThrowException();
-                    ppp.Salesman_Deliveryman_Comment = "You are the Deliveryman Salesman";
-                    ppp.Salesman_Deliveryman_Pct_Of_Total = buySellDoc.DeliverymanSalesmanCommission.Percent;
+                    ppp.Salesman_Deliveryman.Comment = "Deliveryman Salesman";
+                    ppp.Salesman_Deliveryman.Percent = buySellDoc.DeliverymanSalesmanCommission.Percent;
 
-                    if (ppp.Salesman_Deliveryman_Pct_Of_Total == 0)
+                    if (ppp.Salesman_Deliveryman.Percent == 0)
                         return;
 
-                    ppp.Salesman_Deliveryman_RecivedAmount = Math.Round(ppp.Salesman_Deliveryman_Pct_Of_Total * totalPaymentAmount / 100, 2);
+                    ppp.Salesman_Deliveryman.Amount = Math.Round(ppp.Salesman_Deliveryman.Percent * totalPaymentAmount / 100, 2);
                 }
             }
         }
@@ -505,15 +627,15 @@ namespace UowLibrary.SuperLayerNS
         {
             if (!buySellDoc.CustomerSalesmanId.IsNullOrWhiteSpace())
             {
-                ppp.ClearSalesman_Customer();
-                ppp.Salesman_Customer = SalesmanBiz.GetPersonForPlayer(buySellDoc.CustomerSalesmanId);
-                ppp.Salesman_Customer.IsNullThrowException();
-                ppp.Salesman_Customer_Comment = "You are the Customer Salesman";
-                ppp.Salesman_Customer_Pct_Of_Total = buySellDoc.CustomerSalesmanCommission.Percent;
+                ppp.Salesman_Customer.Clear();
+                ppp.Salesman_Customer.Person = SalesmanBiz.GetPersonForPlayer(buySellDoc.CustomerSalesmanId);
+                ppp.Salesman_Customer.Person.IsNullThrowException();
+                ppp.Salesman_Customer.Comment = "Customer Salesman";
+                ppp.Salesman_Customer.Percent = buySellDoc.CustomerSalesmanCommission.Percent;
 
-                if (ppp.Salesman_Customer_Pct_Of_Total == 0)
+                if (ppp.Salesman_Customer.Percent == 0)
                     return;
-                ppp.Salesman_Customer_RecivedAmount = Math.Round(totalPaymentAmount * ppp.Salesman_Customer_Pct_Of_Total / 100, 2);
+                ppp.Salesman_Customer.Amount = Math.Round(totalPaymentAmount * ppp.Salesman_Customer.Percent / 100, 2);
             }
         }
 
@@ -522,94 +644,19 @@ namespace UowLibrary.SuperLayerNS
 
             if (!buySellDoc.OwnerSalesmanId.IsNullOrWhiteSpace())
             {
-                ppp.ClearSalesman_Owner();
-                ppp.Salesman_Owner = SalesmanBiz.GetPersonForPlayer(buySellDoc.OwnerSalesmanId);
+                ppp.Salesman_Owner.Clear();
+                ppp.Salesman_Owner.Person = SalesmanBiz.GetPersonForPlayer(buySellDoc.OwnerSalesmanId);
                 ppp.Salesman_Owner.IsNullThrowException();
-                ppp.Salesman_Owner_Comment = "You are the Owner Salesman";
-                ppp.Salesman_Owner_Pct_Of_Total = buySellDoc.OwnerSalesmanCommission.Percent;
+                ppp.Salesman_Owner.Comment = "Owner Salesman";
+                ppp.Salesman_Owner.Percent = buySellDoc.OwnerSalesmanCommission.Percent;
 
-                if (ppp.Salesman_Owner_Pct_Of_Total == 0)
+                if (ppp.Salesman_Owner.Percent == 0)
                     return;
 
-                ppp.Salesman_Owner_RecivedAmount = Math.Round(totalPaymentAmount * ppp.Salesman_Owner_Pct_Of_Total / 100, 2);
+                ppp.Salesman_Owner.Amount = Math.Round(totalPaymentAmount * ppp.Salesman_Owner.Percent / 100, 2);
             }
         }
 
-        private void createMessageFor(RejectCancelDeleteInbetweenClass rcdbc, BuySellDoc buySellDoc)
-        {
-            string fromPersonId = "";
-            string toPersonId = "";
-            Person fromPerson = null;
-            List<string> listOfToPeople = new List<string>();
-
-            string buySellDocId = buySellDoc.Id;
-            Person ownerPerson = OwnerBiz.GetPersonForPlayer(buySellDoc.OwnerId);
-            Person customerPerson = CustomerBiz.GetPersonForPlayer(buySellDoc.CustomerId);
-
-            ownerPerson.IsNullThrowException();
-            customerPerson.IsNullThrowException();
-            switch (buySellDoc.BuySellDocumentTypeEnum)
-            {
-                case BuySellDocumentTypeENUM.Sale:
-                    fromPersonId = ownerPerson.Id;
-                    fromPerson = ownerPerson;
-                    toPersonId = customerPerson.Id;
-                    listOfToPeople.Add(toPersonId);
-                    break;
-
-                case BuySellDocumentTypeENUM.Purchase:
-                    toPersonId = ownerPerson.Id;
-                    fromPersonId = customerPerson.Id;
-                    fromPerson = customerPerson;
-                    listOfToPeople.Add(toPersonId);
-
-                    break;
-                case BuySellDocumentTypeENUM.Delivery:
-                    Person deliveryPerson = DeliverymanBiz.GetPersonForPlayer(buySellDoc.DeliverymanId);
-                    deliveryPerson.IsNullThrowException();
-
-                    fromPersonId = deliveryPerson.Id;
-                    fromPerson = deliveryPerson;
-                    listOfToPeople.Add(ownerPerson.Id);
-                    listOfToPeople.Add(customerPerson.Id);
-                    break;
-
-                case BuySellDocumentTypeENUM.Unknown:
-                default:
-                    throw new Exception("Unknown document type");
-            }
-
-            Message message = new Message(
-                fromPersonId,
-                fromPerson,
-                listOfToPeople,
-                rcdbc.Subject,
-                rcdbc.Comment,
-                MessageENUM.Free,
-                null);
-
-            if (buySellDoc.Messages.IsNull())
-                buySellDoc.Messages = new List<Message>();
-
-            buySellDoc.Messages.Add(message);
-            message.BuySellDocId = buySellDoc.Id;
-
-            message.ListOfToPeopleId.IsNullOrEmptyThrowException();
-            foreach (var pplId in message.ListOfToPeopleId)
-            {
-                Person person = PersonBiz.Find(pplId);
-                person.IsNullThrowException();
-
-                PeopleMessage pplMsg = new PeopleMessage();
-                pplMsg.IsNullThrowException();
-                pplMsg.PersonId = pplId;
-                pplMsg.Person = person;
-                pplMsg.MessageId = message.Id;
-                PeopleMessageBiz.Create(pplMsg);
-
-            }
-            MessageBiz.Create(message);
-        }
 
 
         #endregion

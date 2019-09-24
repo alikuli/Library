@@ -3,225 +3,386 @@
 
 
 @*@if (Model.UserParameter.IsSalesman)*@
-@if (true)
-{
 
-    if (Model.CustomerSalesmanId == Model.UserParameter.SalesmanId)
-    {
-
-
-        @*<div class="card flex-md-row mb-4 shadow-sm h-md-250">
-                <div class="card-body d-flex flex-column align-items-start">
-                    <strong class="d-inline-block mb-2 text-success">Health</strong>
-                    <h6 class="mb-0">
-                        <a class="text-dark" href="#">Food for Thought: Diet and Brain Health</a>
-                    </h6>
-                    <div class="mb-1 text-muted small">Nov 11</div>
-                    <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                    <a class="btn btn-outline-success btn-sm" href="http://www.jquery2dotnet.com/">Continue reading</a>
-                </div>
-                <img class="card-img-right flex-auto d-none d-lg-block" alt="Thumbnail [200x250]" src="//placeimg.com/250/250/nature" style="width: 200px; height: 250px;">
-            </div>*@
+@*@if (Model.CustomerSalesmanId == Model.UserParameter.SalesmanId)
+    {*@
 
 
 
 
 
-        <div class="card lh-0-75-em">
-            <div class="card-header background-ltgrey text-center">
-                <strong>Customer Commission</strong>
-            </div>
+<div class="card lh-0-75-em">
+    <div class="card-header background-ltgrey text-center">
+        <strong>Customer Commission</strong>
+    </div>
 
-            <div class="card-Body p-2 text-center">
-                <div class="card-title ">
-                    <small><strong>Customer</strong> belongs to you.</small>
-                </div>
-
-                <label><small><strong>Sale:</strong></small> </label>
-                <span><small>@Model.TotalInvoiceLessFreight.ToString().ToRuppeeFormat()</small> </span>
-                <br />
-
-                <label><small><strong>Percent:</strong></small> </label>
-                <span><small>@Model.CustomerSalesmanCommission.Percent%</small> </span>
-                <br />
-
-                <label><small><strong>Commission:</strong></small> </label>
-                <span class="background-ltblue pl-1 pr-1"><small>@Model.CustomerSalesmanCommission.Amount.ToString().ToRuppeeFormat()</small> </span>
-
-            </div>
+    <div class="card-Body p-2 text-center">
+        <div class="card-title ">
+            <small><strong>Customer</strong> belongs to you.</small>
         </div>
 
+        <label><small><strong>Sale:</strong></small> </label>
+        <span><small>@Model.TotalInvoiceLessFreight.ToString().ToRuppeeFormat()</small> </span>
+        <br />
 
-    }
+        <label><small><strong>Percent:</strong></small> </label>
+        <span><small>@Model.CustomerSalesmanCommission.Percent%</small> </span>
+        <br />
 
-    //if (Model.OwnerSalesmanId == Model.UserParameter.SalesmanId)
-    if (true)
-    {
+        <label><small><strong>Commission:</strong></small> </label>
+        <span class="background-ltblue pl-1 pr-1"><small>@Model.CustomerSalesmanCommission.Amount.ToString().ToRuppeeFormat()</small> </span>
 
-        <div class="card lh-0-75-em">
+    </div>
+</div>
 
-            <div class="card-header background-ltgrey text-center">
-                <strong>Seller Commission</strong>
-            </div>
 
-            <div class="card-Body p-2  text-center">
-                <div class="card-title">
-                    <small><strong>Seller</strong> belongs to you.</small>
-                </div>
-                <p>
-                    <label class=""><small><strong>Sale:</strong></small> </label>
-                    <span><small>@Model.TotalInvoiceLessFreight.ToString().ToRuppeeFormat()</small> </span>
-                </p>
-                <p>
-                    <label><small><strong>Percent:</strong></small> </label>
-                    <span><small>@Model.OwnerSalesmanCommission.Percent%</small> </span>
-                </p>
 
-                <label><small><strong>Commission:</strong></small> </label>
-                <span class="background-ltblue pl-1 pr-1"><small>@Model.OwnerSalesmanCommission.Amount.ToString().ToRuppeeFormat()</small> </span>
+@*//if (Model.OwnerSalesmanId == Model.UserParameter.SalesmanId)*@
+<div class="card lh-0-75-em">
 
-            </div>
+    <div class="card-header background-ltgrey text-center">
+        <strong>Seller Commission</strong>
+    </div>
+
+    <div class="card-Body p-2  text-center">
+        <div class="card-title">
+            <small><strong>Seller</strong> belongs to you.</small>
+        </div>
+        <p>
+            <label class=""><small><strong>Sale:</strong></small> </label>
+            <span><small>@Model.TotalInvoiceLessFreight.ToString().ToRuppeeFormat()</small> </span>
+        </p>
+        <p>
+            <label><small><strong>Percent:</strong></small> </label>
+            <span><small>@Model.OwnerSalesmanCommission.Percent%</small> </span>
+        </p>
+
+        <label><small><strong>Commission:</strong></small> </label>
+        <span class="background-ltblue pl-1 pr-1"><small>@Model.OwnerSalesmanCommission.Amount.ToString().ToRuppeeFormat()</small> </span>
+
+    </div>
+</div>
+
+
+
+<div class="card lh-0-75-em">
+
+    <div class="card-header background-ltgrey text-center">
+        <strong>Deliveryman Commission</strong>
+    </div>
+
+    <div class="card-Body p-2 text-center">
+        <div class="card-title ">
+            <small><strong>Deliveryman</strong> belongs to you.</small>
         </div>
 
-    }
+        <label><small><strong>Sale:</strong></small> </label>
+        <span><small>@Model.Freight_Accepted.ToString().ToRuppeeFormat()</small> </span>
+        <br />
+
+        <label><small><strong>Percent:</strong></small> </label>
+        <span><small>@Model.DeliverymanSalesmanCommission.Percent%</small> </span>
+        <br />
+
+        <label><small><strong>Commission:</strong></small> </label>
+        <span class="background-ltblue pl-1 pr-1"><small>@Model.DeliverymanSalesmanCommission.Amount.ToString().ToRuppeeFormat()</small> </span>
+
+    </div>
+</div>
 
 
-    //if (Model.DeliverymanSalesmanId == Model.UserParameter.SalesmanId)
-    if (true)
-    {
 
-        <div class="card lh-0-75-em">
 
-            <div class="card-header background-ltgrey text-center">
-                <strong>Deliveryman Commission</strong>
-            </div>
+<div class="container p-2 background-ltblue mt-2">
 
-            <div class="card-Body p-2 text-center">
-                <div class="card-title ">
-                    <small><strong>Deliveryman</strong> belongs to you.</small>
-                </div>
+    <div class="card mt-2">
+        <strong class="card-h background-ltgrey p-1">
+            <label>Owner Salesman Commission</label>
+        </strong>
+        @Html.DropDownListFor(x => x.OwnerSalesmanId,
+                (@Model.SelectListOwnerSalesman as IEnumerable<SelectListItem>),
+                       "Select Owner's Salesman",
+               new { @class = "form-control", title = "This is customer's salesman.", data_placement = "right", disabled = "disabled" })
+        <div class="card-Body p-2">
+            @Model.OwnerSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+            (@Model.OwnerSalesmanCommission.Percent%)
 
-                <label><small><strong>Sale:</strong></small> </label>
-                <span><small>@Model.Freight_Accepted.ToString().ToRuppeeFormat()</small> </span>
-                <br />
-
-                <label><small><strong>Percent:</strong></small> </label>
-                <span><small>@Model.DeliverymanSalesmanCommission.Percent%</small> </span>
-                <br />
-
-                <label><small><strong>Commission:</strong></small> </label>
-                <span class="background-ltblue pl-1 pr-1"><small>@Model.DeliverymanSalesmanCommission.Amount.ToString().ToRuppeeFormat()</small> </span>
-
-            </div>
         </div>
+    </div>
 
 
-
-    }
 
     <div class="container p-2 background-ltblue mt-2">
 
         <div class="card mt-2">
             <strong class="card-h background-ltgrey p-1">
-                <label>Owner Salesman Commission</label>
+                <label>Owner Super Salesman Commission</label>
             </strong>
-            @Html.DropDownListFor(x => x.OwnerSalesmanId,
-                (@Model.SelectListOwnerSalesman as IEnumerable<SelectListItem>),
-                       "Select Owner's Salesman",
-               new { @class = "form-control", title = "This is customer's salesman.", data_placement = "right", disabled = "disabled" })
+
+            @if (Model.SuperOwnerSalesman.IsNull())
+            {
+                <div class="card-title bg-light p-1">
+                    Super Owner Salesman is NULL
+                </div>
+            }
+            else
+            {
+                <div class="card-title bg-light p-1">
+                    @Model.SuperOwnerSalesman.FullName()
+                </div>
+            }
             <div class="card-Body p-2">
-                @Model.OwnerSalesmanCommission.Amount.ToString().ToRuppeeFormat()
-                (@Model.OwnerSalesmanCommission.Percent%)
+                @Model.SuperOwnerSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+                (@Model.SuperOwnerSalesmanCommission.Percent.ToString("N2")%)
 
             </div>
         </div>
+    </div>
 
 
+
+    <div class="container p-2 background-ltblue mt-2">
 
         <div class="card mt-2">
             <strong class="card-h background-ltgrey p-1">
-                <label>Customer Salesman Commission</label>
+                <label>Owner Super Super Salesman Commission</label>
             </strong>
-            @Html.DropDownListFor(x => x.CustomerSalesmanId,
+
+            @if (Model.SuperSuperOwnerSalesman.IsNull())
+            {
+                <div class="card-title bg-light p-1">
+                    Super Super Owner Salesman is NULL
+                </div>
+
+            }
+            else
+            {
+                <div class="card-title bg-light p-1">
+                    @Model.SuperSuperOwnerSalesman.FullName()
+
+                </div>
+            }
+            <div class="card-Body p-2">
+                @Model.SuperSuperOwnerSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+                (@Model.SuperSuperOwnerSalesmanCommission.Percent%)
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="card mt-2">
+        <strong class="card-h background-ltgrey p-1">
+            <label>Customer Salesman Commission</label>
+        </strong>
+        @Html.DropDownListFor(x => x.CustomerSalesmanId,
                 (@Model.SelectListCustomerSalesman as IEnumerable<SelectListItem>),
                        "Select Customer's Salesman",
                new { @class = "form-control", title = "This is customer's salesman.", data_placement = "right", disabled = "disabled" })
-            <div class="card-Body p-2">
-                @Model.CustomerSalesmanCommission.Amount.ToString().ToRuppeeFormat()
-                (@Model.CustomerSalesmanCommission.Percent%)
+        <div class="card-Body p-2">
+            @Model.CustomerSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+            (@Model.CustomerSalesmanCommission.Percent%)
 
-            </div>
         </div>
+    </div>
 
 
+
+    <div class="container p-2 background-ltblue mt-2">
 
         <div class="card mt-2">
             <strong class="card-h background-ltgrey p-1">
-                <label>Deliveryman Salesman Commission</label>
+                <label>Customer Super Salesman Commission</label>
             </strong>
-            @Html.DropDownListFor(x => x.DeliverymanSalesmanId,
+
+            @if (Model.SuperCustomerSalesman.IsNull())
+            {
+                <div class="card-title bg-light p-1">
+                    Customer Super Salesman is NULL
+                </div>
+
+            }
+            else
+            {
+                <div>
+                    @Model.SuperCustomerSalesman.FullName()
+
+                </div>
+            }
+            <div class="card-Body p-2">
+                @Model.SuperCustomerSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+                (@Model.SuperCustomerSalesmanCommission.Percent%)
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container p-2 background-ltblue mt-2">
+
+        <div class="card mt-2">
+            <strong class="card-h background-ltgrey p-1">
+                <label>Customer Super Super Salesman Commission</label>
+            </strong>
+
+            @if (Model.SuperSuperCustomerSalesman.IsNull())
+            {
+                <div class="card-title bg-light p-1">
+                    Customer Super Super Salesman is NULL
+                </div>
+
+            }
+            else
+            {
+                <div class="card-title bg-light p-1">
+
+                    @Model.SuperSuperCustomerSalesman.FullName()
+                </div>
+            }
+            <div class="card-Body p-2">
+                @Model.SuperSuperCustomerSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+                (@Model.SuperSuperCustomerSalesmanCommission.Percent%)
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="card mt-2">
+        <strong class="card-h background-ltgrey p-1">
+            <label>Deliveryman Salesman Commission</label>
+        </strong>
+        @Html.DropDownListFor(x => x.DeliverymanSalesmanId,
                 (@Model.SelectListDeliverymanSalesman as IEnumerable<SelectListItem>),
                        "Select Deliveryman's Salesman",
                new { @class = "form-control", title = "This is customer's salesman.", data_placement = "right", disabled = "disabled" })
-            <div class="card-Body p-2">
-                @Model.DeliverymanSalesmanCommission.Amount.ToString().ToRuppeeFormat()
-                (@Model.DeliverymanSalesmanCommission.Percent%)
+        <div class="card-Body p-2">
+            @Model.DeliverymanSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+            (@Model.DeliverymanSalesmanCommission.Percent%)
 
-            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="container p-2 background-ltblue mt-2">
+
+    <div class="card mt-2">
+        <strong class="card-h background-ltgrey p-1">
+            <label>Deliveryman Super Salesman Commission</label>
+        </strong>
+
+        @if (Model.SuperDeliverymanSalesman.IsNull())
+        { }
+        else
+        {
+            Model.SuperDeliverymanSalesman.FullName();
+        }
+        <div class="card-Body p-2">
+            @Model.SuperDeliverymanSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+            (@Model.SuperDeliverymanSalesmanCommission.Percent%)
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container p-2 background-ltblue mt-2">
+
+    <div class="card mt-2">
+        <strong class="card-h background-ltgrey p-1">
+            <label>Deliveryman Super Super Salesman Commission</label>
+        </strong>
+
+        @if (Model.SuperSuperDeliverymanSalesman.IsNull())
+        { }
+        else
+        {
+            Model.SuperSuperDeliverymanSalesman.FullName();
+        }
+        <div class="card-Body p-2">
+            @Model.SuperSuperDeliverymanSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+            (@Model.SuperSuperDeliverymanSalesmanCommission.Percent%)
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="background-yellow p-2 mt-2">
+    <div class="card mt-2">
+        <strong class="card-h background-ltgrey p-1">
+            <label>System Commission For Sale W/O Freight</label>
+        </strong>
+        <div class="card-Body p-2">
+            @Model.System_Commission_For_SaleWithoutFreight.Amount.ToString().ToRuppeeFormat()
+            (@Model.System_Commission_For_SaleWithoutFreight.Percent%)
+
         </div>
     </div>
 
 
-    <div class="background-yellow p-2 mt-2">
-        <div class="card mt-2">
-            <strong class="card-h background-ltgrey p-1">
-                <label>System Commission For Sale W/O Freight</label>
-            </strong>
-            <div class="card-Body p-2">
-                @Model.System_Commission_For_SaleWithoutFreight.Amount.ToString().ToRuppeeFormat()
-                (@Model.System_Commission_For_SaleWithoutFreight.Percent%)
+    <div class="card mt-2">
+        <strong class="card-h background-ltgrey p-1">
+            <label>System Commission For Freight</label>
+        </strong>
+        <div class="card-Body p-2">
+            @Model.System_Commission_For_Freight.Amount.ToString().ToRuppeeFormat()
+            (@Model.System_Commission_For_Freight.Percent%)
 
-            </div>
         </div>
-
-
-        <div class="card mt-2">
-            <strong class="card-h background-ltgrey p-1">
-                <label>System Commission For Freight</label>
-            </strong>
-            <div class="card-Body p-2">
-                @Model.System_Commission_For_Freight.Amount.ToString().ToRuppeeFormat()
-                (@Model.System_Commission_For_Freight.Percent%)
-
-            </div>
-        </div>
-
     </div>
 
-    <div class="background-Red p-2 mt-2">
-        <div class="card mt-2">
-            <strong class="card-h background-ltgrey p-1">
-                <label>Total Charged To Owner</label>
-            </strong>
-            <div class="card-Body p-2">
-                @Model.Total_Charged_To_Owner.Amount.ToString().ToRuppeeFormat()
-                (@Model.Total_Charged_To_Owner.Percent%)
+</div>
 
-            </div>
+<div class="background-Red p-2 mt-2">
+    <div class="card mt-2">
+        <strong class="card-h background-ltgrey p-1">
+            <label>Total Charged To Owner</label>
+        </strong>
+        <div class="card-Body p-2">
+            @Model.Total_Charged_To_Owner.Amount.ToString().ToRuppeeFormat()
+            (@Model.Total_Charged_To_Owner.Percent%)
+
         </div>
-
-
-        <div class="card mt-2">
-            <strong class="card-h background-ltgrey p-1">
-                <label>Total Charged To Deliverymant</label>
-            </strong>
-            <div class="card-Body p-2">
-                @Model.Total_Charged_To_Deliveryman.Amount.ToString().ToRuppeeFormat()
-                (@Model.Total_Charged_To_Deliveryman.Percent%)
-
-            </div>
-        </div>
-
     </div>
-}
+
+
+    <div class="card mt-2">
+        <strong class="card-h background-ltgrey p-1">
+            <label>Total Charged To Deliverymant</label>
+        </strong>
+        <div class="card-Body p-2">
+            @Model.Total_Charged_To_Deliveryman.Amount.ToString().ToRuppeeFormat()
+            (@Model.Total_Charged_To_Deliveryman.Percent%)
+
+        </div>
+    </div>
+
+</div>
+
 

@@ -1,8 +1,4 @@
-﻿using AliKuli.Extentions;
-using ModelsClassLibrary.ModelsNS.DocumentsNS.GlobalObjectNS;
-using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
-using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
-using System;
+﻿using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using System.Web.Mvc;
 
 namespace MarketPlace.Web4.Controllers
@@ -23,16 +19,15 @@ namespace MarketPlace.Web4.Controllers
 
         private void getUserMoneyAccount()
         {
-
-
-
             GlobalObject globalObject = SuperCashBiz.GetGlobalObject();
             //ViewBag.MoneyItemParent = globalObject;
             ViewBag.GlobalObject = globalObject;
             string customerMsg = string.Format("You can Buy. Your balance is {0:N2}", globalObject.Money_User.Refundable.MoneyAmount);
             ErrorsGlobal.AddMessage(customerMsg);
-
             ErrorsGlobal.MemorySave();
+
         }
+
+
     }
 }

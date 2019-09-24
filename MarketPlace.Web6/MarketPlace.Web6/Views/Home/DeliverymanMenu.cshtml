@@ -1,0 +1,30 @@
+﻿@model ModelsClassLibrary.ModelsNS.GlobalObjectNS.GlobalObject
+@{
+    ViewBag.Title = "Product Menu";
+}
+
+<h2>Product Menu</h2>
+
+
+@using (Html.BeginForm())
+{
+
+    <div class="">
+        <hr />
+
+        <h3 class="text-center">Deliveryman</h3>
+
+        <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("GetAllOrdersReadyForShipment", "buyselldocs", null)">Open Deliveries</a>
+        @if (Model.IsAdmin)
+        {
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("Index", "FreightOfferTrxs", null)">Freight Offer Trxs</a>
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("Index", "VehicalTypes", null)">Vehical Types</a>
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("InitializeDb", "VehicalTypes", null)">Initialize Vehical Types</a>
+        }
+
+
+
+
+    </div>
+}
+

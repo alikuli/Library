@@ -1,12 +1,15 @@
-﻿using DalLibrary.Interfaces;
+﻿using AliKuli.Extentions;
+using DalLibrary.Interfaces;
+using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
+using System.Linq;
+using System.Web.Mvc;
 using UowLibrary.AddressNS;
+using UowLibrary.CashTtxNS;
 using UowLibrary.ParametersNS;
-using UowLibrary.PlayersNS.PersonNS;
 using UowLibrary.PlayersNS.PlayerAbstractCategoryNS;
 using UowLibrary.PlayersNS.SalesmanCategoryNS;
-using AliKuli.Extentions;
-using UowLibrary.CashTtxNS;
+
 
 namespace UowLibrary.PlayersNS.SalesmanNS
 {
@@ -24,17 +27,28 @@ namespace UowLibrary.PlayersNS.SalesmanNS
         }
 
 
-        public SalesmanCategoryBiz SalesmanCategoryBiz 
-        { 
-            get 
+        public SalesmanCategoryBiz SalesmanCategoryBiz
+        {
+            get
             {
                 _salesmanCategoryBiz.IsNullThrowException();
                 _salesmanCategoryBiz.UserId = UserId;
                 _salesmanCategoryBiz.UserName = UserName;
 
-                return _salesmanCategoryBiz; 
-            } 
+                return _salesmanCategoryBiz;
+            }
         }
+
+
+        public SelectList SelectListSuperSalesmen()
+        {
+            string salesmanCategory = SalesmanCategoryENUM.SuperSalesman.ToString().ToTitleSentance().ToLower();
+            IQueryable<Salesman> data = FindAll().Where(x => x.SalesmanCategory.Name.ToLower() == salesmanCategory);
+            SelectList selectList = SelectList_Engine(data);
+            return selectList;
+        }
+
+
 
     }
 }

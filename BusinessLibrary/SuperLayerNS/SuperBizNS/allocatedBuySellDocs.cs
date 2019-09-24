@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.UtilitiesNS.RandomNumberGeneratorNS;
 using EnumLibrary.EnumNS;
+using EnumLibrary.EnumNS.VerificationNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS;
 using ModelsClassLibrary.ModelsNS.CashNS.CashEncashmentTrxNS;
@@ -9,6 +10,8 @@ using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellItemNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
+using ModelsClassLibrary.ModelsNS.ServiceRequestNS.ServiceRequestHdrNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -199,6 +202,9 @@ namespace UowLibrary.SuperLayerNS
                 BuySellDocBiz.GetDefaultVehicalType(sale);
                 //add the owners address
                 sale.AddressShipFromId = productChild.ShipFromAddressId;
+
+                sale.RequestUnconfirmed.SetToTodaysDate(UserName, UserId);
+
                 BuySellDocBiz.Create(sale);
                 totalThisItem++;
 
@@ -241,6 +247,8 @@ namespace UowLibrary.SuperLayerNS
 
                 BuySellDocBiz.GetDefaultVehicalType(sale);
                 sale.AddressShipFromId = productChild.ShipFromAddressId;
+
+                sale.RequestUnconfirmed.SetToTodaysDate(UserName, UserId);
 
                 BuySellDocBiz.Update(sale);
 
@@ -305,6 +313,83 @@ namespace UowLibrary.SuperLayerNS
         {
             PenaltyController penaltyController = new PenaltyController();
             //throw new NotImplementedException();
+        }
+
+        public void CreateAnIWantToBeASalesmanEntry(string UserId)
+        {
+            //get the person
+
+            if (CurrentUserParameter.IsSalesman)
+                throw new Exception("You are already a salesman!");
+
+            decimal costToBecomeASalesman = SuperBiz.GetCostToBecomeASalesman();
+
+            ServiceRequestHdrBiz.CreateAnIWantToBeASalesmanEntry(
+                CurrentUserParameter.PersonId,
+                CurrentUserParameter.SystemPersonId,
+                costToBecomeASalesman);
+
+        }
+
+
+
+
+        public List<DateStringStringBool> GetListOfPeopleWantingJobs()
+        {
+            //just get those jobs that are withing the users expertise.
+            List<ServiceRequestHdr> allServiceHeaders = new List<ServiceRequestHdr>();
+            List<ServiceRequestHdr> salesmenRequestsOnly = new List<ServiceRequestHdr>();
+            List<ServiceRequestHdr> mailerRequestsOnly = new List<ServiceRequestHdr>();
+            List<ServiceRequestHdr> sellerRequestsOnly = new List<ServiceRequestHdr>();
+            List<ServiceRequestHdr> customerRequestsOnly = new List<ServiceRequestHdr>();
+
+            IQueryable<ServiceRequestHdr> allIq = ServiceRequestHdrBiz.FindAll().Where(x => x.ServiceRequestStatusEnum == ServiceRequestStatusENUM.Open);
+            sellerRequestsOnly = allIq.Where(x => x.RequestTypeEnum == RequestTypeENUM.BecomeSeller).ToList();
+            customerRequestsOnly = allIq.Where(x => x.RequestTypeEnum == RequestTypeENUM.BecomeCustomer).ToList();
+
+            if (CurrentUserParameter.IsSuperSalesman)
+            {
+                salesmenRequestsOnly = allIq.Where(x => x.RequestTypeEnum == RequestTypeENUM.BecomeSalesman).ToList();
+
+            }
+
+            if (CurrentUserParameter.IsMailer)
+            {
+                salesmenRequestsOnly = allIq.Where(x => x.RequestTypeEnum == RequestTypeENUM.BecomeMailer).ToList();
+
+            }
+
+            //Concat
+
+            if (!salesmenRequestsOnly.IsNullOrEmpty())
+                allServiceHeaders = allServiceHeaders.Concat(salesmenRequestsOnly).ToList();
+
+            if (!mailerRequestsOnly.IsNullOrEmpty())
+                allServiceHeaders = allServiceHeaders.Concat(mailerRequestsOnly).ToList();
+
+            if (!sellerRequestsOnly.IsNullOrEmpty())
+                allServiceHeaders = allServiceHeaders.Concat(sellerRequestsOnly).ToList();
+
+            if (!customerRequestsOnly.IsNullOrEmpty())
+                allServiceHeaders = allServiceHeaders.Concat(customerRequestsOnly).ToList();
+
+            if (allServiceHeaders.IsNullOrEmpty())
+                return null;
+
+
+            List<DateStringStringBool> lstOfPplWantingJobs = new List<DateStringStringBool>();
+
+            foreach (ServiceRequestHdr srh in allServiceHeaders)
+            {
+                DateStringStringBool dssb = new DateStringStringBool(
+                    srh.MetaData.Created.Date_NotNull_Min,
+                    srh.PersonFrom.FullName(),
+                    srh.RequestTypeEnum.ToString().ToTitleSentance(),
+                    false);
+
+                lstOfPplWantingJobs.Add(dssb);
+            }
+            return lstOfPplWantingJobs;
         }
     }
 }

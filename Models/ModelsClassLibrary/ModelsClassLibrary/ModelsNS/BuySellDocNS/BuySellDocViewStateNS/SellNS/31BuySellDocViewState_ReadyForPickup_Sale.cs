@@ -37,7 +37,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
 
         public override bool HD_Show_Delivery_Format { get { return true; } }
         public override bool HD_Show_RequireInsuranace { get { return true; } }
-        //public override bool HD_Enable_RequireInsuranace { get { return true; } }
+        public override bool HD_Enable_RequireInsuranace { get { return true; } }
         public override bool HD_Show_Freight_Request_Info { get { return true; } }
         public override bool HD_Enable_Delivery_Info { get { return true; } }
 

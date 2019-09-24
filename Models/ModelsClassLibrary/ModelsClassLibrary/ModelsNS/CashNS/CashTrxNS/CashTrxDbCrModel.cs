@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
+using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.CashTrxNS;
 using ModelsClassLibrary.ModelsNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
@@ -24,7 +25,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
         }
         public CashTrxDbCrModel(List<CashTrxVM2> cashTrx, DateTime fromDate, DateTime toDate, CashTypeENUM cashTypeEnum, CashStateENUM cashStateEnum, UserParameter userParameter, bool isShowAdminReports)
         {
-            CashTrx = cashTrx;
+            CashTrxs = cashTrx;
             FromDate = fromDate;
             ToDate = toDate;
             CashTypeEnum = cashTypeEnum;
@@ -33,9 +34,10 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
             IsShowAdminReports = isShowAdminReports;
 
         }
-        public bool IsShowAdminReports { get; private set; }
 
-        //public Person Person { get; set; }
+
+
+        public bool IsShowAdminReports { get; private set; }
         UserParameter UserParameter { get; set; }
         public CashStateENUM CashStateEnum { get; set; }
 
@@ -66,8 +68,8 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
 
                 heading += " for " + PersonName;
 
-                if (IsAdmin)
-                    heading += " -Admin Screen";
+                if (IsShowAdminReports)
+                    heading += " -Admin Report";
                 return heading;
 
             }
@@ -101,12 +103,9 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
             }
         }
 
-        //public List<CashTrxVM2> ReceivedTrx { get; set; }
 
-        //public List<CashTrxVM2> PaidTrx { get; set; }
+        public List<CashTrxVM2> CashTrxs { get; set; }
 
-        public List<CashTrxVM2> CashTrx { get; set; }
-        
 
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
@@ -117,11 +116,11 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
             get
             {
                 decimal _paidBf = 0;
-                if (!CashTrx.IsNullOrEmpty())
+                if (!CashTrxs.IsNullOrEmpty())
                 {
                     DateParameter dateparam = new DateParameter();
 
-                    foreach (var trx in CashTrx)
+                    foreach (var trx in CashTrxs)
                     {
                         DateTime date = trx.Date;
                         if (dateparam.Date1BeforeDate2(trx.Date, FromDate))
@@ -138,9 +137,9 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
             {
                 DateParameter dateparam = new DateParameter();
                 decimal _receivedBF = 0;
-                if (!CashTrx.IsNullOrEmpty())
+                if (!CashTrxs.IsNullOrEmpty())
                 {
-                    foreach (var trx in CashTrx)
+                    foreach (var trx in CashTrxs)
                     {
                         if (dateparam.Date1BeforeDate2(trx.Date, FromDate))
                             if (trx.CashStateEnum == CashStateENUM.Available)
@@ -176,13 +175,15 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
                 }
 
                 DateParameter dateParm = new DateParameter();
-
-                if (!CashTrx.IsNull())
+                if (!CashTrxs.IsNull())
                 {
-                    foreach (var item in CashTrx)
+                    foreach (var item in CashTrxs)
                     {
+
                         if (dateParm.IsDateWithinBeginAndEndDatesInclusive(item.Date, DateTime.MinValue, ToDate))
+                        {
                             return false;
+                        }
                     }
                 }
 
@@ -210,15 +211,16 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
             get
             {
 
-                if (CashTrx.IsNullOrEmpty())
+                if (CashTrxs.IsNullOrEmpty())
                     return null;
 
                 List<CashTrxVM2> lst = new List<CashTrxVM2>();
                 DateParameter dateParam = new DateParameter();
-                if (!CashTrx.IsNullOrEmpty())
+                if (!CashTrxs.IsNullOrEmpty())
                 {
-                    foreach (var trx in CashTrx)
+                    foreach (var trx in CashTrxs)
                     {
+
                         if (dateParam.IsDateWithinBeginAndEndDatesInclusive(trx.Date, FromDate, ToDate))
                             lst.Add(trx);
                     }
@@ -226,58 +228,16 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
 
                 return lst.OrderBy(x => x.Date).ToList();
 
-
-                //DateParameter dateParam = new DateParameter();
-
-                //if (!PaidTrx.IsNullOrEmpty())
-                //{
-                //    foreach (var trx in PaidTrx)
-                //    {
-                //        if(dateParam.IsDateWithinBeginAndEndDatesInclusive(trx.Date, FromDate, ToDate))
-                //            lst.Add(trx);
-                //    }
-                //}
-                //if (!ReceivedTrx.IsNullOrEmpty())
-                //{
-                //    foreach (var trx in ReceivedTrx)
-                //    {
-                //        if (dateParam.IsDateWithinBeginAndEndDatesInclusive(trx.Date, FromDate, ToDate))
-                //            lst.Add(trx);
-                //    }
-                //}
-
             }
         }
-        //public List<CashTrxVM2> PaidTrx_DateDelimited
-        //{
-        //    get
-        //    {
-        //        List<CashTrxVM2> lst = new List<CashTrxVM2>();
-        //        lst = Get_PaidTrx_DateDelimited(lst);
-
-        //        return lst;
-        //    }
-        //}
-        //public List<CashTrxVM2> ReceivedTrx_DateDelimited
-        //{
-        //    get
-        //    {
-        //        List<CashTrxVM2> lst = new List<CashTrxVM2>();
-        //        lst = Get_ReceivedTrx_DateDelimited(lst);
-
-
-        //        return lst;
-        //    }
-        //}
-
 
         public List<CashTrxVM2> Get_Trx_DateDelimited(List<CashTrxVM2> lst)
         {
             DateParameter dateParam = new DateParameter();
 
-            if (!CashTrx.IsNullOrEmpty())
+            if (!CashTrxs.IsNullOrEmpty())
             {
-                foreach (var trx in CashTrx)
+                foreach (var trx in CashTrxs)
                 {
                     if (dateParam.IsDateWithinBeginAndEndDatesInclusive(trx.Date, FromDate, ToDate))
                         lst.Add(trx);
@@ -286,35 +246,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.CashNS.CashTrxNS
             return lst;
         }
 
-        //public List<CashTrxVM2> Get_PaidTrx_DateDelimited(List<CashTrxVM2> lst)
-        //{
-        //    DateParameter dateParam = new DateParameter();
-
-        //    if (!CashTrx.IsNullOrEmpty())
-        //    {
-        //        foreach (var trx in CashTrx)
-        //        {
-        //            if (dateParam.IsDateWithinBeginAndEndDatesInclusive(trx.Date, FromDate, ToDate))
-        //                lst.Add(trx);
-        //        }
-        //    }
-        //    return lst;
-        //}
-
-        //public List<CashTrxVM2> Get_ReceivedTrx_DateDelimited(List<CashTrxVM2> lst)
-        //{
-        //    DateParameter dateParam = new DateParameter();
-
-        //    if (!ReceivedTrx.IsNullOrEmpty())
-        //    {
-        //        foreach (var trx in ReceivedTrx)
-        //        {
-        //            if (dateParam.IsDateWithinBeginAndEndDatesInclusive(trx.Date, FromDate, ToDate))
-        //                lst.Add(trx);
-        //        }
-        //    }
-        //    return lst;
-        //}
         public decimal FinalBalance
         {
             get

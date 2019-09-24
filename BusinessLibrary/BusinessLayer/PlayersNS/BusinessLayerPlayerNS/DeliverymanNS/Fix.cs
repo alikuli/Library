@@ -25,6 +25,19 @@ namespace UowLibrary.PlayersNS.DeliverymanNS
             if (deliveryman.DeliverymanCategoryId.IsNullOrWhiteSpace())
                 deliveryman.DeliverymanCategoryId = null;
 
+            if(deliveryman.Name.IsNullOrWhiteSpace())
+            {
+                if (deliveryman.Person.IsNull())
+                {
+                    deliveryman.PersonId.IsNullOrWhiteSpaceThrowException();
+                    deliveryman.Person = PersonBiz.Find(deliveryman.PersonId);
+                    deliveryman.Person.IsNullThrowException();
+                }
+
+                deliveryman.Name = deliveryman.Person.Name;
+
+            }
+
         }
 
     }

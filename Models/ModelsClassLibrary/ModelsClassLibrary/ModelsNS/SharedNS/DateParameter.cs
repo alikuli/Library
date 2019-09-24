@@ -97,7 +97,10 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         public bool DatesAreEqual(DateTime date1, DateTime date2)
         {
-            int result = DateTime.Compare(date1, date2);
+            DateTime date1_fixed = new DateTime(date1.Year, date1.Month, date1.Day, 0, 0, 0);
+            DateTime date2_fixed = new DateTime(date2.Year, date2.Month, date2.Day, 0, 0, 0);
+
+            int result = DateTime.Compare(date1_fixed, date2_fixed);
             bool success = result == 0;
 
             string msg;
@@ -121,7 +124,10 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         public bool Date1AfterDate2(DateTime date1, DateTime date2)
         {
-            int result = DateTime.Compare(date1, date2);
+            DateTime date1_fixed = new DateTime(date1.Year, date1.Month, date1.Day, 0, 0, 0);
+            DateTime date2_fixed = new DateTime(date2.Year, date2.Month, date2.Day, 23, 59, 59);
+
+            int result = DateTime.Compare(date1_fixed, date2_fixed);
             bool success = result == 1;
 
             string msg;
@@ -144,7 +150,10 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         }
         public bool Date1BeforeDate2(DateTime date1, DateTime date2)
         {
-            int result = DateTime.Compare(date1, date2);
+            DateTime date1_fixed = new DateTime(date1.Year, date1.Month, date1.Day, 0, 0, 0);
+            DateTime date2_fixed = new DateTime(date2.Year, date2.Month, date2.Day, 23, 59, 59);
+
+            int result = DateTime.Compare(date1_fixed, date2_fixed);
 
             bool success = result == -1;
 

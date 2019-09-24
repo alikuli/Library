@@ -157,6 +157,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLayer\Abstract\IAbstractBiz.cs" />
     <Compile Include="BusinessLayer\BuySellDocHistoryNS\BuySellDocHistoryBiz.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\BuySellDocBiz.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\AddToSale.cs" />
@@ -528,6 +529,10 @@
     <Compile Include="BusinessLayer\MenuNS\MenuPath3NS\Initialization.cs" />
     <Compile Include="BusinessLayer\MenuNS\MenuPath3NS\SelectList.cs" />
     <Compile Include="BusinessLayer\MenuNS\MenuPath3NS\MenuPath3Biz.cs" />
+    <Compile Include="BusinessLayer\ServiceRequestNS\ServiceRequestHdrNS\IServiceRequestHdrBiz.cs" />
+    <Compile Include="BusinessLayer\ServiceRequestNS\ServiceRequestHdrNS\ServiceRequestHdrBiz.cs" />
+    <Compile Include="BusinessLayer\ServiceRequestNS\ServiceRequestTrxNS\IServiceRequestTrxBiz.cs" />
+    <Compile Include="BusinessLayer\ServiceRequestNS\ServiceRequestTrxNS\ServiceRequestTrxBiz.cs" />
     <Compile Include="BusinessLayer\UploadingNS\ModifyIndex.cs" />
     <Compile Include="BusinessLayer\UploadingNS\SelectList.cs" />
     <Compile Include="BusinessLayer\UploadingNS\UploadedFileBiz.cs" />
@@ -545,9 +550,13 @@
     <Compile Include="BusinessLayer\VisitorLogs\VisitorLogBiz - SelectList.cs" />
     <Compile Include="BusinessLayer\VisitorLogs\VisitorLogBiz.cs" />
     <Compile Include="SuperLayerNS\AccountsNS\AccountsBiz.cs" />
+    <Compile Include="SuperLayerNS\SuperBizNS\AllTrxFor.cs" />
+    <Compile Include="SuperLayerNS\SuperBizNS\CreateMessage.cs" />
     <Compile Include="SuperLayerNS\SuperBizNS\getListOfPeopleOwnedBySalesman.cs" />
     <Compile Include="SuperLayerNS\SuperBizNS\allocatedBuySellDocs.cs" />
+    <Compile Include="SuperLayerNS\SuperBizNS\Initialize.cs" />
     <Compile Include="SuperLayerNS\SuperBizNS\Penalty.cs" />
+    <Compile Include="SuperLayerNS\SuperBizNS\Run_Daily_Tasks.cs" />
     <Compile Include="SuperLayerNS\SuperBizNS\SuperBiz.cs" />
   </ItemGroup>
   <ItemGroup>

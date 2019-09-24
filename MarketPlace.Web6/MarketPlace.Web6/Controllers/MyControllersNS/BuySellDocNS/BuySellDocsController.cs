@@ -4,7 +4,9 @@ using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS;
 using ModelsClassLibrary.ModelsNS.CashNS.PenaltyNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
+using ModelsClassLibrary.ModelsNS.DocumentsNS.FreightOffersTrxNS;
 using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
+using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Reflection;
@@ -194,13 +196,14 @@ namespace MarketPlace.Web6.Controllers
                 //get the penalty amounts
                 PersonPayingPenalty personPayingPenalty;
                 IPenaltyClass penaltyClass = PenaltyController.GetPenalty(buySellDoc, out personPayingPenalty);
-                
-                if (!penaltyClass.IsNull())
-                    text = penaltyClass.Text;
 
+                if (!penaltyClass.IsNull())
+                {
+                    text = penaltyClass.Text;
+                }
                 RejectCancelDeleteInbetweenClass rejectCancelDeleteInbetweenClass = new RejectCancelDeleteInbetweenClass(
-                    returnUrl, 
-                    text, 
+                    returnUrl,
+                    text,
                     buySellDoc);
 
                 return View(rejectCancelDeleteInbetweenClass);
@@ -259,35 +262,43 @@ namespace MarketPlace.Web6.Controllers
             if (buySellDoc.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
             {
                 getCustomerSalesmanAndOwnerSalesman(buySellDoc);
-                getDeliverymanSalesman(buySellDoc);
+                //getDeliverymanSalesman(buySellDoc);
             }
         }
 
-        private void getDeliverymanSalesman(BuySellDoc buySellDoc)
+        //private void getDeliverymanSalesman(BuySellDoc bsd)
+        //{
+        //    if (bsd.BuySellDocumentTypeEnum == BuySellDocumentTypeENUM.Delivery)
+        //    {
+        //        //this is the current state BuySellDocStateENUM.RequestConfirmed moving on to BuySellDocStateENUM.CourierComingToPickUp
+        //        if (bsd.BuySellDocStateEnum == BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller)
+        //        {
+        //            if (bsd.DeliverymanSalesmanId.IsNullOrWhiteSpace())
+        //                SuperBiz.GetAllDeliverySalesmen(bsd);
+
+        //        }
+        //    }
+        //}
+
+        private void getCustomerSalesmanAndOwnerSalesman(BuySellDoc bsd)
         {
-            if (buySellDoc.BuySellDocumentTypeEnum == BuySellDocumentTypeENUM.Delivery)
+            if (bsd.BuySellDocumentTypeEnum == BuySellDocumentTypeENUM.Sale)
             {
-                //this is the current state BuySellDocStateENUM.RequestConfirmed moving on to BuySellDocStateENUM.CourierComingToPickUp
-                if (buySellDoc.BuySellDocStateEnum == BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller)
+                if (bsd.BuySellDocStateEnum == BuySellDocStateENUM.RequestConfirmed)
                 {
-                    if (buySellDoc.DeliverymanSalesmanId.IsNullOrWhiteSpace())
-                        buySellDoc.DeliverymanSalesmanId = SuperBiz.GetSalesmanForDeliveryman(buySellDoc.DeliverymanId);
+                    //make sure there a salesman has not been already selected
+                    if (bsd.CustomerSalesmanId.IsNullOrWhiteSpace())
+                    {
+                        //No customer salesman exists
+                        SuperBiz.GetAllCustomerSalesmen(bsd);
 
-                }
-            }
-        }
+                    }
 
-        private void getCustomerSalesmanAndOwnerSalesman(BuySellDoc buySellDoc)
-        {
-            if (buySellDoc.BuySellDocumentTypeEnum == BuySellDocumentTypeENUM.Sale)
-            {
-                if (buySellDoc.BuySellDocStateEnum == BuySellDocStateENUM.RequestConfirmed)
-                {
-                    if (buySellDoc.CustomerSalesmanId.IsNullOrWhiteSpace())
-                        buySellDoc.CustomerSalesmanId = SuperBiz.GetSalesmanIdForCustomer(buySellDoc.CustomerId);
 
-                    if (buySellDoc.OwnerSalesmanId.IsNullOrWhiteSpace())
-                        buySellDoc.OwnerSalesmanId = SuperBiz.GetSalesmanIdForOwner(buySellDoc.OwnerId);
+                    if (bsd.OwnerSalesmanId.IsNullOrWhiteSpace())
+                    {
+                        SuperBiz.GetAllOwnerSalesmen(bsd);
+                    }
                 }
             }
         }
@@ -443,11 +454,11 @@ namespace MarketPlace.Web6.Controllers
             return View(buySellDoc);
         }
 
-        public ActionResult AcceptDeliveryman(string frtOfferId, string returnUrl, BuySellDocumentTypeENUM buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Unknown)
+        public ActionResult AcceptDeliveryman(string frtOfferId, string returnUrl, decimal insuranceRequired, BuySellDocumentTypeENUM buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Unknown)
         {
             try
             {
-                AcceptDeliveryMan_Code(frtOfferId, buySellDocumentTypeEnum);
+                AcceptDeliveryMan_Code(frtOfferId, buySellDocumentTypeEnum, insuranceRequired);
             }
             catch (Exception ex)
             {
@@ -457,11 +468,11 @@ namespace MarketPlace.Web6.Controllers
 
         }
 
-        public ActionResult Deliveryman_Accepts_To_Deliver(string frtOfferId, string returnUrl)
+        public ActionResult Deliveryman_Accepts_To_Deliver(string frtOfferId, string buySellId, string returnUrl)
         {
             try
             {
-                SuperBiz.Deliveryman_Accepts_To_Deliver(frtOfferId);
+                SuperBiz.Deliveryman_Accepts_To_Deliver(frtOfferId, buySellId);
             }
             catch (Exception ex)
             {
@@ -2631,23 +2642,23 @@ namespace MarketPlace.Web6.Controllers
 
 
 
-        private bool Deliveryman_Accepts_To_Deliver_Code(string frtOfferId)
-        {
-            try
-            {
-                UserId.IsNullOrWhiteSpaceThrowException();
-                SuperBiz.Deliveryman_Accepts_To_Deliver(frtOfferId);
-                return true;
-            }
-            catch (Exception e)
-            {
-                ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
+        //private bool Deliveryman_Accepts_To_Deliver_Code(string frtOfferId)
+        //{
+        //    try
+        //    {
+        //        UserId.IsNullOrWhiteSpaceThrowException();
+        //        SuperBiz.Deliveryman_Accepts_To_Deliver(frtOfferId);
+        //        return true;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ErrorsGlobal.Add("Something went wrong.", MethodBase.GetCurrentMethod(), e);
 
-            }
-            return false;
-        }
+        //    }
+        //    return false;
+        //}
 
-        private bool AcceptDeliveryMan_Code(string frtOfferId, BuySellDocumentTypeENUM buySellDocumentTypeEnum)
+        private bool AcceptDeliveryMan_Code(string frtOfferId, BuySellDocumentTypeENUM buySellDocumentTypeEnum, decimal insuranceRequired)
         {
             try
             {
@@ -2656,9 +2667,21 @@ namespace MarketPlace.Web6.Controllers
                     throw new Exception("Document type is not known.");
                 }
                 UserId.IsNullOrWhiteSpaceThrowException();
+                frtOfferId.IsNullOrWhiteSpaceThrowException();
 
-                decimal currRefundabelBalance = SuperBiz.BalanceFor_User(UserId, CashTypeENUM.Refundable);
-                BuySellDocBiz.AcceptCourier(frtOfferId, buySellDocumentTypeEnum, currRefundabelBalance);
+                FreightOfferTrx frt = FreightOfferTrxBiz.Find(frtOfferId);
+                frt.IsNullThrowException();
+                frt.Deliveryman.IsNullThrowException();
+                frt.Deliveryman.PersonId.IsNullOrWhiteSpaceThrowException();
+
+                string deliverymanPersonId = frt.Deliveryman.PersonId;
+
+                //the UserId in this case is the one accepting the eliveryman... maybe the seller, or customer.
+                //so we need to get the delveryman
+
+
+                decimal currRefundabelBalance = SuperBiz.BalanceFor_Person(deliverymanPersonId, CashTypeENUM.Refundable);
+                BuySellDocBiz.AcceptCourier(frt, buySellDocumentTypeEnum, currRefundabelBalance, insuranceRequired);
                 return true;
             }
             catch (Exception e)

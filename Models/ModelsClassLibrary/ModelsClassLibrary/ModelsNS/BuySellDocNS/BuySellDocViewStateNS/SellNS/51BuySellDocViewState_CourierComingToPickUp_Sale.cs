@@ -50,6 +50,10 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         public override bool HD_Show_Enter_PickupCode_Seller { get { return true; } }
         public override bool HD_Show_OwnersSalesman { get { return true; } }
 
+        public override bool HD_Show_ExpectedDeliveryDate { get { return true; } }
+//        public override bool HD_Enable_ExpectedDeliveryDate { get { return true; } }
+
+
         #endregion
 
 

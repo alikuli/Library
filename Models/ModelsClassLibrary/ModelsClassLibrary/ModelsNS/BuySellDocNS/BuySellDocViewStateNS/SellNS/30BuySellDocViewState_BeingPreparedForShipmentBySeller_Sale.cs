@@ -24,6 +24,12 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         public override bool OL_IsCanceledEnabled { get { return true; } }
 
         public override string OL_Cancel_Button_ToolTip { get { return "You can cancel this order without penalty."; } }
+
+
+        public override bool HD_Enable_ExpectedDeliveryDate { get { return true; } }
+        
+
+
         #endregion
 
 

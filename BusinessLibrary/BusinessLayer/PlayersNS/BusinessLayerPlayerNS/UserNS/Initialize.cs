@@ -32,9 +32,9 @@ namespace UowLibrary
         
 
 
-        public void InitializeSystem()
+        public ApplicationUser InitializeSystem()
         {
-            InitializeAdministrator();
+            return InitializeAdministrator();
 
         }
         

@@ -197,7 +197,8 @@ namespace UowLibrary
             throwErrorUserIsNullOrWhiteSpace(userName);
 
 
-            ApplicationUser appUser = UserManager.Find(userName, password);
+            //ApplicationUser appUser = UserManager.Find(userName, password);
+            ApplicationUser appUser = FindByName(userName);
             if (!appUser.IsNull())
                 return appUser;
 

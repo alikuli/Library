@@ -25,7 +25,7 @@ namespace ModelsClassLibrary.ModelsNS.GlobalObjectNS
 
         }
 
-        public GlobalObject(string userId, bool isAdmin, bool isCustomer, bool isOwner, bool isDeliveryman, bool isSalesman, bool isLoggedIn)
+        public GlobalObject(string userId, bool isAdmin, bool isCustomer, bool isOwner, bool isDeliveryman, bool isSalesman, bool isLoggedIn, bool isBank, bool isSuperSalesman)
             : this()
         {
             UserId = userId;
@@ -35,7 +35,13 @@ namespace ModelsClassLibrary.ModelsNS.GlobalObjectNS
             _isDeliveryman = isDeliveryman;
             _isSalesman = isSalesman;
             _isLoggedIn = isLoggedIn;
+            _isBank = isBank;
+            _isSuperSalesman = isSuperSalesman;
         }
+
+        bool _isSuperSalesman;
+        public bool IsSuperSalesman { get { return _isSuperSalesman; } }
+
 
         bool _isLoggedIn;
         public bool IsLoggedIn { get { return _isLoggedIn; } }
@@ -52,6 +58,16 @@ namespace ModelsClassLibrary.ModelsNS.GlobalObjectNS
 
         bool _isOwner;
         public bool IsOwner { get { return _isOwner; } }
+
+
+        //implement it
+        bool _isMailer = true;
+        public bool IsMailer { get { return _isMailer; } }
+
+
+        //implement it
+        bool _isBank = true;
+        public bool IsBank { get { return _isBank; } }
 
         bool _isDeliveryman;
         public bool IsDeliveryman { get { return _isDeliveryman; } }

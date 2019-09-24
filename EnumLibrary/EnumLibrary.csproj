@@ -110,6 +110,7 @@
     <Compile Include="EnumNS\CashTypeENUM.cs" />
     <Compile Include="EnumNS\DeleteButtonENUM.cs" />
     <Compile Include="EnumNS\MessageENUM.cs" />
+    <Compile Include="EnumNS\ServiceRequestStatusENUM.cs" />
     <Compile Include="EnumNS\VerificationNS\AddressVerificaionENUM.cs" />
     <Compile Include="EnumNS\MenuENUM.cs" />
     <Compile Include="EnumNS\MenuPathNS\MenuPath2ENUM.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="EnumNS\VerificationNS\MailLocalOrForigenENUM.cs" />
     <Compile Include="EnumNS\VerificationNS\MailServiceENUM.cs" />
     <Compile Include="EnumNS\VerificationNS\PlayerTypeENUM.cs" />
+    <Compile Include="EnumNS\VerificationNS\RequestTypeENUM.cs" />
     <Compile Include="EnumNS\VerificationNS\SuccessENUM.cs" />
     <Compile Include="EnumNS\VerificationNS\TrustLevelENUM.cs" />
     <Compile Include="EnumNS\WhoPaysWhoENUM.cs" />

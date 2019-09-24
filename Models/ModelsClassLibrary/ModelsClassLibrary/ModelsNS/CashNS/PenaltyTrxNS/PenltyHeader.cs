@@ -28,16 +28,20 @@ namespace ModelsClassLibrary.ModelsNS.CashNS.PenaltyNS
             Amount = penaltyAmount;
             FromPersonId = personFrom.Id;
             FromPerson = personFrom;
-            IsToPay = isToPay;
+            //IsToPay = isToPay;
 
         }
 
-        public bool IsToPay { get; set; }
+        //public bool IsToPay { get; set; }
         public long DocumentNo { get; set; }
+
+
 
         [Display(Name = "From Person")]
         public string FromPersonId { get; set; }
         public virtual Person FromPerson { get; set; }
+
+
         public decimal Amount { get; set; }
 
         public static PenaltyHeader Unbox(ICommonWithId icommonWithId)

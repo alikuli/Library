@@ -197,6 +197,27 @@ namespace UowLibrary.PlayersNS.PlayerAbstractCategoryNS
             base.Fix(parm);
 
             PlayerAbstract playerAbstract = PlayerAbstract.UnboxPlayerAbstract(parm);
+
+            if(playerAbstract.Name.IsNullOrWhiteSpace())
+            {
+                if(playerAbstract.Person.IsNull())
+                {
+                    if(playerAbstract.PersonId.IsNull())
+                    {
+                        throw new Exception("No person");
+                    }
+                    else
+                    {
+                        Person person = PersonBiz.Find(playerAbstract.PersonId);
+                        person.IsNullThrowException();
+                        playerAbstract.Person = person;
+                    }
+
+                }
+                playerAbstract.Name = playerAbstract.Person.Name;
+            }
+
+
             //if (!playerAbstract.PersonId.IsNullOrWhiteSpace())
             //{
             //    //we need to add a person Id

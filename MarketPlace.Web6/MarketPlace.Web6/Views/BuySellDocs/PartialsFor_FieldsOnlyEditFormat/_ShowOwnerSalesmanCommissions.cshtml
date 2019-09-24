@@ -53,6 +53,125 @@
     </div>
 
 
+
+
+
+
+
+
+
+    <div class="form-group">
+        <strong>
+            Customer Super Salesman
+        </strong>
+        @if (Model.Super_CustomerSalesman().IsNull())
+        {
+
+        }
+        else
+        {
+            Model.Super_CustomerSalesman().FullName();
+
+        }
+    </div>
+    <div class="form-group">
+        <strong>
+            Customer Super Super Salesman
+        </strong>
+        @if (Model.Super_Super_CustomerSalesman().IsNull())
+        {
+
+        }
+        else
+        {
+            Model.Super_Super_CustomerSalesman().FullName();
+
+        }
+    </div>
+
+
+    <div class="form-group">
+        <strong>
+            @Html.LabelFor(model => model.OwnerSalesmanId, htmlAttributes: new { @class = "background-ltgrey p-2" })
+        </strong>
+        @Html.DropDownListFor(x => x.OwnerSalesmanId,
+                (@Model.SelectListOwnerSalesman as IEnumerable<SelectListItem>),
+                       "--- Select Owner Super Salesman ---",
+               new { @class = "form-control", title = "This is customer's salesman.", data_placement = "right", disabled = "disabled" })
+    </div>
+
+
+    <div class="form-group">
+        <strong>
+            Owner Super Salesman
+        </strong>
+        @if (Model.Super_OwnerSalesman().IsNull())
+        {
+
+        }
+        else
+        {
+            Model.Super_OwnerSalesman().FullName();
+
+        }
+    </div>
+    <div class="form-group">
+        <strong>
+            Owner Super Super Salesman
+        </strong>
+        @if (Model.Super_Super_OwnerSalesman().IsNull())
+        {
+
+        }
+        else
+        {
+            Model.Super_Super_OwnerSalesman().FullName();
+
+        }
+    </div>
+    
+    
+    
+    <div class="form-group">
+        <strong>
+            @Html.LabelFor(model => model.DeliverymanSalesmanId, htmlAttributes: new { @class = "background-ltgrey p-2" })
+        </strong>
+        @Html.DropDownListFor(x => x.DeliverymanSalesmanId,
+                (@Model.SelectListDeliverymanSalesman as IEnumerable<SelectListItem>),
+                       "--- Select Deliveryman Super Salesman ---",
+               new { @class = "form-control", title = "This is customer's salesman.", data_placement = "right", disabled = "disabled" })
+    </div>
+
+    <div class="form-group">
+        <strong>
+            Deliveryman Super Salesman
+        </strong>
+        @if (Model.Super_DeliverymanSalesman().IsNull())
+        {
+
+        }
+        else
+        {
+            Model.Super_DeliverymanSalesman().FullName();
+
+        }
+    </div>
+    <div class="form-group">
+        <strong>
+            Deliveryman Super Super Salesman
+        </strong>
+        @if (Model.Super_Super_DeliverymanSalesman().IsNull())
+        {
+
+        }
+        else
+        {
+            Model.Super_Super_DeliverymanSalesman().FullName();
+
+        }
+    </div>
+
+
 }
 else
 {

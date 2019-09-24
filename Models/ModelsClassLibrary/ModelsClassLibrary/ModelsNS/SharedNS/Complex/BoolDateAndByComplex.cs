@@ -5,17 +5,21 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.Complex
     [ComplexType]
     public class BoolDateAndByComplex : DateAndByComplex
     {
-        public bool Selected { get; set; }
+        public bool IsSelected { get; set; }
 
         public void MarkTrue(string userName, string userId)
         {
-            Selected = true;
-            base.SetToTodaysDate(userName, userId);
+            SetToTodaysDate(userName, userId);
         }
         public override void Clear()
         {
-            Selected = false;
+            IsSelected = false;
             base.Clear();
+        }
+        public override void SetToTodaysDate(string byUser, string byUserId)
+        {
+            IsSelected = true;
+            base.SetToTodaysDate(byUser, byUserId);
         }
     }
 }

@@ -1,0 +1,53 @@
+﻿@model ModelsClassLibrary.ModelsNS.GlobalObjectNS.GlobalObject
+@{
+    ViewBag.Title = "Cash Menu";
+
+
+    string amountRefundableAndNonRefundableMenuItem = Model.Money_User.TotalCash.MenuName;
+    string amountRefundableAndNonRefundableToolTip = Model.Money_User.TotalCash.MenuToolTip;
+    string amountRefundableAndNonRefundable_Path = @Url.Action("ShowCashMenu", "CashTrxs");
+    string amountTotalUser = Model.Money_User.TotalCash.MoneyAmount.ToString().ToRuppeeFormat();
+    
+}
+
+
+
+<h2>Cash Menu</h2>
+
+
+@using (Html.BeginForm())
+{
+
+    <div class="">
+        <hr />
+
+
+        <h3 class="text-center">Cash Postion</h3>
+        <a class="btn btn-lg btn-default text-danger w-100 m-1" href="@amountRefundableAndNonRefundable_Path" data-toggle="tooltip" title="@amountRefundableAndNonRefundableToolTip" data-placement="left">@amountRefundableAndNonRefundableMenuItem</a>
+        
+        <h3 class="text-center">Make Payment</h3>
+
+
+        <a class="btn btn-lg btn-default text-success w-100 m-1" href="@Url.Action("MakeRefundablePayment", "CashTrxs", null)">Pay Refundable Payment</a>
+        <a class="btn btn-lg btn-default text-primary w-100 m-1" href="@Url.Action("MakeNonRefundablePayment", "CashTrxs", null)">Pay NON Refundable Cash</a>
+        
+        <h3 class="text-center">Receive Money</h3>
+        <a class="btn btn-lg btn-default text-info w-100 m-1" href="@Url.Action("EncashmentRequest", "CashTrxs", null)">Encashment</a>
+
+            @if (@Model.IsAdmin)
+            {
+                <h3 class="text-center">Admin Options</h3>
+                <a class="btn btn-lg btn-default text-info w-100 m-1" href="@Url.Action("Index", "CashTrxs", null)">Cash Trx</a>
+                <a class="btn btn-lg btn-default text-info w-100 m-1" href="@Url.Action("DebitCredit_Refundable", "CashTrxs", null)">Show Refundable Trx</a>
+                <a class="btn btn-lg btn-default text-info w-100 m-1" href="@Url.Action("DebitCredit_NonRefundable", "CashTrxs", null)">Show NON Refundable Trx</a>
+                <a class="btn btn-lg btn-default text-info w-100 m-1" href="@Url.Action("Get_Cash_From_EncashmentRequest", "CashTrxs", null)">Cash Encashment</a>
+            }
+
+
+
+
+
+
+    </div>
+}
+

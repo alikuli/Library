@@ -1,7 +1,5 @@
-﻿using AliKuli.Extentions;
-using System;
+﻿using ModelsClassLibrary.ModelsNS.PlayersNS;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Configuration;
 
 namespace AliKuli.ToolsNS
 {
@@ -14,63 +12,92 @@ namespace AliKuli.ToolsNS
     public class SalesCommissionClass
     {
 
+        #region Customer Salesmen Commission
+
         public static decimal CommissionPct_CustomerSalesman
         {
             get
             {
-                return CommissionPct_CustomerSalesman_String().ToDecimal();
+                return Salesman.CommissionPct_CustomerSalesman;
             }
         }
-        static string CommissionPct_CustomerSalesman_String()
+        public static decimal CommissionPct_Customer_Super_Salesman
         {
-            string commission = ConfigurationManager.AppSettings["PercentOfSale.Salesman.Customer"];
-            if (commission.IsNullOrWhiteSpace())
+            get
             {
-                throw new Exception("Please set PercentOfSale.Salesman.Customer in WebConfig");
+                return Salesman.CommissionPct_Customer_Super_Salesman;
             }
-
-            return commission;
+        }
+        public static decimal CommissionPct_Customer_Super_Super_Salesman
+        {
+            get
+            {
+                return Salesman.CommissionPct_Customer_Super_Super_Salesman;
+            }
         }
 
+
+
+        #endregion
+
+        #region Owner Salesman Commission
 
         public static decimal CommissionPct_OwnerSalesman
         {
             get
             {
-                return CommissionPct_OwnerSalesman_String().ToDecimal();
+                return Salesman.CommissionPct_OwnerSalesman;
             }
         }
-        static string CommissionPct_OwnerSalesman_String()
+        public static decimal CommissionPct_Owner_Super_Salesman
         {
-            string commission = ConfigurationManager.AppSettings["PercentOfSale.Salesman.Owner"];
-            if (commission.IsNullOrWhiteSpace())
+            get
             {
-                throw new Exception("Please set PercentOfSale.Salesman.Owner in WebConfig");
+                return Salesman.CommissionPct_Owner_Super_Salesman;
             }
-
-            return commission;
+        }
+        public static decimal CommissionPct_Owner_Super_Super_Salesman
+        {
+            get
+            {
+                return Salesman.CommissionPct_Owner_Super_Super_Salesman;
+            }
         }
 
+
+        #endregion
+
+        #region Deliveryman Sales Percent
 
         public static decimal CommissionPct_DeliverymanSalesman
         {
             get
             {
-                return CommissionPct_DeliverymanSalesman_String().ToDecimal();
+                return Deliveryman.CommissionPct_DeliverymanSalesman;
             }
         }
 
-        static string CommissionPct_DeliverymanSalesman_String()
+        public static decimal CommissionPct_Deliveryman_Super_Salesman
         {
-            string commission = ConfigurationManager.AppSettings["PercentOfSale.Salesman.Deliveryman"];
-
-            if (commission.IsNullOrWhiteSpace())
+            get
             {
-                throw new Exception("Please set PercentOfSale.Salesman.Deliveryman in WebConfig");
+                return Deliveryman.CommissionPct_Deliveryman_Super_Salesman;
             }
-
-            return commission;
         }
+
+        public static decimal CommissionPct_Deliveryman_Super_Super_Salesman
+        {
+            get
+            {
+                return Deliveryman.CommissionPct_Deliveryman_Super_Super_Salesman;
+            }
+        }
+
+
+        #endregion
+
+        #region System Commission
+
 
 
         /// <summary>
@@ -80,101 +107,14 @@ namespace AliKuli.ToolsNS
         {
             get
             {
-                return CommissionPct_System_String().ToDecimal();
+                return Salesman.CommissionPct_System;
             }
         }
 
-        /// <summary>
-        /// this is for both delivey and sales
-        /// </summary>
-        /// <returns></returns>
-        static string CommissionPct_System_String()
-        {
-            string commission = ConfigurationManager.AppSettings["PercentOfSale.Salesman.System"];
-            if (commission.IsNullOrWhiteSpace())
-            {
-                throw new Exception("Please set PercentOfSale.Salesman.System in WebConfig");
-            }
-
-            return commission;
-        }
 
 
 
-
-        /// <summary>
-        /// This calculates the commission for the OwnerSalesman
-        /// It will give an amount regardless if the player exists or not
-        /// </summary>
-        /// <param name="saleWithoutFreight"></param>
-        /// <returns></returns>
-        public static decimal CommissionAmount_OwnerSalesman_For(decimal saleWithoutFreight)
-        {
-            if (CommissionPct_OwnerSalesman == 0)
-                return 0;
-
-            if (saleWithoutFreight == 0)
-                return 0;
-
-            decimal commissionAmount = saleWithoutFreight * CommissionPct_OwnerSalesman / 100;
-            return commissionAmount;
-        }
-
-        /// <summary>
-        /// This is the total commission amount calculated for the customer salesman
-        /// It will give an amount regardless if the player exists or not
-        /// </summary>
-        /// <param name="saleWithoutFreight"></param>
-        /// <returns></returns>
-        public static decimal CommissionAmount_CustomerSalesman_For(decimal saleWithoutFreight)
-        {
-            if (CommissionPct_CustomerSalesman == 0)
-                return 0;
-
-            if (saleWithoutFreight == 0)
-                return 0;
-
-            decimal commissionAmount = saleWithoutFreight * CommissionPct_CustomerSalesman / 100;
-            return commissionAmount;
-        }
-
-        /// <summary>
-        /// This is the total commission amount calculated for the deliveryman salesman on freight
-        /// It will give an amount regardless if the player exists or not
-        /// </summary>
-        /// <param name="freightMoney"></param>
-        /// <returns></returns>
-        public static decimal CommissionAmount_DeliverySalesman_For(decimal freightMoney)
-        {
-            if (CommissionPct_DeliverymanSalesman == 0)
-                return 0;
-
-            if (freightMoney == 0)
-                return 0;
-
-            decimal commissionAmount = freightMoney * CommissionPct_DeliverymanSalesman / 100;
-            return commissionAmount;
-        }
-
-
-        /// <summary>
-        /// This is the commission amount calculated for the system. You need to add freight amount when calculating
-        /// commission for the freight and the saleWithoutFrt amount when calculating for sale.
-        /// It will give an amount regardless if the player exists or not
-        /// </summary>
-        /// <param name="freightMoney_OR_SaleWithoutFreight"></param>
-        /// <returns></returns>
-        public static decimal CommissionAmount_ToSystem_For(decimal freightMoney_OR_SaleWithoutFreight)
-        {
-            if (CommissionPct_System == 0)
-                return 0;
-
-            if (freightMoney_OR_SaleWithoutFreight == 0)
-                return 0;
-
-            decimal commissionAmount = freightMoney_OR_SaleWithoutFreight * CommissionPct_System / 100;
-            return commissionAmount;
-        }
+        #endregion
 
 
 
@@ -183,14 +123,14 @@ namespace AliKuli.ToolsNS
         /// 
         /// </summary>
         /// <returns></returns>
-        public static decimal Commission_Payable_On_TotalSale_Pct(decimal saleWithoutFreightMoney, decimal freightMoney)
+        public static decimal Get_Maximum_Commission_Chargeable_On_TotalSale_Percent(decimal saleWithoutFreightMoney, decimal freightMoney)
         {
             decimal totalSale = saleWithoutFreightMoney + freightMoney;
 
             if (totalSale == 0)
                 return 0;
 
-            decimal totalCommission = Commission_Payable_On_TotalSale_Amount(saleWithoutFreightMoney, freightMoney);
+            decimal totalCommission = Commission_Payable_On_Invoice_Amount(saleWithoutFreightMoney, freightMoney);
 
             if (totalCommission == 0)
                 return 0;
@@ -210,15 +150,15 @@ namespace AliKuli.ToolsNS
         /// <param name="saleWithoutFreightMoney"></param>
         /// <param name="freightMoney"></param>
         /// <returns></returns>
-        public static decimal Commission_Payable_On_TotalSale_Amount(decimal saleWithoutFreightMoney, decimal freightMoney)
+        public static decimal Commission_Payable_On_Invoice_Amount(decimal saleWithoutFreightMoney, decimal freightMoney)
         {
             decimal totalSale = saleWithoutFreightMoney + freightMoney;
 
             if (totalSale == 0)
                 return 0;
 
-            decimal totatCommission_On_NetSale_Money = Commission_Payable_On_TotalSaleWithoutFreight_Amount(saleWithoutFreightMoney);
-            decimal totalCommission_On_Freight_Money = Commission_Payable_On_Freight_Amount(freightMoney);
+            decimal totatCommission_On_NetSale_Money = TotalCommissionOnSaleWithoutFreight_Amount(saleWithoutFreightMoney);
+            decimal totalCommission_On_Freight_Money = TotalCommissionOnFreight_Amount(freightMoney);
             decimal totalCommission = totatCommission_On_NetSale_Money + totalCommission_On_Freight_Money;
 
             return totalCommission;
@@ -233,47 +173,23 @@ namespace AliKuli.ToolsNS
         /// </summary>
         /// <param name="freightMoney"></param>
         /// <returns></returns>
-        public static decimal Commission_Payable_On_Freight_Amount(decimal freightMoney)
+        public static decimal TotalCommissionOnFreight_Amount(decimal freightMoney)
         {
 
             if (freightMoney == 0)
                 return 0;
 
-            if ((CommissionPct_DeliverymanSalesman + CommissionPct_System) == 0)
+            if (TotalCommissionOnFreight_Precent() == 0)
                 return 0;
 
             decimal totalCommission_On_Freight_Money =
-                CommissionAmount_ToSystem_For(freightMoney) +
-                CommissionAmount_DeliverySalesman_For(freightMoney);
+                freightMoney * TotalCommissionOnFreight_Precent();
 
             return totalCommission_On_Freight_Money;
         }
 
 
 
-        /// <summary>
-        /// This is the maximum commission  (Salesman + system) on the deliverymans amount shown as a percentage of the total sale.
-        /// It is not neccesary this amount will be met because, sometimes players are missing.
-        /// It will give an amount regardless if the player exists or not
-        /// </summary>
-        /// <param name="freightMoney"></param>
-        /// <param name="totalSale"></param>
-        /// <returns></returns>
-        public static decimal Commission_Payable_On_Freight_As_Pct_Of_TotalSale(decimal freightMoney, decimal totalSale)
-        {
-            if (totalSale == 0)
-                return 0;
-
-            decimal ttlCommPayableOnFrt_Amount = Commission_Payable_On_Freight_Amount(freightMoney);
-
-            if (ttlCommPayableOnFrt_Amount == 0)
-                return 0;
-
-            decimal pctage = ttlCommPayableOnFrt_Amount / totalSale;
-            return pctage;
-
-
-        }
 
 
 
@@ -284,74 +200,42 @@ namespace AliKuli.ToolsNS
         /// </summary>
         /// <param name="saleWithoutFreightMoney"></param>
         /// <returns></returns>
-        public static decimal Commission_Payable_On_TotalSaleWithoutFreight_Amount(decimal saleWithoutFreightMoney)
+        public static decimal TotalCommissionOnSaleWithoutFreight_Amount(decimal saleWithoutFreightMoney)
         {
 
             if (saleWithoutFreightMoney == 0)
                 return 0;
 
-            decimal totalCommission_On_NetSale_Money = saleWithoutFreightMoney * (CommissionPct_CustomerSalesman + CommissionPct_OwnerSalesman + CommissionPct_System);
+            decimal totalCommission_On_NetSale_Money = saleWithoutFreightMoney * TotalCommissionOnSaleWithoutFreight_Percent();
 
             if (totalCommission_On_NetSale_Money == 0)
                 return 0;
+
             return totalCommission_On_NetSale_Money / 100;
 
         }
 
-
-
-        /// <summary>
-        /// This is the total commission payable on NetSale as a percentage of the total sale.
-        /// It is not neccesary this amount will be met because, sometimes players are missing.
-        /// It will give an amount regardless if the player exists or not
-        /// 
-        /// </summary>
-        /// <param name="saleWithoutFreightMoney"></param>
-        /// <param name="totalSale"></param>
-        /// <returns></returns>
-        public static decimal Commission_Payable_TotalSaleWithoutFreight_As_Percentage_Of_TotalSale(decimal saleWithoutFreightMoney, decimal totalSale)
+        public static decimal TotalCommissionOnSaleWithoutFreight_Percent()
         {
-            if (saleWithoutFreightMoney == 0)
-                return 0;
-
-            if (totalSale == 0)
-                return 0;
-
-            decimal totalCommission_On_NetSale_Money = Commission_Payable_On_TotalSaleWithoutFreight_Amount(saleWithoutFreightMoney);
-
-            if (totalCommission_On_NetSale_Money == 0)
-                return 0;
-
-            decimal percent = totalCommission_On_NetSale_Money / totalSale;
-
-            return percent;
-
+            decimal pct =
+                CommissionPct_CustomerSalesman +
+                CommissionPct_Customer_Super_Salesman +
+                CommissionPct_Customer_Super_Super_Salesman +
+                CommissionPct_OwnerSalesman +
+                CommissionPct_Owner_Super_Salesman +
+                CommissionPct_Owner_Super_Super_Salesman +
+                CommissionPct_System;
+            return pct;
         }
 
-
-        /// <summary>
-        /// A simple error check
-        /// </summary>
-        /// <param name="freightMoney"></param>
-        /// <param name="totalSale"></param>
-        /// <param name="saleWithoutFreightMoney"></param>
-        public static void SelfErrorCheck(decimal freightMoney, decimal totalSale, decimal saleWithoutFreightMoney)
+        public static decimal TotalCommissionOnFreight_Precent()
         {
-            //check amounts
-            if (saleWithoutFreightMoney != totalSale - freightMoney)
-                throw new Exception("There is an error in your max calculations for commissions.");
-
-            decimal max_Comm_On_Frt_As_Pct_Of_TtlSale = Commission_Payable_On_Freight_As_Pct_Of_TotalSale(freightMoney, totalSale);
-            decimal max_Comm_On_Net_Sale_As_Pct_Of_TtlSale = Commission_Payable_TotalSaleWithoutFreight_As_Percentage_Of_TotalSale(saleWithoutFreightMoney, totalSale);
-
-            decimal sumOfcalcComm = max_Comm_On_Frt_As_Pct_Of_TtlSale + max_Comm_On_Net_Sale_As_Pct_Of_TtlSale;
-            decimal comFromMethod = Commission_Payable_On_TotalSale_Pct(saleWithoutFreightMoney, freightMoney);
-
-            //check calculated commission
-            if (sumOfcalcComm != comFromMethod)
-                throw new Exception("There is an error in your calculations for commissions.(2)");
-
-
+            decimal pct =
+                CommissionPct_DeliverymanSalesman +
+                CommissionPct_Deliveryman_Super_Salesman +
+                CommissionPct_Deliveryman_Super_Super_Salesman +
+                CommissionPct_System;
+            return pct;
         }
     }
 }

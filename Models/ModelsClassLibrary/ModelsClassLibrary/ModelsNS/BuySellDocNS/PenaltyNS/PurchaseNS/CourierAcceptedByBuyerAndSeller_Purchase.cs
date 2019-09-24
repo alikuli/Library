@@ -11,9 +11,21 @@ namespace ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS.PurchaseNS
 
         }
   
-        public override decimal Percent { get { return PenaltyClassAbstract.GetPenaltyPercentageForPurchaserQuitting(); } }
+        public override decimal Percent 
+        { 
+            get 
+            {
+                if (BuySellDoc.IsDeliveryLate)
+                    return 0;
+
+                return PenaltyClassAbstract.GetPenaltyPercentageForPurchaserQuitting(); 
+            } 
+        }
         public override decimal GetAmountToBasePenaltyOn()
         {
+
+            if (BuySellDoc.IsDeliveryLate)
+                return 0;
 
             return BuySellDoc.TotalInvoice;
         }
@@ -22,7 +34,23 @@ namespace ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS.PurchaseNS
         {
             get
             {
-                return WhoPaysWhoENUM.Unknown;
+                if (BuySellDoc.IsDeliveryLate)
+                    return WhoPaysWhoENUM.Unknown;
+                
+                return WhoPaysWhoENUM.CustomerPaysOwner;
+            }
+        }
+
+        public override string Text
+        {
+            get
+            {
+                if (BuySellDoc.IsDeliveryLate)
+                    return string.Format("The seller '{0}' was supposed to deliver on {1}. Therefore, {0} is late. You will not be penalized.", 
+                        BuySellDoc.Owner.FullName(), 
+                        BuySellDoc.ExpectedDeliveryDate.ToShortDateString());
+
+                return base.Text;
             }
         }
     }

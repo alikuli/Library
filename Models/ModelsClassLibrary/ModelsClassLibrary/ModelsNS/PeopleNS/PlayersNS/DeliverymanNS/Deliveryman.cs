@@ -10,6 +10,7 @@ using AliKuli.Extentions;
 using System;
 using System.Collections.Generic;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FreightOffersTrxNS;
+using System.Configuration;
 
 
 namespace ModelsClassLibrary.ModelsNS.PlayersNS
@@ -74,5 +75,65 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
                 throw new Exception("Cost of Delivery % cannot be less than 0.");
 
         }
+
+
+
+        static string CommissionPct_DeliverymanSalesman_String()
+        {
+            string commission = ConfigurationManager.AppSettings["PercentOfSale.Salesman.Deliveryman"];
+
+            if (commission.IsNullOrWhiteSpace())
+            {
+                throw new Exception("Please set PercentOfSale.Salesman.Deliveryman in WebConfig");
+            }
+
+            return commission;
+        }
+        static string CommissionPct_Deliveryman_Super_Salesman_String()
+        {
+            string commission = ConfigurationManager.AppSettings["PercentOfSale.Super.Salesman.Deliveryman"];
+
+            if (commission.IsNullOrWhiteSpace())
+            {
+                throw new Exception("Please set PercentOfSale.Super.Salesman.Deliveryman in WebConfig");
+            }
+
+            return commission;
+        }
+        static string CommissionPct_Deliveryman_Super_Super_Salesman_String()
+        {
+            string commission = ConfigurationManager.AppSettings["PercentOfSale.Super.Super.Salesman.Deliveryman"];
+
+            if (commission.IsNullOrWhiteSpace())
+            {
+                throw new Exception("Please set PercentOfSale.Super.Super.Salesman.Deliveryman in WebConfig");
+            }
+
+            return commission;
+        }
+        public static decimal CommissionPct_DeliverymanSalesman
+        {
+            get
+            {
+                return CommissionPct_DeliverymanSalesman_String().ToDecimal();
+            }
+        }
+
+        public static decimal CommissionPct_Deliveryman_Super_Salesman
+        {
+            get
+            {
+                return CommissionPct_Deliveryman_Super_Salesman_String().ToDecimal();
+            }
+        }
+
+        public static decimal CommissionPct_Deliveryman_Super_Super_Salesman
+        {
+            get
+            {
+                return CommissionPct_Deliveryman_Super_Super_Salesman_String().ToDecimal();
+            }
+        }
+
     }
 }

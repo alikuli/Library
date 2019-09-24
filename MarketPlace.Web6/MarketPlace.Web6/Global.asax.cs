@@ -46,58 +46,11 @@ namespace MarketPlace.Web6
         /// </summary>
         public void CreateInitializationDirectories()
         {
-            //var lstClassesNames = ListOfAllClassEntyTypes();
 
-            //if (lstClassesNames.IsNullOrEmpty())
-            //{
-            //    throw new Exception("Programming error. No POCO list recieved");
-            //}
             string filename = AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY;
             string path = HttpContext.Current.Server.MapPath(filename);
             AliKuli.ToolsNS.FileTools.CreateDirectory(path);
-            //foreach (var entityType in lstClassesNames)
-            //{
 
-
-            //    //var cls = System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(classname.Name);
-            //    //var cls = Activator.CreateInstance()
-
-            //    IHasUploads ihasuploads;
-            //    ICommonWithId icommonWithId;
-            //    var type = Type.GetType(entityType.FullName);
-            //    if (type.IsNull())
-            //    {
-            //        //the type is in a different assembly.
-            //        var type2 = GetInstance(entityType.FullName);
-            //        ihasuploads = type2 as IHasUploads;
-            //        icommonWithId = type2 as ICommonWithId;
-
-            //    }
-            //    else
-            //    {
-
-            //        ihasuploads = type as IHasUploads;
-            //        icommonWithId = type as ICommonWithId;
-
-            //    }
-
-            //    if (!ihasuploads.IsNull())
-            //    {
-            //        string rawName = icommonWithId.ClassNameRaw.ToLower();
-            //        switch (rawName)
-            //        {
-            //            case "menupath1": rawName = "menupaths";
-            //                break;
-            //            case "menupath2": continue;
-            //            case "menupath3": continue; ;
-
-            //        }
-            //        //string filename = AliKuli.ConstantsNS.MyConstants.SAVE_INITIALIZATION_DIRECTORY;
-            //        //string path = HttpContext.Current.Server.MapPath(filename);
-            //        ////this  has uploads then we need to make the directory
-            //        //AliKuli.ToolsNS.FileTools.CreateDirectory(path);
-            //    }
-            //}
         }
 
         //If your Fully Qualified Name(ie, Vehicles.Car in this case) is in another assembly, the Type.GetType will be null. In such cases, you have loop through all assemblies and find the Type. For that you can use the below code

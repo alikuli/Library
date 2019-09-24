@@ -12,6 +12,8 @@
     
 }
 
+
+
 @if (Model.IsNoMoreData)
 {
     <h2>
@@ -25,10 +27,13 @@
 }
 else
 {
+
     string todayMinusOne = Model.FromDate == DateTime.MinValue ? DateTime.MinValue.ToString("yyyy-MMM-dd") : Model.FromDate.AddDays(-1).ToString("yyyy-MMM-dd");
     string bf_Orders_Path = Url.Action("getCashStatement", "CashTrxs", new { cashTypeEnum = Model.CashTypeEnum, toDateStr = todayMinusOne, isShowAdminReports = Model.IsShowAdminReports, cashStateEnum = CashStateENUM.All });
     string bf_Orders_ToolTip = string.Format("You can see detail before {0:dd-MMM-yyyy} by clicking here.", Model.FromDate);
 
+    
+    
     <table class=" table table-responsive table-striped table-light table-hover table-bordered  small">
         <thead>
             <tr class="bg-primary text-white font-weight-bold p-1">

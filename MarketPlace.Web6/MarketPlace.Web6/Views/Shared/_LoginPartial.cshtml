@@ -66,7 +66,8 @@
     bool isDeliveryman = globalObject.IsDeliveryman;
     bool isSalesman = globalObject.IsSalesman;
 
-
+    string i_Want_To_Path = Url.Action("IWantTo", "ServiceRequestHdrs");
+    string i_Want_To_ToolTip = "This allows you to join our team of champitons.";
 
 }
 
@@ -86,25 +87,26 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                    <a class="dropdown-item" href="@amountRefundableAndNonRefundable_Path" data-toggle="tooltip" title="@amountRefundableAndNonRefundableToolTip" data-placement="left">@amountRefundableAndNonRefundableMenuItem</a>
+                    <a class="dropdown-item bg-light" href="@amountRefundableAndNonRefundable_Path" data-toggle="tooltip" title="@amountRefundableAndNonRefundableToolTip" data-placement="left">@amountRefundableAndNonRefundableMenuItem</a>
 
                     @if (isOwner || isAdmin)
                     {
-                        <a class="dropdown-item" href="@personTotalSaleOrders_Path" data-toggle="tooltip" title="@personTotalSaleOrdersToolTip" data-placement="left">@personTotalSaleOrdersMenuItem</a>
+                        <a class="dropdown-item bg-light" href="@personTotalSaleOrders_Path" data-toggle="tooltip" title="@personTotalSaleOrdersToolTip" data-placement="left">@personTotalSaleOrdersMenuItem</a>
                     }
                     @if (isCustomer || isAdmin)
                     {
-                        <a class="dropdown-item" href="@personTotalPurchaseOrders_Path" data-toggle="tooltip" title="@personTotalPurchaseOrdersToolTip" data-placement="left">@personTotalPurchaseOrdersMenuItem</a>
+                        <a class="dropdown-item bg-light" href="@personTotalPurchaseOrders_Path" data-toggle="tooltip" title="@personTotalPurchaseOrdersToolTip" data-placement="left">@personTotalPurchaseOrdersMenuItem</a>
                     }
                     @if (isDeliveryman || isAdmin)
                     {
-                        <a class="dropdown-item" href="@personTotalDeliveryOrders_Path" data-toggle="tooltip" title="@personTotalDeliveryOrdersToolTip" data-placement="left">@personTotalDeliveryOrdersMenuItem</a>
+                        <a class="dropdown-item bg-light" href="@personTotalDeliveryOrders_Path" data-toggle="tooltip" title="@personTotalDeliveryOrdersToolTip" data-placement="left">@personTotalDeliveryOrdersMenuItem</a>
                     }
 
                     @if (isSalesman || isAdmin)
                     {
-                        <a class="dropdown-item" href="@personTotalSalesmanOrders_Path" data-toggle="tooltip" title="@personTotalSalesmanOrdersToolTip" data-placement="left">@personTotalSalesmanOrdersMenuItem</a>
+                        <a class="dropdown-item bg-light" href="@personTotalSalesmanOrders_Path" data-toggle="tooltip" title="@personTotalSalesmanOrdersToolTip" data-placement="left">@personTotalSalesmanOrdersMenuItem</a>
                     }
+                    <a class="dropdown-item bg-light" href="@i_Want_To_Path" data-toggle="tooltip" title="@i_Want_To_ToolTip" data-placement="left">I want to...</a>
 
                     @if (globalObject.IsAdmin)
                     {

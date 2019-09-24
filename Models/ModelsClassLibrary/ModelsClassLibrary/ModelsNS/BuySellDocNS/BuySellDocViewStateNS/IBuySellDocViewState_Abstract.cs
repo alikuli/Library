@@ -102,7 +102,8 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
 
         //bool HD_Show_RequestedDate { get; }
         //bool HD_Enable_RequestedDate { get; }
-
+        bool HD_Show_ExpectedDeliveryDate { get; }
+        bool HD_Enable_ExpectedDeliveryDate { get; }
 
         bool HD_Show_DeliverymanSalesman { get; }
         bool HD_Show_OwnersSalesman { get; }

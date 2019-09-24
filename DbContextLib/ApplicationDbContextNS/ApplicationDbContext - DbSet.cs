@@ -27,6 +27,8 @@ using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS.MailerNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
+using ModelsClassLibrary.ModelsNS.ServiceRequestNS.ServiceRequestHdrNS;
+using ModelsClassLibrary.ModelsNS.ServiceRequestNS.ServiceRequestTrxNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.CounterNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.RightsNS;
@@ -141,6 +143,8 @@ namespace ApplicationDbContextNS
         public IDbSet<Right> Rights { get; set; }
         public IDbSet<OwnerCategory> OwnerCategories { get; set; }
 
+        public IDbSet<ServiceRequestHdr> ServiceRequestHdrs { get; set; }
+        public IDbSet<ServiceRequestTrx> ServiceRequestTrxs { get; set; }
         public IDbSet<State> States { get; set; }
 
         //public IDbSet<Salesman> Salesmen { get; set; }

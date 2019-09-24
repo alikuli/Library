@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    @RenderSection("metatags", false)
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css/FileinputCSS")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @RenderSection("styles", required: false)
+
+
+
+
+</head>
+<body class="p-3 container">
+    @{
+        ModelsClassLibrary.ModelsNS.GlobalObjectNS.GlobalObject globalObject = ViewBag.GlobalObject as ModelsClassLibrary.ModelsNS.GlobalObjectNS.GlobalObject;
+
+        if (globalObject.IsNull())
+        {
+            globalObject = new ModelsClassLibrary.ModelsNS.GlobalObjectNS.GlobalObject();
+        }
+    }
+
+
+
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark justify-content-end">
+        <a class="navbar-brand" href="@Url.Action("Index", "Menus",null)">Menu</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <ul class="navbar-nav active">
+                @*<li class="nav-item active">
+                        <a class="nav-link" href="@Url.Action("Index","Home",null)">Home <span class="sr-only">(current)</span></a>
+                    </li>*@
+                @if (globalObject.IsAdmin)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="@Url.Action("Index", "Products", null)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Products
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="@Url.Action("Index", "Home", null)">Home</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("InitializeSystem", "Home", null)">Initialize System</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "BuySellDocs", null)">Sale Order</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Products", null)">Products</a>
+                            <a class="dropdown-item" href="@Url.Action("UnapprovedProducts", "Products", null)">Products pending Approval</a>
+                            <a class="dropdown-item" href="@Url.Action("DeleteAll", "Products", null)">Products -Delete All</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("Index", "ProductApprovers", null)">Products Approvers</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "ProductApproverCategories", null)">Products Approver Categories</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("Index", "ProductChilds", null)">Products Child</a>
+                            <a class="dropdown-item" href="@Url.Action("ShowHidden", "ProductChilds", null)">Products Child-Show Hidden</a>
+                            <a class="dropdown-item" href="@Url.Action("DeleteAll", "ProductChilds", null)">Products Child-Delete All</a>
+                            <div class="dropdown-divider">Utilities</div>
+                            <a class="dropdown-item" href="@Url.Action("MarkAllProductsApprovedUtility", "Products", null)">Mark all Products Approved</a>
+
+
+                            <div class="dropdown-divider"></div>
+
+                            <a class="dropdown-item" href="@Url.Action("Index", "MenuFeatures", null)">Menu Feature</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "ProductFeatures", null)">Product Feature</a>
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("Index", "MenuPathMains", null)">Menu Path</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "MenuPath1s", null)">Menu Path 1</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "MenuPath2s", null)">Menu Path 2</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "MenuPath3s", null)">Menu Path 3</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Messages", null)">Messages</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "MessagesToPeople", null)">Messages -List of To People</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("Index", "ServiceRequestHdrs", null)">Request Header</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "ServiceRequestTrxs", null)">Request Trx</a>
+                            <a class="dropdown-item" href="@Url.Action("ListOfPeopleWantingJobs", "ServiceRequestHdrs", null)">List of People wanting jobs</a>
+                            
+
+                        </div>
+
+                    </li>
+                }
+
+                @if(globalObject.IsLoggedIn)
+                { 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="@Url.Action("Index", "Addresses", null)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Addy
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="@Url.Action("Index", "Addresses", null)">Addresses</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Phones", null)">Phones</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "EmailAddresses", null)">Email Addresses</a>
+                        </div>
+
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="@Url.Action("Index", "CashTrxs", null)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Money
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="@Url.Action("Index", "CashTrxs", null)">Cash Trx</a>
+                            <a class="dropdown-item" href="@Url.Action("DebitCredit_Refundable", "CashTrxs", null)">Show Refundable Trx</a>
+                            <a class="dropdown-item" href="@Url.Action("DebitCredit_NonRefundable", "CashTrxs", null)">Show NON Refundable Trx</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("MakeRefundablePayment", "CashTrxs", null)">Pay Refundable Payment</a>
+                            <a class="dropdown-item" href="@Url.Action("MakeNonRefundablePayment", "CashTrxs", null)">Pay NON Refundable Cash</a>
+                            <a class="dropdown-item bg-success text-white" href="@Url.Action("EncashmentRequest", "CashTrxs", null)">Encashment</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item bg-success text-white" href="@Url.Action("Index", "PenaltyHeaders", null)">Penalty Headers</a>
+                            <a class="dropdown-item bg-success text-white" href="@Url.Action("Index", "PenaltyTrxs", null)">Penalty Trxs</a>
+
+
+                            @if (globalObject.IsAdmin)
+                            {
+                                <a class="dropdown-item background-yellow text-dark" href="@Url.Action("Get_Cash_From_EncashmentRequest", "CashTrxs", null)">Cash Encashment</a>
+
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item background-yellow" href="@Url.Action("Index", "PaymentMethods", null)">Payment Methods</a>
+                            }
+                        </div>
+
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="@Url.Action("Index","FileDocs",null)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Files
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="@Url.Action("Index", "FileDocs", null)">Filing</a>
+                        </div>
+
+                    </li>
+
+                }
+                @if (globalObject.IsAdmin)
+                {
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("GetGroupedCount", "DashBoard", null)">PageViews</a>
+                    </li>
+                }
+
+                @if (globalObject.IsDeliveryman || globalObject.IsAdmin)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="@Url.Action("GetAllOrdersReadyForShipment", "buysellitems", null)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Deliveries
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="@Url.Action("GetAllOrdersReadyForShipment", "buyselldocs", null)">Open Deliveries</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "FreightOfferTrxs", null)">Freight Offer Trxs</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "VehicalTypes", null)">Vehical Types</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("InitializeDb", "VehicalTypes", null)">Initialize Vehical Types</a>
+                        </div>
+                    </li>
+
+
+                }
+                
+                @if (globalObject.IsSalesman || globalObject.IsAdmin)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="@Url.Action("GetListOfPeopleCurrentUserHasSoldTo", "Salesmans", null)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Salesman
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="@Url.Action("GetListOfPeopleCurrentUserHasSoldTo", "Salesmans", null)">Get list You have sold To/bought from</a>
+                        </div>
+
+                    </li>
+
+                }
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="@Url.Action("CreateMailingList", "Mailers", null)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Mail
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="@Url.Action("CreateMailingList", "Mailers", null)">Mailing List Dashborad</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("CreateAMailer", "Mailers", null)">Create a Mailer</a>
+                        <a class="dropdown-item" href="@Url.Action("SetAllAddressesToNotVerified", "Addresses", null)">Reset Addresses</a>
+                    </div>
+
+                </li>
+                @if (globalObject.IsAdmin)
+                {
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="@Url.Action("Index", "Customers", null)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Players
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="@Url.Action("IWannaTrade", "Persons", null)">I Want To Trade!</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Persons", null)">Person</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Mailers", null)">Mailer</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Customers", null)">Customer</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Owners", null)">Owner</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Deliverymans", null)">Deliverymen</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Cashiers", null)">Cashier</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Salesmans", null)">Salesman</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Banks", null)">Bank</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "ProductApprovers", null)">Product Approver</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("Index", "PersonCategories", null)">Person Category</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "MailerCategories", null)">Mailer Category</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "CustomerCategories", null)">Customer Category</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "OwnerCategories", null)">Owner Category</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "DeliverymanCategories", null)">Deliverymen Category</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "CashierCategories", null)">Cashier Category</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "SalesmanCategories", null)">Salesman Category</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "BankCategories", null)">Bank Category</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "ProductApproverCategories", null)">Product Approver Categories</a>
+                        </div>
+
+                    </li>
+                }
+            </ul>
+            <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+
+
+    @RenderBody()
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/MyScripts/_Pollyfill.js"></script>
+    @Scripts.Render("~/bundles/jqueryuobtrsive")
+    @Scripts.Render("~/bundles/popper")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/JqueryIntelisense")
+    @Scripts.Render("~/bundles/FormAjaxPlugIn")
+    @Scripts.Render("~/bundles/Fileinput")
+    @Scripts.Render("~/Scripts/notifyNS/notify")
+    @Scripts.Render("~/Scripts/MyScripts/MyGlobalScriptNew")
+    @RenderSection("scripts", required: false)
+
+
+
+
+</body>
+</html>

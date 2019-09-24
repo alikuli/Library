@@ -19,6 +19,7 @@ using UowLibrary.PlayersNS.DeliverymanNS;
 using UowLibrary.PlayersNS.MessageNS;
 using UowLibrary.PlayersNS.OwnerNS;
 using UowLibrary.PlayersNS.PersonNS;
+using UowLibrary.PlayersNS.SalesmanCategoryNS;
 using UowLibrary.PlayersNS.SalesmanNS;
 using UowLibrary.PlayersNS.VehicalTypeNS;
 using UowLibrary.ProductChildNS;
@@ -66,6 +67,14 @@ namespace UowLibrary.BuySellDocNS
                 _buySellDocHistoryBiz.UserId = UserId;
                 _buySellDocHistoryBiz.UserName = UserName;
                 return _buySellDocHistoryBiz;
+            }
+        }
+
+        public SalesmanCategoryBiz SalesmanCategoryBiz
+        {
+            get
+            {
+                return SalesmanBiz.SalesmanCategoryBiz;
             }
         }
         public SalesmanBiz SalesmanBiz

@@ -87,7 +87,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         //public override bool HD_Hide_Save_Button_In_Edit { get { return true; } }
         public override bool HD_Show_Vehical_Type_Requested { get { return true; } }
 
-
+        public override bool HD_Enable_ExpectedDeliveryDate { get { return true; } }
 
 
 

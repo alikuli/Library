@@ -36,8 +36,17 @@ namespace UowLibrary.BuySellDocNS
             fixSeller(buySellDoc);
 
             fixCustomerSalesman(buySellDoc);
+            fix_Super_Customer_Salesman(buySellDoc);
+            fix_Super_Super_Customer_Salesman(buySellDoc);
+
             fixOwnerSalesman(buySellDoc);
+            fix_Super_Owner_Salesman(buySellDoc);
+            fix_Super_Super_Owner_Salesman(buySellDoc);
+
+
             fixDeliverymanSalesman(buySellDoc);
+            fix_Super_Deliveryman_Salesman(buySellDoc);
+            fix_Super_Super_Deliveryman_Salesman(buySellDoc);
 
             fixAddresses(buySellDoc);
             fixVehicalType(buySellDoc);
@@ -50,9 +59,170 @@ namespace UowLibrary.BuySellDocNS
 
         }
 
+
+
+
+
+
+
+        private void fix_Super_Super_Deliveryman_Salesman(BuySellDoc bsd)
+        {
+            if (bsd.DeliverymanSalesmanId.IsNullOrWhiteSpace())
+                return;
+
+            if (bsd.DeliverymanSalesman.IsNull())
+                throw new Exception("Deliveryman Salesman is null.");
+
+
+            if (bsd.DeliverymanSalesman.ParentSalesmanId.IsNullOrWhiteSpace())
+                return;
+
+            if (bsd.DeliverymanSalesman.ParentSalesman.IsNull())
+                throw new Exception("Deliveryman Salesman Parent is null.");
+
+            if (bsd.DeliverymanSalesman.ParentSalesman.ParentSalesmanId.IsNullOrWhiteSpace())
+                return;
+
+            bsd.DeliverymanSalesman.ParentSalesman.ParentSalesman = SalesmanBiz.Find(bsd.DeliverymanSalesman.ParentSalesman.ParentSalesmanId);
+            bsd.DeliverymanSalesman.ParentSalesman.ParentSalesman.IsNullThrowException();
+        }
+
+        private void fix_Super_Deliveryman_Salesman(BuySellDoc bsd)
+        {
+            if (bsd.DeliverymanSalesmanId.IsNullOrWhiteSpace())
+                return;
+
+            if (bsd.DeliverymanSalesman.IsNull())
+                throw new Exception("Deliveryman Salesman is null.");
+
+
+            if (bsd.DeliverymanSalesman.ParentSalesmanId.IsNullOrWhiteSpace())
+                return;
+
+            if (bsd.DeliverymanSalesman.ParentSalesman.IsNull())
+            {
+                bsd.DeliverymanSalesman.ParentSalesman = SalesmanBiz.Find(bsd.DeliverymanSalesman.ParentSalesmanId);
+                bsd.DeliverymanSalesman.ParentSalesman.IsNullThrowException();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private void fix_Super_Super_Owner_Salesman(BuySellDoc bsd)
+        {
+            if (bsd.OwnerSalesmanId.IsNullOrWhiteSpace())
+                return;
+
+            if (bsd.OwnerSalesman.IsNull())
+                throw new Exception("Owner Salesman is null.");
+
+
+            if (bsd.OwnerSalesman.ParentSalesmanId.IsNullOrWhiteSpace())
+                return;
+
+            if (bsd.OwnerSalesman.ParentSalesman.IsNull())
+                throw new Exception("Owner Salesman Parent is null.");
+
+            if (bsd.OwnerSalesman.ParentSalesman.ParentSalesmanId.IsNullOrWhiteSpace())
+                return;
+
+            bsd.OwnerSalesman.ParentSalesman.ParentSalesman = SalesmanBiz.Find(bsd.OwnerSalesman.ParentSalesman.ParentSalesmanId);
+            bsd.OwnerSalesman.ParentSalesman.ParentSalesman.IsNullThrowException();
+        }
+
+        private void fix_Super_Owner_Salesman(BuySellDoc bsd)
+        {
+            if (bsd.OwnerSalesmanId.IsNullOrWhiteSpace())
+                return;
+
+            if (bsd.OwnerSalesman.IsNull())
+                throw new Exception("Owner Salesman is null.");
+
+
+            if (bsd.OwnerSalesman.ParentSalesmanId.IsNullOrWhiteSpace())
+                return;
+
+            if (bsd.OwnerSalesman.ParentSalesman.IsNull())
+            {
+                bsd.OwnerSalesman.ParentSalesman = SalesmanBiz.Find(bsd.OwnerSalesman.ParentSalesmanId);
+                bsd.OwnerSalesman.ParentSalesman.IsNullThrowException();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+        private void fix_Super_Super_Customer_Salesman(BuySellDoc bsd)
+        {
+            if (bsd.CustomerSalesmanId.IsNullOrWhiteSpace())
+                return;
+
+            if (bsd.CustomerSalesman.IsNull())
+                throw new Exception("Customer Salesman is null.");
+
+
+            if (bsd.CustomerSalesman.ParentSalesmanId.IsNullOrWhiteSpace())
+                return;
+
+            if (bsd.CustomerSalesman.ParentSalesman.IsNull())
+                throw new Exception("Customer Salesman Parent is null.");
+
+            if (bsd.CustomerSalesman.ParentSalesman.ParentSalesmanId.IsNullOrWhiteSpace())
+                return;
+
+            bsd.CustomerSalesman.ParentSalesman.ParentSalesman = SalesmanBiz.Find(bsd.CustomerSalesman.ParentSalesman.ParentSalesmanId);
+            bsd.CustomerSalesman.ParentSalesman.ParentSalesman.IsNullThrowException();
+        }
+
+        private void fix_Super_Customer_Salesman(BuySellDoc bsd)
+        {
+            if (bsd.CustomerSalesmanId.IsNullOrWhiteSpace())
+                return;
+
+            if (bsd.CustomerSalesman.IsNull())
+                throw new Exception("Customer Salesman is null.");
+
+
+            if (bsd.CustomerSalesman.ParentSalesmanId.IsNullOrWhiteSpace())
+                return;
+
+            if (bsd.CustomerSalesman.ParentSalesman.IsNull())
+            {
+                bsd.CustomerSalesman.ParentSalesman = SalesmanBiz.Find(bsd.CustomerSalesman.ParentSalesmanId);
+                bsd.CustomerSalesman.ParentSalesman.IsNullThrowException();
+            }
+        }
+
         private void fix_MenuManager(BuySellDoc buySellDoc, ControllerCreateEditParameter parm)
         {
-            if(buySellDoc.MenuManager.IsNull())
+            if (buySellDoc.MenuManager.IsNull())
             {
                 buySellDoc.MenuManager = new MenuManager(null, null, null, MenuENUM.IndexDefault, BreadCrumbManager, null, UserId, parm.ReturnUrl, UserName);
             }
@@ -343,8 +513,11 @@ namespace UowLibrary.BuySellDocNS
             }
             else
             {
-                buySellDoc.CustomerSalesman = SalesmanBiz.Find(buySellDoc.CustomerSalesmanId);
-                buySellDoc.CustomerSalesman.IsNullThrowException("Salesman not found!");
+                if (buySellDoc.CustomerSalesman.IsNull())
+                {
+                    buySellDoc.CustomerSalesman = SalesmanBiz.Find(buySellDoc.CustomerSalesmanId);
+                    buySellDoc.CustomerSalesman.IsNullThrowException("Salesman not found!");
+                }
             }
         }
 

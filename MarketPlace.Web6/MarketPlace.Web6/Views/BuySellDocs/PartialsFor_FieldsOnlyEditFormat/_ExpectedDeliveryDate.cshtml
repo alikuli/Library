@@ -1,0 +1,48 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_ExpectedDelivryDate = Model.BuySellDocViewState;
+
+    bool show_ExpectedDeliveryDate = viewState_ExpectedDelivryDate.HD_Show_ExpectedDeliveryDate;
+    bool enable_ExpectedDeliveryDate = viewState_ExpectedDelivryDate.HD_Enable_ExpectedDeliveryDate;
+
+
+}
+
+
+
+
+@if (show_ExpectedDeliveryDate)
+{
+    if (enable_ExpectedDeliveryDate)
+    {
+        <div class="form-group">
+            <label class="background-ltgrey p-2">
+                <strong>
+                    <label>Expected Delivery Date</label>
+                </strong>
+            </label>
+            @Html.EditorFor(x => x.ExpectedDeliveryDate, new { htmlAttributes = new { @class = "form-control DatePickers", @placeholder = "The expected delivery date."} })
+        </div>
+    }
+    else
+    {
+        @Html.HiddenFor(x => x.ExpectedDeliveryDate)
+        <div class="form-group">
+            <label class="background-ltgrey p-2">
+                <strong>
+                    <label>Expected Delivery Date</label>
+                </strong>
+            </label>
+            @Html.EditorFor(x => x.ExpectedDeliveryDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "The expected delivery date.", disabled = "disabled"} })
+        </div>
+    }
+
+}
+else
+{
+    @Html.HiddenFor(x => x.ExpectedDeliveryDate)
+}
+

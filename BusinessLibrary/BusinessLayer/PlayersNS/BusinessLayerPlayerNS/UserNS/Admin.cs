@@ -219,13 +219,12 @@ namespace UowLibrary
 
         //    }
         //}
-        private void InitializeAdministrator()
+        private ApplicationUser InitializeAdministrator()
         {
             IdentityRole role = initializeAdminRole();
             ApplicationUser user = initializeAdminUser();
-
-
             addAdminToAdminRole(user.Id, role.Name);
+            return user;
         }
 
         private void addAdminToAdminRole(string userId, string roleName)

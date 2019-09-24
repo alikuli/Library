@@ -46,7 +46,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         #region Methods
 
-        public void SetToTodaysDate(string byUser, string byUserId)
+        public virtual void SetToTodaysDate(string byUser, string byUserId)
         {
             Date = DateTime.UtcNow;
             By = byUser;

@@ -14,6 +14,13 @@ namespace ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS
 {
     public class Mailer : PlayerAbstract, IPlayer
     {
+        public static Mailer Unbox(ICommonWithId ic)
+        {
+            Mailer mailer = ic as Mailer;
+            mailer.IsNullThrowException();
+            return mailer;
+        }
+
         [Display(Name = "Trust Level")]
         public TrustLevelENUM TrustLevelEnum { get; set; }
         public override ClassesWithRightsENUM ClassNameForRights()

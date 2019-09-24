@@ -3,7 +3,6 @@ using AliKuli.ToolsNS;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.BuySellDocNS;
-using ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FreightOffersTrxNS;
 using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
@@ -61,7 +60,7 @@ namespace UowLibrary.BuySellDocNS
 
 
                         case BuySellDocStateENUM.Enroute:
-                            deliveryman_Matches_DeliveryCode_With_Buyers_Code_And_Delivers(buySellDoc);
+                            deliveryman_Delivers_Product(buySellDoc);
                             canceled_Becomes_A_Problem(buySellDoc);
                             break;
 
@@ -118,7 +117,7 @@ namespace UowLibrary.BuySellDocNS
 
                         case BuySellDocStateENUM.CourierComingToPickUp:
                             not_Within_Shipping_Window_Throw_Exception(buySellDoc);
-                            seller_Checks_Pickup_Code_Of_Deliveryman(buySellDoc);
+                            deliveryman_PicksUp_From_Seller(buySellDoc);
                             cancel_Pickup_of(buySellDoc);
 
                             break;
@@ -202,7 +201,7 @@ namespace UowLibrary.BuySellDocNS
                 default:
                     throw new Exception("Unknown Document Type.");
             }
-        //    cancel_With_Penalty(buySellDoc);
+            //    cancel_With_Penalty(buySellDoc);
             ThrowExceptionIfBillToIdOrShipToIdIsEmptyOrNull(buySellDoc);
             not_Within_Shipping_Window_Throw_Message(buySellDoc);
             order_Canceled(buySellDoc);
@@ -222,21 +221,16 @@ namespace UowLibrary.BuySellDocNS
             }
         }
 
-  
+
         private void seller_Cancels_And_Goes_Back_To_BeingPreparedForShipmentBySeller(BuySellDoc buySellDoc)
         {
             if (buySellDoc.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Cancel)
             {
+                reset_DeliverymansCommissionAndFields(buySellDoc);
+
                 buySellDoc.BuySellDocStateEnum = BuySellDocStateENUM.BeingPreparedForShipmentBySeller;
-
-                buySellDoc.CourierSelected.Clear();
-                buySellDoc.OrderConfirmedByDeliveryman.Clear();
-
-                //clear courier offers.??
-
-                //buySellDoc.OrderConfirmedByCustomer.Clear();
-                //buySellDoc.OrderConfirmedByOwner.Clear();
                 buySellDoc.BuySellDocStateModifierEnum = BuySellDocStateModifierENUM.Unknown;
+
             }
 
         }
@@ -283,12 +277,200 @@ namespace UowLibrary.BuySellDocNS
                 return;
 
             set_Owners_MaxCommission(buySellDoc);
+
             set_OwnersSalesMan_Commission(buySellDoc);
+            set_Super_OwnersSalesMan_Commission(buySellDoc);
+            set_Super_Super_OwnersSalesMan_Commission(buySellDoc);
+
             set_CustomersSalesMan_Commission(buySellDoc);
+            set_Super_CustomersSalesMan_Commission(buySellDoc);
+            set_Super_Super_CustomersSalesMan_Commission(buySellDoc);
+
             set_Deliveryman_Commission(buySellDoc);
+
             set_DeliverymansSalesMan_Commission(buySellDoc);
+            set_Super_DeliverymansSalesMan_Commission(buySellDoc);
+            set_Super_Super_DeliverymansSalesMan_Commission(buySellDoc);
+
             set_System_Commission_Freight(buySellDoc);
             set_System_Commission_SaleWithoutFreight(buySellDoc);
+
+        }
+
+        private void set_Super_Super_DeliverymansSalesMan_Commission(BuySellDoc bsd)
+        {
+            if (bsd.DeliverymanSalesmanId.IsNullOrWhiteSpace())
+            {
+                bsd.SuperSuperDeliverymanSalesmanCommission = new CommissionComplex();
+                return;
+            }
+
+            if (bsd.SuperDeliverymanSalesmanId.IsNullOrWhiteSpace())
+            {
+                bsd.SuperSuperDeliverymanSalesmanCommission = new CommissionComplex();
+                return;
+            }
+
+            //check to see if Super Deliveryman Salesman Exists
+            if (bsd.SuperSuperDeliverymanSalesmanId.IsNullOrWhiteSpace())
+            {
+                bsd.SuperSuperDeliverymanSalesmanCommission = new CommissionComplex();
+                return;
+            }
+
+
+
+            decimal pct = SalesCommissionClass.CommissionPct_Deliveryman_Super_Super_Salesman;
+            bsd.SuperSuperDeliverymanSalesmanCommission.Percent = pct;
+
+            if (bsd.TotalInvoiceLessFreight * pct == 0)
+                return;
+
+            bsd.SuperSuperDeliverymanSalesmanCommission.Amount = bsd.TotalInvoiceLessFreight * pct / 100;
+
+        }
+
+        private void set_Super_DeliverymansSalesMan_Commission(BuySellDoc bsd)
+        {
+
+
+            if (bsd.DeliverymanSalesmanId.IsNullOrWhiteSpace())
+            {
+                bsd.SuperDeliverymanSalesmanCommission = new CommissionComplex();
+                return;
+            }
+
+            //check to see if Super Deliveryman Salesman Exists
+            if (bsd.SuperDeliverymanSalesmanId.IsNull())
+            {
+                bsd.SuperDeliverymanSalesmanCommission = new CommissionComplex();
+                return;
+            }
+
+            //reset if ownerSalesmanId is null
+
+            decimal pct = SalesCommissionClass.CommissionPct_Deliveryman_Super_Salesman;
+            bsd.SuperDeliverymanSalesmanCommission.Percent = pct;
+            if (bsd.TotalInvoiceLessFreight * pct == 0)
+                return;
+
+            bsd.SuperDeliverymanSalesmanCommission.Amount = bsd.TotalInvoiceLessFreight * pct / 100;
+
+        }
+
+        private void set_Super_Super_CustomersSalesMan_Commission(BuySellDoc bsd)
+        {
+            //check to see if Customer Salesman Exists
+            if (bsd.CustomerSalesmanId.IsNullOrWhiteSpace())
+            {
+                bsd.SuperSuperCustomerSalesmanCommission = new CommissionComplex();
+                return;
+            }
+
+            //check to see if Super Customer Salesman Exists
+            if (bsd.SuperCustomerSalesmanId.IsNull())
+            {
+                bsd.SuperSuperCustomerSalesmanCommission = new CommissionComplex();
+                return;
+            }
+
+            if (bsd.SuperSuperCustomerSalesmanId.IsNull())
+            {
+                bsd.SuperSuperCustomerSalesmanCommission = new CommissionComplex();
+                return;
+            }
+
+            decimal pct = SalesCommissionClass.CommissionPct_Customer_Super_Super_Salesman;
+            bsd.SuperSuperCustomerSalesmanCommission.Percent = pct;
+
+            if (bsd.TotalInvoiceLessFreight * pct == 0)
+                return;
+
+            bsd.SuperSuperCustomerSalesmanCommission.Amount = bsd.TotalInvoiceLessFreight * pct / 100;
+
+        }
+
+        private void set_Super_CustomersSalesMan_Commission(BuySellDoc bsd)
+        {
+            if (bsd.CustomerSalesmanId.IsNullOrWhiteSpace())
+            {
+                bsd.SuperCustomerSalesmanCommission = new CommissionComplex();
+                return;
+            }
+
+            //check to see if Super Customer Salesman Exists
+            if (bsd.SuperCustomerSalesman.IsNull())
+            {
+                bsd.SuperCustomerSalesmanCommission = new CommissionComplex();
+                return;
+            }
+
+            //reset if ownerSalesmanId is null
+
+            decimal pct = SalesCommissionClass.CommissionPct_Customer_Super_Salesman;
+            bsd.SuperCustomerSalesmanCommission.Percent = pct;
+            if (bsd.TotalInvoiceLessFreight * pct == 0)
+                return;
+
+            bsd.SuperCustomerSalesmanCommission.Amount = bsd.TotalInvoiceLessFreight * pct / 100;
+
+        }
+
+        private void set_Super_Super_OwnersSalesMan_Commission(BuySellDoc bsd)
+        {
+            //check to see if Super Owner Salesman Exists
+            if (bsd.OwnerSalesmanId.IsNullOrWhiteSpace())
+            {
+                bsd.SuperSuperOwnerSalesmanCommission = new CommissionComplex();
+                return;
+            }
+
+            //check to see if Super Owner Salesman Exists
+            if (bsd.SuperOwnerSalesmanId.IsNull())
+            {
+                bsd.SuperSuperOwnerSalesmanCommission = new CommissionComplex();
+                return;
+            }
+
+            if (bsd.SuperSuperOwnerSalesmanId.IsNull())
+            {
+                bsd.SuperSuperOwnerSalesmanCommission = new CommissionComplex();
+                return;
+            }
+
+
+            decimal pct = SalesCommissionClass.CommissionPct_Owner_Super_Super_Salesman;
+            bsd.SuperSuperOwnerSalesmanCommission.Percent = pct;
+
+            if (bsd.TotalInvoiceLessFreight * pct == 0)
+                return;
+
+            bsd.SuperSuperOwnerSalesmanCommission.Amount = bsd.TotalInvoiceLessFreight * pct / 100;
+        }
+
+        private void set_Super_OwnersSalesMan_Commission(BuySellDoc bsd)
+        {
+            if (bsd.OwnerSalesmanId.IsNullOrWhiteSpace())
+            {
+                bsd.SuperOwnerSalesmanCommission = new CommissionComplex();
+                return;
+            }
+
+            //check to see if Super Owner Salesman Exists
+            if (bsd.SuperOwnerSalesmanId.IsNull())
+            {
+                bsd.SuperOwnerSalesmanCommission = new CommissionComplex();
+                return;
+            }
+
+            //reset if ownerSalesmanId is null
+
+            decimal pct = SalesCommissionClass.CommissionPct_Owner_Super_Salesman;
+            bsd.SuperOwnerSalesmanCommission.Percent = pct;
+            if (bsd.TotalInvoiceLessFreight * pct == 0)
+                return;
+
+            bsd.SuperOwnerSalesmanCommission.Amount = bsd.TotalInvoiceLessFreight * pct / 100;
 
         }
 
@@ -307,48 +489,79 @@ namespace UowLibrary.BuySellDocNS
         }
 
 
-        private void reset_CustomersCommissionAndFields(BuySellDoc buySellDoc)
+        private void reset_CustomersCommissionAndFields(BuySellDoc bsd)
         {
-            buySellDoc.CustomerSalesmanId_TEMP = null;
-            buySellDoc.CustomerSalesmanId = null;
-            buySellDoc.CustomerSalesmanCommission = new CommissionComplex();
+            //buySellDoc.CustomerSalesmanId_TEMP = null;
+            bsd.CustomerSalesmanId = null;
+            bsd.CustomerSalesman = null;
+            bsd.CustomerSalesmanCommission = new CommissionComplex();
+
+            bsd.SuperCustomerSalesmanId = null;
+            bsd.SuperCustomerSalesman = null;
+            bsd.SuperCustomerSalesmanCommission = new CommissionComplex();
+
+            bsd.SuperSuperCustomerSalesmanId = null;
+            bsd.SuperSuperCustomerSalesman = null;
+            bsd.SuperSuperCustomerSalesmanCommission = new CommissionComplex();
         }
 
 
-        private void reset_OwnersCommissionAndFields(BuySellDoc buySellDoc)
+        private void reset_OwnersCommissionAndFields(BuySellDoc bsd)
         {
-            
-            buySellDoc.OwnerSalesmanId_TEMP = null;
-            buySellDoc.OwnerSalesmanId = null;
-            buySellDoc.OwnerSalesmanCommission = new CommissionComplex();
-            buySellDoc.Total_Charged_To_Owner = new CommissionComplex();
+
+            //buySellDoc.OwnerSalesmanId_TEMP = null;
+            bsd.OwnerSalesmanId = null;
+            bsd.OwnerSalesman = null;
+
+            bsd.OwnerSalesmanCommission = new CommissionComplex();
+
+            bsd.SuperOwnerSalesmanId = null;
+            bsd.SuperOwnerSalesman = null;
+            bsd.SuperOwnerSalesmanCommission = new CommissionComplex();
+
+            bsd.SuperSuperOwnerSalesmanId = null;
+            bsd.SuperSuperOwnerSalesman = null;
+            bsd.SuperSuperOwnerSalesmanCommission = new CommissionComplex();
+
+            bsd.Total_Charged_To_Owner = new CommissionComplex();
+
 
         }
 
 
-        private void reset_DeliverymansCommissionAndFields(BuySellDoc buySellDoc)
+        private void reset_DeliverymansCommissionAndFields(BuySellDoc bsd)
         {
-            if (!buySellDoc.FreightOfferTrxAcceptedId.IsNullOrWhiteSpace())
+            if (!bsd.FreightOfferTrxAcceptedId.IsNullOrWhiteSpace())
             {
-                FreightOfferTrx freightOfferTrx = FreightOfferTrxBiz.Find(buySellDoc.FreightOfferTrxAcceptedId);
+                FreightOfferTrx freightOfferTrx = FreightOfferTrxBiz.Find(bsd.FreightOfferTrxAcceptedId);
                 freightOfferTrx.IsNullThrowException();
-                freightOfferTrx.IsOfferAccepted = false;
+                //freightOfferTrx.OfferAcceptedByDeliveryman = new BoolDateAndByComplex();
+                freightOfferTrx.OfferAcceptedByOwner = new BoolDateAndByComplex();
                 FreightOfferTrxBiz.Update(freightOfferTrx);
 
-                buySellDoc.FreightOfferTrxAcceptedId = null;
-                buySellDoc.FreightOfferTrxAccepted = null;
+                bsd.FreightOfferTrxAcceptedId = null;
+                bsd.FreightOfferTrxAccepted = null;
 
             }
-            
-            buySellDoc.DeliverymanSalesman = null;
-            buySellDoc.DeliverymanSalesmanId = null;
-            buySellDoc.DeliverymanSalesmanCommission = new CommissionComplex();
-            buySellDoc.Total_Charged_To_Deliveryman = new CommissionComplex();
-            buySellDoc.System_Commission_For_Freight = new CommissionComplex();
 
-            buySellDoc.CourierSelected.Clear();
-            buySellDoc.OrderConfirmedByOwner.Clear();
-            buySellDoc.OrderConfirmedByDeliveryman.Clear();
+            bsd.DeliverymanSalesman = null;
+            bsd.DeliverymanSalesmanId = null;
+            bsd.DeliverymanSalesmanCommission = new CommissionComplex();
+
+            bsd.SuperDeliverymanSalesmanId = null;
+            bsd.SuperDeliverymanSalesman = null;
+            bsd.SuperDeliverymanSalesmanCommission = new CommissionComplex();
+
+            bsd.SuperSuperDeliverymanSalesmanId = null;
+            bsd.SuperSuperDeliverymanSalesman = null;
+            bsd.SuperSuperDeliverymanSalesmanCommission = new CommissionComplex();
+
+            bsd.Total_Charged_To_Deliveryman = new CommissionComplex();
+
+
+            bsd.CourierAcceptedByBuyerAndSeller = new BoolDateAndByComplex();
+            bsd.CourierComingToPickUp = new BoolDateAndByComplex();
+
 
         }
 
@@ -521,7 +734,7 @@ namespace UowLibrary.BuySellDocNS
             if (buySellDoc.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Cancel)
             {
                 buySellDoc.BuySellDocStateEnum = BuySellDocStateENUM.RequestUnconfirmed;
-                buySellDoc.OrderConfirmedByCustomer.Clear();
+                buySellDoc.RequestConfirmed.Clear();
                 reset_Commissions_And_Fields(buySellDoc);
             }
         }
@@ -539,26 +752,25 @@ namespace UowLibrary.BuySellDocNS
 
         #region Deliveryman rules
 
-        private void deliveryman_Matches_DeliveryCode_With_Buyers_Code_And_Delivers(BuySellDoc buySellDoc)
+        private void deliveryman_Delivers_Product(BuySellDoc bsd)
         {
-            if (buySellDoc.DeliveryCode_Deliveryman == buySellDoc.DeliveryCode_Customer)
+            if (bsd.DeliveryCode_Deliveryman == bsd.DeliveryCode_Customer)
             {
-                buySellDoc.BuySellDocStateEnum = BuySellDocStateENUM.Delivered;
-                buySellDoc.OrderDelivered.SetToTodaysDate(UserName, UserId);
+                bsd.BuySellDocStateEnum = BuySellDocStateENUM.Delivered;
+                bsd.Delivered.IsTrue = true;
+
+                bsd.Delivered.SetToTodaysDate(UserName, UserId);
             }
         }
 
-        private void deliveryman_Accepts_Request_To_Pickup(BuySellDoc buySellDoc)
+        private void deliveryman_Accepts_Request_To_Pickup(BuySellDoc bsd)
         {
-            if (buySellDoc.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
+            if (bsd.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
             {
-
-                buySellDoc.OrderConfirmedByDeliveryman.SetToTodaysDate(UserName, UserId);
-
-
-                buySellDoc.BuySellDocStateEnum = BuySellDocStateENUM.CourierComingToPickUp;
-                get_DeliverymanSalesman(buySellDoc);
-
+                bsd.CourierComingToPickUp.SetToTodaysDate(UserName, UserId);
+                bsd.DeliveryCode_Customer = GetRandomCode();
+                bsd.PickupCode_Deliveryman = GetRandomCode();
+                bsd.BuySellDocStateEnum = BuySellDocStateENUM.CourierComingToPickUp;
             }
         }
 
@@ -589,7 +801,14 @@ namespace UowLibrary.BuySellDocNS
 
 
                     //create an offer
-                    FreightOfferTrx frtOff = new FreightOfferTrx(buySellDoc.Id, deliveryman.Id, buySellDoc.FreightOfferDecimal, buySellDoc.OfferedPickupOnDate, buySellDoc.ExpectedDeliveryDate, buySellDoc.CommentByDeliveryman, buySellDoc.VehicalTypeOfferedId);
+                    FreightOfferTrx frtOff = new FreightOfferTrx(
+                        buySellDoc.Id,
+                        deliveryman.Id,
+                        buySellDoc.FreightOfferDecimal,
+                        buySellDoc.OfferedPickupOnDate,
+                        buySellDoc.ExpectedDeliveryDate,
+                        buySellDoc.CommentByDeliveryman,
+                        buySellDoc.VehicalTypeOfferedId);
 
                     //used later
                     frtOff.Deliveryman = deliveryman;
@@ -642,39 +861,39 @@ namespace UowLibrary.BuySellDocNS
             }
         }
 
-        private void buyer_Confirms_His_PurchaseOrder(BuySellDoc buySellDoc, ControllerCreateEditParameter parm)
+        private void buyer_Confirms_His_PurchaseOrder(BuySellDoc bsd, ControllerCreateEditParameter parm)
         {
-            if (buySellDoc.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
+            if (bsd.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
             {
 
-                check_BillTo_Address_Is_filled(buySellDoc);
-                check_ShipTo_Address_Is_filled(buySellDoc);
-                check_BillFrom_Address_Is_filled(buySellDoc);
-                check_ThereAreFundsAvailable(buySellDoc, parm.GlobalObject);
+                check_BillTo_Address_Is_filled(bsd);
+                check_ShipTo_Address_Is_filled(bsd);
+                check_BillFrom_Address_Is_filled(bsd);
+                check_ThereAreFundsAvailable(bsd, parm.GlobalObject);
 
-                update_Customer_Person_Bill_To_Default_Address_If_empty(buySellDoc);
-                get_CustomerSalesman(buySellDoc);
-                get_OwnerSalesman(buySellDoc);
-                buySellDoc.OrderConfirmedByCustomer.SetToTodaysDate(UserName, UserId);
-                buySellDoc.BuySellDocStateEnum = BuySellDocStateENUM.RequestConfirmed;
+                update_Customer_Person_Bill_To_Default_Address_If_empty(bsd);
+
+                //we get the salesmen in superbiz at the event fired by the BuySellDocsController.
+
+                //get_CustomerSalesman(bsd);
+                //get_OwnerSalesman(bsd);
+                bsd.RequestConfirmed.SetToTodaysDate(UserName, UserId);
+                bsd.BuySellDocStateEnum = BuySellDocStateENUM.RequestConfirmed;
+                bsd.RequestConfirmed.SetToTodaysDate(UserName, UserId);
             }
         }
 
-        private void get_CustomerSalesman(BuySellDoc buySellDoc)
-        {
-            if (!buySellDoc.CustomerSalesmanId_TEMP.IsNullOrWhiteSpace())
-                buySellDoc.CustomerSalesmanId = buySellDoc.CustomerSalesmanId_TEMP;
-        }
-        private void get_OwnerSalesman(BuySellDoc buySellDoc)
-        {
-            if (!buySellDoc.OwnerSalesmanId_TEMP.IsNullOrWhiteSpace())
-                buySellDoc.OwnerSalesmanId = buySellDoc.OwnerSalesmanId_TEMP;
-        }
-        private void get_DeliverymanSalesman(BuySellDoc buySellDoc)
-        {
-            if (!buySellDoc.DeliverymanSalesmanId_TEMP.IsNullOrWhiteSpace())
-                buySellDoc.DeliverymanSalesmanId = buySellDoc.DeliverymanSalesmanId_TEMP;
-        }
+        //private void get_CustomerSalesman(BuySellDoc buySellDoc)
+        //{
+        //    if (!buySellDoc.CustomerSalesmanId_TEMP.IsNullOrWhiteSpace())
+        //        buySellDoc.CustomerSalesmanId = buySellDoc.CustomerSalesmanId_TEMP;
+        //}
+        //private void get_OwnerSalesman(BuySellDoc buySellDoc)
+        //{
+        //    if (!buySellDoc.OwnerSalesmanId_TEMP.IsNullOrWhiteSpace())
+        //        buySellDoc.OwnerSalesmanId = buySellDoc.OwnerSalesmanId_TEMP;
+        //}
+
 
 
         #endregion
@@ -683,60 +902,69 @@ namespace UowLibrary.BuySellDocNS
         #region Seller Rules
 
 
-        private void seller_Checks_Pickup_Code_Of_Deliveryman(BuySellDoc buySellDoc)
+        private void deliveryman_PicksUp_From_Seller(BuySellDoc bsd)
         {
-            if (buySellDoc.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Cancel)
+            if (bsd.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Cancel)
                 return;
 
 
-            if (buySellDoc.PickupCode_Seller == buySellDoc.PickupCode_Deliveryman)
+            if (bsd.PickupCode_Seller == bsd.PickupCode_Deliveryman)
             {
-                string err = string.Format("Delivery code {0} Accepted!", buySellDoc.PickupCode_Deliveryman);
+                string err = string.Format("Delivery code {0} Accepted!", bsd.PickupCode_Deliveryman);
                 ErrorsGlobal.AddMessage(err);
-                buySellDoc.BuySellDocStateEnum = BuySellDocStateENUM.Enroute;
+                bsd.BuySellDocStateEnum = BuySellDocStateENUM.Enroute;
+                bsd.Enroute.SetToTodaysDate(UserName, UserId);
 
             }
             else
             {
-                string err = string.Format("The code {0} given by delivery man is incorrect!", buySellDoc.PickupCode_Seller);
+                string err = string.Format("The code {0} given by delivery man is incorrect!", bsd.PickupCode_Seller);
                 throw new Exception(err);
             }
         }
 
-        private void seller_Selects_Deliveryman_For_Shipment(BuySellDoc buySellDoc)
+        private void seller_Selects_Deliveryman_For_Shipment(BuySellDoc bsd)
         {
-            if (buySellDoc.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
+            if (bsd.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
             {
-                buySellDoc.BuySellDocStateEnum = BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller;
-                buySellDoc.CourierSelected.SetToTodaysDate(UserName, UserId);
+                bsd.BuySellDocStateEnum = BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller;
+                bsd.CourierAcceptedByBuyerAndSeller.SetToTodaysDate(UserName, UserId);
             }
         }
 
-        private static void seller_Has_Completed_Preparing_Parcel_For_Shipment(BuySellDoc buySellDoc)
+        private void seller_Has_Completed_Preparing_Parcel_For_Shipment(BuySellDoc bsd)
         {
-            if (buySellDoc.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
+            if (bsd.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
             {
-                buySellDoc.BuySellDocStateEnum = BuySellDocStateENUM.ReadyForPickup;
+                bsd.BuySellDocStateEnum = BuySellDocStateENUM.ReadyForPickup;
+                bsd.ReadyForPickup.SetToTodaysDate(UserName, UserId);
             }
         }
 
 
-        private void seller_Accepts_Buyers_RequestConfirmed(BuySellDoc buySellDoc)
+        private void seller_Accepts_Buyers_RequestConfirmed(BuySellDoc bsd)
         {
-            if (buySellDoc.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
+            if (bsd.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
             {
-                buySellDoc.BuySellDocStateEnum = BuySellDocStateENUM.BeingPreparedForShipmentBySeller;
-                buySellDoc.OrderConfirmedByOwner.SetToTodaysDate(UserName, UserId);
+                //make sure the seller has given some Expected delivery address
+                if (bsd.ExpectedDeliveryDate == DateTime.MinValue || bsd.ExpectedDeliveryDate == DateTime.MaxValue)
+                {
+                    throw new Exception("You must fill in the expected date the customer will receive the product.");
+                }
+                bsd.BuySellDocStateEnum = BuySellDocStateENUM.BeingPreparedForShipmentBySeller;
+                bsd.BeingPreparedForShipmentBySeller.SetToTodaysDate(UserName, UserId);
             }
         }
 
-        private static void seller_Cancels_Deliveryman(BuySellDoc buySellDoc)
+        private void seller_Cancels_Deliveryman(BuySellDoc bsd)
         {
-            if (buySellDoc.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Cancel)
+            if (bsd.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Cancel)
             {
-                buySellDoc.FreightOfferTrxAcceptedId = null;
-                buySellDoc.FreightOfferTrxAccepted = null;
-                buySellDoc.BuySellDocStateEnum = BuySellDocStateENUM.ReadyForPickup;
+                //bsd.FreightOfferTrxAcceptedId = null;
+                //bsd.FreightOfferTrxAccepted = null;
+                reset_DeliverymansCommissionAndFields(bsd);
+                bsd.BuySellDocStateEnum = BuySellDocStateENUM.ReadyForPickup;
+                bsd.ReadyForPickup.SetToTodaysDate(UserName, UserId);
             }
 
 

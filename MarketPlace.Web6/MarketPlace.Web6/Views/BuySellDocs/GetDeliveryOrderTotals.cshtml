@@ -72,40 +72,9 @@
 
     <div class="">
 
-        @*@if (zeroTotal)
-        {
-            <p class="text-center">You have no orders.</p>
-        }
-        else
-        {
-            <a class="btn btn-lg btn-default text-success w-100 m-1" href="@userTotalDelivery_Path " data-toggle=" tooltip" title="@userTotalDeliveryToolTip" data-placement="left">@userTotalDeliveryOrdersMenuItem</a>
-            <br />
-
-        }
-
-
-        @if (zeroInProccessOrders)
-        {
-            <p class="text-center">You have no orders in proccess</p>
-        }
-        else
-        {
-            <a class="btn btn-lg btn-default  w-100 m-1" href="@userInProccessOrders_Path" data-toggle=" tooltip" title="@userInProccessOrdersToolTip" data-placement="left">@userInProccessOrdersMenuItem</a>
-            <br />
-
-        }*@
-
-
 
 
         <h5 class="text-dark background-ltgrey  w-100 text-center p-2">Detail</h5>
-
-
-
-
-
-
-
 
 
         @if (zeroRejected)
@@ -131,51 +100,6 @@
             <br />
 
         }
-
-
-
-
-
-        @*@if (zeroUnconfirmedRequests)
-        {
-            <p class="text-center">You have no unconfirmed requests</p>
-        }
-        else
-        {
-            <a class="btn btn-lg btn-default text-success w-100 m-1" href="@userRequestsUnconfirmed_Path " data-toggle=" tooltip" title="@userRequestsUnconfirmedToolTip" data-placement="left">@userRequestsUnconfirmedMenuItem</a>
-            <br />
-
-        }
-
-
-
-        @if (zeroConfirmedRequests)
-        {
-            <p class="text-center">You have no CONFIRMED requests</p>
-        }
-        else
-        {
-            <a class="btn btn-lg btn-default text-success w-100 m-1" href="@userRequestsConfirmed_Path " data-toggle=" tooltip" title="@userRequestsConfirmedToolTip" data-placement="left">@userRequestsConfirmedMenuItem</a>
-            <br />
-
-        }
-
-
-
-
-
-
-        @if (zeroConfirmedBySeller)
-        {
-            <p class="text-center">You have no orders being prepared for shipment by Seller </p>
-        }
-        else
-        {
-            <a class="btn btn-lg btn-default text-success w-100 m-1" href="@userConfirmedBySellers_Path " data-toggle=" tooltip" title="@userConfirmedBySellersToolTip" data-placement="left">@userConfirmedBySellersMenuItem</a>
-            <br />
-
-        }*@
-
 
 
         @if (zeroReadyForShipment)

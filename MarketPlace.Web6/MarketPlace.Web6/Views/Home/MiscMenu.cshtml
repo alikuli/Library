@@ -1,0 +1,36 @@
+﻿@model ModelsClassLibrary.ModelsNS.GlobalObjectNS.GlobalObject
+@{
+    ViewBag.Title = "Misc";
+}
+
+<h2>Misc</h2>
+
+
+@using (Html.BeginForm())
+{
+
+    <div class="">
+
+
+
+        <h3 class="text-center">Messages</h3>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("Index", "Messages", null)">Messages</a>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("Index", "MessagesToPeople", null)">Messages -List of To People</a>
+
+        <h3 class="text-center">Service Request</h3>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("Index", "ServiceRequestHdrs", null)">Request Header</a>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("Index", "ServiceRequestTrxs", null)">Request Trx</a>
+
+        <h3 class="text-center">Penalty</h3>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("Index", "PenaltyHeaders", null)">Penalty Headers</a>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("Index", "PenaltyTrxs", null)">Penalty Trxs</a>
+
+        <h3 class="text-center">Misc</h3>
+
+        <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("GetGroupedCount", "DashBoard", null)">PageViews</a>
+        <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("Index", "PaymentMethods", null)">Payment Methods</a>
+
+
+    </div>
+}
+

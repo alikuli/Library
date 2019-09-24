@@ -1,0 +1,41 @@
+﻿@model ModelsClassLibrary.ModelsNS.GlobalObjectNS.GlobalObject
+@{
+    ViewBag.Title = "Mailer Menu";
+}
+
+<h2>Product Menu</h2>
+
+
+@using (Html.BeginForm())
+{
+
+    <div class="">
+        <hr />
+
+        @*<a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("Index", "Products", null)">Products</a>
+        <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("UnapprovedProducts", "Products", null)">Products pending Approval</a>
+        <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("Index", "ProductFeatures", null)">Product Feature</a>
+        <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("DeleteAll", "Products", null)">Products -Delete All</a>
+
+        <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("Index", "ProductApprovers", null)">Products Approvers</a>
+        <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("Index", "ProductApproverCategories", null)">Products Approver Categories</a>
+        <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("Index", "ProductChilds", null)">Products Child</a>
+        <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("ShowHidden", "ProductChilds", null)">Products Child-Show Hidden</a>
+        <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("DeleteAll", "ProductChilds", null)">Products Child-Delete All</a>
+        <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("MarkAllProductsApprovedUtility", "Products", null)">Mark all Products Approved</a>*@
+
+        <h3 class="text-center">Mailer</h3>
+
+        <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("CreateMailingList", "Mailers", null)">Mailing List Dashborad</a>
+
+        @if (Model.IsAdmin)
+        {
+            <div class="dropdown-divider"></div>
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("CreateAMailer", "Mailers", null)">Create a Mailer</a>
+            <a class="btn btn-lg btn-default text-danger  w-100 m-1" href="@Url.Action("SetAllAddressesToNotVerified", "Addresses", null)">Reset Addresses</a>
+        }
+
+
+    </div>
+}
+

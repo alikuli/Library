@@ -1,12 +1,11 @@
-﻿using EnumLibrary.EnumNS;
+﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using InterfacesLibrary.PeopleNS.PlayersNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
-using UserModels;
-using AliKuli.Extentions;
 
 
 namespace ModelsClassLibrary.ModelsNS.PlayersNS
@@ -22,6 +21,13 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
         }
 
 
+        public static Customer Unbox(ICommonWithId ic)
+        {
+            Customer cust = ic as Customer;
+            cust.IsNullThrowException();
+            return cust;
+
+        }
 
         [Display(Name = "Category")]
         [MaxLength(128)]
@@ -44,14 +50,14 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
 
 
 
-        
-        [Display(Name="Inform To")]
+
+        [Display(Name = "Inform To")]
         [MaxLength(128)]
         public virtual string DefaultInformToAddressId { get; set; }
         public virtual AddressMain DefaultInformToAddress { get; set; }
 
-        
-        
+
+
         [NotMapped]
         public SelectList SelectListCustomerCategory { get; set; }
 

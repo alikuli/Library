@@ -31,6 +31,11 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         //}
 
         #region Order Lines (OL) This is the orders list
+        public override bool OL_IsCanceledEnabled { get { return true; } }
+        public override bool OL_IsShowCancelButton { get { return true; } }
+
+        string message = string.Format("Cancel if you have a problem with the order. This will freeze everyone's money until the problem is resolved. This option is only available during the guarantee period. CUSTOMER IS ALWAYS RIGHT. This option is available until ");
+        public override string OL_Cancel_Button_ToolTip { get { return message; } }
 
 
         #endregion

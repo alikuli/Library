@@ -13,7 +13,7 @@ namespace ModelsClassLibrary.ModelsNS.BuySellDocNS
         {
 
         }
-        public UserParameter(string userId, string userName, string customerId, string ownerId, string deliverymanId, string salesmanId, string personId, string personName, bool isAdmin, string personAcceptingPaymentForSystemId)
+        public UserParameter(string userId, string userName, string customerId, string ownerId, string deliverymanId, string salesmanId, string personId, string personName, bool isAdmin, string personAcceptingPaymentForSystemId, string mailerId, string bankId, bool isSuperSalesman, bool isSuperSuperSalesman)
         {
             UserId = userId;
             CustomerId = customerId;
@@ -24,7 +24,11 @@ namespace ModelsClassLibrary.ModelsNS.BuySellDocNS
             UserName = userName;
             IsAdmin = isAdmin;
             PersonName = personName;
-            PersonAcceptingPaymentForSystemId = personAcceptingPaymentForSystemId;
+            SystemPersonId = personAcceptingPaymentForSystemId;
+            MailerId = mailerId;
+            BankId = bankId;
+            IsSuperSalesman = isSuperSalesman;
+            IsSuperSuperSalesman = isSuperSuperSalesman;
 
         }
         public string UserId { get; set; }
@@ -32,11 +36,12 @@ namespace ModelsClassLibrary.ModelsNS.BuySellDocNS
         public string OwnerId { get; set; }
         public string DeliverymanId { get; set; }
         public string SalesmanId { get; set; }
+        public string MailerId { get; set; }
         public string PersonId { get; set; }
         public string PersonName { get; set; }
         public string UserName { get; set; }
-        public string PersonAcceptingPaymentForSystemId { get; set; }
-
+        public string SystemPersonId { get; set; }
+        public string BankId { get; set; }
         public bool IsAdmin { get; set; }
         public bool IsCustomer
         {
@@ -66,14 +71,13 @@ namespace ModelsClassLibrary.ModelsNS.BuySellDocNS
                 return !SalesmanId.IsNullOrWhiteSpace();
             }
         }
+        public bool IsSuperSalesman { get; private set; }
+        public bool IsSuperSuperSalesman { get; private set; }
+        public bool IsBank { get { return !BankId.IsNullOrWhiteSpace(); } }
 
-        public bool IsLoggedIn
-        {
-            get
-            {
-                return !UserId.IsNullOrWhiteSpace();
-            }
-        }
+        public bool IsMailer { get { return !MailerId.IsNullOrWhiteSpace(); } }
+
+        public bool IsLoggedIn { get { return !UserId.IsNullOrWhiteSpace(); } }
 
 
     }

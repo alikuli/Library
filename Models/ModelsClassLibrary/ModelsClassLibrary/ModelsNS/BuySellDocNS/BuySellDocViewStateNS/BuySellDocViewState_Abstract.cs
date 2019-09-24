@@ -398,6 +398,9 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         public virtual string HD_Text_Button_DelyButton { get { return "Yes"; } }
 
 
+        public virtual bool HD_Show_ExpectedDeliveryDate { get { return true; } }
+        public virtual bool HD_Enable_ExpectedDeliveryDate { get { return false; } }
+
 
         #endregion
 

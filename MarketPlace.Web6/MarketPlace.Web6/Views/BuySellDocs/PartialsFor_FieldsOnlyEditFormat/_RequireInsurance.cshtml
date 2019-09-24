@@ -21,9 +21,23 @@
 
                     <div class="form-group">
                         <strong>@Html.LabelFor(model => model.InsuranceRequired, htmlAttributes: new { @class = "background-ltgrey p-2" })</strong>
+                        <div class="row">
+                            <div class="col">
+                                @Html.EditorFor(x => x.InsuranceRequired, new { htmlAttributes = new { @class = "form-control form-inline", @placeholder = "If your product is guaranteed, you may need to pay more, but the delivery man will have to pay you this amount if he does not deliver the goods intact." } })
+                            </div>
+                            <div class="col">
 
-                        @Html.EditorFor(x => x.InsuranceRequired, new { htmlAttributes = new { @class = "form-control", @placeholder = "If your product is guaranteed, you may need to pay more, but the delivery man will have to pay you this amount if he does not deliver the goods intact." } })
+                                @if (Model.BuySellDocStateEnum == BuySellDocStateENUM.ReadyForPickup)
+                                {
+                                    if(Model.BuySellDocumentTypeEnum == BuySellDocumentTypeENUM.Sale)
+                                    { 
+                                        <button type="submit" class="btn  btn-success"><small>Update Insurance</small> </button>
+                                    }
+                                }
+                            </div>
+                        </div>
                     </div>
+                    
 
 
                 }

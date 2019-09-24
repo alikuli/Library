@@ -195,7 +195,7 @@ namespace ModelsClassLibrary.ModelsNS.CashNS.CashEncashmentTrxNS
         {
 
             CashStateENUM cashStateEnum = CashStateENUM.Allocated;
-            if (IsApproved.Selected)
+            if (IsApproved.IsSelected)
             {
                 if (IsPaid())
                 {
@@ -243,17 +243,13 @@ namespace ModelsClassLibrary.ModelsNS.CashNS.CashEncashmentTrxNS
             }
 
             CashStateENUM cashStateEnum = CashStateENUM.Allocated;
-            if (IsApproved.Selected)
+            if (IsApproved.IsSelected)
             {
                 if (IsPaid())
                 {
                     cashStateEnum = CashStateENUM.Available;
 
                 }
-            }
-            else
-            {
-                return null;
             }
 
 

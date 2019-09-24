@@ -61,8 +61,6 @@ namespace ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS
                                 break;
                             case BuySellDocStateENUM.BeingPreparedForShipmentBySeller:
                                 
-                                if (buySellDoc.IsPickupLate)
-                                    return null;
 
                                 return new CourierAcceptedByBuyerAndSeller_Purchase(buySellDoc);
 
@@ -78,7 +76,8 @@ namespace ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS
                             case BuySellDocStateENUM.Enroute:
                                 break;
                             case BuySellDocStateENUM.Delivered:
-                                break;
+                                return new Delivered_Purchase(buySellDoc);
+
                             case BuySellDocStateENUM.Rejected:
                                 break;
                             case BuySellDocStateENUM.Problem:

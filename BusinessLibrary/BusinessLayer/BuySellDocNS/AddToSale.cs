@@ -1,15 +1,10 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
-using ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FreightOffersTrxNS;
-using ModelsClassLibrary.ModelsNS.MessageNS;
-using ModelsClassLibrary.ModelsNS.PeopleMessageNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
-using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace UowLibrary.BuySellDocNS
@@ -52,34 +47,54 @@ namespace UowLibrary.BuySellDocNS
         }
 
         #region AcceptCourier
-        public void AcceptCourier(string frtOfferId, BuySellDocumentTypeENUM buySellDocumentTypeEnum, decimal currBalance)
+        public void AcceptCourier(FreightOfferTrx frtTrx, BuySellDocumentTypeENUM buySellDocumentTypeEnum, decimal currBalance, decimal insuranceRequired)
         {
-            FreightOfferTrx freightOfferAcceptedTrx = getFreightOffer(frtOfferId);
-            freightOfferAcceptedTrx.IsNullThrowException();
+            if (insuranceRequired < 0)
+                throw new Exception("Insurance cannot be less than zero!");
 
-            BuySellDoc buyselldoc = getBuySellDoc(freightOfferAcceptedTrx);
-            buyselldoc.IsNullThrowException();
+            BuySellDoc bsd = getBuySellDoc(frtTrx);
+            bsd.IsNullThrowException();
+            exceptionSellerAndDeliveryManIsTheSame(frtTrx, bsd);
 
-            exceptionSellerAndDeliveryManIsTheSame(freightOfferAcceptedTrx, buyselldoc);
-            exceptionIfCurrBalanceIsNotEnought(freightOfferAcceptedTrx.OfferAmount, currBalance);
+            bsd.BuySellDocumentTypeEnum = buySellDocumentTypeEnum;
+            
+            //this should all happen when courier accepts.
+            //bsd.DeliveryCode_Customer = GetRandomCode();
+            //bsd.PickupCode_Deliveryman = GetRandomCode();
+            //bsd.FreightOfferTrxAcceptedId = frtTrx.Id;
+            
+            bsd.BuySellDocStateModifierEnum = BuySellDocStateModifierENUM.Accept;
+            bsd.InsuranceRequired = insuranceRequired;
+            decimal maxDeliverymanLiability = maxPossibleLiabilityToDeliverParcel(bsd, frtTrx);
 
-            buyselldoc.BuySellDocumentTypeEnum = buySellDocumentTypeEnum;
-
-            acceptDeliveryMan(freightOfferAcceptedTrx, buyselldoc);
-
+            if (frtTrx.MaxPossibleLiabilityToDeliverParcel() > currBalance)
+            {
+                frtTrx.IsNullThrowException();
+                decimal insuranceAmountRqrdToPass = currBalance - frtTrx.OfferAmount;
+                string err = string.Format("The deliveryman '{0}' is unable to satisfy financial guarantee requirements by Rs{1:N0}. If you would still like to use him, you have an insurance amount of {2:N0} which can be reduced to {4:N0} which will allow you to proceed and accept the deliveryman. This is risky. If something goes wrong during delivery, then the maximum amount you will be able to recover from the deliveryman will be {3:N0}. Alternatively, you can request '{0}' to increase his guarantee amount with the Company. Proceed cautiously.",
+                   frtTrx.Deliveryman.FullName(),
+                   maxDeliverymanLiability - currBalance,
+                   bsd.InsuranceRequired,
+                   currBalance,
+                   insuranceAmountRqrdToPass);
+                throw new Exception(err);
+            }
+            frtTrx.OfferAcceptedByOwner.SetToTodaysDate(UserName,UserId);
+            FreightOfferTrxBiz.Update(frtTrx);
+            Update(bsd);
 
         }
 
+        decimal maxPossibleLiabilityToDeliverParcel(BuySellDoc bsd, FreightOfferTrx frtTrx)
+        {
+            bsd.IsNullThrowException();
+            decimal ttlLiability = frtTrx.OfferAmount + bsd.InsuranceRequired;
+            return ttlLiability;
+        }
+
+
         private void exceptionIfCurrBalanceIsNotEnought(decimal freightOfferAmount, decimal currBalance)
         {
-            if (freightOfferAmount > currBalance)
-            {
-                string err = string.Format("Freight offer is {0:N2} and your current amount is {1:N2}. You are short of {2:N2}. Please load your account with REFUNDABLE MONEY.",
-                   freightOfferAmount,
-                   currBalance,
-                   freightOfferAmount - currBalance);
-                throw new Exception(err);
-            }
         }
 
         private BuySellDoc getBuySellDoc(FreightOfferTrx freightOfferAcceptedTrx)
@@ -98,14 +113,6 @@ namespace UowLibrary.BuySellDocNS
 
         private void acceptDeliveryMan(FreightOfferTrx freightOfferAcceptedTrx, BuySellDoc buyselldoc)
         {
-            buyselldoc.DeliveryCode_Customer = GetRandomCode();
-            buyselldoc.PickupCode_Deliveryman = GetRandomCode();
-
-            buyselldoc.FreightOfferTrxAcceptedId = freightOfferAcceptedTrx.Id;
-            //buyselldoc.AcceptRejectOrEmpty = ConstantsLibrary.BuySellConstants.ACCEPT;
-            buyselldoc.BuySellDocStateModifierEnum = BuySellDocStateModifierENUM.Accept;
-
-            Update(buyselldoc);
         }
 
         private void updateTheAcceptedFreightOffer(FreightOfferTrx freightOfferAcceptedTrx)

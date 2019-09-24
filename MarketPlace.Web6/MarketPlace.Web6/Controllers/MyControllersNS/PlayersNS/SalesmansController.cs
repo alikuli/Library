@@ -48,32 +48,30 @@ namespace MarketPlace.Web6.Controllers
 
         public override ActionResult Event_Create_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
-            UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
-            Salesman salesman = parm.Entity as Salesman;
-            salesman.IsNullThrowException("Unable to unbox Salesman");
-
-            salesman.SelectListSalesmanCategory = _salesmanBiz.SalesmanCategoryBiz.SelectList();
-            salesman.SelectListBillAddress = _salesmanBiz.SelectListBillAddressesFor(UserId);
-            salesman.SelectListShipAddress = _salesmanBiz.SelectListShipAddressesFor(UserId);
-
-            salesman.SelectListPeople = _salesmanBiz.PersonBiz.SelectList(); ;
-
+            setupCode(parm);
             return base.Event_Create_ViewAndSetupSelectList_GET(parm);
         }
 
         public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
+            setupCode(parm);
+            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
+        }
+
+        
+        private void setupCode(ControllerIndexParams parm)
+        {
             UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
             Salesman salesman = parm.Entity as Salesman;
             salesman.IsNullThrowException("Unable to unbox Salesman");
 
-            salesman.SelectListSalesmanCategory = _salesmanBiz.SalesmanCategoryBiz.SelectList();
-            salesman.SelectListBillAddress = _salesmanBiz.SelectListBillAddressesFor(UserId);
-            salesman.SelectListShipAddress = _salesmanBiz.SelectListShipAddressesFor(UserId);
-
+            salesman.SelectListSalesmanCategory = SalesmanBiz.SalesmanCategoryBiz.SelectList();
+            salesman.SelectListBillAddress = SalesmanBiz.SelectListBillAddressesFor(UserId);
+            salesman.SelectListShipAddress = SalesmanBiz.SelectListShipAddressesFor(UserId);
+            salesman.SelectListParentSalesmen = SalesmanBiz.SelectListSuperSalesmen();
             salesman.SelectListPeople = _salesmanBiz.PersonBiz.SelectList(); ;
-            return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
         }
+
 
         public ActionResult GetListOfPeopleCurrentUserHasSoldTo()
         {

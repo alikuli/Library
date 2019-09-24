@@ -11,8 +11,7 @@ namespace UowLibrary.PlayersNS.CustomerNS
         public override void Fix(ControllerCreateEditParameter parm)
         {
             base.Fix(parm);
-            Customer customer = parm.Entity as Customer;
-            customer.IsNullThrowException("Unable to unbox customer");
+            Customer customer =Customer.Unbox(parm.Entity);
 
             //we need to add this because the DefaultBillAddressId is returning as a blank
             //and then thesystme thinks that there is a record with a blank Id
@@ -27,6 +26,9 @@ namespace UowLibrary.PlayersNS.CustomerNS
                 customer.CustomerCategoryId = null;
             if (customer.DefaultInformToAddressId.IsNullOrWhiteSpace())
                 customer.DefaultInformToAddressId = null;
+
+            if (customer.Name.IsNullOrWhiteSpace())
+                customer.Name = UserName;
 
         }
 

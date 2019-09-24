@@ -13,14 +13,14 @@ namespace MarketPlace.Web6.Controllers
     public class PenaltyHeadersController : EntityAbstractController<PenaltyHeader>
     {
 
-        PenaltyHeaderBiz _PenaltyHeadersBiz;
+        PenaltyHeaderBiz _serviceRequestHdrsBiz;
         SuperBiz _superBiz;
 
 
         public PenaltyHeadersController(AbstractControllerParameters param, SuperBiz superBiz)
             : base(superBiz.PenaltyHeaderBiz, param)
         {
-            _PenaltyHeadersBiz = superBiz.PenaltyHeaderBiz;
+            _serviceRequestHdrsBiz = superBiz.PenaltyHeaderBiz;
             _superBiz = superBiz;
         }
 
@@ -37,7 +37,7 @@ namespace MarketPlace.Web6.Controllers
         {
             get
             {
-                return _PenaltyHeadersBiz;
+                return _serviceRequestHdrsBiz;
             }
         }
 

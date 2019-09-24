@@ -79,7 +79,10 @@ namespace UowLibrary
 
 
 
-
+        public DbContext Db()
+        {
+            return _dal.GetDb;
+        }
 
 
 
@@ -1620,7 +1623,7 @@ namespace UowLibrary
         /// To send more complicated data, override GetData.
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
-        public void InitializationData()
+        public virtual void InitializationData()
         {
             try
             {
@@ -1858,46 +1861,6 @@ namespace UowLibrary
             var selectList = new SelectList(sortedList, "Value", "Text");
             return selectList;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

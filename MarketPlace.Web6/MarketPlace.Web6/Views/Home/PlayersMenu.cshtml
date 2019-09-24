@@ -1,0 +1,40 @@
+﻿@model ModelsClassLibrary.ModelsNS.GlobalObjectNS.GlobalObject
+@{
+    ViewBag.Title = "Misc";
+}
+
+<h2>Players</h2>
+
+
+@using (Html.BeginForm())
+{
+
+    <div class="">
+
+
+        <h3 class="text-center">Players</h3>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("IWannaTrade", "Persons", null)">I Want To Trade!</a>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("Index", "Persons", null)">Person</a>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("Index", "Mailers", null)">Mailer</a>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("Index", "Customers", null)">Customer</a>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("Index", "Owners", null)">Owner</a>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("Index", "Deliverymans", null)">Deliverymen</a>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("Index", "Cashiers", null)">Cashier</a>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("Index", "Salesmans", null)">Salesman</a>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("Index", "Banks", null)">Bank</a>
+        <a class="btn btn-lg btn-default text-info  w-100 m-1" href="@Url.Action("Index", "ProductApprovers", null)">Product Approver</a>
+        <h3 class="text-center">Player Categories</h3>
+        <a class="btn btn-lg btn-default text-success  w-100 m-1" href="@Url.Action("Index", "PersonCategories", null)">Person Category</a>
+        <a class="btn btn-lg btn-default text-success  w-100 m-1" href="@Url.Action("Index", "MailerCategories", null)">Mailer Category</a>
+        <a class="btn btn-lg btn-default text-success  w-100 m-1" href="@Url.Action("Index", "CustomerCategories", null)">Customer Category</a>
+        <a class="btn btn-lg btn-default text-success  w-100 m-1" href="@Url.Action("Index", "OwnerCategories", null)">Owner Category</a>
+        <a class="btn btn-lg btn-default text-success  w-100 m-1" href="@Url.Action("Index", "DeliverymanCategories", null)">Deliverymen Category</a>
+        <a class="btn btn-lg btn-default text-success  w-100 m-1" href="@Url.Action("Index", "CashierCategories", null)">Cashier Category</a>
+        <a class="btn btn-lg btn-default text-success  w-100 m-1" href="@Url.Action("Index", "SalesmanCategories", null)">Salesman Category</a>
+        <a class="btn btn-lg btn-default text-success  w-100 m-1" href="@Url.Action("Index", "BankCategories", null)">Bank Category</a>
+        <a class="btn btn-lg btn-default text-success  w-100 m-1" href="@Url.Action("Index", "ProductApproverCategories", null)">Product Approver Categories</a>
+
+
+    </div>
+}
+

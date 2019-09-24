@@ -12,7 +12,13 @@ namespace UowLibrary.MailerNS
         public override void Fix(ControllerCreateEditParameter parm)
         {
             base.Fix(parm);
-            Mailer mailer = parm.Entity as Mailer;
+            Mailer mailer = Mailer.Unbox(parm.Entity);
+
+            if (mailer.DefaultBillAddressId.IsNullOrWhiteSpace())
+                mailer.DefaultBillAddressId = null;
+
+            if (mailer.DefaultShipAddressId.IsNullOrWhiteSpace())
+                mailer.DefaultShipAddressId = null;
 
             //update the User as well.
             //mailer.UserId.IsNullOrWhiteSpaceThrowArgumentException("No user ID");

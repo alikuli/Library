@@ -34,8 +34,8 @@ namespace DalLibrary.DalNS
             //    Check_ForDuplicate_Name(entity);
             //}
 
-            if (ErrorsGlobal.HasErrors)
-                throw new Exception(ErrorsGlobal.ToString());
+            //if (ErrorsGlobal.HasErrors)
+            //    throw new Exception(ErrorsGlobal.ToString());
 
         }
 

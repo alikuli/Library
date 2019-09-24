@@ -58,6 +58,9 @@
                         Pick up date
                     </th>
                     <th class="text-right">
+                        Insurance
+                    </th>
+                    <th class="text-right">
                         Amount
                     </th>
                     <th>
@@ -77,7 +80,7 @@
                     viewState_ShowOffers = Model.GetBuySellDocViewState(Model.BuySellDocStateEnum, Model.BuySellDocumentTypeEnum);
 
                     string pathToDeliverymanUrl = Url.Action("DeliveryManInfo", "Deliverymans", new { id = offer.DeliverymanId, returnUrl = Request.Url.PathAndQuery });
-                    string acceptBtnUrl = Url.Action("AcceptDeliveryman", "BuySellDocs", new { frtOfferId = offer.Id, returnUrl = Request.Url.PathAndQuery, buySellDocumentTypeEnum = Model.BuySellDocumentTypeEnum });
+                    string acceptBtnUrl = Url.Action("AcceptDeliveryman", "BuySellDocs", new { frtOfferId = offer.Id, returnUrl = Request.Url.PathAndQuery, buySellDocumentTypeEnum = Model.BuySellDocumentTypeEnum, insuranceRequired = Model.InsuranceRequired });
 
                     string path_Cancel_Offer_Button = Url.Action("CancelDeliveryMan", "BuySellDocs", new { buySellDocId = offer.BuySellDocId, returnUrl = Request.Url.PathAndQuery, buySellDocumentTypeEnum = Model.BuySellDocumentTypeEnum }); 
                     
@@ -88,7 +91,7 @@
 
 
 
-                    string path_Deliveryman_Accept_To_Deliver_Product = Url.Action("Deliveryman_Accepts_To_Deliver", "BuySellDocs", new { frtOfferId = offer.Id, returnUrl = Request.Url.PathAndQuery}); ;
+                    string path_Deliveryman_Accept_To_Deliver_Product = Url.Action("Deliveryman_Accepts_To_Deliver", "BuySellDocs", new { frtOfferId = offer.Id, buySellId = Model.Id, returnUrl = Request.Url.PathAndQuery}); ;
 
                     string offerDate = offer.MetaData.Modified.Date_NotNull_Min == DateTime.MinValue ?
                         offer.MetaData.Created.Date_NotNull_Max.ToLongDateString() :
@@ -114,17 +117,11 @@
 
                     bool isLowestOffer = offer.OfferAmount == lowestOffer;
 
-                    bool isOfferAcceptedByCustomerAndSeller = offer.Id.IsNullOrWhiteSpace() ? false : offer.Id == (Model.FreightOfferTrxAcceptedId ?? "");
-
-
-                    bool isOfferAcceptedByCourier = isOfferAcceptedByCustomerAndSeller && offer.IsOfferAccepted == true;
-
-
-
-
-                    bool isCurrentUserTheSelectedDeliveryman = Model.DeliverymanId.IsNullOrWhiteSpace()? false : Model.CurrentUser_DeliverymanId.IsNullOrWhiteSpace() ? false : Model.CurrentUser_DeliverymanId == Model.DeliverymanId;
-
-                    bool isCurrUserDeliveryman_And_OfferAcceptedByShipper = isCurrentUserTheSelectedDeliveryman && isOfferAcceptedByCustomerAndSeller;
+                    //bool isOfferAcceptedByCustomerAndSeller = offer.Id.IsNullOrWhiteSpace() ? false : offer.Id == (Model.FreightOfferTrxAcceptedId ?? "");
+                    bool isOfferAcceptedByCustomerAndSeller = offer.OfferAcceptedByOwner.IsSelected == true;
+                    bool isOfferAcceptedByCourier = offer.IsOfferAcceptedByDeliveryman();
+                    bool isButtonBelongsToThisDeliveryman = offer.DeliverymanId == Model.UserParameter.DeliverymanId;
+                    bool isCurrUserDeliveryman_And_OfferAcceptedByShipper_And_Button_Belongs_To_This_Deliveryman = isOfferAcceptedByCustomerAndSeller && Model.UserParameter.IsDeliveryman && isButtonBelongsToThisDeliveryman;
                     ownerId_ShowOffers = offer.BuySellDoc.OwnerId;
                     customerId_ShowOffers = offer.BuySellDoc.CustomerId;
 
@@ -161,7 +158,8 @@
                         <td><a href="@pathToDeliverymanUrl">@offer.Deliveryman.Name</a> </td>
                         <td>@vehicalType</td>
                         <td>@offer.PickupDate.ToLongDateString()</td>
-                        <td class="text-right">@offer.OfferAmount.ToString("N2")</td>
+                        <td class="text-right">@Model.InsuranceRequired.ToString("N0")</td>
+                        <td class="text-right">@offer.OfferAmount.ToString("N0")</td>
                         <td>
                             @offer.Comment
                             @if (isLowestOffer)
@@ -220,57 +218,70 @@
 
 
                             @*After the customer/seller have accepted the deliveryman, This is where the courier accepts the offer*@
-                            @if (isCurrUserDeliveryman_And_OfferAcceptedByShipper)
+                            @if (isCurrUserDeliveryman_And_OfferAcceptedByShipper_And_Button_Belongs_To_This_Deliveryman)
                             {
                                 if (isCoourierAcceptBtnVisible)
                                 {
                                     if (isOfferAcceptedByCourier)
                                     {
+                                        <div class="row">
+                                            <div class="col">
+                                                <button data-toggle="tooltip"
+                                                        title="Accept the request to deliver product"
+                                                        data-placement="top"
+                                                        class="btn btn-sm btn-success"
+                                                        onclick=""
+                                                        @enabled_Deliveryman_Accept_To_Deliver_Product_Button>
+                                                    <img width="20" src="@icon_Deliveryman_Accept_To_Deliver_Product_Button" />
+                                                    Accept Delivery
 
-                                        <button data-toggle="tooltip"
-                                                title="Accept the request to deliver product"
-                                                data-placement="top"
-                                                class="btn btn-sm btn-success"
-                                                onclick=""
-                                                @enabled_Deliveryman_Accept_To_Deliver_Product_Button>
-                                            <img width="20" src="@icon_Deliveryman_Accept_To_Deliver_Product_Button" />
-                                            Accept Delivery
+                                                </button>
+                                            </div>
+                                            <div class="col">
+                                                <button data-toggle="tooltip"
+                                                        title="@tooltip_DeleteOfferButton"
+                                                        data-placement="top"
+                                                        class="btn btn-sm btn-danger"
+                                                        onclick="openPath('@path_Offer_Delete_Button')"
+                                                        @enabled_DeleteOfferButton>
+                                                    <img width="20" src="@icon_DeleteOfferButton" />
+                                                </button>
 
-                                        </button>
+                                            </div>
+                                        </div>
                                 
-                                        <button data-toggle="tooltip"
-                                                title="@tooltip_DeleteOfferButton"
-                                                data-placement="top"
-                                                class="btn btn-sm btn-danger"
-                                                onclick="openPath('@path_Offer_Delete_Button')"
-                                                @enabled_DeleteOfferButton>
-                                            <img width="20" src="@icon_DeleteOfferButton" />
-                                        </button>
-
                                         }
                                     else
                                     {
 
+                                        <div class="row">
+                                            <div class="col">
+                                                <button data-toggle="tooltip"
+                                                        title="Accept the request to deliver product"
+                                                        data-placement="top"
+                                                        class="btn btn-sm btn-success"
+                                                        onclick="openPath('@path_Deliveryman_Accept_To_Deliver_Product')"
+                                                        @enabled_Deliveryman_Accept_To_Deliver_Product_Button>
+                                                    <img width="20" src="@icon_Deliveryman_Accept_To_Deliver_Product_Button" />
+                                                    Accept Delivery
 
-                                        <button data-toggle="tooltip"
-                                                title="Accept the request to deliver product"
-                                                data-placement="top"
-                                                class="btn btn-sm btn-success"
-                                                onclick="openPath('@path_Deliveryman_Accept_To_Deliver_Product')"
-                                                @enabled_Deliveryman_Accept_To_Deliver_Product_Button>
-                                            <img width="20" src="@icon_Deliveryman_Accept_To_Deliver_Product_Button" />
-                                            Accept Delivery
+                                                </button>
 
-                                        </button>
+                                            </div>
+                                            <div class="col">
+                                                <button data-toggle="tooltip"
+                                                        title="@tooltip_DeleteOfferButton"
+                                                        data-placement="top"
+                                                        class="btn btn-sm btn-danger"
+                                                        onclick="openPath('@path_Offer_Delete_Button')"
+                                                        @enabled_DeleteOfferButton>
+                                                    <img width="20" src="@icon_DeleteOfferButton" />
+                                                </button>
+                                            </div>
+                                        </div>
+
                             
-                                        <button data-toggle="tooltip"
-                                                title="@tooltip_DeleteOfferButton"
-                                                data-placement="top"
-                                                class="btn btn-sm btn-danger"
-                                                onclick="openPath('@path_Offer_Delete_Button')"
-                                                @enabled_DeleteOfferButton>
-                                            <img width="20" src="@icon_DeleteOfferButton" />
-                                        </button>
+                                        
                                     }
                                 }
 

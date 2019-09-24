@@ -7,9 +7,7 @@ using ModelsClassLibrary.ModelsNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.CashNS.PenaltyNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.AbstractNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS;
-using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.VehicalTypeNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellItemNS;
-using ModelsClassLibrary.ModelsNS.DocumentsNS.FreightOffersTrxNS;
 using ModelsClassLibrary.ModelsNS.MessageNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
@@ -32,7 +30,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
     /// What will happen if the seller and the delivery man are the same. They could cheat the customer.
     /// The customer can always create a problem.
     /// </summary>
-    public class BuySellDoc : DocumentAbstract
+    public partial class BuySellDoc : DocumentAbstract
     {
         public BuySellDoc()
         {
@@ -45,11 +43,20 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
         void initializeComplexs()
         {
-            CourierSelected = new BoolDateAndByComplex();
-            OrderConfirmedByDeliveryman = new BoolDateAndByComplex();
-            xyz = new BoolDateAndByComplex();
-            OrderShipped = new BoolDateAndByComplexWithConfirmationCode();
-            OrderDelivered = new BoolDateAndByComplexWithConfirmationCode();
+            //CourierSelected = new BoolDateAndByComplex();
+            //OrderConfirmedByDeliveryman = new BoolDateAndByComplex();
+
+            RequestUnconfirmed = new BoolDateAndByComplex();
+            RequestConfirmed = new BoolDateAndByComplex();
+            BeingPreparedForShipmentBySeller = new BoolDateAndByComplex();
+            ReadyForPickup = new BoolDateAndByComplex();
+            CourierAcceptedByBuyerAndSeller = new BoolDateAndByComplex();
+            CourierComingToPickUp = new BoolDateAndByComplex();
+            PickedUp = new BoolDateAndByComplex();
+            Enroute = new BoolDateAndByComplex();
+            Rejected = new BoolDateAndByComplex();
+            Problem = new BoolDateAndByComplex();
+            Delivered = new BoolDateAndByComplexWithConfirmationCode();
 
             //RequestConfirmed_Sign = new SignatureComplex();
             //ConfirmedBySeller_Sign = new SignatureComplex();
@@ -67,14 +74,22 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
             Total_Charged_To_Owner = new CommissionComplex();
             Total_Charged_To_Deliveryman = new CommissionComplex();
+
             CustomerSalesmanCommission = new CommissionComplex();
+            SuperCustomerSalesmanCommission = new CommissionComplex();
+            SuperSuperCustomerSalesmanCommission = new CommissionComplex();
+
             OwnerSalesmanCommission = new CommissionComplex();
+            SuperOwnerSalesmanCommission = new CommissionComplex();
+            SuperSuperOwnerSalesmanCommission = new CommissionComplex();
+
             DeliverymanSalesmanCommission = new CommissionComplex();
+            SuperDeliverymanSalesmanCommission = new CommissionComplex();
+            SuperSuperDeliverymanSalesmanCommission = new CommissionComplex();
+
             System_Commission_For_SaleWithoutFreight = new CommissionComplex();
             System_Commission_For_Freight = new CommissionComplex();
 
-            OrderConfirmedByCustomer = new BoolDateAndByComplex();
-            OrderConfirmedByOwner = new BoolDateAndByComplex();
 
 
 
@@ -137,19 +152,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         [NotMapped]
         decimal CustomerBalanceNonRefundable { get; set; }
 
-        /// <summary>
-        /// When accpeted, the document moves to the next level.
-        /// This is not persisted
-        /// </summary>
-
-        //[NotMapped]
-        //[Display(Name = "Accept and move to next step!")]
-        //public string AcceptRejectOrEmpty { get; set; }
-
-        //public string AcceptRejectOrEmpty_Accept = "accept";
-        //public string AcceptRejectOrEmpty_Reject = "reject";
-        //public string AcceptRejectOrEmpty_Empty = "";
-
 
         /// <summary>
         /// This is used in View OrderList to determine if the current user is the deliveryman
@@ -159,42 +161,12 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         public string CurrentUser_DeliverymanId { get; set; }
 
 
-        public string CurrentUsers_FreightOfferTrx_String(string currUser_DeliverymanId)
-        {
-            if (currUser_DeliverymanId.IsNullOrWhiteSpace())
-                return null;
 
-            if (FreightOfferTrxs.IsNullOrEmpty())
-                return null;
-            //return " <<< NO OFFER >>";
-            FreightOfferTrx frtTrx = FreightOfferTrxs.FirstOrDefault(x => x.DeliverymanId == currUser_DeliverymanId);
-            if (frtTrx.IsNull())
-                return null;
 
-            string date = frtTrx.MetaData.Created.Date_NotNull_Min.ToShortDateString();
-            string offerAmount = frtTrx.OfferAmount.ToString("N0");
-            string transport = frtTrx.VehicalType.IsNull() ? "Unknown" : frtTrx.VehicalType.FullName();
-            string insurance = InsuranceRequired_ToSring;
-            string freightOffer = string.Format("On {0} You offered Rs{1} to pick. Vehical Type: {2}, Insurance {3}",
-                date,
-                offerAmount,
-                transport,
-                insurance);
-
-            if (!FreightOfferTrxAcceptedId.IsNullOrWhiteSpace())
-            {
-                freightOffer += " *** Accepted By Seller ***";
-
-            }
-
-            if (frtTrx.IsOfferAccepted)
-            {
-                freightOffer += " *** Accepted By You ***";
-            }
-            return freightOffer;
-
-        }
-
+        /// <summary>
+        /// used in BuySellDocs.orderList.cshtml
+        /// </summary>
+        /// <returns></returns>
         public string PictureAddressPathAny()
         {
             string path = AliKuli.UtilitiesNS.ConfigManagerHelper.DefaultBlankPicture;
@@ -319,152 +291,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
         #endregion
 
-        #region Freight Offer
 
-
-
-        [Display(Name = "Freight Offers")]
-        public virtual ICollection<FreightOfferTrx> FreightOfferTrxs { get; set; }
-
-
-        [NotMapped]
-        public List<FreightOfferTrx> FreightOfferTrxs_Fixed
-        {
-            get
-            {
-                if (FreightOfferTrxs.IsNullOrEmpty())
-                    return new List<FreightOfferTrx>();
-                return FreightOfferTrxs.Where(x => x.MetaData.IsDeleted == false).OrderByDescending(x => x.IsOfferAccepted).OrderBy(x => x.OfferAmount).ToList();
-            }
-        }
-
-
-
-        [Display(Name = "Accepted Trx")]
-        public string FreightOfferTrxAcceptedId { get; set; }
-        public virtual FreightOfferTrx FreightOfferTrxAccepted { get; set; }
-
-
-        /// <summary>
-        /// This is the offer made by the delivery man to pick and drop the item
-        /// </summary>
-        /// 
-        [NotMapped]
-        [Display(Name = "Offer")]
-        public string FreightOffer { get; set; }
-
-        [NotMapped]
-        [Display(Name = "Freight Offer")]
-        public decimal FreightOfferDecimal
-        {
-            get
-            {
-                decimal offer;
-                bool success = decimal.TryParse(FreightOffer, out offer);
-                if (success)
-                    return offer;
-                return 0;
-            }
-        }
-
-        /// <summary>
-        /// This it the amount the customer has budgeted for freight. Not neccassry he will
-        /// get it but it will be the starting value for the deliveryman
-        /// </summary>
-        [Display(Name = "Customer Freight Budget")]
-
-        public decimal FreightCustomerBudget { get; set; }
-
-        [NotMapped]
-        [Display(Name = "Customer Freight Budget")]
-
-        public string FreightCustomerBudget_String { get; set; }
-
-
-
-        [NotMapped]
-        [Display(Name = "delivery man comments")]
-        public string CommentByDeliveryman { get; set; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        [Display(Name = "Offered Date")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [NotMapped]
-        public DateTime OfferedPickupOnDate { get; set; }
-
-
-
-        [Display(Name = "Offered Date")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [NotMapped]
-        public DateTime ExpectedDeliveryDate { get; set; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-        [NotMapped]
-        [Display(Name = "Agreed Pick up Date")]
-        [DataType(DataType.Date)]
-        //[Column(TypeName = "DateTime2")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime AgreedPickupDateByDeliveryman
-        {
-            get
-            {
-                if (FreightOfferTrxAccepted.IsNull())
-                    return DateTime.MinValue;
-
-                return FreightOfferTrxAccepted.PickupDate;
-            }
-        }
-
-
-
-        /// <summary>
-        /// This is the date that pick up is requested.
-        /// </summary>
-        [Display(Name = "Please pick up on ")]
-        [Column(TypeName = "DateTime2")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-
-        public DateTime PleasePickupOnDate_Start { get; set; }
-
-
-
-        [Display(Name = "Last Day for Pick up")]
-        [Column(TypeName = "DateTime2")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime PleasePickupOnDate_End { get; set; }
-
-
-        #endregion
 
 
         /// <summary>
@@ -615,67 +442,78 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
             }
         }
 
-        #region Vehical Type Requested
-        [Display(Name = "Vehical Type Requested")]
-        public string VehicalTypeRequestedId { get; set; }
-
-        [Display(Name = "Vehical Type Requested")]
-        public virtual VehicalType VehicalTypeRequested { get; set; }
-
-        [NotMapped]
-        public SelectList SelectListVehicalTypeRequested { get; set; }
-        #endregion
-
-        #region Vehical Type Offered
-
-        [NotMapped]
-        [Display(Name = "Vehical Type Offered")]
-        public string VehicalTypeOfferedId { get; set; }
-
-        [Display(Name = "Vehical Type Offered")]
-        [NotMapped]
-        public virtual VehicalType VehicalTypeOffered { get; set; }
-
-        [NotMapped]
-        public SelectList SelectListVehicalTypeOffered { get; set; }
-
-        #endregion
-
-        #region Vehical Type Accepted
-
-        [Display(Name = "Vehical Type Accepted")]
-        [NotMapped]
-        public string VehicalTypeAcceptedId
+        public bool IsDeliveryLate
         {
             get
             {
-                if (VehicalTypeAccepted.IsNull())
-                    return null;
+                DateParameter dp = new DateParameter();
+                dp.BeginDate = DateTime.Now;
+                dp.EndDate = ExpectedDeliveryDate;
 
-                return VehicalTypeAccepted.Id;
+                return dp.BeginDateAfterEndDate;
             }
         }
+        //#region Vehical Type Requested
+        //[Display(Name = "Vehical Type Requested")]
+        //public string VehicalTypeRequestedId { get; set; }
+
+        //[Display(Name = "Vehical Type Requested")]
+        //public virtual VehicalType VehicalTypeRequested { get; set; }
+
+        //[NotMapped]
+        //public SelectList SelectListVehicalTypeRequested { get; set; }
+        //#endregion
+
+        //#region Vehical Type Offered
+
+        //[NotMapped]
+        //[Display(Name = "Vehical Type Offered")]
+        //public string VehicalTypeOfferedId { get; set; }
+
+        //[Display(Name = "Vehical Type Offered")]
+        //[NotMapped]
+        //public virtual VehicalType VehicalTypeOffered { get; set; }
+
+        //[NotMapped]
+        //public SelectList SelectListVehicalTypeOffered { get; set; }
+
+        //#endregion
+
+        //#region Vehical Type Accepted
+
+        //[Display(Name = "Vehical Type Accepted")]
+        //[NotMapped]
+        //public string VehicalTypeAcceptedId
+        //{
+        //    get
+        //    {
+        //        if (VehicalTypeAccepted.IsNull())
+        //            return null;
+
+        //        return VehicalTypeAccepted.Id;
+        //    }
+        //}
 
 
-        [NotMapped]
-        [Display(Name = "Vehical Type Accepted")]
-        public virtual VehicalType VehicalTypeAccepted
-        {
-            get
-            {
-                if (FreightOfferTrxAccepted.IsNull())
-                    return null;
-                if (FreightOfferTrxAccepted.VehicalType.IsNull())
-                    return null;
-                return FreightOfferTrxAccepted.VehicalType;
-            }
-        }
+        //[NotMapped]
+        //[Display(Name = "Vehical Type Accepted")]
+        //public virtual VehicalType VehicalTypeAccepted
+        //{
+        //    get
+        //    {
+        //        if (FreightOfferTrxAccepted.IsNull())
+        //            return null;
+        //        if (FreightOfferTrxAccepted.VehicalType.IsNull())
+        //            return null;
+        //        return FreightOfferTrxAccepted.VehicalType;
+        //    }
+        //}
 
 
-        [NotMapped]
-        public SelectList SelectListVehicalTypeAccepted { get; set; }
+        //[NotMapped]
+        //public SelectList SelectListVehicalTypeAccepted { get; set; }
 
-        #endregion
+        //#endregion
 
         #region Totals
         public string TotalCompleted
@@ -824,66 +662,112 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
 
         #region Order Status variables
-        public BoolDateAndByComplex CourierSelected { get; set; }
-        public BoolDateAndByComplex OrderConfirmedByDeliveryman { get; set; }
-        public BoolDateAndByComplex xyz { get; set; }
-        public BoolDateAndByComplex OrderConfirmedByCustomer { get; set; }
-        public BoolDateAndByComplex OrderConfirmedByOwner { get; set; }
+        //public BoolDateAndByComplex CourierSelected { get; set; }
+        //public BoolDateAndByComplex OrderConfirmedByDeliveryman { get; set; }
+        public BoolDateAndByComplex RequestUnconfirmed { get; set; }
+        public BoolDateAndByComplex RequestConfirmed { get; set; }
+        public BoolDateAndByComplex BeingPreparedForShipmentBySeller { get; set; }
+        public BoolDateAndByComplex ReadyForPickup { get; set; }
+        public BoolDateAndByComplex CourierAcceptedByBuyerAndSeller { get; set; }
+        public BoolDateAndByComplex CourierComingToPickUp { get; set; }
+        public BoolDateAndByComplex PickedUp { get; set; }
+        public BoolDateAndByComplex Enroute { get; set; }
+        public BoolDateAndByComplex Rejected { get; set; }
+        public BoolDateAndByComplex Problem { get; set; }
+        public BoolDateAndByComplexWithConfirmationCode Delivered { get; set; }
 
 
-        public BoolDateAndByComplexWithConfirmationCode OrderShipped { get; set; }
-        public BoolDateAndByComplexWithConfirmationCode OrderDelivered { get; set; }
 
+        /// <summary>
+        /// Used in ListOrder.cshtml
+        /// </summary>
+        /// <returns></returns>
+        public string Get_BuySellDocState_Date_Controller()
+        {
+            string dateString = "";
+            string timeString = "";
+            switch (BuySellDocStateEnum)
+            {
+                case BuySellDocStateENUM.Unknown:
+                    break;
+                case BuySellDocStateENUM.RequestUnconfirmed:
+                    dateString = RequestUnconfirmed.Date_NotNull_Min == DateTime.MinValue ? "" : RequestUnconfirmed.Date_NotNull_Min.ToShortDateString();
+                    timeString = RequestUnconfirmed.Date_NotNull_Min == DateTime.MinValue ? "" : RequestUnconfirmed.Date_NotNull_Min.ToShortTimeString();
+                    break;
+
+                case BuySellDocStateENUM.RequestConfirmed:
+                    dateString = RequestConfirmed.Date_NotNull_Min == DateTime.MinValue ? "" : RequestConfirmed.Date_NotNull_Min.ToShortDateString();
+                    timeString = RequestConfirmed.Date_NotNull_Min == DateTime.MinValue ? "" : RequestConfirmed.Date_NotNull_Min.ToShortTimeString();
+                    break;
+                case BuySellDocStateENUM.BeingPreparedForShipmentBySeller:
+                    dateString = BeingPreparedForShipmentBySeller.Date_NotNull_Min == DateTime.MinValue ? "" : BeingPreparedForShipmentBySeller.Date_NotNull_Min.ToShortDateString();
+                    timeString = BeingPreparedForShipmentBySeller.Date_NotNull_Min == DateTime.MinValue ? "" : BeingPreparedForShipmentBySeller.Date_NotNull_Min.ToShortTimeString();
+                    break;
+                case BuySellDocStateENUM.ReadyForPickup:
+                    dateString = ReadyForPickup.Date_NotNull_Min == DateTime.MinValue ? "" : ReadyForPickup.Date_NotNull_Min.ToShortDateString();
+                    timeString = ReadyForPickup.Date_NotNull_Min == DateTime.MinValue ? "" : ReadyForPickup.Date_NotNull_Min.ToShortTimeString();
+                    break;
+                case BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller:
+                    dateString = CourierAcceptedByBuyerAndSeller.Date_NotNull_Min == DateTime.MinValue ? "" : CourierAcceptedByBuyerAndSeller.Date_NotNull_Min.ToShortDateString();
+                    timeString = CourierAcceptedByBuyerAndSeller.Date_NotNull_Min == DateTime.MinValue ? "" : CourierAcceptedByBuyerAndSeller.Date_NotNull_Min.ToShortTimeString();
+                    break;
+                case BuySellDocStateENUM.CourierComingToPickUp:
+                    dateString = CourierComingToPickUp.Date_NotNull_Min == DateTime.MinValue ? "" : CourierComingToPickUp.Date_NotNull_Min.ToShortDateString();
+                    timeString = CourierComingToPickUp.Date_NotNull_Min == DateTime.MinValue ? "" : CourierComingToPickUp.Date_NotNull_Min.ToShortTimeString();
+                    break;
+                case BuySellDocStateENUM.PickedUp:
+                    dateString = PickedUp.Date_NotNull_Min == DateTime.MinValue ? "" : PickedUp.Date_NotNull_Min.ToShortDateString();
+                    timeString = PickedUp.Date_NotNull_Min == DateTime.MinValue ? "" : PickedUp.Date_NotNull_Min.ToShortTimeString();
+                    break;
+                case BuySellDocStateENUM.Enroute:
+                    dateString = Enroute.Date_NotNull_Min == DateTime.MinValue ? "" : Enroute.Date_NotNull_Min.ToShortDateString();
+                    timeString = Enroute.Date_NotNull_Min == DateTime.MinValue ? "" : Enroute.Date_NotNull_Min.ToShortTimeString();
+                    break;
+                case BuySellDocStateENUM.Delivered:
+                    dateString = Delivered.Date_NotNull_Min == DateTime.MinValue ? "" : Delivered.Date_NotNull_Min.ToShortDateString();
+                    timeString = Delivered.Date_NotNull_Min == DateTime.MinValue ? "" : Delivered.Date_NotNull_Min.ToShortTimeString();
+                    break;
+                case BuySellDocStateENUM.Rejected:
+                    dateString = Rejected.Date_NotNull_Min == DateTime.MinValue ? "" : Rejected.Date_NotNull_Min.ToShortDateString();
+                    timeString = Rejected.Date_NotNull_Min == DateTime.MinValue ? "" : Rejected.Date_NotNull_Min.ToShortTimeString();
+                    break;
+                case BuySellDocStateENUM.Problem:
+                    dateString = Problem.Date_NotNull_Min == DateTime.MinValue ? "" : Problem.Date_NotNull_Min.ToShortDateString();
+                    timeString = Problem.Date_NotNull_Min == DateTime.MinValue ? "" : Problem.Date_NotNull_Min.ToShortTimeString();
+                    break;
+                default:
+                    break;
+            }
+
+            if (dateString.IsNullOrWhiteSpace())
+            {
+
+                dateString = "(Date Not Set)";
+            }
+            else
+            {
+                dateString = string.Format("on {0} {1}UTC", dateString, timeString);
+
+                if (BuySellDocStateEnum == BuySellDocStateENUM.Delivered)
+                {
+                    string isPeriodOver = IsGuaranteePeriodIsOver() ? "Yes" : "No";
+                    dateString += string.Format(" Guarantee Period ends {0}. Is it Over? {1}!.", GetDateGuaranteeExpires(), isPeriodOver);
+                }
+            }
+
+            return dateString;
+
+        }
 
         #endregion
 
-        //#region Signatures
-        ////public BoolDateAndByComplex RequestUnconfirmed_Sign { get; set; }
-
-        ///// <summary>
-        ///// When document is RequestUnconfirmed status, and it is signed,
-        ///// the status is upgraded to RequestConfirmed status
-        ///// 
-        ///// Status              Signed  New Status
-        ///// RequestUnconfirmed      =>  RequestConfirmed
-        ///// RequestConfirmed        =>  ConfirmedBySeller
-        ///// ConfirmedBySeller       =>  ReadyForShipment
-        ///// ReadyForShipment        =>  ConfirmedByCourier
-        ///// PickedUp                =>  Delivered
-        ///// RequestConfirmed        =>  Rejected => RequestUnconfirmed      rejected by the seller for some reason
-        ///// PickedUp                =>  Rejected => ReadyForShipment        Rejected by the courer for some reason
-        ///// Rejected                =>  
-        ///// 
-        ///// </summary>
-        ///// 
-        //public SignatureComplex RequestConfirmed_Sign { get; set; }
-        //public SignatureComplex ConfirmedBySeller_Sign { get; set; }
-        //public SignatureComplex ReadyForShipment_Sign { get; set; }
-        //public SignatureComplex ConfirmedByCourier_Sign { get; set; }
-        //public SignatureComplex PickedUp_Sign { get; set; }
-        //public SignatureComplex Delivered_Sign { get; set; }
-        //public SignatureComplex Rejected_Sign { get; set; }
-        //public SignatureComplex Problem_Sign { get; set; }
-
-        //#endregion
-
-
-
-        //These temp holders needed because we are unable to access cashTrx once we are in
-        //BuySellDocBiz. We need it to find the salesperson for the document at a when the bu
 
         #region Penalties
 
         public virtual ICollection<PenaltyHeader> PenaltyHeaders { get; set; }
         #endregion
 
-        [NotMapped]
 
-        public string CustomerSalesmanId_TEMP { get; set; }
-        [NotMapped]
-        public string OwnerSalesmanId_TEMP { get; set; }
-        [NotMapped]
-        public string DeliverymanSalesmanId_TEMP { get; set; }
 
 
 
@@ -891,20 +775,41 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         [Display(Name = "Customer Salesman")]
         public string CustomerSalesmanId { get; set; }
 
+        [Display(Name = "Customer Salesman")]
+        public virtual Salesman CustomerSalesman { get; set; }
 
-
-
-        [Display(Name = "Salesman")]
-        public Salesman CustomerSalesman { get; set; }
-
-        //[Display(Name = "Owner Salesman Commission %")]
-        //public decimal CustomerSalesmanCommission_Percent { get; set; }
-
-        //[Display(Name = "Owner Salesman Commission Min Amount")]
-        //public decimal CustomerSalesmanCommission_Amount { get; set; }
 
         [NotMapped]
         public SelectList SelectListCustomerSalesman { get; set; }
+
+
+
+        [Display(Name = "Super Customer Salesman")]
+        public string SuperCustomerSalesmanId { get; set; }
+
+        [Display(Name = "Super Customer Salesman")]
+        public virtual Salesman SuperCustomerSalesman { get; set; }
+
+
+        [NotMapped]
+        public SelectList SelectListSuperCustomerSalesman { get; set; }
+
+
+
+        [Display(Name = "Super Super Customer Salesman")]
+        public string SuperSuperCustomerSalesmanId { get; set; }
+
+        [Display(Name = "Super Super Customer Salesman")]
+        public virtual Salesman SuperSuperCustomerSalesman { get; set; }
+
+
+        [NotMapped]
+        public SelectList SelectListSuperSuperCustomerSalesman { get; set; }
+
+
+
+
+
 
 
 
@@ -914,10 +819,77 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         [Display(Name = "Owner Salesman")]
         public string OwnerSalesmanId { get; set; }
         [Display(Name = "Salesman")]
-        public Salesman OwnerSalesman { get; set; }
+        public virtual Salesman OwnerSalesman { get; set; }
 
         [NotMapped]
         public SelectList SelectListOwnerSalesman { get; set; }
+
+
+        [Display(Name = "Super Owner Salesman")]
+        public string SuperOwnerSalesmanId { get; set; }
+
+        [Display(Name = "Super Owner Salesman")]
+        public virtual Salesman SuperOwnerSalesman { get; set; }
+
+
+        [NotMapped]
+        public SelectList SelectListSuperOwnerSalesman { get; set; }
+
+
+
+
+
+        [Display(Name = "Super Super Owner Salesman")]
+        public string SuperSuperOwnerSalesmanId { get; set; }
+
+        [Display(Name = "Super Super Owner Salesman")]
+        public virtual Salesman SuperSuperOwnerSalesman { get; set; }
+
+        [NotMapped]
+        public SelectList SelectListSuperSuperOwnerSalesman { get; set; }
+
+
+
+
+
+
+
+
+
+
+        [Display(Name = "Deliveryman Salesman")]
+        public string DeliverymanSalesmanId { get; set; }
+        [Display(Name = "Salesman")]
+        public virtual Salesman DeliverymanSalesman { get; set; }
+
+        [NotMapped]
+        public SelectList SelectListDeliverymanSalesman { get; set; }
+
+        [Display(Name = "Super Deliveryman Salesman")]
+        public string SuperDeliverymanSalesmanId { get; set; }
+
+        [Display(Name = "Super Deliveryman Salesman")]
+        public virtual Salesman SuperDeliverymanSalesman { get; set; }
+
+
+        [NotMapped]
+        public SelectList SelectListSuperDeliverymanSalesman { get; set; }
+
+
+
+        [Display(Name = "Super Super Deliveryman Salesman")]
+        public string SuperSuperDeliverymanSalesmanId { get; set; }
+
+        [Display(Name = "Super Super Deliveryman Salesman")]
+        public virtual Salesman SuperSuperDeliverymanSalesman { get; set; }
+
+
+        [NotMapped]
+        public SelectList SelectListSuperSuperDeliverymanSalesman { get; set; }
+
+
+
+
 
 
         #region Commissions
@@ -932,6 +904,41 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         }
 
         /// <summary>
+
+
+
+
+
+        /// <summary>
+        /// This is the commission paid to the CustomerSalesmanCommission
+        /// </summary>
+        public virtual CommissionComplex CustomerSalesmanCommission { get; set; }
+        public virtual CommissionComplex SuperCustomerSalesmanCommission { get; set; }
+        public virtual CommissionComplex SuperSuperCustomerSalesmanCommission { get; set; }
+
+
+        /// <summary>
+        /// This is the commission paid to the OwnerSalesmanCommission
+        /// </summary>
+        public virtual CommissionComplex OwnerSalesmanCommission { get; set; }
+        public virtual CommissionComplex SuperOwnerSalesmanCommission { get; set; }
+        public virtual CommissionComplex SuperSuperOwnerSalesmanCommission { get; set; }
+
+        /// <summary>
+        /// This is the commission paid to the DelivermanSalesman
+        /// </summary>
+        public virtual CommissionComplex DeliverymanSalesmanCommission { get; set; }
+        public virtual CommissionComplex SuperDeliverymanSalesmanCommission { get; set; }
+        public virtual CommissionComplex SuperSuperDeliverymanSalesmanCommission { get; set; }
+
+
+
+        /// <summary>
+        /// This is the commission paid to the System
+        /// </summary>
+        public virtual CommissionComplex System_Commission_For_SaleWithoutFreight { get; set; }
+        public virtual CommissionComplex System_Commission_For_Freight { get; set; }
+
         /// This will always be the maximum commission
         /// </summary>
         public virtual CommissionComplex Total_Charged_To_Owner { get; set; }
@@ -943,34 +950,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
 
 
-
-
-        /// <summary>
-        /// This is the commission paid to the CustomerSalesmanCommission
-        /// </summary>
-        public virtual CommissionComplex CustomerSalesmanCommission { get; set; }
-
-
-        /// <summary>
-        /// This is the commission paid to the OwnerSalesmanCommission
-        /// </summary>
-        public virtual CommissionComplex OwnerSalesmanCommission { get; set; }
-
-        /// <summary>
-        /// This is the commission paid to the DelivermanSalesman
-        /// </summary>
-        public virtual CommissionComplex DeliverymanSalesmanCommission { get; set; }
-
-
-
-        /// <summary>
-        /// This is the commission paid to the System
-        /// </summary>
-        public virtual CommissionComplex System_Commission_For_SaleWithoutFreight { get; set; }
-        public virtual CommissionComplex System_Commission_For_Freight { get; set; }
-
-
-
         /// <summary>
         /// This is the maximum commission that is charged to the BuySellDoc. It
         /// is the sum of the commissions of SalesmanCustomer + OwnerSalesman + DeliverymanSalesman + System
@@ -978,60 +957,21 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         /// <returns></returns>
         public decimal Get_Maximum_Commission_Chargeable_On_TotalSale_Percent()
         {
-            decimal ttlComm = SalesCommissionClass.Commission_Payable_On_TotalSale_Pct(TotalInvoiceLessFreight, Freight_Accepted);
+            decimal ttlComm = SalesCommissionClass.Get_Maximum_Commission_Chargeable_On_TotalSale_Percent(TotalInvoiceLessFreight, Freight_Accepted);
             return ttlComm;
 
-        }
-
-
-
-        /// <summary>
-        /// This is the maximum commission that is charged to the BuySellDoc. It
-        /// is the sum of the commissions of SalesmanCustomer + OwnerSalesman + DeliverymanSalesman + System
-        /// 
-        /// However, the deliveryman's commission is based on freight, whereas the other commissions are based on
-        /// Net sale
-        /// </summary>
-        public decimal Get_Maximum_Commission_Chargeable_On_TotalSale_Amount()
-        {
-            decimal ttlComm = SalesCommissionClass.Commission_Payable_On_TotalSale_Amount(TotalInvoiceLessFreight, Freight_Accepted);
-            return ttlComm;
-
-        }
-
-        public decimal Get_Maximum_Commision_On_TotalSaleLessFreight_For_OwnerSalesman_Amount()
-        {
-            decimal commissionAmnt = SalesCommissionClass.CommissionAmount_OwnerSalesman_For(TotalInvoiceLessFreight);
-            return commissionAmnt;
-        }
-
-        public decimal Get_Maximum_Commision_On_TotalSaleLessFreight_For_OwnerSalesman_Percent()
-        {
-            decimal commissionPercent = SalesCommissionClass.CommissionPct_OwnerSalesman;
-            return commissionPercent;
         }
 
         public decimal Get_Maximum_Commission_Chargeable_On_TotalSaleLessFreight_Amount()
         {
-            decimal ttlComm = SalesCommissionClass.Commission_Payable_On_TotalSaleWithoutFreight_Amount(TotalInvoiceLessFreight);
+            decimal ttlComm = SalesCommissionClass.TotalCommissionOnSaleWithoutFreight_Amount(TotalInvoiceLessFreight);
             return ttlComm;
 
         }
-        public decimal Get_Maximum_Commission_Chargeable_On_TotalSaleLessFreight_Based_On_TotalSale_Percent()
-        {
-            if (Get_Maximum_Commission_Chargeable_On_TotalSaleLessFreight_Amount() == 0)
-                return 0;
-            if (TotalInvoice == 0)
-                return 0;
-            decimal commissionPct = Get_Maximum_Commission_Chargeable_On_TotalSaleLessFreight_Amount() / TotalInvoice * 100;
-            return commissionPct;
-
-        }
-
 
         public decimal Get_Maximum_Commission_Chargeable_On_Freight_Amount()
         {
-            decimal ttlComm = SalesCommissionClass.Commission_Payable_On_Freight_Amount(Freight_Accepted);
+            decimal ttlComm = SalesCommissionClass.TotalCommissionOnFreight_Amount(Freight_Accepted);
             return ttlComm;
 
         }
@@ -1039,14 +979,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
 
 
-        public decimal Get_Maximum_Commission_Chargeable_On_Freight_TO_SalesPeople_And_System_Percent()
-        {
-            decimal ttlComm =
-                SalesCommissionClass.CommissionPct_DeliverymanSalesman +
-                SalesCommissionClass.CommissionPct_System;
-            return ttlComm;
-
-        }
         public decimal Get_Maximum_Commission_Chargeable_On_SaleWithoutFreight_To_SalesPeople_And_System_Percent()
         {
             decimal ttlComm =
@@ -1149,20 +1081,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         }
 
 
-        /// <summary>
-        /// This makes the commission amount payable based on total invoice
-        /// </summary>
-        /// <returns></returns>
-        //public decimal Get_System_Sale_Commission_Based_On_TotalInvoice()
-        //{
-        //    if (System_Commission_For_SaleWithoutFreight.Amount == 0)
-        //        return 0;
-        //    if (TotalInvoice == 0)
-        //        return 0;
-        //    decimal pct = System_Commission_For_SaleWithoutFreight.Amount / TotalInvoice;
-        //    return pct;
-        //}
-
 
 
         #endregion
@@ -1196,7 +1114,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         private void check_TotalCommission_Is_Greater_Than_Total_Allowed()
         {
             //decimal totalCommissions = Get_Actual_Commission_Payable_On_TotalSale_Amount();
-            decimal maxCommAllowed = SalesCommissionClass.Commission_Payable_On_TotalSale_Amount(TotalInvoiceLessFreight, Freight_Accepted);
+            decimal maxCommAllowed = SalesCommissionClass.Commission_Payable_On_Invoice_Amount(TotalInvoiceLessFreight, Freight_Accepted);
             if (Total_Commission_Amount > maxCommAllowed)
                 throw new Exception("Commissions are less.");
 
@@ -1279,13 +1197,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
 
 
-        [Display(Name = "Deliveryman Salesman")]
-        public string DeliverymanSalesmanId { get; set; }
-        [Display(Name = "Salesman")]
-        public Salesman DeliverymanSalesman { get; set; }
-
-        [NotMapped]
-        public SelectList SelectListDeliverymanSalesman { get; set; }
 
 
         public bool IsAllItemPricesOriginal
@@ -1338,60 +1249,15 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                 return buySellDocViewStateController.GetBuySellDocStateController();
             }
         }
+
+
+
+
         #endregion
 
 
 
 
-
-
-
-        [NotMapped]
-        public Deliveryman Deliveryman
-        {
-            get
-            {
-                if (FreightOfferTrxAccepted.IsNull())
-                    return null;
-
-                FreightOfferTrxAccepted.Deliveryman.IsNullThrowException();
-                return FreightOfferTrxAccepted.Deliveryman;
-            }
-        }
-
-        [NotMapped]
-        public string DeliverymanId
-        {
-            get
-            {
-                if (Deliveryman.IsNull())
-                    return "";
-                return Deliveryman.Id;
-            }
-        }
-        /// <summary>
-        /// If true then the deliveryman has accepted to deliver the products
-        /// </summary>
-        [NotMapped]
-        public bool IsDeliveryman_Accepted_By_Courier
-        {
-            get
-            {
-                if (FreightOfferTrxAccepted.IsNull())
-                    return false;
-
-                if (FreightOfferTrxAccepted.IsOfferAccepted)
-                    return true;
-                return false;
-            }
-        }
-
-        public string GetDeliverymanId()
-        {
-            if (Deliveryman.IsNull())
-                return "";
-            return Deliveryman.Id;
-        }
 
         public IBuySellDocViewState GetBuySellDocViewState(BuySellDocStateENUM buySellDocStateEnum, BuySellDocumentTypeENUM buySellDocumentTypeEnum)
         {
@@ -1409,8 +1275,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
         public override string FullName()
         {
-            //Owner.IsNullThrowException("Owner");
-            //Customer.IsNullThrowException("Customer");
+
             string statementType = "Error";
             string ownerName = "Owner not found";
             string customerName = "Customer not found";
@@ -1445,32 +1310,15 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
             if (!Customer.IsNull())
                 customerName = Customer.Name;
-            string fullName = "Error";
 
-            switch (BuySellDocumentTypeEnum)
-            {
-                case BuySellDocumentTypeENUM.Unknown:
-                    break;
-                case BuySellDocumentTypeENUM.Purchase:
-                    fullName = string.Format("{4} {0} of {1} By: {3} To: {2} ({5}) [Rs{6}]", DocumentNumber, MetaData.Created.Date_NotNull_Min.ToString("dd-MMM-yyyy"),
-                        ownerName,
-                        customerName,
-                        statementType,
-                        vehicalType,
-                        TotalInvoice.ToString("N2"));
-                    break;
-                case BuySellDocumentTypeENUM.Sale:
-                case BuySellDocumentTypeENUM.Delivery:
-                default:
-                    fullName = string.Format("{4} {0} of {1} By: {2} To: {3} ({5}) [Rs{6}] -{7}", DocumentNumber, MetaData.Created.Date_NotNull_Min.ToString("dd-MMM-yyyy"),
-                        ownerName,
-                        customerName,
-                        statementType,
-                        vehicalType,
-                        TotalInvoice.ToString("N2"),
-                        BuySellDocStateEnum.ToString().ToTitleSentance());
-                    break;
-            }
+            string fullName = string.Format("{4} {0} of {1} By: {2} To: {3} ({5}) [Rs{6}] -{7}", DocumentNumber, MetaData.Created.Date_NotNull_Min.ToString("dd-MMM-yyyy"),
+                ownerName,
+                customerName,
+                statementType,
+                vehicalType,
+                TotalInvoice.ToString("N2"),
+                BuySellDocStateEnum.ToString().ToTitleSentance());
+
             return fullName;
         }
 
@@ -1479,267 +1327,51 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         {
             return ClassesWithRightsENUM.BuySellDoc;
         }
-        public void UpdateFreightBidVars(FreightOfferTrx earlierOfferByUser)
-        {
-            FreightOffer = string.Format("{0:N0}", earlierOfferByUser.OfferAmount);
-            CommentByDeliveryman = earlierOfferByUser.Comment;
-            OfferedPickupOnDate = earlierOfferByUser.PickupDate;
-            VehicalTypeOfferedId = earlierOfferByUser.VehicalTypeId;
-
-        }
-
-
-        /// <summary>
-        /// This is only concerned with updating information
-        /// do not add any logic here.
-        /// Add logic in Business rules.
-        /// </summary>
-        /// <param name="icommonWithId"></param>
-        public override void UpdatePropertiesDuringModify(ICommonWithId icommonWithId)
-        {
-            base.UpdatePropertiesDuringModify(icommonWithId);
-            BuySellDoc buySellDoc = BuySellDoc.UnBox(icommonWithId);
-
-            CustomerSalesmanId_TEMP = buySellDoc.CustomerSalesmanId_TEMP;
-            OwnerSalesmanId_TEMP = buySellDoc.OwnerSalesmanId_TEMP;
-            DeliverymanSalesmanId_TEMP = buySellDoc.DeliverymanSalesmanId_TEMP;
-
-            update_DocumentTypeAndState(buySellDoc);
-
-            switch (buySellDoc.BuySellDocumentTypeEnum)
-            {
-
-                //*******************************************************************************
-                //*     DELIVERY
-                //*******************************************************************************
-                case BuySellDocumentTypeENUM.Delivery:
-                    switch (buySellDoc.BuySellDocStateEnum)
-                    {
-                        case BuySellDocStateENUM.ReadyForPickup:
-                            //update the courier offer
-                            update_OfferVariables(buySellDoc);
-                            break;
-
-                        case BuySellDocStateENUM.RequestUnconfirmed:
-                        case BuySellDocStateENUM.RequestConfirmed:
-                        case BuySellDocStateENUM.BeingPreparedForShipmentBySeller:
-                        case BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller:
-                        case BuySellDocStateENUM.CourierComingToPickUp:
-                            break;
-                        case BuySellDocStateENUM.Enroute:
-
-                            DeliveryCode_Deliveryman_AsEntered = buySellDoc.DeliveryCode_Deliveryman_AsEntered;
-
-                            string minimumNumberStr = ConfigurationManager.AppSettings["PickupDelivery.RandomNumberGenerator.MinimumNumber"];
-                            minimumNumberStr.IsNullOrWhiteSpaceThrowException("The RandomNumberGenerator.MinimumNumber is null or empty");
-
-                            DeliveryCode_Deliveryman = DeliveryCode_Deliveryman_AsEntered
-                                .Substring(DeliveryCode_Deliveryman_AsEntered.Length - minimumNumberStr.Length);
-
-                            break;
-
-                        case BuySellDocStateENUM.Delivered:
-                        case BuySellDocStateENUM.Rejected:
-                        case BuySellDocStateENUM.Problem:
-                            globalUpdate(buySellDoc);
-                            break;
-                        case BuySellDocStateENUM.Unknown:
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-
-
-                //*******************************************************************************
-                //*     SALE
-                //*******************************************************************************
-                case BuySellDocumentTypeENUM.Sale:
-                    switch (buySellDoc.BuySellDocStateEnum)
-                    {
-                        case BuySellDocStateENUM.RequestConfirmed:
-                        //Insurance can be added.
-                        //the quantity can be reduced.
-                        //a message to the purchaser can be sent.
-                        case BuySellDocStateENUM.BeingPreparedForShipmentBySeller:
-                            globalUpdate(buySellDoc);
-                            break;
-
-                        case BuySellDocStateENUM.CourierComingToPickUp:
-                            PickupCode_Seller = buySellDoc.PickupCode_Seller;
-                            break;
 
 
 
-                        case BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller:
-                            FreightOfferTrxAcceptedId = buySellDoc.FreightOfferTrxAcceptedId;
-                            //CourierSelected = buySellDoc.CourierSelected;
-                            break;
-
-                        case BuySellDocStateENUM.Rejected:
-                        case BuySellDocStateENUM.Problem:
-                        case BuySellDocStateENUM.RequestUnconfirmed:
-                        case BuySellDocStateENUM.Unknown:
-                        case BuySellDocStateENUM.ReadyForPickup:
-                        case BuySellDocStateENUM.Enroute:
-                        case BuySellDocStateENUM.Delivered:
-                        default:
-                            break;
-                    }
-                    break;
-
-
-                //*******************************************************************************
-                //*     PURCHASE
-                //*******************************************************************************
-
-                case BuySellDocumentTypeENUM.Purchase:
-                    switch (buySellDoc.BuySellDocStateEnum)
-                    {
-                        case BuySellDocStateENUM.RequestUnconfirmed:
-                            //update_Accept(buySellDoc);
-                            update_Freight_Request_Variables(buySellDoc);
-                            update_VehicalType(buySellDoc);
-                            update_Customer_Comment(buySellDoc);
-                            update_BillToAddress(buySellDoc);
-                            update_ShipToAddress(buySellDoc);
-                            //update_CustomerBalanceRefundable(buySellDoc);
-                            //update_InsuranceRequired(buySellDoc);
-                            //update_OfferVariables(buySellDoc);
-
-                            break;
-
-                        case BuySellDocStateENUM.RequestConfirmed:
-                        case BuySellDocStateENUM.BeingPreparedForShipmentBySeller:
-                        case BuySellDocStateENUM.ReadyForPickup:
-
-                            update_Customer_Comment(buySellDoc);
-                            update_Freight_Request_Variables(buySellDoc);
-                            break;
-
-                        case BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller:
-                            update_freightOfferAccepted(buySellDoc);
-                            break;
-
-                        case BuySellDocStateENUM.Delivered:
-                        case BuySellDocStateENUM.Rejected:
-                        case BuySellDocStateENUM.Problem:
-                        case BuySellDocStateENUM.CourierComingToPickUp:
-                        case BuySellDocStateENUM.Enroute:
-                        case BuySellDocStateENUM.Unknown:
-                        default:
-                            break;
-                    }
-                    break;
-
-                //*******************************************************************************
-                //*     PURCHASE
-                //*******************************************************************************
-
-                case BuySellDocumentTypeENUM.Salesman:
-                    switch (buySellDoc.BuySellDocStateEnum)
-                    {
-                        case BuySellDocStateENUM.RequestUnconfirmed:
-                        case BuySellDocStateENUM.RequestConfirmed:
-                        case BuySellDocStateENUM.BeingPreparedForShipmentBySeller:
-                        case BuySellDocStateENUM.ReadyForPickup:
-                        case BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller:
-                        case BuySellDocStateENUM.Delivered:
-                        case BuySellDocStateENUM.Rejected:
-                        case BuySellDocStateENUM.Problem:
-                        case BuySellDocStateENUM.CourierComingToPickUp:
-                        case BuySellDocStateENUM.Enroute:
-                        case BuySellDocStateENUM.Unknown:
-                        default:
-                            break;
-                    }
-                    break;
-                default:
-                    break;
-            }
 
 
 
-        }
-
-        private void update_freightOfferAccepted(BuySellDoc buySellDoc)
-        {
-            FreightOfferTrxAcceptedId = buySellDoc.FreightOfferTrxAcceptedId;
-        }
-        private void update_DocumentTypeAndState(BuySellDoc buySellDoc)
-        {
-            BuySellDocStateEnum = buySellDoc.BuySellDocStateEnum;
-            BuySellDocumentTypeEnum = buySellDoc.BuySellDocumentTypeEnum;
-        }
-
-        private void update_BillToAddress(BuySellDoc buySellDoc)
-        {
-            AddressBillToComplex = buySellDoc.AddressBillToComplex;
-            AddressBillToId = buySellDoc.AddressBillToId;
-        }
-
-        private void update_ShipToAddress(BuySellDoc buySellDoc)
-        {
-            AddressShipToId = buySellDoc.AddressShipToId;
-            AddressShipToComplex = buySellDoc.AddressShipToComplex;
-        }
-
-        private void update_OfferVariables(BuySellDoc buySellDoc)
-        {
-            OfferedPickupOnDate = buySellDoc.OfferedPickupOnDate;
-            VehicalTypeOfferedId = buySellDoc.VehicalTypeOfferedId;
-            FreightOffer = buySellDoc.FreightOffer;
-            CommentByDeliveryman = buySellDoc.CommentByDeliveryman;
-        }
-
-        private void globalUpdate(BuySellDoc buySellDoc)
-        {
-            //CourierAccepts = buySellDoc.CourierAccepts;
-            //VendorAccepts = buySellDoc.VendorAccepts;
-
-            //update_Accept(buySellDoc);
-            update_DocumentTypeAndState(buySellDoc);
-            update_OfferVariables(buySellDoc);
-            update_InsuranceRequired(buySellDoc);
-            update_CustomerBalanceRefundable(buySellDoc);
-
-        }
-
-        //private void update_Accept(BuySellDoc buySellDoc)
+        //private string parse_DeliveryCode_Deliveryman(string DeliveryCode_Deliveryman_AsEntered)
         //{
-        //    AcceptRejectOrEmpty = buySellDoc.AcceptRejectOrEmpty;
+
+        //    string minimumNumberStr = BuySellDoc.GetRandomGeneratorMinimumNumber();
+        //    minimumNumberStr.IsNullOrWhiteSpaceThrowException("The RandomNumberGenerator.MinimumNumber is null or empty");
+        //    //get the digits from the right which are relevant
+        //    string code = DeliveryCode_Deliveryman_AsEntered
+        //        .Substring(DeliveryCode_Deliveryman_AsEntered.Length - minimumNumberStr.Length);
+
+
+        //    return code;
+        //    //DeliveryCode_Deliveryman = DeliveryCode_Deliveryman_AsEntered
+        //    //    .Substring(DeliveryCode_Deliveryman_AsEntered.Length - minimumNumberStr.Length);
+
+
         //}
 
-        private void update_CustomerBalanceRefundable(BuySellDoc buySellDoc)
-        {
+        //private void update_freightOfferAccepted(BuySellDoc buySellDoc)
+        //{
+        //    FreightOfferTrxAcceptedId = buySellDoc.FreightOfferTrxAcceptedId;
+        //}
 
-            //DANGEROUS... why are we doing this? This can be solved by Superbiz.
-            CustomerBalanceRefundable = buySellDoc.CustomerBalanceRefundable;
-        }
-
-        private void update_InsuranceRequired(BuySellDoc buySellDoc)
-        {
-            InsuranceRequired = buySellDoc.InsuranceRequired;
-        }
+        //private void update_InsuranceRequired(BuySellDoc buySellDoc)
+        //{
+        //    InsuranceRequired = buySellDoc.InsuranceRequired;
+        //}
 
 
-        private void update_Freight_Request_Variables(BuySellDoc buySellDoc)
-        {
-            PleasePickupOnDate_Start = buySellDoc.PleasePickupOnDate_Start;
-            PleasePickupOnDate_End = buySellDoc.PleasePickupOnDate_End;
-            VehicalTypeRequestedId = buySellDoc.VehicalTypeRequestedId;
-            FreightCustomerBudget_String = buySellDoc.FreightCustomerBudget_String;
-        }
-        private void update_VehicalType(BuySellDoc buySellDoc)
-        {
-            VehicalTypeRequestedId = buySellDoc.VehicalTypeRequestedId;
-        }
-
-        private void update_Customer_Comment(BuySellDoc buySellDoc)
-        {
-            Comment = buySellDoc.Comment;
-
-        }
+        //private void update_Freight_Request_Variables(BuySellDoc buySellDoc)
+        //{
+        //    PleasePickupOnDate_Start = buySellDoc.PleasePickupOnDate_Start;
+        //    PleasePickupOnDate_End = buySellDoc.PleasePickupOnDate_End;
+        //    VehicalTypeRequestedId = buySellDoc.VehicalTypeRequestedId;
+        //    FreightCustomerBudget_String = buySellDoc.FreightCustomerBudget_String;
+        //}
+        //private void update_VehicalType(BuySellDoc buySellDoc)
+        //{
+        //    VehicalTypeRequestedId = buySellDoc.VehicalTypeRequestedId;
+        //}
 
         #region IQueriable
 
@@ -1848,25 +1480,21 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
         public static IQueryable<BuySellDoc> IQueryable_GetDeliveryDocs(IQueryable<BuySellDoc> allOrders, string deliveryId)
         {
+            //IQueryable<BuySellDoc> purchaseSql = allOrders
+            //                               .Where(x =>
+            //                                ((x.BuySellDocStateEnum == BuySellDocStateENUM.CourierComingToPickUp ||
+            //                                x.BuySellDocStateEnum == BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller ||
+            //                                x.BuySellDocStateEnum == BuySellDocStateENUM.Enroute ||
+            //                                x.BuySellDocStateEnum == BuySellDocStateENUM.Delivered) && x.FreightOfferTrxAccepted.DeliverymanId == deliveryId)
+            //                                || x.BuySellDocStateEnum == BuySellDocStateENUM.ReadyForPickup);
             IQueryable<BuySellDoc> purchaseSql = allOrders
                                            .Where(x =>
                                             ((x.BuySellDocStateEnum == BuySellDocStateENUM.CourierComingToPickUp ||
-                                            x.BuySellDocStateEnum == BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller ||
                                             x.BuySellDocStateEnum == BuySellDocStateENUM.Enroute ||
-                                            x.BuySellDocStateEnum == BuySellDocStateENUM.Delivered) && x.FreightOfferTrxAccepted.DeliverymanId == deliveryId)
-                                            || x.BuySellDocStateEnum == BuySellDocStateENUM.ReadyForPickup);
+                                            x.BuySellDocStateEnum == BuySellDocStateENUM.Delivered) && x.FreightOfferTrxAccepted.DeliverymanId == deliveryId) || x.BuySellDocStateEnum == BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller || x.BuySellDocStateEnum == BuySellDocStateENUM.ReadyForPickup);
 
-            if (deliveryId.IsNullOrWhiteSpace())
-            {
-                purchaseSql = allOrders
-                                               .Where(x =>
-                                                ((x.BuySellDocStateEnum == BuySellDocStateENUM.CourierComingToPickUp ||
-                                                x.BuySellDocStateEnum == BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller ||
-                                                x.BuySellDocStateEnum == BuySellDocStateENUM.Enroute ||
-                                                x.BuySellDocStateEnum == BuySellDocStateENUM.Delivered) &&
-                                                (x.FreightOfferTrxAccepted.DeliverymanId != "" || x.FreightOfferTrxAccepted.DeliverymanId != null))
-                                                || x.BuySellDocStateEnum == BuySellDocStateENUM.ReadyForPickup);
-            }
+            List<BuySellDoc> purchaseSql_2_DEBUG = purchaseSql.ToList();
+
 
             return purchaseSql;
 
@@ -1880,11 +1508,30 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                 return allOrders
                     .Where(x =>
                         (x.CustomerSalesmanId != null && x.CustomerSalesmanId.Trim() != "") ||
-                        (x.OwnerSalesmanId != null && x.OwnerSalesmanId.Trim() != "") ||
-                        (x.DeliverymanSalesmanId != null && x.DeliverymanSalesmanId.Trim() != ""));
+                        (x.CustomerSalesman.ParentSalesmanId != null && x.CustomerSalesman.ParentSalesmanId.Trim() != "") ||
+                        (x.CustomerSalesman.ParentSalesman.ParentSalesmanId != null && x.CustomerSalesman.ParentSalesman.ParentSalesmanId.Trim() != "") ||
+                        
+                        (x.OwnerSalesman != null && x.OwnerSalesmanId.Trim() != "") ||
+                        (x.OwnerSalesman.ParentSalesmanId != null && x.OwnerSalesman.ParentSalesmanId.Trim() != "") ||
+                        (x.OwnerSalesman.ParentSalesman.ParentSalesmanId != null && x.OwnerSalesman.ParentSalesman.ParentSalesmanId.Trim() != "") ||
+
+                        (x.DeliverymanSalesmanId != null && x.DeliverymanSalesmanId.Trim() != "") ||
+                        (x.DeliverymanSalesman.ParentSalesmanId != null && x.DeliverymanSalesman.ParentSalesmanId.Trim() != "") ||
+                        (x.DeliverymanSalesman.ParentSalesman.ParentSalesmanId != null && x.DeliverymanSalesman.ParentSalesman.ParentSalesmanId.Trim() != ""));
 
             IQueryable<BuySellDoc> purchaseSql = allOrders
-                .Where(x => x.CustomerSalesmanId == salesmanId || x.OwnerSalesmanId == salesmanId || x.DeliverymanSalesmanId == salesmanId);
+                .Where(x =>
+                    x.CustomerSalesmanId == salesmanId ||
+                    x.SuperCustomerSalesmanId == salesmanId ||
+                    x.SuperSuperCustomerSalesmanId == salesmanId ||
+                    
+                    x.OwnerSalesmanId == salesmanId ||
+                    x.SuperOwnerSalesmanId == salesmanId ||
+                    x.SuperSuperOwnerSalesmanId == salesmanId ||
+                    
+                    x.DeliverymanSalesmanId == salesmanId ||
+                    x.SuperDeliverymanSalesmanId== salesmanId ||
+                    x.SuperSuperDeliverymanSalesmanId == salesmanId);
             return purchaseSql;
 
         }
@@ -3285,27 +2932,36 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
             return pct;
         }
 
-        public static int GetMoneyBackGuaranteeNumberOfDays()
+        public DateTime GetDateGuaranteeExpires()
         {
-            string noOfDaysString = ConfigurationManager.AppSettings["MoneyBackGuarantee.NumberOfDays"];
-            int noOfDays = noOfDaysString.ToInt();
-            return noOfDays;
+            if (Delivered.IsTrue)
+            {
+                DateTime orderDeliverDate = Delivered.Date_NotNull_Max;
+
+                if (orderDeliverDate == DateTime.MaxValue)
+                    return DateTime.MaxValue; ;
+
+                int noOfDaysGuarantee = BuySellDoc.GetMoneyBackGuaranteeNumberOfDays();
+                DateTime dateMoneyBackExpires = orderDeliverDate.AddDays(noOfDaysGuarantee);
+
+                return dateMoneyBackExpires;
+            }
+
+            return DateTime.MaxValue; ;
 
         }
-
         public bool IsGuaranteePeriodIsOver()
         {
             bool afterGuaranteePeriod = false;
             DateParameter dp = new DateParameter();
-            if (OrderDelivered.IsTrue)
+            if (Delivered.IsTrue)
             {
-                DateTime orderDeliverDate = OrderDelivered.Date_NotNull_Max;
+                DateTime orderDeliverDate = Delivered.Date_NotNull_Max;
 
                 if (orderDeliverDate == DateTime.MaxValue)
                     return false;
 
-                int noOfDaysGuarantee = BuySellDoc.GetMoneyBackGuaranteeNumberOfDays();
-                DateTime dateMoneyBackExpires = orderDeliverDate.AddDays(noOfDaysGuarantee);
+                DateTime dateMoneyBackExpires = GetDateGuaranteeExpires();
 
                 afterGuaranteePeriod = dp.Date1AfterDate2(
                     DateTime.Now,
@@ -3321,7 +2977,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
             if (BuySellDocStateEnum == BuySellDocStateENUM.Rejected)
                 return true;
 
-            
+
             if (BuySellDocStateEnum == BuySellDocStateENUM.Delivered)
             {
                 if (IsGuaranteePeriodIsOver())
@@ -3344,6 +3000,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
 
         }
+
         public bool IsCashAvailableTo_Owner()
         {
 
@@ -3360,6 +3017,8 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
 
         }
+
+
         //public bool IsCashFromDocAvailableCalculator(int cashBackGuaranteeNoOfDays)
         //{
         //    if (BuySellDocStateEnum == BuySellDocStateENUM.Problem)
@@ -3389,5 +3048,41 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         //    return false;
 
         //}
+
+
+        public static int GetMoneyBackGuaranteeNumberOfDays()
+        {
+            string noOfDaysString = ConfigurationManager.AppSettings["MoneyBackGuarantee.NumberOfDays"];
+            int noOfDays = noOfDaysString.ToInt();
+            return noOfDays;
+
+        }
+        public static string GetRandomGeneratorMinimumNumber()
+        {
+            string minNumbStr = ConfigurationManager.AppSettings["PickupDelivery.RandomNumberGenerator.MinimumNumber"];
+
+            if (minNumbStr.Trim() == "")
+                throw new Exception("Unable to access minimum Random Number");
+
+            return minNumbStr;
+            //int minNumber = minNumbStr.ToInt();
+            //return minNumber;
+
+        }
+
+        public decimal Get_Maximum_Commission_Chargeable_On_TotalSaleLessFreight_Based_On_TotalSale_Percent()
+        {
+            decimal commissionPct = SalesCommissionClass.TotalCommissionOnSaleWithoutFreight_Percent();
+            return commissionPct;
+
+
+        }
+
+        public decimal Get_Maximum_Commission_Chargeable_On_Freight_TO_SalesPeople_And_System_Percent()
+        {
+            decimal ttlComm = SalesCommissionClass.TotalCommissionOnFreight_Precent();
+            return ttlComm;
+
+        }
     }
 }
