@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using DalLibrary.Interfaces;
+using EnumLibrary.EnumNS;
 using EnumLibrary.EnumNS.VerificationNS;
 using ModelsClassLibrary.ModelsNS.ServiceRequestNS.ServiceRequestHdrNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
@@ -7,19 +8,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UowLibrary.BusinessLayer.ServiceRequestNS.ServiceRequestHdrNS;
-using UowLibrary.BusinessLayer.ServiceRequestNS.ServiceRequestTrxNS;
+//using UowLibrary.BusinessLayer.ServiceRequestNS.ServiceRequestTrxNS;
 using UowLibrary.ParametersNS;
-using UowLibrary.PlayersNS.ServiceRequestTrxNS;
+//using UowLibrary.PlayersNS.ServiceRequestTrxNS;
 
 namespace UowLibrary.PlayersNS.ServiceRequestHdrNS
 {
     public partial class ServiceRequestHdrBiz : BusinessLayer<ServiceRequestHdr>, IServiceRequestHdrBiz
     {
-        IServiceRequestTrxBiz _iserviceRequestTrxBiz;
-        public ServiceRequestHdrBiz(IRepositry<ServiceRequestHdr> entityDal, BizParameters bizParameters, IServiceRequestTrxBiz iserviceRequestTrxBiz)
+        //IServiceRequestTrxBiz _iserviceRequestTrxBiz;
+        public ServiceRequestHdrBiz(IRepositry<ServiceRequestHdr> entityDal, BizParameters bizParameters /*, IServiceRequestTrxBiz iserviceRequestTrxBiz */)
             : base(entityDal, bizParameters)
         {
-            _iserviceRequestTrxBiz = iserviceRequestTrxBiz;
+            //_iserviceRequestTrxBiz = iserviceRequestTrxBiz;
         }
 
         public static ServiceRequestHdrBiz Unbox(IServiceRequestHdrBiz iserviceRequestHdrBiz)
@@ -30,15 +31,15 @@ namespace UowLibrary.PlayersNS.ServiceRequestHdrNS
 
         }
 
-        public ServiceRequestTrxBiz ServiceRequestTrxBiz
-        {
-            get
-            {
-                _iserviceRequestTrxBiz.UserId = UserId;
-                _iserviceRequestTrxBiz.UserName = UserName;
-                return ServiceRequestTrxBiz.Unbox(_iserviceRequestTrxBiz);
-            }
-        }
+        //public ServiceRequestTrxBiz ServiceRequestTrxBiz
+        //{
+        //    get
+        //    {
+        //        _iserviceRequestTrxBiz.UserId = UserId;
+        //        _iserviceRequestTrxBiz.UserName = UserName;
+        //        return ServiceRequestTrxBiz.Unbox(_iserviceRequestTrxBiz);
+        //    }
+        //}
 
 
         public override string SelectListCacheKey
@@ -92,14 +93,13 @@ namespace UowLibrary.PlayersNS.ServiceRequestHdrNS
 
         public void CreateAnIWantToBeASalesmanEntry(string userPersonId, string systemPersonId, decimal amount)
         {
-
-            ServiceRequestHdr svh = new ServiceRequestHdr(userPersonId, systemPersonId, amount,RequestTypeENUM.BecomeSalesman);
+            ServiceRequestHdr svh = new ServiceRequestHdr(userPersonId, amount, ServiceRequestTypeENUM.BecomeSalesman);
             //check to see if an older request does not exist
 
             ServiceRequestHdr svhExists = FindAll()
                 .FirstOrDefault(x => 
                     x.PersonFromId == userPersonId && 
-                    x.RequestTypeEnum == RequestTypeENUM.BecomeSalesman &&
+                    x.RequestTypeEnum == ServiceRequestTypeENUM.BecomeSalesman &&
                     x.ServiceRequestStatusEnum == EnumLibrary.EnumNS.ServiceRequestStatusENUM.Open);
 
             if (svhExists.IsNull())

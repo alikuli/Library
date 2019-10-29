@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -40,7 +41,10 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
         public virtual string SalesmanCategoryId { get; set; }
         public virtual SalesmanCategory SalesmanCategory { get; set; }
 
+        //public virtual ICollection<BuySellDoc> BuySellDocs { get; set; }
 
+
+        //https://stackoverflow.com/questions/5559043/entity-framework-code-first-two-foreign-keys-from-same-table
 
 
         [Display(Name = "Super Salesman")]
@@ -50,16 +54,89 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
         public virtual Salesman ParentSalesman { get; set; }
 
         [Display(Name = "Super Salesmen")]
+        [InverseProperty("ParentSalesman")]
         public virtual ICollection<Salesman> ParentSalesmen { get; set; }
+
+        [NotMapped]
+        public SelectList SelectListParentSalesmen { get; set; }
+
+
+
+        [Display(Name = "Customer Salesmen")]
+        [InverseProperty("CustomerSalesman")]
+        public virtual ICollection<BuySellDoc> CustomerSalesmenBuySellDocs { get; set; }
+
+        [Display(Name = "Super Customer Salesmen")]
+        [InverseProperty("SuperCustomerSalesman")]
+        public virtual ICollection<BuySellDoc> SuperCustomerSalesmanBuySellDocs { get; set; }
+
+
+
+
+        [Display(Name = "Super Super Customer Salesmen")]
+        [InverseProperty("SuperSuperCustomerSalesman")]
+        public virtual ICollection<BuySellDoc> SuperSuperCustomerSalesmanBuySellDocs { get; set; }
+
+
+        [Display(Name = "Owner Salesmen")]
+        [InverseProperty("OwnerSalesman")]
+        public virtual ICollection<BuySellDoc> OwnerSalesmanBuySellDocs { get; set; }
+
+
+        [Display(Name = "Super Owner Salesmen")]
+        [InverseProperty("SuperOwnerSalesman")]
+        public virtual ICollection<BuySellDoc> SuperOwnerSalesmanBuySellDocs { get; set; }
+
+
+
+        [Display(Name = "Super Super Owner Salesmen")]
+        [InverseProperty("SuperSuperOwnerSalesman")]
+        public virtual ICollection<BuySellDoc> SuperSuperOwnerSalesmanBuySellDocs { get; set; }
+
+
+
+
+
+
+
+
+
+
+
+        [Display(Name = "Deliveryman Salesmen")]
+        [InverseProperty("DeliverymanSalesman")]
+        public virtual ICollection<BuySellDoc> DeliverymanSalesmanBuySellDocs { get; set; }
+
+
+        [Display(Name = "Super Deliveryman Salesmen")]
+        [InverseProperty("SuperDeliverymanSalesman")]
+        public virtual ICollection<BuySellDoc> SuperDeliverymanSalesmanBuySellDocs { get; set; }
+
+
+
+        [Display(Name = "Super Super Deliveryman Salesmen")]
+        [InverseProperty("SuperSuperDeliverymanSalesman")]
+        public virtual ICollection<BuySellDoc> SuperSuperDeliverymanSalesmanBuySellDocs { get; set; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /// <summary>
         /// If true, then this user can hire other salesmen
         /// </summary>
         public bool IsSuperSalesman { get; set; }
-
-
-        [NotMapped]
-        public SelectList SelectListParentSalesmen { get; set; }
 
 
         [NotMapped]

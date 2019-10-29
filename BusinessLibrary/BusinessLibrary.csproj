@@ -33,6 +33,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Azure|AnyCPU'">
+    <OutputPath>bin\Azure\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Azure2|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Azure2\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -162,6 +180,7 @@
     <Compile Include="BusinessLayer\BuySellDocNS\BuySellDocBiz.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\AddToSale.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\BusinessRules.cs" />
+    <Compile Include="BusinessLayer\BuySellDocNS\CommissionsAndPayments.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\IsSaleOrPurchase.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\Load_SaleOrders_And_PurchaseOrders_Into_GlobalObject.cs" />
     <Compile Include="BusinessLayer\BuySellDocNS\Fix.cs" />
@@ -243,6 +262,7 @@
     <Compile Include="BusinessLayer\PlayersNS\CategoriesNS\ProductApproverCategoryNS\ProductApproverCategoryBiz.cs" />
     <Compile Include="BusinessLayer\PlayersNS\CategoriesNS\ProductApproverCategoryNS\SelectList.cs" />
     <Compile Include="BusinessLayer\ProductNS\ProductChildNS\Pictures.cs" />
+    <Compile Include="BusinessLayer\ProductNS\ShopNS\ShopBiz.cs" />
     <Compile Include="BusinessLayer\ProductNS\UomQtyNS\ProductChildFeatureNS\Fix.cs" />
     <Compile Include="BusinessLayer\ProductNS\UomQtyNS\ProductChildFeatureNS\ProductChildFeaturesBiz.cs" />
     <Compile Include="BusinessLayer\ProductNS\ProductChildNS\fixProductChildFeatures.cs" />
@@ -296,8 +316,6 @@
     <Compile Include="BusinessLayer\CounterNS\Initialization.cs" />
     <Compile Include="BusinessLayer\CounterNS\CounterBiz.cs" />
     <Compile Include="BusinessLayer\CounterNS\SelectList.cs" />
-    <Compile Include="BusinessLayer\DiscountNS\SelectList.cs" />
-    <Compile Include="BusinessLayer\DiscountNS\Index.cs" />
     <Compile Include="BusinessLayer\FileDocsNS\Factory.cs" />
     <Compile Include="BusinessLayer\FileDocsNS\Upload.cs" />
     <Compile Include="BusinessLayer\FileDocsNS\Find.cs" />
@@ -414,8 +432,6 @@
     <Compile Include="BusinessLayer\PlayersNS\CategoriesNS\OwnerCategoryNS\OwnersCategoryBiz.cs" />
     <Compile Include="BusinessLayer\PlayersNS\CategoriesNS\CustomerCategoryNS\Initialization.cs" />
     <Compile Include="BusinessLayer\PlayersNS\CategoriesNS\CustomerCategoryNS\CustomerCategoryBiz.cs" />
-    <Compile Include="BusinessLayer\DiscountNS\Initialization.cs" />
-    <Compile Include="BusinessLayer\DiscountNS\DiscountPrecedenceBiz.cs" />
     <Compile Include="BusinessLayer\Interface\IBusinessLayer.cs" />
     <Compile Include="BusinessLayer\LanguagesNS\Initialization.cs" />
     <Compile Include="BusinessLayer\LanguagesNS\LanguageBiz.cs" />
@@ -531,8 +547,6 @@
     <Compile Include="BusinessLayer\MenuNS\MenuPath3NS\MenuPath3Biz.cs" />
     <Compile Include="BusinessLayer\ServiceRequestNS\ServiceRequestHdrNS\IServiceRequestHdrBiz.cs" />
     <Compile Include="BusinessLayer\ServiceRequestNS\ServiceRequestHdrNS\ServiceRequestHdrBiz.cs" />
-    <Compile Include="BusinessLayer\ServiceRequestNS\ServiceRequestTrxNS\IServiceRequestTrxBiz.cs" />
-    <Compile Include="BusinessLayer\ServiceRequestNS\ServiceRequestTrxNS\ServiceRequestTrxBiz.cs" />
     <Compile Include="BusinessLayer\UploadingNS\ModifyIndex.cs" />
     <Compile Include="BusinessLayer\UploadingNS\SelectList.cs" />
     <Compile Include="BusinessLayer\UploadingNS\UploadedFileBiz.cs" />
@@ -554,6 +568,8 @@
     <Compile Include="SuperLayerNS\SuperBizNS\CreateMessage.cs" />
     <Compile Include="SuperLayerNS\SuperBizNS\getListOfPeopleOwnedBySalesman.cs" />
     <Compile Include="SuperLayerNS\SuperBizNS\allocatedBuySellDocs.cs" />
+    <Compile Include="SuperLayerNS\SuperBizNS\Shop.cs" />
+    <Compile Include="SuperLayerNS\SuperBizNS\ServiceRequestHdr.cs" />
     <Compile Include="SuperLayerNS\SuperBizNS\Initialize.cs" />
     <Compile Include="SuperLayerNS\SuperBizNS\Penalty.cs" />
     <Compile Include="SuperLayerNS\SuperBizNS\Run_Daily_Tasks.cs" />

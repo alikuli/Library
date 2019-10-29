@@ -3,6 +3,7 @@ using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeatureNS;
+using ModelsClassLibrary.ModelsNS.IndexNS.PlaceLocationNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
@@ -13,6 +14,7 @@ using System.Web.Mvc;
 using UowLibrary;
 using UowLibrary.FeatureNS.MenuFeatureNS;
 using UowLibrary.ParametersNS;
+using UowLibrary.PlayersNS.OwnerNS;
 using UowLibrary.PlayersNS.ProductApproverNS;
 using UowLibrary.ProductNS;
 
@@ -24,14 +26,27 @@ namespace MarketPlace.Web6.Controllers
         ProductBiz _productBiz;
         ProductApproverBiz _productApproverBiz;
         MenuFeatureBiz _menuFeatureBiz;
-        public ProductsController(ProductBiz biz, AbstractControllerParameters param, ProductApproverBiz productApproverBiz, MenuFeatureBiz menuFeatureBiz)
+        OwnerBiz _ownerBiz;
+        public ProductsController(ProductBiz biz, AbstractControllerParameters param, ProductApproverBiz productApproverBiz, MenuFeatureBiz menuFeatureBiz, OwnerBiz ownerBiz)
             : base(biz, param)
         {
             _productBiz = biz;
             _productApproverBiz = productApproverBiz;
             _menuFeatureBiz = menuFeatureBiz;
+            _ownerBiz = ownerBiz;
         }
 
+        OwnerBiz OwnerBiz
+        {
+            get
+            {
+                _ownerBiz.UserId = UserId;
+                _ownerBiz.UserName = UserName;
+
+                return _ownerBiz;
+            }
+
+        }
         MenuFeatureBiz MenuFeatureBiz
         {
             get
@@ -77,14 +92,8 @@ namespace MarketPlace.Web6.Controllers
             _productBiz.FixProductFeatures(product);
 
 
-            //product.ParentSelectList = _productBiz.SelectList_ForParent(parm.Entity);
-            product.SelectListUomPurchase = _productBiz.SelectList_UomPurchaseQty();
-            product.SelectListUomVolume = _productBiz.SelectList_UomVolume();
-            product.SelectListUomShipWeight = _productBiz.SelectList_UomWeight();
-            product.SelectListUomWeight = _productBiz.SelectList_UomWeight();
-            product.SelectListUomLength = _productBiz.SelectList_UomLength();
-            product.SelectListUomDimensionsLength = _productBiz.SelectList_UomLength();
-            
+            set_selectLists(product);
+
             if (!parm.ReturnUrl.IsNullOrWhiteSpace())
             {
                 product.MenuManager.ReturnUrl = parm.ReturnUrl;
@@ -113,6 +122,18 @@ namespace MarketPlace.Web6.Controllers
 
         }
 
+        private void set_selectLists(Product product)
+        {
+            //product.ParentSelectList = _productBiz.SelectList_ForParent(parm.Entity);
+            product.SelectListUomPurchase = _productBiz.SelectList_UomPurchaseQty();
+            product.SelectListUomVolume = _productBiz.SelectList_UomVolume();
+            product.SelectListUomShipWeight = _productBiz.SelectList_UomWeight();
+            product.SelectListUomWeight = _productBiz.SelectList_UomWeight();
+            product.SelectListUomLength = _productBiz.SelectList_UomLength();
+            product.SelectListUomDimensionsLength = _productBiz.SelectList_UomLength();
+            product.SelectListOwners = OwnerBiz.SelectList();
+        }
+
         public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
             Product product = parm.Entity as Product;
@@ -123,12 +144,13 @@ namespace MarketPlace.Web6.Controllers
 
 
             //product.ParentSelectList = _productBiz.SelectList_ForParent(parm.Entity);
-            product.SelectListUomPurchase = _productBiz.SelectList_UomPurchaseQty();
-            product.SelectListUomVolume = _productBiz.SelectList_UomVolume();
-            product.SelectListUomShipWeight = _productBiz.SelectList_UomWeight();
-            product.SelectListUomWeight = _productBiz.SelectList_UomWeight();
-            product.SelectListUomLength = _productBiz.SelectList_UomLength();
-            product.SelectListUomDimensionsLength = _productBiz.SelectList_UomLength();
+            //product.SelectListUomPurchase = _productBiz.SelectList_UomPurchaseQty();
+            //product.SelectListUomVolume = _productBiz.SelectList_UomVolume();
+            //product.SelectListUomShipWeight = _productBiz.SelectList_UomWeight();
+            //product.SelectListUomWeight = _productBiz.SelectList_UomWeight();
+            //product.SelectListUomLength = _productBiz.SelectList_UomLength();
+            //product.SelectListUomDimensionsLength = _productBiz.SelectList_UomLength();
+            set_selectLists(product);
 
             if (!parm.ReturnUrl.IsNullOrWhiteSpace())
             {
@@ -165,14 +187,12 @@ namespace MarketPlace.Web6.Controllers
 
             try
             {
-                if (UserId.IsNullOrWhiteSpace())
-                    throw new Exception("You are not authourized.");
-
-                if (!ProductApproverBiz.IsApprover(UserId))
-                    throw new Exception("You are not authourized.");
+                IsAuthourized();
                 //This works in the Index when the GetListForIndex is invoked. It is overridden and this bool comes into play
                 ProductBiz.IsShowUnApproved = true;
-                return await base.Index(id, searchFor, isandForSearch, selectedId, returnUrl, menuEnum, sortBy, print, isMenu, menuPathMainId);
+                MainLocationSelectorClass mainLocationSelectorClass = new MainLocationSelectorClass();
+
+                return await base.Index(id, searchFor, isandForSearch, selectedId, returnUrl, mainLocationSelectorClass, menuEnum, sortBy, print, isMenu, menuPathMainId);
 
             }
             catch (Exception e)
@@ -181,6 +201,26 @@ namespace MarketPlace.Web6.Controllers
                 ErrorsGlobal.MemorySave();
                 return RedirectToAction("Index", "Menus");
 
+            }
+        }
+
+        private void IsAuthourized()
+        {
+            if (UserId.IsNullOrWhiteSpace())
+                throw new Exception("You are not authourized.");
+
+            if (ProductApproverBiz.IsApprover(UserId))
+            {
+
+            }
+            else
+            {
+                if (GlobalObject.IsAdmin)
+                { }
+                else
+                {
+                    throw new Exception("You are not authourized.");
+                }
             }
         }
 

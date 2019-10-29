@@ -167,7 +167,7 @@ namespace UowLibrary.ProductNS
             product.MenuManager = new MenuManager(null, product, null, MenuENUM.IndexDefault, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
             indexItem.MenuManager = new MenuManager(null, product, null, MenuENUM.IndexMenuPath1, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
 
-            indexItem.MenuManager.PictureAddresses =   GetPictureList(product);
+            indexItem.MenuManager.PictureAddresses =   GetCurrItemsPictureList(product);
 
         }
 

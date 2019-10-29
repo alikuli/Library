@@ -1,20 +1,12 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
-using ErrorHandlerLibrary.ExceptionsNS;
-using InterfacesLibrary.SharedNS;
-using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
-using System;
-using System.Threading.Tasks;
 using System.Web.Mvc;
-using UowLibrary;
-using UowLibrary.MenuNS;
-using UowLibrary.ProductNS;
 
 namespace MarketPlace.Web6.Controllers
 {
-    public partial class MenusController 
+    public partial class MenusController
     {
 
 
@@ -22,7 +14,7 @@ namespace MarketPlace.Web6.Controllers
         {
 
 
-            switch (parm.Menu.MenuEnum)
+            switch (parm.MenuEnum)
             {
                 case MenuENUM.IndexMenuPath1:
                     break;
@@ -103,10 +95,10 @@ namespace MarketPlace.Web6.Controllers
 
         //                dudMenuPathMain.MenuPath1 = mpm.MenuPath1;
         //                dudMenuPathMain.MenuPath1Id = mpm.MenuPath1Id;
-                        
+
         //            //  Note: mpm.MenuPath2Id = string.Empty; .MenuPath3Id = string.Empty;
         //                dudMenuPathMain.MenuManager.MenuPathMain = dudMenuPathMain;
-                        
+
         //                break;
 
         //            case MenuLevelENUM.Level_3:
@@ -122,13 +114,13 @@ namespace MarketPlace.Web6.Controllers
 
         //                dudMenuPathMain.MenuPath1 = mpm.MenuPath1;
         //                dudMenuPathMain.MenuPath1Id = mpm.MenuPath1Id;
-                        
+
         //                dudMenuPathMain.MenuPath2 = mpm.MenuPath2;
         //                dudMenuPathMain.MenuPath2Id = mpm.MenuPath2Id;
 
         //            //  Note: mpm.MenuPath2Id = string.Empty; .MenuPath3Id = string.Empty;
         //                dudMenuPathMain.MenuManager.MenuPathMain = dudMenuPathMain;
-                        
+
         //                break;
 
         //            case MenuLevelENUM.Level_4:

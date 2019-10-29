@@ -14,8 +14,10 @@ using Ninject.Modules;
 using Ninject.Web.Common;
 using UowLibrary;
 using UowLibrary.AddressNS;
+using UowLibrary.BusinessLayer.ProductNS.ShopNS;
+//using UowLibrary.BusinessLayer.NonReturnableNS;
 using UowLibrary.BusinessLayer.ServiceRequestNS.ServiceRequestHdrNS;
-using UowLibrary.BusinessLayer.ServiceRequestNS.ServiceRequestTrxNS;
+//using UowLibrary.BusinessLayer.ServiceRequestNS.ServiceRequestTrxNS;
 using UowLibrary.BuySellDocNS;
 using UowLibrary.CashEncashmentTrxNS;
 using UowLibrary.CashTtxNS;
@@ -31,6 +33,7 @@ using UowLibrary.Interface;
 using UowLibrary.LikeUnlikeNS;
 using UowLibrary.MailerNS;
 using UowLibrary.MenuNS;
+//using UowLibrary.NonReturnableNS;
 using UowLibrary.PageViewNS;
 using UowLibrary.ParametersNS;
 using UowLibrary.PaymentTypeNS;
@@ -56,7 +59,7 @@ using UowLibrary.PlayersNS.ProductApproverNS;
 using UowLibrary.PlayersNS.SalesmanCategoryNS;
 using UowLibrary.PlayersNS.SalesmanNS;
 using UowLibrary.PlayersNS.ServiceRequestHdrNS;
-using UowLibrary.PlayersNS.ServiceRequestTrxNS;
+//using UowLibrary.PlayersNS.ServiceRequestTrxNS;
 using UowLibrary.PlayersNS.VehicalTypeNS;
 using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
@@ -83,7 +86,7 @@ namespace DependancyResolver
             LoadUserStuff();
             LoadMisc();
             LoadUow();
-            LoadDALs();
+            //LoadDALs();
             LoadBusinessLayer();
 
         }
@@ -157,12 +160,6 @@ namespace DependancyResolver
             Bind<AccountsBizSuper>().ToSelf();
             //Bind<MenuPath1FeatureBiz>().ToSelf();
             Bind<MenuFeatureBiz>().ToSelf();
-            //Bind<UserBiz>().ToSelf();
-            //Bind<FeatureBiz>().ToSelf();
-            //Bind<MenuPath1FeatureBiz>().ToSelf();
-            //Bind<MenuPath2FeatureBiz>().ToSelf();
-            //Bind<RightBiz>().ToSelf();
-            //Bind<MenuPath3FeatureBiz>().ToSelf();
 
             Bind<ProductApproverBiz>().ToSelf();
             Bind<ProductApproverCategoryBiz>().ToSelf();
@@ -177,17 +174,8 @@ namespace DependancyResolver
             Bind<BuySellDocHistoryBiz>().ToSelf();
             Bind<PenaltyHeaderBiz>().ToSelf();
             Bind<PenaltyTrxBiz>().ToSelf();
+            Bind<ShopBiz>().ToSelf();
             Bind<IServiceRequestHdrBiz>().To<ServiceRequestHdrBiz>();
-            Bind<IServiceRequestTrxBiz>().To<ServiceRequestTrxBiz>();
-
-        }
-
-        public void LoadDALs()
-        {
-            //Bind<IUserDAL>().To<UserDAL>().InRequestScope(); 
-            //Bind<ICountryDAL>().To<CountryDAL>().InRequestScope();
-
-
             //https://stackoverflow.com/questions/4370515/ninject-bind-generic-repository
             Bind(typeof(IRepositry<>)).To(typeof(Repositry<>));
             //Bind<UserDAL>().ToSelf();

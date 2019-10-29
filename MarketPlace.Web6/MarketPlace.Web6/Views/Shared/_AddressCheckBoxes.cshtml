@@ -1,0 +1,150 @@
+﻿@model ModelsClassLibrary.ViewModels.IndexListVM
+
+
+
+@if (Model.MainLocationSelectorClass.IsNull())
+{
+    <p>Not Applicable</p>
+
+}
+else
+{
+    <div class="background-ltblue text-center d-none">
+        <a class="btn btn-info text-center w-100 mb-1"  href="#" onclick="HideMenuCol()">Hide Menu</a>
+    </div>
+
+    <div class="container mb-5" id="accordian">
+
+        @*COUNTRY*@
+        @for (int countryCount = 0; countryCount < Model.MainLocationSelectorClass.Countries.Count; countryCount++)
+        {
+            string countryBodyId = "countryBody_" + countryCount;
+            string countryChkBoxId = "countryChkBox_" + countryCount;
+            string countryDataName = string.Format("{0}", Model.MainLocationSelectorClass.Countries[countryCount].Name);
+
+            <div class=" card">
+                <div class="card-header">
+                    @Html.CheckBoxFor(x => Model.MainLocationSelectorClass.Countries[countryCount].IsSelected, new { @class = "myAddressList", onclick ="updateCheckBoxChildrenOf(this, 'country');", data_Name = @countryDataName })
+
+                    @Html.HiddenFor(x => Model.MainLocationSelectorClass.Countries[countryCount].Name)
+
+
+                    <div class="btn btn-link myAddressList" data-toggle="collapse" data-target="#@countryBodyId"> @countryDataName </div>
+                </div>
+                <div id="@countryBodyId" class="card-body collapse" data-parent="#accordian">
+
+
+
+                    @if (Model.MainLocationSelectorClass.Countries[countryCount].States.IsNullOrEmpty())
+                    {
+                        <p>None</p>
+
+                    }
+                    else
+                    {
+                        //STATE
+                        for (int stateCount = 0; stateCount < Model.MainLocationSelectorClass.Countries[countryCount].States.Count; stateCount++)
+                        {
+                            string stateBodyId = countryBodyId + "stateBody_" + stateCount;
+                            string stateDataName = string.Format("{0}__{1}", countryDataName, Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].Name);
+
+                            <div class=" card">
+                                <div class="card-header">
+                                    @Html.CheckBoxFor(x => Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].IsSelected, new { @class = "myAddressList", onclick = "updateCheckBoxChildrenOf(this, 'state');", data_Name = @stateDataName })
+
+
+                                    @Html.HiddenFor(x => Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].Name)
+
+
+
+                                    <div class="btn btn-link myAddressList" data-toggle="collapse" data-target="#@stateBodyId">@Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].Name</div>
+                                </div>
+                                <div id="@stateBodyId" class="card-body collapse" data-parent="#@countryBodyId">
+
+
+                                    @*city*@
+
+                                    @if (Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].Cities.IsNullOrEmpty())
+                                    {
+                                        <p>None</p>
+                                    }
+                                    else
+                                    {
+                                        //CITY
+                                        for (int cityCount = 0; cityCount < Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].Cities.Count; cityCount++)
+                                        {
+                                            string cityBodyId = stateBodyId + "cityBody_" + cityCount;
+                                            string cityDataName = string.Format("{0}__{1}",
+                                                stateDataName,
+                                                Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].Cities[cityCount].Name);
+
+                                            <div class=" card">
+                                                <div class="card-header">
+
+
+
+                                                    @Html.CheckBoxFor(x => Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].Cities[cityCount].IsSelected, new { @class = "myAddressList", onclick =  "updateCheckBoxChildrenOf(this, 'city');", data_Name = @cityDataName })
+
+                                                    @Html.HiddenFor(x => Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].Cities[cityCount].Name)
+
+
+
+
+
+
+                                                    <div class="btn btn-link myAddressList" data-toggle="collapse" data-target="#@cityBodyId">@Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].Cities[cityCount].Name</div>
+                                                </div>
+                                                <div id="@cityBodyId" class="card-body collapse" data-parent="#@stateBodyId">
+
+                                                    @*Town*@
+
+
+                                                    @if (Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].Cities[cityCount].Towns.IsNullOrEmpty())
+                                                    {
+                                                        <p>None</p>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        //TOWN
+
+                                                        for (int townCount = 0; townCount < Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].Cities[cityCount].Towns.Count; townCount++)
+                                                        {
+                                                            string townBodyId = cityBodyId + "townBody_" + townCount;
+                                                            string townDataName = string.Format("{0}__{1}", cityDataName, Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].Cities[cityCount].Towns[townCount].Name);
+
+                                                            @Html.CheckBoxFor(x => Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].Cities[cityCount].Towns[townCount].IsSelected, new { @class = "myAddressList", onclick =  "updateCheckBoxChildrenOf(this, 'town');", data_Name = @townDataName })
+
+                                                            @Html.HiddenFor(x => Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].Cities[cityCount].Towns[townCount].Name)
+                                                            <span class="myAddressList">
+                                                                &nbsp;
+                                                                @Model.MainLocationSelectorClass.Countries[countryCount].States[stateCount].Cities[cityCount].Towns[townCount].Name
+                                                            </span>
+
+                                                            <br />}
+                                                    }
+
+
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+
+                </div>
+            </div>
+
+        }
+
+
+    </div>
+
+    <button id="saveBtn" class="btn btn-success w-100" onclick="getUnCheckedBoxesCoordinates()">Show Filtered Results</button>
+}

@@ -1,9 +1,12 @@
 ﻿using AliKuli.Extentions;
 using DalLibrary.Interfaces;
 using EnumLibrary.EnumNS;
+using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.AddressNS.AddessWithIdNS;
 using ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +25,7 @@ namespace UowLibrary.AddressNS
         CountryBiz _countryBiz;
         AddressVerificationTrxBiz _addressVerificationTrxBiz;
         AddressVerificationHdrBiz _addressVerificationHdrBiz;
-        public AddressBiz(IRepositry<AddressMain> entityDal, BizParameters bizParameters,  AddressVerificationHdrBiz addressVerificationHdrBiz, PersonBiz personBiz, CountryBiz countryBiz)
+        public AddressBiz(IRepositry<AddressMain> entityDal, BizParameters bizParameters, AddressVerificationHdrBiz addressVerificationHdrBiz, PersonBiz personBiz, CountryBiz countryBiz)
             : base(entityDal, bizParameters, personBiz, countryBiz)
         {
             //_personBiz = personBiz;
@@ -111,7 +114,7 @@ namespace UowLibrary.AddressNS
 
 
         //this verifies the verification code and updates the AddressVerificationTrx and AddressWithId
-        public void VerifiyAddressCode(AddressVerificationNumberVm avnVM)
+        public void VerifiyAddressCode(AddressVerificationNumberVm avnVM, GlobalObject globalObject)
         {
             avnVM.IsNullThrowExceptionArgument("Address Verification not recieved");
             avnVM.VerificaitonNumber.IsNullOrWhiteSpaceThrowException("Verification is blank.");
@@ -139,7 +142,14 @@ namespace UowLibrary.AddressNS
             addressVerificationTrx.Verification.VerificaionStatusEnum = VerificaionStatusENUM.Verified;
 
             _addressVerificationTrxBiz.Update(addressVerificationTrx);
-            UpdateAndSave(address);
+
+
+            ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+            param.Entity = address as ICommonWithId;
+            param.GlobalObject = globalObject;
+
+
+            UpdateAndSave(param);
 
 
         }
@@ -147,14 +157,15 @@ namespace UowLibrary.AddressNS
 
 
         [Authorize(Roles = "Administrator")]
-        public async Task ResetAddressVerificationComplete()
+        public async Task ResetAddressVerificationComplete(GlobalObject globalObject)
         {
             //delete all the AddressVerificationTrx
             await AddressVerificationTrxBiz.DeleteActuallyAllAndSaveAsync();
             //delete all the AddressVerificationHdr
             await AddressVerificationHdrBiz.DeleteActuallyAllAndSaveAsync();
+
             //Reset the Administrators addresses
-            SetAllAddressesToNotVerified();
+            SetAllAddressesToNotVerified(globalObject);
             ErrorsGlobal.AddMessage("Addresses Verification Reset!");
         }
 
@@ -170,6 +181,7 @@ namespace UowLibrary.AddressNS
             //bool IsInPakistan = CountryBiz.IsAddressInPakistan(addy.CountryId);
             //return IsInPakistan;
             throw new NotImplementedException();
+
         }
 
 

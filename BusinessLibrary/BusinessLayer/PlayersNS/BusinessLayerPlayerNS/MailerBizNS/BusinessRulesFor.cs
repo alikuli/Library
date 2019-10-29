@@ -3,9 +3,12 @@ using AliKuli.ConstantsNS;
 using AliKuli.Extentions;
 using ConfigManagerLibrary;
 using EnumLibrary.EnumNS;
+using InterfacesLibrary.SharedNS;
 using MigraDocLibrary.InvoiceNS;
 using ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS;
 using ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Collections.Generic;
 
@@ -189,15 +192,21 @@ namespace UowLibrary.MailerNS
         }
 
 
-        public void UpdateStatusToPrinted(string addressVerificationHdr_Id)
+        public void UpdateStatusToPrinted(string addressVerificationHdr_Id, GlobalObject globalObject)
         {
             addressVerificationHdr_Id.IsNullOrWhiteSpaceThrowArgumentException("addressVerificationHdr_Id");
             AddressVerificationHdr addyVerfHdr = AddressVerificationHdrBiz.Find(addressVerificationHdr_Id);
             addyVerfHdr.IsNullThrowException("Address Veification Header not found. Status of transaction not changed.");
             addyVerfHdr.Verification.SetTo(VerificaionStatusENUM.Printed);
 
+            ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+            param.Entity = addyVerfHdr as ICommonWithId;
+            param.GlobalObject = globalObject;
+
+            AddressVerificationHdrBiz.UpdateAndSave(param);
+
             //updateAllTheAddresses(addyVerfHdr);
-            AddressVerificationHdrBiz.UpdateAndSave(addyVerfHdr);
+            //AddressVerificationHdrBiz.UpdateAndSave(addyVerfHdr);
         }
 
         //private void updateAllTheAddresses(AddressVerificationHdr addyVerfHdr)

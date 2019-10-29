@@ -97,8 +97,8 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         public bool DatesAreEqual(DateTime date1, DateTime date2)
         {
-            DateTime date1_fixed = new DateTime(date1.Year, date1.Month, date1.Day, 0, 0, 0);
-            DateTime date2_fixed = new DateTime(date2.Year, date2.Month, date2.Day, 0, 0, 0);
+            DateTime date1_fixed = fixDate(date1);
+            DateTime date2_fixed = fixDate(date2);
 
             int result = DateTime.Compare(date1_fixed, date2_fixed);
             bool success = result == 0;
@@ -121,11 +121,17 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             return success;
         }
 
+        private static DateTime fixDate(DateTime date)
+        {
+            DateTime date1_fixed = new DateTime(date.Year, date.Month, date.Day, 0, 0, 0);
+            return date1_fixed;
+        }
+
 
         public bool Date1AfterDate2(DateTime date1, DateTime date2)
         {
-            DateTime date1_fixed = new DateTime(date1.Year, date1.Month, date1.Day, 0, 0, 0);
-            DateTime date2_fixed = new DateTime(date2.Year, date2.Month, date2.Day, 23, 59, 59);
+            DateTime date1_fixed = fixDate(date1);
+            DateTime date2_fixed = fixDate(date2);
 
             int result = DateTime.Compare(date1_fixed, date2_fixed);
             bool success = result == 1;
@@ -150,8 +156,8 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         }
         public bool Date1BeforeDate2(DateTime date1, DateTime date2)
         {
-            DateTime date1_fixed = new DateTime(date1.Year, date1.Month, date1.Day, 0, 0, 0);
-            DateTime date2_fixed = new DateTime(date2.Year, date2.Month, date2.Day, 23, 59, 59);
+            DateTime date1_fixed = fixDate(date1);
+            DateTime date2_fixed = fixDate(date2);
 
             int result = DateTime.Compare(date1_fixed, date2_fixed);
 
@@ -247,6 +253,46 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
                     EndDate.ToLongTimeString());
                 return _heading;
             }
+        }
+        /// <summary>
+        /// This gives the date as so many days ago, or tomorrow, or yesterday
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public string ToNoOfDaysAway(DateTime date)
+        {
+            int noOfDays = (date - DateTime.Now).Days;
+            int noOfDaysAbs = Math.Abs(noOfDays);
+            string english = "";
+            switch (noOfDaysAbs)
+            {
+                case 0: english = "Today";
+                    return english;
+
+                case 1:
+                    if (noOfDays < 0)
+                        english = "Yesterday";
+                    else
+                        english = "Tomorrow";
+                    break;
+
+                case 2:
+                        if (noOfDays < 0)
+                            english = "Day Before Yesterday";
+                        else
+                            english = "Day After Tomorrow";
+
+                        break;
+
+                default:
+                        if (noOfDays < 0)
+                            english = string.Format("{0:N0} Days ago", noOfDaysAbs);
+                        else
+                            english = string.Format("in {0:N0} Days ", noOfDaysAbs);
+                    break;
+            }
+
+            return english;
         }
 
     }

@@ -20,7 +20,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
             Check_Short_Description();
             Check_Long_Description();
-            Check_MlpPrice();
+            //Check_MlpPrice();
             Check_Sell_Price();
             Check_Is_Not_Child_Of_Self();
             Check_Uom_Weight_On_Product();
@@ -266,41 +266,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         }
 
-        /// <summary>
-        /// Manufacturers lowest price
-        /// </summary>
-        private void Check_MlpPrice()
-        {
-            if (Sell.MlpPrice == 0)
-            {
-                //No checks
-                return;
-            }
 
-            if (Sell.MlpPrice > Sell.SellPrice)
-            {
-                throw new Exception(string.Format("The MLP Price {0}, cannot be higher than the Sell Price {1} for product '{2}' ProductAbstract.Check_MlpPrice.",
-                    Sell.MlpPrice,
-                    Sell.SellPrice,
-                    FullName()));
-            }
-
-        }
-
-        //private void Check_MSRP()
-        //{
-        //    if (Sell.MSRP == 0)
-        //    {
-        //        if (IsAllowd_Zero_MRSP)
-        //        {
-        //            //dont do anything.
-        //        }
-        //        else
-        //        {
-        //            throw new Exception(string.Format("MSRP is zero for product '{0}'. This is not allowed for this product. If you want a zero MSRP then mark IsAllowd_Zero_MRSP to true from Product Edits. ProductAbstract.Check_MSRP", FullName()));
-        //        }
-        //    }
-        //}
 
         private void Check_Long_Description()
         {

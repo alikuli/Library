@@ -71,7 +71,7 @@ namespace MarketPlace.Web6.Controllers
                 id.IsNullOrWhiteSpaceThrowArgumentException("id");
                 string downloadFileName = "Verification_Letter_" + DateTime.Now.Ticks.ToString() + ".pdf";
                 FileContentResult fs = File(MailerBiz.PrintVerificationLetters(id), "application/pdf", downloadFileName);
-                MailerBiz.UpdateStatusToPrinted(id);
+                MailerBiz.UpdateStatusToPrinted(id, GlobalObject);
                 return fs;
 
             }
@@ -111,7 +111,7 @@ namespace MarketPlace.Web6.Controllers
             {
 
                 mailingCostsVM.IsNullThrowExceptionArgument("mailingCostsVM");
-                MailerBiz.UpdateAndSaveMailingCost(mailingCostsVM);
+                MailerBiz.UpdateAndSaveMailingCost(mailingCostsVM, GlobalObject);
 
             }
             catch (Exception e)

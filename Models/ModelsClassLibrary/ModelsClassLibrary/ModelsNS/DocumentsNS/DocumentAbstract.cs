@@ -24,8 +24,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.AbstractNS
             string customerId,
             string addressBillToId,
             string addressShipToId,
-            string poNumber,
-            DateTime poDate,
             SelectList selectListOwner,
             SelectList selectListCustomer,
             SelectList selectListAddressInformTo,
@@ -36,8 +34,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.AbstractNS
                 customerId,
                 addressBillToId,
                 addressShipToId,
-                poNumber,
-                poDate,
                 selectListOwner,
                 selectListCustomer,
                 selectListAddressInformTo,
@@ -50,8 +46,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.AbstractNS
             string customerId,
             string addressBillToId,
             string addressShipToId,
-            string poNumber,
-            DateTime poDate,
             SelectList selectListOwner,
             SelectList selectListCustomer,
             SelectList selectListAddressInformTo,
@@ -61,8 +55,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.AbstractNS
             CustomerId = customerId;
             AddressBillToId = addressBillToId;
             AddressShipToId = addressShipToId;
-            PoNumber = poNumber;
-            PoDate = poDate;
             SelectListOwner = selectListOwner;
             SelectListCustomer = selectListCustomer;
             SelectListAddressInformTo = selectListAddressInformTo;

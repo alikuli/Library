@@ -25,6 +25,7 @@ namespace EnumLibrary.EnumNS
         Problem, //there is a problem with the order.
         CashTransaction, //used for cash trx when converting to cashtrxVm2.
         CashEncashment,  //used for cash trx when converting to cashtrxVm2.
+        OptedOutOfSystem, //this buysell order will
         //New, //Depreciated to ConfirmedBySeller
         //Closed,      //Depreciated to Delivered or Rejected
         //Canceled,   //Depreciated to rejected

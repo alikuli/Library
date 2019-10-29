@@ -6,6 +6,7 @@ using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using ModelsClassLibrary.ModelsNS.VerificatonNS;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
 using System.Web.Hosting;
 
 namespace ModelsClassLibrary.ViewModels
@@ -38,6 +39,20 @@ namespace ModelsClassLibrary.ViewModels
             Price = price;
             Comment = comment;
         }
+
+
+        public bool IsShopAndOwnerOfShop { get; set; }
+        public bool IsShop { get; set; }
+        /// <summary>
+        /// When this is true, there are no products for sale.
+        /// </summary>
+        public bool HasProductsForSale { get; set; }
+        public int NoOfItems { get; set; }
+        public int NoOfShops { get; set; }
+        public string ShopExpiresStr { get; set; }
+        //if this is true then user is accepting non-refundable payments
+        public bool IsTokenPaymentAccepted { get; set; }
+        public bool IsHidden { get; set; }
 
         public bool IsPickup { get; set; }
         public long CompleteMenuPathViews { get; set; }
@@ -176,10 +191,31 @@ namespace ModelsClassLibrary.ViewModels
         /// This is the second heading line.
         /// </summary>
         public string Amount2ndLine { get; set; }
+
+        /// <summary>
+        /// The image pictureAddress is the absolute path
+        /// </summary>
+        /// <param name="pictureAddress"></param>
+        /// <returns></returns>
+        public bool IsPictureLandscape(string pictureAddress)
+        {
+
+            using (Image image = Image.FromFile(pictureAddress))
+            {
+
+                return image.Height < image.Width;
+            }
+
+        }
         public static void PictureCalculateDimensions(string pictureAddress)
         {
             PictureHeight = MaxHeightFound.ToString();
             PictureWidth = "0";
+
+
+            //if picture is potrait, then look for max height
+            //if picture is landscape, look for max width
+
             //pictureAddress.IsNullOrWhiteSpaceThrowException("PictureAddress");
             //string hostPath = HostingEnvironment.MapPath(pictureAddress);
             //System.Drawing.Image img = System.Drawing.Image.FromFile(hostPath);

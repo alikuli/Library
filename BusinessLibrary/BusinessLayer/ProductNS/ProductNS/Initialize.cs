@@ -3,6 +3,7 @@ using DatastoreNS;
 using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
@@ -128,7 +129,7 @@ namespace UowLibrary.ProductNS
 
                     pcHasuploads.MiscFiles.Add(file);
 
-                    UploadedFileBiz.CreateSimple(CreateControllerCreateEditParameter(file as ICommonWithId));
+                    UploadedFileBiz.Create(CreateControllerCreateEditParameter(file as ICommonWithId));
 
                 }
             }
@@ -233,30 +234,34 @@ namespace UowLibrary.ProductNS
 
 
                     #region Menu Path
-                    
-                    prodInitHelper.Menupaths.IsNullOrEmptyThrowException();
 
-                    foreach (MenuPathHelper mph in prodInitHelper.Menupaths)
+                    if (prodInitHelper.Menupaths.IsNull())
+                    { }
+                    else
                     {
-                        MenuPathMain mpm = MenuPathMainBiz.FindAll().FirstOrDefault(x =>
-                                x.MenuPath1.Name.ToLower() == mph.MenuPath1Name.ToLower() &&
-                                x.MenuPath2.Name.ToLower() == mph.MenuPath2Name.ToLower() &&
-                                x.MenuPath3.Name.ToLower() == mph.MenuPath3Name.ToLower());
 
-                        if (mpm.IsNull())
-                            continue;
 
-                        if (p.MenuPathMains.IsNull())
-                            p.MenuPathMains = new List<MenuPathMain>();
+                        foreach (MenuPathHelper mph in prodInitHelper.Menupaths)
+                        {
+                            MenuPathMain mpm = MenuPathMainBiz.FindAll().FirstOrDefault(x =>
+                                    x.MenuPath1.Name.ToLower() == mph.MenuPath1Name.ToLower() &&
+                                    x.MenuPath2.Name.ToLower() == mph.MenuPath2Name.ToLower() &&
+                                    x.MenuPath3.Name.ToLower() == mph.MenuPath3Name.ToLower());
 
-                        p.MenuPathMains.Add(mpm);
+                            if (mpm.IsNull())
+                                continue;
 
-                        if (mpm.Products.IsNull())
-                            mpm.Products = new List<Product>();
+                            if (p.MenuPathMains.IsNull())
+                                p.MenuPathMains = new List<MenuPathMain>();
 
-                        mpm.Products.Add(p);
+                            p.MenuPathMains.Add(mpm);
+
+                            if (mpm.Products.IsNull())
+                                mpm.Products = new List<Product>();
+
+                            mpm.Products.Add(p);
+                        }
                     }
-
                     #endregion
 
 
@@ -265,27 +270,29 @@ namespace UowLibrary.ProductNS
 
 
                     #region ProductIdentifier
-                    prodInitHelper.ProductIdentifiers.IsNullOrEmptyThrowException();
-
-                    foreach (string piStr in prodInitHelper.ProductIdentifiers)
+                    if (prodInitHelper.ProductIdentifiers.IsNull())
+                    { }
+                    else
                     {
-                        ProductIdentifier pi = ProductIdentifierBiz.Find(piStr);
+                        foreach (string piStr in prodInitHelper.ProductIdentifiers)
+                        {
+                            ProductIdentifier pi = ProductIdentifierBiz.Find(piStr);
 
-                        if (!pi.IsNull())
-                            throw new Exception(string.Format("Duplicate product Identifier: '{0}'", piStr));
+                            if (!pi.IsNull())
+                                throw new Exception(string.Format("Duplicate product Identifier: '{0}'", piStr));
 
-                        pi = ProductIdentifierBiz.Factory() as ProductIdentifier;
+                            pi = ProductIdentifierBiz.Factory() as ProductIdentifier;
 
-                        pi.Name = piStr;
-                        pi.Product = p;
-                        pi.ProductId = p.Id;
+                            pi.Name = piStr;
+                            pi.Product = p;
+                            pi.ProductId = p.Id;
 
-                        if (p.ProductIdentifiers.IsNull())
-                            p.ProductIdentifiers = new List<ProductIdentifier>();
+                            if (p.ProductIdentifiers.IsNull())
+                                p.ProductIdentifiers = new List<ProductIdentifier>();
 
-                        p.ProductIdentifiers.Add(pi);
+                            p.ProductIdentifiers.Add(pi);
+                        }
                     }
-
                     #endregion
                     CreateSave_ForInitializeOnly(p);
 
@@ -293,12 +300,57 @@ namespace UowLibrary.ProductNS
 
 
             }
+
+            AddInitData_ProductChild();
         }
 
         public override bool Event_LockEditDuringInitialization()
         {
             return false;
         }
+
+
+        public void AddInitData_ProductChild()
+        {
+            //get the data
+            List<ProductChildInitializer> dataList = GetDataListForChildProduct;
+
+            if (dataList.IsNullOrEmpty())
+            {
+                ErrorsGlobal.Add("No data available.", MethodBase.GetCurrentMethod());
+                throw new Exception(ErrorsGlobal.ToString());
+            }
+
+
+            foreach (ProductChildInitializer item in dataList)
+            {
+                ProductChild pc = new ProductChild();
+
+                pc.Name = item.ProductName;
+                pc.Sell.SellPrice = item.SalePrice;
+                Product product = FindForName(item.ParentName);
+                product.IsNullThrowException();
+                pc.ProductId = product.Id;
+                pc.Product = product;
+                pc.ShipFromAddressComplex = AddressComplex.SystemAddress_Complex();
+                pc.IsNonRefundablePaymentAccepted = item.IsNonRefundablePaymentAccepted;
+               
+                if (product.ProductChildren.IsNull())
+                    product.ProductChildren = new List<ProductChild>();
+
+                product.ProductChildren.Add(pc);
+                ProductChildBiz.CreateSave_ForInitializeOnly(pc);
+            }
+        }
+
+        public List<ProductChildInitializer> GetDataListForChildProduct
+        {
+            get
+            {
+                return new ProductChildtDataArray().DataArray();
+            }
+        }
+
 
     }
 }

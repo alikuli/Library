@@ -1,5 +1,7 @@
 ﻿using AliKuli.Extentions;
+using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.DiscountNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
 using System.Collections.Generic;
@@ -101,7 +103,7 @@ namespace UowLibrary.DiscountPrecedenceNS
 
         }
 
-        public void MakeFirst(string idToMove)
+        public void MakeFirst(string idToMove, GlobalObject globalObject)
         {
 
             DiscountPrecedence dpToMove = Find(idToMove);
@@ -112,12 +114,19 @@ namespace UowLibrary.DiscountPrecedenceNS
 
             //ControllerCreateEditParameter parmToMove = new ControllerCreateEditParameter();
             //parmToMove.Entity = dpToMove;
-            UpdateAndSave(dpToMove);
+
+            ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+            param.Entity = dpToMove as ICommonWithId;
+            param.GlobalObject = globalObject;
+
+            UpdateAndSave(param);
+
+            //UpdateAndSave(dpToMove);
             ResetRankSpacing();
             SaveChanges();
         }
 
-        public void MakeLast(string idToMove)
+        public void MakeLast(string idToMove, GlobalObject globalObject)
         {
 
             idToMove.IsNullOrWhiteSpaceThrowException();
@@ -127,7 +136,14 @@ namespace UowLibrary.DiscountPrecedenceNS
 
             int maxRank = FindAll().Max(x => x.Rank);
             dpToMove.Rank = maxRank+1;
-            UpdateAndSave(dpToMove);
+
+            ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+            param.Entity = dpToMove as ICommonWithId;
+            param.GlobalObject = globalObject;
+
+            UpdateAndSave(param);
+
+            //UpdateAndSave(dpToMove);
         }
         private void ResetRankSpacing()
         {

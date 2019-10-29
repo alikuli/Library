@@ -82,10 +82,10 @@ namespace UowLibrary.MenuNS.MenuStateNS
                     MenuState = new EditMenuProductChild(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
 
-
                 case MenuENUM.CreateMenuPath1:
                     MenuState = new CreateMenuPath1(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;
+
                 case MenuENUM.CreateMenuPath2:
                     MenuState = new CreateMenuPath2(MenuPathMain, Product, ProductChild, MenuEnum, LikeUnlikesCounter, UserId, UserName);
                     break;

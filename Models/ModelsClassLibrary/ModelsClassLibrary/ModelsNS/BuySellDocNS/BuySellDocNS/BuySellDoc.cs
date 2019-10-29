@@ -1,15 +1,16 @@
 ﻿using AliKuli.Extentions;
-using AliKuli.ToolsNS;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.BuySellDocNS;
+//using ModelsClassLibrary.ModelsNS.BuySellDocNS.NonReturnableNS;
 using ModelsClassLibrary.ModelsNS.CashNS.PenaltyNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.AbstractNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellItemNS;
 using ModelsClassLibrary.ModelsNS.MessageNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
+using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Complex;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
@@ -30,7 +31,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
     /// What will happen if the seller and the delivery man are the same. They could cheat the customer.
     /// The customer can always create a problem.
     /// </summary>
-    public partial class BuySellDoc : DocumentAbstract
+    public partial class BuySellDoc : DocumentAbstract, ModelsClassLibrary.ModelsNS.BuySellDocNS.BuySellDocNS.IContainBuySellViewState
     {
         public BuySellDoc()
         {
@@ -43,9 +44,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
         void initializeComplexs()
         {
-            //CourierSelected = new BoolDateAndByComplex();
-            //OrderConfirmedByDeliveryman = new BoolDateAndByComplex();
-
             RequestUnconfirmed = new BoolDateAndByComplex();
             RequestConfirmed = new BoolDateAndByComplex();
             BeingPreparedForShipmentBySeller = new BoolDateAndByComplex();
@@ -56,75 +54,64 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
             Enroute = new BoolDateAndByComplex();
             Rejected = new BoolDateAndByComplex();
             Problem = new BoolDateAndByComplex();
+            OptedOutOfSystem = new BoolDateAndByComplex();
             Delivered = new BoolDateAndByComplexWithConfirmationCode();
-
-            //RequestConfirmed_Sign = new SignatureComplex();
-            //ConfirmedBySeller_Sign = new SignatureComplex();
-            //ReadyForShipment_Sign = new SignatureComplex();
-            //ConfirmedByCourier_Sign = new SignatureComplex();
-            //PickedUp_Sign = new SignatureComplex();
-            //Delivered_Sign = new SignatureComplex();
-            //Rejected_Sign = new SignatureComplex();
-            //Problem_Sign = new SignatureComplex();
 
             AddressBillToComplex = new AddressComplex();
             AddressShipToComplex = new AddressComplex();
             AddressShipFromComplex = new AddressComplex();
             MoneyBackGuarantee = new BoolAndDaysDateAndByComplex();
 
-            Total_Charged_To_Owner = new CommissionComplex();
-            Total_Charged_To_Deliveryman = new CommissionComplex();
+            CustomerSalesmanCommission = new PaymentsComplex();
+            SuperCustomerSalesmanCommission = new PaymentsComplex();
+            SuperSuperCustomerSalesmanCommission = new PaymentsComplex();
+            Total_Commissions_Payable_By_Owner = new PaymentsComplex();
+            Total_Commissions_Payable_By_Deliveryman = new PaymentsComplex();
+            OwnerSalesmanCommission = new PaymentsComplex();
+            SuperOwnerSalesmanCommission = new PaymentsComplex();
+            SuperSuperOwnerSalesmanCommission = new PaymentsComplex();
 
-            CustomerSalesmanCommission = new CommissionComplex();
-            SuperCustomerSalesmanCommission = new CommissionComplex();
-            SuperSuperCustomerSalesmanCommission = new CommissionComplex();
+            DeliverymanSalesmanCommission = new PaymentsComplex();
+            SuperDeliverymanSalesmanCommission = new PaymentsComplex();
+            SuperSuperDeliverymanSalesmanCommission = new PaymentsComplex();
 
-            OwnerSalesmanCommission = new CommissionComplex();
-            SuperOwnerSalesmanCommission = new CommissionComplex();
-            SuperSuperOwnerSalesmanCommission = new CommissionComplex();
+            System_Commission_For_Product = new PaymentsComplex();
+            System_Commission_For_Freight = new PaymentsComplex();
 
-            DeliverymanSalesmanCommission = new CommissionComplex();
-            SuperDeliverymanSalesmanCommission = new CommissionComplex();
-            SuperSuperDeliverymanSalesmanCommission = new CommissionComplex();
-
-            System_Commission_For_SaleWithoutFreight = new CommissionComplex();
-            System_Commission_For_Freight = new CommissionComplex();
-
-
+            Total_Product_Payment_For_Invoice = new PaymentsComplex();
+            Total_Delivery_Payment_For_Invoice = new PaymentsComplex();
 
 
         }
 
-        public void Initialize(string ownerId, string customerId, string addressBillToId, string addressShipToId, string poNumber, DateTime poDate, SelectList selectListOwner, SelectList selectListCustomer, SelectList selectListAddressBillTo, SelectList selectListAddressShipTo)
+        public void Initialize(string ownerId, string customerId, string addressBillToId, string addressShipToId, SelectList selectListOwner, SelectList selectListCustomer, SelectList selectListAddressBillTo, SelectList selectListAddressShipTo)
         {
 
-            base.InitializeAbstract(ownerId, customerId, addressBillToId, addressShipToId, poNumber, poDate, selectListOwner, selectListCustomer, selectListAddressBillTo, selectListAddressShipTo);
+            base.InitializeAbstract(ownerId, customerId, addressBillToId, addressShipToId, selectListOwner, selectListCustomer, selectListAddressBillTo, selectListAddressShipTo);
             //BuySellDocStateEnum = BuySellDocStateENUM.RequestUnconfirmed;
             BuySellDocStateEnum = BuySellDocStateENUM.Unknown;
             FreightCustomerBudget = 1000;
             PleasePickupOnDate_Start = DateTime.Now;
             PleasePickupOnDate_End = DateTime.Now.AddDays(10);
+            ExpectedDeliveryDate = PleasePickupOnDate_End.AddDays(1);
 
 
         }
-        ///// <summary>
-        ///// This works out if the item has been delivered, is the cash available
-        ///// </summary>
-        ///// <returns></returns>
-        //public CashStateENUM CashAvailableStatus(int cashBackGuaranteeNoOfDays)
-        //{
 
-        //    if (IsCashFromDocAvailableCalculator(cashBackGuaranteeNoOfDays))
-        //        return CashStateENUM.Available;
-        //    return CashStateENUM.Allocated;
-
-        //}
         public static BuySellDoc UnBox(ICommonWithId icommonWithId)
         {
             BuySellDoc buySellDoc = icommonWithId as BuySellDoc;
             buySellDoc.IsNullThrowException();
             return buySellDoc;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ShopId { get; set; }
+        public virtual Product Shop { get; set; }
+
+        public bool IsShop { get { return !ShopId.IsNullOrWhiteSpace(); } }
 
         /// <summary>
         /// The buySellDoc money is always not available, except 
@@ -161,7 +148,8 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         public string CurrentUser_DeliverymanId { get; set; }
 
 
-
+        public bool IsShowFullAddressTo_Seller { get; set; }
+        public bool IsShowFullAddressTo_Customer { get; set; }
 
         /// <summary>
         /// used in BuySellDocs.orderList.cshtml
@@ -171,6 +159,21 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         {
             string path = AliKuli.UtilitiesNS.ConfigManagerHelper.DefaultBlankPicture;
             UploadedFile uploadedFile = new UploadedFile();
+
+            if (!Shop.IsNull())
+            {
+
+                if (Shop.MiscFiles.IsNull())
+                    return path;
+
+                if (Shop.MiscFiles.FirstOrDefault().IsNull())
+                    return path;
+
+
+                path = Shop.MiscFiles.FirstOrDefault().GetRelativePathWithFileName();
+                return path;
+            }
+
 
             if (BuySellItems.IsNullOrEmpty())
                 return path;
@@ -307,7 +310,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
             get
             {
                 if (Messages.IsNull())
-                    return null;
+                    return new List<Message>();
 
                 return Messages.Where(x => x.MetaData.IsDeleted == false).OrderByDescending(x => x.MetaData.Created.Date).ToList();
             }
@@ -363,7 +366,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
             get
             {
                 if (BuySellDocHistorys.IsNull())
-                    return null;
+                    return new List<BuySellDocHistory>();
 
                 return BuySellDocHistorys
                     .Where(x => x.MetaData.IsDeleted == false)
@@ -393,6 +396,16 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         public string AnchorDescriptionInOrderListItem()
         {
             string completeDescription = "ERROR";
+
+            if (!Shop.IsNull())
+            {
+                completeDescription = string.Format("For Shop: {0}  ", Shop.FullName());
+                return completeDescription;
+
+            }
+
+
+
             string ownersShipFromAddress = AddressShipFromComplex.ToStringOnlyNameAndCityAndCountry;
             string customersShipToAddress = AddressShipToComplex.ToStringOnlyNameAndCityAndCountry;
             string documentName = BuySellDocumentTypeEnum.ToString().ToTitleSentance();
@@ -405,16 +418,16 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
 
             if (customersShipToAddress.IsNullOrWhiteSpace())
-                customersShipToAddress = "ERROR";
+                customersShipToAddress = "No Address";
 
             if (ownersShipFromAddress.IsNullOrWhiteSpace())
-                ownersShipFromAddress = "ERROR";
+                ownersShipFromAddress = "No Address";
 
             if (documentName.IsNullOrWhiteSpace())
-                documentName = "ERROR";
+                documentName = "Unknown Document Type";
 
             if (documentNumber.IsNullOrWhiteSpace())
-                documentNumber = "ERROR";
+                documentNumber = "No Doc #";
             if (ttlWt != 0)
                 ttlWtString = string.Format("{0:N2}KG", ttlWt);
 
@@ -555,7 +568,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         }
 
 
-        public decimal TotalRs
+        public decimal TotalRs_Refundable_From_Product
         {
             get
             {
@@ -565,12 +578,29 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                 decimal totalRs = 0;
                 foreach (var item in buySellItemFixed)
                 {
-                    totalRs += item.OrderedRs;
+                    if (!item.ProductChild.IsNonRefundablePaymentAccepted)
+                        totalRs += item.OrderedRs;
                 }
                 return totalRs;
             }
         }
 
+        public decimal TotalRs_Non_Refundable_From_Product
+        {
+            get
+            {
+                if (buySellItemFixed.IsNullOrEmpty())
+                    return 0;
+
+                decimal totalRs = 0;
+                foreach (var item in buySellItemFixed)
+                {
+                    if (item.ProductChild.IsNonRefundablePaymentAccepted)
+                        totalRs += item.OrderedRs;
+                }
+                return totalRs;
+            }
+        }
         public double TotalWeight
         {
             get
@@ -619,28 +649,50 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                 return BuySellItems.Count();
             }
         }
-        public decimal TotalInvoice
+        public decimal TotalInvoice_Refundable
         {
             get
             {
-                return TotalInvoiceLessFreight + Freight_Accepted;
+                return Total_Product_Refundable + Freight_Accepted_Refundable;
             }
         }
-        public decimal TotalInvoiceLessFreight
+
+        public decimal TotalInvoice_NonRefundable
         {
             get
             {
-                return TotalRs;
+                return Total_Product_Non_Refundable;
             }
         }
+
+        public decimal Total_Product_Refundable
+        {
+            get
+            {
+                return TotalRs_Refundable_From_Product;
+            }
+        }
+
+
+
+        public decimal Total_Product_Non_Refundable
+        {
+            get
+            {
+                return TotalRs_Non_Refundable_From_Product;
+            }
+        }
+
 
         #endregion
 
 
         #region Freight offered
+
+
         [NotMapped]
         [Display(Name = "Payment for Delivery")]
-        public decimal Freight_Accepted
+        public decimal Freight_Accepted_Refundable
         {
             get
             {
@@ -650,13 +702,18 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                 return FreightOfferTrxAccepted.OfferAmount;
             }
         }
+
+
+
         public string Freight_Accepted_Formatted
         {
             get
             {
-                return Freight_Accepted.ToString("N0");
+                return Freight_Accepted_Refundable.ToString("N0");
             }
         }
+
+
 
         #endregion
 
@@ -666,6 +723,12 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         //public BoolDateAndByComplex OrderConfirmedByDeliveryman { get; set; }
         public BoolDateAndByComplex RequestUnconfirmed { get; set; }
         public BoolDateAndByComplex RequestConfirmed { get; set; }
+
+        [Display(Name = "Opt Out Of System")]
+        public BoolDateAndByComplex OptedOutOfSystem { get; set; }
+
+        //public BoolDateAndByComplex Opt_Out_Of_System { get; set; }
+
         public BoolDateAndByComplex BeingPreparedForShipmentBySeller { get; set; }
         public BoolDateAndByComplex ReadyForPickup { get; set; }
         public BoolDateAndByComplex CourierAcceptedByBuyerAndSeller { get; set; }
@@ -735,6 +798,11 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                     dateString = Problem.Date_NotNull_Min == DateTime.MinValue ? "" : Problem.Date_NotNull_Min.ToShortDateString();
                     timeString = Problem.Date_NotNull_Min == DateTime.MinValue ? "" : Problem.Date_NotNull_Min.ToShortTimeString();
                     break;
+                case BuySellDocStateENUM.OptedOutOfSystem:
+                    dateString = OptedOutOfSystem.Date_NotNull_Min == DateTime.MinValue ? "" : OptedOutOfSystem.Date_NotNull_Min.ToShortDateString();
+                    timeString = OptedOutOfSystem.Date_NotNull_Min == DateTime.MinValue ? "" : OptedOutOfSystem.Date_NotNull_Min.ToShortTimeString();
+                    break;
+
                 default:
                     break;
             }
@@ -763,14 +831,31 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
 
         #region Penalties
-
         public virtual ICollection<PenaltyHeader> PenaltyHeaders { get; set; }
+
+        public List<PenaltyHeader> PenaltyHeaders_Fixed()
+        {
+            if (PenaltyHeaders.IsNullOrEmpty())
+                return PenaltyHeaders.ToList();
+            var lst = PenaltyHeaders.Where(x => x.MetaData.IsDeleted == false).ToList();
+
+            return lst;
+        }
+
         #endregion
 
+        //public virtual ICollection<NonReturnableTrx> NonReturnableTrxs { get; set; }
 
+        //public List<NonReturnableTrx> NonReturnableTrxs_Fixed()
+        //{
+        //    if (NonReturnableTrxs.IsNullOrEmpty())
+        //        return NonReturnableTrxs.ToList();
+        //    var lst = NonReturnableTrxs.Where(x => x.MetaData.IsDeleted == false).ToList();
 
+        //    return lst;
+        //}
 
-
+        //https://stackoverflow.com/questions/5559043/entity-framework-code-first-two-foreign-keys-from-same-table
 
         [Display(Name = "Customer Salesman")]
         public string CustomerSalesmanId { get; set; }
@@ -784,11 +869,14 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
 
 
+
         [Display(Name = "Super Customer Salesman")]
         public string SuperCustomerSalesmanId { get; set; }
 
         [Display(Name = "Super Customer Salesman")]
         public virtual Salesman SuperCustomerSalesman { get; set; }
+
+
 
 
         [NotMapped]
@@ -823,6 +911,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
         [NotMapped]
         public SelectList SelectListOwnerSalesman { get; set; }
+
 
 
         [Display(Name = "Super Owner Salesman")]
@@ -865,6 +954,8 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         [NotMapped]
         public SelectList SelectListDeliverymanSalesman { get; set; }
 
+
+
         [Display(Name = "Super Deliveryman Salesman")]
         public string SuperDeliverymanSalesmanId { get; set; }
 
@@ -888,312 +979,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
         public SelectList SelectListSuperSuperDeliverymanSalesman { get; set; }
 
 
-
-
-
-
-        #region Commissions
-
-
-        public decimal Total_Commission_Amount
-        {
-            get
-            {
-                return Total_Charged_To_Owner.Amount + Total_Charged_To_Deliveryman.Amount;
-            }
-        }
-
-        /// <summary>
-
-
-
-
-
-        /// <summary>
-        /// This is the commission paid to the CustomerSalesmanCommission
-        /// </summary>
-        public virtual CommissionComplex CustomerSalesmanCommission { get; set; }
-        public virtual CommissionComplex SuperCustomerSalesmanCommission { get; set; }
-        public virtual CommissionComplex SuperSuperCustomerSalesmanCommission { get; set; }
-
-
-        /// <summary>
-        /// This is the commission paid to the OwnerSalesmanCommission
-        /// </summary>
-        public virtual CommissionComplex OwnerSalesmanCommission { get; set; }
-        public virtual CommissionComplex SuperOwnerSalesmanCommission { get; set; }
-        public virtual CommissionComplex SuperSuperOwnerSalesmanCommission { get; set; }
-
-        /// <summary>
-        /// This is the commission paid to the DelivermanSalesman
-        /// </summary>
-        public virtual CommissionComplex DeliverymanSalesmanCommission { get; set; }
-        public virtual CommissionComplex SuperDeliverymanSalesmanCommission { get; set; }
-        public virtual CommissionComplex SuperSuperDeliverymanSalesmanCommission { get; set; }
-
-
-
-        /// <summary>
-        /// This is the commission paid to the System
-        /// </summary>
-        public virtual CommissionComplex System_Commission_For_SaleWithoutFreight { get; set; }
-        public virtual CommissionComplex System_Commission_For_Freight { get; set; }
-
-        /// This will always be the maximum commission
-        /// </summary>
-        public virtual CommissionComplex Total_Charged_To_Owner { get; set; }
-
-        /// <summary>
-        /// This will always be the maximum commission
-        /// </summary>
-        public virtual CommissionComplex Total_Charged_To_Deliveryman { get; set; }
-
-
-
-        /// <summary>
-        /// This is the maximum commission that is charged to the BuySellDoc. It
-        /// is the sum of the commissions of SalesmanCustomer + OwnerSalesman + DeliverymanSalesman + System
-        /// </summary>
-        /// <returns></returns>
-        public decimal Get_Maximum_Commission_Chargeable_On_TotalSale_Percent()
-        {
-            decimal ttlComm = SalesCommissionClass.Get_Maximum_Commission_Chargeable_On_TotalSale_Percent(TotalInvoiceLessFreight, Freight_Accepted);
-            return ttlComm;
-
-        }
-
-        public decimal Get_Maximum_Commission_Chargeable_On_TotalSaleLessFreight_Amount()
-        {
-            decimal ttlComm = SalesCommissionClass.TotalCommissionOnSaleWithoutFreight_Amount(TotalInvoiceLessFreight);
-            return ttlComm;
-
-        }
-
-        public decimal Get_Maximum_Commission_Chargeable_On_Freight_Amount()
-        {
-            decimal ttlComm = SalesCommissionClass.TotalCommissionOnFreight_Amount(Freight_Accepted);
-            return ttlComm;
-
-        }
-
-
-
-
-        public decimal Get_Maximum_Commission_Chargeable_On_SaleWithoutFreight_To_SalesPeople_And_System_Percent()
-        {
-            decimal ttlComm =
-                SalesCommissionClass.CommissionPct_OwnerSalesman +
-                SalesCommissionClass.CommissionPct_CustomerSalesman +
-                SalesCommissionClass.CommissionPct_System;
-            return ttlComm;
-
-        }
-
-        public decimal Get_Maximum_Commission_Estimate_Chargeable_On_Total_Invoice_Percent()
-        {
-            decimal ttl =
-                Get_Maximum_Commission_Chargeable_On_SaleWithoutFreight_To_SalesPeople_And_System_Percent() +
-                Get_Maximum_Commission_Chargeable_On_Freight_TO_SalesPeople_And_System_Percent();
-            return ttl;
-        }
-
-
-        /// <summary>
-        /// This is the total commission actually payable by the BuySellDoc
-        /// </summary>
-        /// <returns></returns>
-        public decimal Get_Actual_Commission_Payable_On_Freight_Amount()
-        {
-            decimal ttlComm = DeliverymanSalesmanCommission.Amount + System_Commission_For_Freight.Amount;
-            return ttlComm;
-
-        }
-
-
-        public decimal Get_Actual_Extra_Commission_Earned_By_System_On_Freight_Amount()
-        {
-            decimal maxComm = Get_Maximum_Commission_Chargeable_On_Freight_Amount();
-            decimal actualComm = Get_Actual_Commission_Payable_On_Freight_Amount();
-
-            if (maxComm == 0)
-                throw new Exception("Maximum Commission Chargeable On Freight Amount is 0");
-
-            return maxComm;
-
-        }
-
-
-        /// <summary>
-        /// This makes the commission amount payable based on total invoice
-        /// </summary>
-        /// <returns></returns>
-        public decimal Get_OwnersSalesman_Commission_Based_On_TotalInvoice()
-        {
-            if (OwnerSalesmanCommission.Amount == 0)
-                return 0;
-            if (TotalInvoice == 0)
-                return 0;
-            decimal pct = OwnerSalesmanCommission.Amount / TotalInvoice;
-            return pct;
-        }
-        /// <summary>
-        /// This makes the commission amount payable based on total invoice
-        /// </summary>
-        /// <returns></returns>
-        public decimal Get_CustomersSalesman_Commission_Based_On_TotalInvoice()
-        {
-            if (CustomerSalesmanCommission.Amount == 0)
-                return 0;
-            if (TotalInvoice == 0)
-                return 0;
-            decimal pct = CustomerSalesmanCommission.Amount / TotalInvoice;
-            return pct;
-        }
-
-
-        /// <summary>
-        /// This makes the commission amount payable based on total invoice
-        /// </summary>
-        /// <returns></returns>
-        public decimal Get_DeliverymansSalesman_Commission_Based_On_TotalInvoice()
-        {
-            if (DeliverymanSalesmanCommission.Amount == 0)
-                return 0;
-            if (TotalInvoice == 0)
-                return 0;
-            decimal pct = DeliverymanSalesmanCommission.Amount / TotalInvoice;
-            return pct;
-        }
-
-
-        /// <summary>
-        /// This makes the commission amount payable based on total invoice
-        /// </summary>
-        /// <returns></returns>
-        public decimal Get_System_Freight_Commission_Based_On_TotalInvoice()
-        {
-            if (System_Commission_For_Freight.Amount == 0)
-                return 0;
-            if (TotalInvoice == 0)
-                return 0;
-            decimal pct = System_Commission_For_Freight.Amount / TotalInvoice;
-            return pct;
-        }
-
-
-
-
-        #endregion
-
-
-        #region Commission checks
-
-        public void ErrorCheckForCommission()
-        {
-            check_TotalCommission_Is_Greater_Than_Total_Allowed();
-            //check_GetTotalCommissionEarnedBySystem_Amount_is_Greater_Than_Zero();
-            check_If_OwnerSalesman_Commission_Pct__Zero_Then_Amount_Zero();
-            check_If_CustomerSalesman_Commission_Pct__Zero_Then_Amount_Zero();
-            check_If_DeliverymanSalesman_Commission_Pct__Zero_Then_Amount_Zero();
-        }
-
-        private void calculateCommissions()
-        {
-            throw new NotImplementedException();
-        }
-
-        //private void check_GetTotalCommissionEarnedBySystem_Amount_is_Greater_Than_Zero()
-        //{
-        //    if (Get_Actual_Extra_Commission_Earned_By_System_On_TotalSale_Amount() > 0)
-        //        return;
-
-        //    throw new Exception("Total Commission earned by system is zero.");
-
-        //}
-
-        private void check_TotalCommission_Is_Greater_Than_Total_Allowed()
-        {
-            //decimal totalCommissions = Get_Actual_Commission_Payable_On_TotalSale_Amount();
-            decimal maxCommAllowed = SalesCommissionClass.Commission_Payable_On_Invoice_Amount(TotalInvoiceLessFreight, Freight_Accepted);
-            if (Total_Commission_Amount > maxCommAllowed)
-                throw new Exception("Commissions are less.");
-
-        }
-
-        private void check_If_OwnerSalesman_Commission_Pct__Zero_Then_Amount_Zero()
-        {
-            if (OwnerSalesmanCommission.Percent == 0)
-            {
-                if (OwnerSalesmanCommission.Amount != 0)
-                {
-                    throw new Exception("Owner Salesman Commission Pct is zero but ammount is not Zero.");
-                }
-            }
-            else
-            {
-                if (OwnerSalesmanCommission.Amount != 0)
-                {
-                    return;
-                }
-                else
-                {
-                    //it is possible the amount is zero but the commission percent is not. Eg. if freight is zero
-                    //then the max commission amount will still be a number, but of zero.
-                }
-
-
-            }
-
-
-        }
-
-        private void check_If_CustomerSalesman_Commission_Pct__Zero_Then_Amount_Zero()
-        {
-            if (CustomerSalesmanCommission.Percent == 0)
-            {
-                if (CustomerSalesmanCommission.Amount != 0)
-                {
-                    throw new Exception("Customer Salesman Commission Pct is zero but ammount is not Zero.");
-                }
-            }
-            else
-            {
-                if (CustomerSalesmanCommission.Amount != 0)
-                {
-                    return;
-                }
-                //it is possible the amount is zero but the commission percent is not. Eg. if freight is zero
-                //then the max commission amount will still be a number, but of zero.
-
-            }
-
-
-        }
-
-        private void check_If_DeliverymanSalesman_Commission_Pct__Zero_Then_Amount_Zero()
-        {
-            if (DeliverymanSalesmanCommission.Percent == 0)
-            {
-                if (DeliverymanSalesmanCommission.Amount != 0)
-                {
-                    throw new Exception("Deliveryman Salesman Commission Pct is zero but ammount is not Zero.");
-                }
-            }
-            else
-            {
-                if (DeliverymanSalesmanCommission.Amount != 0)
-                {
-                    return;
-                }
-                //it is possible the amount is zero but the commission percent is not. Eg. if freight is zero
-                //then the max commission amount will still be a number, but of zero.
-
-            }
-
-
-        }
-
-        #endregion
 
 
 
@@ -1250,6 +1035,14 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
             }
         }
 
+        public IBuySellDocViewState GetBuySellDocViewState(BuySellDocStateENUM buySellDocStateEnum, BuySellDocumentTypeENUM buySellDocumentTypeEnum)
+        {
+            //note the customer and owner come from the BuysellDoc. It is in the abstract.
+            BuySellDocViewStateController buySellDocViewStateController = new BuySellDocViewStateController(BuySellDocStateEnum, BuySellDocumentTypeEnum, Customer, Owner, CustomerBalanceRefundable, CustomerBalanceNonRefundable);
+            return buySellDocViewStateController.GetBuySellDocStateController();
+
+        }
+
 
 
 
@@ -1258,14 +1051,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
 
 
-
-        public IBuySellDocViewState GetBuySellDocViewState(BuySellDocStateENUM buySellDocStateEnum, BuySellDocumentTypeENUM buySellDocumentTypeEnum)
-        {
-            //note the customer and owner come from the BuysellDoc. It is in the abstract.
-            BuySellDocViewStateController buySellDocViewStateController = new BuySellDocViewStateController(BuySellDocStateEnum, BuySellDocumentTypeEnum, Customer, Owner, CustomerBalanceRefundable, CustomerBalanceNonRefundable);
-            return buySellDocViewStateController.GetBuySellDocStateController();
-
-        }
 
 
         public override bool HideNameInView()
@@ -1316,7 +1101,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                 customerName,
                 statementType,
                 vehicalType,
-                TotalInvoice.ToString("N2"),
+                TotalInvoice_Refundable.ToString("N2"),
                 BuySellDocStateEnum.ToString().ToTitleSentance());
 
             return fullName;
@@ -1333,45 +1118,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
 
 
-        //private string parse_DeliveryCode_Deliveryman(string DeliveryCode_Deliveryman_AsEntered)
-        //{
-
-        //    string minimumNumberStr = BuySellDoc.GetRandomGeneratorMinimumNumber();
-        //    minimumNumberStr.IsNullOrWhiteSpaceThrowException("The RandomNumberGenerator.MinimumNumber is null or empty");
-        //    //get the digits from the right which are relevant
-        //    string code = DeliveryCode_Deliveryman_AsEntered
-        //        .Substring(DeliveryCode_Deliveryman_AsEntered.Length - minimumNumberStr.Length);
-
-
-        //    return code;
-        //    //DeliveryCode_Deliveryman = DeliveryCode_Deliveryman_AsEntered
-        //    //    .Substring(DeliveryCode_Deliveryman_AsEntered.Length - minimumNumberStr.Length);
-
-
-        //}
-
-        //private void update_freightOfferAccepted(BuySellDoc buySellDoc)
-        //{
-        //    FreightOfferTrxAcceptedId = buySellDoc.FreightOfferTrxAcceptedId;
-        //}
-
-        //private void update_InsuranceRequired(BuySellDoc buySellDoc)
-        //{
-        //    InsuranceRequired = buySellDoc.InsuranceRequired;
-        //}
-
-
-        //private void update_Freight_Request_Variables(BuySellDoc buySellDoc)
-        //{
-        //    PleasePickupOnDate_Start = buySellDoc.PleasePickupOnDate_Start;
-        //    PleasePickupOnDate_End = buySellDoc.PleasePickupOnDate_End;
-        //    VehicalTypeRequestedId = buySellDoc.VehicalTypeRequestedId;
-        //    FreightCustomerBudget_String = buySellDoc.FreightCustomerBudget_String;
-        //}
-        //private void update_VehicalType(BuySellDoc buySellDoc)
-        //{
-        //    VehicalTypeRequestedId = buySellDoc.VehicalTypeRequestedId;
-        //}
 
         #region IQueriable
 
@@ -1417,6 +1163,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
             IQueryable<BuySellDoc> docs = filteredDocsByDate
                .Where(x =>
                    x.BuySellDocStateEnum == BuySellDocStateENUM.RequestConfirmed ||
+                   x.BuySellDocStateEnum == BuySellDocStateENUM.OptedOutOfSystem ||
                    x.BuySellDocStateEnum == BuySellDocStateENUM.BeingPreparedForShipmentBySeller ||
                    x.BuySellDocStateEnum == BuySellDocStateENUM.ReadyForPickup ||
                    x.BuySellDocStateEnum == BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller ||
@@ -1432,6 +1179,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                        .Where(x =>
                            x.BuySellDocStateEnum == BuySellDocStateENUM.RequestUnconfirmed ||
                            x.BuySellDocStateEnum == BuySellDocStateENUM.RequestConfirmed ||
+                           x.BuySellDocStateEnum == BuySellDocStateENUM.OptedOutOfSystem ||
                            x.BuySellDocStateEnum == BuySellDocStateENUM.BeingPreparedForShipmentBySeller ||
                            x.BuySellDocStateEnum == BuySellDocStateENUM.ReadyForPickup ||
                            x.BuySellDocStateEnum == BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller ||
@@ -1480,13 +1228,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
         public static IQueryable<BuySellDoc> IQueryable_GetDeliveryDocs(IQueryable<BuySellDoc> allOrders, string deliveryId)
         {
-            //IQueryable<BuySellDoc> purchaseSql = allOrders
-            //                               .Where(x =>
-            //                                ((x.BuySellDocStateEnum == BuySellDocStateENUM.CourierComingToPickUp ||
-            //                                x.BuySellDocStateEnum == BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller ||
-            //                                x.BuySellDocStateEnum == BuySellDocStateENUM.Enroute ||
-            //                                x.BuySellDocStateEnum == BuySellDocStateENUM.Delivered) && x.FreightOfferTrxAccepted.DeliverymanId == deliveryId)
-            //                                || x.BuySellDocStateEnum == BuySellDocStateENUM.ReadyForPickup);
             IQueryable<BuySellDoc> purchaseSql = allOrders
                                            .Where(x =>
                                             ((x.BuySellDocStateEnum == BuySellDocStateENUM.CourierComingToPickUp ||
@@ -1510,7 +1251,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                         (x.CustomerSalesmanId != null && x.CustomerSalesmanId.Trim() != "") ||
                         (x.CustomerSalesman.ParentSalesmanId != null && x.CustomerSalesman.ParentSalesmanId.Trim() != "") ||
                         (x.CustomerSalesman.ParentSalesman.ParentSalesmanId != null && x.CustomerSalesman.ParentSalesman.ParentSalesmanId.Trim() != "") ||
-                        
+
                         (x.OwnerSalesman != null && x.OwnerSalesmanId.Trim() != "") ||
                         (x.OwnerSalesman.ParentSalesmanId != null && x.OwnerSalesman.ParentSalesmanId.Trim() != "") ||
                         (x.OwnerSalesman.ParentSalesman.ParentSalesmanId != null && x.OwnerSalesman.ParentSalesman.ParentSalesmanId.Trim() != "") ||
@@ -1524,13 +1265,13 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                     x.CustomerSalesmanId == salesmanId ||
                     x.SuperCustomerSalesmanId == salesmanId ||
                     x.SuperSuperCustomerSalesmanId == salesmanId ||
-                    
+
                     x.OwnerSalesmanId == salesmanId ||
                     x.SuperOwnerSalesmanId == salesmanId ||
                     x.SuperSuperOwnerSalesmanId == salesmanId ||
-                    
+
                     x.DeliverymanSalesmanId == salesmanId ||
-                    x.SuperDeliverymanSalesmanId== salesmanId ||
+                    x.SuperDeliverymanSalesmanId == salesmanId ||
                     x.SuperSuperDeliverymanSalesmanId == salesmanId);
             return purchaseSql;
 
@@ -1556,15 +1297,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
                         switch (buySellDocStateEnum)
                         {
-                            //case BuySellDocStateENUM.New:
-                            //case BuySellDocStateENUM.Closed:
-                            //case BuySellDocStateENUM.BackOrdered:
-                            //case BuySellDocStateENUM.Quotation:
-                            //case BuySellDocStateENUM.Credit:
-                            //    throw new NotImplementedException();
 
-                            //case BuySellDocStateENUM.Canceled:
-                            //    break;
 
                             case BuySellDocStateENUM.InProccess:
                                 content = ConfigurationManager.AppSettings["menu.person.SaleOrders.InProccess.ToolTip"];
@@ -1636,15 +1369,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                     {
                         switch (buySellDocStateEnum)
                         {
-                            //case BuySellDocStateENUM.New:
-                            //case BuySellDocStateENUM.Closed:
-                            //case BuySellDocStateENUM.BackOrdered:
-                            //case BuySellDocStateENUM.Quotation:
-                            //case BuySellDocStateENUM.Credit:
-                            //    throw new NotImplementedException();
-
-                            //case BuySellDocStateENUM.Canceled:
-                            //    break;
 
                             case BuySellDocStateENUM.InProccess:
                                 content = ConfigurationManager.AppSettings["menu.person.PurchaseOrders.InProccess.ToolTip"];
@@ -1709,15 +1433,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                     {
                         switch (buySellDocStateEnum)
                         {
-                            //case BuySellDocStateENUM.New:
-                            //case BuySellDocStateENUM.Closed:
-                            //case BuySellDocStateENUM.BackOrdered:
-                            //case BuySellDocStateENUM.Quotation:
-                            //case BuySellDocStateENUM.Credit:
-                            //    throw new NotImplementedException();
-
-                            //case BuySellDocStateENUM.Canceled:
-                            //    break;
 
                             case BuySellDocStateENUM.InProccess:
                                 content = ConfigurationManager.AppSettings["menu.person.Salesman.InProccess.ToolTip"];
@@ -1782,15 +1497,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                     {
                         switch (buySellDocStateEnum)
                         {
-                            //case BuySellDocStateENUM.New:
-                            //case BuySellDocStateENUM.Closed:
-                            //case BuySellDocStateENUM.BackOrdered:
-                            //case BuySellDocStateENUM.Quotation:
-                            //case BuySellDocStateENUM.Credit:
-                            //    throw new NotImplementedException();
-
-                            //case BuySellDocStateENUM.Canceled:
-                            //    break;
 
                             case BuySellDocStateENUM.InProccess:
                                 content = ConfigurationManager.AppSettings["menu.person.Salesman.InProccess.ToolTip"];
@@ -1876,16 +1582,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
                         switch (buySellDocStateEnum)
                         {
-                            //case BuySellDocStateENUM.New:
-                            //case BuySellDocStateENUM.Closed:
-                            //case BuySellDocStateENUM.BackOrdered:
-                            //case BuySellDocStateENUM.Quotation:
-                            //case BuySellDocStateENUM.Credit:
-                            //    throw new NotImplementedException();
-
-                            //case BuySellDocStateENUM.Canceled:
-                            //    break;
-
                             case BuySellDocStateENUM.InProccess:
                                 content = ConfigurationManager.AppSettings["menu.system.SaleOrders.InProccess.ToolTip"];
                                 break;
@@ -1956,16 +1652,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                     {
                         switch (buySellDocStateEnum)
                         {
-                            //case BuySellDocStateENUM.New:
-                            //case BuySellDocStateENUM.Closed:
-                            //case BuySellDocStateENUM.BackOrdered:
-                            //case BuySellDocStateENUM.Quotation:
-                            //case BuySellDocStateENUM.Credit:
-                            //    throw new NotImplementedException();
-
-                            //case BuySellDocStateENUM.Canceled:
-                            //    break;
-
                             case BuySellDocStateENUM.InProccess:
                                 content = ConfigurationManager.AppSettings["menu.system.PurchaseOrders.InProccess.ToolTip"];
                                 break;
@@ -2029,15 +1715,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                     {
                         switch (buySellDocStateEnum)
                         {
-                            //case BuySellDocStateENUM.New:
-                            //case BuySellDocStateENUM.Closed:
-                            //case BuySellDocStateENUM.BackOrdered:
-                            //case BuySellDocStateENUM.Quotation:
-                            //case BuySellDocStateENUM.Credit:
-                            //    throw new NotImplementedException();
-
-                            //case BuySellDocStateENUM.Canceled:
-                            //    break;
 
                             case BuySellDocStateENUM.InProccess:
                                 content = ConfigurationManager.AppSettings["menu.system.Salesman.InProccess.ToolTip"];
@@ -2102,15 +1779,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                     {
                         switch (buySellDocStateEnum)
                         {
-                            //case BuySellDocStateENUM.New:
-                            //case BuySellDocStateENUM.Closed:
-                            //case BuySellDocStateENUM.BackOrdered:
-                            //case BuySellDocStateENUM.Quotation:
-                            //case BuySellDocStateENUM.Credit:
-                            //    throw new NotImplementedException();
-
-                            //case BuySellDocStateENUM.Canceled:
-                            //    break;
 
                             case BuySellDocStateENUM.InProccess:
                                 content = ConfigurationManager.AppSettings["menu.system.Salesman.InProccess.ToolTip"];
@@ -2199,15 +1867,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
                         switch (buySellDocStateEnum)
                         {
-                            //case BuySellDocStateENUM.New:
-                            //case BuySellDocStateENUM.Closed:
-                            //case BuySellDocStateENUM.BackOrdered:
-                            //case BuySellDocStateENUM.Quotation:
-                            //case BuySellDocStateENUM.Credit:
-                            //    throw new NotImplementedException();
-
-                            //case BuySellDocStateENUM.Canceled:
-                            //    break;
 
                             case BuySellDocStateENUM.InProccess:
                                 content = ConfigurationManager.AppSettings["menu.person.SaleOrders.InProccess.MenuItem"];
@@ -2922,13 +2581,13 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
         public decimal GetPercentFreightToTotalInvoice(decimal totalPaymentAmount)
         {
-            if (Freight_Accepted == 0)
+            if (Freight_Accepted_Refundable == 0)
                 return 0;
-            if (TotalInvoice == 0)
+            if (TotalInvoice_Refundable == 0)
                 return 0;
             if (totalPaymentAmount == 0)
                 return 0;
-            decimal pct = totalPaymentAmount / TotalInvoice;
+            decimal pct = totalPaymentAmount / TotalInvoice_Refundable;
             return pct;
         }
 
@@ -3003,6 +2662,8 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
         public bool IsCashAvailableTo_Owner()
         {
+            if (BuySellDocStateEnum == BuySellDocStateENUM.OptedOutOfSystem)
+                return true;
 
             if (BuySellDocStateEnum == BuySellDocStateENUM.Rejected)
                 return true;
@@ -3017,38 +2678,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
 
         }
-
-
-        //public bool IsCashFromDocAvailableCalculator(int cashBackGuaranteeNoOfDays)
-        //{
-        //    if (BuySellDocStateEnum == BuySellDocStateENUM.Problem)
-        //        return false;
-
-        //    if (BuySellDocStateEnum == BuySellDocStateENUM.RequestUnconfirmed)
-        //        return true;
-
-        //    if (BuySellDocStateEnum != BuySellDocStateENUM.Delivered)
-        //        return false;
-
-
-        //    int cashBackNoOfDays = cashBackGuaranteeNoOfDays * (-1);
-        //    string err = string.Format("Delivered order date is null for {0}", FullName());
-        //    OrderDelivered.Date.IsNullThrowException(err);
-
-        //    //get the date of the record and see if the window is passed
-        //    DateTime dateOfDelivery = OrderDelivered.Date_NotNull_Min;
-
-        //    DateParameter dp = new DateParameter();
-        //    dp.BeginDate = DateTime.Now.AddDays(cashBackNoOfDays);
-        //    dp.EndDate = dateOfDelivery;
-
-        //    if (dp.BeginDateBeforeEndDate)
-        //        return true;
-
-        //    return false;
-
-        //}
-
 
         public static int GetMoneyBackGuaranteeNumberOfDays()
         {
@@ -3070,19 +2699,37 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
         }
 
-        public decimal Get_Maximum_Commission_Chargeable_On_TotalSaleLessFreight_Based_On_TotalSale_Percent()
+        //public decimal Get_Maximum_Commission_Chargeable_On_TotalSaleLessFreight_Based_On_TotalSale_Percent()
+        //{
+        //    decimal commissionPct = Total_Commission_Product_Percent_Expected();
+        //    return commissionPct;
+
+
+        //}
+
+
+
+        public static decimal Get_Opt_Out_Fee()
         {
-            decimal commissionPct = SalesCommissionClass.TotalCommissionOnSaleWithoutFreight_Percent();
-            return commissionPct;
+            string optOutFeeStr = ConfigurationManager.AppSettings["Sale.Opt_Out_Fee.Amount"];
+            decimal optOutAmount = optOutFeeStr.ToDecimal();
 
-
+            return optOutAmount;
         }
 
-        public decimal Get_Maximum_Commission_Chargeable_On_Freight_TO_SalesPeople_And_System_Percent()
+        public static decimal Seller_Minimum_Balance_Amount_To_Accept_Sales()
         {
-            decimal ttlComm = SalesCommissionClass.TotalCommissionOnFreight_Precent();
-            return ttlComm;
+            string minBalanceStr = ConfigurationManager.AppSettings["sale.minimum_balance.amount"];
+            decimal minBalance = minBalanceStr.ToDecimal();
 
+            return minBalance;
+        }
+        public static decimal Payment_For_Full_Address()
+        {
+            string minBalanceStr = ConfigurationManager.AppSettings["payment_to_see_full_address.amount"];
+            decimal minBalance = minBalanceStr.ToDecimal();
+
+            return minBalance;
         }
     }
 }

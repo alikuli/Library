@@ -23,8 +23,9 @@ namespace MarketPlace.Web6
                 "~/Scripts/MyScripts/_ProductScripts.js",
                 "~/Scripts/MyScripts/_GetInfoFromAddressD",
                 "~/Scripts/MyScripts/_GetInfoFromAddressDropDownList.js",
-                "~/Scripts/bootstrap-datepicker/bootstrap-datepicker.js"
-                ));
+                "~/Scripts/bootstrap-datepicker/bootstrap-datepicker.js",
+                "~/Scripts/bootstrap-input-spinner-master/src/bootstrap-input-spinner.js"));
+            //https://github.com/shaack/bootstrap-input-spinner
 
 
             bundles.Add(new ScriptBundle("~/Scripts/notifyNS/notify").Include(
@@ -108,7 +109,7 @@ namespace MarketPlace.Web6
                       "~/Content/bootstrap-theme.css",
                       "~/Content/PrintStyleSheet.css",
                       "~/Content/bootstrap-datepicker/dist/bootstrap-datepicker.min.css",
-                      "~/Content/myCss1.css"));
+                      "~/Content/myCss.css"));
 
 
             bundles.Add(new StyleBundle("~/Content/css/FileinputCSS").Include(

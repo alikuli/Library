@@ -1,6 +1,8 @@
-﻿using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
+﻿using AliKuli.Extentions;
+using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
@@ -11,25 +13,24 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
     public abstract partial class ProductAbstract
     {
 
-        /// <summary>
-        /// These are all the list of Item Numbers the product can have. You must have at least one
-        /// </summary>
-        //public virtual ICollection<ProductIdentifier> ItemNos { get; set; }
 
-
-
-
-        //[Display(Name = "Parent")]
-
-        //public string ParentId { get; set; }
-
-        //[Display(Name = "Parent")]
-        //public virtual Product Parent { get; set; }
-
-
-        //public virtual ICollection<Product> ParentChildren { get; set; }
 
         public virtual ICollection<LikeUnlike> LikeUnlikes { get; set; }
+
+
+        [NotMapped]
+        public List<LikeUnlike> LikeUnlikes_Fixed
+        {
+            get
+            {
+                if (LikeUnlikes.IsNullOrEmpty())
+                    return new List<LikeUnlike>();
+
+                List<LikeUnlike> lst = LikeUnlikes.Where(x => x.MetaData.IsDeleted == false).ToList();
+                return lst;
+            }
+        }
+
 
 
 

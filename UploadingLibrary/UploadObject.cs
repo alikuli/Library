@@ -1,5 +1,6 @@
 ﻿using AliKuli.ConstantsNS;
 using AliKuli.Extentions;
+using AliKuli.ToolsNS;
 using ErrorHandlerLibrary.ExceptionsNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System;
@@ -39,13 +40,34 @@ namespace AliKuli.UtilitiesNS
             SaveFilesInHttpPostedFileBase();
         }
 
+        HttpPostedFileBase File { get; set; }
+        int noOfTrys = 0;
 
-        //public UploadObject()
-        //    : this()
-        //{
-        //    RelativePathInWebSite = saveToLocationConst;
+        public void SaveFileToSystem(HttpPostedFileBase file, string relativePathWithName)
+        {
+            string absolutePath = UploadedFile.GetAbsolutePath(relativePathWithName);
+            try
+            {
+                WebImage img = new WebImage(file.InputStream);
+                img = img.Resize(200, 200, true, true);
 
-        //}
+                img.Save(absolutePath);
+                //file.SaveAs(absolutePath);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                if (noOfTrys > 3)
+                    throw new Exception("Unable to create directory " + UploadedFile.AbsolutePathWithFileName(absolutePath, relativePathWithName));
+
+                //create the directory
+                FileTools.CreateDirectory(UploadedFile.GetAbsolutePath(relativePathWithName));
+                noOfTrys += 1;
+                SaveFileToSystem(file, relativePathWithName);
+            }
+
+        }
+
+
 
         HttpPostedFileBase[] _httpPostedFileBase;
         public HttpPostedFileBase[] HttpPostedFile
@@ -115,25 +137,10 @@ namespace AliKuli.UtilitiesNS
             {
                 for (int i = 0; i < noOfFiles; i++)
                 {
+                    //this saves the file into the system
                     UploadedFile uf = new UploadedFile(HttpPostedFile[i], RelativePathInWebSite);
+                    SaveFileToSystem(HttpPostedFile[i], uf.GetRelativePathWithFileName());
 
-                    long maxSizeallowed = 0;
-                    bool success = long.TryParse(MyConstants.MAX_UPLOAD_SIZE_ALLOWED_IN_BYTES, out maxSizeallowed);
-
-                    if (!success)
-                    {
-                        ErrorSet.Add(string.Format("Unable to parse MAX_UPLOAD_SIZE_ALLOWED_IN_BYTES. Current value is '{0:N2}'", MyConstants.MAX_UPLOAD_SIZE_ALLOWED_IN_BYTES), MethodBase.GetCurrentMethod());
-                        throw new Exception(ErrorSet.ToString());
-                    }
-
-                    if (HttpPostedFile[i].ContentLength > maxSizeallowed)
-                    {
-                        ErrorSet.AddMessage(string.Format("File '{0}' is bigger than the max size allowed ({1}), this file size is {2:N2} bytes. This file was skipped.",
-                            HttpPostedFile[i].FileName,
-                            maxSizeallowed,
-                            HttpPostedFile[i].ContentLength));
-                        continue;
-                    }
                     FileList.Add(uf);
                 }
             }
@@ -198,7 +205,7 @@ namespace AliKuli.UtilitiesNS
                         _locationConst = _locationConst.Substring(1);
                     }
 
-                    string savePath = Path.Combine(MyConstants.SAVE_ROOT_DIRECTORY,_locationConst);
+                    string savePath = Path.Combine(MyConstants.SAVE_ROOT_DIRECTORY, _locationConst);
                     _relativePath = savePath;
 
                 }

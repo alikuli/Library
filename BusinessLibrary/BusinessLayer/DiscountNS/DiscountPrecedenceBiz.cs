@@ -18,14 +18,18 @@ namespace UowLibrary.DiscountPrecedenceNS
         }
 
 
-
+        /// <summary>
+        /// I changed from CreateSimple to Create... there may be a mess here,
+        /// </summary>
+        /// <param name="parm"></param>
         public override void CreateSimple(ControllerCreateEditParameter parm)
         {
             DiscountPrecedence dp = parm.Entity as DiscountPrecedence;
             if (dp.DiscountRuleEnum == DiscountRuleENUM.Unknown || dp.DiscountTypeEnum == DiscountTypeENUM.Unknown)
                 return;
 
-            base.CreateSimple(parm);
+
+            base.Create(parm);
         }
 
 

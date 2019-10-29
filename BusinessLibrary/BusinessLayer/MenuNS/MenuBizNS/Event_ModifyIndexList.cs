@@ -1,11 +1,13 @@
 ﻿using AliKuli.Extentions;
 using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.IndexNS.PlaceLocationNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
+using System.Linq;
 using UowLibrary.MenuNS.MenuStateNS;
 
 namespace UowLibrary.MenuNS
@@ -45,7 +47,9 @@ namespace UowLibrary.MenuNS
             }
 
 
-
+            //indexListVM.MainLocationSelectorClass = new MainLocationSelectorClass(addressBiz.FindAll().ToList());
+            indexListVM.MainLocationSelectorClass = new MainLocationSelectorClass();
+            indexListVM.MainLocationSelectorClass.AddCountries(addressBiz.FindAll().ToList());
         }
 
         //This supplies a dummy MenuPathMain for the Back to List in the Create.
@@ -56,30 +60,30 @@ namespace UowLibrary.MenuNS
             Product p = null;
             ProductChild pc = null;
 
-            switch (parm.Menu.MenuEnum)
+            switch (parm.MenuEnum)
             {
                 case EnumLibrary.EnumNS.MenuENUM.IndexMenuPath2:
                 case EnumLibrary.EnumNS.MenuENUM.IndexMenuPath3:
                 case EnumLibrary.EnumNS.MenuENUM.IndexMenuProduct:
 
-                    parm.Menu.MenuPathMainId.IsNullOrWhiteSpaceThrowException();
-                    string mpmId = parm.Menu.MenuPathMainId;
+                    parm.MenuPathMainId.IsNullOrWhiteSpaceThrowException();
+                    string mpmId = parm.MenuPathMainId;
                     mpm = Find(mpmId);
                     mpm.IsNullThrowException();
                     break;
 
                 case EnumLibrary.EnumNS.MenuENUM.IndexMenuProductChild:
 
-                    parm.Menu.ProductId.IsNullOrWhiteSpaceThrowException();
-                    string pId = parm.Menu.ProductId;
+                    parm.ProductId.IsNullOrWhiteSpaceThrowException();
+                    string pId = parm.ProductId;
                     p = ProductBiz.Find(pId);
                     p.IsNullThrowException();
                     break;
 
                 case EnumLibrary.EnumNS.MenuENUM.IndexMenuProductChildLandingPage:
 
-                    parm.Menu.ProductChildId.IsNullOrWhiteSpaceThrowException();
-                    string productChildId = parm.Menu.ProductChildId;
+                    parm.ProductChildId.IsNullOrWhiteSpaceThrowException();
+                    string productChildId = parm.ProductChildId;
                     pc = ProductChildBiz.Find(productChildId);
                     pc.IsNullThrowException();
 
@@ -104,7 +108,7 @@ namespace UowLibrary.MenuNS
                     break;
             }
 
-            MenuManager mm = new MenuManager(mpm, p, pc, parm.Menu.MenuEnum, parm.BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
+            MenuManager mm = new MenuManager(mpm, p, pc, parm.MenuEnum, parm.BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
             mm.BreadCrumbManager = parm.BreadCrumbManager;
             //mm.IndexMenuVariables.IsAdmin = UserBiz.IsAdmin(UserId);
 

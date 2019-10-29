@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
+using InterfacesLibrary.SharedNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.CashTrxNS;
 using ModelsClassLibrary.ModelsNS.CashNS.CashEncashmentTrxNS;
@@ -320,7 +321,7 @@ namespace MarketPlace.Web6.Controllers
             string userIdOfPayee = UserId;
             //check if payee is a bank
             bool isBank = BankBiz.IsBanker_User(userIdOfPayee);
-            
+
             decimal currBalance = 0;
             if (!SuperBiz.HasAvailableBalancePerson(cashPaymentModel, userIdOfPayee, isBank, out currBalance))
             {
@@ -671,7 +672,12 @@ namespace MarketPlace.Web6.Controllers
                 cashEncashmentTrx.NoOfTriesToEnterSecretNumber += 1;
                 if (cashEncashmentTrx.SecretNumber.Trim() != encashment.Code.Trim())
                 {
-                    CashEncashmentTrxBiz.UpdateAndSave(cashEncashmentTrx);
+                    ControllerCreateEditParameter parm = new ControllerCreateEditParameter();
+                    parm.Entity = cashEncashmentTrx as ICommonWithId;
+                    parm.GlobalObject = GlobalObject;
+
+
+                    CashEncashmentTrxBiz.UpdateAndSave(parm);
                     throw new Exception("The secret code does not match!");
 
                 }
@@ -682,7 +688,12 @@ namespace MarketPlace.Web6.Controllers
                 cashEncashmentTrx.SecretNumberEntered.Value = encashment.Code.Trim();
                 cashEncashmentTrx.SecretNumberEntered.SetToTodaysDate(UserName, UserId);
                 cashEncashmentTrx.ReceiversIdentificationCardNumber = encashment.IdentificationCardNumber;
-                CashEncashmentTrxBiz.UpdateAndSave(cashEncashmentTrx);
+
+                ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+                param.Entity = cashEncashmentTrx as ICommonWithId;
+                param.GlobalObject = GlobalObject;
+
+                CashEncashmentTrxBiz.UpdateAndSave(param);
 
                 return View("Encashment_Code_Accepted", cashEncashmentTrx);
             }

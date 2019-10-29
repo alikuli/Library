@@ -33,6 +33,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Azure|AnyCPU'">
+    <OutputPath>bin\Azure\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Azure2|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Azure2\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -205,9 +223,15 @@
     <Compile Include="InterfacesNS\SharedNS\CommonNS\ICommonNoId.cs" />
     <Compile Include="InterfacesNS\SharedNS\IEntity.cs" />
     <Compile Include="InterfacesNS\SharedNS\FeaturesNS\IHasUser.cs" />
+    <Compile Include="ModelsNS\AddressNS\AddressMainNS\addressJS.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocHistoryNS\BuySellDocHistory.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\BuySellDocNS\Payments.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocNS\DeliverymanStuff.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\BuySellDocNS\IContainBuySellViewState.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\BuySellDocNS\Commissions.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocNS\UpdatePropertiesDuringModify.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\PurchaseNS\015BuySellDocViewState_OptedOutOfSystem_Purchase.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\SalesmanNS\015BuySellDocViewState_OptedOutOfSystem_Salesman.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\SalesmanNS\0BuySellDocViewState_RequestUnconfirmed_Salesman.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\SalesmanNS\1BuySellDocViewState_RequestConfirmed_Salesman.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\SalesmanNS\38BuySellDocViewState_BeingPreparedForShipmentBySellert_Salesman.cs" />
@@ -218,30 +242,52 @@
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\SalesmanNS\7BuySellDocViewState_Delivered_Salesman.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\SalesmanNS\8BuySellDocViewState_Problem_Salesman.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\SalesmanNS\9BuySellDocViewState_Rejected_Salesman.cs" />
-    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\DeliveryNS\Delivered_Delivery.cs" />
-    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\DeliveryNS\CourierComingToPickUp_Delivery.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\SellNS\015BuySellDocViewState_OptedOutOfSystem_Sale.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PenaltyTrxNS\DeliveryNS\Delivered_Delivery.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PenaltyTrxNS\DeliveryNS\CourierComingToPickUp_Delivery.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\IPenaltyClass.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PenaltyClass.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PenaltyController.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PenaltyFlatFile.cs" />
-    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PurchaseNS\CourierAcceptedByBuyerAndSeller_Purchase.cs" />
-    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PurchaseNS\Delivered_Purchase.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PenaltyTrxNS\PurchaseNS\CourierAcceptedByBuyerAndSeller_Purchase.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PenaltyTrxNS\PurchaseNS\Delivered_Purchase.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PenaltyTrxNS\PurchaseNS\OptOutOfSystem_Purchase.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PenaltyTrxNS\SaleNS\ToBuyShop_Sale.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\SellNS\BuySellOpt_Sale.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\SellNS\SeeAddress_Sale .cs" />
     <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\SellNS\CourierComingToPickUp_Sale.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\ShopCreateVM.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\userParameter.cs" />
+    <Compile Include="ModelsNS\CashNS\CashBalanceVM.cs" />
+    <Compile Include="ModelsNS\CashNS\CashDistributionEngine.cs" />
     <Compile Include="ModelsNS\CashNS\CashEncashmentTrxNS\Encashment_ForGettingCash.cs" />
     <Compile Include="ModelsNS\CashNS\CashTrxNS\CashGroupForFindingSalesman.cs" />
     <Compile Include="ModelsNS\CashNS\CashTrxNS\CashTrxVM2.cs" />
     <Compile Include="ModelsNS\CashNS\CommissionCalculator.cs" />
-    <Compile Include="ModelsNS\CashNS\PenaltyTrxNS\PenaltyTrx.cs" />
-    <Compile Include="ModelsNS\CashNS\PenaltyTrxNS\PenltyHeader.cs" />
-    <Compile Include="ModelsNS\CashNS\PenaltyTrxNS\PersonPayingPenalty.cs" />
-    <Compile Include="ModelsNS\CashNS\PenaltyTrxNS\PersonPayingPenaltyDetail.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PenaltyTrxNS\PenaltyTrx.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PenaltyTrxNS\PenltyHeader.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PenaltyTrxNS\PersonPayingPenalty.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\PenaltyNS\PenaltyTrxNS\PersonPayingPenaltyDetail.cs" />
+    <Compile Include="ModelsNS\IndexNS\PlaceLocationNS\3CityLocation.cs" />
+    <Compile Include="ModelsNS\IndexNS\PlaceLocationNS\1CountryLoction.cs" />
+    <Compile Include="ModelsNS\IndexNS\PlaceLocationNS\0MainLocationSelectorClass.cs" />
+    <Compile Include="ModelsNS\IndexNS\PlaceLocationNS\2StateLocation.cs" />
+    <Compile Include="ModelsNS\IndexNS\PlaceLocationNS\4TownLocation.cs" />
+    <Compile Include="ModelsNS\MenuNS\IHasMenuPaths.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\SalesmanNS\PersonServedBySalesmanWithTotalTrxAmountAdded.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\SalesmanNS\PersonServedBySalesman.cs" />
     <Compile Include="ModelsNS\PeopleNS\PlayersNS\SalesmanNS\PersonServedBySalesmanWithTotalTrxAmountAdded_Header.cs" />
+    <Compile Include="ModelsNS\ProductNS\ShopNS\ShopCreatedSuccessfullyVM.cs" />
+    <Compile Include="ModelsNS\ServiceRequestNS\ServiceRequest_StatePatternNS\IServiceRequestDetail.cs" />
     <Compile Include="ModelsNS\ServiceRequestNS\ServiceRequestHdrNS\IServiceRequestHdr.cs" />
+    <Compile Include="ModelsNS\ServiceRequestNS\ServiceRequest_StatePatternNS\ServiceRequestController.cs" />
+    <Compile Include="ModelsNS\ServiceRequestNS\ServiceRequest_StatePatternNS\ServiceRequestDetail_Aabstract.cs" />
     <Compile Include="ModelsNS\ServiceRequestNS\ServiceRequestHdrNS\ServiceRequestHdr.cs" />
-    <Compile Include="ModelsNS\ServiceRequestNS\ServiceRequestTrxNS\ServiceRequestTrx.cs" />
+    <Compile Include="ModelsNS\ServiceRequestNS\ServiceRequestHdrNS\ServiceRequestVM.cs" />
+    <Compile Include="ModelsNS\ServiceRequestNS\ServiceRequest_StatePatternNS\ServiceRequest_StatesNS\BecomeMailerState.cs" />
+    <Compile Include="ModelsNS\ServiceRequestNS\ServiceRequest_StatePatternNS\ServiceRequest_StatesNS\BecomeSellerState.cs" />
+    <Compile Include="ModelsNS\ServiceRequestNS\ServiceRequest_StatePatternNS\ServiceRequest_StatesNS\BecomeSalesmanState.cs" />
+    <Compile Include="ModelsNS\ServiceRequestNS\ServiceRequest_StatePatternNS\ServiceRequest_StatesNS\GetPhoneNumberState.cs" />
     <Compile Include="ModelsNS\SharedNS\Complex\BoolAndDaysDateAndByComplex.cs" />
     <Compile Include="ModelsNS\SharedNS\Complex\StringDateAndByComplex.cs" />
     <Compile Include="ModelsNS\SharedNS\Complex\CommissionComplex.cs" />
@@ -326,8 +372,8 @@
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\SellNS\9BuySellDocViewState_Rejected_Sale.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\SellNS\1BuySellDocViewState_RequestConfirmed_Sale.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\SellNS\0BuySellDocViewState_RequestUnconfirmed_Sale.cs" />
-    <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\PurchaseNS\0BuySellDocViewState_RequestUnconfirmed_Purchase.cs" />
-    <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\PurchaseNS\1BuySellDocViewState_RequestConfirmed_Purchase.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\PurchaseNS\00BuySellDocViewState_RequestUnconfirmed_Purchase.cs" />
+    <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\PurchaseNS\010BuySellDocViewState_RequestConfirmed_Purchase.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\PurchaseNS\39BuySellDocViewState_ReadyForPickup_Purchase.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\PurchaseNS\38BuySellDocViewState_BeingPreparedForShipmentBySellert_Purchase.cs" />
     <Compile Include="ModelsNS\BuySellDocNS\BuySellDocViewStateNS\PurchaseNS\5BuySellDocViewState_CourierComingToPickUp_Purchase.cs" />
@@ -351,7 +397,7 @@
     <Compile Include="ModelsNS\FeaturesNS\MenuFeatureNS\MenuFeatureModel.cs" />
     <Compile Include="ModelsNS\FeaturesNS\ProductFeatureNS\ProductFeatureModel.cs" />
     <Compile Include="ModelsNS\FeaturesNS\ProductFeaturesAbstract.cs" />
-    <Compile Include="ModelsNS\MenuNS\IMenuPath1.cs" />
+    <Compile Include="ModelsNS\MenuNS\IMenuPath.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\IconPropertiesNS\IconPropertiesExtended.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\MenuStateNS\IconPropertiesNS\IIconProperties.cs" />
     <Compile Include="ModelsNS\MenuNS\MenuManagerNS\UserMoneyAccountNS\UserMoneyAccountHelperClass.cs" />
@@ -409,7 +455,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ModelsNS\ProductNS\CheckBoxItemNS\CheckBoxListTree.cs" />
-    <Compile Include="ModelsNS\ProductNS\ProductNS\fullname.cs" />
     <Compile Include="ModelsNS\SharedNS\Complex\LonglWithDateComplex.cs" />
     <Compile Include="ModelsNS\SharedNS\Complex\SignatureComplex .cs" />
     <Compile Include="ModelsNS\SharedNS\Complex\BoolDateAndByComplexWithConfirmationCode.cs" />
@@ -499,7 +544,6 @@
     <Compile Include="ModelsNS\ProductNS\ProductChildNS\ProductChild.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\IProduct.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\IProductHasUploads.cs" />
-    <Compile Include="ModelsNS\ProductNS\ProductNS\ViewModelFunctions.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductAbstractNS\IProductAbstract.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductNS\UpdatePropertiesDuringModify.cs" />
     <Compile Include="ModelsNS\ProductNS\ProductAbstractNS\Dates.cs" />

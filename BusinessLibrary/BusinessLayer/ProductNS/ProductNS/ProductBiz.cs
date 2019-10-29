@@ -1,12 +1,8 @@
 ﻿using AliKuli.Extentions;
 using DalLibrary.Interfaces;
-using ModelsClassLibrary.ModelsNS.FeaturesNS;
-using ModelsClassLibrary.ModelsNS.FeaturesNS.MenuFeatureNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UowLibrary.FeatureNS.MenuFeatureNS;
 using UowLibrary.LikeUnlikeNS;
 using UowLibrary.MenuNS;
@@ -29,6 +25,7 @@ namespace UowLibrary.ProductNS
         ProductChildBiz _productChildBiz;
         LikeUnlikeBiz _likeUnlikeBiz;
         OwnerBiz _ownerBiz;
+        BizParameters _bizParameters;
         public ProductBiz(UserBiz userBiz, IRepositry<Product> entityDal, MyWorkClassesProduct myWorkClassesProduct, ProductChildBiz productChildBiz, BizParameters bizParameters, LikeUnlikeBiz likeUnlikeBiz, OwnerBiz ownerBiz)
             : base(entityDal, bizParameters)
         {
@@ -37,6 +34,7 @@ namespace UowLibrary.ProductNS
             _productChildBiz = productChildBiz;
             _likeUnlikeBiz = likeUnlikeBiz;
             _ownerBiz = ownerBiz;
+            _bizParameters = bizParameters;
         }
         public OwnerBiz OwnerBiz
         {
@@ -48,7 +46,13 @@ namespace UowLibrary.ProductNS
             }
         }
 
-
+        public BizParameters BizParameters
+        {
+            get
+            {
+                return _bizParameters;
+            }
+        }
         public LikeUnlikeBiz LikeUnlikeBiz
         {
             get
@@ -68,7 +72,7 @@ namespace UowLibrary.ProductNS
             }
         }
 
-        MyWorkClassesProduct MyWorkClassesProduct
+        public MyWorkClassesProduct MyWorkClassesProduct
         {
             get
             {

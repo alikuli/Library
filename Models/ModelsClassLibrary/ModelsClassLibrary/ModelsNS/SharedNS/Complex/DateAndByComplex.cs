@@ -60,12 +60,19 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
 
         //}
 
-        public void SetDateTo(string byUser, int noOfDays)
+        public void SetDateTo(string byUserName, string byUserId, int noOfDays)
         {
             Date = DateTime.UtcNow.AddDays(noOfDays);
-            By = byUser;
+            By = byUserName;
+            ByUserId = byUserId;
         }
 
+        public void SetDateTo(string byUserName, string byUserId, DateTime date)
+        {
+            Date = date;
+            By = byUserName;
+            ByUserId = byUserId;
+        }
         public void AddDate(DateTime date)
         {
             Date = date;

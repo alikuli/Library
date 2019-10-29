@@ -42,6 +42,8 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS
         /// This gets its value in _IndexMiddlePart - TiledPictures
         /// </summary>
         public bool IsProductChild { get; set; }
+        public bool IsProduct { get; set; }
+        public bool IsShop { get; set; }
         public override string ButtonDisableConditionally
         {
             get

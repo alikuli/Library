@@ -19,7 +19,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         //    }
         //}
 
-        public override bool OL_IsDeleteEnabled { get { return true; } }
+        //public override bool OL_IsDeleteEnabled { get { return true; } }
 
 
 
@@ -76,7 +76,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         //    }
         //}
 
-        public override bool OD_Hide_Save_Button { get { return true; } }
+        public override bool OD_Hide_System_Save_Button { get { return true; } }
 
 
         #endregion

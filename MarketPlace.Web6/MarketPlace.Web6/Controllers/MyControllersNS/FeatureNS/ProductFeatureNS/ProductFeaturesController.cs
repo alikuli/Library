@@ -135,14 +135,22 @@ namespace MarketPlace.Web6.Controllers
 
         public ActionResult CreateNewFeature(string productId, string returnUrl)
         {
-            productId.IsNullOrWhiteSpaceThrowArgumentException("productId");
-            returnUrl.IsNullOrWhiteSpaceThrowArgumentException("returnUrl");
+            try
+            {
+                productId.IsNullOrWhiteSpaceThrowArgumentException("productId");
+                returnUrl.IsNullOrWhiteSpaceThrowArgumentException("returnUrl");
 
-            CreateNewFeatureModel createNewFeatureModel = new CreateNewFeatureModel();
-            createNewFeatureModel.ParentId = productId;
-            createNewFeatureModel.ReturnUrl = returnUrl;
+                CreateNewFeatureModel createNewFeatureModel = new CreateNewFeatureModel();
+                createNewFeatureModel.ParentId = productId;
+                createNewFeatureModel.ReturnUrl = returnUrl;
 
-            return View(createNewFeatureModel);
+                return View(createNewFeatureModel);
+            }
+            catch (Exception ex)
+            {
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), ex);
+            }
+            return Redirect(returnUrl);
 
         }
         [HttpPost]

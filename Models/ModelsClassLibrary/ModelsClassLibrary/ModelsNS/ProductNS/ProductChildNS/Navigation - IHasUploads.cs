@@ -1,8 +1,8 @@
 ﻿using AliKuli.Extentions;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
-using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 {
@@ -10,6 +10,17 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
     {
         #region IHasUploads
         public virtual ICollection<UploadedFile> MiscFiles { get; set; }
+        public List<UploadedFile> MiscFiles_Fixed
+        {
+            get
+            {
+                if (MiscFiles.IsNullOrEmpty())
+                    return new List<UploadedFile>();
+
+                List<UploadedFile> miscFile = MiscFiles.Where(x => x.MetaData.IsDeleted == false).ToList();
+                return miscFile;
+            }
+        }
 
         public string MiscFilesLocation(string aName)
         {

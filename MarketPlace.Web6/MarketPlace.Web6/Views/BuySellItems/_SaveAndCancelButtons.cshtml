@@ -1,0 +1,32 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellItemNS.BuySellItem
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_DelyButton = Model.BuySellDocViewState;
+
+    bool show_SaveCancelButtons = viewState_DelyButton.OD_Show_Button_SaveButton;
+    bool enable_SaveCancelButtons = viewState_DelyButton.OD_Enable_Button_SaveButton;
+    string returnUrl = ViewBag.ReturnUrl_Edit as string;
+
+}
+
+
+
+
+@if (show_SaveCancelButtons)
+{
+    if (enable_SaveCancelButtons)
+    {
+        <button class="btn btn-lg btn-success m-1" type="submit">Save</button>
+        <a class="btn btn-lg btn-danger m-1" href="@returnUrl" role="button">Back To List</a>
+    }
+    else
+    {
+        <button class="btn btn-lg btn-success m-1" type="submit" disabled>Save</button>
+    <a class="btn btn-lg btn-danger m-1" href="@returnUrl" role="button">Back To List</a>
+
+    }
+
+}
+

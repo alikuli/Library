@@ -11,21 +11,24 @@
     string searchFor = Model.SearchFor;
     string menuPathmainId = Model.MenuManager.MenuState.MenuPathMainId;
     string selectedId = Model.SelectedId;
+    string createButtonAction = Model.MenuManager.MenuState.CreateButtonAction;
 
-    EnumLibrary.EnumNS.MenuENUM menuEnum = Model.MenuManager.MenuState.MenuEnum ;
+    EnumLibrary.EnumNS.MenuENUM menuEnum = Model.MenuManager.MenuState.MenuEnum;
     SortOrderENUM sortOrderEnum = Model.SortOrderEnum;
     bool showCreateButton = Model.MenuManager.MenuState.ShowCreateButton;
+    bool showCreateProductButton = Model.MenuManager.MenuState.ShowCreateProductButton;
+
     string createButtonText = Model.MenuManager.MenuState.CreateLink_Name;
 
     string returnUrl = Request.Url.PathAndQuery;
-    
-    if(!Model.MenuManager.ReturnUrl.IsNullOrWhiteSpace())
-         returnUrl = Model.MenuManager.ReturnUrl;
+
+    if (!Model.MenuManager.ReturnUrl.IsNullOrWhiteSpace())
+        returnUrl = Model.MenuManager.ReturnUrl;
 
     Model.MenuManager.BreadCrumbManager.Push(Model.MenuManager.MenuState.MenuDisplayName, returnUrl);
     string productId = Model.MenuManager.MenuState.ProductId;
-    
-    
+
+
 }
 
 
@@ -33,17 +36,17 @@
 
 
 
-    @*<p>
+@*<p>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     </p>*@
-    
 
-    @*This is the heading*@
+
+@*This is the heading*@
 
 
 <h2>
-    @Model.Heading.Main 
-    
+    @Model.Heading.Main
+
     @if (@Model.Heading.Small.IsNullOrWhiteSpace())
     {
 
@@ -56,10 +59,10 @@
 
 </h2>
 
-        @**********************************************************
-        This is where the error messages are displayed
-        **********************************************************@
-    @Html.Partial("_messages")
+@**********************************************************
+    This is where the error messages are displayed
+    **********************************************************@
+@Html.Partial("_messages")
 
 
 <div class="row">
@@ -68,192 +71,257 @@
     </div>
 
     <div class="col-xs-6 col-lg-6">
-            <div class="pull-right">
-                <h5>@Model.NoOfRecords 
-                    @if (!@Model.MenuManager.WebClicksCount.IsNullOrWhiteSpace())
-                    {
-                        <span class="text-danger">
-                            (@Model.MenuManager.WebClicksCount)
-                        </span>
-                    }
-                </h5>
-                
-            </div>
-        
+        <div class="pull-right">
+            <h5>
+                @Model.NoOfRecords
+            @if (!@Model.MenuManager.WebClicksCount.IsNullOrWhiteSpace())
+            {
+                <span class="text-danger">
+                    (@Model.MenuManager.WebClicksCount)
+                </span>
+            }
+        </h5>
+
     </div>
 
 </div>
 
+</div>
 
-<div >
-    <div class="panel-group ">
-        <div class="panel panel-info">
-            <div class="panel-heading ">
-                <div class="panel-title">
 
-                    <div class="row">
-                        <div class="col-xs-12 col-lg-3 ">
-                            <a data-toggle="collapse" href="#collapse1">
-                                <strong>
-                                    <small>@Model.Heading.SortOrderDescription.ToString().ToTitleSentance()</small>
-                                </strong>
-                            </a>
 
-                        </div>
-                        <div class="col-xs-12 col-lg-4 ">
-                            <div>
-                                @using (Html.BeginForm())
-                                {
-                                    //string isandForSearch = "";
+@using (Html.BeginForm(null, null, FormMethod.Get, new { id = "myform" }))
+{
+    <div>
+        <div class="panel-group ">
+            <div class="panel panel-info">
+                <div class="panel-heading ">
+                    <div class="panel-title">
+
+                        <div class="row">
+                            <div class="col-xs-12 col-lg-3 ">
+                                <a data-toggle="collapse" href="#collapse1">
+                                    <strong>
+                                        <small>@Model.Heading.SortOrderDescription.ToString().ToTitleSentance()</small>
+                                    </strong>
+                                </a>
+
+                            </div>
+                            <div class="col-xs-12 col-lg-4 ">
+                                <div>
+                                    @*@using (Html.BeginForm())
+                                        {*@
+
                                     <span>
-                                        @Html.TextBox("searchFor", @searchFor, new { @placeholder = "Search/Find", size = 12 })
+                                        @Html.TextBox("searchFor", @searchFor, new { @placeholder = "Search/Find", size = 30 })
                                         <button type="submit" class="btn btn-info btn-sm">
-                                            <span class="fas fa-search"> Search</span>
+                                            <img src="~/ContentMine/Icons/MagnifyingGlass.png" />
                                         </button>
 
                                     </span>
                                     <br />
                                     <div class="col-xs-4">
-                                        @Html.RadioButton("isandForSearch", "And",true, new { id = "IsAnd" })
+                                        @Html.RadioButton("isandForSearch", "And", true, new { id = "IsAnd" })
                                         <label for="IsAnd" data-toggle="tooltip" title="Use AND if you want both all the search words to be present"><span><span>And</span></span></label>
 
                                     </div>
                                     <div class="col-xs-4">
-                                        @Html.RadioButton("isandForSearch", "Or", false, new { id = "IsOr"})
-                                        <label for="IsOr" data-toggle ="tooltip"  title="Use OR if you want to find any occourance of any of the search words"><span><span>OR</span></span></label>
+                                        @Html.RadioButton("isandForSearch", "Or", false, new { id = "IsOr" })
+                                        <label for="IsOr" data-toggle="tooltip" title="Use OR if you want to find any occourance of any of the search words"><span><span>OR</span></span></label>
                                     </div>
-                                }
-                            </div>
+                                    @*}*@
+                                </div>
 
-
-                        </div>
-                        <div class="col-xs-6 col-lg-2">
-                            <div>
-                                @if (showCreateButton)
-                                {
-
-                                    <div>
-                                        @Html.ActionLink(createButtonText, "Create", @controllerNameForCreate, new { menuEnum = menuEnum, menuPathMainId = menuPathmainId, sortBy = sortOrderEnum, searchFor = searchFor, selectedId = selectedId, returnUrl = Request.Url.PathAndQuery, productId = productId }, new { @class = "text-danger btn btn-success btn-sm" })
-                                    </div>
-                                }
 
                             </div>
+                            <div class="col-xs-6 col-lg-2">
+                                <div>
+                                    @if (showCreateButton)
+                                    {
+
+                                        <div>
+                                            @Html.ActionLink(createButtonText, @createButtonAction, @controllerNameForCreate, new { menuEnum = menuEnum, menuPathMainId = menuPathmainId, sortBy = sortOrderEnum, searchFor = searchFor, selectedId = selectedId, returnUrl = Request.Url.PathAndQuery, productId = productId }, new { @class = "text-danger btn btn-success btn-sm m-1" })
+                                        </div>
+
+                                    }
+                                    @if (showCreateProductButton)
+                                    {
+                                        <div>
+                                            @Html.ActionLink("Create Product", "Create", "Products", new { menuEnum = menuEnum, menuPathMainId = menuPathmainId, sortBy = sortOrderEnum, searchFor = searchFor, selectedId = selectedId, returnUrl = Request.Url.PathAndQuery, productId = productId }, new { @class = "text-danger btn btn-info btn-sm m-1" })
+                                        </div>
+
+                                    }
+                                </div>
 
 
-                        </div>
-
-                        <div class="col-xs-6 col-lg-1 ">
-                            <div >
-                                @Html.ActionLink("Print", "Index", new { sortBy = sortOrderEnum, searchFor = searchFor, selectedId = selectedId, print = true, menuEnum = menuEnum  }, new { @class = "btn btn-danger btn-sm", target = "_blank" })
                             </div>
 
+                            <div class="col-xs-6 col-lg-1 ">
+                                <div>
+                                    @Html.ActionLink("Print", "Index", new { sortBy = sortOrderEnum, searchFor = searchFor, selectedId = selectedId, print = true, menuEnum = menuEnum }, new { @class = "btn btn-danger btn-sm", target = "_blank" })
+                                </div>
+
+
+                            </div>
 
                         </div>
-
                     </div>
                 </div>
-            </div>
 
 
 
-            <div id="collapse1" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <div class="row ">
-                        <div class="container">
+                <div id="collapse1" class="panel-collapse collapse">
+                    <div class="card-body">
+                        <div class="row ">
+                            <div class="container">
 
-                            <div class="col-sm-2 ">
-                                @Html.ActionLink(Model.SortOrder1_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item1_Asc, searchFor = searchFor, selectedId = selectedId, menuEnum = menuEnum  }, new { @class = "btn btn-primary" }) <br />
-                                @Html.ActionLink(Model.SortOrder1_Description_Dsc, "Index", new { sortBy = SortOrderENUM.Item1_Dsc, searchFor = searchFor, selectedId = selectedId, print = false, menuEnum = menuEnum }, new { @class = "btn btn-danger" })
+                                <div class="col-sm-2 ">
+                                    @Html.ActionLink(Model.SortOrder1_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item1_Asc, searchFor = searchFor, selectedId = selectedId, menuEnum = menuEnum }, new { @class = "btn btn-primary" }) <br />
+                                    @Html.ActionLink(Model.SortOrder1_Description_Dsc, "Index", new { sortBy = SortOrderENUM.Item1_Dsc, searchFor = searchFor, selectedId = selectedId, print = false, menuEnum = menuEnum }, new { @class = "btn btn-danger" })
+                                </div>
+
+                                <div class="col-sm-2 ">
+                                    @if (!Model.NameInput2.IsNullOrWhiteSpace())
+                                    {
+                                        <span>
+                                            @Html.ActionLink(Model.SortOrder2_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item2_Asc, searchFor = searchFor, selectedId = selectedId, menuEnum = menuEnum }, new { @class = "btn btn-primary" }) <br />
+                                            @Html.ActionLink(Model.SortOrder2_Description_Dsc, "Index", new { sortBy = SortOrderENUM.Item2_Dsc, searchFor = searchFor, selectedId = selectedId, menuEnum = menuEnum }, new { @class = "btn btn-danger" })
+                                        </span>
+                                    }
+                                </div>
+
+                                <div class="col-sm-2 ">
+                                    @if (!Model.NameInput3.IsNullOrWhiteSpace())
+                                    {
+                                        <span>
+                                            @Html.ActionLink(Model.SortOrder3_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item3_Asc, searchFor = searchFor, selectedId = selectedId, menuEnum = menuEnum }, new { @class = "btn btn-primary" }) <br />
+                                            @Html.ActionLink(Model.SortOrder3_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item3_Dsc, searchFor = searchFor, selectedId = selectedId, menuEnum = menuEnum }, new { @class = "btn btn-danger" })
+                                        </span>
+                                    }
+                                </div>
+
                             </div>
-
-                            <div class="col-sm-2 ">
-                                @if (!Model.NameInput2.IsNullOrWhiteSpace())
-                                {
-                                <span>
-                                    @Html.ActionLink(Model.SortOrder2_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item2_Asc, searchFor = searchFor, selectedId = selectedId, menuEnum = menuEnum }, new { @class = "btn btn-primary" }) <br />
-                                    @Html.ActionLink(Model.SortOrder2_Description_Dsc, "Index", new { sortBy = SortOrderENUM.Item2_Dsc, searchFor = searchFor, selectedId = selectedId, menuEnum = menuEnum }, new { @class = "btn btn-danger" })
-                                </span>
-                                }
-                            </div>
-
-                            <div class="col-sm-2 ">
-                                @if (!Model.NameInput3.IsNullOrWhiteSpace())
-                                {
-                                <span>
-                                    @Html.ActionLink(Model.SortOrder3_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item3_Asc, searchFor = searchFor, selectedId = selectedId, menuEnum = menuEnum  }, new { @class = "btn btn-primary" }) <br />
-                                    @Html.ActionLink(Model.SortOrder3_Description_Asc, "Index", new { sortBy = SortOrderENUM.Item3_Dsc, searchFor = searchFor, selectedId = selectedId, menuEnum = menuEnum  }, new { @class = "btn btn-danger" })
-                                </span>
-                                }
-                            </div>
-      
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="container" >
-    <a href="@Url.Content(@returnUrl)">Go Back</a>
+    <div class="container">
+        <a href="@Url.Content(@returnUrl)">Go Back</a>
 
-    <div class="flex-row align-content-center" >
-        @if (!Model.SortedAndFilteredData().IsNullOrEmpty())
-        {
+        <div class="row " id="body-row">
+            @if (!Model.MainLocationSelectorClass.IsNull())
+            {
+                <div id="menuCol" class="col-xs-12 col-md-3 background-ltgrey p-1">
 
-            if (Model.IsImageTiled)
-            {
-                @Html.Partial(@"ViewControls/index/_IndexMiddlePart - TiledPictures")
-            }
-            else
-            {
-                <div id="indexmiddlepart">
-                    @Html.Partial(@"ViewControls/index/_IndexMiddlePart")
+                    @Html.Partial("_AddressCheckBoxes")
                 </div>
+                @*<div id="btnCol" class="col-2  d-none">
+
+                    <button type="button" class="vh-100 btn btn-dark" onclick="showMenuCol();">Show</button>
+                </div>*@
+
             }
-        }
-        else
-        {
-            <h3>- No Data -</h3>
-        }
+            <div id="mainCol" class="col-md-9">
+                @*<div class="flex-row align-content-center">*@
+                <div id="ajaxResult">
+                    @if (!Model.SortedAndFilteredData().IsNullOrEmpty())
+                    {
 
+                        if (Model.IsImageTiled)
+                        {
+                            @Html.Partial(@"ViewControls/index/_IndexMiddlePart - TiledPictures")
+                        }
+                        else
+                        {
+                            <div id="indexmiddlepart">
+                                @Html.Partial(@"ViewControls/index/_IndexMiddlePart")
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <h3>- No Data -</h3>
+                    }
+
+                </div>
+
+                @*  </div> *@
+
+            </div>
+
+
+
+        </div>
+
+        <a href="@Url.Content(@returnUrl)">Go Back</a>
     </div>
-    <a href="@Url.Content(@returnUrl)">Go Back</a>
-</div>
 
+}
 
+@section styles{
 
-        @section styles{
+    <style>
+        /* CSS used here will be applied after bootstrap.css */
 
-            <style>
-                /* CSS used here will be applied after bootstrap.css */
-
-                body {
-                    padding-top: 50px;
-                }
-
-                .thumbnail {
-                    position: relative;
-                    overflow: hidden;
-                }
-
-                .caption {
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    background: rgba(90, 90, 90, 0.75);
-                    width: 100%;
-                    height: 100%;
-                    padding: 2%;
-                    display: none;
-                    text-align: left;
-                    font-size: 7pt;
-                    color: #fff !important;
-                    z-index: 2;
-                }
-            </style>
+        body {
+            padding-top: 50px;
         }
 
-    @section scripts{
-        <script src="~/Scripts/MyScripts/IndexScripts.js"></script>
-    }
+        .thumbnail {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .caption {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(90, 90, 90, 0.75);
+            width: 100%;
+            height: 100%;
+            padding: 2%;
+            display: none;
+            text-align: left;
+            font-size: 7pt;
+            color: #fff !important;
+            z-index: 2;
+        }
+    </style>
+}
+
+@section scripts{
+    <script src="~/Scripts/MyScripts/IndexScripts1.js"></script>
+
+    <script>
+        // Collapse click
+        $('[data-toggle=sidebar-colapse]').click(function () {
+            SidebarCollapse();
+        });
+
+        function SidebarCollapse() {
+            $('.menu-collapsed').toggleClass('d-none');
+            $('.sidebar-submenu').toggleClass('d-none');
+            $('.submenu-icon').toggleClass('d-none');
+            $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
+
+            // Treating d-flex/d-none on separators with title
+            var SeparatorTitle = $('.sidebar-separator-title');
+            if (SeparatorTitle.hasClass('d-flex')) {
+                SeparatorTitle.removeClass('d-flex');
+            } else {
+                SeparatorTitle.addClass('d-flex');
+            }
+
+            // Collapse/Expand icon
+            $('#collapse-icon').toggleClass('fa-angle-double-left fa-angle-double-right');
+        }
+
+    </script>
+
+
+
+}
+

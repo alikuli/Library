@@ -1,7 +1,7 @@
-﻿using EnumLibrary.EnumNS;
+﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
-using ModelsClassLibrary.ModelsNS;
 using ModelsClassLibrary.ModelsNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.GlobalCommentsNS;
 using ModelsClassLibrary.ModelsNS.LikeUnlikeNS;
@@ -9,12 +9,14 @@ using ModelsClassLibrary.ModelsNS.MenuNS;
 using ModelsClassLibrary.ModelsNS.MessageNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
+using System.Linq;
 
 namespace ModelsClassLibrary.MenuNS
 {
 
-    public class MenuPath2 : MenuPathAbstract, IHasUploads, IMenuPath
+    public class MenuPath2 : MenuPathAbstract, IHasUploads, IMenuPath, IHasMenuPaths
     {
         public override ClassesWithRightsENUM ClassNameForRights()
         {
@@ -34,6 +36,84 @@ namespace ModelsClassLibrary.MenuNS
         //public virtual ICollection<Feature> Features { get; set; }
         //public virtual ICollection<MenuPath2Feature> MenuPath2Features { get; set; }
 
+
+        [NotMapped]
+        public List<UploadedFile> MiscFiles_Fixed
+        {
+            get
+            {
+                if (MiscFiles.IsNullOrEmpty())
+                    return new List<UploadedFile>();
+
+                List<UploadedFile> miscFile = MiscFiles.Where(x => x.MetaData.IsDeleted == false).ToList();
+                return miscFile;
+            }
+        }
+        [NotMapped]
+        public List<MenuPathMain> MenuPathMains_Fixed
+        {
+            get
+            {
+                if (MenuPathMains.IsNullOrEmpty())
+                    return new List<MenuPathMain>();
+
+                List<MenuPathMain> lst = MenuPathMains.Where(x => x.MetaData.IsDeleted == false).ToList();
+                return lst;
+            }
+        }
+        [NotMapped]
+        public List<GlobalComment> GlobalComments_Fixed
+        {
+            get
+            {
+                if (GlobalComments.IsNullOrEmpty())
+                    return new List<GlobalComment>();
+
+                List<GlobalComment> lst = GlobalComments.Where(x => x.MetaData.IsDeleted == false).ToList();
+                return lst;
+            }
+        }
+        [NotMapped]
+        public List<LikeUnlike> LikeUnlikes_Fixed
+        {
+            get
+            {
+                if (LikeUnlikes.IsNullOrEmpty())
+                    return new List<LikeUnlike>();
+
+                List<LikeUnlike> lst = LikeUnlikes.Where(x => x.MetaData.IsDeleted == false).ToList();
+                return lst;
+            }
+        }
+        [NotMapped]
+        public List<Message> Messages_Fixed
+        {
+            get
+            {
+                if (Messages.IsNullOrEmpty())
+                    return new List<Message>();
+
+                List<Message> lst = Messages.Where(x => x.MetaData.IsDeleted == false).ToList();
+                return lst;
+            }
+        }
+        [NotMapped]
+        public List<MenuFeature> MenuFeatures_Fixed
+        {
+            get
+            {
+                if (MenuFeatures.IsNullOrEmpty())
+                    return new List<MenuFeature>();
+
+                List<MenuFeature> lst = MenuFeatures.Where(x => x.MetaData.IsDeleted == false).ToList();
+                return lst;
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public virtual ICollection<MenuFeature> MenuFeatures { get; set; }
 
         string IHasUploads.MiscFilesLocation(string aName)

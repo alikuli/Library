@@ -17,7 +17,7 @@ namespace UowLibrary.StateNS
             if (!state.Abbreviation.IsNullOrWhiteSpace())
                 state.Abbreviation = state.Abbreviation.ToUpper();
 
-            fixTheCountry(state);
+            //fixTheCountry(state);
         }
 
 

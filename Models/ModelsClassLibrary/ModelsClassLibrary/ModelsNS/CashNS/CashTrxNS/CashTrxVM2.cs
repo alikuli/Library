@@ -44,7 +44,13 @@ namespace ModelsClassLibrary.CashTrxNS
                 BuySellDocStateEnum.ToString().ToTitleSentance());
             return docNo;
         }
-
+        public bool HasValue
+        {
+            get
+            {
+                return !(ReceiptAmount == 0 && PaymentAmount == 0);
+            }
+        }
         public BuySellDocStateENUM BuySellDocStateEnum { get; set; }
         public Person FromPerson { get; set; }
         public Person ToPerson { get; set; }
@@ -197,7 +203,8 @@ namespace ModelsClassLibrary.CashTrxNS
                 foreach (var cashTrx in lst_CashTrx)
                 {
                     CashTrxVM2 cashTrxVM2 = cashTrx.ConvertToCashTrxVM2("(From Cash)", personIdForWhomWeAreWorking);
-                    lst_CashTrxVM2.Add(cashTrxVM2);
+                    if (cashTrxVM2.HasValue)
+                        lst_CashTrxVM2.Add(cashTrxVM2);
                 }
             }
             return lst_CashTrxVM2;

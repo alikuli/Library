@@ -121,6 +121,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                             update_Customer_Comment(bsd);
                             update_BillToAddress(bsd);
                             update_ShipToAddress(bsd);
+                            //update_Opt_Out_Of_System(bsd);
                             //update_CustomerBalanceRefundable(buySellDoc);
                             //update_InsuranceRequired(buySellDoc);
                             //update_OfferVariables(buySellDoc);
@@ -180,6 +181,19 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
 
 
         }
+
+        //private void update_Opt_Out_Of_System(BuySellDoc bsd)
+        //{
+            
+        //    if (bsd.OptedOutOfSystem.IsSelected)
+        //    {
+        //        //the user names will be added in the "Fix" section
+        //        //of the BusinessLayer
+        //        OptedOutOfSystem.MarkTrue("", "");
+
+        //    }
+
+        //}
 
 
         private void update_Customer_Comment(BuySellDoc buySellDoc)

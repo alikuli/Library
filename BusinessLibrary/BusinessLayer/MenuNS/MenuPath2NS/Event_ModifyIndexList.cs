@@ -39,7 +39,7 @@ namespace UowLibrary.MenuNS
             indexItem.MenuManager = new MenuManager(mpm, null, null, MenuENUM.EditMenuPath2, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
 
 
-            indexItem.MenuManager.PictureAddresses = GetPictureList(mp2);
+            indexItem.MenuManager.PictureAddresses = GetCurrItemsPictureList(mp2);
 
         }
     }

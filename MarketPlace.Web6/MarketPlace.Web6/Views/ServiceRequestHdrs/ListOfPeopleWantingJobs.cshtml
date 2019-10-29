@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ModelsClassLibrary.ModelsNS.SharedNS.DateStringStringBool>
+﻿@model IEnumerable< ModelsClassLibrary.ModelsNS.ServiceRequestNS.ServiceRequestHdrNS.ServiceRequestVM>
 
 @{
     ViewBag.Title = "ListOfPeopleWantingJobs";
@@ -21,23 +21,28 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Str1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Str2)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    @if (Model.IsNull())
+    { }
+    else
+    {
 
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Date
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.ServiceRequestTypeEnum.ToString().ToTitleSentance()
+                </td>
+                <td>
+                    @Html.ActionLink("Purchase Name", "AssignUserToServiceRequestHdr", new { serviceRequestHdrId = item.ServiceRequestHdrId }, new { @class = "btn btn-success" }) 
+                </td>
+            </tr>
+        }
+
+    }
 </table>

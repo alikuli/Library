@@ -16,6 +16,9 @@ using System.Linq;
 using System.Text;
 using UowLibrary.MenuNS.MenuStateNS;
 using UserModels;
+using ModelsClassLibrary.ModelsNS.IndexNS;
+using ModelsClassLibrary.ModelsNS.IndexNS.PlaceLocationNS;
+
 namespace ModelsClassLibrary.ViewModels
 {
     /// <summary>
@@ -29,13 +32,6 @@ namespace ModelsClassLibrary.ViewModels
 
         public IndexListVM()
         {
-            Data = new List<IndexItemVM>();
-            Heading = new Headings();
-            Show = new Show();
-                        //setup.
-            string stopWordsPath = AliKuli.ConstantsNS.MyConstants.STOP_WORDS_PATH;
-            _listOfStopWords = StringTools.GetStopWords(stopWordsPath);
-            _searchWords = getSearchWords();
 
 
         }
@@ -97,20 +93,24 @@ namespace ModelsClassLibrary.ViewModels
 
             PdfHeaderInfo = new ModelClassLibrary.MigraDocNS.PdfHeaderInfo(title, subject, author);
 
+
             //this points to the logo
             Logo = new Logo(logoaddress);
+            Data = new List<IndexItemVM>();
+            Show = new Show();
+            //setup.
+            string stopWordsPath = AliKuli.ConstantsNS.MyConstants.STOP_WORDS_PATH;
+            _listOfStopWords = StringTools.GetStopWords(stopWordsPath);
+            _searchWords = getSearchWords();
 
 
         }
-
-
+        /// <summary>
+        /// This holds a tree of address locations
+        /// </summary>
+        public MainLocationSelectorClass MainLocationSelectorClass { get; set; }
         public ApplicationUser User { get; set; }
-        //public void Load(ControllerIndexParams p)
-        //{
-        //    string webCompany = "";
-        //    initialize(p.Id, p.SortBy, p.SearchFor, p.SelectedId, p.DudEntity, webCompany, p.LogoAddress, p.UserId, p.UserName, p.IsAndForSearch, p.BreadCrumbManager, p.ActionNameEnum, p.LikeUnlikeCounter, p.IsMenu);
 
-        //}
 
         /// <summary>
         /// Note. This Id is dangerous. 
@@ -164,53 +164,6 @@ namespace ModelsClassLibrary.ViewModels
         }
         public Show Show { get; set; }
 
-        //public bool ShowEditDeleteAndCreate
-        //{
-        //    set
-        //    {
-        //        bool isTrue = value;
-
-        //        if (isTrue)
-        //        {
-        //            ShowEdit = true;
-        //            ShowDelete = true;
-        //            ShowCreate = true;
-        //        }
-        //    }
-        //}
-
-        //public void ShowMoveUpMoveDown(bool trueFalse)
-        //{
-        //    ShowMoveUp = trueFalse;
-        //    ShowMoveDown = trueFalse;
-        //    ShowMoveTop = trueFalse;
-        //    ShowMoveBottom = trueFalse;
-        //}
-
-        //#region Show ...
-        ////public bool ShowMoveTop { get; set; }
-        ////public bool ShowMoveBottom { get; set; }
-        ////public bool ShowMoveUp { get; set; }
-        ////public bool ShowMoveDown { get; set; }
-        /////// <summary>
-        /////// If true, then Edit shows
-        /////// </summary>
-        ////public bool ShowEdit { get; set; }
-
-        /////// <summary>
-        /////// If true then Delete shows. Remember this is also controlled by the
-        /////// AutoCreated in the CommonWithId. Both have to be true to allow delete.
-        /////// </summary>
-        ////public bool ShowDelete { get; set; }
-
-        ///// <summary>
-        ///// if true then create shows
-        /////// </summary>
-        ////public bool ShowCreate { get; set; }
-
-        ////public bool HideImageInList { get; set; }
-
-        //#endregion
         public string SearchFor { get; set; }
 
         private string[] listOfStopWords
@@ -668,6 +621,9 @@ namespace ModelsClassLibrary.ViewModels
 
         public void CreateSortOrderDescription(SortOrderENUM sortOrderEnum)
         {
+            if (Heading.IsNull())
+                Heading = new Headings();
+
             switch (sortOrderEnum)
             {
                 case SortOrderENUM.Item1_Asc:

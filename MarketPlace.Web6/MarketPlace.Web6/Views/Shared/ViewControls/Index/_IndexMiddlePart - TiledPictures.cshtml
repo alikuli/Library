@@ -5,7 +5,7 @@
 }
 
 
-<div class="akaFix">
+<div class="akaFix small ">
 
     @{
         Model.MenuManager.MenuState.ControllerCurrentName = this.ViewContext.RouteData.Values["controller"].ToString();
@@ -20,125 +20,158 @@
         menuVar.UserId = Model.UserId ?? "";
         menuVar.CommentUrl = "";
         menuVar.ShortNameOfProduct = "";
+        bool showCreateProductButton = Model.MenuManager.MenuState.ShowCreateProductButton;
 
         string returnUrl = Request.Url.OriginalString;
         string carouselName = "carousel";
         string carouselId = "";
         int carouselCount = 0;
+        string classForTiles = "";
+        
+        if (Model.MainLocationSelectorClass.IsNull())
+        {
+            classForTiles = "col-xl-3 col-lg-4 col-md-6 col-xsm-12  p-0";
+        }
+        else
+        {
+            classForTiles = "col-xl-3 col-lg-4 col-md-6 col-xsm-12 p-0";
+
+        }
+
     }
 
 
+    <div class="">
+        <div class="row">
 
 
-
-    @for (int i = 0; i < IndexItemArray.Length; i++)
+            @for (int i = 0; i < IndexItemArray.Length; i++)
     {
-        <div>
-            <!-- #region Initialization -->
-            @{
+                <div>
+                    <!-- #region Initialization -->
+                    @{
         //count = i;
         menuVar.Count = i;
         currIndexItemVM = IndexItemArray[i];
         menuVar.IdForEdit = IndexItemArray[i].Id;
         menuVar.MainMenuPath = "";
-        
+
         menuVar.MenuPath1Id = "";
         menuVar.MenuPath2Id = "";
         menuVar.MenuPath3Id = "";
         menuVar.ProductId = "";
         menuVar.ProductChildId = "";
         menuVar.MenuPathMainId = "";
-        
+
         menuVar.LikeIcon.Url = "";
         menuVar.LikeIcon.UrlCount = "";
         menuVar.UnLikeIcon.Url = "";
         menuVar.UnLikeIcon.UrlCount = "";
         menuVar.ShoppingCartIcon.Url = "";
         menuVar.HandPointingUrl = "";
+
+
         var itemMenuVar = IndexItemArray[i].MenuManager;
-   
+
         string shoppingCartToolTip = "To buy";
         string editIconToolTip = "Click here to edit this item";
         string flagToolTip = "Offended? Flag them!";
         string itemHeading = IndexItemArray[i].ShortName;
         string editAction = Url.Action("Edit", menuVar.EditController, new { id = menuVar.IdForEdit, returnUrl = returnUrl });
-        
-            }
+        string shopEditAction = Url.Action("EditShop", menuVar.EditController, new { productId = menuVar.IdForEdit, returnUrl = returnUrl });
+
+        string productId = "";
+                    }
 
 
-            <!-- #endregion -->
-            <!-- #region alert and short name initialization -->
-            @{
-                menuVar.ShortNameOfProduct = IndexItemArray[i].ShortName;
+                    <!-- #endregion -->
+                    <!-- #region alert and short name initialization -->
+                    @{
+        menuVar.ShortNameOfProduct = IndexItemArray[i].ShortName;
 
-                //this is for the table type of index
+        //this is for the table type of index
 
-                string alert = (@Model.SelectedIdMatchesThis(menuVar.IdForEdit) ? "alert-info " : " ");
-                string alertFont = (@Model.SelectedIdMatchesThis(menuVar.IdForEdit) ? " text-danger " : " ");
-            }
+        string alert = (@Model.SelectedIdMatchesThis(menuVar.IdForEdit) ? "alert-info " : " ");
+        string alertFont = (@Model.SelectedIdMatchesThis(menuVar.IdForEdit) ? " text-danger " : " ");
+        string originalMenuPath = "";
+                    }
 
 
-            @if (menuVar.Count % 2 == 0)
+                    @if (menuVar.Count % 2 == 0)
             {
                 alert += " background-ltgrey ";
             }
-            <!-- #endregion -->
-
-
-
-            <!-- #region if (Model.MenuManager.MenuState.IsMenu) -->
-            @if (Model.MenuManager.MenuState.IsMenu)
+                    <!-- #endregion -->
+                    <!-- #region if (Model.MenuManager.MenuState.IsMenu) -->
+                    @if (Model.MenuManager.MenuState.IsMenu)
             {
-                menuVar.MainMenuPath = Url.Action("index", menuVar.CurrController, new { id = menuVar.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu, returnUrl = @Request.Url.PathAndQuery });
+
+                //originalMenuPath = Url.Action("index", menuVar.CurrController, new { id = menuVar.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu, returnUrl = @Request.Url.PathAndQuery });
+                menuVar.MenuPathMainId = currIndexItemVM.Id;
+
 
                 switch (IndexItemArray[i].MenuManager.MenuState.MenuEnum)
                 {
 
                     case MenuENUM.IndexDefault:
 
+                        originalMenuPath = Url.Action("index", menuVar.CurrController, new { id = menuVar.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu /*, returnUrl = @Request.Url.PathAndQuery */, menuPathMainId = menuVar.MenuPathMainId, productId = productId });
                         break;
 
                     case MenuENUM.IndexMenuPath1:
 
                         //item is menuPathMain
-                        menuVar.MenuPathMainId = menuVar.IdForEdit;
                         menuVar.IdForEdit = IndexItemArray[i].MenuManager.MenuState.MenuPath1Id;
                         menuVar.MenuPath1Id = IndexItemArray[i].MenuManager.MenuState.MenuPath1Id;
+                        //menuVar.MainMenuPath = originalMenuPath;
+
+                        originalMenuPath = Url.Action("index", menuVar.CurrController, new { id = menuVar.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu /*, returnUrl = @Request.Url.PathAndQuery */, menuPathMainId = menuVar.MenuPathMainId, productId = productId });
                         break;
 
 
                     case MenuENUM.IndexMenuPath2:
                         //item is menuPathMain
-                        menuVar.MenuPathMainId = menuVar.IdForEdit;
                         menuVar.IdForEdit = IndexItemArray[i].MenuManager.MenuState.MenuPath2Id;
                         menuVar.MenuPath2Id = IndexItemArray[i].MenuManager.MenuState.MenuPath2Id;
+                        //menuVar.MainMenuPath = originalMenuPath;
+                        originalMenuPath = Url.Action("index", menuVar.CurrController, new { id = menuVar.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu /*, returnUrl = @Request.Url.PathAndQuery */, menuPathMainId = menuVar.MenuPathMainId, productId = productId });
+
                         break;
 
 
                     case MenuENUM.IndexMenuPath3:
                         //item is menuPathMain
-                        menuVar.MenuPathMainId = menuVar.IdForEdit;
                         menuVar.IdForEdit = IndexItemArray[i].MenuManager.MenuState.MenuPath3Id;
                         menuVar.MenuPath3Id = IndexItemArray[i].MenuManager.MenuState.MenuPath3Id;
+                        //menuVar.MainMenuPath = originalMenuPath;
+                        originalMenuPath = Url.Action("index", menuVar.CurrController, new { id = menuVar.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu /*, returnUrl = @Request.Url.PathAndQuery */, menuPathMainId = menuVar.MenuPathMainId, productId = productId });
+
                         break;
 
 
                     case MenuENUM.IndexMenuProduct:
                         //item is product
+                        menuVar.MenuPathMainId = "";
                         menuVar.IdForEdit = IndexItemArray[i].MenuManager.MenuState.ProductId;
                         menuVar.ProductId = IndexItemArray[i].MenuManager.MenuState.ProductId;
+                        productId = IndexItemArray[i].MenuManager.MenuState.ProductId;
+                        //menuVar.MainMenuPath = originalMenuPath;
+
+                        originalMenuPath = Url.Action("index", menuVar.CurrController, new { id = menuVar.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu/*, returnUrl = @Request.Url.PathAndQuery */, menuPathMainId = menuVar.MenuPathMainId, productId = productId });
+
                         break;
 
 
                     case MenuENUM.IndexMenuProductChild:
                         //item is productChild
+                        menuVar.MenuPathMainId = "";
                         menuVar.IdForEdit = IndexItemArray[i].MenuManager.MenuState.ProductChildId;
                         menuVar.ProductChildId = IndexItemArray[i].MenuManager.MenuState.ProductChildId;
 
-                        menuVar.MainMenuPath = Url.Action("ProductChildLandingPage", "ProductChilds", new { productChildId = menuVar.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu, returnUrl = returnUrl });
+                        originalMenuPath = Url.Action("ProductChildLandingPage", "ProductChilds", new { productChildId = menuVar.IdForEdit, menuEnum = Model.MenuManager.MenuState.NextMenu/*, returnUrl = @Request.Url.PathAndQuery */});
                         //this causes the shopping cart button to be active only for product child
                         itemMenuVar.IndexMenuVariables.ShoppingCartIcon.IsProductChild = true;
-                        
+
                         break;
 
 
@@ -146,6 +179,9 @@
                         break;
                 }
 
+
+
+                menuVar.MainMenuPath = originalMenuPath;
             }
             else
             {
@@ -154,21 +190,27 @@
                 if (currIndexItemVM.IsPickup)
                 {
                     //menuVar.MainMenuPath = Url.Action("GetDeliveryOrder", "BuySellDocs", new { id = currIndexItemVM.ParentId });
-                    menuVar.MainMenuPath = Url.Action("Edit", "BuySellDocs", new { id = currIndexItemVM.ParentId, returnUrl = Request.Url.PathAndQuery, buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Delivery });
-                    
+                    originalMenuPath = Url.Action("Edit", "BuySellDocs", new { id = currIndexItemVM.ParentId/*, returnUrl = @Request.Url.PathAndQuery */, buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Delivery });
+
                 }
                 else
                 {
-                    menuVar.MainMenuPath = editAction;
-                    
+                    originalMenuPath =editAction;
+                    //menuVar.MainMenuPath = editAction;
+
                 }
 
             }
+                    <span>
+                        @{
 
-            <!-- #endregion -->
-            <!-- #region if (Model.IsMenu) Like/Unlike/Finger Up Icons URLS -->
-            @*@if (Model.IsMenu)*@
-            @if (Model.MenuManager.MenuState.IsMenu)
+                        }
+                    </span>
+
+                    <!-- #endregion -->
+                    <!-- #region if (Model.IsMenu) Like/Unlike/Finger Up Icons URLS -->
+                    @*@if (Model.IsMenu)*@
+                    @if (Model.MenuManager.MenuState.IsMenu)
             {
                 menuVar.LikeIcon.Url = Url.Action("Like", "LikeUnlikes", new { menuPath1Id = menuVar.MenuPath1Id, menuPath2Id = menuVar.MenuPath2Id, menuPath3Id = menuVar.MenuPath3Id, productId = menuVar.ProductId, productChildId = menuVar.ProductChildId, userId = menuVar.UserId, isLike = true });
 
@@ -180,43 +222,95 @@
 
 
                 menuVar.MessageIcon.Url = Url.Action("SaleMessage", "Messages", new { menuPathMainId = menuVar.MenuPathMainId, productId = menuVar.ProductId, productChildId = menuVar.ProductChildId, returnUrl = returnUrl, messageEnum = MessageENUM.Paid, menuEnum = IndexItemArray[i].MenuManager.MenuState.MenuEnum });
-                
+
                 menuVar.CommentUrl = Url.Action("AddComment", "GlobalComments", new { menuPath1Id = menuVar.MenuPath1Id, menuPath2Id = menuVar.MenuPath2Id, menuPath3Id = menuVar.MenuPath3Id, productId = menuVar.ProductId, productChildId = menuVar.ProductChildId, userId = menuVar.UserId });
 
                 menuVar.ShoppingCartIcon.Url = Url.Action("BuyAjax", "BuySellDocs", new { productChildId = menuVar.ProductChildId }).ToString();
             }
 
 
-            <!-- #endregion -->
+                    <!-- #endregion -->
 
 
 
 
 
 
-        </div>
+                </div>
 
-        <div class="col-lg-3 col-md-6  p-0" >
+                <div class="@classForTiles">
 
-            <div class="border border-dark rounded text-center backgroundYellowOnHover m-1 " >
-                
-                @if (IndexItemArray[i].CompleteMenuPathViews == 0 && IndexItemArray[i].PictureViews == 0)
+                    <div class="border border-dark rounded text-center backgroundYellowOnHover m-1 ">
+
+
+                        @{
+                    string toolTipForHasProductForSale = string.Format("This means that there are {0:N0} items for sale and {1:N0} Shops", currIndexItemVM.NoOfItems, currIndexItemVM.NoOfShops);
+                    if (showCreateProductButton)
+                    {
+                        if (currIndexItemVM.NoOfItems == 1)
+                        {
+                            toolTipForHasProductForSale = string.Format("This means that there is {0:N0} items for sale", currIndexItemVM.NoOfItems);
+
+                        }
+                        else
+                        {
+                            toolTipForHasProductForSale = string.Format("This means that there are {0:N0} items for sale", currIndexItemVM.NoOfItems);
+                        }
+                    }
+                        }
+                        @if (@currIndexItemVM.HasProductsForSale == true)
+                {
+                        <div class="form-check-inline bg-success text-white mt-1 p-1 small" data-toggle="tooltip" title="@toolTipForHasProductForSale" data-placement="top">
+                            @*@Html.CheckBoxFor(c => currIndexItemVM.HasProductsForSale, htmlAttributes: new { disabled = "disabled" }) &nbsp*@
+                            @currIndexItemVM.NoOfItems.ToString("N0")
+                            @if(!showCreateProductButton)
+                        {
+                        <span>/@currIndexItemVM.NoOfShops.ToString("N0")</span>
+
+                        }
+
+
+                        </div>
+
+                }
+                else
+                {
+                    if (showCreateProductButton)
+                    {
+                        if(currIndexItemVM.IsShop)
+                        {
+                        <div class="bg-info text-white p-1">Shop</div>
+
+                            if (currIndexItemVM.IsShopAndOwnerOfShop)
+                            {
+                        <div class="bg-warning text-black p-1">Expires: @currIndexItemVM.ShopExpiresStr</div>
+
+                            }
+                        }
+                    }
+
+                }
+
+
+
+
+                        @if (IndexItemArray[i].CompleteMenuPathViews == 0 && IndexItemArray[i].PictureViews == 0)
                 {
 
                 }
                 else
                 {
-                    <small class="text-center">
-                        @string.Format("Menu Views {0:N0} / Picture Views {1:N0}", IndexItemArray[i].CompleteMenuPathViews, IndexItemArray[i].PictureViews) 
-                    </small>
+                        <small class="text-center">
+                            @string.Format("Menu Views {0:N0} / Picture Views {1:N0}", IndexItemArray[i].CompleteMenuPathViews, IndexItemArray[i].PictureViews)
+                        </small>
 
                 }
 
 
-                <h4>@itemHeading</h4>
+                        <h4>@itemHeading</h4>
 
 
-                @{
+                        @{
                     int pictureCount = 0;
                     List<string> picturesList = IndexItemArray[i].MenuManager.PictureAddresses.ToList();
                     string carouselItemClass = "carousel-item active";
@@ -224,32 +318,44 @@
                     carouselId = carouselName + carouselCount;
 
                     ModelsClassLibrary.ViewModels.IndexItemVM.GetMaxWidthHeightForCarousel(picturesList);
-                }
+                        }
 
-                <div class="">
-                    <div id="@carouselId" class="carousel slide" data-ride="carousel">
-                        <ul class="carousel-indicators">
-                            @for (int indicator = 0; indicator < picturesList.Count; indicator++)
+                        <div class="">
+                            <div id="@carouselId" class="carousel slide" data-ride="carousel">
+                                <ul class="carousel-indicators">
+                                    @for (int indicator = 0; indicator < picturesList.Count; indicator++)
                             {
                                 if (indicator != 0)
                                 {
                                     caouselIndicatorLiClass = "";
                                 }
-                                <li data-target="#@carouselId" data-slide-to="@indicator" class="@caouselIndicatorLiClass"></li>
+                                    <li data-target="#@carouselId" data-slide-to="@indicator" class="@caouselIndicatorLiClass"></li>
 
                             }
-                        </ul>
+                                </ul>
+                                @if(currIndexItemVM.IsTokenPaymentAccepted == true)
+                        {
+                                <div class="small bg-danger text-white text-center p-1 mb-1">
+                                    NonRefundable Tokens Accepted
+                                </div>
+                        }
 
+                                @if (currIndexItemVM.IsHidden == true)
+                        {
+                                <div class="small bg-warning text-black text-center p-1">
+                                    Hidden Product
+                                </div>
+                        }
 
-                        <div class="carousel-inner ">
-                            @foreach (var pictureAddy in picturesList)
+                                <div class="carousel-inner ">
+                                    @foreach (var pictureAddy in picturesList)
                             {
 
                                 string imageSrc = Url.Content(pictureAddy);
                                 string imageAlt = IndexItemArray[i].ShortName;
 
 
-                                string amount = IndexItemArray[i].Price == 0 ? "" :  IndexItemArray[i].Price.ToString().ToRuppeeFormat(); 
+                                string amount = IndexItemArray[i].Price == 0 ? "" : IndexItemArray[i].Price.ToString().ToRuppeeFormat();
 
                                 //string amount2ndLine = "Test";
                                 string amount2ndLine = IndexItemArray[i].Amount2ndLine;
@@ -263,106 +369,154 @@
                                     carouselItemClass = "carousel-item";
                                 }
 
-                                <div class="@carouselItemClass">
-                                    <a href="@menuVar.MainMenuPath" data-toggle="tooltip" title="@IndexItemArray[i].Description" data-placement="top" class="d-block h-100 text-center mb-0">
-                                        
-                                        <div class="container" style="height: 200px;" >
-                                            @if (imageWidth == "0")
+                                    <div class="@carouselItemClass">
+                                        <div class="container">
+                                            <div class="row justify-content-center">
+
+                                                @*the anchor*@
+                                                @*<a id="itemAnchor" href="@menuVar.MainMenuPath" data-toggle="tooltip" title="@IndexItemArray[i].Description" data-placement="top" class="d-block h-100 text-center mb-0" data-path="@originalMenuPath">*@
+                                                <button type="submit" data-toggle="tooltip" title="@IndexItemArray[i].Description" data-placement="top" class="myItem d-block h-100 text-center mb-0" data-path="@originalMenuPath">
+
+
+
+
+
+
+                                                    <div class="container p-1" style="height: 200px;">
+                                                        @if (currIndexItemVM.IsPictureLandscape(HttpContext.Current.Server.MapPath(pictureAddy)))
                                             {
-                                                <img src="@imageSrc" alt="@imageAlt" class=" img-fluid" @*style="height:100%;"*@>
+                                                    <img src="@imageSrc" alt="@imageAlt" class=" img-fluid w-100">
 
                                             }
                                             else
                                             {
-                                                <img src="@imageSrc" alt="@imageAlt" class="img-fluid" @*style="width:100%;"*@>
+                                                    <img src="@imageSrc" alt="@imageAlt" class=" img-fluid h-100">
 
                                             }
-                                        </div>
+                                                    </div>
 
-                                        <div class=" carousel-caption">
-                                            @if (!amount.IsNullOrWhiteSpace())
+                                                    <div class=" carousel-caption">
+                                                        @if (!amount.IsNullOrWhiteSpace())
                                             {
-                                                <strong>@amount</strong>
+                                                    <strong>@amount</strong>
                                             }
-                                            @if (!amount2ndLine.IsNullOrWhiteSpace())
+                                                        @if (!amount2ndLine.IsNullOrWhiteSpace())
                                             {
-                                                <p>@amount2ndLine</p>
+                                                    <p>@amount2ndLine</p>
 
                                             }
+                                                    </div>
+                                                </button>
+
+                                            </div>
                                         </div>
-                                    </a>
-                                </div>
-                                            pictureCount++;
+                                    </div>
+                                                    pictureCount++;
 
                             }
 
 
+                                </div>
+                                <a class="carousel-control-prev" href="#@carouselId" data-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                </a>
+                                <a class="carousel-control-next" href="#@carouselId" data-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                </a>
+
+                            </div>
                         </div>
-                        <a class="carousel-control-prev" href="#@carouselId" data-slide="prev">
-                            <span class="carousel-control-prev-icon"></span>
-                        </a>
-                        <a class="carousel-control-next" href="#@carouselId" data-slide="next">
-                            <span class="carousel-control-next-icon"></span>
-                        </a>
 
-                    </div>
-                </div>
-
-                @{
+                        @{
                     carouselCount++;
-                }
+                        }
 
 
 
-                @if (Model.IsMenu)                
+                        @if (Model.IsMenu)
                 {
                     if (itemMenuVar.IndexMenuVariables.ShoppingCartIcon.IsOwnerOfProductChild)
                     {
                         shoppingCartToolTip = "You are the owner. You can't buy this!";
                     }
                     <!-- #region User Icons -->
-                    <div class="m-1">
-                        
+                        <div class="m-1">
+
+
+
+
+
+
+
+
+
+                            @*==========================================================================================================*@
+                            @*this will be the shop edit button*@
+
+
+
+                            @if (currIndexItemVM.IsShopAndOwnerOfShop)
+            {
+                        <span data-toggle="tooltip" title="@editIconToolTip" data-placement="top">
+
+                            <button id="@menuVar.IconEditProductChild.Id"
+                                    class="@menuVar.IconEditProductChild.ButtonClass"
+                                    data-nameofproduct="@menuVar.ShortNameOfProduct"
+                                    data-url="@menuVar.IconEditProductChild.Url"
+                                    onclick="openPath('@shopEditAction')">
+                                <img src="~/ContentMine/Icons/Edit.png" />
+
+                            </button>
+                        </span>
+
+            }
+
+
+                        @*==========================================================================================================*@
+
+
+
+
                         @*This is the shopping cart*@
 
                         @if (itemMenuVar.IndexMenuVariables.ShoppingCartIcon.IsProductChild)
                         {
                             if (itemMenuVar.IndexMenuVariables.IconEditProductChild.IsOwnerOfProductChild)
                             {
-                                <span data-toggle="tooltip" title="@editIconToolTip" data-placement="top">
+                        <span data-toggle="tooltip" title="@editIconToolTip" data-placement="top">
 
-                                    <button id="@menuVar.IconEditProductChild.Id"
-                                            class="@menuVar.IconEditProductChild.ButtonClass"
-                                            data-nameofproduct="@menuVar.ShortNameOfProduct"
-                                            data-url="@menuVar.IconEditProductChild.Url"
-                                            onclick="openPath('@editAction')">
-                                        <img src="~/ContentMine/Icons/Edit.png" />
+                            <button id="@menuVar.IconEditProductChild.Id"
+                                    class="@menuVar.IconEditProductChild.ButtonClass"
+                                    data-nameofproduct="@menuVar.ShortNameOfProduct"
+                                    data-url="@menuVar.IconEditProductChild.Url"
+                                    onclick="openPath('@editAction')">
+                                <img src="~/ContentMine/Icons/Edit.png" />
 
-                                    </button>
-                                </span>
+                            </button>
+                        </span>
 
                             }
                             else
                             {
-                                <span data-toggle="tooltip" title="@shoppingCartToolTip" data-placement="top">
+                        <span data-toggle="tooltip" title="@shoppingCartToolTip" data-placement="top">
 
-                                    <button id="@menuVar.ShoppingCartIcon.Id"
-                                            class="@menuVar.ShoppingCartIcon.ButtonClass"
-                                            data-nameofproduct="@menuVar.ShortNameOfProduct"
-                                            data-url="@menuVar.ShoppingCartIcon.Url"
-                                            onclick="@menuVar.ShoppingCartIcon.OnClick"
-                                            @itemMenuVar.IndexMenuVariables.ShoppingCartIcon.ButtonDisableConditionally>
+                            <button id="@menuVar.ShoppingCartIcon.Id"
+                                    class="@menuVar.ShoppingCartIcon.ButtonClass"
+                                    data-nameofproduct="@menuVar.ShortNameOfProduct"
+                                    data-url="@menuVar.ShoppingCartIcon.Url"
+                                    onclick="@menuVar.ShoppingCartIcon.OnClick"
+                                    @itemMenuVar.IndexMenuVariables.ShoppingCartIcon.ButtonDisableConditionally>
 
-                                        <span id="@menuVar.ShoppingCartIcon.IdCount"
-                                              class="@menuVar.ShoppingCartIcon.BadgeClass">
+                                <span id="@menuVar.ShoppingCartIcon.IdCount"
+                                      class="@menuVar.ShoppingCartIcon.BadgeClass">
 
-                                            @menuVar.ShoppingCartIcon.CountIcon
-                                        </span>
-
-                                        <img src="~/ContentMine/Icons/ShoppingCartIcon.png" />
-
-                                    </button>
+                                    @menuVar.ShoppingCartIcon.CountIcon
                                 </span>
+
+                                <img src="~/ContentMine/Icons/ShoppingCartIcon.png" />
+
+                            </button>
+                        </span>
                             }
                         }
 
@@ -418,24 +572,24 @@
 
                         @*<span data-toggle="tooltip" title="I HATE it! Press button and tell us why?" data-placement="top">
 
-                            <a id="@menuVar.UnLikeIcon.Id"
-                               class="@menuVar.UnLikeIcon.AnchorButtonClassWithIcon"
-                               data-nameofproduct="@menuVar.ShortNameOfProduct"
-                               data-url="@menuVar.UnLikeIcon.Url"
-                               data-counturl="@menuVar.UnLikeIcon.UrlCount"
-                               data-toggle="modal"
-                               data-target="#mymodalnew"
-                               onclick="@menuVar.UnLikeIcon.OnClick">
+                                <a id="@menuVar.UnLikeIcon.Id"
+                                   class="@menuVar.UnLikeIcon.AnchorButtonClassWithIcon"
+                                   data-nameofproduct="@menuVar.ShortNameOfProduct"
+                                   data-url="@menuVar.UnLikeIcon.Url"
+                                   data-counturl="@menuVar.UnLikeIcon.UrlCount"
+                                   data-toggle="modal"
+                                   data-target="#mymodalnew"
+                                   onclick="@menuVar.UnLikeIcon.OnClick">
 
-                                <span id="@menuVar.UnLikeIcon.IdCount"
-                                      class="@menuVar.UnLikeIcon.BadgeClass">
+                                    <span id="@menuVar.UnLikeIcon.IdCount"
+                                          class="@menuVar.UnLikeIcon.BadgeClass">
 
 
-                                    @menuVar.UnLikeIcon.CountIcon
-                                </span>
+                                        @menuVar.UnLikeIcon.CountIcon
+                                    </span>
 
-                            </a>
-                        </span>*@
+                                </a>
+                            </span>*@
 
                         <span data-toggle="tooltip" title="I HATE it! Press button and tell us why?" data-placement="top">
 
@@ -464,23 +618,23 @@
 
 
                         @*<a id="@menuVar.CommentId"
-                           data-toggle="modal"
-                           href="#modalBoxId"
-                           data-url="@menuVar.CommentUrl"
-                           class="anchorButtons btn btn-xs btn-primary aria-label far fa-comment"
-                           onclick="LoadDataUrlInComment(this, document.getElementById('modalBoxId'))"></a>
+                               data-toggle="modal"
+                               href="#modalBoxId"
+                               data-url="@menuVar.CommentUrl"
+                               class="anchorButtons btn btn-xs btn-primary aria-label far fa-comment"
+                               onclick="LoadDataUrlInComment(this, document.getElementById('modalBoxId'))"></a>
 
-                        @{
+                            @{
 
-                            if (!IndexItemArray[i].MenuManager.IsNull())
-                            {
-                                if (!IndexItemArray[i].MenuManager.LikeUnlikesCounter.IsNull())
+                                if (!IndexItemArray[i].MenuManager.IsNull())
                                 {
-                                    //ADD THE MESSAGE ICON CODE HERE.
+                                    if (!IndexItemArray[i].MenuManager.LikeUnlikesCounter.IsNull())
+                                    {
+                                        //ADD THE MESSAGE ICON CODE HERE.
+                                    }
                                 }
-                            }
 
-                        }*@
+                            }*@
 
 
 
@@ -489,19 +643,19 @@
 
                         @*<span data-toggle="tooltip" title="Send messages." data-placement="top">
 
-                            <a id="@menuVar.MessageIcon.Id"
-                               class="@menuVar.MessageIcon.AnchorButtonClassWithIcon"
-                               data-nameofproduct="@menuVar.ShortNameOfProduct"
-                               data-counturl="@menuVar.MessageIcon.UrlCount"
-                               href="@menuVar.MessageIcon.Url">
+                                <a id="@menuVar.MessageIcon.Id"
+                                   class="@menuVar.MessageIcon.AnchorButtonClassWithIcon"
+                                   data-nameofproduct="@menuVar.ShortNameOfProduct"
+                                   data-counturl="@menuVar.MessageIcon.UrlCount"
+                                   href="@menuVar.MessageIcon.Url">
 
-                                <span id="@menuVar.MessageIcon.IdCount"
-                                      class="@menuVar.MessageIcon.BadgeClass">
-                                    @menuVar.MessageIcon.CountIcon
-                                </span>
+                                    <span id="@menuVar.MessageIcon.IdCount"
+                                          class="@menuVar.MessageIcon.BadgeClass">
+                                        @menuVar.MessageIcon.CountIcon
+                                    </span>
 
-                            </a>
-                        </span>*@
+                                </a>
+                            </span>*@
                         <span data-toggle="tooltip" title="Send messages." data-placement="top">
 
                             <button @*class="btn btn-sm btn-warning"*@
@@ -529,26 +683,26 @@
                         }
 
 
-                            <span data-toggle="tooltip" title="@flagToolTip" data-placement="top">
-                                <button id="@menuVar.FlagIcon.Id"
-                                        class="@menuVar.FlagIcon.ButtonClass"
-                                        data-nameofproduct="@menuVar.ShortNameOfProduct"
-                                        data-url="@menuVar.FlagIcon.Url"
-                                        onclick="@menuVar.FlagIcon.OnClick"
-                                        @menuVar.FlagIcon.ButtonDisableConditionally>
+                        <span data-toggle="tooltip" title="@flagToolTip" data-placement="top">
+                            <button id="@menuVar.FlagIcon.Id"
+                                    class="@menuVar.FlagIcon.ButtonClass"
+                                    data-nameofproduct="@menuVar.ShortNameOfProduct"
+                                    data-url="@menuVar.FlagIcon.Url"
+                                    onclick="@menuVar.FlagIcon.OnClick"
+                                    @menuVar.FlagIcon.ButtonDisableConditionally>
 
-                                    <span id="@menuVar.FlagIcon.IdCount"
-                                          class="@menuVar.FlagIcon.BadgeClass">
+                                <span id="@menuVar.FlagIcon.IdCount"
+                                      class="@menuVar.FlagIcon.BadgeClass">
 
-                                        @menuVar.FlagIcon.CountIcon
-                                    </span>
+                                    @menuVar.FlagIcon.CountIcon
+                                </span>
 
-                                    <img src="~/ContentMine/Icons/Flag.png" />
+                                <img src="~/ContentMine/Icons/Flag.png" />
 
-                                </button>
-                            </span>
+                            </button>
+                        </span>
 
-</div>
+                    </div>
             <!-- #endregion -->
 
 
@@ -558,28 +712,30 @@
                     if (menuVar.IsAdmin)
                     {
                         @*<div>
-                            <a id="@menuVar.ShoppingCartCountId"
-                               class="@menuVar.ClassWrench"
-                               data-nameofproduct="@menuVar.ShortNameOfProduct"
-                               data-url="@menuVar.UnLikeIcon.UrlCount"
-                               data-toggle="modal"
-                               data-target="#mymodalnew"
-                               onclick="">&nbsp;</a>
+                                <a id="@menuVar.ShoppingCartCountId"
+                                   class="@menuVar.ClassWrench"
+                                   data-nameofproduct="@menuVar.ShortNameOfProduct"
+                                   data-url="@menuVar.UnLikeIcon.UrlCount"
+                                   data-toggle="modal"
+                                   data-target="#mymodalnew"
+                                   onclick="">&nbsp;</a>
 
 
 
 
-                            <a id="@menuVar.CommentCountId" class="btn btn-xs aria-label disabled"></a>
-                        </div>*@
+                                <a id="@menuVar.CommentCountId" class="btn btn-xs aria-label disabled"></a>
+                            </div>*@
                     }
 
             <!-- #endregion -->
 
 
                 }
-            </div>
-        </div>
+                    </div>
+                </div>
     }
+        </div>
+    </div>
 </div>
 
 

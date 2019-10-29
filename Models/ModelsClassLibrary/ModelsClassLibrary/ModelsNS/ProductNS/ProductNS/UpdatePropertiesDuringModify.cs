@@ -43,17 +43,18 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
             //ProductFeatures = p.ProductFeatures;
 
             //ParentId = p.ParentId;
-
-            if (IsUnApproved)
+            if (OwnerId.IsNullOrWhiteSpace())
             {
-                IsUnApproved = p.IsUnApproved;
-                ApprovedBy = p.ApprovedBy;
+                if (IsUnApproved)
+                {
+                    IsUnApproved = p.IsUnApproved;
+                    ApprovedBy = p.ApprovedBy;
+                }
+                else
+                {
+                    IsUnApproved = true;
+                }
             }
-            else
-            {
-                IsUnApproved = true;
-            }
-
         }
 
     }

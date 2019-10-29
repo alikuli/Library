@@ -78,7 +78,7 @@ namespace MarketPlace.Web6.Controllers
         {
             try
             {
-                AddressBiz.IssueAddressVerificationRequest(avr);
+                AddressBiz.IssueAddressVerificationRequest(avr, GlobalObject);
                 return RedirectToAction("Index");
 
 
@@ -112,7 +112,7 @@ namespace MarketPlace.Web6.Controllers
         {
             try
             {
-                AddressBiz.VerifiyAddressCode(avnVM);
+                AddressBiz.VerifiyAddressCode(avnVM, GlobalObject);
             }
             catch (System.Exception e)
             {
@@ -140,7 +140,7 @@ namespace MarketPlace.Web6.Controllers
         {
             try
             {
-                AddressBiz.SetAllAddressesToNotVerified();
+                AddressBiz.SetAllAddressesToNotVerified(GlobalObject);
 
             }
             catch (System.Exception e)
@@ -160,7 +160,7 @@ namespace MarketPlace.Web6.Controllers
         {
             try
             {
-                await AddressBiz.ResetAddressVerificationComplete();
+                await AddressBiz.ResetAddressVerificationComplete(GlobalObject);
             }
             catch (System.Exception e)
             {
@@ -191,7 +191,7 @@ namespace MarketPlace.Web6.Controllers
             addressId.IsNullOrWhiteSpaceThrowArgumentException();
             try
             {
-                AddressBiz.UpdateAndSaveDefaultAddress(UserId, addressId);
+                AddressBiz.UpdateAndSaveDefaultAddress(UserId, addressId, GlobalObject);
                 ErrorsGlobal.MemorySave();
                 return RedirectToAction("Index", "Addresses", new
                 {
@@ -231,7 +231,7 @@ namespace MarketPlace.Web6.Controllers
             AddressMain addyMain = AddressBiz.Find(id);
             addyMain.IsNullThrowExceptionArgument();
             AddressStringWithNames addressString = addyMain.ToAddressComplex();
-            return Json(addressString,JsonRequestBehavior.DenyGet);
+            return Json(addressString, JsonRequestBehavior.DenyGet);
         }
 
     }

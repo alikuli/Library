@@ -21,13 +21,13 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
             }
         }
 
-        public override bool OL_IsDeleteEnabled
-        {
-            get
-            {
-                return true;
-            }
-        }
+        //public override bool OL_IsDeleteEnabled
+        //{
+        //    get
+        //    {
+        //        return true;
+        //    }
+        //}
 
         #endregion
 
@@ -74,13 +74,13 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
             }
         }
 
-        public override bool HD_OL_Button_Is_Delete_Enabled
-        {
-            get
-            {
-                return true;
-            }
-        }
+        //public override bool HD_OL_Button_Is_Delete_Enabled
+        //{
+        //    get
+        //    {
+        //        return true;
+        //    }
+        //}
 
         #endregion
 

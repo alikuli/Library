@@ -110,7 +110,7 @@ namespace MarketPlace.Web6.Controllers
         public SelectList SelectListInstructor { get; set; }
         public ActionResult ListOfPeopleWantingJobs()
         {
-            List<DateStringStringBool> lstOfppl = new List<DateStringStringBool>();
+            List<ServiceRequestVM> lstOfppl = new List<ServiceRequestVM>();
             try
             {
                 lstOfppl = SuperBiz.GetListOfPeopleWantingJobs();
@@ -125,6 +125,46 @@ namespace MarketPlace.Web6.Controllers
             return View(lstOfppl);
         }
 
+        public ActionResult PurchaseService(string serviceHeader, string returnUrl/*, BuySellDocStateModifierENUM buySellDocStateModifierEnum = BuySellDocStateModifierENUM.Unknown */)
+        {
+            throw new NotImplementedException();
+            //try
+            //{
+            //    buySellDocId.IsNullOrWhiteSpaceThrowArgumentException("Id");
+            //    returnUrl.IsNullOrWhiteSpaceThrowArgumentException("returnUrl");
+            //    text.IsNullOrWhiteSpaceThrowArgumentException("text");
+
+
+            //    if (buySellDocumentTypeEnum == BuySellDocumentTypeENUM.Unknown)
+            //        throw new Exception("buySellDocumentType unknown");
+
+
+            //    BuySellDoc buySellDoc = BuySellDocBiz.Find(buySellDocId);
+            //    buySellDoc.IsNullThrowException();
+            //    buySellDoc.BuySellDocumentTypeEnum = buySellDocumentTypeEnum;
+            //    buySellDoc.BuySellDocStateModifierEnum = buySellDocStateModifierEnum;
+            //    //get the penalty amounts
+            //    PersonPayingPenalty personPayingPenalty;
+            //    IPenaltyClass penaltyClass = PenaltyController.GetPenalty(buySellDoc, out personPayingPenalty);
+
+            //    if (!penaltyClass.IsNull())
+            //    {
+            //        text = penaltyClass.Text;
+            //    }
+            //    RejectCancelDeleteInbetweenClass rejectCancelDeleteInbetweenClass = new RejectCancelDeleteInbetweenClass(
+            //        returnUrl,
+            //        text,
+            //        buySellDoc,
+            //        GlobalObject);
+
+            //    return View(rejectCancelDeleteInbetweenClass);
+            //}
+            //catch (Exception ex)
+            //{
+            //    ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), ex);
+            //    return Redirect(returnUrl);
+            //}
+        }
 
         public override ActionResult Event_Edit_ViewAndSetupSelectList_GET(ControllerIndexParams parm)
         {
@@ -151,9 +191,9 @@ namespace MarketPlace.Web6.Controllers
             ServiceRequestHdr svh = ServiceRequestHdr.Unbox(parm.Entity);
             svh.SelectListPersonFrom = SuperBiz.PersonBiz.SelectList();
             svh.SelectListPersonTo = SuperBiz.PersonBiz.SelectList();
-
-
-
         }
+
+        public decimal AmountPaid { get; set; }
+        public decimal AmountReceived { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UowLibrary.PlayersNS.SalesmanCategoryNS;
+﻿using UowLibrary.MenuNS;
+using UowLibrary.PlayersNS.SalesmanCategoryNS;
 
 namespace UowLibrary.SuperLayerNS
 {
@@ -10,6 +11,9 @@ namespace UowLibrary.SuperLayerNS
         public void InitializeDb()
         {
             SalesmanCategoryBiz.InitializationData();
+            VehicalTypeBiz.VehicalTypeDefaultItems();
+            ProductBiz.InitializationData();
+            //ProductChildBiz.InitializationData();
         }
     }
 }

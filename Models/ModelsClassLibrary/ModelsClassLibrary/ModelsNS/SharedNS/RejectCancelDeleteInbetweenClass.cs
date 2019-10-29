@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModelsClassLibrary.ModelsNS.SharedNS
@@ -16,7 +17,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         {
 
         }
-        public RejectCancelDeleteInbetweenClass(string returnUrl, string text, BuySellDoc buySellDoc)
+        public RejectCancelDeleteInbetweenClass(string returnUrl, string text, BuySellDoc buySellDoc, GlobalObject globalObject)
         {
             ReturnUrl = returnUrl;
             Text = text;
@@ -25,6 +26,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             BuySellDocId = buySellDoc.Id;
             BuySellDocumentTypeEnum = buySellDoc.BuySellDocumentTypeEnum;
             BuySellDocStateModifierEnum = buySellDoc.BuySellDocStateModifierEnum;
+            GlobalObject = globalObject;
         }
 
 
@@ -59,7 +61,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         //        return heading;
         //    }
         //}
-
+        public GlobalObject GlobalObject { get; set; }
         public string BuySellDocId { get; set; }
         public BuySellDoc BuySellDoc { get; set; }
 

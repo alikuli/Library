@@ -50,11 +50,11 @@ namespace ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS.DeliverymanNS
         public override decimal GetAmountToBasePenaltyOn()
         {
 
-            if (BuySellDoc.Freight_Accepted == 0)
+            if (BuySellDoc.Freight_Accepted_Refundable == 0)
                 return 0;
 
 
-            return BuySellDoc.Freight_Accepted;
+            return BuySellDoc.Freight_Accepted_Refundable;
         }
 
         public override WhoPaysWhoENUM WhoPaysWhoEnum

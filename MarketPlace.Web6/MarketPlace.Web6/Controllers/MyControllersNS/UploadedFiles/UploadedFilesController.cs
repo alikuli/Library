@@ -1,5 +1,6 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.ToolsNS;
+using InterfacesLibrary.SharedNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
@@ -58,7 +59,14 @@ namespace MarketPlace.Web6.Controllers
             try
             {
                 upf.Name = newFileName;
-                Biz.UpdateAndSave(upf);
+
+                ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+                param.Entity = upf as ICommonWithId;
+                param.GlobalObject = GlobalObject;
+
+                Biz.UpdateAndSave(param);
+
+                //Biz.UpdateAndSave(upf);
 
             }
             catch (Exception e)

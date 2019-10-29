@@ -1,17 +1,20 @@
 ﻿using AliKuli.Extentions;
 using DalLibrary.Interfaces;
 using EnumLibrary.EnumNS;
+using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.VehicalTypeNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellItemNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FreightOffersTrxNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UowLibrary.AddressNS;
+using UowLibrary.BusinessLayer.ProductNS.ShopNS;
 using UowLibrary.FreightOffersTrxNS;
 using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS.CustomerNS;
@@ -32,7 +35,7 @@ namespace UowLibrary.BuySellDocNS
     {
         OwnerBiz _ownerBiz;
         CustomerBiz _customerBiz;
-        ProductBiz _productBiz;
+        ShopBiz _shopBiz;
         BuySellDocBiz _buySellBiz;
         BuySellItemBiz _buySellItemBiz;
         DeliverymanBiz _deliverymanBiz;
@@ -42,13 +45,12 @@ namespace UowLibrary.BuySellDocNS
         PeopleMessageBiz _peopleMessageBiz;
         SalesmanBiz _salesmanBiz;
         BuySellDocHistoryBiz _buySellDocHistoryBiz;
-
-        public BuySellDocBiz(IRepositry<BuySellDoc> entityDal, BuySellItemBiz buySellItemBiz, BizParameters bizParameters, OwnerBiz ownerBiz, CustomerBiz customerBiz, ProductBiz productBiz, DeliverymanBiz deliverymanBiz, FreightOfferTrxBiz freightOfferTrxBiz, VehicalTypeBiz vehicalTypeBiz, MessageBiz messageBiz, PeopleMessageBiz peopleMessageBiz, SalesmanBiz salesmanBiz, BuySellDocHistoryBiz buySellDocHistoryBiz)
+        public BuySellDocBiz(IRepositry<BuySellDoc> entityDal, BuySellItemBiz buySellItemBiz, BizParameters bizParameters, OwnerBiz ownerBiz, CustomerBiz customerBiz, ShopBiz shopBiz, DeliverymanBiz deliverymanBiz, FreightOfferTrxBiz freightOfferTrxBiz, VehicalTypeBiz vehicalTypeBiz, MessageBiz messageBiz, PeopleMessageBiz peopleMessageBiz, SalesmanBiz salesmanBiz, BuySellDocHistoryBiz buySellDocHistoryBiz )
             : base(entityDal, bizParameters)
         {
             _ownerBiz = ownerBiz;
             _customerBiz = customerBiz;
-            _productBiz = productBiz;
+            _shopBiz = shopBiz;
             _buySellBiz = entityDal as BuySellDocBiz;
             _buySellItemBiz = buySellItemBiz;
             _freightOfferTrxBiz = freightOfferTrxBiz;
@@ -59,6 +61,8 @@ namespace UowLibrary.BuySellDocNS
             _salesmanBiz = salesmanBiz;
             _buySellDocHistoryBiz = buySellDocHistoryBiz;
         }
+
+
 
         public BuySellDocHistoryBiz BuySellDocHistoryBiz
         {
@@ -157,13 +161,21 @@ namespace UowLibrary.BuySellDocNS
         {
             get
             {
-                _productBiz.IsNullThrowException("_productBiz");
-                _productBiz.UserId = UserId;
-                _productBiz.UserName = UserName;
-                return _productBiz;
+
+                return ShopBiz.ProductBiz;
             }
         }
 
+        public ShopBiz ShopBiz
+        {
+            get
+            {
+                _shopBiz.IsNullThrowException("_shopBiz");
+                _shopBiz.UserId = UserId;
+                _shopBiz.UserName = UserName;
+                return _shopBiz;
+            }
+        }
 
         public ProductChildBiz ProductChildBiz
         {
@@ -237,7 +249,7 @@ namespace UowLibrary.BuySellDocNS
 
 
         #region Move to BuySellBiz
-        public void RejectOrder_Code(string id, BuySellDocumentTypeENUM buySellDocumentTypeEnum)
+        public void RejectOrder_Code(string id, BuySellDocumentTypeENUM buySellDocumentTypeEnum, GlobalObject globalObject)
         {
             id.IsNullOrWhiteSpaceThrowException();
             //returnUrl.IsNullOrWhiteSpaceThrowException();
@@ -245,7 +257,13 @@ namespace UowLibrary.BuySellDocNS
             BuySellDoc buySellDoc = Find(id);
             buySellDoc.IsNullThrowException();
             buySellDoc.BuySellDocStateEnum = BuySellDocStateENUM.Rejected;
-            UpdateAndSave(buySellDoc);
+
+            ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+            param.Entity = buySellDoc as ICommonWithId;
+            param.GlobalObject = globalObject;
+
+            UpdateAndSave(param);
+
         }
         public static void CreateHeadingForCreateForm(ControllerIndexParams parm)
         {
@@ -327,7 +345,7 @@ namespace UowLibrary.BuySellDocNS
 
         public static void FixFreightOfferAndCustomerBudeget(BuySellDoc buySellDoc)
         {
-            buySellDoc.FreightOffer = string.Format("{0:N0}", buySellDoc.Freight_Accepted);
+            buySellDoc.FreightOffer = string.Format("{0:N0}", buySellDoc.Freight_Accepted_Refundable);
             buySellDoc.FreightCustomerBudget_String = string.Format("{0:N0}", buySellDoc.FreightCustomerBudget);
         }
 
@@ -554,7 +572,7 @@ namespace UowLibrary.BuySellDocNS
         {
             if (buySellDoc.BuySellDocStateEnum == BuySellDocStateENUM.RequestUnconfirmed)
                 return;
-    
+
             if (IsWithinDate(buySellDoc))
             {
                 return;

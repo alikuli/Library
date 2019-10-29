@@ -16,7 +16,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
     {
         public ControllerIndexParams()
         {
-            Menu = new MenuParameters(MenuENUM.IndexDefault, "");
+            //Menu = new MenuParameters(MenuENUM.IndexDefault, "");
 
         }
 
@@ -50,7 +50,9 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             SelectedId = selectedId;
             Entity = entity;
             SortBy = sortBy;
-            Menu = new MenuParameters(menuEnum, id);
+            //Menu = new MenuParameters(menuEnum, id);
+            MenuEnum = menuEnum;
+
             LogoAddress = logoAddress;
             UserName = userName;
             UserId = userId;
@@ -74,7 +76,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         /// If this is true then Menu features will work in the View: _IndexMiddlePart - TiledPictures
         /// </summary>
         public bool IsMenu { get; set; }
-
+        public MenuENUM MenuEnum { get; set; }
         /// <summary>
         /// This is used in the view of Product and ProductChild
         /// It causes the features to display as editable during create
@@ -85,6 +87,8 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public string Button { get; set; }
         public ApplicationUser User { get; set; }
         public string ProductId { get; set; }
+        public string ProductChildId { get; set; }
+
         public string ReturnUrl { get; set; }
         public string MenuPathMainId { get; set; }
         public BreadCrumbManager BreadCrumbManager { get; set; }
@@ -105,7 +109,7 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public string UserId { get; set; }
         //public ApplicationUser User { get; set; }
 
-        public bool IsUserAdmin { get;set;} 
+        public bool IsUserAdmin { get; set; }
         //public string ReturnUrl { get; set; }
         public MenuParameters Menu { get; set; }
         public LikeUnlikeParameters LikeUnlikeCounter { get; set; }

@@ -13,7 +13,7 @@ namespace UowLibrary.Interface
     /// <typeparam name="TEntity"></typeparam>
     public interface IBusinessLayer<TEntity> where TEntity : class, ICommonWithId
     {
-        void CreateSimple(ControllerCreateEditParameter parm);
+        //void CreateSimple(ControllerCreateEditParameter parm);
         //Task CreateAsync(TEntity entity);
         //void Create(ControllerCreateEditParameter param);
         //Task CreateAsync(TEntity entity, HttpPostedFileBase[] files);

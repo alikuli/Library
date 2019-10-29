@@ -8,14 +8,14 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
     [ComplexType]
     public class SalePriceComplex
     {
-        /// <summary>
-        /// Manufacturers suggested price
-        /// </summary>
-        [Display(Name = "Suggested Price")]
-        public decimal MSRP { get; set; }
+        ///// <summary>
+        ///// Manufacturers suggested price
+        ///// </summary>
+        //[Display(Name = "Suggested Price")]
+        //public decimal MSRP { get; set; }
 
-        [Display(Name = "Lowest Price")]
-        public decimal MlpPrice { get; set; }
+        //[Display(Name = "Lowest Price")]
+        //public decimal MlpPrice { get; set; }
 
 
         [Display(Name = "Sell Price")]
@@ -23,6 +23,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
 
         [NotMapped]
         public string SellPriceMoneyFormat { get { return ToMoneyFormat(SellPrice); } }
+
 
         public string ToMoneyFormat(decimal money)
         {

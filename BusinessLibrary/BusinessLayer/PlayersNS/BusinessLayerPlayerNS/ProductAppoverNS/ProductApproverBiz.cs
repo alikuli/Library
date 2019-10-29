@@ -1,12 +1,14 @@
 ﻿using AliKuli.Extentions;
 using DalLibrary.Interfaces;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using System.Collections.Generic;
 using System.Linq;
 using UowLibrary.AddressNS;
 using UowLibrary.CashTtxNS;
 using UowLibrary.ParametersNS;
+using UowLibrary.PlayersNS.PersonNS;
 using UowLibrary.PlayersNS.PlayerAbstractCategoryNS;
 using UowLibrary.PlayersNS.ProductApproverCategoryNS;
 
@@ -15,26 +17,43 @@ namespace UowLibrary.PlayersNS.ProductApproverNS
     public partial class ProductApproverBiz : BusinessLayerPlayer<ProductApprover>
     {
 
-        readonly ProductApproverCategoryBiz _ownerCategoryBiz;
+        readonly ProductApproverCategoryBiz _productApproverBiz;
 
         public ProductApproverBiz(IRepositry<ProductApprover> entityDal, BizParameters bizParameters, ProductApproverCategoryBiz ownerCategoryBiz, AddressBiz addressBiz, CashTrxBiz cashTrxBiz)
             : base(entityDal, bizParameters, addressBiz, cashTrxBiz)
         {
 
-            _ownerCategoryBiz = ownerCategoryBiz;
+            _productApproverBiz = ownerCategoryBiz;
         }
 
 
 
+        //public PersonBiz PersonBiz
+        //{
+        //    get
+        //    {
+                
+        //        return CashTrxBiz.PersonBiz; ;
 
+        //    }
+        //}
+
+        //public UserBiz UserBiz
+        //{
+        //    get
+        //    {
+        //        return PersonBiz.UserBiz;
+        //    }
+
+        //}
         public ProductApproverCategoryBiz ProductApproverCategoryBiz
         {
             get
             {
-                _ownerCategoryBiz.IsNullThrowException("_ownerCategoryBiz");
-                _ownerCategoryBiz.UserId = UserId;
-                _ownerCategoryBiz.UserName = UserName;
-                return _ownerCategoryBiz;
+                _productApproverBiz.IsNullThrowException("_ownerCategoryBiz");
+                _productApproverBiz.UserId = UserId;
+                _productApproverBiz.UserName = UserName;
+                return _productApproverBiz;
             }
         }
         public ProductApprover GetProductApproverForUser(string userId)
@@ -50,6 +69,8 @@ namespace UowLibrary.PlayersNS.ProductApproverNS
         }
         public bool IsApprover(string userId)
         {
+            if (UserBiz.IsAdmin(userId))
+                return true;
 
             return !GetProductApproverForUser(userId).IsNull();
         }

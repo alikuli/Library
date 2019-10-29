@@ -1,14 +1,21 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
+using ModelsClassLibrary.MenuNS;
+using ModelsClassLibrary.ModelsNS.AddressNS;
+using ModelsClassLibrary.ModelsNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS;
 using ModelsClassLibrary.ModelsNS.CashNS.PenaltyNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FreightOffersTrxNS;
 using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
+using ModelsClassLibrary.ModelsNS.ProductChildNS;
+using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 using UowLibrary.AddressNS;
@@ -21,7 +28,6 @@ using UowLibrary.PlayersNS.OwnerNS;
 using UowLibrary.PlayersNS.PersonNS;
 using UowLibrary.PlayersNS.VehicalTypeNS;
 using UowLibrary.SuperLayerNS;
-
 namespace MarketPlace.Web6.Controllers
 {
     /// <summary>
@@ -44,6 +50,8 @@ namespace MarketPlace.Web6.Controllers
     ///     BuySellDoc.UpdatePropertiesDuringModify
     ///     BuySellItem.UpdatePropertiesDuringModify
     ///     
+    /// In order for a seller to accept an order, he must have a minimum balance of Rs. x amount. This is so as to cover
+    /// any commission expenses, otherwise the account may go negative.
     /// </summary>
     [Authorize]
     public class BuySellDocsController : EntityAbstractController<BuySellDoc>
@@ -166,7 +174,7 @@ namespace MarketPlace.Web6.Controllers
             try
             {
 
-                BuySellDocBiz.RejectOrder_Code(id, buySellDocumentTypeEnum);
+                BuySellDocBiz.RejectOrder_Code(id, buySellDocumentTypeEnum, GlobalObject);
 
             }
             catch (Exception e)
@@ -177,6 +185,8 @@ namespace MarketPlace.Web6.Controllers
             return Redirect(returnUrl);
         }
 
+
+
         public ActionResult CancelRejectOrder(string buySellDocId, string returnUrl, string text, BuySellDocumentTypeENUM buySellDocumentTypeEnum = BuySellDocumentTypeENUM.Unknown, BuySellDocStateModifierENUM buySellDocStateModifierEnum = BuySellDocStateModifierENUM.Unknown)
         {
 
@@ -184,7 +194,9 @@ namespace MarketPlace.Web6.Controllers
             {
                 buySellDocId.IsNullOrWhiteSpaceThrowArgumentException("Id");
                 returnUrl.IsNullOrWhiteSpaceThrowArgumentException("returnUrl");
-                text.IsNullOrWhiteSpaceThrowArgumentException("text");
+                //text.IsNullOrWhiteSpaceThrowArgumentException("text");
+
+
                 if (buySellDocumentTypeEnum == BuySellDocumentTypeENUM.Unknown)
                     throw new Exception("buySellDocumentType unknown");
 
@@ -201,10 +213,16 @@ namespace MarketPlace.Web6.Controllers
                 {
                     text = penaltyClass.Text;
                 }
+                else
+                {
+                    text = "No Value Received";
+                }
+
                 RejectCancelDeleteInbetweenClass rejectCancelDeleteInbetweenClass = new RejectCancelDeleteInbetweenClass(
                     returnUrl,
                     text,
-                    buySellDoc);
+                    buySellDoc,
+                    GlobalObject);
 
                 return View(rejectCancelDeleteInbetweenClass);
             }
@@ -236,7 +254,7 @@ namespace MarketPlace.Web6.Controllers
                 {
 
                     //rejectCancelDeleteInbetweenClass.BuySellDocumentTypeEnum + rejectCancelDeleteInbetweenClass.BuySellDoc.BuySellDocStateEnum.ToString().ToTitleSentance();
-
+                    rejectCancelDeleteInbetweenClass.GlobalObject = SuperBiz.GetGlobalObject();
                     SuperBiz.CancelRejectOrder(rejectCancelDeleteInbetweenClass);
                 }
 
@@ -261,7 +279,7 @@ namespace MarketPlace.Web6.Controllers
 
             if (buySellDoc.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
             {
-                getCustomerSalesmanAndOwnerSalesman(buySellDoc);
+                //getCustomerSalesmanAndOwnerSalesman(buySellDoc);
                 //getDeliverymanSalesman(buySellDoc);
             }
         }
@@ -279,30 +297,6 @@ namespace MarketPlace.Web6.Controllers
         //        }
         //    }
         //}
-
-        private void getCustomerSalesmanAndOwnerSalesman(BuySellDoc bsd)
-        {
-            if (bsd.BuySellDocumentTypeEnum == BuySellDocumentTypeENUM.Sale)
-            {
-                if (bsd.BuySellDocStateEnum == BuySellDocStateENUM.RequestConfirmed)
-                {
-                    //make sure there a salesman has not been already selected
-                    if (bsd.CustomerSalesmanId.IsNullOrWhiteSpace())
-                    {
-                        //No customer salesman exists
-                        SuperBiz.GetAllCustomerSalesmen(bsd);
-
-                    }
-
-
-                    if (bsd.OwnerSalesmanId.IsNullOrWhiteSpace())
-                    {
-                        SuperBiz.GetAllOwnerSalesmen(bsd);
-                    }
-                }
-            }
-        }
-
 
 
 
@@ -340,7 +334,9 @@ namespace MarketPlace.Web6.Controllers
             try
             {
                 SuperBiz.Event_Edit_ViewAndSetupSelectList_Get_Code(parm);
-                Hide_Save_Button(parm.Entity as BuySellDoc);
+                BuySellDoc bsd = BuySellDoc.UnBox(parm.Entity);
+
+                Hide_Save_Button(bsd);
 
             }
             catch (Exception ex)
@@ -472,7 +468,7 @@ namespace MarketPlace.Web6.Controllers
         {
             try
             {
-                SuperBiz.Deliveryman_Accepts_To_Deliver(frtOfferId, buySellId);
+                SuperBiz.Deliveryman_Accepts_To_Deliver(frtOfferId, buySellId, GlobalObject);
             }
             catch (Exception ex)
             {
@@ -702,7 +698,6 @@ namespace MarketPlace.Web6.Controllers
         }
 
         #endregion
-
 
         #region Purchase Orders Admin
         public ActionResult List_Purchase_All_Admin()
@@ -1082,7 +1077,6 @@ namespace MarketPlace.Web6.Controllers
 
         #endregion
 
-
         #region Salesman Orders Admin
         public ActionResult List_Salesman_All_Admin()
         {
@@ -1276,9 +1270,6 @@ namespace MarketPlace.Web6.Controllers
 
 
         #endregion
-
-
-
 
         #region Sales Orders
         public ActionResult List_Sale_All()
@@ -2061,8 +2052,6 @@ namespace MarketPlace.Web6.Controllers
 
         #endregion
 
-
-
         #region Salesman Orders
         public ActionResult List_Salesman_All()
         {
@@ -2380,18 +2369,6 @@ namespace MarketPlace.Web6.Controllers
 
         #endregion
 
-
-
-
-
-
-
-
-
-
-
-
-
         #region Delivery
 
 
@@ -2637,6 +2614,7 @@ namespace MarketPlace.Web6.Controllers
             {
                 ViewBag.ShowEditControls = false.ToString();
 
+
             }
         }
 
@@ -2717,5 +2695,6 @@ namespace MarketPlace.Web6.Controllers
 
 
 
+ 
     }
 }

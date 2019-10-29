@@ -98,16 +98,6 @@ namespace ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS
 
             return pctAmount;
         }
-        //public static decimal GetPenaltyPercentageForSalesmanCanceling_Late_Deliveryman()
-        //{
-        //    string pctAmountString = ConfigurationManager.AppSettings["Salesman.PenaltyForCancelingDeliveryman.Late.Percent"];
-        //    decimal pctAmount = pctAmountString.ToDecimal();
-
-        //    return pctAmount;
-        //}
-
-
-
 
 
     }

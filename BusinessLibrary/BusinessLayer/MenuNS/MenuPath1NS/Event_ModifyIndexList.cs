@@ -36,7 +36,7 @@ namespace UowLibrary.MenuNS
             indexItem.MenuManager = new MenuManager(mpm, null, null, MenuENUM.EditMenuPath1, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
 
 
-            indexItem.MenuManager.PictureAddresses = GetPictureList(mp1);
+            indexItem.MenuManager.PictureAddresses = GetCurrItemsPictureList(mp1);
 
 
 

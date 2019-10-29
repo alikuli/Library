@@ -34,6 +34,12 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
 
         }
 
+        /// <summary>
+        /// When true,then payment is first taken using tokens
+        /// </summary>
+        /// 
+        [Display(Name = "Non-Refundable Money/Token Accepted ")]
+        public bool IsNonRefundablePaymentAccepted { get; set; }
 
         public static ProductChild Unbox(ICommonWithId icommonWithId)
         {
@@ -140,6 +146,10 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
         }
 
         public bool Hide { get; set; }
+        public static string GetShopName()
+        {
+            return EnumLibrary.EnumNS.ProductChildForSystemENUM.Shop.ToString().ToTitleSentance();
+        }
     }
 
 

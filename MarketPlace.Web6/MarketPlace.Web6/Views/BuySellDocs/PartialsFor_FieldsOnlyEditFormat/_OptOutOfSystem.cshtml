@@ -1,0 +1,64 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_optOutOfSystem = Model.BuySellDocViewState;
+
+    bool isShowOptOutOfSystem = viewState_optOutOfSystem.HD_Show_Opt_Out_Of_System;
+    bool isEnableOptOutOfSystem = viewState_optOutOfSystem.HD_Enable_Opt_Out_Of_System && Model.OptedOutOfSystem.IsSelected == false;;
+    string toolTip = viewState_optOutOfSystem.HD_Text_Opt_Out_Of_System;
+    string optOutOfSystem_Path = Url.Action("CancelRejectOrder", "BuySellDocs", new { buySellDocId = Model.Id, returnUrl = Request.Url.OriginalString, buySellDocumentTypeEnum = Model.BuySellDocumentTypeEnum, buySellDocStateModifierEnum = BuySellDocStateModifierENUM.OptOutOfSystem });
+    string optOutOfSystem_ButtonText = string.Format("Opt Out Of System Rs({0:N2}).", ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc.Get_Opt_Out_Fee());
+}
+
+@Html.HiddenFor(x => x.OptedOutOfSystem)
+
+
+        @if (isShowOptOutOfSystem)
+        {
+            <div class="">
+
+                @if (isEnableOptOutOfSystem)
+                {
+
+                    @*<div class="form-group form-check-inline bg-warning w-100 p-2">
+                        @Html.CheckBoxFor(x => x.OptedOutOfSystem.IsSelected)
+                        <strong>@Html.LabelFor(model => model.OptedOutOfSystem, htmlAttributes: new { @class = "p-2", data_toggle = "tooltip", title = @toolTip, data_placement = "top" })</strong>
+
+                    </div>*@
+
+
+                    if (Model.BuySellDocumentTypeEnum == BuySellDocumentTypeENUM.Purchase)
+                    {
+                        if (Model.BuySellDocStateEnum == BuySellDocStateENUM.RequestUnconfirmed || Model.BuySellDocStateEnum == BuySellDocStateENUM.RequestConfirmed)
+                        {
+
+                            <button type="button" class="btn btn-success" onclick="openPath('@optOutOfSystem_Path')" data_toggle="tooltip"  title=@toolTip  data_placement="top">
+
+                                @optOutOfSystem_ButtonText
+                            </button>
+                        }
+                    }
+
+                }
+
+
+                else
+                {
+
+
+
+    <div class="form-group form-check-inline bg-warning w-100 p-2">
+        @Html.CheckBoxFor(x => x.OptedOutOfSystem.IsSelected, htmlAttributes: new { disabled = "disabled" })
+        <strong>@Html.LabelFor(model => model.OptedOutOfSystem, htmlAttributes: new { @class = "p-2" })</strong>
+
+    </div>
+
+
+                }
+            </div>
+
+        }
+
+

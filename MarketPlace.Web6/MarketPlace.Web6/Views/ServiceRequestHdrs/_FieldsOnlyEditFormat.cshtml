@@ -55,44 +55,10 @@
         @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
     </div>
 
-
-<div class="row m-2">
-    <div class="col"><h3>List of Service Request Transactions</h3></div>
-
+<div class="form-check-inline">
+    @Html.CheckBoxFor(model => model.IsReceipt)
+    @Html.LabelFor(model => model.IsReceipt, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
 </div>
-
-    @if(Model.ServiceRequestTrxs_Fixed.IsNullOrEmpty())
-    {
-        <div class="row bg-danger text-white m-2" >
-            <div class="col">
-                No Transactions
-
-            </div>
-        </div>
-    }
-    else
-    {
-    <div class="row">
-        <div class="col">Sr#</div>
-        <div class="col">Name</div>
-        <div class="col">Amount</div>
-        <div class="col">Comment</div>
-    </div>
-
-        foreach (var serviceRequestTrx in Model.ServiceRequestTrxs_Fixed)
-        {
-            count++;
-                  
-            <div class="row">
-                <div class="col">@count.)</div>
-                <div class="col">@serviceRequestTrx.Name</div>
-                <div class="col">@serviceRequestTrx.Commission.Amount</div>
-                <div class="col">@serviceRequestTrx.Comment</div>
-            </div>
-
-        }
-
-    }
-
 
 

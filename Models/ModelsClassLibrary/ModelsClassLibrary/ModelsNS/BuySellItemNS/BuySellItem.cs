@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.BuySellDocNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
@@ -11,7 +12,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellItemNS
 {
-    public class BuySellItem : CommonWithId
+    public class BuySellItem : CommonWithId, IContainBuySellViewState
     {
         public BuySellItem()
         {

@@ -134,13 +134,13 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS
         {
             int noOfDaysAllowed = VerificationConfig.Number_Of_Days_Allowed_For_Local_Post;
             BeginDate.SetToTodaysDate(userName, userId);
-            EndDate.SetDateTo(userName, noOfDaysAllowed);
+            EndDate.SetDateTo(userName,userId, noOfDaysAllowed);
         }
         private void AddBeginEndDate_Pakistan_Courier(string userName, string userId)
         {
             int noOfDaysAllowed = VerificationConfig.Number_Of_Days_Allowed_For_Local_Courier;
             BeginDate.SetToTodaysDate(userName, userId);
-            EndDate.SetDateTo(userName, noOfDaysAllowed);
+            EndDate.SetDateTo(userName, userId, noOfDaysAllowed);
 
         }
 
@@ -148,14 +148,14 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS
         {
             int noOfDaysAllowed = VerificationConfig.Number_Of_Days_Allowed_For_Foreign_Post;
             BeginDate.SetToTodaysDate(userName, userId);
-            EndDate.SetDateTo(userName, noOfDaysAllowed);
+            EndDate.SetDateTo(userName, userId, noOfDaysAllowed);
 
         }
         private void AddBeginEndDate_Foreign_Courier(string userName, string userId)
         {
             int noOfDaysAllowed = VerificationConfig.Number_Of_Days_Allowed_For_Foreign_Courier;
             BeginDate.SetToTodaysDate(userName, userId);
-            EndDate.SetDateTo(userName, noOfDaysAllowed);
+            EndDate.SetDateTo(userName, userId, noOfDaysAllowed);
 
         }
 

@@ -17,6 +17,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         string ClassFor_Canceled_Pill { get; }
         string ClassFor_Rejected_Pill { get; }
         string ClassFor_Problem_Pill { get; }
+        string ClassFor_OptingOut_Pill { get; }
 
         string CurrentColorClass { get; }
         string CurrentColorClassPill { get; }
@@ -36,12 +37,12 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         #region Order Lines (OL) This is the orders list
         string OL_BadgeColor { get; }
 
-        
+
         string OL_IconForEditView { get; }
         string OL_ToolTip_Edit { get; }
         bool OL_IsEditEnabled { get; }
         bool OL_IsShowEditButton { get; }
-        
+
 
 
 
@@ -164,6 +165,13 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         bool HD_Enable_Button_DelyButton { get; }
         string HD_Text_Button_DelyButton { get; }
 
+        /// <summary>
+        /// This allows you to not use the system. You do everything directly yourself.
+        /// </summary>
+        bool HD_Show_Opt_Out_Of_System { get; }
+        bool HD_Enable_Opt_Out_Of_System { get; }
+        string HD_Text_Opt_Out_Of_System { get; }
+
 
 
         #endregion
@@ -188,9 +196,9 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         bool OD_SalePriceIsEnabled { get; }
         string OD_LabelOrderOrShipped { get; }
 
-        bool OD_Hide_Save_Button { get; }
-        bool OD_Show_Button_DelyButton { get; }
-        bool OD_Enable_Button_DelyButton { get; }
+        bool OD_Hide_System_Save_Button { get; }
+        bool OD_Show_Button_SaveButton { get; }
+        bool OD_Enable_Button_SaveButton { get; }
 
 
         #endregion

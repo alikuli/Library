@@ -12,8 +12,12 @@ namespace EnumLibrary.EnumNS
         Unknown,
         OwnerPaysCustomer,
         OwnerPaysDeliveryMan,
+        OwnerPaysSystem,
+
         CustomerPaysOwner,
         CustomerPaysDeliveryman,
+        CustomerPaysSystem,
+        
         DeliverymanPaysOwner,
         DeliverymanPaysCustomer,
     }

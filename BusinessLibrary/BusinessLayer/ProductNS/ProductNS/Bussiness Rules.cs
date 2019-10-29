@@ -20,11 +20,17 @@ namespace UowLibrary.ProductNS
         public override void BusinessRulesFor(ControllerCreateEditParameter parm)
         {
 
-            Product p = parm.Entity as Product;
-            //GetDataFromMenuCheckBoxes(p);
+            Product p = Product.Unbox(parm.Entity);
+            
+            if(p.IsShop)
+            { }
+            else
+            {
+            }
+
             GetDataFromMenuPathCheckBoxes(p);
             IProduct iproduct = p as IProduct;
-            addOwner(p);
+            //addOwner(p);
             addRemoveApprover(p);
             //FixProductFeatures(iproduct);
             base.BusinessRulesFor(parm);
@@ -69,9 +75,9 @@ namespace UowLibrary.ProductNS
                         //Now this user will own this product.
                         p.OwnerId = owner.Id;
 
-                        if (owner.Products.IsNull())
-                            owner.Products = new List<Product>();
-                        owner.Products.Add(p);
+                        if (owner.Shops.IsNull())
+                            owner.Shops = new List<Product>();
+                        owner.Shops.Add(p);
                     }
 
                 }
@@ -155,6 +161,7 @@ namespace UowLibrary.ProductNS
 
         public void FixMenuPaths(ControllerIndexParams parm)
         {
+            
             if (parm.MenuPathMainId.IsNullOrWhiteSpace())
                 return;
 
@@ -170,6 +177,7 @@ namespace UowLibrary.ProductNS
             mpm.IsNullThrowException("mpm");
 
             product.MenuPathMains.Add(mpm);
+            product.MainMenuIdForShop = mpm.Id;
         }
     }
 }

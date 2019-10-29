@@ -11,12 +11,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
         {
             base.UpdatePropertiesDuringModify(icommonWithId);
 
-            ProductChild pc = icommonWithId as ProductChild;
-
-            if (pc.IsNull())
-            {
-                throw new Exception("Product Child is Null. Programming error.");
-            }
+            ProductChild pc = ProductChild.Unbox(icommonWithId);
 
             //UserId = pc.UserId;
             ExpiryDate = pc.ExpiryDate;
@@ -30,6 +25,7 @@ namespace ModelsClassLibrary.ModelsNS.ProductChildNS
             ShipFromAddressComplex = pc.ShipFromAddressComplex;
             ShipFromAddressId = pc.ShipFromAddressId;
             Hide = pc.Hide;
+            IsNonRefundablePaymentAccepted = pc.IsNonRefundablePaymentAccepted;
         }
 
     }

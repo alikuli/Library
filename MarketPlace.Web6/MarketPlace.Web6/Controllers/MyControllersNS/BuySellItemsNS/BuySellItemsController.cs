@@ -91,7 +91,7 @@ namespace MarketPlace.Web6.Controllers
         private void Hide_Save_Button(BuySellItem buySellItem)
         {
             buySellItem.BuySellDocViewState.IsNullThrowException();
-            if (buySellItem.BuySellDocViewState.OD_Hide_Save_Button)
+            if (buySellItem.BuySellDocViewState.OD_Hide_System_Save_Button)
             {
                 ViewBag.ShowEditControls = false.ToString();
 

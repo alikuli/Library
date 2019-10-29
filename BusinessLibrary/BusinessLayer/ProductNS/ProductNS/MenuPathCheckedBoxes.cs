@@ -18,14 +18,13 @@ namespace UowLibrary.ProductNS
         //Note, the MenuPath1 of the Product should have the correct Menupath or a MenuPath1 has to be passed.
         public void LoadMenuPathCheckedBoxes(ControllerIndexParams parm)
         {
-            Product product = parm.Entity as Product;
-            product.IsNullThrowException("Product was not boxed/unboxed. ProductBiz.LoadMenuPathCheckedBoxes");
+            Product product = Product.Unbox(parm.Entity);
 
 
             addMenuPathMainSentFromView(parm, product);
 
 
-            List<CheckBoxItem> checkedboxes = CreateCheckBoxes(product);
+            List<CheckBoxItem> checkedboxes = CreateCheckBoxes();
             markProductSelectedCheckBoxesTrue(product, checkedboxes);
 
             //new code to create CheckBoxList
@@ -56,31 +55,13 @@ namespace UowLibrary.ProductNS
 
 
 
-        private List<CheckBoxItem> CreateCheckBoxes(Product product)
+        private List<CheckBoxItem> CreateCheckBoxes()
         {
-            List<CheckBoxItem> checkedboxes = new List<CheckBoxItem>();
-
-            if (product.MenuPathMains.IsNull())
-                product.MenuPathMains = new List<MenuPathMain>();
-
-            MenuPathMain mpm = product.MenuPathMains.FirstOrDefault();
-
-            if (mpm.IsNull())
-                mpm = new MenuPathMain();
-
-            string mp1Id = mpm.MenuPath1Id;
-
-            MenuPath1 mp1;
-            if (!mp1Id.IsNullOrWhiteSpace())
-                mp1 = MenuPath1Biz.Find(mp1Id);
-            else
-                mp1 = new MenuPath1();
-
 
             List<MenuPathMain> allMenuPaths = MenuPathMainBiz.FindAll().ToList();
 
             //Now create all the check boxes
-            checkedboxes = createAllCheckBoxes(allMenuPaths);
+            List<CheckBoxItem> checkedboxes = createAllCheckBoxes(allMenuPaths); 
             return checkedboxes;
         }
 
@@ -278,10 +259,11 @@ namespace UowLibrary.ProductNS
                 mpm = MenuPathMainBiz.FindAll().FirstOrDefault(x => x.Id == cbi.Id);
                 mpm.IsNullThrowException("Main path not found! Programming error.");
 
-
-
                 product.MenuPathMains.Add(mpm);
                 mpm.Products.Add(product);
+
+                Update(product);
+                MenuPathMainBiz.Update(mpm);
 
             }
         }

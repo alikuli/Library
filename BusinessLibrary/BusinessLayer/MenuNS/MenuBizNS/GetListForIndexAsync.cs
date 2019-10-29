@@ -5,6 +5,7 @@ using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace UowLibrary.MenuNS
 
             List<ICommonWithId> lst = new List<ICommonWithId>();
 
-            switch (parms.Menu.MenuEnum)
+            switch (parms.MenuEnum)
             {
                 case MenuENUM.IndexMenuPath1:
                     lst = await IndexMenuPath1_DataListAsync();
@@ -71,10 +72,10 @@ namespace UowLibrary.MenuNS
         /// </summary>
         /// <param name="cat1Id"></param>
         /// <returns></returns>
-        private List<string> UniqueMenuMainWithMenu1()
+        private List<string> UniqueMenuMainWithMenu1(List<MenuPathMain> lstOfMpm)
         {
 
-            var mp1LstIds = FindAll()
+            var mp1LstIds = lstOfMpm
                 .Select(x => x.MenuPath1Id)
                 .Distinct()
                 .ToList();
@@ -89,24 +90,196 @@ namespace UowLibrary.MenuNS
         /// <returns></returns>
         private async Task<List<ICommonWithId>> IndexMenuPath1_DataListAsync()
         {
-            List<string> listOfMenuPath1Ids = UniqueMenuMainWithMenu1();
 
-            if (listOfMenuPath1Ids.IsNullOrEmpty())
-                return null;
+
+
+            //find all live product children
+            //get their products
+            //get all shops that are live
+            //get all menupaths of shops and products
+            //get all menupaths where MenuPath1Id == id
+
+
+            List<MenuPathMain> mpms_Distinct_With_Live_Products_And_Shops = get_All_Live_Products_And_Shops();
+            List<string> mp1List_Live = UniqueLiveMpm1List(mpms_Distinct_With_Live_Products_And_Shops);
+            //=====================================
+
 
             //we need to return MenuPathMain List because the Index needs it.
             List<ICommonWithId> pclst = new List<ICommonWithId>();
 
-            var allMenuMain = await FindAllAsync();
-            var allMenu1 = await MenuPathMainBiz.MenuPath1Biz.FindAllAsync();
+            List<MenuPathMain> allMenuMain = await FindAllAsync();
+
+            if (allMenuMain.IsNullOrEmpty())
+                return null;
+
+            List<string> listOfMenuPath1Ids = UniqueMenuMainWithMenu1(allMenuMain);
+
+            if (listOfMenuPath1Ids.IsNullOrEmpty())
+                return null;
 
             foreach (var id in listOfMenuPath1Ids)
             {
-                var pc = allMenuMain.FirstOrDefault(x => x.MenuPath1Id == id);
-                pclst.Add(pc);
+                List<MenuPathMain> mpmList = allMenuMain.Where(x => x.MenuPath1Id == id).ToList();
+                MenuPathMain mpm = mpmList.FirstOrDefault(x => x.MenuPath1Id == id);
+
+                if (mpm.MenuPath1Id.IsNullOrWhiteSpace())
+                    continue;
+
+                if (mp1List_Live.Contains(mpm.MenuPath1Id))
+                    mpm.HasLiveProductChildren = true;
+
+                if (mpm.HasLiveProductChildren)
+                {
+                    if (!mpmList.IsNullOrEmpty())
+                    {
+                        foreach (var mpm_counter in mpmList)
+                        {
+                            mpm.NoOfItems += mpm_counter.ProductChildren_Fixed_Not_Hidden.Count;
+                            mpm.NoOfShops += mpm_counter.Product_Shops_Not_Expired.Count;
+                        }
+                    }
+                }
+                pclst.Add(mpm);
             }
 
             return pclst;
+        }
+
+        private List<MenuPathMain> get_All_Live_Products_And_Shops()
+        {
+            List<Product> productList = get_Live_Products();
+            if (productList.IsNullOrEmpty())
+                return null;
+
+            List<Product> shopList_Live = get_Live_Shops();
+            List<Product> concatedList_Distinct = concatTheLists(productList, shopList_Live);
+
+            if (concatedList_Distinct.IsNullOrEmpty())
+                return null;
+
+            List<MenuPathMain> mpms_Distinct_With_Live_Products = getUniqueMenuPaths(concatedList_Distinct);
+            return mpms_Distinct_With_Live_Products;
+        }
+
+        private List<string> UniqueLiveMpm1List(List<MenuPathMain> mpms_Distinct_With_Live_Products)
+        {
+            if (mpms_Distinct_With_Live_Products.IsNullOrEmpty())
+                return null;
+
+            List<string> allMp1 = new List<string>();
+            foreach (MenuPathMain mpm in mpms_Distinct_With_Live_Products)
+            {
+                if (mpm.MenuPath1Id.IsNullOrWhiteSpace())
+                    continue;
+                allMp1.Add(mpm.MenuPath1Id);
+            }
+
+            if (allMp1.IsNullOrEmpty())
+                return null;
+
+            List<string> allMp1Distinct = new HashSet<string>(allMp1).ToList();
+            return allMp1Distinct;
+
+
+        }
+
+        private List<MenuPathMain> getUniqueMenuPaths(List<Product> concatedList_Distinct)
+        {
+            List<MenuPathMain> mpms = new List<MenuPathMain>();
+
+            foreach (Product prod in concatedList_Distinct)
+            {
+                if (prod.MenuPathMains.IsNullOrEmpty())
+                {
+                    //                    throw new Exception("Product has no paths = " + prod.FullName());
+                    //system product has no path
+                    continue;
+
+                }
+                foreach (MenuPathMain mpm in prod.MenuPathMains)
+                {
+                    mpms.Add(mpm);
+                }
+            }
+
+            //if (mpms.IsNullOrEmpty())
+            //    return null;
+
+            List<MenuPathMain> mpms_distinct = new HashSet<MenuPathMain>(mpms).ToList();
+            return mpms_distinct;
+        }
+
+        private List<Product> get_Live_Products()
+        {
+            List<ProductChild> liveChldren = ProductChildBiz.FindAll()
+                .Where(x => x.Hide == false)
+                .ToList();
+            if (liveChldren.IsNullOrEmpty())
+                return null;
+
+            List<Product> productList = new List<Product>();
+            foreach (ProductChild pc in liveChldren)
+            {
+                if (pc.Product.IsNull())
+                    throw new Exception("Product child has no parent");
+                productList.Add(pc.Product);
+            }
+            return productList;
+        }
+
+        private List<Product> get_Live_Shops()
+        {
+            //get all live shops
+            //if product has an owner it is a shop.
+            List<Product> shopList_All = ProductBiz.FindAll()
+                .Where(x => x.OwnerId != null || x.OwnerId.Trim() != "")
+                .ToList();
+
+            List<Product> shopList_Live = new List<Product>();
+
+            foreach (Product shop in shopList_All)
+            {
+                if (shop.IsShopExpired)
+                    continue;
+                shopList_Live.Add(shop);
+            }
+            return shopList_Live;
+        }
+
+        private static List<Product> concatTheLists(List<Product> productList, List<Product> shopList_Live)
+        {
+            //concat the two lists...
+            List<Product> concatedList = new List<Product>();
+            if (productList.IsNullOrEmpty())
+            {
+                if (shopList_Live.IsNullOrEmpty())
+                {
+                    //do nothing
+                }
+                else
+                {
+                    concatedList = shopList_Live;
+                }
+            }
+            else
+            {
+                if (shopList_Live.IsNullOrEmpty())
+                {
+                    concatedList = productList;
+                }
+                else
+                {
+                    concatedList = productList.Concat(shopList_Live).ToList();
+                }
+            }
+
+            if (concatedList.IsNullOrEmpty())
+                return null;
+
+            List<Product> concatedList_Distinct = new HashSet<Product>(concatedList).ToList();
+
+            return concatedList_Distinct;
         }
 
         #endregion
@@ -131,13 +304,17 @@ namespace UowLibrary.MenuNS
         }
         private async Task<List<ICommonWithId>> indexMenuPath2_DataListAsync(ControllerIndexParams parms)
         {
-            parms.Menu.MenuPathMainId.IsNullOrWhiteSpaceThrowException();
-            MenuPathMain mpm = await FindAsync(parms.Menu.MenuPathMainId);
+
+            parms.MenuPathMainId.IsNullOrWhiteSpaceThrowException();
+            MenuPathMain mpm = await FindAsync(parms.MenuPathMainId);
             mpm.IsNullThrowException("Main path not found.");
+
+            //===========================================
+            List<MenuPathMain> mpms_Distinct_With_Live_Products_And_Shops = get_All_Live_Products_And_Shops();
+            //===========================================
 
             var allMenuPathMain = await FindAllAsync();
             var allMenuPathMainWithMenuPath1 = allMenuPathMain.Where(x => x.MenuPath1Id == mpm.MenuPath1Id).ToList();
-            List<string> listOfMenuPath2Ids = UniqueListOfMenuPath2_IDs(allMenuPathMainWithMenuPath1);
 
 
             //update the count of Menu1Path
@@ -152,20 +329,38 @@ namespace UowLibrary.MenuNS
                 }
             }
 
+            List<string> listOfMenuPath2Ids = UniqueListOfMenuPath2_IDs(allMenuPathMainWithMenuPath1);
+
             if (listOfMenuPath2Ids.IsNullOrEmpty())
                 return null;
-
 
             List<ICommonWithId> mpmlst = new List<ICommonWithId>();
 
             foreach (var mp2Id in listOfMenuPath2Ids)
             {
-                MenuPathMain mpmInner = allMenuPathMainWithMenuPath1.Where(x => x.MenuPath2Id == mp2Id).FirstOrDefault();
+                MenuPathMain mpmInner = allMenuPathMainWithMenuPath1
+                    .Where(x => x.MenuPath2Id == mp2Id)
+                    .FirstOrDefault();
+
                 if (!mpmInner.IsNull())
+                {
+                    if (!mpms_Distinct_With_Live_Products_And_Shops.IsNullOrEmpty())
+                    {
+                        MenuPathMain mpm_liveOne = mpms_Distinct_With_Live_Products_And_Shops
+                            .FirstOrDefault(x => x.MenuPath1Id == mpmInner.MenuPath1Id && x.MenuPath2Id == mpmInner.MenuPath2Id);
+                        if (!mpm_liveOne.IsNull())
+                        {
+                            mpmInner.HasLiveProductChildren = true;
+                            mpmInner.NoOfItems = mpm_liveOne.ProductChildren_Fixed_Not_Hidden.Count;
+                            mpmInner.NoOfShops = mpm_liveOne.Product_Shops_Not_Expired.Count;
+                        }
+                    }
+
                     mpmlst.Add(mpmInner);
 
-
+                }
             }
+
             if (mpmlst.IsNullOrEmpty())
                 return null;
 
@@ -193,12 +388,16 @@ namespace UowLibrary.MenuNS
         private async Task<List<ICommonWithId>> indexMenuPath3_DataListAsync(ControllerIndexParams parms)
         {
 
-            parms.Menu.MenuPathMainId.IsNullOrWhiteSpaceThrowException("Main Menu Path Id not received.");
+            parms.MenuPathMainId.IsNullOrWhiteSpaceThrowException("Main Menu Path Id not received.");
 
-            MenuPathMain mpm = await FindAsync(parms.Menu.MenuPathMainId);
+            MenuPathMain mpm = await FindAsync(parms.MenuPathMainId);
             mpm.IsNullThrowException("MenuPathMain not found.");
 
             List<MenuPathMain> uniqueListOfMainPaths = UniqueListOfMainPath_IDs(mpm.MenuPath1Id, mpm.MenuPath2Id);
+
+            //===========================================
+            List<MenuPathMain> mpms_Distinct_With_Live_Products_And_Shops = get_All_Live_Products_And_Shops();
+            //===========================================
 
             //update the count of Menu2Path
             MenuPath2 mp2 = MenuPathMainBiz.MenuPath2Biz.FindAll().FirstOrDefault(x => x.Id == mpm.MenuPath2Id);
@@ -217,21 +416,18 @@ namespace UowLibrary.MenuNS
             if (uniqueListOfMainPaths.IsNullOrEmpty())
                 return null;
 
-            //in case the menu has not been set we need to check if there are any items.
-            //if there are no menu 3 items, then there will be no MenuPath3
-            bool thereAreNoItems = true;
-            foreach (var item in uniqueListOfMainPaths)
+
+            foreach (MenuPathMain mpm2 in uniqueListOfMainPaths)
             {
-                if (!item.MenuPath3.IsNull())
+                //check to see if these items have any sale items
+                if (mpms_Distinct_With_Live_Products_And_Shops.Contains(mpm2))
                 {
-                    thereAreNoItems = false;
-                    break;
+                    mpm2.HasLiveProductChildren = true;
+                    mpm2.NoOfItems = mpm2.ProductChildren_Fixed_Not_Hidden.Count;
+                    mpm2.NoOfShops = mpm2.Product_Shops_Not_Expired.Count;
+
                 }
             }
-
-            if (thereAreNoItems)
-                return null;
-
             List<ICommonWithId> mpmlst = uniqueListOfMainPaths.Cast<ICommonWithId>().ToList();
 
 
@@ -248,14 +444,15 @@ namespace UowLibrary.MenuNS
 
 
             //get the menupathMain
-            MenuPathMain mpm = await FindAsync(parms.Menu.MenuPathMainId);
+            MenuPathMain mpm = await FindAsync(parms.MenuPathMainId);
             mpm.IsNullThrowException("Menu Path does note exist. Something is wrong.");
 
             //Get all the products listed by it
-            List<Product> listOfProducts = mpm.Products.Where(x => x.MetaData.IsDeleted == false && x.IsUnApproved == false).ToList();
+            List<Product> listOfProducts = mpm.Products_Fixed_And_Approved;
 
             //update the count of Menu3Path
             MenuPath3 mp3 = MenuPathMainBiz.MenuPath3Biz.FindAll().FirstOrDefault(x => x.Id == mpm.MenuPath3Id);
+
             if (!mp3.IsNull())
             {
                 if (!UserId.IsNullOrWhiteSpace())
@@ -297,34 +494,69 @@ namespace UowLibrary.MenuNS
         {
             //Get the product
 
-            parms.Menu.ProductId.IsNullOrWhiteSpaceThrowException();
-            Product parentProduct = await ProductBiz.FindAsync(parms.Menu.ProductId);
+            parms.ProductId.IsNullOrWhiteSpaceThrowException();
+            Product product = await ProductBiz.FindAsync(parms.ProductId);
             //parent product cannot be null. It is some kind of programming error if it is.
-            parentProduct.IsNullThrowException(string.Format("Product not found. Id ='{0}'", parms.Menu.ProductId));
+            product.IsNullThrowException(string.Format("Product not found. Id ='{0}'", parms.ProductId));
 
 
             //update the number of visits
             if (!UserId.IsNullOrWhiteSpace())
             {
 
-                parentProduct.NoOfVisits.AddOne(UserId, UserName);
-                await ProductBiz.UpdateAndSaveAsync(parentProduct);
+                product.NoOfVisits.AddOne(UserId, UserName);
+                await ProductBiz.UpdateAndSaveAsync(product);
             }
             //get all its child products and display them
 
-            if (parentProduct.ProductChildren.IsNullOrEmpty())
-                return null;
+            List<ProductChild> children;
+            //see if the product is a shop
+            if (product.OwnerId.IsNullOrWhiteSpace())
+            {
+                //this is not a shop.
+                children = productChildren(product);
 
-            List<ProductChild> children = parentProduct.ProductChildren.Where(x => x.MetaData.IsDeleted == false && x.Hide == false).ToList();
+            }
+            else
+            {
+                //this is a shop
+                children = shopChildren(product);
+            }
 
             if (children.IsNullOrEmpty())
                 return null;
 
-            //children.IsNullOrEmptyThrowException("Something went wrong, No Product Children found.");
             List<ICommonWithId> childrenAsIcommonLst = children.Cast<ICommonWithId>().ToList();
 
             return childrenAsIcommonLst;
         }
+
+        private List<ProductChild> productChildren(Product product)
+        {
+            if (product.ProductChildren.IsNullOrEmpty())
+                return null;
+
+            List<ProductChild> children = product.ProductChildren.Where(x => x.MetaData.IsDeleted == false && x.Hide == false).ToList();
+
+            return children;
+        }
+
+
+        private List<ProductChild> shopChildren(Product product)
+        {
+            if (product.IsShopExpired)
+                return null;
+
+            List<ProductChild> children = ProductChildBiz.FindAll().Where(x => x.OwnerId == product.OwnerId && x.Hide == false).ToList();
+
+
+            return children;
+        }
+
+
+
+
+
         #endregion
 
 

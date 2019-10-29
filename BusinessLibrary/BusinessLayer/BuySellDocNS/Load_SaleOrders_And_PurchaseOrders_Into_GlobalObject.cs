@@ -230,7 +230,9 @@ namespace UowLibrary.BuySellDocNS
                     loadAddressShipTo(buysellDoc);
                     loadAddressBillTo(buysellDoc);
                     loadAddressShipFrom(buysellDoc);
-                    buysellDoc.BuySellDocumentTypeEnum = buySellDocumentTypeEnum;
+
+                    //this changes the value of the doc.
+                    //buysellDoc.BuySellDocumentTypeEnum = buySellDocumentTypeEnum;
                 }
             }
 

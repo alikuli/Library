@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using MarketPlace.Web4.Controllers;
 using Microsoft.AspNet.Identity.Owin;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsNS.Models;
 using System;
 using System.Reflection;
@@ -185,6 +186,8 @@ namespace MarketPlace.Web6.Controllers
             {
                 try
                 {
+                    GlobalObject globalObject = ViewBag.GlobalObject as GlobalObject;
+                    model.GlobalObject = globalObject;
                     ApplicationUser theUser = await SuperCashBiz.RegisterAsync(model);
                     return RedirectToAction("Index", "Menus");
 

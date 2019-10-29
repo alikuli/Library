@@ -10,7 +10,7 @@ namespace InterfacesLibrary.SharedNS
 
         void SetToTodaysDate(string byUser, string byUserId);
         //void SetToTodaysDateStart(string byUser, string byUserId);
-        void SetDateTo(string byUser, int noOfDays);
+        void SetDateTo(string byUser, string byUserId, int noOfDays);
 
     }
 }

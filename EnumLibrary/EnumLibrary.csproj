@@ -33,6 +33,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Azure|AnyCPU'">
+    <OutputPath>bin\Azure\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Azure2|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Azure2\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\MarketPlace.Web4\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -110,6 +128,7 @@
     <Compile Include="EnumNS\CashTypeENUM.cs" />
     <Compile Include="EnumNS\DeleteButtonENUM.cs" />
     <Compile Include="EnumNS\MessageENUM.cs" />
+    <Compile Include="EnumNS\ProductChildForSystemENUM.cs" />
     <Compile Include="EnumNS\ServiceRequestStatusENUM.cs" />
     <Compile Include="EnumNS\VerificationNS\AddressVerificaionENUM.cs" />
     <Compile Include="EnumNS\MenuENUM.cs" />
@@ -154,7 +173,7 @@
     <Compile Include="EnumNS\VerificationNS\MailLocalOrForigenENUM.cs" />
     <Compile Include="EnumNS\VerificationNS\MailServiceENUM.cs" />
     <Compile Include="EnumNS\VerificationNS\PlayerTypeENUM.cs" />
-    <Compile Include="EnumNS\VerificationNS\RequestTypeENUM.cs" />
+    <Compile Include="EnumNS\ServiceRequestTypeENUM.cs" />
     <Compile Include="EnumNS\VerificationNS\SuccessENUM.cs" />
     <Compile Include="EnumNS\VerificationNS\TrustLevelENUM.cs" />
     <Compile Include="EnumNS\WhoPaysWhoENUM.cs" />
@@ -173,6 +192,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ConstantsLibrary\ConstantsLibrary.csproj">
+      <Project>{88109ea7-d29b-4833-8fd0-8b1ea0605260}</Project>
+      <Name>ConstantsLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExtentionsLibrary\AliKuliLibrary.csproj">
       <Project>{db8b5ef1-1281-4c65-ae5a-b798426ed432}</Project>
       <Name>AliKuliLibrary</Name>

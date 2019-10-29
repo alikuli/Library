@@ -1,0 +1,13 @@
+﻿@model ModelsClassLibrary.ModelsNS.ProductNS.ShopNS.ShopCreatedSuccessfullyVM
+
+@{
+    ViewBag.Title = "Shop";
+}
+<p class="text-danger text-capitalize text-center mt-2">@Model.ToString()</p>
+<h2 class="text-danger text-capitalize text-center">Shop <strong class="text-info">"@Model.ShopName"</strong>  Updated Successfully</h2>
+<h3>Money used = @Model.Refundable.ToString("N2")</h3>
+<h3>Tokens used = @Model.NonRefundable.ToString("N2")</h3>
+<h3><strong>Total used = @Model.Total().ToString("N2")</strong> </h3>
+
+<h3 class="background-Red text-white">New Expiry Date: @Model.ExpiryDate</h3>
+<button class="btn btn-success w-100" onclick="openPath('@Model.ReturnUrl')">Return</button>

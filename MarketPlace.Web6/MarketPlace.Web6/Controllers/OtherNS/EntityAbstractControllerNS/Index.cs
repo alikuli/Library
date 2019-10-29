@@ -2,6 +2,7 @@
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using MarketPlace.Web4.Controllers;
+using ModelsClassLibrary.ModelsNS.IndexNS.PlaceLocationNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ViewModels;
 using System;
@@ -35,14 +36,17 @@ namespace MarketPlace.Web6.Controllers.Abstract
         /// <param name="sortBy"></param>
         /// <param name="print"></param>
         /// <returns></returns>
-        public virtual async Task<ActionResult> Index(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, MenuENUM menuEnum = MenuENUM.IndexDefault, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "", string viewName = "Index")
+        public virtual async Task<ActionResult> Index(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, MainLocationSelectorClass MainLocationSelectorClass = null, MenuENUM menuEnum = MenuENUM.IndexDefault, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "", string productId = "", string viewName = "Index", FormCollection fc = null)
         {
             try
             {
                 TEntity dudEntity = Biz.Factory() as TEntity;
+                var routData = Url.RequestContext.RouteData;
+                var path = Request.Path;
+                var pathInfo = Request.PathInfo;
 
-
-                string productIdDud = "";
+                string addressData = ViewBag.AddressCheckBoxes as string;
+                //string productIdDud = "";
                 if (returnUrl.IsNullOrWhiteSpace())
                     returnUrl = Request.Url.PathAndQuery;
 
@@ -59,7 +63,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                     BreadCrumbManager,
                     UserId,
                     UserName,
-                    productIdDud,
+                    productId,
                     returnUrl,
                     isMenu,
                     buttonDud,
@@ -70,6 +74,8 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
                 IndexListVM indexListVM = await IndexEngineAsync(parms);
                 indexListVM.MenuManager.ReturnUrl = returnUrl;
+
+
 
                 if (print)
                 {
@@ -84,7 +90,7 @@ namespace MarketPlace.Web6.Controllers.Abstract
                 }
 
                 //this is an Ajax Request.
-                return PartialView("ViewControls/index/_IndexMiddlePart", indexListVM);
+                return PartialView("ViewControls/index/_IndexMiddlePart - TiledPictures", indexListVM);
 
             }
             catch (Exception e)

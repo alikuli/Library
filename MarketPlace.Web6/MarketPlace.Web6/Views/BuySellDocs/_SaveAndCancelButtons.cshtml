@@ -1,0 +1,45 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_DelyButton = Model.BuySellDocViewState;
+
+    bool show_Button_DelyButton = viewState_DelyButton.HD_Show_Button_DelyButton;
+    bool enable_Button_DelyButton = Model.OptedOutOfSystem.IsSelected ? false  : viewState_DelyButton.HD_Enable_Button_DelyButton;
+    string delyButtonText = viewState_DelyButton.HD_Text_Button_DelyButton;
+    string returnUrl = ViewBag.ReturnUrl_Edit as string;
+    string valueAccept = BuySellDocStateModifierENUM.Accept.ToString();
+
+}
+
+
+
+
+@if (show_Button_DelyButton)
+{
+    if (enable_Button_DelyButton)
+    {
+        <button class="btn btn-lg btn-success m-1" name="button" value="@valueAccept" type="submit">@delyButtonText</button>
+        <button class="btn btn-lg btn-info m-1" type="submit">Only Save</button>
+        <a class="btn btn-lg btn-danger m-1" href="@returnUrl" role="button">Back To List</a>
+    }
+    else
+    {
+        <button class="btn btn-lg btn-success m-1" type="submit" disabled>@delyButtonText</button>
+    if(Model.OptedOutOfSystem.IsSelected == true)
+    {
+        <button class="btn btn-lg btn-info m-1" type="submit">Save</button>
+
+    }
+else
+    {
+        <button class="btn btn-lg btn-info m-1" type="submit" disabled>Save</button>
+
+    }
+    <a class="btn btn-lg btn-danger m-1" href="@returnUrl" role="button">Back To List</a>
+
+    }
+
+}
+

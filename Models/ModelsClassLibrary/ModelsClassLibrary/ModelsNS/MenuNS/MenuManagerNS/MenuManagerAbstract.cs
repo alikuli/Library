@@ -37,6 +37,8 @@ namespace UowLibrary.MenuNS.MenuStateNS
         public abstract string CreateLink_Name { get; }
         public abstract MenuENUM CreateLink_MenuEnum { get; }
         public abstract string CreateAndEditLink_ControllerName { get; }
+        public virtual string CreateButtonAction { get { return "Create"; } }
+
         public virtual bool IsMenu
         {
             get
@@ -65,9 +67,13 @@ namespace UowLibrary.MenuNS.MenuStateNS
                 return _productChild;
             }
         }
+
+        public virtual bool ShowCreateButton { get{return false;} }
+        public virtual bool ShowCreateProductButton { get { return false; } }
+        
         public abstract string BackLink_Name { get; }
         public abstract MenuENUM BackLink_MenuEnum { get; }
-        public abstract bool ShowCreateButton { get; }
+        //public abstract bool ShowCreateButton { get; }
         public abstract bool ShowEditButton { get; }
 
 

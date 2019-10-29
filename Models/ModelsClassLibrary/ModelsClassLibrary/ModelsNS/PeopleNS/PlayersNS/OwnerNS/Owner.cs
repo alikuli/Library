@@ -1,12 +1,12 @@
-﻿using EnumLibrary.EnumNS;
+﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using InterfacesLibrary.PeopleNS.PlayersNS;
-using ModelsClassLibrary.ModelsNS.AddressNS;
+using ModelsClassLibrary.ModelsNS.ProductNS;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
-using AliKuli.Extentions;
-using System.Collections.Generic;
-using ModelsClassLibrary.ModelsNS.ProductNS;
+
 
 namespace ModelsClassLibrary.ModelsNS.PlayersNS
 {
@@ -29,14 +29,39 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
 
 
 
-        [Display(Name = "Owner")]
+        [Display(Name = "Owner Category")]
         [MaxLength(128)]
         public virtual string OwnerCategoryId { get; set; }
+        [Display(Name = "Owner Category")]
         public virtual OwnerCategory OwnerCategory { get; set; }
 
 
-        public virtual ICollection<Product> Products { get; set; }
+        [Display(Name = "Shops")]
+        [InverseProperty("Owner")]
+        public virtual ICollection<Product> Shops { get; set; }
 
+        [NotMapped]
+        public virtual List<Product> Shops_Fixed
+        {
+            get
+            {
+                if (Shops.IsNullOrEmpty())
+                    return null;
+
+                List<Product> undeletedShops = new List<Product>();
+                foreach (Product shop in Shops)
+                {
+                    if (shop.IsShopExpired)
+                        continue;
+                    undeletedShops.Add(shop);
+                }
+
+                return undeletedShops;
+
+            }
+        }
+
+        //public virtual ICollection<Product> Shops { get; set; }
 
 
         //[Display(Name = "Default Ship Address")]

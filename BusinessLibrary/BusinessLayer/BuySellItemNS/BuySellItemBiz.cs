@@ -2,6 +2,7 @@
 using DalLibrary.Interfaces;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellItemNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS.MenuStateNS;
@@ -16,7 +17,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UowLibrary.MenuNS.MenuStateNS;
 using UowLibrary.ParametersNS;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UowLibrary.BuySellDocNS
 {
@@ -262,14 +262,20 @@ namespace UowLibrary.BuySellDocNS
 
         private decimal getSalePriceFor(BuySellItem buySellItem)
         {
+            string salePriceStr = buySellItem.SalePriceStr;
+            salePriceStr = salePriceStr.ToNumericString();
             decimal salePriceOut;
             bool success = decimal.TryParse(buySellItem.SalePriceStr, out salePriceOut);
-            buySellItem.SalePrice = buySellItem.SalePriceStr.ToDecimal();
+
+            if (success)
+                buySellItem.SalePrice = buySellItem.SalePriceStr.ToDecimal();
+            else
+                throw new Exception("Unable to understand number: " + buySellItem.SalePriceStr);
 
             if (buySellItem.SalePrice == 0)
                 ErrorsGlobal.AddMessage("The sale price is zero");
 
-            return buySellItem.SalePriceStr.ToDecimal();
+            return salePriceOut;
         }
 
         public decimal GetSalePriceFor(BuySellItem buySellItem)
@@ -339,13 +345,13 @@ namespace UowLibrary.BuySellDocNS
             indexItemVM.MenuManager = new MenuManager(null, null, productChild, MenuENUM.IndexMenuProductChild, BreadCrumbManager, new LikeUnlikeParameters(0, 0, ""), UserId, indexListVM.MenuManager.ReturnUrl, UserName);
 
             //get the pictures list from the productChild
-            List<string> pictureAddresses = GetPictureList(productChild);
+            List<string> pictureAddresses = GetCurrItemsPictureList(productChild);
 
             //if none are available get them from the product
             if (pictureAddresses.IsNullOrEmpty())
             {
                 productChild.Product.IsNullThrowException();
-                pictureAddresses = GetPictureList(productChild.Product);
+                pictureAddresses = GetCurrItemsPictureList(productChild.Product);
 
             }
 
@@ -388,7 +394,7 @@ namespace UowLibrary.BuySellDocNS
         //This supplies a dummy MenuPathMain for the Back to List in the Create.
         protected IMenuManager makeMenuManager(ControllerIndexParams parm)
         {
-            MenuManager mm = new MenuManager(null, null, null, parm.Menu.MenuEnum, parm.BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
+            MenuManager mm = new MenuManager(null, null, null, parm.MenuEnum, parm.BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
             mm.BreadCrumbManager = parm.BreadCrumbManager;
             return mm as IMenuManager;
 

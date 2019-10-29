@@ -137,7 +137,8 @@ namespace UowLibrary.SuperLayerNS
             foreach (PenaltyFlatFile pf in penaltyTrxFlatFile)
             {
                 CashTrxVM2 csh = pf.ConvertTo_CashTrxVM2();
-                cashTrxList.Add(csh);
+                if(csh.HasValue)
+                    cashTrxList.Add(csh);
             }
             return cashTrxList;
         }
@@ -712,8 +713,8 @@ namespace UowLibrary.SuperLayerNS
                     if (bsd.BuySellDocStateEnum == BuySellDocStateENUM.Rejected)
                         continue;
 
-                    if (bsd.BuySellDocStateEnum == BuySellDocStateENUM.RequestUnconfirmed)
-                        continue;
+                    //if (bsd.BuySellDocStateEnum == BuySellDocStateENUM.RequestUnconfirmed)
+                    //    continue;
 
                     Person bsdCustomerPerson = CustomerBiz.GetPersonForPlayer(bsd.CustomerId);
                     Person bsdOwnerPerson = OwnerBiz.GetPersonForPlayer(bsd.OwnerId);
@@ -733,65 +734,120 @@ namespace UowLibrary.SuperLayerNS
 
 
 
+                    if (bsd.OptedOutOfSystem.IsSelected)
+                    {
+                        //get_Customer_NoNReturnable_CashTrxVM2(
+                        //    personWeAreWorkingFor,
+                        //    lstOfCashTrxVm2,
+                        //    bsd,
+                        //    personForSystem,
+                        //    bsdOwnerPerson);
+                    }
+                    else
+                    {
+                        get_Customer_CashTrxVM2(
+                            personWeAreWorkingFor,
+                            lstOfCashTrxVm2,
+                            bsd,
+                            bsdCustomerPerson,
+                            bsdOwnerPerson);
 
 
-                    //this one is allowed so that the money of the customer becomes allocated.
-                    get_Customer_CashTrxVM2(
-                        personWeAreWorkingFor,
-                        lstOfCashTrxVm2,
-                        bsd,
-                        bsdCustomerPerson,
-                        bsdOwnerPerson);
-
-                    if (bsd.BuySellDocStateEnum == BuySellDocStateENUM.RequestConfirmed)
-                        continue;
+                        if (bsd.BuySellDocStateEnum == BuySellDocStateENUM.RequestConfirmed)
+                            continue;
 
 
-                    get_Owner_CashTrxVM2(
-                        personWeAreWorkingFor,
-                        lstOfCashTrxVm2,
-                        bsd,
-                        bsdCustomerPerson,
-                        bsdOwnerPerson,
-                        bsdDeliverymanPerson);
+                        get_Owner_CashTrxVM2(
+                            personWeAreWorkingFor,
+                            lstOfCashTrxVm2,
+                            bsd,
+                            bsdCustomerPerson,
+                            bsdOwnerPerson,
+                            bsdDeliverymanPerson);
 
-                    get_Deliveryman_CashTrxVM2(
-                        personWeAreWorkingFor,
-                        personForSystem,
-                        lstOfCashTrxVm2,
-                        bsd,
-                        bsdDeliverymanPerson,
-                        bsdOwnerPerson);
 
-                    get_Salesmen_CashTrxVM2(
-                        personWeAreWorkingFor,
-                        personForSystem,
-                        lstOfCashTrxVm2,
-                        bsd,
-                        bsdCustomerSalesmanPerson,
-                        bsdDeliverymanSalesmanPerson,
-                        bsdOwnerSalesmanPerson,
-                        bsdCustomer_Super_SalesmanPerson,
-                        bsdCustomer_Super_Super_SalesmanPerson,
-                        bsdDeliveryman_Super_SalesmanPerson,
-                        bsdDeliveryman_Super_Super_SalesmanPerson,
-                        bsdOwner_Super_SalesmanPerson,
-                        bsdOwner_Super_Super_SalesmanPerson);
+                        get_Deliveryman_CashTrxVM2(
+                            personWeAreWorkingFor,
+                            personForSystem,
+                            lstOfCashTrxVm2,
+                            bsd,
+                            bsdDeliverymanPerson,
+                            bsdOwnerPerson);
 
-                    get_System_CashTrxVM2(
-                        personWeAreWorkingFor,
-                        lstOfCashTrxVm2,
-                        bsd,
-                        bsdOwnerPerson,
-                        personForSystem);
+
+                        get_Salesmen_CashTrxVM2(
+                            personWeAreWorkingFor,
+                            personForSystem,
+                            lstOfCashTrxVm2,
+                            bsd,
+                            bsdCustomerSalesmanPerson,
+                            bsdDeliverymanSalesmanPerson,
+                            bsdOwnerSalesmanPerson,
+                            bsdCustomer_Super_SalesmanPerson,
+                            bsdCustomer_Super_Super_SalesmanPerson,
+                            bsdDeliveryman_Super_SalesmanPerson,
+                            bsdDeliveryman_Super_Super_SalesmanPerson,
+                            bsdOwner_Super_SalesmanPerson,
+                            bsdOwner_Super_Super_SalesmanPerson);
+
+
+                        get_System_CashTrxVM2(
+                            personWeAreWorkingFor,
+                            lstOfCashTrxVm2,
+                            bsd,
+                            bsdOwnerPerson,
+                            personForSystem);
+                    }
 
 
                 }
             }
 
-
             return lstOfCashTrxVm2;
         }
+
+        //private void get_Customer_NoNReturnable_CashTrxVM2(Person personWeAreWorkingFor, List<CashTrxVM2> lstOfCashTrxVm2, BuySellDoc bsd, Person personForSystem, Person bsdOwnerPerson)
+        //{
+        //    if (bsd.BuySellDocStateEnum == BuySellDocStateENUM.RequestUnconfirmed)
+        //        return;
+
+        //    if (bsd.BuySellDocStateEnum == BuySellDocStateENUM.Rejected)
+        //        return;
+
+
+        //    //Non Returnable expenses are always payable only by the seller/owner
+
+        //    Owner owner;
+        //    if (IsOwner(personWeAreWorkingFor.Id, out owner))
+        //    {
+        //        if (!bsdOwnerPerson.IsNull())
+        //        {
+        //            if (personWeAreWorkingFor.Id == bsdOwnerPerson.Id)
+        //            {
+        //                if (bsd.NonReturnableTrxs.IsNullOrEmpty())
+        //                { }
+        //                else
+        //                {
+        //                    foreach (NonReturnableTrx nrt in bsd.NonReturnableTrxs)
+        //                    {
+        //                        CashTrxVM2 cashTrx = create_CashTrxVM2_From_BuySellDoc(
+        //                            bsd,
+        //                            bsd.RequestConfirmed.Date_NotNull_Min,
+        //                            nrt.Amount,
+        //                            0,
+        //                            nrt.FullName(),
+        //                            bsdOwnerPerson,
+        //                            personForSystem,
+        //                            CashTrxVmDocumentTypeENUM.SaleOrder, 
+        //                            bsd.IsCashAvailableTo_Owner());
+
+        //                        lstOfCashTrxVm2.Add(cashTrx);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 
 
         private void get_System_CashTrxVM2(Person personWeAreWorkingFor, List<CashTrxVM2> lstOfCashTrxVm2, BuySellDoc bsd, Person bsdOwnerPerson, Person bsdSystemPerson)
@@ -803,8 +859,6 @@ namespace UowLibrary.SuperLayerNS
 
             if (bsd.BuySellDocStateEnum == BuySellDocStateENUM.Rejected)
                 return;
-
-
 
 
             Owner owner;
@@ -820,16 +874,33 @@ namespace UowLibrary.SuperLayerNS
 
                         CashTrxVM2 cashTrx = create_CashTrxVM2_From_BuySellDoc(
                             bsd,
-                            bsd.RequestConfirmed.Date_NotNull_Min,
-                            bsd.Total_Charged_To_Owner.Amount,
+                            bsd.MetaData.Created.Date_NotNull_Min,
+                            bsd.Total_Commissions_Payable_By_Owner.Amount_Refundable,
                             0,
                             commentFixed,
                             bsdOwnerPerson,
                             bsdOwnerPerson,
                             CashTrxVmDocumentTypeENUM.SaleOrder,
-                            bsd.IsCashAvailableTo_Owner());
+                            bsd.IsCashAvailableTo_Owner(),
+                            CashTypeENUM.Refundable);
 
-                        lstOfCashTrxVm2.Add(cashTrx);
+                        if(cashTrx.HasValue)
+                            lstOfCashTrxVm2.Add(cashTrx);
+
+                        cashTrx = create_CashTrxVM2_From_BuySellDoc(
+                            bsd,
+                            bsd.MetaData.Created.Date_NotNull_Min,
+                            bsd.Total_Commissions_Payable_By_Owner.Amount_NonRefundable,
+                            0,
+                            commentFixed,
+                            bsdOwnerPerson,
+                            bsdOwnerPerson,
+                            CashTrxVmDocumentTypeENUM.SaleOrder,
+                            bsd.IsCashAvailableTo_Owner(),
+                            CashTypeENUM.NonRefundable);
+
+                        if (cashTrx.HasValue)
+                            lstOfCashTrxVm2.Add(cashTrx);
                     }
                 }
 
@@ -984,16 +1055,37 @@ namespace UowLibrary.SuperLayerNS
                 {
                     CashTrxVM2 cashTrx = create_CashTrxVM2_From_BuySellDoc(
                                 bsd,
-                                bsd.RequestConfirmed.Date_NotNull_Min,
+                                bsd.MetaData.Created.Date_NotNull_Min,
                                 0,
-                                bsd.SuperSuperDeliverymanSalesmanCommission.Amount,
-                                "Percent: " + bsd.SuperSuperDeliverymanSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                bsd.SuperSuperDeliverymanSalesmanCommission.Amount_Refundable,
+                                "Deliveryman Super Super Salesman Commission - Percent: " + bsd.SuperSuperDeliverymanSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
                                 personForSystem,
                                 bsdDeliveryman_Super_Super_SalesmanPerson,
-                                CashTrxVmDocumentTypeENUM.SalesmanSuperSuperDeliverymanCommission,
-                                bsd.IsCashAvailableTo_Deliveryman());
+                                CashTrxVmDocumentTypeENUM.SuperSuperDeliverymanSalesmanCommission,
+                                bsd.IsCashAvailableTo_Deliveryman(),
+                            CashTypeENUM.Refundable);
 
-                    lstOfCashTrxVm2.Add(cashTrx);
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
+
+                
+                
+                    cashTrx = create_CashTrxVM2_From_BuySellDoc(
+                                bsd,
+                                bsd.MetaData.Created.Date_NotNull_Min,
+                                0,
+                                bsd.SuperSuperDeliverymanSalesmanCommission.Amount_NonRefundable,
+                                "Deliveryman Super Super Salesman Commission - Percent: " + bsd.SuperSuperDeliverymanSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                personForSystem,
+                                bsdDeliveryman_Super_Super_SalesmanPerson,
+                                CashTrxVmDocumentTypeENUM.SuperSuperDeliverymanSalesmanCommission,
+                                bsd.IsCashAvailableTo_Deliveryman(),
+                            CashTypeENUM.NonRefundable);
+
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
                 }
             }
         }
@@ -1009,16 +1101,37 @@ namespace UowLibrary.SuperLayerNS
                 {
                     CashTrxVM2 cashTrx = create_CashTrxVM2_From_BuySellDoc(
                                 bsd,
-                                bsd.RequestConfirmed.Date_NotNull_Min,
+                                bsd.MetaData.Created.Date_NotNull_Min,
                                 0,
-                                bsd.SuperDeliverymanSalesmanCommission.Amount,
-                                "Percent: " + bsd.SuperDeliverymanSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                bsd.SuperDeliverymanSalesmanCommission.Amount_Refundable,
+                                "Deliveryman Super Salesman Commission - Percent: " + bsd.SuperDeliverymanSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
                                 personForSystem,
                                 bsdDeliveryman_Super_SalesmanPerson,
-                                CashTrxVmDocumentTypeENUM.SalesmanSuperDeliverymanCommission,
-                                bsd.IsCashAvailableTo_Deliveryman());
+                                CashTrxVmDocumentTypeENUM.SuperDeliverymanSalesmanCommission,
+                                bsd.IsCashAvailableTo_Deliveryman(),
+                            CashTypeENUM.Refundable);
 
-                    lstOfCashTrxVm2.Add(cashTrx);
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
+
+
+                    cashTrx = create_CashTrxVM2_From_BuySellDoc(
+                                bsd,
+                                bsd.MetaData.Created.Date_NotNull_Min,
+                                0,
+                                bsd.SuperDeliverymanSalesmanCommission.Amount_NonRefundable,
+                                "Deliveryman Super Salesman Commission - Percent: " + bsd.SuperDeliverymanSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                personForSystem,
+                                bsdDeliveryman_Super_SalesmanPerson,
+                                CashTrxVmDocumentTypeENUM.SuperDeliverymanSalesmanCommission,
+                                bsd.IsCashAvailableTo_Deliveryman(),
+                            CashTypeENUM.NonRefundable);
+
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
+ 
                 }
             }
         }
@@ -1034,16 +1147,37 @@ namespace UowLibrary.SuperLayerNS
                 {
                     CashTrxVM2 cashTrx = create_CashTrxVM2_From_BuySellDoc(
                                 bsd,
-                                bsd.RequestConfirmed.Date_NotNull_Min,
+                                bsd.MetaData.Created.Date_NotNull_Min,
                                 0,
-                                bsd.SuperSuperOwnerSalesmanCommission.Amount,
-                                "Percent: " + bsd.SuperSuperOwnerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                bsd.SuperSuperOwnerSalesmanCommission.Amount_Refundable,
+                                "Seller Super Super Salesman Commission - Percent: " + bsd.SuperSuperOwnerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
                                 personForSystem,
                                 bsdOwner_Super_Super_SalesmanPerson,
-                                CashTrxVmDocumentTypeENUM.SalesmanSuperSuperOwnerCommission,
-                                bsd.IsCashAvailableTo_Owner());
+                                CashTrxVmDocumentTypeENUM.SuperSuperOwnerSalesmanCommission,
+                                bsd.IsCashAvailableTo_Owner(),
+                            CashTypeENUM.Refundable);
 
-                    lstOfCashTrxVm2.Add(cashTrx);
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
+
+                    cashTrx = create_CashTrxVM2_From_BuySellDoc(
+                                bsd,
+                                bsd.MetaData.Created.Date_NotNull_Min,
+                                0,
+                                bsd.SuperSuperOwnerSalesmanCommission.Amount_NonRefundable,
+                                "Seller Super Super Salesman Commission - Percent: " + bsd.SuperSuperOwnerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                personForSystem,
+                                bsdOwner_Super_Super_SalesmanPerson,
+                                CashTrxVmDocumentTypeENUM.SuperSuperOwnerSalesmanCommission,
+                                bsd.IsCashAvailableTo_Owner(),
+                            CashTypeENUM.NonRefundable);
+
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
+                
+                
                 }
             }
         }
@@ -1059,16 +1193,37 @@ namespace UowLibrary.SuperLayerNS
                 {
                     CashTrxVM2 cashTrx = create_CashTrxVM2_From_BuySellDoc(
                                 bsd,
-                                bsd.RequestConfirmed.Date_NotNull_Min,
+                                bsd.MetaData.Created.Date_NotNull_Min,
                                 0,
-                                bsd.SuperOwnerSalesmanCommission.Amount,
-                                "Percent: " + bsd.SuperOwnerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                bsd.SuperOwnerSalesmanCommission.Amount_Refundable,
+                                "Seller Super Salesman Commission - Percent: " + bsd.SuperOwnerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
                                 personForSystem,
                                 bsdOwner_Super_SalesmanPerson,
-                                CashTrxVmDocumentTypeENUM.SalesmanSuperOwnerCommission,
-                                bsd.IsCashAvailableTo_Owner());
+                                CashTrxVmDocumentTypeENUM.SuperOwnerSalesmanCommission,
+                                bsd.IsCashAvailableTo_Owner(),
+                            CashTypeENUM.Refundable);
 
-                    lstOfCashTrxVm2.Add(cashTrx);
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
+
+
+                    cashTrx = create_CashTrxVM2_From_BuySellDoc(
+                                bsd,
+                                bsd.MetaData.Created.Date_NotNull_Min,
+                                0,
+                                bsd.SuperOwnerSalesmanCommission.Amount_NonRefundable,
+                                "Seller Super Salesman Commission - Percent: " + bsd.SuperOwnerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                personForSystem,
+                                bsdOwner_Super_SalesmanPerson,
+                                CashTrxVmDocumentTypeENUM.SuperOwnerSalesmanCommission,
+                                bsd.IsCashAvailableTo_Owner(),
+                            CashTypeENUM.NonRefundable);
+
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
+
                 }
             }
         }
@@ -1084,16 +1239,36 @@ namespace UowLibrary.SuperLayerNS
                 {
                     CashTrxVM2 cashTrx = create_CashTrxVM2_From_BuySellDoc(
                                 bsd,
-                                bsd.RequestConfirmed.Date_NotNull_Min,
+                                bsd.MetaData.Created.Date_NotNull_Min,
                                 0,
-                                bsd.SuperSuperCustomerSalesmanCommission.Amount,
-                                "Percent: " + bsd.SuperSuperCustomerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                bsd.SuperSuperCustomerSalesmanCommission.Amount_Refundable,
+                                "Customer Super Super Salesman Commission - Percent: " + bsd.SuperSuperCustomerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
                                 personForSystem,
                                 bsdCustomer_Super_Super_SalesmanPerson,
-                                CashTrxVmDocumentTypeENUM.SalesmanSuperSuperCustomerCommission,
-                                bsd.IsCashAvailableTo_Customer());
+                                CashTrxVmDocumentTypeENUM.SuperSuperCustomerSalesmanCommission,
+                                bsd.IsCashAvailableTo_Customer(),
+                            CashTypeENUM.Refundable);
 
-                    lstOfCashTrxVm2.Add(cashTrx);
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
+
+                    cashTrx = create_CashTrxVM2_From_BuySellDoc(
+                                bsd,
+                                bsd.MetaData.Created.Date_NotNull_Min,
+                                0,
+                                bsd.SuperSuperCustomerSalesmanCommission.Amount_NonRefundable,
+                                "Customer Super Super Salesman Commission - Percent: " + bsd.SuperSuperCustomerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                personForSystem,
+                                bsdCustomer_Super_Super_SalesmanPerson,
+                                CashTrxVmDocumentTypeENUM.SuperSuperCustomerSalesmanCommission,
+                                bsd.IsCashAvailableTo_Customer(),
+                            CashTypeENUM.NonRefundable);
+
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
+
                 }
             }
         }
@@ -1109,16 +1284,36 @@ namespace UowLibrary.SuperLayerNS
                 {
                     CashTrxVM2 cashTrx = create_CashTrxVM2_From_BuySellDoc(
                                 bsd,
-                                bsd.RequestConfirmed.Date_NotNull_Min,
+                                bsd.MetaData.Created.Date_NotNull_Min,
                                 0,
-                                bsd.SuperCustomerSalesmanCommission.Amount,
-                                "Percent: " + bsd.SuperCustomerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                bsd.SuperCustomerSalesmanCommission.Amount_Refundable,
+                                "Customer Super Salesman Commission - Percent: " + bsd.SuperCustomerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
                                 personForSystem,
                                 bsdCustomer_Super_SalesmanPerson,
-                                CashTrxVmDocumentTypeENUM.SalesmanSuperCustomerCommission,
-                                bsd.IsCashAvailableTo_Customer());
+                                CashTrxVmDocumentTypeENUM.SuperCustomerSalesmanCommission,
+                                bsd.IsCashAvailableTo_Customer(),
+                            CashTypeENUM.Refundable);
 
-                    lstOfCashTrxVm2.Add(cashTrx);
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
+
+                    cashTrx = create_CashTrxVM2_From_BuySellDoc(
+                                bsd,
+                                bsd.MetaData.Created.Date_NotNull_Min,
+                                0,
+                                bsd.SuperCustomerSalesmanCommission.Amount_NonRefundable,
+                                "Customer Super Salesman Commission - Percent: " + bsd.SuperCustomerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                personForSystem,
+                                bsdCustomer_Super_SalesmanPerson,
+                                CashTrxVmDocumentTypeENUM.SuperCustomerSalesmanCommission,
+                                bsd.IsCashAvailableTo_Customer(),
+                            CashTypeENUM.NonRefundable);
+
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
+
                 }
             }
         }
@@ -1134,15 +1329,34 @@ namespace UowLibrary.SuperLayerNS
                 {
                     CashTrxVM2 cashTrx = create_CashTrxVM2_From_BuySellDoc(
                                 bsd,
-                                bsd.CourierComingToPickUp.Date_NotNull_Min,
+                                bsd.MetaData.Created.Date_NotNull_Min,
                                 0,
-                                bsd.DeliverymanSalesmanCommission.Amount,
-                                "Percent: " + bsd.DeliverymanSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                bsd.DeliverymanSalesmanCommission.Amount_Refundable,
+                                "Deliveryman Salesman Commission - Percent: " + bsd.DeliverymanSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
                                 personForSystem,
                                 bsdDeliverymanSalesmanPerson,
-                                CashTrxVmDocumentTypeENUM.SalesmanDeliverymanCommission, bsd.IsCashAvailableTo_Owner());
+                                CashTrxVmDocumentTypeENUM.DeliverymanSalesmanCommission, bsd.IsCashAvailableTo_Owner(),
+                            CashTypeENUM.Refundable);
 
-                    lstOfCashTrxVm2.Add(cashTrx);
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
+
+                    cashTrx = create_CashTrxVM2_From_BuySellDoc(
+                                bsd,
+                                bsd.MetaData.Created.Date_NotNull_Min,
+                                0,
+                                bsd.DeliverymanSalesmanCommission.Amount_NonRefundable,
+                                "Deliveryman Salesman Commission - Percent: " + bsd.DeliverymanSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                personForSystem,
+                                bsdDeliverymanSalesmanPerson,
+                                CashTrxVmDocumentTypeENUM.DeliverymanSalesmanCommission, bsd.IsCashAvailableTo_Owner(),
+                            CashTypeENUM.NonRefundable);
+
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
+
                 }
             }
         }
@@ -1158,16 +1372,34 @@ namespace UowLibrary.SuperLayerNS
                 {
                     CashTrxVM2 cashTrx = create_CashTrxVM2_From_BuySellDoc(
                                 bsd,
-                                bsd.RequestConfirmed.Date_NotNull_Min,
+                                bsd.MetaData.Created.Date_NotNull_Min,
                                 0,
-                                bsd.OwnerSalesmanCommission.Amount,
-                                "Percent: " + bsd.OwnerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                bsd.OwnerSalesmanCommission.Amount_Refundable,
+                                "Owner Salesman Commission - Percent: " + bsd.OwnerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
                                 personForSystem,
                                 bsdOwnerSalesmanPerson,
-                                CashTrxVmDocumentTypeENUM.SalesmanOwnerCommission,
-                                bsd.IsCashAvailableTo_Owner());
+                                CashTrxVmDocumentTypeENUM.OwnerSalesmanCommission,
+                                bsd.IsCashAvailableTo_Owner(),
+                            CashTypeENUM.Refundable);
 
-                    lstOfCashTrxVm2.Add(cashTrx);
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
+                    cashTrx = create_CashTrxVM2_From_BuySellDoc(
+                                bsd,
+                                bsd.MetaData.Created.Date_NotNull_Min,
+                                0,
+                                bsd.OwnerSalesmanCommission.Amount_NonRefundable,
+                                "Owner Salesman Commission - Percent: " + bsd.OwnerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                personForSystem,
+                                bsdOwnerSalesmanPerson,
+                                CashTrxVmDocumentTypeENUM.OwnerSalesmanCommission,
+                                bsd.IsCashAvailableTo_Owner(),
+                            CashTypeENUM.NonRefundable);
+
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
                 }
             }
         }
@@ -1187,16 +1419,34 @@ namespace UowLibrary.SuperLayerNS
                 {
                     CashTrxVM2 cashTrx = create_CashTrxVM2_From_BuySellDoc(
                                 bsd,
-                                bsd.RequestConfirmed.Date_NotNull_Min,
+                                bsd.MetaData.Created.Date_NotNull_Min,
                                 0,
-                                bsd.CustomerSalesmanCommission.Amount,
-                                "Percent: " + bsd.CustomerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                bsd.CustomerSalesmanCommission.Amount_Refundable,
+                                " - Percent: " + bsd.CustomerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
                                 personForSystem,
                                 bsdCustomerSalesmanPerson,
-                                CashTrxVmDocumentTypeENUM.SalesmanCustomerCommission,
-                                bsd.IsCashAvailableTo_Owner());
+                                CashTrxVmDocumentTypeENUM.CustomerSalesmanCommission,
+                                bsd.IsCashAvailableTo_Owner(),
+                            CashTypeENUM.Refundable);
 
-                    lstOfCashTrxVm2.Add(cashTrx);
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
+                    cashTrx = create_CashTrxVM2_From_BuySellDoc(
+                                bsd,
+                                bsd.MetaData.Created.Date_NotNull_Min,
+                                0,
+                                bsd.CustomerSalesmanCommission.Amount_NonRefundable,
+                                " - Percent: " + bsd.CustomerSalesmanCommission.Percent.ToString("N2") + "%. " + bsd.Comment,
+                                personForSystem,
+                                bsdCustomerSalesmanPerson,
+                                CashTrxVmDocumentTypeENUM.CustomerSalesmanCommission,
+                                bsd.IsCashAvailableTo_Owner(),
+                            CashTypeENUM.NonRefundable);
+
+                    if (cashTrx.HasValue)
+                        lstOfCashTrxVm2.Add(cashTrx);
+
                 }
             }
         }
@@ -1220,43 +1470,53 @@ namespace UowLibrary.SuperLayerNS
 
                         CashTrxVM2 cashTrx = create_CashTrxVM2_From_BuySellDoc(
                                     bsd,
-                                    bsd.CourierAcceptedByBuyerAndSeller.Date_NotNull_Min,
+                                    bsd.MetaData.Created.Date_NotNull_Min,
                                     0,
-                                    bsd.Freight_Accepted,
+                                    bsd.Freight_Accepted_Refundable,
                                     commentFixed,
                                     personForSystem,
                                     bsdDeliverymanPerson,
-                                    CashTrxVmDocumentTypeENUM.DeliveryOrderCharges, bsd.IsCashAvailableTo_Deliveryman());
+                                    CashTrxVmDocumentTypeENUM.DeliveryOrderCharges, bsd.IsCashAvailableTo_Deliveryman(),
+                            CashTypeENUM.Refundable);
 
-                        lstOfCashTrxVm2.Add(cashTrx);
+                        if (cashTrx.HasValue)
+                            lstOfCashTrxVm2.Add(cashTrx);
 
 
                         //also block the same amount of freight in case of failure
                         cashTrx = create_CashTrxVM2_From_BuySellDoc(
-                        bsd,
-                        bsd.CourierAcceptedByBuyerAndSeller.Date_NotNull_Min,
-                        bsd.Freight_Accepted,
-                        0,
-                        commentFixed,
-                        bsdDeliverymanPerson,
-                        personForSystem,
-                        CashTrxVmDocumentTypeENUM.DeliveryOrderExecutionGuarantee,
-                        bsd.IsCashAvailableTo_Deliveryman());
+                            bsd,
+                            bsd.MetaData.Created.Date_NotNull_Min,
+                            bsd.Freight_Accepted_Refundable,
+                            0,
+                            commentFixed,
+                            bsdDeliverymanPerson,
+                            personForSystem,
+                            CashTrxVmDocumentTypeENUM.DeliveryOrderExecutionGuarantee,
+                            bsd.IsCashAvailableTo_Deliveryman(),
+                            CashTypeENUM.Refundable);
 
-                        lstOfCashTrxVm2.Add(cashTrx);
+                        if (cashTrx.HasValue)
+                            lstOfCashTrxVm2.Add(cashTrx);
+
+
+
 
                         cashTrx = create_CashTrxVM2_From_BuySellDoc(
-                        bsd,
-                        bsd.CourierAcceptedByBuyerAndSeller.Date_NotNull_Min,
-                        bsd.InsuranceRequired,
-                        0,
-                        commentFixed,
-                        bsdDeliverymanPerson,
-                        personForSystem,
-                        CashTrxVmDocumentTypeENUM.DeliveryOrderInsurance,
-                        bsd.IsCashAvailableTo_Deliveryman());
+                            bsd,
+                            bsd.MetaData.Created.Date_NotNull_Min,
+                            bsd.InsuranceRequired,
+                            0,
+                            commentFixed,
+                            bsdDeliverymanPerson,
+                            personForSystem,
+                            CashTrxVmDocumentTypeENUM.DeliveryOrderInsurance,
+                            bsd.IsCashAvailableTo_Deliveryman(),
+                            CashTypeENUM.Refundable);
 
-                        lstOfCashTrxVm2.Add(cashTrx);
+
+                        if(cashTrx.HasValue)
+                            lstOfCashTrxVm2.Add(cashTrx);
 
 
                     }
@@ -1284,46 +1544,39 @@ namespace UowLibrary.SuperLayerNS
                     {
                         CashTrxVM2 cashTrx = create_CashTrxVM2_From_BuySellDoc(
                             bsd,
-                            bsd.RequestConfirmed.Date_NotNull_Min,
+                            bsd.MetaData.Created.Date_NotNull_Min,
                             0,
-                            bsd.TotalInvoice,
+                            bsd.Total_Payment_For_Invoice_Refundable(),
                             bsd.Comment,
                             bsdCustomerPerson,
                             bsdOwnerPerson,
-                            CashTrxVmDocumentTypeENUM.SaleOrder, bsd.IsCashAvailableTo_Owner());
+                            CashTrxVmDocumentTypeENUM.SaleOrder,
+                            bsd.IsCashAvailableTo_Owner(),
+                            CashTypeENUM.Refundable);
 
-                        lstOfCashTrxVm2.Add(cashTrx);
+                        if (cashTrx.HasValue)
+                            lstOfCashTrxVm2.Add(cashTrx);
+
+
+                        cashTrx = create_CashTrxVM2_From_BuySellDoc(
+                            bsd,
+                            bsd.MetaData.Created.Date_NotNull_Min,
+                            0,
+                            bsd.Total_Payment_For_Invoice_NonRefundable(),
+                            bsd.Comment,
+                            bsdCustomerPerson,
+                            bsdOwnerPerson,
+                            CashTrxVmDocumentTypeENUM.SaleOrder,
+                            bsd.IsCashAvailableTo_Owner(),
+                            CashTypeENUM.NonRefundable);
+
+                        if (cashTrx.HasValue)
+                            lstOfCashTrxVm2.Add(cashTrx);
+
+
                     }
                 }
 
-                //if (!bsdDeliverymanPerson.IsNull())
-                //{
-                //    //add insurance in case
-                //    CashTrxVM2 cashTrx = create_CashTrxVM2_From_BuySellDoc(
-                //        bsd,
-                //        bsd.OrderConfirmedByDeliveryman.Date_NotNull_Min,
-                //        bsd.Freight_Accepted,
-                //        bsd.Freight_Accepted,
-                //        bsd.Comment,
-                //        bsdDeliverymanPerson,
-                //        bsdOwnerPerson,
-                //        CashTrxVmDocumentTypeENUM.DeliveryOrderPickupGuarantee);
-
-                //    lstOfCashTrxVm2.Add(cashTrx);
-
-                //    //add guarantee
-                //    cashTrx = create_CashTrxVM2_From_BuySellDoc(
-                //        bsd,
-                //        bsd.OrderConfirmedByDeliveryman.Date_NotNull_Min,
-                //        bsd.Freight_Accepted,
-                //        bsd.Freight_Accepted,
-                //        bsd.Comment,
-                //        bsdDeliverymanPerson,
-                //        bsdOwnerPerson,
-                //        CashTrxVmDocumentTypeENUM.DeliveryOrderInsurance);
-
-                //    lstOfCashTrxVm2.Add(cashTrx);
-                //}
             }
 
 
@@ -1343,17 +1596,38 @@ namespace UowLibrary.SuperLayerNS
                     {
                         //create a trx for customer salesman
                         CashTrxVM2 cashTrx = create_CashTrxVM2_From_BuySellDoc(
-                                                        bsd,
-                                                        bsd.RequestConfirmed.Date_NotNull_Min,
-                                                        bsd.TotalInvoice,
-                                                        0,
-                                                        bsd.Comment,
-                                                        bsdCustomerPerson,
-                                                        bsdOwnerPerson,
-                                                        CashTrxVmDocumentTypeENUM.PurchaseOrder,
-                                                        bsd.IsCashAvailableTo_Customer());
+                            bsd,
+                            bsd.MetaData.Created.Date_NotNull_Min,
+                            bsd.Total_Payment_For_Invoice_Refundable(),
+                            0,
+                            bsd.Comment,
+                            bsdCustomerPerson,
+                            bsdOwnerPerson,
+                            CashTrxVmDocumentTypeENUM.PurchaseOrder,
+                            bsd.IsCashAvailableTo_Customer(),
+                            CashTypeENUM.Refundable);
 
-                        lstOfCashTrxVm2.Add(cashTrx);
+                        if (cashTrx.HasValue)
+                            lstOfCashTrxVm2.Add(cashTrx);
+
+
+
+                        //create a trx for customer salesman
+                        cashTrx = create_CashTrxVM2_From_BuySellDoc(
+                            bsd,
+                            bsd.MetaData.Created.Date_NotNull_Min,
+                            bsd.Total_Payment_For_Invoice_NonRefundable(),
+                            0,
+                            bsd.Comment,
+                            bsdCustomerPerson,
+                            bsdOwnerPerson,
+                            CashTrxVmDocumentTypeENUM.PurchaseOrder,
+                            bsd.IsCashAvailableTo_Customer(),
+                            CashTypeENUM.NonRefundable);
+
+                        if (cashTrx.HasValue)
+                            lstOfCashTrxVm2.Add(cashTrx);
+
                     }
                 }
             }
@@ -1392,10 +1666,23 @@ namespace UowLibrary.SuperLayerNS
 
 
 
-        private CashTrxVM2 create_CashTrxVM2_From_BuySellDoc(BuySellDoc bsd, DateTime date, decimal paymentAmount, decimal receiptAmount, string comment, Person fromPerson, Person toPerson, CashTrxVmDocumentTypeENUM cashTrxVmDocumentTypeENUM, bool isCashAvailable)
+        private CashTrxVM2 create_CashTrxVM2_From_BuySellDoc(BuySellDoc bsd, DateTime date, decimal paymentAmount, decimal receiptAmount, string comment, Person fromPerson, Person toPerson, CashTrxVmDocumentTypeENUM cashTrxVmDocumentTypeENUM, bool isCashAvailable, CashTypeENUM cashTypeEnum)
         {
             CashStateENUM CashStateEnum = isCashAvailable ? CashStateENUM.Available : CashStateENUM.Allocated;
             //if from person is owner or customer or deliveryman.... the cash available status will be different
+            if(bsd.IsShop)
+            {
+                if(bsd.Shop.IsNull())
+                {
+                    comment = "(Shop) " + comment;
+
+                }
+                else
+                {
+                    comment = "(Shop: " + bsd.Shop.FullName() + ") " + comment;
+
+                }
+            }
             CashTrxVM2 cashTrx = new CashTrxVM2(
                         bsd.Id,
                         date,                                  //*
@@ -1404,7 +1691,7 @@ namespace UowLibrary.SuperLayerNS
                         comment,                               //*
                         fromPerson,                            //*
                         toPerson,                              //*
-                        CashTypeENUM.Refundable,
+                        cashTypeEnum,
                         CashStateEnum,
                         cashTrxVmDocumentTypeENUM,             //*
                         bsd.Name,

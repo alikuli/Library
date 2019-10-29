@@ -1,0 +1,48 @@
+﻿@model ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc
+
+
+
+@{
+    int count = 0;
+}
+
+<style>
+    div {
+        word-wrap: break-word;
+    }
+</style>
+
+
+
+<a class="btn btn-info m-1" href="#nonreturnabletrxid" data-toggle="collapse">Non Refundable Amounts</a>
+
+
+<div id="nonreturnabletrxid" class="collapse  border-bottom-2">
+
+
+    @if (!Model.NonReturnableTrxs_Fixed().IsNullOrEmpty())
+    {
+        foreach (ModelsClassLibrary.ModelsNS.BuySellDocNS.NonReturnableNS.NonReturnableTrx item in Model.NonReturnableTrxs_Fixed())
+        {
+            count++;
+            
+            <div class="row border border-white border-bottom-2 rounded">
+                <div class="col-1 overflow-wrap">
+                    <strong>@count)</strong> 
+                </div>
+                <div class="col-7 overflow-wrap">
+                    @item.Name
+                </div>
+
+                <div class="col-4 overflow-wrap">
+                    @item.Amount.ToString().ToRuppeeFormat() 
+                </div>
+            </div>
+
+        }
+    }
+    else
+    {
+        <div class="text-white bg-danger p-2">No Transactions</div>
+    }
+</div>

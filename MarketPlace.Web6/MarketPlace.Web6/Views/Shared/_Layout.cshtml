@@ -60,6 +60,7 @@
                             <a class="dropdown-item" href="@Url.Action("MiscMenu", "Home", null)">Misc</a>
                             <a class="dropdown-item" href="@Url.Action("PlayersMenu", "Home", null)">Players</a>
                             <a class="dropdown-item" href="@Url.Action("ListOfPeopleWantingJobs", "ServiceRequestHdrs", null)">List of People wanting jobs</a>
+                            <a class="dropdown-item" href="@Url.Action("RunDailyTasks", "Home", null)">Run Daily Tasks</a>
                             @*<a class="dropdown-item background-yellow text-dark" href="@Url.Action("Get_Cash_From_EncashmentRequest", "CashTrxs", null)">Cash Encashment</a>*@
                         </div>
                     </li>
@@ -70,7 +71,7 @@
                 {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="@Url.Action("Index","FileDocs",null)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Genearal
+                            General
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="@Url.Action("CashMenu", "Home", null)">Payments & Receipts</a>
@@ -197,6 +198,13 @@
         <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
     </footer>
 
+    <div class="loaderbody spinner-border loader2 d-none" role="status" id="loaderbody">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+
+
+
 
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/MyScripts/_Pollyfill.js"></script>
@@ -209,6 +217,8 @@
     @Scripts.Render("~/bundles/Fileinput")
     @Scripts.Render("~/Scripts/notifyNS/notify")
     @Scripts.Render("~/Scripts/MyScripts/MyGlobalScriptNew")
+    <script src="~/Scripts/MyScripts/_addressCheckBoxes.js"></script>
+
     @RenderSection("scripts", required: false)
 
 

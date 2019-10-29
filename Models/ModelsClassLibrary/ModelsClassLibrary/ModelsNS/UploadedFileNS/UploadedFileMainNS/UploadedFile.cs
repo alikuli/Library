@@ -1,7 +1,6 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.ToolsNS;
 using EnumLibrary.EnumNS;
-using InterfacesLibrary.SharedNS.FeaturesNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -25,7 +24,7 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
         {
 
         }
-        public UploadedFile(HttpPostedFileBase file, string relativePath, int noOfTrys = 0)
+        public UploadedFile(HttpPostedFileBase file, string relativePath)
             : this(
             Path.GetFileNameWithoutExtension(file.FileName),
             FileTools.CreateNewNameForFile(Path.GetExtension(file.FileName)),
@@ -33,48 +32,11 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
             relativePath)
         {
 
-            try
-            {
-                file.SaveAs(AbsolutePathWithFileName());
-            }
-            catch (DirectoryNotFoundException)
-            {
-                if (noOfTrys > 3)
-                    throw new Exception("Unable to create directory " + AbsolutePathWithFileName());
+            File = file;
+            
 
-                //create the directory
-                FileTools.CreateDirectory(GetAbsolutePath(relativePath));
-                noOfTrys += 1;
-                new UploadedFile(file, relativePath, noOfTrys);
-            }
-
-            //if (file.IsNull())
-            //    return;
-            //if (!file.FileName.IsNullOrWhiteSpace())
-            //{
-            //    OriginalNameWithoutExtention = Path.GetFileNameWithoutExtension(file.FileName);
-            //    Extention = Path.GetExtension(file.FileName);
-            //    Name = FileTools.CreateNewNameForFile(Extention);
-            //    RelativeWebsitePath = relativePath;
-            //    //Now we will standardize the size of the picture by max bit size and height and width
-            //    HttpPostedFileBase adjustedsizeFile = ConvertHttpImageToSmall(file);
-            //    adjustedsizeFile.SaveAs(AbsolutePathWithFileName());
-            //}
         }
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="originalNameWithoutExtention">This is there because during initialization the name of the file is the name of the item. That is why there is no extention. Also at this time we have no idea what the extention is.</param>
-        ///// <param name="newNameWithMappedPathPlusExtention"></param>
-        ///// <param name="saveToRelativePath"></param>
-        //public UploadedFile(string originalNameWithoutExtention, string newNameWithMappedPathPlusExtention, string saveToRelativePath)
-        //{
-        //    OriginalNameWithoutExtention = originalNameWithoutExtention;
-        //    Name = newNameWithMappedPathPlusExtention;
-        //    Extention = Path.GetExtension(newNameWithMappedPathPlusExtention);
-        //    RelativeWebsitePath = saveToRelativePath;
-        //}
+        //int noOfTrys = 0;
 
         public UploadedFile(string originalNameNoExtention, string newNameNoExtention, string extention, string saveToRelativePath)
         {
@@ -85,28 +47,34 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
         }
 
 
-        //public UploadedFile(string getFromRelativePath, string saveToRelativePath, string nameWithExtention)
+        //public void SaveFile()
         //{
+        //    try
+        //    {
+        //        File.SaveAs(AbsolutePathWithFileName());
+        //    }
+        //    catch (DirectoryNotFoundException)
+        //    {
+        //        if (noOfTrys > 3)
+        //            throw new Exception("Unable to create directory " + AbsolutePathWithFileName());
+
+        //        //create the directory
+        //        FileTools.CreateDirectory(GetAbsolutePath(RelativeWebsitePath));
+        //        noOfTrys += 1;
+        //        SaveFile();
+        //    }
 
         //}
-        //public UploadedFile(string fileNameWithPathAndExtention, string saveToRelativePath)
-        //    : this(
-        //    Path.GetFileName(fileNameWithPathAndExtention),
-        //    AliKuli.ToolsNS.FileTools.CreateNewNameForFile(Path.GetExtension(fileNameWithPathAndExtention)),
-        //    saveToRelativePath)
-        //{
-        //    //string orignalNameWithExtention = Path.GetFileName(fileNameWithPathAndExtention);
-        //    //string orignalNameWithoutExtention = Path.GetFileNameWithoutExtension(orignalNameWithExtention);
-        //    //string relativePath = Path.GetFullPath(fileNameWithPathAndExtention);
-        //    //string newNameWithExtention = AliKuli.ToolsNS.FileTools.CreateNewNameForFile(Path.GetExtension(fileNameWithPathAndExtention));
 
-        //}
+        HttpPostedFileBase File { get; set; }
+
 
 
         public override ClassesWithRightsENUM ClassNameForRights()
         {
             return ClassesWithRightsENUM.UploadFile;
         }
+
         /// <summary>
         /// This stores the Original name without the extention
         /// </summary>
@@ -134,23 +102,36 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
         /// <returns></returns>
         public string AbsolutePathWithFileName()
         {
-            return Path.Combine(AbsolutePath(), Name);
+            return UploadedFile.AbsolutePathWithFileName (AbsolutePath(), Name);
         }
-        
+
+        public static string AbsolutePathWithFileName(string absolutePath, string name)
+        {
+            return Path.Combine(absolutePath, name);
+        }
+
 
         public string GetRelativePathWithFileName()
         {
             return GetRelativePathWithFileName(Name, RelativeWebsitePath);
         }
 
-        public string GetRelativePathWithFileName(string name,string relativeWebsitePath)
+        public string GetRelativePathWithFileName(string name, string relativeWebsitePath)
         {
             if (relativeWebsitePath.IsNullOrEmpty())
-                return AliKuli.UtilitiesNS.ConfigManagerHelper.DefaultBlankPicture;
+                return DefaultBlankPictureLocation();
 
             if (name.IsNullOrEmpty())
-                return AliKuli.UtilitiesNS.ConfigManagerHelper.DefaultBlankPicture;
+                return DefaultBlankPictureLocation();
+
             return Path.Combine(relativeWebsitePath, name);
+        }
+
+        public static string DefaultBlankPictureLocation()
+        {
+            string str = AliKuli.UtilitiesNS.ConfigManagerHelper.DefaultBlankPicture;
+            str.IsNullOrWhiteSpaceThrowException("DefaultBlankPictureLocation");
+            return str;
         }
 
         public static string GetAbsolutePath(string relativePath)
@@ -199,6 +180,21 @@ namespace ModelsClassLibrary.ModelsNS.UploadedFileNS
         }
 
 
+        public bool IsImage()
+        {
+            string extention_Fixed = Extention.ToLower();
+            switch (extention_Fixed)
+            {
+                case ".bmp":
+                case ".jpeg":
+                case ".jpg":
+                case ".png":
+                    return true;
+                default:
+                    return false;
+            }
+
+        }
 
 
     }

@@ -2,6 +2,7 @@
 using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
 using ModelsClassLibrary.ModelsNS.AddressNS;
+using ModelsClassLibrary.ModelsNS.IndexNS.PlaceLocationNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
@@ -214,7 +215,8 @@ namespace MarketPlace.Web6.Controllers
         public async Task<ActionResult> ShowHidden(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, MenuENUM menuEnum = MenuENUM.IndexDefault, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "", string viewName = "Index")
         {
             ProductChildBiz.IsShowHidden = true;
-            return await base.Index(id, searchFor, isandForSearch, selectedId, returnUrl, menuEnum, sortBy, print, isMenu, menuPathMainId, viewName);
+            MainLocationSelectorClass mainLocationSelectorClass = new MainLocationSelectorClass();
+            return await base.Index(id, searchFor, isandForSearch, selectedId, returnUrl, mainLocationSelectorClass, menuEnum, sortBy, print, isMenu, menuPathMainId, viewName);
         }
 
     }

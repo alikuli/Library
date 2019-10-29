@@ -4,8 +4,11 @@ using AliKuli.ToolsNS;
 using AliKuli.UtilitiesNS.RandomNumberGeneratorNS;
 using DalLibrary.Interfaces;
 using EnumLibrary.EnumNS;
+using InterfacesLibrary.SharedNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS.EmailAddressNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
@@ -38,7 +41,7 @@ namespace UowLibrary.EmailAddressNS
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="emailAddressId"></param>
-        public void SendEmailConfirmation(string emailAddressId)
+        public void SendEmailConfirmation(string emailAddressId, GlobalObject globalObject)
         {
             UserId.IsNullThrowException("You are not logged in");
             emailAddressId.IsNullOrWhiteSpaceThrowArgumentException("emailAddressId");
@@ -65,6 +68,7 @@ namespace UowLibrary.EmailAddressNS
             portStr.IsNullOrWhiteSpaceThrowArgumentException("No port has been listed.");
             int portInt;
             bool success = int.TryParse(portStr, out portInt);
+
             if (!success)
             {
                 throw new Exception("The port number is not a number.");
@@ -84,7 +88,14 @@ namespace UowLibrary.EmailAddressNS
                 emailClient.SendEmailMsg(from,subject,body,sendToList,null);
 
                 emailAddress.VerificationStatusEnum = VerificaionStatusENUM.Mailed;
-                UpdateAndSave(emailAddress);
+
+                ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+                param.Entity = emailAddress as ICommonWithId;
+                param.GlobalObject = globalObject;
+
+                PersonBiz.UpdateAndSave(param);
+
+                //UpdateAndSave(emailAddress);
                 ErrorsGlobal.AddMessage(string.Format("Verification Email Sent to: '{0}'",emailAddress.Name));
 
             }
@@ -98,7 +109,7 @@ namespace UowLibrary.EmailAddressNS
 
         }
 
-        public bool CheckEmailVerificationCode(string emailAddressId, string verificationCode)
+        public bool CheckEmailVerificationCode(string emailAddressId, string verificationCode, GlobalObject globalObject)
         {
             UserId.IsNullThrowException("You are not logged in");
             emailAddressId.IsNullOrWhiteSpaceThrowArgumentException("emailAddressId");
@@ -114,7 +125,14 @@ namespace UowLibrary.EmailAddressNS
                 emailAddress.VerificationStatusEnum = VerificaionStatusENUM.Verified;
                 emailAddress.VerificationDateComplex.SetToTodaysDate(UserName, UserId);
 
-                UpdateAndSave(emailAddress);
+
+                ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+                param.Entity = emailAddress as ICommonWithId;
+                param.GlobalObject = globalObject;
+
+                UpdateAndSave(param);
+
+
                 ErrorsGlobal.AddMessage(string.Format("Email: '{0} has been VERIFIED'", emailAddress.Name));
                 return true;
             }
@@ -184,7 +202,7 @@ namespace UowLibrary.EmailAddressNS
         //}
 
 
-        public void UpdateAndSaveDefaultAddress(string addressId)
+        public void UpdateAndSaveDefaultAddress(string addressId, GlobalObject globalObject)
         {
             UserId.IsNullOrWhiteSpaceThrowArgumentException("not logged in");
             addressId.IsNullOrWhiteSpaceThrowArgumentException("AddressId is null");
@@ -197,7 +215,14 @@ namespace UowLibrary.EmailAddressNS
             person.IsNullThrowException("Person not found");
 
             person.DefaultEmailAddressId = addressId;
-            PersonBiz.UpdateAndSave(person);
+            //PersonBiz.UpdateAndSave(person);
+
+            ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+            param.Entity = person as ICommonWithId;
+            param.GlobalObject = globalObject;
+
+            UpdateAndSave(param);
+
         }
     }
 }

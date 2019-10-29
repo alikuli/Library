@@ -3,10 +3,12 @@ using AliKuli.ToolsNS;
 using EnumLibrary.EnumNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.BuySellDocNS;
+//using ModelsClassLibrary.ModelsNS.BuySellDocNS.NonReturnableNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS;
 using ModelsClassLibrary.ModelsNS.DocumentsNS.FreightOffersTrxNS;
 using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
+using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Complex;
 using System;
@@ -26,33 +28,38 @@ namespace UowLibrary.BuySellDocNS
 
         private void execute_BusinessRules(ControllerCreateEditParameter parm)
         {
-            BuySellDoc buySellDoc = parm.Entity as BuySellDoc;
+            BuySellDoc bsd = BuySellDoc.UnBox(parm.Entity);
+            GlobalObject globalObject = parm.GlobalObject;
+            globalObject.IsNullThrowException();
 
-            switch (buySellDoc.BuySellDocumentTypeEnum)
+            switch (bsd.BuySellDocumentTypeEnum)
             {
 
-
-
                 case BuySellDocumentTypeENUM.Delivery:
-                    switch (buySellDoc.BuySellDocStateEnum)
+                    switch (bsd.BuySellDocStateEnum)
                     {
 
                         case BuySellDocStateENUM.ReadyForPickup:
-                            throwExceptionIfVehicalTypeNotAdded(buySellDoc);
-                            not_Within_Shipping_Window_Throw_Exception(buySellDoc);
-                            deliveryman_Makes_Bid_To_Pickup(buySellDoc);
+                            throwExceptionIfVehicalTypeNotAdded(bsd);
+                            not_Within_Shipping_Window_Throw_Exception(bsd);
+                            //todo check this the freight variable may be wrong
+                            IsEnoughBalanceForUser(bsd, parm, bsd.InsuranceRequired + bsd.FreightOfferDecimal, 0);
+                            deliveryman_Makes_Bid_To_Pickup(bsd);
                             break;
 
                         case BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller:
-                            not_Within_Shipping_Window_Throw_Exception(buySellDoc);
-                            deliveryman_Accepts_Request_To_Pickup(buySellDoc);
+                            //todo check this the freight variable may be wrong
+                            IsEnoughBalanceForUser(bsd, parm, bsd.InsuranceRequired + bsd.FreightOfferDecimal, 0);
+                            not_Within_Shipping_Window_Throw_Exception(bsd);
+                            deliveryman_Accepts_Request_To_Pickup(bsd);
                             break;
 
 
                         case BuySellDocStateENUM.CourierComingToPickUp:
-                            not_Within_Shipping_Window_Throw_Exception(buySellDoc);
-                            cancel_Pickup_of(buySellDoc);
-
+                            not_Within_Shipping_Window_Throw_Exception(bsd);
+                            cancel_Pickup_of(bsd);
+                            //todo check this the freight variable may be wrong
+                            IsEnoughBalanceForUser(bsd, parm, bsd.InsuranceRequired + bsd.FreightOfferDecimal, 0);
                             break;
 
                         case BuySellDocStateENUM.PickedUp:
@@ -60,8 +67,8 @@ namespace UowLibrary.BuySellDocNS
 
 
                         case BuySellDocStateENUM.Enroute:
-                            deliveryman_Delivers_Product(buySellDoc);
-                            canceled_Becomes_A_Problem(buySellDoc);
+                            deliveryman_Delivers_Product(bsd);
+                            canceled_Becomes_A_Problem(bsd);
                             break;
 
                         case BuySellDocStateENUM.Delivered:
@@ -74,6 +81,7 @@ namespace UowLibrary.BuySellDocNS
                         case BuySellDocStateENUM.RequestUnconfirmed:
                         case BuySellDocStateENUM.RequestConfirmed:
                         case BuySellDocStateENUM.BeingPreparedForShipmentBySeller:
+                        case BuySellDocStateENUM.OptedOutOfSystem:
                         default:
                             break;
                     }
@@ -81,50 +89,54 @@ namespace UowLibrary.BuySellDocNS
 
 
                 case BuySellDocumentTypeENUM.Sale:
-                    switch (buySellDoc.BuySellDocStateEnum)
+                    switch (bsd.BuySellDocStateEnum)
                     {
                         case BuySellDocStateENUM.Unknown:
                         case BuySellDocStateENUM.InProccess:
                         case BuySellDocStateENUM.BackOrdered:
                         case BuySellDocStateENUM.All:
                         case BuySellDocStateENUM.RequestUnconfirmed:
-                            not_Within_Shipping_Window_Throw_Exception(buySellDoc);
+                            not_Within_Shipping_Window_Throw_Exception(bsd);
                             break;
 
                         case BuySellDocStateENUM.RequestConfirmed:
-                            not_Within_Shipping_Window_Throw_Exception(buySellDoc);
-                            seller_Accepts_Buyers_RequestConfirmed(buySellDoc);
+                            not_Within_Shipping_Window_Throw_Exception(bsd);
+                            //set_System_Opt_Out_of_System_Payment(bsd, globalObject);
+                            seller_Accepts_Buyers_RequestConfirmed(bsd, parm);
 
                             break;
 
                         case BuySellDocStateENUM.BeingPreparedForShipmentBySeller:
-                            not_Within_Shipping_Window_Throw_Exception(buySellDoc);
-                            seller_Has_Completed_Preparing_Parcel_For_Shipment(buySellDoc);
+                            not_Within_Shipping_Window_Throw_Exception(bsd);
+                            seller_Has_Completed_Preparing_Parcel_For_Shipment(bsd);
                             break;
 
                         case BuySellDocStateENUM.ReadyForPickup:
-                            not_Within_Shipping_Window_Throw_Exception(buySellDoc);
-                            seller_Cancels_Deliveryman(buySellDoc);
-                            seller_Selects_Deliveryman_For_Shipment(buySellDoc);
-                            seller_Cancels_And_Goes_Back_To_BeingPreparedForShipmentBySeller(buySellDoc);
+                            not_Within_Shipping_Window_Throw_Exception(bsd);
+                            seller_Selects_Deliveryman_For_Shipment(bsd);
+                            seller_Cancels_Deliveryman(bsd);
+                            seller_Cancels_And_Goes_Back_To_BeingPreparedForShipmentBySeller(bsd);
                             break;
 
                         case BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller:
-                            not_Within_Shipping_Window_Throw_Exception(buySellDoc);
-                            cancel_Pickup_of(buySellDoc);
+                            not_Within_Shipping_Window_Throw_Exception(bsd);
+                            set_Payment_For_Deliveryman(bsd, parm);
+                            set_Commissions_For_DeliverySalesman(bsd, parm);
+                            cancel_Pickup_of(bsd);
 
                             break;
 
                         case BuySellDocStateENUM.CourierComingToPickUp:
-                            not_Within_Shipping_Window_Throw_Exception(buySellDoc);
-                            deliveryman_PicksUp_From_Seller(buySellDoc);
-                            cancel_Pickup_of(buySellDoc);
+                            not_Within_Shipping_Window_Throw_Exception(bsd);
+
+                            deliveryman_PicksUp_From_Seller(bsd);
+                            cancel_Pickup_of(bsd);
 
                             break;
 
                         case BuySellDocStateENUM.PickedUp:
                         case BuySellDocStateENUM.Enroute:
-                            canceled_Becomes_A_Problem(buySellDoc);
+                            canceled_Becomes_A_Problem(bsd);
                             break;
 
                         case BuySellDocStateENUM.Delivered:
@@ -132,8 +144,12 @@ namespace UowLibrary.BuySellDocNS
 
                         case BuySellDocStateENUM.Rejected:
                             //this is during BuySellController.CancelOrder
-
                             break;
+
+                        case BuySellDocStateENUM.OptedOutOfSystem:
+                            //gets reset in GetPenalty
+                            break;
+
                         case BuySellDocStateENUM.Problem:
                             break;
                         default:
@@ -143,7 +159,7 @@ namespace UowLibrary.BuySellDocNS
 
 
                 case BuySellDocumentTypeENUM.Purchase:
-                    switch (buySellDoc.BuySellDocStateEnum)
+                    switch (bsd.BuySellDocStateEnum)
                     {
                         case BuySellDocStateENUM.Unknown:
                         case BuySellDocStateENUM.InProccess:
@@ -152,7 +168,7 @@ namespace UowLibrary.BuySellDocNS
                             break;
 
                         case BuySellDocStateENUM.RequestUnconfirmed:
-                            buyer_Confirms_His_PurchaseOrder(buySellDoc, parm);
+                            buyer_Confirms_His_PurchaseOrder(bsd, parm);
                             //calculate_CustomerSalesman_Commission(buySellDoc);
                             //calculate_OwnerSalesman_Commission(buySellDoc);
                             //calculate_System_Commission(buySellDoc);
@@ -160,7 +176,7 @@ namespace UowLibrary.BuySellDocNS
                             break;
 
                         case BuySellDocStateENUM.RequestConfirmed:
-                            not_Within_Shipping_Window_Throw_Message(buySellDoc);
+                            not_Within_Shipping_Window_Throw_Message(bsd);
 
                             break;
 
@@ -168,7 +184,7 @@ namespace UowLibrary.BuySellDocNS
                             break;
 
                         case BuySellDocStateENUM.ReadyForPickup:
-                            Buyer_Selects_Courier_For_Shipment(buySellDoc);
+                            Buyer_Selects_Courier_For_Shipment(bsd);
                             break;
 
                         case BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller:
@@ -178,16 +194,18 @@ namespace UowLibrary.BuySellDocNS
                         case BuySellDocStateENUM.PickedUp:
                             break;
                         case BuySellDocStateENUM.Enroute:
-                            canceled_Becomes_A_Problem(buySellDoc);
+                            canceled_Becomes_A_Problem(bsd);
                             break;
 
                         case BuySellDocStateENUM.Delivered:
                             break;
 
                         case BuySellDocStateENUM.Rejected:
-                            Buyer_Converts_BuySell_To_RequestUnconfirmed(buySellDoc);
+                            Buyer_Converts_BuySell_To_RequestUnconfirmed(bsd);
                             break;
 
+                        case BuySellDocStateENUM.OptedOutOfSystem:
+                        //gets reset in GetPenalty
                         case BuySellDocStateENUM.Problem:
                             break;
 
@@ -202,15 +220,17 @@ namespace UowLibrary.BuySellDocNS
                     throw new Exception("Unknown Document Type.");
             }
             //    cancel_With_Penalty(buySellDoc);
-            ThrowExceptionIfBillToIdOrShipToIdIsEmptyOrNull(buySellDoc);
-            not_Within_Shipping_Window_Throw_Message(buySellDoc);
-            order_Canceled(buySellDoc);
-            order_Rejected(buySellDoc);
-            set_Commissions(buySellDoc);
-            reset_Commissions_And_Fields(buySellDoc);
-            CreateBuySellHistory(buySellDoc);
+            ThrowExceptionIfBillToIdOrShipToIdIsEmptyOrNull(bsd);
+            not_Within_Shipping_Window_Throw_Message(bsd);
+            order_Canceled(bsd);
+            order_Rejected(bsd);
+            set_Commissions(bsd, parm);
+            if_Reject_reset_Commissions_And_Fields(bsd);
+            CreateBuySellHistory(bsd);
 
         }
+
+
 
         private void canceled_Becomes_A_Problem(BuySellDoc buySellDoc)
         {
@@ -261,482 +281,63 @@ namespace UowLibrary.BuySellDocNS
         // Commission for Sales
         //**********************************************************************************************************
 
-        /// <summary>
-        /// Use this so that all the amounts are in sync.
-        /// </summary>
-        /// <param name="buySellDoc"></param>
-        private void set_Commissions(BuySellDoc buySellDoc)
+
+
+        private void order_Canceled(BuySellDoc bsd)
         {
-            if (buySellDoc.BuySellDocStateEnum == BuySellDocStateENUM.RequestUnconfirmed)
-                return;
+            if (bsd.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Cancel)
+            {
+                if (bsd.BuySellDocStateEnum == BuySellDocStateENUM.Delivered)
+                {
+                    if (bsd.ShopId.IsNullOrWhiteSpace())
+                    {
+                        bsd.BuySellDocStateEnum = BuySellDocStateENUM.Problem;
+                        bsd.Problem.SetToTodaysDate(UserName, UserId);
+                    }
+                    else
+                    {
+                        ifShopPurchaseThenDeleteShopAndMarkReject(bsd);
+                    }
+                }
+                else
+                {
+                    clearAllStatus(bsd);
+                    bsd.BuySellDocStateEnum = BuySellDocStateENUM.RequestUnconfirmed;
 
-            if (buySellDoc.BuySellDocStateEnum == BuySellDocStateENUM.RequestConfirmed)
-                return;
-
-            if (buySellDoc.BuySellDocStateEnum == BuySellDocStateENUM.Rejected)
-                return;
-
-            set_Owners_MaxCommission(buySellDoc);
-
-            set_OwnersSalesMan_Commission(buySellDoc);
-            set_Super_OwnersSalesMan_Commission(buySellDoc);
-            set_Super_Super_OwnersSalesMan_Commission(buySellDoc);
-
-            set_CustomersSalesMan_Commission(buySellDoc);
-            set_Super_CustomersSalesMan_Commission(buySellDoc);
-            set_Super_Super_CustomersSalesMan_Commission(buySellDoc);
-
-            set_Deliveryman_Commission(buySellDoc);
-
-            set_DeliverymansSalesMan_Commission(buySellDoc);
-            set_Super_DeliverymansSalesMan_Commission(buySellDoc);
-            set_Super_Super_DeliverymansSalesMan_Commission(buySellDoc);
-
-            set_System_Commission_Freight(buySellDoc);
-            set_System_Commission_SaleWithoutFreight(buySellDoc);
-
+                    //reset_Commissions_And_Fields(bsd);
+                }
+            }
         }
 
-        private void set_Super_Super_DeliverymansSalesMan_Commission(BuySellDoc bsd)
+        private void ifShopPurchaseThenDeleteShopAndMarkReject(BuySellDoc bsd)
         {
-            if (bsd.DeliverymanSalesmanId.IsNullOrWhiteSpace())
-            {
-                bsd.SuperSuperDeliverymanSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-            if (bsd.SuperDeliverymanSalesmanId.IsNullOrWhiteSpace())
-            {
-                bsd.SuperSuperDeliverymanSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-            //check to see if Super Deliveryman Salesman Exists
-            if (bsd.SuperSuperDeliverymanSalesmanId.IsNullOrWhiteSpace())
-            {
-                bsd.SuperSuperDeliverymanSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-
-
-            decimal pct = SalesCommissionClass.CommissionPct_Deliveryman_Super_Super_Salesman;
-            bsd.SuperSuperDeliverymanSalesmanCommission.Percent = pct;
-
-            if (bsd.TotalInvoiceLessFreight * pct == 0)
+            //is this a shop BuySellDoc
+            if (bsd.ShopId.IsNullOrWhiteSpace())
                 return;
 
-            bsd.SuperSuperDeliverymanSalesmanCommission.Amount = bsd.TotalInvoiceLessFreight * pct / 100;
+            //locate the shop in products and make it deleted
+            Product shop = ProductBiz.Find(bsd.ShopId);
+            shop.IsNullThrowException();
+            shop.MetaData.IsDeleted = true;
+            shop.MetaData.Deleted.SetToTodaysDate(UserName, UserId);
+            clearAllStatus(bsd);
+            bsd.BuySellDocStateEnum = BuySellDocStateENUM.Rejected;
+            bsd.Rejected.SetToTodaysDate(UserName, UserId);
 
+            ProductBiz.Update(shop);
         }
 
-        private void set_Super_DeliverymansSalesMan_Commission(BuySellDoc bsd)
+        private void clearAllStatus(BuySellDoc bsd)
         {
-
-
-            if (bsd.DeliverymanSalesmanId.IsNullOrWhiteSpace())
-            {
-                bsd.SuperDeliverymanSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-            //check to see if Super Deliveryman Salesman Exists
-            if (bsd.SuperDeliverymanSalesmanId.IsNull())
-            {
-                bsd.SuperDeliverymanSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-            //reset if ownerSalesmanId is null
-
-            decimal pct = SalesCommissionClass.CommissionPct_Deliveryman_Super_Salesman;
-            bsd.SuperDeliverymanSalesmanCommission.Percent = pct;
-            if (bsd.TotalInvoiceLessFreight * pct == 0)
-                return;
-
-            bsd.SuperDeliverymanSalesmanCommission.Amount = bsd.TotalInvoiceLessFreight * pct / 100;
-
-        }
-
-        private void set_Super_Super_CustomersSalesMan_Commission(BuySellDoc bsd)
-        {
-            //check to see if Customer Salesman Exists
-            if (bsd.CustomerSalesmanId.IsNullOrWhiteSpace())
-            {
-                bsd.SuperSuperCustomerSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-            //check to see if Super Customer Salesman Exists
-            if (bsd.SuperCustomerSalesmanId.IsNull())
-            {
-                bsd.SuperSuperCustomerSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-            if (bsd.SuperSuperCustomerSalesmanId.IsNull())
-            {
-                bsd.SuperSuperCustomerSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-            decimal pct = SalesCommissionClass.CommissionPct_Customer_Super_Super_Salesman;
-            bsd.SuperSuperCustomerSalesmanCommission.Percent = pct;
-
-            if (bsd.TotalInvoiceLessFreight * pct == 0)
-                return;
-
-            bsd.SuperSuperCustomerSalesmanCommission.Amount = bsd.TotalInvoiceLessFreight * pct / 100;
-
-        }
-
-        private void set_Super_CustomersSalesMan_Commission(BuySellDoc bsd)
-        {
-            if (bsd.CustomerSalesmanId.IsNullOrWhiteSpace())
-            {
-                bsd.SuperCustomerSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-            //check to see if Super Customer Salesman Exists
-            if (bsd.SuperCustomerSalesman.IsNull())
-            {
-                bsd.SuperCustomerSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-            //reset if ownerSalesmanId is null
-
-            decimal pct = SalesCommissionClass.CommissionPct_Customer_Super_Salesman;
-            bsd.SuperCustomerSalesmanCommission.Percent = pct;
-            if (bsd.TotalInvoiceLessFreight * pct == 0)
-                return;
-
-            bsd.SuperCustomerSalesmanCommission.Amount = bsd.TotalInvoiceLessFreight * pct / 100;
-
-        }
-
-        private void set_Super_Super_OwnersSalesMan_Commission(BuySellDoc bsd)
-        {
-            //check to see if Super Owner Salesman Exists
-            if (bsd.OwnerSalesmanId.IsNullOrWhiteSpace())
-            {
-                bsd.SuperSuperOwnerSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-            //check to see if Super Owner Salesman Exists
-            if (bsd.SuperOwnerSalesmanId.IsNull())
-            {
-                bsd.SuperSuperOwnerSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-            if (bsd.SuperSuperOwnerSalesmanId.IsNull())
-            {
-                bsd.SuperSuperOwnerSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-
-            decimal pct = SalesCommissionClass.CommissionPct_Owner_Super_Super_Salesman;
-            bsd.SuperSuperOwnerSalesmanCommission.Percent = pct;
-
-            if (bsd.TotalInvoiceLessFreight * pct == 0)
-                return;
-
-            bsd.SuperSuperOwnerSalesmanCommission.Amount = bsd.TotalInvoiceLessFreight * pct / 100;
-        }
-
-        private void set_Super_OwnersSalesMan_Commission(BuySellDoc bsd)
-        {
-            if (bsd.OwnerSalesmanId.IsNullOrWhiteSpace())
-            {
-                bsd.SuperOwnerSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-            //check to see if Super Owner Salesman Exists
-            if (bsd.SuperOwnerSalesmanId.IsNull())
-            {
-                bsd.SuperOwnerSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-            //reset if ownerSalesmanId is null
-
-            decimal pct = SalesCommissionClass.CommissionPct_Owner_Super_Salesman;
-            bsd.SuperOwnerSalesmanCommission.Percent = pct;
-            if (bsd.TotalInvoiceLessFreight * pct == 0)
-                return;
-
-            bsd.SuperOwnerSalesmanCommission.Amount = bsd.TotalInvoiceLessFreight * pct / 100;
-
-        }
-
-        private void reset_Commissions_And_Fields(BuySellDoc buySellDoc)
-        {
-            if (buySellDoc.BuySellDocStateEnum == BuySellDocStateENUM.RequestUnconfirmed ||
-                buySellDoc.BuySellDocStateEnum == BuySellDocStateENUM.RequestConfirmed ||
-                buySellDoc.BuySellDocStateEnum == BuySellDocStateENUM.Rejected)
-            {
-                reset_CustomersCommissionAndFields(buySellDoc);
-                reset_OwnersCommissionAndFields(buySellDoc);
-                reset_DeliverymansCommissionAndFields(buySellDoc);
-                reset_SystemsCommission(buySellDoc);
-            }
-
-        }
-
-
-        private void reset_CustomersCommissionAndFields(BuySellDoc bsd)
-        {
-            //buySellDoc.CustomerSalesmanId_TEMP = null;
-            bsd.CustomerSalesmanId = null;
-            bsd.CustomerSalesman = null;
-            bsd.CustomerSalesmanCommission = new CommissionComplex();
-
-            bsd.SuperCustomerSalesmanId = null;
-            bsd.SuperCustomerSalesman = null;
-            bsd.SuperCustomerSalesmanCommission = new CommissionComplex();
-
-            bsd.SuperSuperCustomerSalesmanId = null;
-            bsd.SuperSuperCustomerSalesman = null;
-            bsd.SuperSuperCustomerSalesmanCommission = new CommissionComplex();
-        }
-
-
-        private void reset_OwnersCommissionAndFields(BuySellDoc bsd)
-        {
-
-            //buySellDoc.OwnerSalesmanId_TEMP = null;
-            bsd.OwnerSalesmanId = null;
-            bsd.OwnerSalesman = null;
-
-            bsd.OwnerSalesmanCommission = new CommissionComplex();
-
-            bsd.SuperOwnerSalesmanId = null;
-            bsd.SuperOwnerSalesman = null;
-            bsd.SuperOwnerSalesmanCommission = new CommissionComplex();
-
-            bsd.SuperSuperOwnerSalesmanId = null;
-            bsd.SuperSuperOwnerSalesman = null;
-            bsd.SuperSuperOwnerSalesmanCommission = new CommissionComplex();
-
-            bsd.Total_Charged_To_Owner = new CommissionComplex();
-
-
-        }
-
-
-        private void reset_DeliverymansCommissionAndFields(BuySellDoc bsd)
-        {
-            if (!bsd.FreightOfferTrxAcceptedId.IsNullOrWhiteSpace())
-            {
-                FreightOfferTrx freightOfferTrx = FreightOfferTrxBiz.Find(bsd.FreightOfferTrxAcceptedId);
-                freightOfferTrx.IsNullThrowException();
-                //freightOfferTrx.OfferAcceptedByDeliveryman = new BoolDateAndByComplex();
-                freightOfferTrx.OfferAcceptedByOwner = new BoolDateAndByComplex();
-                FreightOfferTrxBiz.Update(freightOfferTrx);
-
-                bsd.FreightOfferTrxAcceptedId = null;
-                bsd.FreightOfferTrxAccepted = null;
-
-            }
-
-            bsd.DeliverymanSalesman = null;
-            bsd.DeliverymanSalesmanId = null;
-            bsd.DeliverymanSalesmanCommission = new CommissionComplex();
-
-            bsd.SuperDeliverymanSalesmanId = null;
-            bsd.SuperDeliverymanSalesman = null;
-            bsd.SuperDeliverymanSalesmanCommission = new CommissionComplex();
-
-            bsd.SuperSuperDeliverymanSalesmanId = null;
-            bsd.SuperSuperDeliverymanSalesman = null;
-            bsd.SuperSuperDeliverymanSalesmanCommission = new CommissionComplex();
-
-            bsd.Total_Charged_To_Deliveryman = new CommissionComplex();
-
-
-            bsd.CourierAcceptedByBuyerAndSeller = new BoolDateAndByComplex();
-            bsd.CourierComingToPickUp = new BoolDateAndByComplex();
-
-
-        }
-
-        private void reset_SystemsCommission(BuySellDoc buySellDoc)
-        {
-            buySellDoc.System_Commission_For_SaleWithoutFreight = new CommissionComplex();
-            buySellDoc.System_Commission_For_Freight = new CommissionComplex();
-
-
-        }
-
-
-
-        //**********************************************************************************************************
-        // Commission for Sales
-        //**********************************************************************************************************
-
-
-        //this will always be the max commission chargeable
-        //use calculate_Commissions
-        private void set_Owners_MaxCommission(BuySellDoc buySellDoc)
-        {
-            //this should be on the TotalSaleLessFreight
-            buySellDoc.Total_Charged_To_Owner.Amount = buySellDoc.Get_Maximum_Commission_Chargeable_On_TotalSaleLessFreight_Amount();
-            buySellDoc.Total_Charged_To_Owner.Percent = buySellDoc.Get_Maximum_Commission_Chargeable_On_TotalSaleLessFreight_Based_On_TotalSale_Percent();
-            //buySellDoc.Total_Charged_To_Owner.Percent = buySellDoc.Get_Maximum_Commission_Chargeable_On_TotalSaleLessFreight_Based_On_TotalSale_Percent();
-
-        }
-
-
-        //use calculate_Commissions
-
-        private void set_OwnersSalesMan_Commission(BuySellDoc buySellDoc)
-        {
-            if (buySellDoc.OwnerSalesmanId.IsNullOrWhiteSpace())
-            {
-                buySellDoc.OwnerSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-            decimal ownersCommissionPct = SalesCommissionClass.CommissionPct_OwnerSalesman;
-            buySellDoc.OwnerSalesmanCommission.Percent = SalesCommissionClass.CommissionPct_OwnerSalesman;
-            if (buySellDoc.TotalInvoiceLessFreight * ownersCommissionPct == 0)
-                return;
-
-            buySellDoc.OwnerSalesmanCommission.Amount = buySellDoc.TotalInvoiceLessFreight * ownersCommissionPct / 100;
-
-            //buySellDoc.OwnerSalesmanCommission.Amount = buySellDoc.Get_Maximum_Commision_On_TotalSaleLessFreight_For_OwnerSalesman_Amount();
-            //buySellDoc.OwnerSalesmanCommission.Percent = buySellDoc.Get_Maximum_Commision_On_TotalSaleLessFreight_For_OwnerSalesman_Percent();
-        }
-
-
-
-
-
-        //use calculate_Commissions
-
-        private void set_CustomersSalesMan_Commission(BuySellDoc buySellDoc)
-        {
-            if (buySellDoc.CustomerSalesmanId.IsNullOrWhiteSpace())
-            {
-                buySellDoc.CustomerSalesmanCommission = new CommissionComplex();
-                return;
-            }
-
-            decimal commissionPct = SalesCommissionClass.CommissionPct_OwnerSalesman;
-            buySellDoc.CustomerSalesmanCommission.Percent = commissionPct;
-
-            if (commissionPct * buySellDoc.TotalInvoiceLessFreight == 0)
-                return;
-
-            buySellDoc.CustomerSalesmanCommission.Amount = commissionPct * buySellDoc.TotalInvoiceLessFreight / 100;
-        }
-
-
-        //------------------------------------------------- This ends the Commission on Sales
-
-
-
-
-
-        //**********************************************************************************************************
-        // Commission for Freight
-        //**********************************************************************************************************
-
-
-
-        /// <summary>
-        /// This is always max.
-        /// Not the percent is of the deliveryman's sale amount
-        /// use calculate_Commissions
-        /// </summary>
-        /// <param name="buySellDoc"></param>
-        private void set_Deliveryman_Commission(BuySellDoc buySellDoc)
-        {
-            buySellDoc.Total_Charged_To_Deliveryman.Amount = buySellDoc.Get_Maximum_Commission_Chargeable_On_Freight_Amount();
-            buySellDoc.Total_Charged_To_Deliveryman.Percent = buySellDoc.Get_Maximum_Commission_Chargeable_On_Freight_TO_SalesPeople_And_System_Percent();
-
-        }
-
-
-
-
-        /// use calculate_Commissions
-        private void set_DeliverymansSalesMan_Commission(BuySellDoc buySellDoc)
-        {
-            if (buySellDoc.DeliverymanSalesmanId.IsNullOrWhiteSpace())
-            {
-                buySellDoc.DeliverymanSalesmanCommission = new CommissionComplex();
-                return;
-
-            }
-
-            decimal commissionPct = SalesCommissionClass.CommissionPct_DeliverymanSalesman;
-            buySellDoc.DeliverymanSalesmanCommission.Percent = commissionPct;
-
-            if (commissionPct * buySellDoc.Freight_Accepted == 0)
-                return;
-            buySellDoc.DeliverymanSalesmanCommission.Amount = commissionPct * buySellDoc.Freight_Accepted / 100;
-        }
-
-
-
-
-        //------------------------------------------------- This ends the Commission on Freight
-
-        //**********************************************************************************************************
-        // Commission for Freight and sales for System
-        //**********************************************************************************************************
-
-
-        /// use calculate_Commissions
-        private void set_System_Commission_SaleWithoutFreight(BuySellDoc buySellDoc)
-        {
-            decimal commissionPct = SalesCommissionClass.CommissionPct_System;
-
-            buySellDoc.System_Commission_For_SaleWithoutFreight.Percent = commissionPct;
-            if (commissionPct * buySellDoc.TotalInvoiceLessFreight == 0)
-                return;
-            buySellDoc.System_Commission_For_SaleWithoutFreight.Amount = commissionPct * buySellDoc.TotalInvoiceLessFreight / 100;
-
-        }
-
-
-
-
-
-
-        private void set_System_Commission_Freight(BuySellDoc buySellDoc)
-        {
-
-            decimal commissionPct = SalesCommissionClass.CommissionPct_System;
-
-            buySellDoc.System_Commission_For_Freight.Percent = commissionPct;
-            if (commissionPct * buySellDoc.Freight_Accepted == 0)
-                return;
-
-            buySellDoc.System_Commission_For_Freight.Amount = commissionPct * buySellDoc.Freight_Accepted / 100;
-
-        }
-
-
-        //------------------------------------------------- This ends the Commission for Freight and sales for System
-
-
-
-
-        private void order_Canceled(BuySellDoc buySellDoc)
-        {
-            if (buySellDoc.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Cancel)
-            {
-                buySellDoc.BuySellDocStateEnum = BuySellDocStateENUM.RequestUnconfirmed;
-                buySellDoc.RequestConfirmed.Clear();
-                reset_Commissions_And_Fields(buySellDoc);
-            }
+            bsd.RequestUnconfirmed.SetToTodaysDate(UserName, UserId);
+            bsd.RequestConfirmed.Clear();
+            bsd.OptedOutOfSystem.Clear();
+            bsd.BeingPreparedForShipmentBySeller.Clear();
+            bsd.ReadyForPickup.Clear();
+            bsd.CourierAcceptedByBuyerAndSeller.Clear();
+            bsd.CourierComingToPickUp.Clear();
+            bsd.Enroute.Clear();
+            bsd.Delivered.Clear();
         }
 
 
@@ -745,7 +346,7 @@ namespace UowLibrary.BuySellDocNS
             if (buySellDoc.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Reject)
             {
                 buySellDoc.BuySellDocStateEnum = BuySellDocStateENUM.Rejected;
-                reset_Commissions_And_Fields(buySellDoc);
+                if_Reject_reset_Commissions_And_Fields(buySellDoc);
 
             }
         }
@@ -790,7 +391,6 @@ namespace UowLibrary.BuySellDocNS
                 if (dp.IsDateWithinBeginAndEndDatesInclusive(buySellDoc.OfferedPickupOnDate))
                 {
                     string buySellDocId = buySellDoc.Id;
-
                     buySellDoc = Find(buySellDocId);
                     buySellDoc.IsNullThrowException();
 
@@ -865,34 +465,27 @@ namespace UowLibrary.BuySellDocNS
         {
             if (bsd.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
             {
+                if (bsd.IsShop)
+                {
+                    bsd.BuySellDocStateEnum = BuySellDocStateENUM.Delivered;
+                    bsd.Delivered.SetToTodaysDate(UserName, UserId);
 
-                check_BillTo_Address_Is_filled(bsd);
-                check_ShipTo_Address_Is_filled(bsd);
-                check_BillFrom_Address_Is_filled(bsd);
-                check_ThereAreFundsAvailable(bsd, parm.GlobalObject);
+                }
+                else
+                {
+                    check_BillTo_Address_Is_filled(bsd);
+                    check_ShipTo_Address_Is_filled(bsd);
+                    check_BillFrom_Address_Is_filled(bsd);
+                    update_Customer_Person_Bill_To_Default_Address_If_empty(bsd);
 
-                update_Customer_Person_Bill_To_Default_Address_If_empty(bsd);
+                    bsd.BuySellDocStateEnum = BuySellDocStateENUM.RequestConfirmed;
+                    bsd.RequestConfirmed.SetToTodaysDate(UserName, UserId);
+                }
 
-                //we get the salesmen in superbiz at the event fired by the BuySellDocsController.
-
-                //get_CustomerSalesman(bsd);
-                //get_OwnerSalesman(bsd);
-                bsd.RequestConfirmed.SetToTodaysDate(UserName, UserId);
-                bsd.BuySellDocStateEnum = BuySellDocStateENUM.RequestConfirmed;
-                bsd.RequestConfirmed.SetToTodaysDate(UserName, UserId);
+                set_Payment_For_Product(bsd, parm);
             }
         }
 
-        //private void get_CustomerSalesman(BuySellDoc buySellDoc)
-        //{
-        //    if (!buySellDoc.CustomerSalesmanId_TEMP.IsNullOrWhiteSpace())
-        //        buySellDoc.CustomerSalesmanId = buySellDoc.CustomerSalesmanId_TEMP;
-        //}
-        //private void get_OwnerSalesman(BuySellDoc buySellDoc)
-        //{
-        //    if (!buySellDoc.OwnerSalesmanId_TEMP.IsNullOrWhiteSpace())
-        //        buySellDoc.OwnerSalesmanId = buySellDoc.OwnerSalesmanId_TEMP;
-        //}
 
 
 
@@ -942,17 +535,25 @@ namespace UowLibrary.BuySellDocNS
         }
 
 
-        private void seller_Accepts_Buyers_RequestConfirmed(BuySellDoc bsd)
+        private void seller_Accepts_Buyers_RequestConfirmed(BuySellDoc bsd, ControllerCreateEditParameter parm)
         {
             if (bsd.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
             {
-                //make sure the seller has given some Expected delivery address
+                //make sure the seller has given some Expected delivery Date
                 if (bsd.ExpectedDeliveryDate == DateTime.MinValue || bsd.ExpectedDeliveryDate == DateTime.MaxValue)
                 {
                     throw new Exception("You must fill in the expected date the customer will receive the product.");
                 }
-                bsd.BuySellDocStateEnum = BuySellDocStateENUM.BeingPreparedForShipmentBySeller;
-                bsd.BeingPreparedForShipmentBySeller.SetToTodaysDate(UserName, UserId);
+                if (bsd.OptedOutOfSystem.IsSelected)
+                {
+                    bsd.BuySellDocStateEnum = BuySellDocStateENUM.OptedOutOfSystem;
+                    bsd.OptedOutOfSystem.SetToTodaysDate(UserName, UserId);
+                }
+                else
+                {
+                    bsd.BuySellDocStateEnum = BuySellDocStateENUM.BeingPreparedForShipmentBySeller;
+                    bsd.BeingPreparedForShipmentBySeller.SetToTodaysDate(UserName, UserId);
+                }
             }
         }
 
@@ -963,6 +564,7 @@ namespace UowLibrary.BuySellDocNS
                 //bsd.FreightOfferTrxAcceptedId = null;
                 //bsd.FreightOfferTrxAccepted = null;
                 reset_DeliverymansCommissionAndFields(bsd);
+
                 bsd.BuySellDocStateEnum = BuySellDocStateENUM.ReadyForPickup;
                 bsd.ReadyForPickup.SetToTodaysDate(UserName, UserId);
             }
@@ -1013,28 +615,23 @@ namespace UowLibrary.BuySellDocNS
         /// <summary>
         /// Note. This value is fresh as it has just been calculated this round.
         /// </summary>
-        /// <param name="buySellDoc"></param>
+        /// <param name="bsd"></param>
         /// <param name="globalObject"></param>
-        private void check_ThereAreFundsAvailable(BuySellDoc buySellDoc, GlobalObject globalObject)
+        private void check_ThereAreFundsAvailable(BuySellDoc bsd, GlobalObject globalObject)
         {
+            if (bsd.OptedOutOfSystem.IsSelected)
+                return;
 
-            if (UserId.IsNullOrWhiteSpace())
+            globalObject.IsNullThrowException();
+            decimal reqrdAmount = bsd.TotalInvoice_Refundable + 1000m;
+            if (globalObject.Money_User.Refundable.MoneyAmount < (reqrdAmount))
             {
-
-            }
-            else
-            {
-                globalObject.IsNullThrowException();
-                decimal reqrdAmount = buySellDoc.TotalInvoice + 1000m;
-                if (globalObject.Money_User.Refundable.MoneyAmount < (reqrdAmount))
-                {
-                    decimal shortfall = reqrdAmount - globalObject.Money_User.Refundable.MoneyAmount;
-                    string err = string.Format("You do not have sufficent funds. You have {0} and you need {1} + 1000 (to cover freight). Therefore, you have a shortfall of {2}",
-                        globalObject.Money_User.Refundable.MoneyAmount.ToString("N2"),
-                        reqrdAmount.ToString("N2"),
-                        shortfall.ToString("N2"));
-                    throw new Exception(err);
-                }
+                decimal shortfall = reqrdAmount - globalObject.Money_User.Refundable.MoneyAmount;
+                string err = string.Format("You do not have sufficent funds. You have {0} and you need {1} + 1000 (to cover freight). Therefore, you have a shortfall of {2}",
+                    globalObject.Money_User.Refundable.MoneyAmount.ToString("N2"),
+                    reqrdAmount.ToString("N2"),
+                    shortfall.ToString("N2"));
+                throw new Exception(err);
             }
 
 
@@ -1110,12 +707,15 @@ namespace UowLibrary.BuySellDocNS
                 throw new Exception("No Vehical type added. Please add one");
         }
 
-        private static void ThrowExceptionIfBillToIdOrShipToIdIsEmptyOrNull(BuySellDoc buySellDoc)
+        private static void ThrowExceptionIfBillToIdOrShipToIdIsEmptyOrNull(BuySellDoc bsd)
         {
-            if (buySellDoc.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
+            if (bsd.IsShop)
+                return;
+
+            if (bsd.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.Accept)
             {
-                buySellDoc.AddressBillToId.IsNullOrWhiteSpaceThrowException("You must fill in the bill to address");
-                buySellDoc.AddressShipToId.IsNullOrWhiteSpaceThrowException("You must fill in the ship to address");
+                bsd.AddressBillToId.IsNullOrWhiteSpaceThrowException("You must fill in the bill to address");
+                bsd.AddressShipToId.IsNullOrWhiteSpaceThrowException("You must fill in the ship to address");
             }
         }
 

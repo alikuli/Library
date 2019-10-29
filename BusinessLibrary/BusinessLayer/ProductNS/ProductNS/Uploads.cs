@@ -1,6 +1,8 @@
 ﻿using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
+using AliKuli.Extentions;
+using System.Collections.Generic;
 
 
 namespace UowLibrary.ProductNS
@@ -17,8 +19,13 @@ namespace UowLibrary.ProductNS
         //}
         public override void AddEntityRecordIntoUpload(UploadedFile uploadedFile, Product entity, IUserHasUploadsTypeENUM iuserHasUploadsTypeEnum)
         {
-            uploadedFile.Product = entity;
+            //uploadedFile.Product = entity;
             uploadedFile.ProductId = entity.Id;
+
+            if (entity.MiscFiles.IsNull())
+                entity.MiscFiles = new List<UploadedFile>();
+
+            entity.MiscFiles.Add(uploadedFile);
         }
 
     }

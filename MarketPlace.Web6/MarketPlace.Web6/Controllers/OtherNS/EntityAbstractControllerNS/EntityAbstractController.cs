@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using InterfacesLibrary.SharedNS;
 using MarketPlace.Web4.Controllers;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using System;
 using System.Reflection;
 using System.Web.Mvc;
@@ -44,6 +45,16 @@ namespace MarketPlace.Web6.Controllers.Abstract
 
         //[Inject]
         //public AccountsBiz AccountsBiz { get; set; }
+
+        public GlobalObject GlobalObject
+        {
+            get
+            {
+                GlobalObject globalObj = ViewBag.GlobalObject as GlobalObject;
+                globalObj.IsNullThrowException();
+                return globalObj;
+            }
+        }
 
         protected void Hide_Save_Button()
         {

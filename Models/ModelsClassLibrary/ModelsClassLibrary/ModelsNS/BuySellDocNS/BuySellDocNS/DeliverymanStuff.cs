@@ -27,6 +27,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS
                     case EnumLibrary.EnumNS.BuySellDocStateENUM.RequestUnconfirmed:
                     case EnumLibrary.EnumNS.BuySellDocStateENUM.RequestConfirmed:
                     case EnumLibrary.EnumNS.BuySellDocStateENUM.BeingPreparedForShipmentBySeller:
+                    case EnumLibrary.EnumNS.BuySellDocStateENUM.OptedOutOfSystem:
                         return false;
                     case EnumLibrary.EnumNS.BuySellDocStateENUM.ReadyForPickup:
                     case EnumLibrary.EnumNS.BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller:

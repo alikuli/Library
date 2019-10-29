@@ -338,7 +338,8 @@ namespace UowLibrary.PlayersNS.PlayerAbstractCategoryNS
                 return null;
 
             Person person = GetPersonForUserId(userId);
-
+            if (person.IsNull())
+                return null;
             //get the current entity for this pseron
             TEntity entity = FindAll().FirstOrDefault(x => x.PersonId == person.Id);
             //entity.IsNullThrowExceptionArgument("Not found entity");

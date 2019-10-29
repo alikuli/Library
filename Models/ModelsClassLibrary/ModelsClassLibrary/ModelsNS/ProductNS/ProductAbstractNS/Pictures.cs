@@ -1,7 +1,8 @@
-﻿using ModelsClassLibrary.ModelsNS.SharedNS;
+﻿using AliKuli.Extentions;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace ModelsClassLibrary.ModelsNS.ProductNS
 {
@@ -15,6 +16,17 @@ namespace ModelsClassLibrary.ModelsNS.ProductNS
         /// This stores the address of the small picture.
         /// </summary>
         public virtual ICollection<UploadedFile> MiscFiles { get; set; }
+        public List<UploadedFile> MiscFiles_Fixed
+        {
+            get
+            {
+                if (MiscFiles.IsNullOrEmpty())
+                    return new List<UploadedFile>();
+
+                List<UploadedFile> miscFile = MiscFiles.Where(x => x.MetaData.IsDeleted == false).ToList();
+                return miscFile;
+            }
+        }
 
         public string MiscFilesLocation(string aName)
         {

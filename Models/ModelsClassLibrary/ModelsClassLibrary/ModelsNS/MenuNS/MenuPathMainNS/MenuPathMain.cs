@@ -2,9 +2,13 @@
 using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.MenuNS;
 using ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS;
+using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Configuration;
+using System.Linq;
 using System.Text;
 
 namespace ModelsClassLibrary.MenuNS
@@ -29,6 +33,17 @@ namespace ModelsClassLibrary.MenuNS
         }
         StringBuilder sb = new StringBuilder(); //used to collect erors
 
+        /// <summary>
+        /// if this is marked true, then product children for sale exist.
+        /// </summary>
+        [NotMapped]
+        public bool HasLiveProductChildren { get; set; }
+
+        
+        [NotMapped]
+        public int NoOfItems { get; set; }
+        [NotMapped]
+        public int NoOfShops { get; set; }
         public override ClassesWithRightsENUM ClassNameForRights()
         {
             return EnumLibrary.EnumNS.ClassesWithRightsENUM.MenuPathMain;
@@ -40,6 +55,81 @@ namespace ModelsClassLibrary.MenuNS
 
         //public virtual ICollection<IDiscount> ProductCategoryDiscounts { get; set; }
         public virtual ICollection<Product> Products { get; set; }
+
+        [NotMapped]
+        public List<Product> Products_Fixed
+        {
+            get
+            {
+                if (Products.IsNullOrEmpty())
+                    return new List<Product>();
+
+                List<Product> products = Products.Where(x => x.MetaData.IsDeleted == false).ToList();
+                return products;
+            }
+        }
+
+        [NotMapped]
+        public List<Product> Products_Fixed_And_Approved
+        {
+            get
+            {
+
+                List<Product> products = Products_Fixed.Where(x => x.IsUnApproved == false).ToList();
+                return products;
+            }
+        }
+
+        [NotMapped]
+
+        public List<ProductChild> ProductChildren_Fixed_Not_Hidden
+        {
+            get
+            {
+                if (Products_Fixed_And_Approved.IsNullOrEmpty())
+                    return new List<ProductChild>();
+
+                List<ProductChild> pChildren = new List<ProductChild>();
+                foreach (Product product in Products_Fixed_And_Approved)
+                {
+
+                    if (product.ProductChildren_Fixed_Not_Hidden.IsNullOrEmpty())
+                        continue;
+
+                    foreach (var child in product.ProductChildren_Fixed_Not_Hidden)
+                    {
+                        pChildren.Add(child);
+                    }
+                }
+
+                return pChildren;
+            }
+        }
+
+        [NotMapped]
+
+        public List<Product> Product_Shops_Not_Expired
+        {
+            get
+            {
+                if (Products_Fixed.IsNullOrEmpty())
+                    return new List<Product>();
+
+                List<Product> shops = new List<Product>();
+                foreach (Product shop in Products_Fixed)
+                {
+
+                    if (shop.IsShopExpired)
+                        continue;
+
+                    shops.Add(shop);
+                }
+
+                return shops;
+            }
+        }
+
+
 
 
         #endregion
@@ -62,6 +152,7 @@ namespace ModelsClassLibrary.MenuNS
             bool cat1Null = MenuPath1Id.IsNullOrWhiteSpace() && MenuPath1.IsNull();
             return cat1Null;
         }
+
 
         /// <summary>
         /// Only Cat 1 is used. Others are empty
@@ -177,6 +268,13 @@ namespace ModelsClassLibrary.MenuNS
         }
 
 
+        public static decimal Payment_To_Buy_Shop()
+        {
+            string minBalanceStr = ConfigurationManager.AppSettings["payment_to_open_Shop.amount"];
+            decimal minBalance = minBalanceStr.ToDecimal();
+
+            return minBalance;
+        }
 
 
     }

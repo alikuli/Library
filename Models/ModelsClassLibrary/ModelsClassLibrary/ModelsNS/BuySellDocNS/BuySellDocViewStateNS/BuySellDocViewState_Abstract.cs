@@ -56,9 +56,10 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         public string ClassFor_Enroute { get { return " badge-pickedup "; } }
         public string ClassFor_Delivered { get { return " badge-delivered "; } }
         public string ClassFor_Rejected { get { return " badge-rejected "; } }
-        public string ClassFor_Canceled_Pill { get { return " badge-canceled "; } }
+        public string ClassFor_Canceled { get { return " badge-canceled "; } }
         public string ClassFor_Problem { get { return " badge-problem "; } }
 
+        public string ClassFor_OptingOut { get { return " badge-optingout "; } }
 
 
 
@@ -74,6 +75,8 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         public string ClassFor_Delivered_Pill { get { return " badge badge-pill badge-delivered "; } }
         public string ClassFor_Rejected_Pill { get { return " badge badge-pill badge-rejected "; } }
         public string ClassFor_Problem_Pill { get { return " badge badge-pill badge-problem "; } }
+        public string ClassFor_Canceled_Pill { get { return " badge badge-pill badge-canceled "; } }
+        public string ClassFor_OptingOut_Pill { get { return " badge badge-pill badge-optingout "; } }
 
         public string ClassForState { get { return ClassFor_RequestUnconfirmed_Pill; } }
 
@@ -106,6 +109,8 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
                         return ClassFor_Delivered;
                     case BuySellDocStateENUM.Rejected:
                         return ClassFor_Rejected;
+                    case BuySellDocStateENUM.OptedOutOfSystem:
+                        return ClassFor_OptingOut;
                     case BuySellDocStateENUM.Unknown:
                     case BuySellDocStateENUM.Problem:
                     default:
@@ -142,6 +147,8 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
                         return ClassFor_Delivered_Pill;
                     case BuySellDocStateENUM.Rejected:
                         return ClassFor_Rejected_Pill;
+                    case BuySellDocStateENUM.OptedOutOfSystem:
+                        return ClassFor_OptingOut_Pill;
                     case BuySellDocStateENUM.Unknown:
                     case BuySellDocStateENUM.Problem:
                     default:
@@ -257,11 +264,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
 
         #region Header  (HD)  This is Header of the order
 
-        //public const string HD_TemplateAllAddressesEnabled = "AddressComplex" ;
-        //public const string HD_TemplateAllAddressesDisabled = "AddressComplexDisabled";
-        //public const string HD_TemplateCityCountryAddressesDisabled = "AddressComplexDisabled_City_Country_Only";
 
-        //public virtual string HD_OrderList_Template { get { return HD_OL_TemplateCityCountryAddressesDisabled; } }
 
         public virtual bool HD_Show_DeliverymanSalesman { get { return false; } }
         public virtual bool HD_Show_OwnersSalesman { get { return false; } }
@@ -271,30 +274,12 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
 
         public virtual bool HD_Show_DropDown_ShipToAddress { get { return false; } }
 
-        //public virtual bool HD_Show_ShippingAddress_ShipTo { get { return false; } }
-        //public virtual bool HD_Show_ShippingAddress_BillTo { get { return false; } }
         public virtual bool HD_Show_DropDown_BillToAddress { get { return false; } }
 
 
         public virtual bool HD_Show_Complex_Address_Bill_To { get { return false; } }
         public virtual bool HD_Show_Complex_Address_Ship_To { get { return false; } }
         public virtual string HD_AddressTemplate_For_Shipping_And_BillTo_Address { get { return ConstantsLibrary.BuySellConstants.COMPLEX_ADDRESS_DISABLED; } }
-
-        //public bool Is_HD_AddressTemplate_For_Shipping_And_BillTo_Address_DISABLED
-        //{
-        //    get
-        //    {
-        //        switch (HD_AddressTemplate_For_Shipping_And_BillTo_Address)
-        //        {
-        //            case HD_TemplateAllAddressesEnabled:
-        //                return false;
-        //            case HD_TemplateAllAddressesDisabled:
-        //            case HD_TemplateCityCountryAddressesDisabled:
-        //            default:
-        //                return true;
-        //        }
-        //    }
-        //}
 
 
         public virtual bool HD_Enable_Freight_Request_Info { get { return false; } }
@@ -321,7 +306,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         //to makethis work, give a value to ViewBag.ShowEditControls 
         public virtual bool HD_Hide_Save_Button_In_Edit { get { return false; } }
         public virtual bool HD_ShowOffers { get { return false; } }
-        //public virtual bool HD_Enable_VehicalType { get { return false; } }
 
         public virtual bool HD_EnableDeliveryMan { get { return false; } }
         public virtual bool HD_EnableDeliveryDatesRequested { get { return false; } }
@@ -401,6 +385,10 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         public virtual bool HD_Show_ExpectedDeliveryDate { get { return true; } }
         public virtual bool HD_Enable_ExpectedDeliveryDate { get { return false; } }
 
+        public virtual bool HD_Show_Opt_Out_Of_System { get { return true; } }
+        public virtual bool HD_Enable_Opt_Out_Of_System { get { return false; } }
+        public virtual string HD_Text_Opt_Out_Of_System { get { return "You may opt out of the system. If you do, we cannot help you if there is a problem. It is strongly advised that you do NOT opt out... but the decision and the consequences are yours. The risk is if you pay the seller and later you realize he has not delivered as per promise, you risk losing your money."; } }
+
 
         #endregion
 
@@ -443,11 +431,11 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         /// </summary>
         public virtual bool OD_OrderedIsEnabled { get { return false; } }
         public virtual bool OD_SalePriceIsEnabled { get { return false; } }
-        public virtual bool OD_Hide_Save_Button { get { return false; } }
+        public virtual bool OD_Hide_System_Save_Button { get { return false; } }
         //public virtual bool OD_ShippedIsEnabled { get { return false; } }
         //public virtual bool OD_ShippedIsVisible { get { return true; } }
-        public virtual bool OD_Show_Button_DelyButton { get { return true; } }
-        public virtual bool OD_Enable_Button_DelyButton { get { return false; } }
+        public virtual bool OD_Show_Button_SaveButton { get { return true; } }
+        public virtual bool OD_Enable_Button_SaveButton { get { return false; } }
 
 
         #endregion
@@ -473,7 +461,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         #endregion
 
 
-        #region MyRegion
+        #region Misc
         public virtual decimal MISC_PenaltyAmount { get { return 0; } }
         public virtual string MISC_PenaltyText { get { return "Not Set"; } }
 

@@ -1,9 +1,9 @@
-﻿using EnumLibrary.EnumNS;
+﻿using AliKuli.Extentions;
+using EnumLibrary.EnumNS;
 using ModelsClassLibrary.MenuNS;
 using ModelsClassLibrary.ModelsNS.ProductChildNS;
 using ModelsClassLibrary.ModelsNS.ProductNS;
 using ModelsClassLibrary.ModelsNS.SharedNS.Parameters;
-using AliKuli.Extentions;
 
 namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 {
@@ -25,7 +25,7 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 
         public override string CreateLink_Name
         {
-            get { return "Create Product"; }
+            get { return "Create Shop"; }
         }
 
 
@@ -39,6 +39,16 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
             get { return "Back To Menu"; }
         }
 
+        public override string CreateButtonAction
+        {
+            get
+            {
+                return "CreateShop";
+            }
+        }
+
+        public override bool ShowCreateProductButton { get { return true; } }
+
 
         public override MenuENUM BackLink_MenuEnum
         {
@@ -47,11 +57,11 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
 
         public override bool ShowCreateButton
         {
-            get 
+            get
             {
                 if (UserId.IsNull())
                     return false;
-                return true; 
+                return true;
             }
         }
 
@@ -65,9 +75,11 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
             get
             {
 
-                return "Products";
+                return "Shops";
             }
         }
+
+
 
 
         public override string MenuDisplayName
@@ -77,6 +89,7 @@ namespace UowLibrary.MenuNS.MenuStateNS.MenuStatesNS
                 return string.Format("{0}", MenuPathMain.MenuPath3.FullName());
             }
         }
+
 
     }
 }

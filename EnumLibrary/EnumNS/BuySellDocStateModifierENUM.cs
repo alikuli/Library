@@ -7,5 +7,7 @@ namespace EnumLibrary.EnumNS
         Reject,
         Cancel,
         Accept,
+        SeeAddress,
+        OptOutOfSystem,
     }
 }

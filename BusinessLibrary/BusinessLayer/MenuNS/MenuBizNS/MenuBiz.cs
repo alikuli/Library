@@ -1,10 +1,12 @@
 ﻿using AliKuli.Extentions;
 using DalLibrary.Interfaces;
 using ModelsClassLibrary.MenuNS;
+using UowLibrary.AddressNS;
 using UowLibrary.CashTtxNS;
 using UowLibrary.LikeUnlikeNS;
 using UowLibrary.ParametersNS;
 using UowLibrary.PlayersNS.BankNS;
+using UowLibrary.PlayersNS.OwnerNS;
 using UowLibrary.ProductChildNS;
 using UowLibrary.ProductNS;
 
@@ -17,10 +19,11 @@ namespace UowLibrary.MenuNS
         private ProductChildBiz _productChildBiz;
         //private LikeUnlikeBiz _likeUnlikeBiz;
         private CashTrxBiz _cashTrxBiz;
+        OwnerBiz _ownerBiz;
         //AddressBiz _addressBiz;
         BankBiz _bankBix;
-
-        public MenuBiz(MenuPathMainBiz menuPathMainBiz, ProductBiz productBiz, IRepositry<MenuPathMain> entityDal, BizParameters bizParameters, CashTrxBiz cashTrxBiz, BankBiz bankBiz)
+        AddressBiz _addressBiz;
+        public MenuBiz(MenuPathMainBiz menuPathMainBiz, ProductBiz productBiz, IRepositry<MenuPathMain> entityDal, BizParameters bizParameters, CashTrxBiz cashTrxBiz, BankBiz bankBiz, OwnerBiz ownerBiz,  AddressBiz addressBiz)
             : base(entityDal, bizParameters)
         {
 
@@ -30,21 +33,32 @@ namespace UowLibrary.MenuNS
             //_likeUnlikeBiz = likeUnlikeBiz;
             _cashTrxBiz = cashTrxBiz;
             _bankBix = bankBiz;
+            _ownerBiz = ownerBiz;
             //_addressBiz = addressBiz;
+            _addressBiz = addressBiz;
 
         }
 
-        //public AddressBiz addressBiz
-        //{
-        //    get
-        //    {
-        //        _addressBiz.IsNullThrowExceptionArgument();
-        //        _addressBiz.UserId = UserId;
-        //        _addressBiz.UserName = UserName;
-        //        return _addressBiz;
-        //    }
-        //}
+        public AddressBiz addressBiz
+        {
+            get
+            {
+                _addressBiz.IsNullThrowExceptionArgument();
+                _addressBiz.UserId = UserId;
+                _addressBiz.UserName = UserName;
+                return _addressBiz;
+            }
+        }
 
+        OwnerBiz OwnerBiz
+        {
+            get
+            {
+                _ownerBiz.UserId = UserId;
+                _ownerBiz.UserName = UserName;
+                return _ownerBiz;
+            }
+        }
         BankBiz BankBiz
         {
             get

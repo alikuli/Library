@@ -166,9 +166,34 @@
 
                 <h2 class="bg-dark  text-warning text-center"><strong>@Html.DisplayFor(x => x.CombinedCode)</strong></h2>
 
-                <p class="card-text"><strong>Customer: </strong>@Model.Customer.FullName() <br /><strong>Ph: </strong> @Model.AddressShipTo.Phone</p>
-                <p class="card-text"><strong>Seller: </strong>@Model.Owner.FullName() <br /><strong>Ph: </strong> @Model.AddressShipFrom.Phone</p>
-                <p class="card-text"><strong>Delivery Man: </strong>@Model.Deliveryman.FullName() <br /><strong>Ph: </strong> @deliverymanPhoneNo</p>
+
+                @if (@Model.AddressShipTo.IsNull())
+                {
+
+                }
+                else
+                {
+                    <p class="card-text"><strong>Customer: </strong>@Model.Customer.FullName() <br /><strong>Ph: </strong>  @Model.AddressShipTo.Phone</p>
+                }
+
+                @if (@Model.AddressShipFrom.IsNull())
+                {
+
+                }
+                else
+                {
+                    <p class="card-text"><strong>Seller: </strong>@Model.Owner.FullName() <br /><strong>Ph: </strong> @Model.AddressShipFrom.Phone</p>
+                }
+
+
+                @if (@Model.Deliveryman.IsNull())
+                {
+
+                }
+                else
+                {
+                    <p class="card-text"><strong>Delivery Man: </strong>@Model.Deliveryman.FullName() <br /><strong>Ph: </strong> @deliverymanPhoneNo</p>
+                }
 
             </div>
         </div>

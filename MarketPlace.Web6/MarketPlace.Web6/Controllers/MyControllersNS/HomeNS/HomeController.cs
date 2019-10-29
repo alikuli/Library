@@ -1,11 +1,13 @@
 ﻿using AliKuli.Extentions;
 using AliKuli.UtilitiesNS;
+using InterfacesLibrary.SharedNS;
 using MarketPlace.Web4.Controllers;
 using ModelsClassLibrary.ModelsNS.CostNS;
 using ModelsClassLibrary.ModelsNS.CostNS.CostStateNS;
 using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Reflection;
 using System.Web.Mvc;
@@ -108,7 +110,17 @@ namespace MarketPlace.Web6.Controllers
                 addMailer(ConfigManagerHelper, person);
                 addSalesman(ConfigManagerHelper, person);
 
-                UserBiz.UpdateAndSave(user);
+
+                GlobalObject globalObject = ViewBag.GlobalObject as GlobalObject;
+                globalObject.IsNullThrowException("Global Object is null");
+                ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+                param.Entity = user as ICommonWithId;
+                param.GlobalObject = globalObject;
+
+                UserBiz.UpdateAndSave(param);
+
+
+                //UserBiz.UpdateAndSave(user);
                 ErrorsGlobal.ClearAllErrors();
                 ErrorsGlobal.Messages.Clear();
                 return View();
@@ -196,6 +208,7 @@ namespace MarketPlace.Web6.Controllers
                 salesman = SuperBiz.SalesmanBiz.Factory() as Salesman;
                 salesman.Name = ConfigManagerHelper.AdminName;
                 salesman.PersonId = person.Id;
+                
                 SuperBiz.SalesmanBiz.Create(salesman);
 
             }
@@ -309,7 +322,7 @@ namespace MarketPlace.Web6.Controllers
 
                 GlobalObject globalObject = getGlobalObject();
                 if (globalObject.IsSuperSalesman || globalObject.IsAdmin)
-                { 
+                {
                 }
                 else
                 {
@@ -463,9 +476,6 @@ namespace MarketPlace.Web6.Controllers
             return RedirectToAction("Index", "Menus");
         }
 
-
-
-
         public ActionResult MailerMenu()
         {
             try
@@ -482,10 +492,6 @@ namespace MarketPlace.Web6.Controllers
 
             return RedirectToAction("Index", "Menus");
         }
-
-
-
-
 
 
         public ActionResult BankMenu()
@@ -506,10 +512,6 @@ namespace MarketPlace.Web6.Controllers
 
         }
 
-
-
-
-
         private GlobalObject getGlobalObject()
         {
             UserId.IsNullOrWhiteSpaceThrowException("You must be logged in");
@@ -522,6 +524,22 @@ namespace MarketPlace.Web6.Controllers
 
 
             return globalObject;
+        }
+
+        public ActionResult RunDailyTasks()
+        {
+            try
+            {
+                SuperBiz.Run_Daily_Task();
+                return View();
+            }
+            catch (Exception e)
+            {
+                
+                ErrorsGlobal.Add("Something went wrong", MethodBase.GetCurrentMethod(), e);
+            }
+            return View("Error");
+
         }
     }
 }

@@ -3,7 +3,7 @@ using EnumLibrary.EnumNS;
 using EnumLibrary.EnumNS.VerificationNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
-using ModelsClassLibrary.ModelsNS.ServiceRequestNS.ServiceRequestTrxNS;
+//using ModelsClassLibrary.ModelsNS.ServiceRequestNS.ServiceRequestTrxNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,20 +17,22 @@ namespace ModelsClassLibrary.ModelsNS.ServiceRequestNS.ServiceRequestHdrNS
     {
         public ServiceRequestHdr()
         {
-            RequestTypeEnum = RequestTypeENUM.Unknown;
+            RequestTypeEnum = ServiceRequestTypeENUM.Unknown;
             ServiceRequestStatusEnum = ServiceRequestStatusENUM.Open;
         }
 
 
 
-        public ServiceRequestHdr(string personFromId, string personToId, decimal amount, RequestTypeENUM requestTypeEnum)
+        public ServiceRequestHdr(string personFromId, decimal amount, ServiceRequestTypeENUM requestTypeEnum)
             : this()
         {
             PersonFromId = personFromId;
-            PersonToId = personToId;
+            //PersonToId = personToId;
             Amount = amount;
             RequestTypeEnum = requestTypeEnum;
             ServiceRequestStatusEnum = ServiceRequestStatusENUM.Open;
+            //IsReceipt = isReceipt;
+
         }
         public static ServiceRequestHdr Unbox(ICommonWithId icommonWithId)
         {
@@ -52,10 +54,10 @@ namespace ModelsClassLibrary.ModelsNS.ServiceRequestNS.ServiceRequestHdrNS
 
 
         [Display(Name = "Request Type")]
-        public RequestTypeENUM RequestTypeEnum { get; set; }
+        public ServiceRequestTypeENUM RequestTypeEnum { get; set; }
 
         [NotMapped]
-        public SelectList SelectListRequestTypeEnum { get { return EnumExtention.ToSelectListSorted<RequestTypeENUM>(RequestTypeENUM.Unknown); } }
+        public SelectList SelectListRequestTypeEnum { get { return EnumExtention.ToSelectListSorted<ServiceRequestTypeENUM>(ServiceRequestTypeENUM.Unknown); } }
 
 
 
@@ -65,6 +67,9 @@ namespace ModelsClassLibrary.ModelsNS.ServiceRequestNS.ServiceRequestHdrNS
         [NotMapped]
         public SelectList SelectListServiceRequestStatusEnum { get { return EnumExtention.ToSelectListSorted<ServiceRequestStatusENUM>(ServiceRequestStatusENUM.Unknown); } }
 
+        /// <summary>
+        /// This is the person who has accepted the request.
+        /// </summary>
 
         [Display(Name = "To")]
         public string PersonToId { get; set; }
@@ -78,26 +83,27 @@ namespace ModelsClassLibrary.ModelsNS.ServiceRequestNS.ServiceRequestHdrNS
 
         public decimal Amount { get; set; }
 
+        //[Display(Name ="Is Receipt")]
+        //public bool IsReceipt { get; set; }
 
+        //public virtual ICollection<ServiceRequestTrx> ServiceRequestTrxs { get; set; }
 
-        public virtual ICollection<ServiceRequestTrx> ServiceRequestTrxs { get; set; }
+        //[NotMapped]
+        //public List<ServiceRequestTrx> ServiceRequestTrxs_Fixed
+        //{
+        //    get
+        //    {
+        //        if (ServiceRequestTrxs.IsNull())
+        //            return new List<ServiceRequestTrx>();
 
-        [NotMapped]
-        public List<ServiceRequestTrx> ServiceRequestTrxs_Fixed
-        {
-            get
-            {
-                if (ServiceRequestTrxs.IsNull())
-                    return null;
+        //        List<ServiceRequestTrx> lst = ServiceRequestTrxs
+        //            .Where(x => x.MetaData.IsDeleted == false)
+        //            .OrderByDescending(x => x.Name)
+        //            .ToList();
 
-                List<ServiceRequestTrx> lst = ServiceRequestTrxs
-                    .Where(x => x.MetaData.IsDeleted == false)
-                    .OrderByDescending(x => x.Name)
-                    .ToList();
-
-                return lst;
-            }
-        }
+        //        return lst;
+        //    }
+        //}
 
 
 
@@ -112,7 +118,7 @@ namespace ModelsClassLibrary.ModelsNS.ServiceRequestNS.ServiceRequestHdrNS
         {
             string name = string.Format("Doc No. {0:0000} ", DocumentNo);
 
-            if (RequestTypeEnum != RequestTypeENUM.Unknown)
+            if (RequestTypeEnum != ServiceRequestTypeENUM.Unknown)
                 name = RequestTypeEnum.ToString().ToTitleSentance();
             return name;
 

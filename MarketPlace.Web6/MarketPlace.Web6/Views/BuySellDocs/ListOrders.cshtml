@@ -26,6 +26,7 @@
     string colorFor_Canceled_pill = viewState.ClassFor_Canceled_Pill;
     string colorFor_Rejected_pill = viewState.ClassFor_Rejected_Pill;
     string colorFor_Problem_pill = viewState.ClassFor_Problem_Pill;
+    string colorFor_OptingOut_pill = viewState.ClassFor_OptingOut_Pill;
 
 
     string tooltip_Request_Unconfirmed = "When an order has Request Unconfirmed status it means that the a potential buyer is thinking of purchasing this item. The sale has not been confirmed yet";
@@ -39,6 +40,8 @@
     string tooltip_Canceled = viewState.OL_Cancel_Button_ToolTip;
     string tooltip_Rejected = viewState.OL_Reject_Button_ToolTip;
     string tooltip_Problem = "There is a problem";
+    string tooltip_OptingOut = string.Format( "You can opt out of our system and handle your own order. You will be required to pay a small handling charge of Rs{0:N2}.",
+        ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc.Get_Opt_Out_Fee());
 
     bool showBFs = false;
 
@@ -124,6 +127,7 @@
                 <span class="@colorFor_Rejected_pill" data-toggle="tooltip" title="@tooltip_Rejected" data-placement="top">Rejected</span>
                 <span class="@colorFor_Canceled_pill" data-toggle="tooltip" title="@tooltip_Canceled" data-placement="top">Canceled</span>
                 <span class="@colorFor_Problem_pill" data-toggle="tooltip" title="@tooltip_Problem" data-placement="top">Problem</span>
+                <span class="@colorFor_OptingOut_pill" data-toggle="tooltip" title="@tooltip_OptingOut" data-placement="top">Opt Out Of System</span>
             </div>
         </caption>
         <thead>
@@ -250,6 +254,7 @@
 
             //Edit/View Button
             string edit_order_path = Url.Action("Edit", "BuySellDocs", new { id = item.Id, returnUrl = Request.Url.PathAndQuery, buySellDocumentTypeEnum = Model.BuySellDocumentTypeEnum });
+            
             string toolTip_Edit = viewState.OL_ToolTip_Edit;
             string editBtnIcon = viewState.OL_IconForEditView;
             string disableEditButton = viewState.OL_IsEditEnabled ? "" : " disabled ";
@@ -398,6 +403,7 @@
                     </td>
                 }
 
+                @*this is the guarantee message*@
 
                 <td class="@classForLineItem" data-toggle="tooltip" title="@tooltip_Comment" data-placement="top">
                     @item.BuySellDocStateEnum.ToString().ToTitleSentance()

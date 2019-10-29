@@ -60,124 +60,154 @@ namespace ApplicationDbContextNS
             //    .HasForeignKey(o1 => o1.DefaultBillAddressId);
             //This causes the uploads to be deleted along with the main file.
             //we need to delete the physical uploads seperately
-            #region Uploads
-
-            modelBuilder.Entity<MenuPath1>()
-                .HasMany<UploadedFile>(x => x.MiscFiles)
-                .WithOptional(x => x.MenuPath1)
-                .HasForeignKey(x => x.MenuPath1Id)
-                .WillCascadeOnDelete(true);
-
-
-            modelBuilder.Entity<MenuPath2>()
-                .HasMany<UploadedFile>(x => x.MiscFiles)
-                .WithOptional(x => x.MenuPath2)
-                .HasForeignKey(x => x.MenuPath2Id)
-                .WillCascadeOnDelete(true);
-
-
-            modelBuilder.Entity<MenuPath3>()
-                .HasMany<UploadedFile>(x => x.MiscFiles)
-                .WithOptional(x => x.MenuPath3)
-                .HasForeignKey(x => x.MenuPath3Id)
-                .WillCascadeOnDelete(true);
-
-
-            modelBuilder.Entity<FileDoc>()
-                .HasMany<UploadedFile>(x => x.MiscFiles)
-                .WithOptional(x => x.FileDoc)
-                .HasForeignKey(x => x.FileDocId)
-                .WillCascadeOnDelete(true);
-
-
-            //USER Images
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany<UploadedFile>(x => x.MiscFiles)
-                .WithOptional(x => x.ApplicationUser)
-                .HasForeignKey(x => x.ApplicationUserId)
-                .WillCascadeOnDelete(true);
-
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany<UploadedFile>(x => x.SelfieUploads)
-                .WithOptional(x => x.Selfie)
-                .HasForeignKey(x => x.SelfieId)
-                .WillCascadeOnDelete(false);
-
-
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany<UploadedFile>(x => x.IdCardFrontUploads)
-                .WithOptional(x => x.IdCardFrontUpload)
-                .HasForeignKey(x => x.IdCardFrontUploadId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany<UploadedFile>(x => x.IdCardBackUploads)
-                .WithOptional(x => x.IdCardBackUpload)
-                .HasForeignKey(x => x.IdCardBackUploadId)
-                .WillCascadeOnDelete(false);
 
 
 
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany<UploadedFile>(x => x.PassportFrontUploads)
-                .WithOptional(x => x.PassportFrontUpload)
-                .HasForeignKey(x => x.PassportFrontUploadId)
-                .WillCascadeOnDelete(false);
-
-
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany<UploadedFile>(x => x.PassportVisaUploads)
-                .WithOptional(x => x.PassportVisaUpload)
-                .HasForeignKey(x => x.PassportVisaUploadId)
-                .WillCascadeOnDelete(false);
 
 
 
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany<UploadedFile>(x => x.LiscenseFrontUploads)
-                .WithOptional(x => x.LiscenseFrontUpload)
-                .HasForeignKey(x => x.LiscenseFrontUploadId)
-                .WillCascadeOnDelete(false);
-
-
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany<UploadedFile>(x => x.LiscenseBackUploads)
-                .WithOptional(x => x.LiscenseBackUpload)
-                .HasForeignKey(x => x.LiscenseBackUploadId)
-                .WillCascadeOnDelete(false);
-
-
-            modelBuilder.Entity<ProductChild>()
-                .HasMany<UploadedFile>(x => x.MiscFiles)
-                .WithOptional(x => x.ProductChild)
-                .HasForeignKey(x => x.ProductChildId)
-                .WillCascadeOnDelete(false);
-
-            #endregion
-
-            #region Menu Paths
-
-            modelBuilder.Entity<MenuPath1>()
-                .HasMany<MenuPathMain>(x => x.MenuPathMains)
-                .WithOptional(x => x.MenuPath1)
-                .HasForeignKey(x => x.MenuPath1Id)
-                .WillCascadeOnDelete(false);
 
 
 
-            modelBuilder.Entity<MenuPath2>()
-                .HasMany<MenuPathMain>(x => x.MenuPathMains)
-                .WithOptional(x => x.MenuPath2)
-                .HasForeignKey(x => x.MenuPath2Id)
-                .WillCascadeOnDelete(false);
 
 
-            modelBuilder.Entity<MenuPath3>()
-                .HasMany<MenuPathMain>(x => x.MenuPathMains)
-                .WithOptional(x => x.MenuPath3)
-                .HasForeignKey(x => x.MenuPath3Id)
-                .WillCascadeOnDelete(false);
-            #endregion
+
+
+
+
+
+
+
+            //#region Uploads
+
+            //modelBuilder.Entity<MenuPath1>()
+            //    .HasMany<UploadedFile>(x => x.MiscFiles)
+            //    .WithOptional(x => x.MenuPath1)
+            //    .HasForeignKey(x => x.MenuPath1Id)
+            //    .WillCascadeOnDelete(true);
+
+
+            //modelBuilder.Entity<MenuPath2>()
+            //    .HasMany<UploadedFile>(x => x.MiscFiles)
+            //    .WithOptional(x => x.MenuPath2)
+            //    .HasForeignKey(x => x.MenuPath2Id)
+            //    .WillCascadeOnDelete(true);
+
+
+            //modelBuilder.Entity<MenuPath3>()
+            //    .HasMany<UploadedFile>(x => x.MiscFiles)
+            //    .WithOptional(x => x.MenuPath3)
+            //    .HasForeignKey(x => x.MenuPath3Id)
+            //    .WillCascadeOnDelete(true);
+
+
+            //modelBuilder.Entity<FileDoc>()
+            //    .HasMany<UploadedFile>(x => x.MiscFiles)
+            //    .WithOptional(x => x.FileDoc)
+            //    .HasForeignKey(x => x.FileDocId)
+            //    .WillCascadeOnDelete(true);
+
+
+            ////USER Images
+            //modelBuilder.Entity<ApplicationUser>()
+            //    .HasMany<UploadedFile>(x => x.MiscFiles)
+            //    .WithOptional(x => x.ApplicationUser)
+            //    .HasForeignKey(x => x.ApplicationUserId)
+            //    .WillCascadeOnDelete(true);
+
+            //modelBuilder.Entity<ApplicationUser>()
+            //    .HasMany<UploadedFile>(x => x.SelfieUploads)
+            //    .WithOptional(x => x.Selfie)
+            //    .HasForeignKey(x => x.SelfieId)
+            //    .WillCascadeOnDelete(false);
+
+
+            //modelBuilder.Entity<ApplicationUser>()
+            //    .HasMany<UploadedFile>(x => x.IdCardFrontUploads)
+            //    .WithOptional(x => x.IdCardFrontUpload)
+            //    .HasForeignKey(x => x.IdCardFrontUploadId)
+            //    .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<ApplicationUser>()
+            //    .HasMany<UploadedFile>(x => x.IdCardBackUploads)
+            //    .WithOptional(x => x.IdCardBackUpload)
+            //    .HasForeignKey(x => x.IdCardBackUploadId)
+            //    .WillCascadeOnDelete(false);
+
+
+
+            //modelBuilder.Entity<ApplicationUser>()
+            //    .HasMany<UploadedFile>(x => x.PassportFrontUploads)
+            //    .WithOptional(x => x.PassportFrontUpload)
+            //    .HasForeignKey(x => x.PassportFrontUploadId)
+            //    .WillCascadeOnDelete(false);
+
+
+            //modelBuilder.Entity<ApplicationUser>()
+            //    .HasMany<UploadedFile>(x => x.PassportVisaUploads)
+            //    .WithOptional(x => x.PassportVisaUpload)
+            //    .HasForeignKey(x => x.PassportVisaUploadId)
+            //    .WillCascadeOnDelete(false);
+
+
+
+            //modelBuilder.Entity<ApplicationUser>()
+            //    .HasMany<UploadedFile>(x => x.LiscenseFrontUploads)
+            //    .WithOptional(x => x.LiscenseFrontUpload)
+            //    .HasForeignKey(x => x.LiscenseFrontUploadId)
+            //    .WillCascadeOnDelete(false);
+
+
+            //modelBuilder.Entity<ApplicationUser>()
+            //    .HasMany<UploadedFile>(x => x.LiscenseBackUploads)
+            //    .WithOptional(x => x.LiscenseBackUpload)
+            //    .HasForeignKey(x => x.LiscenseBackUploadId)
+            //    .WillCascadeOnDelete(false);
+
+
+            //modelBuilder.Entity<ProductChild>()
+            //    .HasMany<UploadedFile>(x => x.MiscFiles)
+            //    .WithOptional(x => x.ProductChild)
+            //    .HasForeignKey(x => x.ProductChildId)
+            //    .WillCascadeOnDelete(false);
+
+            //#endregion
+
+            //#region Menu Paths
+
+            //modelBuilder.Entity<MenuPath1>()
+            //    .HasMany<MenuPathMain>(x => x.MenuPathMains)
+            //    .WithOptional(x => x.MenuPath1)
+            //    .HasForeignKey(x => x.MenuPath1Id)
+            //    .WillCascadeOnDelete(false);
+
+
+
+            //modelBuilder.Entity<MenuPath2>()
+            //    .HasMany<MenuPathMain>(x => x.MenuPathMains)
+            //    .WithOptional(x => x.MenuPath2)
+            //    .HasForeignKey(x => x.MenuPath2Id)
+            //    .WillCascadeOnDelete(false);
+
+
+            //modelBuilder.Entity<MenuPath3>()
+            //    .HasMany<MenuPathMain>(x => x.MenuPathMains)
+            //    .WithOptional(x => x.MenuPath3)
+            //    .HasForeignKey(x => x.MenuPath3Id)
+            //    .WillCascadeOnDelete(false);
+            //#endregion
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

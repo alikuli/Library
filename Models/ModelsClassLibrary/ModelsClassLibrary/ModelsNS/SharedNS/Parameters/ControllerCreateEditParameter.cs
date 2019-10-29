@@ -62,11 +62,14 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
             ReturnUrl = returnUrl;
             UserName = userName;
             UserId = userId;
-            MenuParameters = new MenuParameters(menuEnum, Entity.Id);
+            //MenuParameters = new MenuParameters(menuEnum, Entity.Id);
+            MenuEnum = menuEnum;
+            Id = Entity.Id;
             GlobalObject = globalObject;
             ButtonValue = buttonValue;
         }
-
+        public string Id { get; set; }
+        public MenuENUM MenuEnum { get; set; }
         public string ButtonValue { get; set; }
         public GlobalObject GlobalObject { get; set; }
         public ICommonWithId Entity { get; set; }
@@ -74,12 +77,13 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS
         public string UserId { get; set; }
 
         public string ReturnUrl { get; set; }
-        public MenuParameters MenuParameters { get; set; }
+        //public MenuParameters MenuParameters { get; set; }
         public ControllerIndexParams ConvertToControllerIndexParams()
         {
             ControllerIndexParams cip = new ControllerIndexParams();
             cip.Entity = Entity;
-            cip.Menu = MenuParameters;
+            cip.MenuEnum = MenuEnum;
+            cip.Id = Id;
             cip.UserId = UserId;
             cip.UserName = UserName;
             cip.ReturnUrl = ReturnUrl;

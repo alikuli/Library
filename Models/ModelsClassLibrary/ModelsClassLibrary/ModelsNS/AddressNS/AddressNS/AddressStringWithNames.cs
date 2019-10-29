@@ -868,5 +868,25 @@ namespace ModelsClassLibrary.ModelsNS.AddressNS
                 (WebAddress.IsNullOrWhiteSpace() || WebAddress.ToLower() == "undefined");
         }
 
+        public static AddressStringWithNames SystemAddress()
+        {
+            AddressStringWithNames ac = new AddressStringWithNames();
+            ac.Road = "Main Harbanspura Road";
+            ac.Address2 = "Gulkali";
+            ac.Attention = "Manager";
+            ac.CityName = "Lahore";
+            ac.CountryName = "Pakistan";
+            ac.Email = "alikuli62@gmail.com";
+            ac.HouseNo = "1";
+            ac.Phone = "92-331-4474120";
+            ac.StateName = "Punjab";
+            ac.TownName = "Lahore";
+            ac.WebAddress = "";
+            ac.Zip = "0000";
+
+            return ac;
+        }
+
+
     }
 }

@@ -2,6 +2,7 @@
 using AliKuli.UtilitiesNS.RandomNumberGeneratorNS;
 using EnumLibrary.EnumNS;
 using EnumLibrary.EnumNS.VerificationNS;
+using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS;
 using ModelsClassLibrary.ModelsNS.CashNS.CashEncashmentTrxNS;
@@ -23,6 +24,35 @@ namespace UowLibrary.SuperLayerNS
 
     public partial class SuperBiz
     {
+
+
+        void getCustomerSalesmanAndOwnerSalesman(BuySellDoc bsd)
+        {
+            //We want to get the sales people so that they can share in the revenue
+            //generated during all stages
+            if (bsd.BuySellDocumentTypeEnum == BuySellDocumentTypeENUM.Purchase)
+            {
+                if (bsd.BuySellDocStateEnum == BuySellDocStateENUM.RequestUnconfirmed)
+                {
+                    //make sure there a salesman has not been already selected
+                    if (bsd.CustomerSalesmanId.IsNullOrWhiteSpace())
+                    {
+                        //No customer salesman exists
+                        getAllCustomerSalesmen(bsd);
+
+                    }
+
+
+                    if (bsd.OwnerSalesmanId.IsNullOrWhiteSpace())
+                    {
+                        getAllOwnerSalesmen(bsd);
+                    }
+                }
+            }
+        }
+
+
+
 
 
         private List<BuySellDoc> get_BuySellDoc_Completed_Payments(CashTypeENUM cashTypeEnum, CashStateENUM cashStateEnum)
@@ -118,9 +148,7 @@ namespace UowLibrary.SuperLayerNS
             productChild.IsNullThrowException("productChild");
 
 
-            //check if user has enough balance to purchase the product.
-            //if(!HasAvailableBalance_User(userId,CashTypeENUM.Refundable,productChild.Sell.SellPrice))
-            //    throw new Exception("You do not have the available balance to purchase this.");
+
             //get the product child's owner
             Owner ownerProductChild = productChild.Owner;
             ownerProductChild.IsNullThrowException("productChildOwner");
@@ -135,10 +163,8 @@ namespace UowLibrary.SuperLayerNS
             ////the user is the customer user;
             //get the customer
             Customer customerUser = CustomerBiz.GetPlayerFor(userId);
-            //customerUser.Person.IsNullThrowException("No person for customer");
-            //Person customerUserPerson = customerUser.Person;
-            //Get the select list for Customer
 
+            //Get the select list for Customer
             //remove the owner from the list... owner cannot sell to self.
             System.Web.Mvc.SelectList customerSelectList = CustomerBiz.SelectListWithout(ownerPerson);
             System.Web.Mvc.SelectList selectListOwner = OwnerBiz.SelectListOnlyWith(ownerProductChild);
@@ -175,37 +201,28 @@ namespace UowLibrary.SuperLayerNS
 
             //create the itemList.
             List<BuySellItem> buySellItems = new List<BuySellItem>();
+            string shopId = "";
             if (sale.IsNull())
             {
                 //otherwise add a new sale
-                sale = BuySellDocBiz.Factory() as BuySellDoc;
-
-                sale.Initialize(
-                    ownerProductChild.Id,
-                    customerUser.Id,
-                    addressBillToId,
-                    addressShipToId,
-                    poNumber,
-                    poDate,
+                sale = CreateSale(
+                    productChild,
+                    ownerProductChild,
+                    1,
+                    productChild.Sell.SellPrice,
+                    customerUser,
                     selectListOwner,
                     selectListCustomer,
+                    addressBillToId,
+                    addressShipToId,
                     selectListBillTo,
-                    selectListShipTo);
+                    selectListShipTo,
+                    BuySellDocStateENUM.RequestUnconfirmed,
+                    BuySellDocStateModifierENUM.Unknown,
+                    DateTime.Now,
+                    DateTime.Now,
+                    shopId);
 
-                //dont really need this, but it is good for consistancy.
-                sale.BuySellDocumentTypeEnum = BuySellDocumentTypeENUM.Purchase;
-                sale.BuySellDocStateEnum = BuySellDocStateENUM.RequestUnconfirmed;
-
-                BuySellItem buySellItem = new BuySellItem(sale.Id, productChild.Id, 1, productChild.Sell.SellPrice, productChild.FullName());
-                sale.Add(buySellItem);
-
-                BuySellDocBiz.GetDefaultVehicalType(sale);
-                //add the owners address
-                sale.AddressShipFromId = productChild.ShipFromAddressId;
-
-                sale.RequestUnconfirmed.SetToTodaysDate(UserName, UserId);
-
-                BuySellDocBiz.Create(sale);
                 totalThisItem++;
 
             }
@@ -242,6 +259,7 @@ namespace UowLibrary.SuperLayerNS
                         //itemFound.Quantity.Ship += 1;
                     }
                 }
+
                 totalThisItem++;
                 sale.AddressShipFromComplex = addressShipFromComplex;
 
@@ -250,7 +268,11 @@ namespace UowLibrary.SuperLayerNS
 
                 sale.RequestUnconfirmed.SetToTodaysDate(UserName, UserId);
 
-                BuySellDocBiz.Update(sale);
+                ControllerCreateEditParameter parm = new ControllerCreateEditParameter();
+                parm.Entity = sale as ICommonWithId;
+                parm.GlobalObject = GetGlobalObject();
+
+                BuySellDocBiz.Update(parm);
 
             }
 
@@ -259,6 +281,166 @@ namespace UowLibrary.SuperLayerNS
             return message;
 
         }
+
+
+
+        /// <summary>
+        /// Use this to create buy sell orders programatically
+        /// </summary>
+        /// <param name="productChild"></param>
+        /// <param name="ownerProductChild"></param>
+        /// <param name="quantity"></param>
+        /// <param name="customerUser"></param>
+        /// <param name="selectListOwner"></param>
+        /// <param name="selectListCustomer"></param>
+        /// <param name="addressBillToId"></param>
+        /// <param name="addressShipToId"></param>
+        /// <param name="selectListBillTo"></param>
+        /// <param name="selectListShipTo"></param>
+        /// <param name="buySellDocStateEnum"></param>
+        /// <returns></returns>
+
+
+        public BuySellDoc CreateSale(
+            ProductChild productChild,
+            Owner ownerProductChild,
+            int quantity,
+            decimal salePrice,
+            Customer customerUser,
+            System.Web.Mvc.SelectList selectListOwner,
+            System.Web.Mvc.SelectList selectListCustomer,
+            string addressBillToId,
+            string addressShipToId,
+            System.Web.Mvc.SelectList selectListBillTo,
+            System.Web.Mvc.SelectList selectListShipTo,
+            BuySellDocStateENUM buySellDocStateEnum,
+            BuySellDocStateModifierENUM buySellDocStateModifierEnum,
+            DateTime pleasePickupOnDate_End,
+            DateTime expectedDeliveryDate,
+            string shopId)
+        {
+            BuySellDoc sale = BuySellDocBiz.Factory() as BuySellDoc;
+            sale.ShopId = shopId;
+
+            sale.Initialize(
+                ownerProductChild.Id,
+                customerUser.Id,
+                addressBillToId,
+                addressShipToId,
+                selectListOwner,
+                selectListCustomer,
+                selectListBillTo,
+                selectListShipTo);
+
+            if (pleasePickupOnDate_End == DateTime.MaxValue || pleasePickupOnDate_End == DateTime.MinValue)
+            {
+
+            }
+            else
+            {
+                sale.PleasePickupOnDate_End = pleasePickupOnDate_End;
+            }
+
+            if (expectedDeliveryDate == DateTime.MaxValue || expectedDeliveryDate == DateTime.MinValue)
+            {
+
+            }
+            else
+            {
+                sale.ExpectedDeliveryDate = expectedDeliveryDate;
+            }
+
+
+            //dont really need this, but it is good for consistancy.
+            sale.BuySellDocumentTypeEnum = BuySellDocumentTypeENUM.Purchase;
+            sale.BuySellDocStateModifierEnum = buySellDocStateModifierEnum;
+            sale.BuySellDocStateEnum = buySellDocStateEnum;
+            sale.ExpectedDeliveryDate = expectedDeliveryDate;
+            BuySellItem buySellItem = new BuySellItem(sale.Id, productChild.Id, quantity, salePrice, productChild.FullName());
+            sale.Add(buySellItem);
+
+
+
+            BuySellDocBiz.GetDefaultVehicalType(sale);
+            //add the owners address
+            sale.AddressShipFromId = productChild.ShipFromAddressId;
+
+            setStatusDate(sale);
+            ControllerCreateEditParameter parm = new ControllerCreateEditParameter();
+            parm.Entity = sale as ICommonWithId;
+            parm.GlobalObject = GetGlobalObject();
+            getCustomerSalesmanAndOwnerSalesman(sale);
+
+
+            //add the payment amount.
+
+
+
+
+
+
+            BuySellDocBiz.Create(parm);
+
+            return sale;
+        }
+
+        private void setStatusDate(BuySellDoc sale)
+        {
+            switch (sale.BuySellDocStateEnum)
+            {
+                case BuySellDocStateENUM.RequestUnconfirmed:
+                    sale.RequestUnconfirmed.SetToTodaysDate(UserName, UserId);
+                    break;
+                case BuySellDocStateENUM.RequestConfirmed:
+                    sale.RequestConfirmed.SetToTodaysDate(UserName, UserId);
+                    break;
+                case BuySellDocStateENUM.BeingPreparedForShipmentBySeller:
+                    sale.BeingPreparedForShipmentBySeller.SetToTodaysDate(UserName, UserId);
+                    break;
+                case BuySellDocStateENUM.ReadyForPickup:
+                    sale.ReadyForPickup.SetToTodaysDate(UserName, UserId);
+                    break;
+                case BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller:
+                    sale.CourierAcceptedByBuyerAndSeller.SetToTodaysDate(UserName, UserId);
+                    break;
+                case BuySellDocStateENUM.CourierComingToPickUp:
+                    sale.CourierComingToPickUp.SetToTodaysDate(UserName, UserId);
+                    break;
+                case BuySellDocStateENUM.PickedUp:
+                    sale.PickedUp.SetToTodaysDate(UserName, UserId);
+                    break;
+                case BuySellDocStateENUM.Enroute:
+                    sale.Enroute.SetToTodaysDate(UserName, UserId);
+                    break;
+                case BuySellDocStateENUM.Delivered:
+                    sale.Delivered.SetToTodaysDate(UserName, UserId);
+                    sale.Delivered.IsTrue = true;
+                    break;
+                case BuySellDocStateENUM.Rejected:
+                    sale.Rejected.SetToTodaysDate(UserName, UserId);
+                    break;
+                case BuySellDocStateENUM.Problem:
+                    sale.Problem.SetToTodaysDate(UserName, UserId);
+                    break;
+                case BuySellDocStateENUM.CashTransaction:
+                    break;
+                case BuySellDocStateENUM.CashEncashment:
+                    //sale.CashEncashment.SetToTodaysDate(UserName, UserId);
+                    break;
+                case BuySellDocStateENUM.OptedOutOfSystem:
+                    sale.RequestUnconfirmed.SetToTodaysDate(UserName, UserId);
+                    break;
+                case BuySellDocStateENUM.Unknown:
+                case BuySellDocStateENUM.InProccess:
+                case BuySellDocStateENUM.BackOrdered:
+                case BuySellDocStateENUM.All:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
 
         public void PrepareEncashmentForUser(string userId, string userName, CashEncashmentTrx cet)
         {
@@ -334,7 +516,7 @@ namespace UowLibrary.SuperLayerNS
 
 
 
-        public List<DateStringStringBool> GetListOfPeopleWantingJobs()
+        public List<ServiceRequestVM> GetListOfPeopleWantingJobs()
         {
             //just get those jobs that are withing the users expertise.
             List<ServiceRequestHdr> allServiceHeaders = new List<ServiceRequestHdr>();
@@ -344,18 +526,19 @@ namespace UowLibrary.SuperLayerNS
             List<ServiceRequestHdr> customerRequestsOnly = new List<ServiceRequestHdr>();
 
             IQueryable<ServiceRequestHdr> allIq = ServiceRequestHdrBiz.FindAll().Where(x => x.ServiceRequestStatusEnum == ServiceRequestStatusENUM.Open);
-            sellerRequestsOnly = allIq.Where(x => x.RequestTypeEnum == RequestTypeENUM.BecomeSeller).ToList();
-            customerRequestsOnly = allIq.Where(x => x.RequestTypeEnum == RequestTypeENUM.BecomeCustomer).ToList();
+            List<ServiceRequestHdr> allIq_DEBUG = allIq.ToList();
+            sellerRequestsOnly = allIq.Where(x => x.RequestTypeEnum == ServiceRequestTypeENUM.BecomeSeller).ToList();
+            customerRequestsOnly = allIq.Where(x => x.RequestTypeEnum == ServiceRequestTypeENUM.BecomeCustomer).ToList();
 
-            if (CurrentUserParameter.IsSuperSalesman)
+            if (CurrentUserParameter.IsSuperSalesman || CurrentUserParameter.IsAdmin)
             {
-                salesmenRequestsOnly = allIq.Where(x => x.RequestTypeEnum == RequestTypeENUM.BecomeSalesman).ToList();
+                salesmenRequestsOnly = allIq.Where(x => x.RequestTypeEnum == ServiceRequestTypeENUM.BecomeSalesman).ToList();
 
             }
 
-            if (CurrentUserParameter.IsMailer)
+            if (CurrentUserParameter.IsMailer || CurrentUserParameter.IsAdmin)
             {
-                salesmenRequestsOnly = allIq.Where(x => x.RequestTypeEnum == RequestTypeENUM.BecomeMailer).ToList();
+                mailerRequestsOnly = allIq.Where(x => x.RequestTypeEnum == ServiceRequestTypeENUM.BecomeMailer).ToList();
 
             }
 
@@ -374,20 +557,19 @@ namespace UowLibrary.SuperLayerNS
                 allServiceHeaders = allServiceHeaders.Concat(customerRequestsOnly).ToList();
 
             if (allServiceHeaders.IsNullOrEmpty())
-                return null;
+                return new List<ServiceRequestVM>();
 
-
-            List<DateStringStringBool> lstOfPplWantingJobs = new List<DateStringStringBool>();
+            List<ServiceRequestVM> lstOfPplWantingJobs = new List<ServiceRequestVM>();
 
             foreach (ServiceRequestHdr srh in allServiceHeaders)
             {
-                DateStringStringBool dssb = new DateStringStringBool(
+                ServiceRequestVM srvm = new ServiceRequestVM(
+                    srh.Id,
                     srh.MetaData.Created.Date_NotNull_Min,
                     srh.PersonFrom.FullName(),
-                    srh.RequestTypeEnum.ToString().ToTitleSentance(),
-                    false);
+                    srh.RequestTypeEnum);
 
-                lstOfPplWantingJobs.Add(dssb);
+                lstOfPplWantingJobs.Add(srvm);
             }
             return lstOfPplWantingJobs;
         }

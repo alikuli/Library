@@ -2,7 +2,7 @@
 using EnumLibrary.EnumNS.VerificationNS;
 using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
-using ModelsClassLibrary.ModelsNS.ServiceRequestNS.ServiceRequestTrxNS;
+//using ModelsClassLibrary.ModelsNS.ServiceRequestNS.ServiceRequestTrxNS;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -16,7 +16,7 @@ namespace ModelsClassLibrary.ModelsNS.ServiceRequestNS.ServiceRequestHdrNS
         string PersonFromId { get; set; }
         Person PersonTo { get; set; }
         string PersonToId { get; set; }
-        RequestTypeENUM RequestTypeEnum { get; set; }
+        ServiceRequestTypeENUM RequestTypeEnum { get; set; }
         SelectList SelectListPersonFrom { get; set; }
         SelectList SelectListPersonTo { get; set; }
         SelectList SelectListRequestTypeEnum { get; }

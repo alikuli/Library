@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -129,6 +130,8 @@ namespace ModelsNS.Models
 
         public PersonComplex Person { get; set; }
         public AddressComplex Address { get; set; }
+
+        public GlobalObject GlobalObject { get; set; }
 
         //[Display(Name = "First Name")]
         //public string FName { get; set; }

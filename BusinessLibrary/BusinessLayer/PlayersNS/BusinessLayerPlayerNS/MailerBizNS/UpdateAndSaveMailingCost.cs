@@ -1,8 +1,11 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
+using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationHdrNS;
 using ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsClassLibrary.ModelsNS.MailerNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 
 namespace UowLibrary.MailerNS
@@ -10,7 +13,7 @@ namespace UowLibrary.MailerNS
     public partial class MailerBiz
     {
 
-        public void UpdateAndSaveMailingCost(MailingCostsVM mailingCostsVM)
+        public void UpdateAndSaveMailingCost(MailingCostsVM mailingCostsVM, GlobalObject globalObject)
         {
             mailingCostsVM.AddressVerificationHdrId.IsNullOrWhiteSpaceThrowArgumentException("View has lost the AddressVerificationHdrId");
 
@@ -48,7 +51,13 @@ namespace UowLibrary.MailerNS
                 AddressVerificationTrxBiz.Update(letter);
             }
 
-            AddressVerificationHdrBiz.UpdateAndSave(addressVerificationHdr);
+            ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+            param.Entity = addressVerificationHdr as ICommonWithId;
+            param.GlobalObject = globalObject;
+
+            AddressVerificationHdrBiz.UpdateAndSave(param);
+
+
 
 
 

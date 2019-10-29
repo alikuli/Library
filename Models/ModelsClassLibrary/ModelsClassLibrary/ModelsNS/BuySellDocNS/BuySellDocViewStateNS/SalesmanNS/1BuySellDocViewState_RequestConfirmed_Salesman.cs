@@ -23,7 +23,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
 
         //public override DeleteButtonENUM OL_DeleteButtonIs { get { return DeleteButtonENUM.CancelButton; } }
 
-        public override bool OL_IsDeleteEnabled { get { return true; } }
+        //public override bool OL_IsDeleteEnabled { get { return true; } }
 
 
         #endregion
@@ -84,7 +84,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
             }
         }
 
-        public override bool OD_Hide_Save_Button { get { return true; } }
+        public override bool OD_Hide_System_Save_Button { get { return true; } }
 
         //public override bool OD_OrderedIsEnabled
         //{

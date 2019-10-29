@@ -26,37 +26,52 @@ namespace UowLibrary.BuySellDocNS
         public override void Fix(ControllerCreateEditParameter parm)
         {
             UserId.IsNullOrWhiteSpaceThrowException("User is not logged in");
-            BuySellDoc buySellDoc = parm.Entity as BuySellDoc;
-            buySellDoc.IsNullThrowException("Unable to unbox payment trx");
+            BuySellDoc bsd = BuySellDoc.UnBox(parm.Entity);
 
 
-            fixDocumentNumber(buySellDoc);
+            fixDocumentNumber(bsd);
             fixName(parm);
-            fixCustomer(buySellDoc);
-            fixSeller(buySellDoc);
+            fixCustomer(bsd);
+            fixSeller(bsd);
 
-            fixCustomerSalesman(buySellDoc);
-            fix_Super_Customer_Salesman(buySellDoc);
-            fix_Super_Super_Customer_Salesman(buySellDoc);
+            fixCustomerSalesman(bsd);
+            fix_Super_Customer_Salesman(bsd);
+            fix_Super_Super_Customer_Salesman(bsd);
 
-            fixOwnerSalesman(buySellDoc);
-            fix_Super_Owner_Salesman(buySellDoc);
-            fix_Super_Super_Owner_Salesman(buySellDoc);
+            fixOwnerSalesman(bsd);
+            fix_Super_Owner_Salesman(bsd);
+            fix_Super_Super_Owner_Salesman(bsd);
 
 
-            fixDeliverymanSalesman(buySellDoc);
-            fix_Super_Deliveryman_Salesman(buySellDoc);
-            fix_Super_Super_Deliveryman_Salesman(buySellDoc);
+            fixDeliverymanSalesman(bsd);
+            fix_Super_Deliveryman_Salesman(bsd);
+            fix_Super_Super_Deliveryman_Salesman(bsd);
 
-            fixAddresses(buySellDoc);
-            fixVehicalType(buySellDoc);
-            fixFreight(buySellDoc);
-            fixDate(buySellDoc);
-            fixFreightOfferTrxId(buySellDoc);
-            fix_Update_BuySellDocStateModifierEnum_InBuySell(parm, buySellDoc);
-            fix_MenuManager(buySellDoc, parm);
+            fixAddresses(bsd);
+            fixVehicalType(bsd);
+            fixFreight(bsd);
+            fixDate(bsd);
+            fixFreightOfferTrxId(bsd);
+            fix_Update_BuySellDocStateModifierEnum_InBuySell(parm, bsd);
+            fix_MenuManager(bsd, parm);
+
+            fix_OptedOutOfSystem(bsd);
             base.Fix(parm);
 
+        }
+
+        private void fix_OptedOutOfSystem(BuySellDoc bsd)
+        {
+            if (bsd.OptedOutOfSystem.IsSelected)
+            {
+                if (bsd.OptedOutOfSystem.ByUserId.IsNullOrWhiteSpace())
+                {
+                    //This has been updated in the UpdateDuringModify
+                    //but username etc could not be supplied. So, update
+                    //it properly now.
+                    bsd.OptedOutOfSystem.MarkTrue(UserName, UserId);
+                }
+            }
         }
 
 

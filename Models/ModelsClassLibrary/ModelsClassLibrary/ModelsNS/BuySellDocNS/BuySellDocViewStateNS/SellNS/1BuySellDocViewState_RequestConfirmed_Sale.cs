@@ -57,12 +57,16 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         #region Order Lines (OL) This is the orders list
         public override string OL_IconForEditView{get{ return IconEdit; } }
 
-        public override bool OL_IsDeleteEnabled { get { return true; } }
+        //public override bool OL_IsDeleteEnabled { get { return true; } }
 
-        public override string OL_IconForDeleteView { get { return cancelIcon; } }
+        //public override string OL_IconForDeleteView { get { return cancelIcon; } }
 
-        public override string OL_DELETE_Button_ToolTip { get { return "The order will go back to unconfirmed. You will not be able to ship it anymore until the customer reconfirms the order."; } }
+        //public override string OL_DELETE_Button_ToolTip { get { return "The order will go back to unconfirmed. You will not be able to ship it anymore until the customer reconfirms the order."; } }
         //public override DeleteButtonENUM OL_DeleteButtonIs { get { return DeleteButtonENUM.CancelButton; } }
+        public override bool OL_IsShowCancelButton { get { return true; } }
+        public override bool OL_IsCanceledEnabled { get { return true; } }
+
+        public override string OL_Cancel_Button_ToolTip { get { return "You can cancel this order without penalty."; } }
 
         public override bool OL_IsShowReject { get { return true; } }
         public override bool OL_IsRejectEnabled { get { return true; } }
@@ -88,7 +92,6 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         public override bool HD_Show_Vehical_Type_Requested { get { return true; } }
 
         public override bool HD_Enable_ExpectedDeliveryDate { get { return true; } }
-
 
 
 
@@ -167,7 +170,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
                 return true;
             }
         }
-
+        
 
         #endregion
 

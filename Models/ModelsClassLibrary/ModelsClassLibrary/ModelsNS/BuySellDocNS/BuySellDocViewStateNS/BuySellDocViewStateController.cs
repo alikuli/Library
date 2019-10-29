@@ -92,6 +92,9 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
 
                         case BuySellDocStateENUM.InProccess:
 
+                        case BuySellDocStateENUM.OptedOutOfSystem:
+                            return new BuySellDocViewState_OptedOutOfSystem_Sale(customerPersonId, sellerPersonId);
+
                         case BuySellDocStateENUM.All:
                         case BuySellDocStateENUM.Problem:
 
@@ -136,6 +139,9 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
 
                         case BuySellDocStateENUM.Rejected:
                             return new BuySellDocViewState_Rejected_Purchase(customerPersonId, sellerPersonId);
+
+                        case BuySellDocStateENUM.OptedOutOfSystem:
+                            return new BuySellDocViewState_OptedOutOfSystem_Purchase(customerPersonId, sellerPersonId);
 
                         case BuySellDocStateENUM.InProccess:
 

@@ -8,21 +8,33 @@ namespace ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS
 {
     public class PenaltyController
     {
-        public static IPenaltyClass GetPenalty(BuySellDoc buySellDoc, out PersonPayingPenalty personPayingPenalty)
+        public static IPenaltyClass GetPenalty(BuySellDoc bsd, out PersonPayingPenalty ppp)
         {
-            personPayingPenalty = new PersonPayingPenalty(buySellDoc);
-            switch (buySellDoc.BuySellDocumentTypeEnum)
+            ppp = new PersonPayingPenalty(bsd);
+            switch (bsd.BuySellDocumentTypeEnum)
             {
                 case BuySellDocumentTypeENUM.Unknown:
                     break;
 
                 case BuySellDocumentTypeENUM.Sale:
-                    personPayingPenalty.IsOwner = true;
-                    switch (buySellDoc.BuySellDocStateEnum)
+                    ppp.IsOwner = true;
+                    switch (bsd.BuySellDocStateEnum)
                     {
                         case BuySellDocStateENUM.RequestUnconfirmed:
+                            if (bsd.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.SeeAddress)
+                            {
+                                return new SeeAddress_Sale(bsd);
+                            }
                             break;
                         case BuySellDocStateENUM.RequestConfirmed:
+                            if (bsd.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.SeeAddress)
+                            {
+                                return new SeeAddress_Sale(bsd);
+                            }
+                            if (bsd.OptedOutOfSystem.IsSelected)
+                            {
+
+                            }
                             break;
                         case BuySellDocStateENUM.BeingPreparedForShipmentBySeller:
                             break;
@@ -33,7 +45,7 @@ namespace ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS
                         case BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller:
                             break;
                         case BuySellDocStateENUM.CourierComingToPickUp:
-                            return new CourierComingToPickUp_Sale(buySellDoc);
+                            return new CourierComingToPickUp_Sale(bsd);
 
                         case BuySellDocStateENUM.PickedUp:
                             break;
@@ -48,21 +60,28 @@ namespace ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS
                         default:
                             break;
                     }
-                break;
+                    break;
 
                 case BuySellDocumentTypeENUM.Purchase:
                     {
-                        personPayingPenalty.IsCustomer = true;
-                        switch (buySellDoc.BuySellDocStateEnum)
+                        ppp.IsCustomer = true;
+                        switch (bsd.BuySellDocStateEnum)
                         {
                             case BuySellDocStateENUM.RequestUnconfirmed:
+                                if (bsd.BuySellDocStateModifierEnum == BuySellDocStateModifierENUM.OptOutOfSystem)
+                                {
+
+                                    return new OptOutOfSystem_Purchase(bsd);
+                                }
+
+
                                 break;
                             case BuySellDocStateENUM.RequestConfirmed:
                                 break;
                             case BuySellDocStateENUM.BeingPreparedForShipmentBySeller:
-                                
 
-                                return new CourierAcceptedByBuyerAndSeller_Purchase(buySellDoc);
+
+                                return new CourierAcceptedByBuyerAndSeller_Purchase(bsd);
 
                             case BuySellDocStateENUM.ReadyForPickup:
                                 break;
@@ -76,12 +95,16 @@ namespace ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS
                             case BuySellDocStateENUM.Enroute:
                                 break;
                             case BuySellDocStateENUM.Delivered:
-                                return new Delivered_Purchase(buySellDoc);
+                                return new Delivered_Purchase(bsd);
 
                             case BuySellDocStateENUM.Rejected:
                                 break;
                             case BuySellDocStateENUM.Problem:
                                 break;
+                            //case BuySellDocStateENUM.OptedOutOfSystem:
+                            //    //reset the opt_out
+                            //    bsd.OptedOutOfSystem = new BoolDateAndByComplex();
+                            //    return new Opt
                             default:
                                 break;
                         }
@@ -89,41 +112,41 @@ namespace ModelsClassLibrary.ModelsNS.BuySellDocNS.PenaltyNS
                     break;
 
                 case BuySellDocumentTypeENUM.Delivery:
-                    personPayingPenalty.IsDeliveryman = true;
-                        switch (buySellDoc.BuySellDocStateEnum)
-                        {
-                            case BuySellDocStateENUM.RequestUnconfirmed:
-                                break;
-                            case BuySellDocStateENUM.RequestConfirmed:
-                                break;
-                            case BuySellDocStateENUM.BeingPreparedForShipmentBySeller:
-                                break;
+                    ppp.IsDeliveryman = true;
+                    switch (bsd.BuySellDocStateEnum)
+                    {
+                        case BuySellDocStateENUM.RequestUnconfirmed:
+                            break;
+                        case BuySellDocStateENUM.RequestConfirmed:
+                            break;
+                        case BuySellDocStateENUM.BeingPreparedForShipmentBySeller:
+                            break;
 
-                            case BuySellDocStateENUM.ReadyForPickup:
-                                break;
+                        case BuySellDocStateENUM.ReadyForPickup:
+                            break;
 
-                            case BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller:
-                                break;
-                            case BuySellDocStateENUM.CourierComingToPickUp:
-                                return new CourierComingToPickUp_Delivery(buySellDoc);
+                        case BuySellDocStateENUM.CourierAcceptedByBuyerAndSeller:
+                            break;
+                        case BuySellDocStateENUM.CourierComingToPickUp:
+                            return new CourierComingToPickUp_Delivery(bsd);
 
-                            case BuySellDocStateENUM.PickedUp:
-                                break;
-                            case BuySellDocStateENUM.Enroute:
-                                break;
-                            case BuySellDocStateENUM.Delivered:
-                                break;
-                            case BuySellDocStateENUM.Rejected:
-                                break;
-                            case BuySellDocStateENUM.Problem:
-                                break;
-                            default:
-                                break;
-                        }
+                        case BuySellDocStateENUM.PickedUp:
+                            break;
+                        case BuySellDocStateENUM.Enroute:
+                            break;
+                        case BuySellDocStateENUM.Delivered:
+                            break;
+                        case BuySellDocStateENUM.Rejected:
+                            break;
+                        case BuySellDocStateENUM.Problem:
+                            break;
+                        default:
+                            break;
+                    }
                     break;
 
                 case BuySellDocumentTypeENUM.Salesman:
-                    personPayingPenalty.IsSalesman = true;
+                    ppp.IsSalesman = true;
                     break;
 
                 default:

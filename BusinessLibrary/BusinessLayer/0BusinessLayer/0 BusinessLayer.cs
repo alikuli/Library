@@ -185,36 +185,26 @@ namespace UowLibrary
 
 
 
-        public virtual void CreateSimple(ControllerCreateEditParameter parm)
-        {
-            createEngineSimple(parm);
-        }
+        //public virtual void CreateSimple(ControllerCreateEditParameter parm)
+        //{
+        //    Create(parm);
+
+        //}
 
         private void create(TEntity entity)
         {
+            IsCreate = true;
+
             //update the create...
             entity.MetaData.Created.SetToTodaysDate(UserName, UserId);
             Dal.Create(entity);
+            ClearSelectListInCache(SelectListCacheKey);
         }
-
-        //public virtual void Create(ControllerCreateEditParameter parm)
-        //{
-        //    createEngineWithFileUpload(parm);
-        //}
-        //public virtual void Create(TEntity entity, HttpPostedFileBase[] files)
-        //{
-        //    createEngineWithFileUpload(entity, files);
-        //}
 
 
 
         //-----------------------------------------------------------------------------------------
 
-        //public virtual void CreateAndSaveNoFileUpload(ControllerCreateEditParameter parm)
-        //{
-        //    createEngineSimple(parm);
-        //    SaveChanges();
-        //}
 
         /// <summary>
         /// This creates and saves for initialization only. It AUTOMATICLY looks for an image in the initialization folder and loads it, 
@@ -251,7 +241,7 @@ namespace UowLibrary
 
         public virtual void CreateAndSave(ControllerCreateEditParameter parm)
         {
-            createEngineWithFileUpload(parm);
+            Create(parm);
             SaveChanges();
         }
 
@@ -263,7 +253,7 @@ namespace UowLibrary
         //}
         public virtual async Task CreateAndSaveAsync(ControllerCreateEditParameter parm)
         {
-            createEngineWithFileUpload(parm);
+            Create(parm);
             await SaveChangesAsync();
         }
 
@@ -276,28 +266,24 @@ namespace UowLibrary
 
 
 
-        private void createEngineWithFileUpload(ControllerCreateEditParameter parm)
-        {
-            //this was removed because it shows up twice... it is also in CreateEngineSimple
-            //fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
-            //handleRelatedFilesIfExist(parm);
-            createEngineSimple(parm);
-        }
-
-        private void createEngineSimple(ControllerCreateEditParameter parm)
-        {
-            //entity.IsCreating = true;
-            //fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
-            handleRelatedFilesIfExist(parm);
-            Create(parm.Entity as TEntity);
-            //ClearSelectListInCache(SelectListCacheKey);
-        }
 
         /// <summary>
         /// This needs to be overridden for the Product VM. Here we will change the Entity. This will be overridden in each individual
         /// ProductVm
         /// </summary>
         /// <param name="entity"></param>
+        public virtual void Create(ControllerCreateEditParameter parm)
+        {
+            IsCreate = true;
+            handleRelatedFilesIfExist(parm);
+
+            parm.Entity.MetaData.Created.SetToTodaysDate(UserName, UserId);
+            fixEntityAndBussinessRulesAndErrorCheck_Helper(parm);
+            create(parm.Entity as TEntity);
+            ClearSelectListInCache(SelectListCacheKey);
+
+        }
+
         public virtual void Create(TEntity entity)
         {
             IsCreate = true;
@@ -340,12 +326,13 @@ namespace UowLibrary
 
         }
 
-        public void UpdateAndSave(TEntity entity)
-        {
-            ControllerCreateEditParameter param = new ControllerCreateEditParameter();
-            param.Entity = entity as ICommonWithId;
-            UpdateAndSave(param);
-        }
+        //public void UpdateAndSave(TEntity entity)
+        //{
+        //    ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+        //    param.Entity = entity as ICommonWithId;
+
+        //    UpdateAndSave(param);
+        //}
 
         public void UpdateAndSave(ControllerCreateEditParameter param)
         {
@@ -1353,11 +1340,11 @@ namespace UowLibrary
                     //IndexItem.Menumanager is initialized here
                     if (indexItemVM.MenuManager.IsNull())
                     {
-                        indexItemVM.MenuManager = new MenuManager(null, null, null, parameters.Menu.MenuEnum, BreadCrumbManager, parameters.LikeUnlikeCounter, UserId, parameters.ReturnUrl, UserName);
+                        indexItemVM.MenuManager = new MenuManager(null, null, null, parameters.MenuEnum, BreadCrumbManager, parameters.LikeUnlikeCounter, UserId, parameters.ReturnUrl, UserName);
                         indexItemVM.MenuManager.PictureAddresses.Add(AliKuli.UtilitiesNS.ConfigManagerHelper.DefaultBlankPicture);
                     }
                     if (indexListVM.MenuManager.IsNull())
-                        indexListVM.MenuManager = new MenuManager(null, null, null, parameters.Menu.MenuEnum, BreadCrumbManager, parameters.LikeUnlikeCounter, UserId, parameters.ReturnUrl, UserName);
+                        indexListVM.MenuManager = new MenuManager(null, null, null, parameters.MenuEnum, BreadCrumbManager, parameters.LikeUnlikeCounter, UserId, parameters.ReturnUrl, UserName);
 
 
                     //return URL is added here to the item. This will be used in the Edit / Create
@@ -1411,31 +1398,31 @@ namespace UowLibrary
         {
             if (entity.MenuManager.IsNull())
             {
-                switch (parm.Menu.MenuEnum)
+                switch (parm.MenuEnum)
                 {
                     case MenuENUM.IndexMenuPath1:
                     case MenuENUM.IndexMenuPath2:
                     case MenuENUM.IndexMenuPath3:
                         //Item is MenuPathMain
-                        entity.MenuManager = new MenuManager(entity as MenuPathMain, null, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
+                        entity.MenuManager = new MenuManager(entity as MenuPathMain, null, null, parm.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
                         break;
 
                     case MenuENUM.IndexMenuProduct:
                         //item is product
-                        entity.MenuManager = new MenuManager(null, entity as Product, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
+                        entity.MenuManager = new MenuManager(null, entity as Product, null, parm.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
                         break;
 
                     case MenuENUM.IndexMenuProductChild:
                         //item is productChild
-                        entity.MenuManager = new MenuManager(null, null, entity as ProductChild, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
+                        entity.MenuManager = new MenuManager(null, null, entity as ProductChild, parm.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
                         break;
 
                     case MenuENUM.IndexMenuProductChildLandingPage:
                         //item is productChild
-                        entity.MenuManager = new MenuManager(null, null, entity as ProductChild, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
+                        entity.MenuManager = new MenuManager(null, null, entity as ProductChild, parm.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
                         break;
                     default:
-                        entity.MenuManager = new MenuManager(null, null, null, parm.Menu.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
+                        entity.MenuManager = new MenuManager(null, null, null, parm.MenuEnum, BreadCrumbManager, parm.LikeUnlikeCounter, UserId, parm.ReturnUrl, UserName);
                         break;
                 }
 
@@ -1459,7 +1446,7 @@ namespace UowLibrary
         //        private IMenuManager getMenuManager(ControllerIndexParams param)
         //        {
 
-        //            switch (param.Menu.MenuEnum)
+        //            switch (param.MenuEnum)
         //            {
         //                case MenuENUM.IndexDefault:
         //                    //this is a MenuPath1
@@ -1702,9 +1689,6 @@ namespace UowLibrary
             //== COPY FILE
             string newNameWithMappedPathPlusExtention = CopyFile(relative_SrcPath, relative_targetPath, Path.ChangeExtension(originalnameWithoutExtention, ExtentionFound));
 
-            //string newPath = Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, entity.ClassNameRaw);
-            //UploadedFile uf = new UploadedFile(originalnameWithoutExtention, newNameWithMappedPathPlusExtention, newPath);
-            //UploadedFile uf = new UploadedFile(originalnameWithoutExtention, newNameWithMappedPathPlusExtention, relative_targetPath);
 
             UploadedFile uf = new UploadedFile(
                 originalnameWithoutExtention,
@@ -1714,7 +1698,7 @@ namespace UowLibrary
 
             lst.Add(uf);
 
-            SaveUploadedFiles(lst,
+            SaveUploadedFilesToDb(lst,
                 entity,
                 entityHasUploads.MiscFiles,
                 IUserHasUploadsTypeENUM.None);
@@ -1934,7 +1918,7 @@ namespace UowLibrary
         /// <typeparam name="TEntity"></typeparam>
 
 
-        public void SaveUploadedFiles(List<UploadedFile> lstUploadedFile, TEntity entity, ICollection<UploadedFile> navigation, IUserHasUploadsTypeENUM iuserHasUploadsTypeEnum = IUserHasUploadsTypeENUM.None)
+        public void SaveUploadedFilesToDb(List<UploadedFile> lstUploadedFile, TEntity entity, ICollection<UploadedFile> navigation, IUserHasUploadsTypeENUM iuserHasUploadsTypeEnum = IUserHasUploadsTypeENUM.None)
         {
             if (!lstUploadedFile.IsNullOrEmpty())
             {
@@ -1952,68 +1936,13 @@ namespace UowLibrary
                     //You need to add a refrence here to save the file in the UploadedFile as well.
                     //the code will ofcourse be in the calling class.
                     AddEntityRecordIntoUpload(file, entity as TEntity, iuserHasUploadsTypeEnum);
-                    UploadedFileBiz.CreateSimple(CreateControllerCreateEditParameter(file as ICommonWithId));
+                    UploadedFileBiz.Create(CreateControllerCreateEditParameter(file as ICommonWithId));
 
                 }
             }
         }
 
 
-        //private string selectNavigationId(UploadedFile file)
-        //{
-        //    switch (FileUploadTypeENUM )
-        //    {
-        //        case FileUploadTypeENUM.MiscUploads:
-        //            return file.Id
-        //            break;
-        //        case FileUploadTypeENUM.UserSelfie:
-        //            break;
-        //        case FileUploadTypeENUM.UserIdCardFront:
-        //            break;
-        //        case FileUploadTypeENUM.UserIdCardBack:
-        //            break;
-        //        case FileUploadTypeENUM.UserLiscenceFront:
-        //            break;
-        //        case FileUploadTypeENUM.UserLiscenceBack:
-        //            break;
-        //        case FileUploadTypeENUM.UserPassportFirstPage:
-        //            break;
-        //        case FileUploadTypeENUM.UserPassPortVisa:
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
-
-
-
-
-
-
-
-
-        //private void uploadFile(ControllerCreateEditParameter parm, IHasUploads entity, HttpPostedFileBase[] files, string locationToSave)
-        //{
-        //    ///Deal with IHasUploads
-        //    if (!files[0].IsNull())
-        //    {
-        //        //Save the files if they exist.
-        //        UploadObject uploadObj = new UploadObject(files, locationToSave);
-
-        //        //If you are here and files exist, they have been saved, now save their pointers
-        //        //to the db.
-        //        //if we have saved some files... they will be in Files.
-        //        if (uploadObj.NumberOfFiles > 0)
-        //        {
-        //            IHasUploads hasUploads = entity as IHasUploads;
-
-        //            if (hasUploads.IsNull())
-        //                return;
-
-        //            getUploads(hasUploads, uploadObj);
-        //        }
-        //    }
-        //}
         /// <summary>
         /// This deletes/Removes the uploaded file.
         /// </summary>
@@ -2276,7 +2205,7 @@ namespace UowLibrary
                 return;
 
             //Now add the uploads to the entity
-            SaveUploadedFiles(uploadObj.FileList, entity, navigation, iuserHasUploadsTypeEnum);
+            SaveUploadedFilesToDb(uploadObj.FileList, entity, navigation, iuserHasUploadsTypeEnum);
 
 
 
@@ -2391,8 +2320,13 @@ namespace UowLibrary
             return listPersonUserFlatFile;
         }
 
-
-        public virtual List<string> GetPictureList(IHasUploads ihasUploads)
+        /// <summary>
+        /// Note. The method IsImage in UploadedFile controls if the image is selected or not. 
+        /// only approved images will be selected
+        /// </summary>
+        /// <param name="ihasUploads"></param>
+        /// <returns></returns>
+        public virtual List<string> GetCurrItemsPictureList(IHasUploads ihasUploads)
         {
             List<string> addresses = new List<string>();
 
@@ -2402,6 +2336,9 @@ namespace UowLibrary
                 lstUploadedFiles.IsNullOrEmptyThrowException("Something went worng. This list cannot be empty.");
                 foreach (UploadedFile uploadFile in lstUploadedFiles)
                 {
+                    if (!uploadFile.IsImage())
+                        continue;
+
                     string pictureAddy = getImageAddressOf(uploadFile);
                     if (!pictureAddy.IsNullOrWhiteSpace())
                     {
@@ -2409,12 +2346,15 @@ namespace UowLibrary
                         //i.e. it has not been deleted inadvertantly
                         string sysAddress = getImageAbsoluteAddressOf(pictureAddy);
                         if (FileTools.IsExistFile(sysAddress))
+                        {
                             addresses.Add(pictureAddy);
-
+                        }
 
                     }
                 }
             }
+
+
 
             if (addresses.IsNullOrEmpty())
             {

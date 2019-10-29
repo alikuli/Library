@@ -179,11 +179,11 @@ namespace AliKuli.ToolsNS
             if (freightMoney == 0)
                 return 0;
 
-            if (TotalCommissionOnFreight_Precent() == 0)
+            if (TotalCommission_Freight_Precent() == 0)
                 return 0;
 
             decimal totalCommission_On_Freight_Money =
-                freightMoney * TotalCommissionOnFreight_Precent();
+                freightMoney * TotalCommission_Freight_Precent();
 
             return totalCommission_On_Freight_Money;
         }
@@ -206,7 +206,7 @@ namespace AliKuli.ToolsNS
             if (saleWithoutFreightMoney == 0)
                 return 0;
 
-            decimal totalCommission_On_NetSale_Money = saleWithoutFreightMoney * TotalCommissionOnSaleWithoutFreight_Percent();
+            decimal totalCommission_On_NetSale_Money = saleWithoutFreightMoney * TotalCommission_Product_Percent();
 
             if (totalCommission_On_NetSale_Money == 0)
                 return 0;
@@ -215,7 +215,7 @@ namespace AliKuli.ToolsNS
 
         }
 
-        public static decimal TotalCommissionOnSaleWithoutFreight_Percent()
+        public static decimal TotalCommission_Product_Percent()
         {
             decimal pct =
                 CommissionPct_CustomerSalesman +
@@ -228,7 +228,7 @@ namespace AliKuli.ToolsNS
             return pct;
         }
 
-        public static decimal TotalCommissionOnFreight_Precent()
+        public static decimal TotalCommission_Freight_Precent()
         {
             decimal pct =
                 CommissionPct_DeliverymanSalesman +

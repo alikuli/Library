@@ -6,12 +6,26 @@
     ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_PickFrom = Model.BuySellDocViewState;
     string shipFromAddress_PickFrom = "";
     bool show_Address_Pick_From = viewState_PickFrom.HD_Show_Address_Pick_From;
+    AddressDetailToShowENUM addressDetailToShow = viewState_PickFrom.HD_AddressDetailToShow;
+    
+    if(Model.BuySellDocumentTypeEnum == BuySellDocumentTypeENUM.Purchase)
+    {
+        if(Model.IsShowFullAddressTo_Customer == true)
+        {
+            addressDetailToShow = AddressDetailToShowENUM.Complete;
+        }
+        
+        if(Model.OptedOutOfSystem.IsSelected)
+        {
+            addressDetailToShow = AddressDetailToShowENUM.Complete;
+            
+        }
+    }
 
-
-
+    
 }
 
-@switch (viewState_PickFrom.HD_AddressDetailToShow)
+@switch (addressDetailToShow)
 {
     case AddressDetailToShowENUM.Complete:
         shipFromAddress_PickFrom = Model.AddressShipFromComplex.ToString();
@@ -44,7 +58,7 @@
 
     </div>
 
-    if (viewState_PickFrom.HD_AddressDetailToShow == AddressDetailToShowENUM.Complete)
+    if (addressDetailToShow == AddressDetailToShowENUM.Complete)
     {
         <div class="form-group">
             <label class="bg-info text-white p-2">
@@ -52,9 +66,11 @@
                     <label>Sellers Phone/Email</label>
                 </strong>
             </label>
-            @Html.EditorFor(model => model.AddressShipFromComplex.ToString_Phone_And_Email, new { htmlAttributes = new { @class = "form-control bg-info text-white", @placeholder = "No Contact.", disabled = "disabled" } })
+            @Html.TextAreaFor(model => model.AddressShipFromComplex.ToString_Phone_And_Email, 2, 25, new { disabled = "disabled", style = "width: 100%; max-width: 100%; white-space: pre-line", @placeholder = "No Contact." })
 
         </div>
     }
 
 }
+
+

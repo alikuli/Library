@@ -29,9 +29,10 @@ namespace UowLibrary.ProductChildNS
         {
             base.Event_ModifyIndexItem(indexListVM, indexItem, icommonWithId);
             ProductChild productChild = ProductChild.Unbox(icommonWithId);
-
+            indexItem.IsHidden = productChild.Hide;
+            indexItem.IsTokenPaymentAccepted = productChild.IsNonRefundablePaymentAccepted;
             indexItem.MenuManager = new MenuManager(null, null, productChild, MenuENUM.IndexMenuPath1, BreadCrumbManager, null, UserId, indexListVM.MenuManager.ReturnUrl, UserName);
-            indexItem.MenuManager.PictureAddresses = GetPictureList(productChild);
+            indexItem.MenuManager.PictureAddresses = GetCurrItemsPictureList(productChild);
             indexItem.Price = productChild.Sell.SellPrice;
 
         }

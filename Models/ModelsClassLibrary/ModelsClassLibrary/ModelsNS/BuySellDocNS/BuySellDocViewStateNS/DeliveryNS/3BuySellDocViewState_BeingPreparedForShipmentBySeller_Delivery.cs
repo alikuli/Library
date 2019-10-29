@@ -45,13 +45,13 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         #region Order Lines (OL) This is the orders list
 
 
-        public override bool OL_IsDeleteEnabled
-        {
-            get
-            {
-                return false;
-            }
-        }
+        //public override bool OL_IsDeleteEnabled
+        //{
+        //    get
+        //    {
+        //        return false;
+        //    }
+        //}
         public override string OL_IconForEditView
         {
             get
@@ -79,13 +79,13 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
             }
         }
 
-        public override bool HD_OL_Button_Is_Delete_Enabled
-        {
-            get
-            {
-                return false;
-            }
-        }
+        //public override bool HD_OL_Button_Is_Delete_Enabled
+        //{
+        //    get
+        //    {
+        //        return false;
+        //    }
+        //}
         public override bool HD_Hide_Save_Button_In_Edit
         {
             get

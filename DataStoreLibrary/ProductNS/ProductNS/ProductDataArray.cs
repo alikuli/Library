@@ -37,6 +37,10 @@ namespace DatastoreNS
 
         ProductInitializerHelper pi;
 
+
+        
+        
+        
         public List<ProductInitializerHelper> DataArray()
         {
             List<ProductInitializerHelper> pList = new List<ProductInitializerHelper>();
@@ -61,6 +65,8 @@ namespace DatastoreNS
             addBmwI3(pList);
             addBmw1Series(pList);
             addBmwZ3(pList);
+            addSystemProduct(pList);
+            
 
             #endregion
 
@@ -87,6 +93,26 @@ namespace DatastoreNS
         }
 
         #region Misc
+
+
+
+        private void addSystemProduct(List<ProductInitializerHelper> lst)
+        {
+
+
+            List<MenuPathHelper> menupaths = new List<MenuPathHelper>();
+            List<string> productIdentifiers = new List<string>();
+
+            name = "System Product";
+
+
+            pi = CreateProductInitializer(name, mrsp, mlsp, lastOrderedDate, height, width, length, uomActualWeightName, actualWeight, shipVol, uomLengthName, uomVolumeName, uomPurchaseName, uomSaleName, uomWeightListedName, weightListed, menupaths, productIdentifiers);
+
+            lst.Add(pi);
+
+
+        }
+
         private void addToyatoSalon2015(List<ProductInitializerHelper> lst)
         {
             List<MenuPathHelper> menupaths = new List<MenuPathHelper>();

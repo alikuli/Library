@@ -42,7 +42,7 @@ namespace MarketPlace.Web6.Controllers
         {
             try
             {
-                EmailAddressBiz.SendEmailConfirmation(addressId);
+                EmailAddressBiz.SendEmailConfirmation(addressId, GlobalObject);
             }
             catch (System.Exception e)
             {
@@ -84,7 +84,7 @@ namespace MarketPlace.Web6.Controllers
                 verificationCode.IsNullOrWhiteSpaceThrowArgumentException("Verification code not received");
                 id.IsNullOrWhiteSpaceThrowArgumentException("EmailAddressBiz not received");
 
-                EmailAddressBiz.CheckEmailVerificationCode(id, verificationCode);
+                EmailAddressBiz.CheckEmailVerificationCode(id, verificationCode, GlobalObject);
             }
             catch (System.Exception e)
             {
@@ -112,7 +112,7 @@ namespace MarketPlace.Web6.Controllers
             addressId.IsNullOrWhiteSpaceThrowArgumentException();
             try
             {
-                EmailAddressBiz.UpdateAndSaveDefaultAddress(addressId);
+                EmailAddressBiz.UpdateAndSaveDefaultAddress(addressId, GlobalObject);
                 ErrorsGlobal.MemorySave();
                 return RedirectToAction("Index", "EmailAddresses", new
                 {

@@ -108,7 +108,7 @@ namespace MarketPlace.Web6.Controllers
         public ActionResult MoveTop(string searchFor, string selectedId, SortOrderENUM sortBy = SortOrderENUM.Item1_Asc)
         {
             if (!selectedId.IsNullOrWhiteSpace())
-                _discountPrecBiz.MakeFirst(selectedId);
+                _discountPrecBiz.MakeFirst(selectedId, GlobalObject);
 
             return RedirectToAction("Index", new { searchFor = searchFor, selectedId = selectedId, sortBy = sortBy });
 
@@ -121,7 +121,7 @@ namespace MarketPlace.Web6.Controllers
 
 
             if (!selectedId.IsNullOrWhiteSpace())
-                _discountPrecBiz.MakeLast(selectedId);
+                _discountPrecBiz.MakeLast(selectedId, GlobalObject);
 
             return RedirectToAction("Index", new { searchFor = searchFor, selectedId = selectedId, sortBy = sortBy });
 

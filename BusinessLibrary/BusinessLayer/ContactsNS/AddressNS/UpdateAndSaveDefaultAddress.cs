@@ -1,6 +1,9 @@
 ﻿using AliKuli.Extentions;
+using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 
 
 namespace UowLibrary.AddressNS
@@ -9,7 +12,7 @@ namespace UowLibrary.AddressNS
     {
 
 
-        public void UpdateAndSaveDefaultAddress(string userId, string addressId)
+        public void UpdateAndSaveDefaultAddress(string userId, string addressId, GlobalObject globalObject)
         {
             userId.IsNullOrWhiteSpaceThrowArgumentException("userId");
             addressId.IsNullOrWhiteSpaceThrowArgumentException("AddressId is null");
@@ -39,7 +42,14 @@ namespace UowLibrary.AddressNS
             person.IsNullThrowException("Person not found");
 
             person.DefaultBillAddressId = addressId;
-            PersonBiz.UpdateAndSave(person);
+
+            ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+            param.Entity = person as ICommonWithId;
+            param.GlobalObject = globalObject;
+
+            PersonBiz.UpdateAndSave(param);
+
+            //PersonBiz.UpdateAndSave(person);
 
         }
 

@@ -21,16 +21,21 @@
             <small><strong>Customer</strong> belongs to you.</small>
         </div>
 
-        <label><small><strong>Sale:</strong></small> </label>
-        <span><small>@Model.TotalInvoiceLessFreight.ToString().ToRuppeeFormat()</small> </span>
+        <label><small><strong>Sale Refundable:</strong></small> </label>
+        <span><small>@Model.Total_Product_Refundable.ToString().ToRuppeeFormat()</small> </span>
+        <label><small><strong>Sale Non Refundable:</strong></small> </label>
+        <span><small>@Model.Total_Product_Non_Refundable.ToString().ToRuppeeFormat()</small> </span>
         <br />
 
         <label><small><strong>Percent:</strong></small> </label>
         <span><small>@Model.CustomerSalesmanCommission.Percent%</small> </span>
         <br />
 
-        <label><small><strong>Commission:</strong></small> </label>
-        <span class="background-ltblue pl-1 pr-1"><small>@Model.CustomerSalesmanCommission.Amount.ToString().ToRuppeeFormat()</small> </span>
+        <label><small><strong>Commission Refundable:</strong></small> </label>
+        <span class="background-ltblue pl-1 pr-1"><small>@Model.CustomerSalesmanCommission.Amount_Refundable.ToString().ToRuppeeFormat()</small> </span>
+
+        <label><small><strong>Commission NonRefundable:</strong></small> </label>
+        <span class="background-ltblue pl-1 pr-1"><small>@Model.CustomerSalesmanCommission.Amount_NonRefundable.ToString().ToRuppeeFormat()</small> </span>
 
     </div>
 </div>
@@ -49,17 +54,24 @@
             <small><strong>Seller</strong> belongs to you.</small>
         </div>
         <p>
-            <label class=""><small><strong>Sale:</strong></small> </label>
-            <span><small>@Model.TotalInvoiceLessFreight.ToString().ToRuppeeFormat()</small> </span>
+            <label class=""><small><strong>Sale Refundable:</strong></small> </label>
+            <span><small>@Model.Total_Product_Refundable.ToString().ToRuppeeFormat()</small> </span>
         </p>
+        <p>
+            <label class=""><small><strong>Sale Non Refundable:</strong></small> </label>
+            <span><small>@Model.Total_Product_Non_Refundable.ToString().ToRuppeeFormat()</small> </span>
+        </p>
+
         <p>
             <label><small><strong>Percent:</strong></small> </label>
             <span><small>@Model.OwnerSalesmanCommission.Percent%</small> </span>
         </p>
 
-        <label><small><strong>Commission:</strong></small> </label>
-        <span class="background-ltblue pl-1 pr-1"><small>@Model.OwnerSalesmanCommission.Amount.ToString().ToRuppeeFormat()</small> </span>
+        <label><small><strong>Commission Refundable:</strong></small> </label>
+        <span class="background-ltblue pl-1 pr-1"><small>@Model.OwnerSalesmanCommission.Amount_Refundable.ToString().ToRuppeeFormat()</small> </span>
 
+        <label><small><strong>Commission NonRefundable:</strong></small> </label>
+        <span class="background-ltblue pl-1 pr-1"><small>@Model.OwnerSalesmanCommission.Amount_NonRefundable.ToString().ToRuppeeFormat()</small> </span>
     </div>
 </div>
 
@@ -77,7 +89,7 @@
         </div>
 
         <label><small><strong>Sale:</strong></small> </label>
-        <span><small>@Model.Freight_Accepted.ToString().ToRuppeeFormat()</small> </span>
+        <span><small>@Model.Freight_Accepted_Formatted.ToString().ToRuppeeFormat()</small> </span>
         <br />
 
         <label><small><strong>Percent:</strong></small> </label>
@@ -85,7 +97,7 @@
         <br />
 
         <label><small><strong>Commission:</strong></small> </label>
-        <span class="background-ltblue pl-1 pr-1"><small>@Model.DeliverymanSalesmanCommission.Amount.ToString().ToRuppeeFormat()</small> </span>
+        <span class="background-ltblue pl-1 pr-1"><small>@Model.DeliverymanSalesmanCommission.Amount_Refundable.ToString().ToRuppeeFormat()</small> </span>
 
     </div>
 </div>
@@ -104,8 +116,12 @@
                        "Select Owner's Salesman",
                new { @class = "form-control", title = "This is customer's salesman.", data_placement = "right", disabled = "disabled" })
         <div class="card-Body p-2">
-            @Model.OwnerSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+            <label><small><strong>Commission Refundable:</strong></small> </label>
+            @Model.OwnerSalesmanCommission.Amount_Refundable.ToString().ToRuppeeFormat()
             (@Model.OwnerSalesmanCommission.Percent%)
+            <label><small><strong>Commission NonRefundable:</strong></small> </label>
+            @Model.OwnerSalesmanCommission.Amount_NonRefundable.ToString().ToRuppeeFormat()
+
 
         </div>
     </div>
@@ -132,8 +148,12 @@
                 </div>
             }
             <div class="card-Body p-2">
-                @Model.SuperOwnerSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+                <label><small><strong>Commission Refundable:</strong></small> </label>
+                @Model.SuperOwnerSalesmanCommission.Amount_Refundable.ToString().ToRuppeeFormat()
                 (@Model.SuperOwnerSalesmanCommission.Percent.ToString("N2")%)
+                <label><small><strong>Commission Non Refundable:</strong></small> </label>
+                @Model.SuperOwnerSalesmanCommission.Amount_NonRefundable.ToString().ToRuppeeFormat()
+
 
             </div>
         </div>
@@ -163,7 +183,12 @@
                 </div>
             }
             <div class="card-Body p-2">
-                @Model.SuperSuperOwnerSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+                <label><small><strong>Commission Refundable:</strong></small> </label>
+                @Model.SuperSuperOwnerSalesmanCommission.Amount_Refundable.ToString().ToRuppeeFormat()
+                (@Model.SuperSuperOwnerSalesmanCommission.Percent%)
+
+                <label><small><strong>Commission Non Refundable:</strong></small> </label>
+                @Model.SuperSuperOwnerSalesmanCommission.Amount_NonRefundable.ToString().ToRuppeeFormat()
                 (@Model.SuperSuperOwnerSalesmanCommission.Percent%)
 
             </div>
@@ -189,8 +214,12 @@
                        "Select Customer's Salesman",
                new { @class = "form-control", title = "This is customer's salesman.", data_placement = "right", disabled = "disabled" })
         <div class="card-Body p-2">
-            @Model.CustomerSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+            <label><small><strong>Commission Refundable:</strong></small> </label>
+            @Model.CustomerSalesmanCommission.Amount_Refundable.ToString().ToRuppeeFormat()
             (@Model.CustomerSalesmanCommission.Percent%)
+            <label><small><strong>Commission Non Refundable:</strong></small> </label>
+            @Model.CustomerSalesmanCommission.Amount_NonRefundable.ToString().ToRuppeeFormat()
+
 
         </div>
     </div>
@@ -219,8 +248,12 @@
                 </div>
             }
             <div class="card-Body p-2">
-                @Model.SuperCustomerSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+                <label><small><strong>Commission Refundable:</strong></small> </label>
+                @Model.SuperCustomerSalesmanCommission.Amount_Refundable.ToString().ToRuppeeFormat()
                 (@Model.SuperCustomerSalesmanCommission.Percent%)
+                <label><small><strong>Commission NonRefundable:</strong></small> </label>
+                @Model.SuperCustomerSalesmanCommission.Amount_NonRefundable.ToString().ToRuppeeFormat()
+
 
             </div>
         </div>
@@ -250,8 +283,12 @@
                 </div>
             }
             <div class="card-Body p-2">
-                @Model.SuperSuperCustomerSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+                <label><small><strong>Commission Refundable:</strong></small> </label>
+                @Model.SuperSuperCustomerSalesmanCommission.Amount_Refundable.ToString().ToRuppeeFormat()
                 (@Model.SuperSuperCustomerSalesmanCommission.Percent%)
+                <label><small><strong>Commission Non Refundable:</strong></small> </label>
+                @Model.SuperSuperCustomerSalesmanCommission.Amount_NonRefundable.ToString().ToRuppeeFormat()
+
 
             </div>
         </div>
@@ -271,9 +308,11 @@
                        "Select Deliveryman's Salesman",
                new { @class = "form-control", title = "This is customer's salesman.", data_placement = "right", disabled = "disabled" })
         <div class="card-Body p-2">
-            @Model.DeliverymanSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+            <label><small><strong>Commission Refundable:</strong></small> </label>
+            @Model.DeliverymanSalesmanCommission.Amount_Refundable.ToString().ToRuppeeFormat()
             (@Model.DeliverymanSalesmanCommission.Percent%)
-
+            <label><small><strong>Commission Non Refundable:</strong></small> </label>
+            @Model.DeliverymanSalesmanCommission.Amount_NonRefundable.ToString().ToRuppeeFormat()
         </div>
     </div>
 </div>
@@ -298,8 +337,12 @@
             Model.SuperDeliverymanSalesman.FullName();
         }
         <div class="card-Body p-2">
-            @Model.SuperDeliverymanSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+            <label><small><strong>Commission Refundable:</strong></small> </label>
+            @Model.SuperDeliverymanSalesmanCommission.Amount_Refundable.ToString().ToRuppeeFormat()
             (@Model.SuperDeliverymanSalesmanCommission.Percent%)
+            <label><small><strong>Commission Non Refundable:</strong></small> </label>
+            @Model.SuperDeliverymanSalesmanCommission.Amount_NonRefundable.ToString().ToRuppeeFormat()
+
 
         </div>
     </div>
@@ -321,8 +364,12 @@
             Model.SuperSuperDeliverymanSalesman.FullName();
         }
         <div class="card-Body p-2">
-            @Model.SuperSuperDeliverymanSalesmanCommission.Amount.ToString().ToRuppeeFormat()
+            <label><small><strong>Commission Refundable:</strong></small> </label>
+            @Model.SuperSuperDeliverymanSalesmanCommission.Amount_Refundable.ToString().ToRuppeeFormat()
             (@Model.SuperSuperDeliverymanSalesmanCommission.Percent%)
+            <label><small><strong>Commission Non Refundable:</strong></small> </label>
+            @Model.SuperSuperDeliverymanSalesmanCommission.Amount_NonRefundable.ToString().ToRuppeeFormat()
+
 
         </div>
     </div>
@@ -339,8 +386,12 @@
             <label>System Commission For Sale W/O Freight</label>
         </strong>
         <div class="card-Body p-2">
-            @Model.System_Commission_For_SaleWithoutFreight.Amount.ToString().ToRuppeeFormat()
-            (@Model.System_Commission_For_SaleWithoutFreight.Percent%)
+            <label><small><strong>Commission Refundable:</strong></small> </label>
+            @Model.System_Commission_For_Product.Amount_Refundable.ToString().ToRuppeeFormat()
+            (@Model.System_Commission_For_Product.Percent%)
+            <label><small><strong>Commission Non Refundable:</strong></small> </label>
+            @Model.System_Commission_For_Product.Amount_NonRefundable.ToString().ToRuppeeFormat()
+
 
         </div>
     </div>
@@ -351,7 +402,8 @@
             <label>System Commission For Freight</label>
         </strong>
         <div class="card-Body p-2">
-            @Model.System_Commission_For_Freight.Amount.ToString().ToRuppeeFormat()
+            <label><small><strong>Commission Refundable:</strong></small> </label>
+            @Model.System_Commission_For_Freight.Amount_Refundable.ToString().ToRuppeeFormat()
             (@Model.System_Commission_For_Freight.Percent%)
 
         </div>
@@ -365,8 +417,15 @@
             <label>Total Charged To Owner</label>
         </strong>
         <div class="card-Body p-2">
-            @Model.Total_Charged_To_Owner.Amount.ToString().ToRuppeeFormat()
-            (@Model.Total_Charged_To_Owner.Percent%)
+            <label><small><strong>Commission Refundable:</strong></small> </label>
+            @Model.Total_Commissions_Payable_By_Owner.Amount_Refundable.ToString().ToRuppeeFormat()
+            (@Model.Total_Commissions_Payable_By_Owner.Percent%)
+
+            <label><small><strong>Commission Non Refundable:</strong></small> </label>
+            @Model.Total_Commissions_Payable_By_Owner.Amount_NonRefundable.ToString().ToRuppeeFormat()
+
+
+
 
         </div>
     </div>
@@ -374,11 +433,26 @@
 
     <div class="card mt-2">
         <strong class="card-h background-ltgrey p-1">
-            <label>Total Charged To Deliverymant</label>
+            <label>Total Charged To Deliveryman</label>
         </strong>
         <div class="card-Body p-2">
-            @Model.Total_Charged_To_Deliveryman.Amount.ToString().ToRuppeeFormat()
-            (@Model.Total_Charged_To_Deliveryman.Percent%)
+
+
+            
+            <label><small><strong>Commission Refundable:</strong></small> </label>
+            @Model.Total_Commissions_Payable_By_Deliveryman.Amount_Refundable.ToString().ToRuppeeFormat()
+            (@Model.Total_Commissions_Payable_By_Deliveryman.Percent%)
+
+
+            <label><small><strong>Commission Non Refundable:</strong></small> </label>
+            @Model.Total_Commissions_Payable_By_Deliveryman.Amount_NonRefundable.ToString().ToRuppeeFormat()
+
+
+
+
+
+
+
 
         </div>
     </div>

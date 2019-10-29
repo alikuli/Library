@@ -95,9 +95,9 @@ namespace UowLibrary.MenuNS
 
             foreach (var menuPathMain in menuPathMainList)
             {
-                if (!menuPathMain.Products.IsNullOrEmpty())
+                if (!menuPathMain.Products_Fixed.IsNullOrEmpty())
                 {
-                    List<Product> menuPathMainProductList = menuPathMain.Products.ToList();
+                    List<Product> menuPathMainProductList = menuPathMain.Products_Fixed.ToList();
                     foreach (var prod in menuPathMainProductList)
                     {
                         productHashList.Add(prod);

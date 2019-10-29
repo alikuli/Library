@@ -58,7 +58,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
 
 
         #region Order Detail (OD) This is the detail of the Order Item
-        public override bool OD_Hide_Save_Button { get { return true; } }
+        public override bool OD_Hide_System_Save_Button { get { return true; } }
 
         #endregion
     }

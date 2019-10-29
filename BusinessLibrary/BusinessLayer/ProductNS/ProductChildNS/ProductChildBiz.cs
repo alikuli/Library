@@ -134,13 +134,13 @@ namespace UowLibrary.ProductChildNS
 
 
 
-            List<string> pictureAddresses = GetPictureList(productChild);
+            List<string> pictureAddresses = GetCurrItemsPictureList(productChild);
 
             //if none are available get them from the product
             if (pictureAddresses.IsNullOrEmpty())
             {
                 productChild.Product.IsNullThrowException();
-                pictureAddresses = GetPictureList(productChild.Product);
+                pictureAddresses = GetCurrItemsPictureList(productChild.Product);
 
             }
 
@@ -205,8 +205,17 @@ namespace UowLibrary.ProductChildNS
             UserId.IsNullOrWhiteSpaceThrowException("You are not logged in");
             Owner owner = OwnerBiz.GetOwnerForUser(UserId);
             owner.IsNullThrowException("Owner not found.");
+            List<ProductChild> lstEntities;
+            if (IsShowHidden)
+            {
+                lstEntities = await FindAll().Where(x => x.OwnerId == owner.Id && x.Hide == IsShowHidden).ToListAsync();
 
-            var lstEntities = await FindAll().Where(x => x.OwnerId == owner.Id && x.Hide == IsShowHidden).ToListAsync();
+            }
+            else
+            {
+                lstEntities = await FindAll().Where(x => x.OwnerId == owner.Id).ToListAsync();
+
+            }
             IList<ICommonWithId> lstIcom = lstEntities.Cast<ICommonWithId>().ToList();
             return lstIcom;
         }

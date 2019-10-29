@@ -33,7 +33,7 @@ namespace UowLibrary
 
             ControllerCreateEditParameter parmState = new ControllerCreateEditParameter();
             parmState.Entity = s as ICommonWithId;
-            StateBiz.CreateSimple(parmState);
+            StateBiz.Create(parmState);
         }
 
     }

@@ -30,6 +30,8 @@
 
     });
 
+    $("input[type='number']").inputSpinner();
+
     
     //$('.datepicker').datepicker({
     //    format: "yyyy/mm/dd",
@@ -41,6 +43,14 @@
 });
 
 
+$(function myfunction() {
+    $(document).bind('ajaxStart', function () {
+
+        $("#loaderbody").removeClass('d-none');
+    }).bind('ajaxStop', function () {
+        $("#loaderbody").addClass('d-none');
+    })
+})
 
 
 function initializeToolTipsBootStrap4()

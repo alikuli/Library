@@ -24,11 +24,18 @@ namespace ModelsClassLibrary.ModelsNS.SharedNS.Complex
         {
             base.Clear();
             ConfirmationCode = "";
+            IsTrue = false;
         }
 
         public bool MatchCode(string code)
         {
             return code == ConfirmationCode;
+        }
+
+        public override void SetToTodaysDate(string byUser, string byUserId)
+        {
+            base.SetToTodaysDate(byUser, byUserId);
+            IsTrue = true;
         }
     }
 }

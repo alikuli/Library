@@ -11,6 +11,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
 
         MenuENUM EditLink_MenuEnum { get; }
         bool ShowCreateButton { get; }
+        bool ShowCreateProductButton { get; }
         bool ShowEditButton { get; }
 
         string MenuPath1Id { get; }
@@ -26,6 +27,7 @@ namespace UowLibrary.MenuNS.MenuStateNS
         string ControllerCurrentName { get; set; }
         string MenuDisplayName { get; set; }
         bool IsProductChild { get; }
+        string CreateButtonAction { get; }
 
 
     }

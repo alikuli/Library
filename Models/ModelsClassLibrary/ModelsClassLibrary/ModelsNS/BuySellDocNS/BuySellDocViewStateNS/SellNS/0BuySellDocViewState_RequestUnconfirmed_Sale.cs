@@ -55,14 +55,7 @@ namespace ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewSta
         //public override bool HD_Enable_RequireInsuranace { get { return true; } }
         public override bool HD_Show_Freight_Request_Info { get { return true; } }
 
-
-        public override AddressDetailToShowENUM HD_AddressDetailToShow
-        {
-            get
-            {
-                return AddressDetailToShowENUM.OnlyNameCityCountry;
-            }
-        }
+        public override AddressDetailToShowENUM HD_AddressDetailToShow { get { return AddressDetailToShowENUM.OnlyNameCityCountry; } }
 
         public override bool HD_Show_Address_Ship_To { get { return true; } }
         public override bool HD_Show_Address_Pick_From { get { return true; } }

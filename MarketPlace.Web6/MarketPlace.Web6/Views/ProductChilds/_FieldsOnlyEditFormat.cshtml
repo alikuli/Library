@@ -7,11 +7,13 @@
     string create_feature_Path = Url.Action("Create", "ProductChildFeatures", new { productChildId = Model.Id, returnUrl = childReturnUrl });
     bool isCreate = Model.MenuManager.IsCreate;
 
-    string addressPath = @Url.Action("GetAddressInfo","Addresses");
+    string addressPath = @Url.Action("GetAddressInfo", "Addresses");
     string dropDownListName = "ShipFromAddressId";
     string preNameOfFields = "ShipFromAddressComplex";
     //string updateJavascript = "updateAddressFields('@dropDownListName', '@preNameOfFields', '@addressPath')" ;
-    
+    string toolTip_IsTokenPaymentAccepted = "If you mark this true then you may get payments in tokens/non-refundable money which can be used to buy services in the system, but cannot be converted to cash.";
+    string toolTip_Hide = "If true, you will stop getting billed for this product, but it will also stop showing to customers. You can always switch it on again by going to your products menu.";
+
 }
 <div class="row border border-dark p-1 w-100 background-ltgreen" style="justify-content:center">
     <h4>Product: @Model.FullName()</h4>
@@ -22,7 +24,7 @@
     @Html.HiddenFor(x => x.ProductId)
     <div class="col-lg">
         <div class="form-group">
-            @Html.LabelFor(model => model.IdentificationNumber, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @toolTipIdentificationNumber, data_placement = "top" })
+            @Html.LabelFor(model => model.IdentificationNumber, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @toolTip_Hide, data_placement = "top" })
             @Html.EditorFor(model => model.IdentificationNumber, new { htmlAttributes = new { @class = "form-control ml-1" } })
             @Html.ValidationMessageFor(model => model.IdentificationNumber, "", new { @class = "text-danger" })
         </div>
@@ -30,22 +32,22 @@
         @Html.Partial(@"_Name_And_DetailInfo")
 
 
+
+
+        @Html.EditorFor(x => x.Sell)
+
+
         <div class="form-check">
             @Html.CheckBoxFor(x => x.Hide)
-            <strong>Hide?</strong>  <small>(If you hide product, you will stop getting billed.)</small> 
+            @Html.LabelFor(x => x.Hide, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @toolTip_IsTokenPaymentAccepted, data_placement = "top" })
         </div>
-    </div>
+
+        <div class="form-check">
+            @Html.CheckBoxFor(model => model.IsNonRefundablePaymentAccepted)
+            @Html.LabelFor(model => model.IsNonRefundablePaymentAccepted, htmlAttributes: new { @class = "", data_toggle = "tooltip", title = @toolTip_IsTokenPaymentAccepted, data_placement = "top" })
 
 
-
-
-
-
-
-
-
-    <div class="col-lg background-ltgrey">
-        @Html.EditorFor(x => x.Sell)
+        </div>
 
 
     </div>
@@ -56,7 +58,7 @@
 
 
 
-        <div class=" bg-light p-2">
+        <div class=" background-ltblue p-2">
             <label>Stored At</label>
             <div class="form-group">
                 @Html.DropDownListFor(x => x.ShipFromAddressId,
@@ -72,6 +74,7 @@
             @Html.ValidationMessageFor(model => model.ShipFromAddressComplex, "", new { @class = "text-danger" })
         </div>
 
+
     </div>
 </div>
 
@@ -85,11 +88,18 @@
 @if (!isCreate)
 {
     <div class="row border border-dark p-1 w-100 background-ltgreen" style="justify-content:center">
-        <h4>Add Features</h4>
+        <div class="col">
+            <h4>Add Features</h4>
+
+        </div>
     </div>
 
     <div class="row border border-dark p-1 w-100">
-        @Html.Partial(@"~/Views/ProductChilds/_ProductChildFeatures.cshtml")
+        <div class="col">
+            @Html.Partial(@"~/Views/ProductChilds/_ProductChildFeatures.cshtml")
+
+
+        </div>
     </div>
 }
 

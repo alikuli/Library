@@ -352,6 +352,8 @@ namespace ModelsClassLibrary.ModelsNS.MenuNS.MenuManagerNS
 
         public string ProductChildId { get; set; }
         public bool IsProductChild { get; set; }
+        public bool IsProduct { get; set; }
+        public bool IsShop { get; set; }
 
 
         #endregion

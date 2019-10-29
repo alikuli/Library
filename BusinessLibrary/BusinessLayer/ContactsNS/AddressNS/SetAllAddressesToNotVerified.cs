@@ -18,12 +18,14 @@ using WebLibrary.Programs;
 using System.Linq;
 using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
+using InterfacesLibrary.SharedNS;
 
 namespace UowLibrary.AddressNS
 {
     public partial class AddressBiz 
     {
-        public void SetAllAddressesToNotVerified()
+        public void SetAllAddressesToNotVerified(GlobalObject globalObject)
         {
             var addressLst = FindAll().ToList();
 
@@ -33,7 +35,13 @@ namespace UowLibrary.AddressNS
             foreach (var item in addressLst)
             {
                 item.Verification.VerificaionStatusEnum = VerificaionStatusENUM.NotVerified;
-                UpdateAndSave(item);
+
+                ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+                param.Entity = item as ICommonWithId;
+                param.GlobalObject = globalObject;
+
+
+                UpdateAndSave(param);
             }
 
 

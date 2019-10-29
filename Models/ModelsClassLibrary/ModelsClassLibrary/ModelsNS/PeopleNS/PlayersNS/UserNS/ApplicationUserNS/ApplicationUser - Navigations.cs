@@ -1,4 +1,5 @@
-﻿using AliKuli.UtilitiesNS;
+﻿using AliKuli.Extentions;
+using AliKuli.UtilitiesNS;
 using InterfacesLibrary.SharedNS;
 using InterfacesLibrary.SharedNS.FeaturesNS;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace UserModels
@@ -55,6 +57,17 @@ namespace UserModels
 
 
         public virtual ICollection<UploadedFile> MiscFiles { get; set; }
+        public List<UploadedFile> MiscFiles_Fixed
+        {
+            get
+            {
+                if (MiscFiles.IsNullOrEmpty())
+                    return new List<UploadedFile>();
+
+                List<UploadedFile> miscFile = MiscFiles.Where(x => x.MetaData.IsDeleted == false).ToList();
+                return miscFile;
+            }
+        }
 
         public string MiscFilesLocation(string aName)
         {
@@ -167,11 +180,11 @@ namespace UserModels
             get { return true; }
         }
 
-       /// <summary>
+        /// <summary>
         /// This is the heading in the Create form. Usually this will be Model.ClassName.ToString().ToTitleSentance()
         /// </summary>
         [NotMapped]
-        
+
         public string HeadingForCreateForm { get; set; }
     }
 }

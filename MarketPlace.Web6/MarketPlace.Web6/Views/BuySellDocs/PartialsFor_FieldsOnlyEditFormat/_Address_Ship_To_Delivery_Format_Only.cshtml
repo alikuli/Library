@@ -6,11 +6,31 @@
     ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDocViewStateNS.IBuySellDocViewState viewState_ShipFrom = Model.BuySellDocViewState;
     string shipToAddress_ShipTo = "";
     bool show_Address_Ship_To = viewState_ShipFrom.HD_Show_Address_Ship_To;
+    AddressDetailToShowENUM addressDetailToShow = viewState_ShipFrom.HD_AddressDetailToShow;
+    string returnUrl_ShipFrom = Request.Url.OriginalString;
+    string showCompleteAddressButtonText = string.Format("Show Complete Address (Rs{0})", ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc.Payment_For_Full_Address());
+    
+    //string text = string.Format("You will be charged (Rs{0}) to see the address", ModelsClassLibrary.ModelsNS.DocumentsNS.BuySellDocNS.BuySellDoc.Payment_For_Full_Address());
+
+    string showCompleteAddressButton_path = Url.Action("CancelRejectOrder", "BuySellDocs", new { buySellDocId = Model.Id, returnUrl = returnUrl_ShipFrom, buySellDocumentTypeEnum = Model.BuySellDocumentTypeEnum, buySellDocStateModifierEnum = BuySellDocStateModifierENUM.SeeAddress});
+    if (Model.BuySellDocumentTypeEnum == BuySellDocumentTypeENUM.Sale)
+    {
+        if (Model.IsShowFullAddressTo_Seller == true)
+        {
+            addressDetailToShow = AddressDetailToShowENUM.Complete;
+        }
+        
+        if(Model.OptedOutOfSystem.IsSelected==true)
+        {
+            addressDetailToShow = AddressDetailToShowENUM.Complete;
+            
+        }
+    }
 
 }
 
 
-@switch (viewState_ShipFrom.HD_AddressDetailToShow)
+@switch (addressDetailToShow)
 {
     case AddressDetailToShowENUM.Complete:
         shipToAddress_ShipTo = Model.AddressShipToComplex.ToString();
@@ -42,7 +62,7 @@
         @Html.TextAreaFor(model => shipToAddress_ShipTo, 7, 25, new { disabled = "disabled", style = "width: 100%; max-width: 100%; white-space: pre-line" })
     </div>
 
-    if (viewState_ShipFrom.HD_AddressDetailToShow == AddressDetailToShowENUM.Complete)
+    if (addressDetailToShow == AddressDetailToShowENUM.Complete)
     {
         <div class="form-group">
             <label class="bg-success  text-white p-2">
@@ -50,8 +70,22 @@
                     <label>Customers Phone/Email</label>
                 </strong>
             </label>
-                @Html.EditorFor(model => model.AddressShipToComplex.ToString_Phone_And_Email, new { htmlAttributes = new { @class = "form-control bg-success text-white", @placeholder = "No Contact.", disabled = "disabled" } })
+                @Html.TextAreaFor(model => model.AddressShipToComplex.ToString_Phone_And_Email, 2, 25, new { disabled = "disabled", style = "width: 100%; max-width: 100%; white-space: pre-line", @placeholder = "No Contact." })
 
         </div>
+    }
+}
+@if(Model.BuySellDocumentTypeEnum == BuySellDocumentTypeENUM.Sale)
+{
+    if (Model.BuySellDocStateEnum == BuySellDocStateENUM.RequestUnconfirmed || Model.BuySellDocStateEnum == BuySellDocStateENUM.RequestConfirmed)
+    { 
+        if (Model.IsShowFullAddressTo_Seller == false)
+        {
+
+            <button type="button" class="btn btn-success" onclick="openPath('@showCompleteAddressButton_path')">
+        
+                @showCompleteAddressButtonText
+            </button>
+        }
     }
 }

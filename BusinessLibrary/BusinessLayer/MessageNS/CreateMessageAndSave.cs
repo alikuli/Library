@@ -29,7 +29,7 @@ namespace UowLibrary.PlayersNS.MessageNS
         HashSet<Product> productsBelongingToUserFrom;
         HashSet<ProductChild> childProductsBelongingToUserFrom;
 
-        HashSet<Person> toPeopleHashSet;
+        //HashSet<Person> toPeopleHashSet;
 
 
         bool countIsSet { get; set; }
@@ -508,7 +508,7 @@ namespace UowLibrary.PlayersNS.MessageNS
                     getPeopleFromMp3Etc(mpm);
 
                     if (!mpm.MenuPath1.IsNull())
-                        if (!mpm.MenuPath1.LikeUnlikes.IsNull())
+                        if (!mpm.MenuPath1.LikeUnlikes_Fixed.IsNull())
                             AddLikes(mpm.MenuPath1.LikeUnlikes);
 
                     if (!mpm.MenuPath2.IsNull())
@@ -559,10 +559,10 @@ namespace UowLibrary.PlayersNS.MessageNS
             mpm.IsNullThrowExceptionArgument("mpm");
             mpm.MenuPath3Id.IsNullOrWhiteSpaceThrowException("MenuPath3 is null");
 
-            if (mpm.Products.IsNullOrEmpty())
+            if (mpm.Products_Fixed.IsNullOrEmpty())
                 return;
 
-            foreach (var product in mpm.Products)
+            foreach (var product in mpm.Products_Fixed)
             {
                 getPeopleFromProductEtc(product);
             }
@@ -659,9 +659,9 @@ namespace UowLibrary.PlayersNS.MessageNS
                 }
 
             //get the likes/unlike people for the product
-            if (!productChild.LikeUnlikes.IsNullOrEmpty())
+            if (!productChild.LikeUnlikes_Fixed.IsNullOrEmpty())
             {
-                AddLikes(productChild.LikeUnlikes);
+                AddLikes(productChild.LikeUnlikes_Fixed);
             }
 
         }

@@ -1,6 +1,7 @@
 ﻿using AliKuli.Extentions;
 using EnumLibrary.EnumNS;
 using MarketPlace.Web6.Controllers.Abstract;
+using ModelsClassLibrary.ModelsNS.IndexNS.PlaceLocationNS;
 using ModelsClassLibrary.ModelsNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
@@ -72,7 +73,7 @@ namespace MarketPlace.Web6.Controllers
             return base.Event_Edit_ViewAndSetupSelectList_GET(parm);
         }
 
-        public override async Task<ActionResult> Index(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, EnumLibrary.EnumNS.MenuENUM menuEnum = MenuENUM.IndexDefault, EnumLibrary.EnumNS.SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "", string viewName = "Index")
+        public override async Task<ActionResult> Index(string id, string searchFor, string isandForSearch, string selectedId, string returnUrl, MainLocationSelectorClass addressCheckBoxes, EnumLibrary.EnumNS.MenuENUM menuEnum = MenuENUM.IndexDefault, EnumLibrary.EnumNS.SortOrderENUM sortBy = SortOrderENUM.Item1_Asc, bool print = false, bool isMenu = false, string menuPathMainId = "", string productId = "", string viewName = "Index", FormCollection fc = null)
         {
             try
             {
@@ -81,7 +82,7 @@ namespace MarketPlace.Web6.Controllers
                 if (!UserBiz.IsAdmin(UserId))
                     throw new Exception("You are not an administrator");
 
-                return await base.Index(id, searchFor, isandForSearch, selectedId, returnUrl, menuEnum, sortBy, print, isMenu, menuPathMainId, viewName);
+                return await base.Index(id, searchFor, isandForSearch, selectedId, returnUrl, addressCheckBoxes, menuEnum, sortBy, print, isMenu, menuPathMainId,productId, viewName, fc);
             }
             catch (Exception e)
             {

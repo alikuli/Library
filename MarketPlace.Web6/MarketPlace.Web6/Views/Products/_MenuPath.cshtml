@@ -3,20 +3,6 @@
 
 @{int count = 0;}
 
-@*<div class="well p-3 m-3">
-        @for (int i = 0; i < Model.CheckedBoxesList.Count(); i++)
-        {
-            <div class="checkbox">
-                <label>
-                    @Html.HiddenFor(model => model.CheckedBoxesList[i].Id)
-                    @Html.CheckBoxFor(model => model.CheckedBoxesList[i].IsTrue)
-                    @Html.DisplayFor(model => model.CheckedBoxesList[i].Label)
-                    @Html.HiddenFor(model => model.CheckedBoxesList[i].IsTrue)
-                </label>
-            </div>
-        }
-    </div>*@
-
 
 <div class="well p-3  w-100">
 
@@ -70,28 +56,29 @@
                                                type="hidden"
                                                value="@chkbox.Id" />
 
-                                        @if (chkbox.IsTrue)
-                                        {
-                                            <input data-val="true"
-                                                   checked="checked"
-                                                   data-val-required="The IsTrue field is required."
-                                                   id="@id2"
-                                                   name="@name2"
-                                                   type="checkbox"
-                                                   value="true" />
 
-                                        }
-                                        else
-                                        {
-                                            <input data-val="true"
-                                                   data-val-required="The IsTrue field is required."
-                                                   id="@id2"
-                                                   name="@name2"
-                                                   type="checkbox"
-                                                   value="true" />
+                                            @if (chkbox.IsTrue)
+                                            {
+                                                <input data-val="true"
+                                                       checked="checked"
+                                                       data-val-required="The IsTrue field is required."
+                                                       id="@id2"
+                                                       name="@name2"
+                                                       type="checkbox"
+                                                       value="true" />
 
-                                        }
+                                            }
+                                            else
+                                            {
+                                                <input data-val="true"
+                                                       data-val-required="The IsTrue field is required."
+                                                       id="@id2"
+                                                       name="@name2"
+                                                       type="checkbox"
+                                                       value="true" />
 
+                                            }
+                                        
 
                                         <input name="@name2"
                                                type="hidden"

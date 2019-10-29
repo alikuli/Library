@@ -1,8 +1,10 @@
 ﻿using AliKuli.Extentions;
-using ConfigManagerLibrary;
 using EnumLibrary.EnumNS;
+using InterfacesLibrary.SharedNS;
 using ModelsClassLibrary.ModelsNS.AddressNS;
 using ModelsClassLibrary.ModelsNS.AddressNS.AddressVerificationTrxNS;
+using ModelsClassLibrary.ModelsNS.GlobalObjectNS;
+using ModelsClassLibrary.ModelsNS.SharedNS;
 using System;
 using System.Collections.Generic;
 
@@ -70,7 +72,7 @@ namespace UowLibrary.AddressNS
         //}
 
 
-        public void IssueAddressVerificationRequest(AddressVerificationRequest avr)
+        public void IssueAddressVerificationRequest(AddressVerificationRequest avr, GlobalObject globalObject)
         {
             avr.AddressId.IsNullOrWhiteSpaceThrowArgumentException("id");
 
@@ -91,7 +93,7 @@ namespace UowLibrary.AddressNS
             address.IsNullThrowException("Address Not found");
 
             AddressVerificationTrx addyVerfTrx = fixAddressVerificationTrx(avr, address);
-            
+
             //this is where we give the verification number
             long verificationNumber = GenerateRandomVerificationNumber;
             addyVerfTrx.Verification.VerificationNumber = verificationNumber;
@@ -105,7 +107,15 @@ namespace UowLibrary.AddressNS
             address.Verification.VerificaionStatusEnum = VerificaionStatusENUM.Requested;
 
             AddressVerificationTrxBiz.Create(addyVerfTrx);
-            UpdateAndSave(address);
+
+            ControllerCreateEditParameter param = new ControllerCreateEditParameter();
+            param.Entity = address as ICommonWithId;
+            param.GlobalObject = globalObject;
+
+
+            UpdateAndSave(param);
+
+            //UpdateAndSave(address);
 
         }
 
@@ -120,10 +130,10 @@ namespace UowLibrary.AddressNS
             addyVerfTrx.MailServiceEnum = avr.MailServiceEnum;
             //todo
             //addyVerfTrx.MailLocalOrForiegnEnum = GetMailLocalOrForiegnEnum(address.CountryId);
-            
+
             //Accept payment here?
             addyVerfTrx.DateVerifcationPaymentAccepted = DateTime.UtcNow;
-            
+
             addyVerfTrx.Verification.SetTo(VerificaionStatusENUM.Requested);
             addyVerfTrx.Name = string.Format("{0}-{1}", UserName, address.Name);
 
@@ -135,7 +145,7 @@ namespace UowLibrary.AddressNS
             get
             {
                 string seedStr = DateTime.UtcNow.Ticks.ToString();
-                string last4Digits = seedStr.Substring(seedStr.Length - 4,4);
+                string last4Digits = seedStr.Substring(seedStr.Length - 4, 4);
                 int seed = last4Digits.ToInt();
                 Random random = new Random(seed);
                 return random.Next(1000, 9999);
@@ -146,9 +156,9 @@ namespace UowLibrary.AddressNS
         {
             switch (CountryBiz.IsAddressInPakistan(countryId))
             {
-                case true: 
+                case true:
                     return MailLocalOrForiegnENUM.InPakistan;
-                
+
                 default:
                     return MailLocalOrForiegnENUM.OutOfPakistan;
             }

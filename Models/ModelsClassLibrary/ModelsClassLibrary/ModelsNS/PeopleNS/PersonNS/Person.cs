@@ -13,15 +13,16 @@ using ModelsClassLibrary.ModelsNS.PeopleNS.PlayersNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS.EmailAddressNS;
 using ModelsClassLibrary.ModelsNS.PlacesNS.PhoneNS;
-//using ModelsClassLibrary.ModelsNS.PlacesNS.PhoneNS;
 using ModelsClassLibrary.ModelsNS.SharedNS;
 using ModelsClassLibrary.ModelsNS.UploadedFileNS;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
+using System.Linq;
 using System.Web.Mvc;
 using UserModels;
+
 namespace ModelsClassLibrary.ModelsNS.PlayersNS
 {
 
@@ -110,6 +111,17 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
         #region Uploads
 
         public virtual ICollection<UploadedFile> MiscFiles { get; set; }
+        public List<UploadedFile> MiscFiles_Fixed
+        {
+            get
+            {
+                if (MiscFiles.IsNullOrEmpty())
+                    return new List<UploadedFile>();
+
+                List<UploadedFile> miscFile = MiscFiles.Where(x => x.MetaData.IsDeleted == false).ToList();
+                return miscFile;
+            }
+        }
 
         public string MiscFilesLocation(string aName)
         {
@@ -179,10 +191,13 @@ namespace ModelsClassLibrary.ModelsNS.PlayersNS
 
         #endregion
 
-        public string LiscenseBackLocationConst(string userName)
-        {
-            return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "LiscenseBack");
-        }
+
+        [NotMapped]
+        public SelectList SelectListShops { get; set; }
+
+
+
+        public string LiscenseBackLocationConst(string userName) { return Path.Combine(AliKuli.ConstantsNS.MyConstants.SAVE_ROOT_DIRECTORY, "LiscenseBack"); }
 
         public virtual ICollection<Message> Messages { get; set; }
 

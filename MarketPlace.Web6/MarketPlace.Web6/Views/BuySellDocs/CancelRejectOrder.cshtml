@@ -2,16 +2,17 @@
 
 @{
     ViewBag.Title = "Cancel / Reject";
-    string placeholder_msg = string.Format("{0}? Please tell us why? ", Model.BuySellDoc.BuySellDocStateModifierEnum);
+    string placeholder_msg = string.Format("{0}? Please tell us why? ", Model.BuySellDoc.BuySellDocStateModifierEnum.ToString().ToTitleSentance());
+    
 }
 
-<h1 class="text-center text-white font-weight-bold bg-danger mt-2 p-1">@Model.BuySellDoc.BuySellDocStateModifierEnum</h1>
+<h1 class="text-center text-white font-weight-bold bg-danger mt-2 p-1">@Model.BuySellDoc.BuySellDocStateModifierEnum.ToString().ToTitleSentance()</h1>
 <h2 class="text-center text-white  bg-secondary mt-2 p-2">@Model.BuySellDoc.FullName() </h2>
-<h3 class="text-center font-weight-bold font "><u>Instructions</u></h3>
+<h3 class="text-center font-weight-bold font "><u>Comments</u></h3>
 <p class=" text-center p-2">@Model.Text</p>
 
 <h3 class="text-center">
-    Are you sure you want to @Model.BuySellDoc.BuySellDocStateModifierEnum?
+    Are you sure you want to @Model.BuySellDoc.BuySellDocStateModifierEnum.ToString().ToTitleSentance()?
 
 </h3>
 
